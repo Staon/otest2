@@ -107,22 +107,19 @@ Declarations: /* -- epsilon */
   | Declarations Declaration Semicolon;
   ;
 
-Declaration: DeclModifier LeftDecl RightDecl
-  ;
-
-LeftDecl: LeftTypeDecl LeftCore
+Declaration: DeclModifier LeftDecl CoreDecl RightDecl
   ;
   
-LeftTypeDecl: QualifiedName DeclModifier
+LeftDecl: QualifiedName DeclModifier
   | LeftTypeItem DeclModifier
-  | LeftTypeDecl LeftTypeItem DeclModifier
+  | LeftDecl LeftTypeItem DeclModifier
   ;
 
 LeftTypeItem: Asterisk
   | Reference
   ;
 
-LeftCore: /* -- epsilon */
+CoreDecl: /* -- epsilon */
   | Identifier
   | LParent RParent
   | LParent Declaration RParent

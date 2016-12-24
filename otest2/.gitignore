@@ -1,0 +1,7 @@
+*.lib
+*.o
+*.err
+*.lst
+*.lnk
+*.usage
+*.ver.cpp

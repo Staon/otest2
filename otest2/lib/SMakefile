@@ -1,0 +1,14 @@
+Include([".", "../include"]);
+
+Project("otest2.lib");
+  Lib("otest2", [
+    "case.cpp",
+    "casegenerated.cpp",
+    "context.cpp",
+    "otest2.cpp",
+    "state.cpp",
+    "stategenerated.cpp",
+    "suite.cpp",
+    "suitegenerated.cpp",
+  ]);
+EndProject();

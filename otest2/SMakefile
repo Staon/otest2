@@ -1,0 +1,4 @@
+Project();
+  HeaderDir("otest2", "include");
+  Subdirs(["lib", "otest2", "test"]);
+EndProject();

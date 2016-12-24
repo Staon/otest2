@@ -1,0 +1,17 @@
+Include(["."]);
+
+Project("otest2");
+  Exec("otest2", [
+    "FlexLexer.h",
+    "generator.cpp",
+    "generator.h",
+    "generatorstd.cpp",
+    "generatorstd.h",
+    "main.cpp",
+    "parsercontext.cpp",
+    "parsercontext.h",
+    "otest2.l",
+    "otest2.y",
+  ]);
+  ProfileVar("BISON_PREFIX", "otest2");
+EndProject();

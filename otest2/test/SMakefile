@@ -1,0 +1,10 @@
+Project();
+  Exec("foo", [
+    "example.cpp",
+    "examplegen.cpp",
+    "foo.cpp",
+  ]);
+  Link([
+    "otest2.lib",
+  ]);
+EndProject();

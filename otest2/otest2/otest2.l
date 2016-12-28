@@ -62,8 +62,11 @@ const                           CONTEXT -> incCol(yyleng); return token::C_CONST
 \[                              CONTEXT -> incCol(yyleng); return token::C_LBRACKET;
 \]                              CONTEXT -> incCol(yyleng); return token::C_RBRACKET;
 ::                              CONTEXT -> incCol(yyleng); return token::C_QUADDOT;
+::\*                            CONTEXT -> incCol(yyleng); return token::C_MEMPTR;
 ;                               CONTEXT -> incCol(yyleng); return token::C_SEMICOLON;
 ,                               CONTEXT -> incCol(yyleng); return token::C_COMMA;
+\<                              CONTEXT -> incCol(yyleng); return token::C_LT;
+\>                              CONTEXT -> incCol(yyleng); return token::C_GT;
 [ \t\n]+                        CONTEXT -> incCol(yyleng); yylval -> string = CONTEXT -> allocateString(yyleng, yytext); return token::C_SPACE;
 .                               CONTEXT -> incCol(yyleng); yylval -> string = CONTEXT -> allocateString(yyleng, yytext); return token::C_ANY;
 

@@ -1,4 +1,4 @@
-%expect 1
+%expect 4
 
 %code top {
 /* -- turn on parser's debugging */
@@ -26,6 +26,7 @@
 #include "declcore.h"
 #include "declfunction.h"
 #include "declleft.h"
+#include "declmemptr.h"
 #include "declpointer.h"
 #include "declreference.h"
 #include "decltype.h"
@@ -63,6 +64,7 @@ class ParserContext;
 %token C_LCURLY
 %token C_RCURLY
 %token C_QUADDOT
+%token C_MEMPTR
 %token C_STRING
 %token C_SPACE
 %token C_ANY
@@ -71,9 +73,13 @@ class ParserContext;
 %token C_REFERENCE
 %token C_SEMICOLON
 %token C_COMMA
+%token C_LT
+%token C_GT
 
 %type<declcore> Declaration
 %type<declleft> LeftDecl
+%type<declcore> DeclarationInner
+%type<declleft> LeftDeclInner
 %type<declleft> LeftTypeItem
 %type<modifier> DeclModifier
 %type<declcore> CoreDecl
@@ -84,6 +90,7 @@ class ParserContext;
 %type<string> QualifiedName
 %type<string> QualifiedNameRaw
 %type<string> Identifier
+%type<string> IdentifierOrTemplate
 %type<string> C_IDENTIFIER
 %type<string> C_STRING
 %type<string> C_SPACE
@@ -117,7 +124,6 @@ namespace otest2 {
 
 TestSource: /* -- epsilon */ { CONTEXT -> beginFile(); }
   | TestSource FreeBlock
-  | TestSource SpacePrint
   | TestSource NamespaceDef
   | TestSource SuiteDef
   ;
@@ -194,18 +200,25 @@ Declaration: DeclModifier LeftDecl CoreDecl { $2 -> applyModifiersDeep($1); $<de
   ;
   
 LeftDecl: QualifiedName DeclModifier { $$ = new ::OTest2::DeclType(*$1); $$ -> applyModifiers($2); FREESTRING($1); }
-  | LeftTypeItem DeclModifier { $1 -> applyModifiers($2); $$ = $1; }
   | LeftDecl LeftTypeItem DeclModifier { $2 -> applyLeftDecl($1); $2 -> applyModifiers($3); $$ = $2; }
+  ;
+
+DeclarationInner: LeftDeclInner CoreDecl { $<declleft>$ = $1; } RightDecl { $2 -> applyRightDecl($4); $$ = $2; }
+  ;
+
+LeftDeclInner: LeftTypeItem DeclModifier { $1 -> applyModifiers($2); $$ = $1; }
+  | LeftDeclInner LeftTypeItem DeclModifier { $2 -> applyLeftDecl($1); $2 -> applyModifiers($3); $$ = $2; }
   ;
 
 LeftTypeItem: Asterisk { $$ = new ::OTest2::DeclPointer; }
   | Reference { $$ = new ::OTest2::DeclReference; }
+  | QualifiedName MemPtr { $$ = new ::OTest2::DeclMemPtr(*$1); FREESTRING($1); }
   ;
 
 CoreDecl: /* -- epsilon */ { $$ = new ::OTest2::DeclCore; }
   | Identifier { $$ = new ::OTest2::DeclCore(*$1); FREESTRING($1); }
   | LParent RParent { $$ = new ::OTest2::DeclCore; }
-  | LParent Declaration RParent { $$ = $2; }
+  | LParent DeclarationInner RParent { $$ = $2; }
   ;
 
 RightDecl: /* -- epsilon */ { $$ = $<declleft>0; }
@@ -232,24 +245,61 @@ QualifiedName: QualifiedNameRaw { $$ = $1; }
   | QuadDot QualifiedNameRaw { $$ = CONTEXT -> allocateString(2, "::"); $$ -> Append(*$2); FREESTRING($2); } 
   ;
 
-QualifiedNameRaw: Identifier { $$ = $1; }
-  | QualifiedNameRaw QuadDot Identifier { $1 -> Append("::"); $1 -> Append(*$3); $$ = $1; FREESTRING($3); }
+QualifiedNameRaw: IdentifierOrTemplate { $$ = $1; }
+  | QualifiedNameRaw QuadDot IdentifierOrTemplate { $1 -> Append("::"); $1 -> Append(*$3); $$ = $1; FREESTRING($3); }
   ;
+
+IdentifierOrTemplate: Identifier { $$ = $1; }
+  | Identifier C_LT { CONTEXT -> startCatching(); } FreeBodyTempl GT {
+      dstring* templ_(CONTEXT -> stopCatching());
+      $1 -> Append("< ");
+      $1 -> Append(*templ_);
+      $1 -> Append(" >");
+      FREESTRING(templ_); 
+      $$ = $1; 
+    }
+  ;
+
 
 NamespaceDef: Namespace C_LCURLY TestSource C_RCURLY
   ; 
 
-FreeBody: OptSpace
-  | FreeBody FreeBlock OptSpace
+FreeBody: /* -- epsilon */
+  | FreeBody FreeBlock
   ;
 
-FreeBlock: AnyPrint
+FreeBlock: SpacePrint 
+  | AnyPrint
   | QuadDotPrint
+  | MemPtrPrint
   | IdentifierPrint
   | StringPrint
   | PairedCurlyPrint
   | PairedParentPrint
   | PairedBracketPrint
+  | ConstPrint
+  | AsteriskPrint
+  | ReferencePrint
+  | SemicolonPrint
+  | CommaPrint
+  | LTPrint
+  | GTPrint
+  ;
+
+FreeBodyTempl: /* -- epsilon */
+  | FreeBodyTempl FreeBlockTempl
+  ;
+
+FreeBlockTempl: SpacePrint 
+  | AnyPrint
+  | QuadDotPrint
+  | MemPtrPrint
+  | IdentifierPrint
+  | StringPrint
+  | PairedCurlyPrint
+  | PairedParentPrint
+  | PairedBracketPrint
+  | PairedTemplPrint
   | ConstPrint
   | AsteriskPrint
   | ReferencePrint
@@ -264,6 +314,9 @@ PairedParentPrint: LParentPrint FreeBody RParentPrint
   ;
 
 PairedBracketPrint: LBracketPrint FreeBody RBracketPrint
+  ;
+
+PairedTemplPrint: LTPrint FreeBodyTempl GTPrint
   ;
 
 Suite: C_SUITE IgnoredSpace
@@ -285,6 +338,12 @@ QuadDot: C_QUADDOT IgnoredSpace
   ;
 
 QuadDotPrint: C_QUADDOT { PRINT("::"); }
+  ;
+
+MemPtr: C_MEMPTR IgnoredSpace
+  ;
+
+MemPtrPrint: C_MEMPTR { PRINT("::*"); }
   ;
 
 Identifier: C_IDENTIFIER IgnoredSpace
@@ -358,6 +417,15 @@ Comma: C_COMMA IgnoredSpace
   
 CommaPrint: C_COMMA { PRINT(","); }
   ;
+
+LTPrint: C_LT { PRINT("<"); }
+  ;
+
+GT: C_GT IgnoredSpace
+  ;
+
+GTPrint: C_GT { PRINT(">"); }
+  ;
   
 IgnoredSpace: /* -- epsilon */
   | IgnoredSpace Space
@@ -366,10 +434,6 @@ IgnoredSpace: /* -- epsilon */
 Space: C_SPACE
   ;
 
-OptSpace: /* -- epsilon */
-  | OptSpace SpacePrint
-  ;
-  
 SpacePrint: C_SPACE { PRINT(*$1); }
   ;
 

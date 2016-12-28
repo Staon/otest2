@@ -1,6 +1,7 @@
 #include <otest2/otest2.h>
 
 #include <datstr/dstring.h>
+#include <datstr/iptr.h>
 #include <iostream>
 
 /**
@@ -19,8 +20,11 @@ TEST_SUITE(ExampleSuite) {
     void (*case_fce)(int, const char* foo_);
     char (*(*fce2)())[10];
     const char* (* const(*fce3)())[10];
+    int dstring::* mptr;
+    int (dstring::* mfce)(int);
+    cIPtr<dstring> temp1;
 
-    TEST_CTOR((case_fce(0), fce2(0), fce3(0))) {
+    TEST_CTOR((case_fce(0), fce2(0), fce3(0), mptr(0), mfce(0))) {
 
     }
 

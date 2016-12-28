@@ -113,6 +113,93 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
             }
     };
 
+    class SecondCase : public ::OTest2::CaseGenerated {
+      private:
+        /* -- avoid copying */
+        SecondCase(
+            const SecondCase&);
+        SecondCase& operator =(
+            const SecondCase&);
+
+      private:
+        dstring & suite_text ;
+
+        class FirstState : public ::OTest2::StateGenerated {
+          private:
+            /* -- avoid copying */
+            FirstState(
+              const FirstState&);
+            FirstState& operator =(
+                const FirstState&);
+
+          private:
+            dstring & suite_text ;
+
+            virtual void runState(
+                const ::OTest2::Context& context_) {
+
+                }
+
+          public:
+            explicit FirstState(
+                const ::OTest2::Context& context_,
+                ExampleSuite* suite_,
+                SecondCase* case_) :
+              ::OTest2::StateGenerated(context_),
+              suite_text(case_ -> suite_text) {
+
+            }
+
+            virtual ~FirstState() {
+
+            }
+        };
+
+        class SecondState : public ::OTest2::StateGenerated {
+          private:
+            /* -- avoid copying */
+            SecondState(
+              const SecondState&);
+            SecondState& operator =(
+                const SecondState&);
+
+          private:
+            dstring & suite_text ;
+
+            virtual void runState(
+                const ::OTest2::Context& context_) {
+
+                }
+
+          public:
+            explicit SecondState(
+                const ::OTest2::Context& context_,
+                ExampleSuite* suite_,
+                SecondCase* case_) :
+              ::OTest2::StateGenerated(context_),
+              suite_text(case_ -> suite_text) {
+
+            }
+
+            virtual ~SecondState() {
+
+            }
+        };
+
+      public:
+        explicit SecondCase(
+            const ::OTest2::Context& context_,
+            ExampleSuite* suite_) :
+          ::OTest2::CaseGenerated(context_),
+          suite_text(suite_ -> suite_text) {
+
+        }
+
+        virtual ~SecondCase() {
+
+        }
+    };
+
   public:
     explicit ExampleSuite(
         const ::OTest2::Context& context_) :
@@ -126,4 +213,5 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
     }
 };
+
 

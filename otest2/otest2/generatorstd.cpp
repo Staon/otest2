@@ -191,7 +191,7 @@ void GeneratorStd::leaveState() {
       << "            virtual ~" << pimpl -> state << "() {"
       << pimpl -> state_dtor
       << "            }\n"
-      << "        };\n";
+      << "        };\n\n";
 
   pimpl -> state.SetNull();
   pimpl -> variables = pimpl -> variables -> getPrevLevel();
@@ -202,7 +202,6 @@ void GeneratorStd::leaveCase() {
   OASSERT_1(!pimpl -> suite.IsNull() && !pimpl -> testcase.IsNull() && pimpl -> state.IsNull());
 
   *pimpl -> output
-      << "\n"
       << "      public:\n"
       << "        explicit " << pimpl -> testcase << "(\n"
       << "            const ::OTest2::Context& context_,\n"
@@ -217,7 +216,7 @@ void GeneratorStd::leaveCase() {
       << "        virtual ~" << pimpl -> testcase << "() {"
       << pimpl -> case_dtor
       << "        }\n"
-      << "    };\n";
+      << "    };\n\n";
 
   pimpl -> testcase.SetNull();
   pimpl -> variables = pimpl -> variables -> getPrevLevel();
@@ -228,7 +227,6 @@ void GeneratorStd::leaveSuite() {
   OASSERT_1(!pimpl -> suite.IsNull() && pimpl -> testcase.IsNull() && pimpl -> state.IsNull());
 
   *pimpl -> output
-      << "\n"
       << "  public:\n"
       << "    explicit " << pimpl -> suite << "(\n"
       << "        const ::OTest2::Context& context_) :\n"
@@ -242,7 +240,7 @@ void GeneratorStd::leaveSuite() {
       << "    virtual ~" << pimpl -> suite << "() {"
       << pimpl -> suite_dtor
       << "    }\n"
-      << "};\n";
+      << "};\n\n";
 
   pimpl -> suite.SetNull();
   pimpl -> variables = 0;

@@ -138,11 +138,18 @@ Cases: /* -- epsilon */
 CaseDef: Case LParent Identifier RParent LCurly { CONTEXT -> enterCase(*$3); } ObjectHeader States RCurly { CONTEXT -> leaveCase(); }
   ;
 
-States: /* -- epsilon */
+States: StateList
+  | NoStates
+  ;
+  
+StateList: /* -- epsilon */
   | States StateDef
   ;
 
 StateDef: State LParent Identifier RParent C_LCURLY { CONTEXT -> enterState(*$3); } FreeBody RCurly { CONTEXT -> leaveState(); }
+  ;
+
+NoStates: C_LCURLY { CONTEXT -> enterState("Init"); } FreeBody RCurly { CONTEXT -> leaveState(); }
   ;
 
 ObjectHeader: Declarations { CONTEXT -> finishDeclarations(); } CtorOpt DtorOpt

@@ -24,7 +24,12 @@ TEST_SUITE(ExampleSuite) {
     int (dstring::* mfce)(int);
     cIPtr<dstring> temp1;
 
-    TEST_CTOR((case_fce(0), fce2(0), fce3(0), mptr(0), mfce(0))) {
+    TEST_CTOR((
+        case_fce(0),
+        fce2(0),
+        fce3(0),
+        mptr(0),
+        mfce(0))) {
 
     }
 
@@ -32,13 +37,23 @@ TEST_SUITE(ExampleSuite) {
 
     }
 
-    TEST_STATE(Init) {
+    {
       std::cout
           << suite_text << std::endl
           << case_var << std::endl
           << case_fce << std::endl
           << fce2 << std::endl
           << fce3 << std::endl;
+    }
+  }
+
+  TEST_CASE(SecondCase) {
+    TEST_STATE(FirstState) {
+
+    }
+
+    TEST_STATE(SecondState) {
+
     }
   }
 }

@@ -1,6 +1,7 @@
 #ifndef OTest2OTEST2_PARSERCONTEXT_H_
 #define OTest2OTEST2_PARSERCONTEXT_H_
 
+#include <astraios/dstream.h>
 #include <datstr/dstring.h>
 #include <iostream>
 #include <list>
@@ -21,6 +22,9 @@ class ParserContext {
     int linenum;
     int colnum;
 
+    bool catch_block;
+    dstrostream block;
+
     Generator* generator;
 
   private:
@@ -37,7 +41,7 @@ class ParserContext {
     ~ParserContext();
 
     /* -- dstring allocation pool */
-    dstring * allocateString(
+    dstring* allocateString(
         int length_,
         const char* string_);
     void freeString(
@@ -48,6 +52,10 @@ class ParserContext {
     void incCol(
         int delta_);
     void incLine();
+
+    /* -- catching of free blocks */
+    void startCatching();
+    dstring* stopCatching();
 
     /* -- generator interface */
     void dumpString(

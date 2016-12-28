@@ -5,3 +5,6 @@
 *.lnk
 *.usage
 *.ver.cpp
+.deps
+.cproject
+.project

@@ -2,16 +2,37 @@ Include(["."]);
 
 Project("otest2");
   Exec("otest2", [
+    "declaration.cpp",
+    "declaration.h",
+    "declargs.cpp",
+    "declargs.h",
+    "declarray.cpp",
+    "declarray.h",
+    "declcore.cpp",
+    "declcore.h",
+    "declfunction.cpp",
+    "declfunction.h",
+    "declleft.cpp",
+    "declleft.h",
+    "declmod.cpp",
+    "declmod.h",
+    "declpointer.cpp",
+    "declpointer.h",
+    "declreference.cpp",
+    "declreference.h",
+    "decltype.cpp",
+    "decltype.h",
     "FlexLexer.h",
     "generator.cpp",
     "generator.h",
     "generatorstd.cpp",
     "generatorstd.h",
     "main.cpp",
-    "parsercontext.cpp",
-    "parsercontext.h",
     "otest2.l",
     "otest2.y",
+    "parsercontext.cpp",
+    "parsercontext.h",
   ]);
   ProfileVar("BISON_PREFIX", "otest2");
+  TaskDep("main.cpp", "otest2.tab.hpp");
 EndProject();

@@ -11,6 +11,8 @@ ParserContext::ParserContext(
   lexan(0),
   linenum(1),
   colnum(1),
+  catch_block(false),
+  block(),
   generator(generator_) {
 
 }
@@ -61,9 +63,21 @@ void ParserContext::incLine() {
   colnum = 1;
 }
 
+void ParserContext::startCatching() {
+  catch_block = true;
+}
+
+dstring* ParserContext::stopCatching() {
+  catch_block = false;
+  return allocateString(block.str().Strlen(), block.str().Str());
+}
+
 void ParserContext::dumpString(
     const dstring& string_) {
-  generator -> dumpString(string_);
+  if(catch_block)
+    block << string_;
+  else
+    generator -> dumpString(string_);
 }
 
 void ParserContext::enterSuite(

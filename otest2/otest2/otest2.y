@@ -14,9 +14,21 @@
 %parse-param { ::OTest2::ParserContext* parser_context }
 %lex-param { ::OTest2::ParserContext* parser_context }
 
-%code requires { 
+%code requires {
+
+#include <cstdint> 
 #include <datstr/dstring.h>
 #include <iostream>
+
+#include "declaration.h"
+#include "declargs.h"
+#include "declarray.h"
+#include "declcore.h"
+#include "declfunction.h"
+#include "declleft.h"
+#include "declpointer.h"
+#include "declreference.h"
+#include "decltype.h"
 
 namespace OTest2 {
 
@@ -29,6 +41,11 @@ class ParserContext;
 /* -- semantic value */
 %union {
   dstring* string;
+  ::OTest2::DeclLeft* declleft;
+  ::OTest2::DeclCore* declcore;
+  ::OTest2::DeclArgs* declargs;
+  ::OTest2::Declaration* declaration;
+  std::uint8_t modifier;
 }
 
 /* -- lexical elements */
@@ -53,11 +70,28 @@ class ParserContext;
 %token C_SEMICOLON
 %token C_COMMA
 
+%type<declcore> Declaration
+%type<declleft> LeftDecl
+%type<declleft> LeftTypeItem
+%type<modifier> DeclModifier
+%type<declcore> CoreDecl
+%type<declaration> RightDecl
+%type<string> ArraySpec
+%type<declargs> FceArgs
+%type<declargs> FceArgsList
+%type<string> QualifiedName
+%type<string> QualifiedNameRaw
 %type<string> Identifier
 %type<string> C_IDENTIFIER
 %type<string> C_STRING
 %type<string> C_SPACE
 %type<string> C_ANY
+
+%destructor { FREESTRING($$); } <string>
+%destructor { delete $$; } <declaration>
+%destructor { delete $$; } <declcore>
+%destructor { delete $$; } <declargs>
+%destructor { delete $$; } <declleft>
 
 %code {
 
@@ -104,53 +138,53 @@ StateDef: State LParent Identifier RParent C_LCURLY { CONTEXT -> enterState(*$3)
   ;
 
 Declarations: /* -- epsilon */
-  | Declarations Declaration Semicolon;
+  | Declarations Declaration Semicolon { $2 -> printDeclaration(std::cout) << std::endl; delete $2; }
   ;
 
-Declaration: DeclModifier LeftDecl CoreDecl RightDecl
+Declaration: DeclModifier LeftDecl CoreDecl { $2 -> applyModifiersDeep($1); $<declleft>$ = $2; } RightDecl { $3 -> applyRightDecl($5); $$ = $3; }
   ;
   
-LeftDecl: QualifiedName DeclModifier
-  | LeftTypeItem DeclModifier
-  | LeftDecl LeftTypeItem DeclModifier
+LeftDecl: QualifiedName DeclModifier { $$ = new ::OTest2::DeclType(*$1); $$ -> applyModifiers($2); FREESTRING($1); }
+  | LeftTypeItem DeclModifier { $1 -> applyModifiers($2); $$ = $1; }
+  | LeftDecl LeftTypeItem DeclModifier { $2 -> applyLeftDecl($1); $2 -> applyModifiers($3); $$ = $2; }
   ;
 
-LeftTypeItem: Asterisk
-  | Reference
+LeftTypeItem: Asterisk { $$ = new ::OTest2::DeclPointer; }
+  | Reference { $$ = new ::OTest2::DeclReference; }
   ;
 
-CoreDecl: /* -- epsilon */
-  | Identifier
-  | LParent RParent
-  | LParent Declaration RParent
+CoreDecl: /* -- epsilon */ { $$ = new ::OTest2::DeclCore; }
+  | Identifier { $$ = new ::OTest2::DeclCore(*$1); FREESTRING($1); }
+  | LParent RParent { $$ = new ::OTest2::DeclCore; }
+  | LParent Declaration RParent { $$ = $2; }
   ;
 
-RightDecl: /* -- epsilon */
-  | RightDecl ArraySpec
-  | RightDecl LParent FceArgs RParent
+RightDecl: /* -- epsilon */ { $$ = $<declleft>0; }
+  | ArraySpec { $<declleft>$ = $<declleft>0; } RightDecl { $$ = new ::OTest2::DeclArray(*$1, $3); FREESTRING($1); }
+  | LParent FceArgs RParent { $<declleft>$ = $<declleft>0; } RightDecl { $$ = new ::OTest2::DeclFunction($5, $2); }
   ;
 
-ArraySpec: C_LBRACKET FreeBody RBracket
+ArraySpec: C_LBRACKET { CONTEXT -> startCatching(); } FreeBody RBracket { $$ = CONTEXT -> stopCatching(); }
   ;
 
-FceArgs: /* -- epsilon */
-  | FceArgsList
+FceArgs: /* -- epsilon */ { $$ = new ::OTest2::DeclArgs; }
+  | FceArgsList { $$ = $1; }
   ;
 
-FceArgsList: Declaration
-  | FceArgsList Comma Declaration
+FceArgsList: Declaration { $$ = new ::OTest2::DeclArgs; $$ -> appendArgument($1); }
+  | FceArgsList Comma Declaration { $1 -> appendArgument($3); $$ = $1; }
   ;
 
-DeclModifier: /* -- epsilon */
-  | Const
+DeclModifier: /* -- epsilon */ { $$ = 0; }
+  | DeclModifier Const { $$ = $1 | ::OTest2::Declaration::CONST; }
   ;
 
-QualifiedName: QualifiedNameRaw
-  | QuadDot QualifiedNameRaw
+QualifiedName: QualifiedNameRaw { $$ = $1; }
+  | QuadDot QualifiedNameRaw { $$ = CONTEXT -> allocateString(2, "::"); $$ -> Append(*$2); FREESTRING($2); } 
   ;
 
-QualifiedNameRaw: Identifier
-  | QualifiedNameRaw QuadDot Identifier
+QualifiedNameRaw: Identifier { $$ = $1; }
+  | QualifiedNameRaw QuadDot Identifier { $1 -> Append("::"); $1 -> Append(*$3); $$ = $1; FREESTRING($3); }
   ;
 
 NamespaceDef: Namespace C_LCURLY TestSource C_RCURLY

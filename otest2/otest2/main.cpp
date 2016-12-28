@@ -20,8 +20,8 @@ int main(
 
   /* -- do analysis */
   otest2::parser parser_(&context_);
-  parser_.set_debug_stream(std::cerr);
-  parser_.set_debug_level(4);
+//  parser_.set_debug_stream(std::cerr);
+//  parser_.set_debug_level(4);
   parser_.parse();
 
   return 0;

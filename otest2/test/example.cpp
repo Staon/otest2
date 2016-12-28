@@ -3,11 +3,6 @@
 #include <datstr/dstring.h>
 #include <iostream>
 
-char (*function())[10] {
-  static char foo_[10];
-  return  &foo_;
-}
-
 /**
  * @brief Example test suite
  */
@@ -17,6 +12,7 @@ TEST_SUITE(ExampleSuite) {
     dstring (*(*case_var[10][20])())(dstring const * const);
     void (*case_fce)(int, const char* foo_);
     char (*(*fce2)())[10];
+    const char* (* const(*fce3)())[10];
     TEST_STATE(Init) {
       std::cout << "Hello world" << std::endl;
 

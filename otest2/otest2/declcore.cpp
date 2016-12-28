@@ -35,6 +35,18 @@ void DeclCore::decRef() {
     delete this;
 }
 
+bool DeclCore::isAnonymous() const {
+  return name.IsNull();
+}
+
+const dstring& DeclCore::getName() const {
+  return name;
+}
+
+const DeclarationPtr& DeclCore::getDeclaration() const {
+  return decl;
+}
+
 void DeclCore::applyRightDecl(
     Declaration* decl_) {
   OASSERT_1(decl_ != 0);

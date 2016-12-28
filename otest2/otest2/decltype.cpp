@@ -42,7 +42,7 @@ void DeclType::applyModifiersDeep(
 }
 
 void DeclType::applyLeftDecl(
-    DeclLeft* decl_) {
+    Declaration* decl_) {
   OASSERT_NEVER();
 }
 

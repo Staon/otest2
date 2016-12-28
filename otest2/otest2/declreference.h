@@ -41,10 +41,11 @@ class DeclReference : public DeclMod {
         Declaration* decl_);
     virtual void applyModifiersDeep(
         std::uint8_t modifier_);
+    virtual DeclarationPtr makeReference();
 
     /* -- declleft interface */
     virtual void applyLeftDecl(
-        DeclLeft* decl_);
+        Declaration* decl_);
 };
 
 } /* -- namespace OTest2 */

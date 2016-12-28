@@ -3,6 +3,8 @@
 
 #include <datstr/dstring.h>
 
+#include "declaration.h"
+
 namespace OTest2 {
 
 /**
@@ -26,6 +28,11 @@ class Generator {
      * @brief Dtor
      */
     virtual ~Generator();
+
+    /**
+     * @brief Generate header of the file
+     */
+    virtual void beginFile() = 0;
 
     /**
      * @brief Dump free string (parts of the source what are not processed
@@ -74,6 +81,45 @@ class Generator {
      * @brief Leave current suite
      */
     virtual void leaveSuite() = 0;
+
+    /**
+     * @brief Append new variable
+     *
+     * @param name_ Name of the variable
+     * @param declaration_ Declaration of the variable
+     */
+    virtual void appendVariable(
+        const dstring& name_,
+        const DeclarationPtr& declaration_) = 0;
+
+    /**
+     * @brief Finish declaration section of current suite/case/state
+     */
+    virtual void finishDeclarations() = 0;
+
+    /**
+     * @brief Set variable initializer
+     *
+     * @param name_ Name of the variable
+     * @param body_ Body of the initializer
+     * @return True if the initializer is set. False if the variable
+     *     doesn't exist.
+     */
+    virtual bool setInitializer(
+        const dstring& name_,
+        const dstring& body_) = 0;
+
+    /**
+     * @brief Set body of the ctor of current object
+     */
+    virtual void setCtorBody(
+        const dstring& body_) = 0;
+
+    /**
+     * @brief Set body of the dtor of current object
+     */
+    virtual void setDtorBody(
+        const dstring& body_) = 0;
 };
 
 } /* -- namespace OTest2 */

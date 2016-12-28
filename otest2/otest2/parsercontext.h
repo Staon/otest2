@@ -6,6 +6,8 @@
 #include <iostream>
 #include <list>
 
+#include "declaration.h"
+
 class otest2FlexLexer;
 
 namespace OTest2 {
@@ -58,6 +60,7 @@ class ParserContext {
     dstring* stopCatching();
 
     /* -- generator interface */
+    void beginFile();
     void dumpString(
         const dstring& string_);
     void enterSuite(
@@ -69,6 +72,17 @@ class ParserContext {
     void leaveState();
     void leaveCase();
     void leaveSuite();
+    void appendVariable(
+        const dstring& name_,
+        const DeclarationPtr& declaration_);
+    void finishDeclarations();
+    bool setInitializer(
+        const dstring& variable_,
+        const dstring& body_);
+    void setCtorBody(
+        const dstring& body_);
+    void setDtorBody(
+        const dstring& body_);
 };
 
 } /* -- namespace OTest2 */

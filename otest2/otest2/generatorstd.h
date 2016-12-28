@@ -36,6 +36,7 @@ class GeneratorStd : public Generator {
     virtual ~GeneratorStd();
 
     /* -- generator interface */
+    virtual void beginFile();
     virtual void dumpString(
         const dstring& string_);
     virtual void enterSuite(
@@ -47,6 +48,17 @@ class GeneratorStd : public Generator {
         const dstring& name_);
     virtual void leaveCase();
     virtual void leaveSuite();
+    virtual void appendVariable(
+        const dstring& name_,
+        const DeclarationPtr& declaration_);
+    virtual void finishDeclarations();
+    virtual bool setInitializer(
+        const dstring& name_,
+        const dstring& body_);
+    virtual void setCtorBody(
+        const dstring& body_);
+    virtual void setDtorBody(
+        const dstring& body_);
 };
 
 } /* -- namespace OTest2 */

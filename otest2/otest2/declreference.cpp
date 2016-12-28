@@ -48,8 +48,12 @@ void DeclReference::applyModifiersDeep(
     decl -> applyModifiersDeep(modifier_);
 }
 
+DeclarationPtr DeclReference::makeReference() {
+  return this;
+}
+
 void DeclReference::applyLeftDecl(
-    DeclLeft* decl_) {
+    Declaration* decl_) {
   OASSERT_1(!decl && decl_ != 0);
   decl = decl_;
 }

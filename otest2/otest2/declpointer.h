@@ -44,7 +44,7 @@ class DeclPointer : public DeclMod {
 
     /* -- declleft interface */
     virtual void applyLeftDecl(
-        DeclLeft* decl_);
+        Declaration* decl_);
 };
 
 } /* -- namespace OTest2 */

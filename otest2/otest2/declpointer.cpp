@@ -49,7 +49,7 @@ void DeclPointer::applyModifiersDeep(
 }
 
 void DeclPointer::applyLeftDecl(
-    DeclLeft* decl_) {
+    Declaration* decl_) {
   OASSERT_1(!decl && decl_ != 0);
   decl = decl_;
 }

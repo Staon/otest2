@@ -43,7 +43,7 @@ class DeclLeft : public Declaration {
      * @param decl_ The part. The ownership is taken.
      */
     virtual void applyLeftDecl(
-        DeclLeft* decl_) = 0;
+        Declaration* decl_) = 0;
 };
 
 } /* -- namespace OTest2 */

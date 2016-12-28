@@ -52,6 +52,8 @@ class ParserContext;
 %token C_SUITE
 %token C_CASE
 %token C_STATE
+%token C_CTOR
+%token C_DTOR
 %token C_NAMESPACE
 %token C_IDENTIFIER
 %token C_LPARENT
@@ -113,21 +115,21 @@ namespace otest2 {
 
 %%
 
-TestSource: /* -- epsilon */
+TestSource: /* -- epsilon */ { CONTEXT -> beginFile(); }
   | TestSource FreeBlock
   | TestSource SpacePrint
   | TestSource NamespaceDef
   | TestSource SuiteDef
   ;
 
-SuiteDef: Suite LParent Identifier RParent LCurly { CONTEXT -> enterSuite(*$3); } Declarations Cases C_RCURLY { CONTEXT -> leaveSuite(); }
+SuiteDef: Suite LParent Identifier RParent LCurly { CONTEXT -> enterSuite(*$3); } ObjectHeader Cases C_RCURLY { CONTEXT -> leaveSuite(); }
   ;
 
 Cases: /* -- epsilon */
   | Cases CaseDef
   ;
 
-CaseDef: Case LParent Identifier RParent LCurly { CONTEXT -> enterCase(*$3); } Declarations States RCurly { CONTEXT -> leaveCase(); }
+CaseDef: Case LParent Identifier RParent LCurly { CONTEXT -> enterCase(*$3); } ObjectHeader States RCurly { CONTEXT -> leaveCase(); }
   ;
 
 States: /* -- epsilon */
@@ -137,8 +139,55 @@ States: /* -- epsilon */
 StateDef: State LParent Identifier RParent C_LCURLY { CONTEXT -> enterState(*$3); } FreeBody RCurly { CONTEXT -> leaveState(); }
   ;
 
+ObjectHeader: Declarations { CONTEXT -> finishDeclarations(); } CtorOpt DtorOpt
+  ;
+
+CtorOpt: /* -- epsilon */
+  | C_CTOR LParent LParent InitializersOpt RParent RParent C_LCURLY { CONTEXT -> startCatching(); } FreeBody RCurly {
+      dstring* body_(CONTEXT -> stopCatching());
+      CONTEXT -> setCtorBody(*body_);
+      FREESTRING(body_);
+    }
+  ;
+
+InitializersOpt: /* -- epsilon */
+  | Initializers
+  ;
+
+Initializers: Initializer
+  | Initializers Comma Initializer
+  ;
+
+Initializer: Identifier C_LPARENT { CONTEXT -> startCatching(); } FreeBody RParent { 
+      dstring* body_(CONTEXT -> stopCatching());
+      bool retval_(CONTEXT -> setInitializer(*$1, *body_));
+      FREESTRING($1);
+      FREESTRING(body_);
+      if(!retval_) {
+        YYABORT;
+      }
+    }
+  ;
+
+DtorOpt: /* -- epsilon */
+  | C_DTOR LParent RParent C_LCURLY { CONTEXT -> startCatching(); } FreeBody RCurly {
+      dstring* body_(CONTEXT -> stopCatching());
+      CONTEXT -> setDtorBody(*body_);
+      FREESTRING(body_);
+    }
+  ;
+
 Declarations: /* -- epsilon */
-  | Declarations Declaration Semicolon { $2 -> printDeclaration(std::cout) << std::endl; delete $2; }
+  | Declarations Declaration Semicolon { 
+      if($2 -> isAnonymous()) {
+        delete $2;
+        YYABORT;
+      }
+      else {
+        CONTEXT -> appendVariable($2 -> getName(), $2 -> getDeclaration());
+        delete $2;
+      }
+    }
   ;
 
 Declaration: DeclModifier LeftDecl CoreDecl { $2 -> applyModifiersDeep($1); $<declleft>$ = $2; } RightDecl { $3 -> applyRightDecl($5); $$ = $3; }

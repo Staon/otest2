@@ -48,6 +48,8 @@ typedef otest2::parser::token token;
 TEST_SUITE                      CONTEXT -> incCol(yyleng); return token::C_SUITE;
 TEST_CASE                       CONTEXT -> incCol(yyleng); return token::C_CASE;
 TEST_STATE                      CONTEXT -> incCol(yyleng); return token::C_STATE;
+TEST_CTOR                       CONTEXT -> incCol(yyleng); return token::C_CTOR;
+TEST_DTOR                       CONTEXT -> incCol(yyleng); return token::C_DTOR;
 namespace                       CONTEXT -> incCol(yyleng); return token::C_NAMESPACE;
 const                           CONTEXT -> incCol(yyleng); return token::C_CONST;
 \*                              CONTEXT -> incCol(yyleng); return token::C_ASTERISK;

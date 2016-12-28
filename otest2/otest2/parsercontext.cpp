@@ -72,6 +72,10 @@ dstring* ParserContext::stopCatching() {
   return allocateString(block.str().Strlen(), block.str().Str());
 }
 
+void ParserContext::beginFile() {
+  generator -> beginFile();
+}
+
 void ParserContext::dumpString(
     const dstring& string_) {
   if(catch_block)
@@ -105,6 +109,32 @@ void ParserContext::leaveCase() {
 
 void ParserContext::leaveSuite() {
   generator -> leaveSuite();
+}
+
+void ParserContext::appendVariable(
+    const dstring& name_,
+    const DeclarationPtr& declaration_) {
+  generator -> appendVariable(name_, declaration_);
+}
+
+void ParserContext::finishDeclarations() {
+  generator -> finishDeclarations();
+}
+
+bool ParserContext::setInitializer(
+    const dstring& variable_,
+    const dstring& body_) {
+  return generator -> setInitializer(variable_, body_);
+}
+
+void ParserContext::setCtorBody(
+    const dstring& body_) {
+  generator -> setCtorBody(body_);
+}
+
+void ParserContext::setDtorBody(
+    const dstring& body_) {
+  generator -> setDtorBody(body_);
 }
 
 } /* -- namespace OTest */

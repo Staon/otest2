@@ -51,6 +51,21 @@ class DeclCore {
     ~DeclCore();
 
     /**
+     * @brief Check if the variable is anonymous
+     */
+    bool isAnonymous() const;
+
+    /**
+     * @brief Get name of the variable
+     */
+    const dstring& getName() const;
+
+    /**
+     * @brief Get declaration of the variable
+     */
+    const DeclarationPtr& getDeclaration() const;
+
+    /**
      * @brief Apply right part of the declaration
      *
      * @param decl_ The declaration. The ownership is taken.

@@ -30,9 +30,13 @@ Project("otest2");
     "main.cpp",
     "otest2.l",
     "otest2.y",
+    "parser.cpp",
+    "parser.h",
     "parsercontext.cpp",
     "parsercontext.h",
+    "vartable.cpp",
+    "vartable.h",
   ]);
   ProfileVar("BISON_PREFIX", "otest2");
-  TaskDep("main.cpp", "otest2.tab.hpp");
+  TaskDep("parsser.cpp", "otest2.tab.hpp");
 EndProject();

@@ -8,7 +8,10 @@
 
 namespace OTest2 {
 
+class Declaration;
 class DeclArgs;
+
+typedef cIntrusivePtrFull<Declaration> DeclarationPtr;
 
 /**
  * @brief Generic declaration interface
@@ -80,9 +83,14 @@ class Declaration {
      */
     virtual void printRightDeclaration(
         std::ostream& os_) = 0;
-};
 
-typedef cIntrusivePtrFull<Declaration> DeclarationPtr;
+    /**
+     * @brief Make reference to current type
+     *
+     * @return The reference declaration object
+     */
+    virtual DeclarationPtr makeReference();
+};
 
 } /* -- namespace OTest2 */
 

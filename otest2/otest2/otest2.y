@@ -102,6 +102,8 @@ class ParserContext;
 %destructor { delete $$; } <declargs>
 %destructor { delete $$; } <declleft>
 
+%printer { YYCDEBUG << CONTEXT -> printString($$); } <string>
+
 %code {
 
 #include <iostream>
@@ -115,9 +117,20 @@ class ParserContext;
 
 /* -- forward declaration of the lexer */
 namespace otest2 {
-  int otest2lex(otest2::parser::semantic_type*, ::OTest2::ParserContext*);
+
+int otest2lex(
+    otest2::parser::semantic_type*,
+    location* loc_,
+    ::OTest2::ParserContext*);
+
+} /* -- namespace otest2 */
+
 }
 
+%locations
+
+%initial-action {
+  @$.initialize(&CONTEXT -> filename);
 }
 
 %%
@@ -174,11 +187,15 @@ Initializers: Initializer
 Initializer: Identifier C_LPARENT { CONTEXT -> startCatching(); } FreeBody RParent { 
       dstring* body_(CONTEXT -> stopCatching());
       bool retval_(CONTEXT -> setInitializer(*$1, *body_));
-      FREESTRING($1);
       FREESTRING(body_);
       if(!retval_) {
+        dstrostream dos_;
+        dos_ << "initializer of an unknown variable '" << *$1 << "'";
+        CONTEXT -> setError(dos_.str(), @$);
+        FREESTRING($1);
         YYABORT;
       }
+      FREESTRING($1);
     }
   ;
 
@@ -194,6 +211,7 @@ Declarations: /* -- epsilon */
   | Declarations Declaration Semicolon { 
       if($2 -> isAnonymous()) {
         delete $2;
+        CONTEXT -> setError("the declaration must not be anonymous", @2);
         YYABORT;
       }
       else {
@@ -453,16 +471,15 @@ namespace otest2 {
 void parser::error(
     const parser::location_type& loc_,
     const std::string& msg_) {
-//  if(msg_ == "parse error")
-//    parser_context -> setError(::OTest::Error::OTEST_SYNTAX);
-//  else
-//    parser_context -> setError(::OTest::Error::OTEST_CRITICAL, msg_.c_str());
+  parser_context -> setError(dstring(msg_.c_str()), loc_);
 }
 
 int otest2lex(
     parser::semantic_type* lvalp_,
+    location* loc_,
     ::OTest2::ParserContext* parser_context_) {
-  return parser_context_ -> lexan -> yylex(lvalp_, parser_context_);
+  loc_ -> step();
+  return parser_context_ -> lexan -> yylex(lvalp_, loc_, parser_context_);
 }
 
 } /* -- namespace otest */

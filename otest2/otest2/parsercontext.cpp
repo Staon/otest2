@@ -1,24 +1,45 @@
 #include "parsercontext.h"
 
+#include <astraios/dstream.h>
+#include <cctype>
 #include <iostream>
+#include <ondrart/oassert.h>
 
 #include "generator.h"
+#include "location.hh"
 
 namespace OTest2 {
 
 ParserContext::ParserContext(
+    const dstring& filename_,
     Generator* generator_) :
   lexan(0),
-  linenum(1),
-  colnum(1),
+  filename(filename_),
   catch_block(false),
   block(),
-  generator(generator_) {
+  generator(generator_),
+  error() {
 
 }
 
 ParserContext::~ParserContext() {
   clearPool();
+}
+
+dstring ParserContext::printString(
+    const dstring* string_) const {
+  OASSERT_1(string_ != 0 && !string_ -> IsNull());
+
+  dstrostream dos_;
+  const char* c_(string_ -> Str());
+  while(*c_ != 0) {
+    if(std::isprint(*c_))
+      dos_.put(*c_);
+    else
+      dos_.put('.');
+    ++c_;
+  }
+  return dos_.str();
 }
 
 dstring* ParserContext::allocateString(
@@ -53,14 +74,12 @@ void ParserContext::clearPool() {
   pool.clear();
 }
 
-void ParserContext::incCol(
-    int delta_) {
-  colnum += delta_;
-}
-
-void ParserContext::incLine() {
-  ++linenum;
-  colnum = 1;
+int ParserContext::returnToken(
+    int token_,
+    int yylen_,
+    otest2::location* yyloc_) const {
+  yyloc_ -> columns(yylen_);
+  return token_;
 }
 
 void ParserContext::startCatching() {
@@ -135,6 +154,19 @@ void ParserContext::setCtorBody(
 void ParserContext::setDtorBody(
     const dstring& body_) {
   generator -> setDtorBody(body_);
+}
+
+void ParserContext::setError(
+    const dstring& message_,
+    const otest2::location& loc_) {
+  otest2::position last_(loc_.end - 1);
+  error.setException(
+      message_,
+      *loc_.begin.filename,
+      loc_.begin.line,
+      loc_.begin.column,
+      last_.line,
+      last_.column);
 }
 
 } /* -- namespace OTest */

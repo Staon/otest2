@@ -7,8 +7,16 @@
 #include <list>
 
 #include "declaration.h"
+#include "excparser.h"
+#include "position.hh"
 
 class otest2FlexLexer;
+
+namespace otest2 {
+
+class location;
+
+} /* -- namespace otest2 */
 
 namespace OTest2 {
 
@@ -21,13 +29,11 @@ class SourceMarker;
 class ParserContext {
   public:
     otest2FlexLexer* lexan;
-    int linenum;
-    int colnum;
-
+    dstring filename;
     bool catch_block;
     dstrostream block;
-
     Generator* generator;
+    ParserException error;
 
   private:
     /* -- string pool */
@@ -39,8 +45,13 @@ class ParserContext {
 
   public:
     explicit ParserContext(
+        const dstring& filename_,
         Generator* generator_);
     ~ParserContext();
+
+    /* -- printing */
+    dstring printString(
+        const dstring* string_) const;
 
     /* -- dstring allocation pool */
     dstring* allocateString(
@@ -51,9 +62,10 @@ class ParserContext {
     void clearPool();
 
     /* -- lexical analyzer interface */
-    void incCol(
-        int delta_);
-    void incLine();
+    int returnToken(
+        int token_,
+        int yylen_,
+        otest2::location* yyloc_) const;
 
     /* -- catching of free blocks */
     void startCatching();
@@ -83,6 +95,9 @@ class ParserContext {
         const dstring& body_);
     void setDtorBody(
         const dstring& body_);
+    void setError(
+        const dstring& message_,
+        const otest2::location& loc_);
 };
 
 } /* -- namespace OTest2 */

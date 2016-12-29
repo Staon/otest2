@@ -81,8 +81,8 @@
 #ifdef YY_DECL
 # undef YY_DECL
 #endif
-#define LEX_PARAM YYSTYPE * yylval, void * parser_context
-#define LEX_VAL yylval, parser_context
+#define LEX_PARAM YYSTYPE* yylval, otest2::location* yyloc, void * parser_context
+#define LEX_VAL yylval, yyloc, parser_context
 #define BASE_DECL int FlexLexer::yylex(LEX_PARAM)
 #define YY_DECL int yyFlexLexer::yylex(LEX_PARAM)
 

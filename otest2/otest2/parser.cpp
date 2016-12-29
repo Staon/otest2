@@ -2,6 +2,7 @@
 
 #include "parser.h"
 
+#include <datstr/dstring.h>
 #include <iostream>
 
 #include "FlexLexer.h"
@@ -13,9 +14,10 @@ namespace OTest2 {
 
 void parse(
     std::istream& is_,
+    const dstring& filename_,
     Generator& generator_) {
   /* -- create context */
-  ::OTest2::ParserContext context_(&generator_);
+  ::OTest2::ParserContext context_(filename_, &generator_);
 
   /* -- initialize the lexical analyzer */
   otest2FlexLexer lexan_;
@@ -28,7 +30,8 @@ void parse(
 //  parser_.set_debug_level(4);
 
   /* -- do the analysis */
-  parser_.parse();
+  if(parser_.parse())
+    context_.error.rethrow();
 }
 
 } /* -- namespace OTest2 */

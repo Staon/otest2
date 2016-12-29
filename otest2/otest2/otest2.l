@@ -10,6 +10,7 @@
 
 #define CONTEXT ((::OTest2::ParserContext*) parser_context)
 #define NEWSTRING(len, text) (CONTEXT -> allocateString(len, text))
+#define RETURN(token_) return CONTEXT -> returnToken(token::token_, yyleng, yyloc)
 
 typedef otest2::parser::token token;
 
@@ -31,44 +32,45 @@ typedef otest2::parser::token token;
 
 %%
 
-\/\*                            CONTEXT -> incCol(yyleng); yylval -> string = CONTEXT -> allocateString(yyleng, yytext); BEGIN(COMMENT);
-<COMMENT>\*\/                   CONTEXT -> incCol(yyleng); BEGIN(0); yylval -> string -> Append(yytext); return token::C_SPACE;
-<COMMENT>\n                     CONTEXT -> incLine(); yylval -> string -> Append(yytext);
-<COMMENT>.                      CONTEXT -> incCol(yyleng); yylval -> string -> Append(yytext);
+\/\*                            yyloc -> columns(yyleng); yylval -> string = CONTEXT -> allocateString(yyleng, yytext); BEGIN(COMMENT);
+<COMMENT>\*\/                   BEGIN(0); yylval -> string -> Append(yytext); RETURN(C_SPACE);
+<COMMENT>\n                     yyloc -> lines(); yylval -> string -> Append(yytext);
+<COMMENT>.                      yyloc -> columns(yyleng); yylval -> string -> Append(yytext);
 
-\/\/[^\n]*\n                    CONTEXT -> incLine(); yylval -> string = CONTEXT -> allocateString(yyleng, yytext); return token::C_SPACE;
+\/\/[^\n]*\n                    yyloc -> lines(); yylval -> string = CONTEXT -> allocateString(yyleng, yytext); return CONTEXT -> returnToken(token::C_SPACE, 0, yyloc);
 
-\"                              CONTEXT -> incCol(yyleng); yylval -> string = CONTEXT -> allocateString(0, ""); BEGIN(STRING);
-<STRING>\\\\                    CONTEXT -> incCol(yyleng); yylval -> string -> Append("\\\\");
-<STRING>\\\"                    CONTEXT -> incCol(yyleng); yylval -> string -> Append("\\\"");
-<STRING>\n                      CONTEXT -> incLine(); yylval -> string -> Append("\n");
-<STRING>\"                      CONTEXT -> incCol(yyleng); BEGIN(0); return token::C_STRING;
-<STRING>.                       CONTEXT -> incLine(); yylval -> string -> Append(yytext);
+\"                              yyloc -> columns(yyleng); yylval -> string = CONTEXT -> allocateString(0, ""); BEGIN(STRING);
+<STRING>\\\\                    yyloc -> columns(yyleng); yylval -> string -> Append("\\\\");
+<STRING>\\\"                    yyloc -> columns(yyleng); yylval -> string -> Append("\\\"");
+<STRING>\n                      yyloc -> lines(); yylval -> string -> Append("\n");
+<STRING>\"                      BEGIN(0); RETURN(C_STRING);
+<STRING>.                       yyloc -> columns(yyleng); yylval -> string -> Append(yytext);
 
-TEST_SUITE                      CONTEXT -> incCol(yyleng); return token::C_SUITE;
-TEST_CASE                       CONTEXT -> incCol(yyleng); return token::C_CASE;
-TEST_STATE                      CONTEXT -> incCol(yyleng); return token::C_STATE;
-TEST_CTOR                       CONTEXT -> incCol(yyleng); return token::C_CTOR;
-TEST_DTOR                       CONTEXT -> incCol(yyleng); return token::C_DTOR;
-namespace                       CONTEXT -> incCol(yyleng); return token::C_NAMESPACE;
-const                           CONTEXT -> incCol(yyleng); return token::C_CONST;
-\*                              CONTEXT -> incCol(yyleng); return token::C_ASTERISK;
-\&                              CONTEXT -> incCol(yyleng); return token::C_REFERENCE;
-[_a-zA-Z][_a-zA-Z0-9]*          CONTEXT -> incCol(yyleng); yylval -> string = CONTEXT -> allocateString(yyleng, yytext); return token::C_IDENTIFIER;
-\{                              CONTEXT -> incCol(yyleng); return token::C_LCURLY;
-\}                              CONTEXT -> incCol(yyleng); return token::C_RCURLY;
-\(                              CONTEXT -> incCol(yyleng); return token::C_LPARENT;
-\)                              CONTEXT -> incCol(yyleng); return token::C_RPARENT;
-\[                              CONTEXT -> incCol(yyleng); return token::C_LBRACKET;
-\]                              CONTEXT -> incCol(yyleng); return token::C_RBRACKET;
-::                              CONTEXT -> incCol(yyleng); return token::C_QUADDOT;
-::\*                            CONTEXT -> incCol(yyleng); return token::C_MEMPTR;
-;                               CONTEXT -> incCol(yyleng); return token::C_SEMICOLON;
-,                               CONTEXT -> incCol(yyleng); return token::C_COMMA;
-\<                              CONTEXT -> incCol(yyleng); return token::C_LT;
-\>                              CONTEXT -> incCol(yyleng); return token::C_GT;
-[ \t\n]+                        CONTEXT -> incCol(yyleng); yylval -> string = CONTEXT -> allocateString(yyleng, yytext); return token::C_SPACE;
-.                               CONTEXT -> incCol(yyleng); yylval -> string = CONTEXT -> allocateString(yyleng, yytext); return token::C_ANY;
+TEST_SUITE                      RETURN(C_SUITE);
+TEST_CASE                       RETURN(C_CASE);
+TEST_STATE                      RETURN(C_STATE);
+TEST_CTOR                       RETURN(C_CTOR);
+TEST_DTOR                       RETURN(C_DTOR);
+namespace                       RETURN(C_NAMESPACE);
+const                           RETURN(C_CONST);
+\*                              RETURN(C_ASTERISK);
+\&                              RETURN(C_REFERENCE);
+[_a-zA-Z][_a-zA-Z0-9]*          yylval -> string = CONTEXT -> allocateString(yyleng, yytext); RETURN(C_IDENTIFIER);
+\{                              RETURN(C_LCURLY);
+\}                              RETURN(C_RCURLY);
+\(                              RETURN(C_LPARENT);
+\)                              RETURN(C_RPARENT);
+\[                              RETURN(C_LBRACKET);
+\]                              RETURN(C_RBRACKET);
+::                              RETURN(C_QUADDOT);
+::\*                            RETURN(C_MEMPTR);
+;                               RETURN(C_SEMICOLON);
+,                               RETURN(C_COMMA);
+\<                              RETURN(C_LT);
+\>                              RETURN(C_GT);
+[ \t]+                          yylval -> string = CONTEXT -> allocateString(yyleng, yytext); RETURN(C_SPACE);
+\n                              yyloc -> lines(); yylval -> string = CONTEXT -> allocateString(yyleng, yytext); return CONTEXT -> returnToken(token::C_SPACE, 0, yyloc);
+.                               yylval -> string = CONTEXT -> allocateString(yyleng, yytext); RETURN(C_ANY);
 
 <<EOF>>                    return 0;
 

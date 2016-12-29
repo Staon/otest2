@@ -24,6 +24,8 @@ Project("otest2");
     "declreference.h",
     "decltype.cpp",
     "decltype.h",
+    "excparser.cpp",
+    "excparser.h",
     "FlexLexer.h",
     "generator.cpp",
     "generator.h",
@@ -40,5 +42,6 @@ Project("otest2");
     "vartable.h",
   ]);
   ProfileVar("BISON_PREFIX", "otest2");
-  TaskDep("parsser.cpp", "otest2.tab.hpp");
+  TaskDep("parser.cpp", "otest2.tab.hpp");
+  TaskDep("parsercontext.cpp", "otest2.tab.hpp");
 EndProject();

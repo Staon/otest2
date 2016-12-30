@@ -12,3 +12,5 @@
 *.lnk
 .deps
 
+/.project
+/.cproject

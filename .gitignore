@@ -1,0 +1,14 @@
+*.lib
+*.lst
+*.err
+*.o
+*.hh
+*.l.cpp
+*.tab.cpp
+*.tab.hpp
+*.output
+*.ver.cpp
+*.usage
+*.lnk
+.deps
+

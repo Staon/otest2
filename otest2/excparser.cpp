@@ -1,6 +1,7 @@
 #include "excparser.h"
 
-#include <astraios/dstream.h>
+#include <sstream>
+#include <utility>
 
 namespace OTest2 {
 
@@ -15,10 +16,10 @@ ParserException::ParserException() :
 }
 
 ParserException::ParserException(
-    const ParserException& exc_) :
-  OExceptionRethrowable(exc_),
-  message(exc_.message),
-  file(exc_.file),
+    ParserException&& exc_) :
+  Exception(std::forward<Exception>(exc_)),
+  message(std::move(exc_.message)),
+  file(std::move(exc_.file)),
   begin_line(exc_.begin_line),
   begin_column(exc_.begin_column),
   end_line(exc_.end_line),
@@ -31,8 +32,8 @@ ParserException::~ParserException() {
 }
 
 void ParserException::setException(
-    const dstring& message_,
-    const dstring& file_,
+    const std::string& message_,
+    const std::string& file_,
     int begin_line_,
     int begin_column_,
     int end_line_,
@@ -45,15 +46,11 @@ void ParserException::setException(
   end_column = end_column_;
 }
 
-dstring ParserException::reason() const {
-  dstrostream dos_;
-  dos_ << file << '(' << begin_line << '.' << begin_column << '-' << end_line
+std::string ParserException::reason() const {
+  std::ostringstream sos_;
+  sos_ << file << '(' << begin_line << '.' << begin_column << '-' << end_line
       << '.' << end_column << "): " << message;
-  return dos_.str();
-}
-
-void ParserException::rethrow() const {
-  throw ParserException(*this);
+  return sos_.str();
 }
 
 } /* -- namespace OTest2 */

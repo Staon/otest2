@@ -17,25 +17,31 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OTest2__INCLUDE_OTEST2_OTEST2_H_
-#define OTest2__INCLUDE_OTEST2_OTEST2_H_
+#include "error.h"
 
-#ifndef OTEST2_PARSER_ACTIVE
+#include <utility>
 
-#define TEST_SUITE(name_) void name_()
-#define TEST_CASE(name_)
-#define TEST_STATE(name_)
-#define TEST_CTOR(initializers_)
-#define TEST_DTOR()
+namespace OTest2 {
 
-#else /* -- OTEST2_PARSER_ACTIVE */
+Error::Error(
+    const std::string message_) :
+  message(message_) {
 
-#define TEST_SUITE(name_) void name_() __attribute__((annotate("otest2::suite")))
-#define TEST_CASE(name_)
-#define TEST_STATE(name_)
-#define TEST_CTOR(initializers_)
-#define TEST_DTOR()
+}
 
-#endif /* -- OTEST2_PARSER_ACTIVE */
+Error::Error(
+    Error&& exc_) :
+  Exception(std::forward<Exception>(exc_)),
+  message(std::move(exc_.message)) {
 
-#endif /* -- OTest2__INCLUDE_OTEST2_OTEST2_H_ */
+}
+
+Error::~Error() {
+
+}
+
+std::string Error::reason() const {
+  return "Generic error: " + message;
+}
+
+} /* namespace OTest2 */

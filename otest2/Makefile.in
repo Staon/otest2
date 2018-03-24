@@ -104,7 +104,9 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_otest2_OBJECTS = main.$(OBJEXT) parser.$(OBJEXT)
+am_otest2_OBJECTS = error.$(OBJEXT) excparser.$(OBJEXT) \
+	generator.$(OBJEXT) generatorprinter.$(OBJEXT) \
+	location.$(OBJEXT) main.$(OBJEXT) parser.$(OBJEXT)
 otest2_OBJECTS = $(am_otest2_OBJECTS)
 otest2_LDADD = $(LDADD)
 AM_V_lt = $(am__v_lt_@AM_V@)
@@ -336,7 +338,21 @@ top_srcdir = @top_srcdir@
 # 
 AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/include/otest2
 AM_CXXFLAGS = 
-otest2_SOURCES = main.cpp parser.cpp parser.h
+otest2_SOURCES = \
+    error.cpp \
+    error.h \
+    excparser.cpp \
+    excparser.h \
+    generator.cpp \
+    generator.h \
+    generatorprinter.cpp \
+    generatorprinter.h \
+    location.cpp \
+    location.h \
+    main.cpp \
+    parser.cpp \
+    parser.h
+
 otest2_LDFLAGS = -L$(top_srcdir)/lib -lotest2
 all: all-am
 
@@ -431,6 +447,11 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/error.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/excparser.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generator.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generatorprinter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/location.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/parser.Po@am__quote@
 

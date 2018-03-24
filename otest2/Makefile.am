@@ -20,5 +20,18 @@ AM_CXXFLAGS =
 
 bin_PROGRAMS = otest2
 
-otest2_SOURCES = main.cpp parser.cpp parser.h
+otest2_SOURCES = \
+    error.cpp \
+    error.h \
+    excparser.cpp \
+    excparser.h \
+    generator.cpp \
+    generator.h \
+    generatorprinter.cpp \
+    generatorprinter.h \
+    location.cpp \
+    location.h \
+    main.cpp \
+    parser.cpp \
+    parser.h
 otest2_LDFLAGS = -L$(top_srcdir)/lib -lotest2

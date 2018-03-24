@@ -1,19 +1,22 @@
-#include <datstr/dstring.h>
+#include <exception>
 #include <iostream>
-#include <oexception/exception.h>
+#include <string>
 
-#include "generatorstd.h"
+#include "exc.h"
 #include "parser.h"
 
 int main(
     int argc_,
     char* argv_[]) {
   try {
-    ::OTest2::GeneratorStd generator_(&std::cout);
-    ::OTest2::parse(std::cin, "stdin", generator_);
+    ::OTest2::parse("example.cpp");
   }
-  catch(OException& exc_) {
+  catch(::OTest2::Exception& exc_) {
     std::cerr << exc_.reason() << std::endl;
+    return -1;
+  }
+  catch(std::exception& exc_) {
+    std::cerr << exc_.what() << std::endl;
     return -1;
   }
   catch(...) {

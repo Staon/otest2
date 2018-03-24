@@ -1,16 +1,15 @@
 #ifndef OTest2OTEST2_EXCPARSER_H_
 #define OTest2OTEST2_EXCPARSER_H_
 
-#include <datstr/dstring.h>
-#include <oexception/excstring.h>
-#include <oexception/rethrowable.h>
+#include <exception>
+#include <string>
 
 namespace OTest2 {
 
-class ParserException : public OExceptionRethrowable {
+class ParserException : public std::exception {
   private:
-    excstring message;   /**< error message */
-    excstring file;        /**< location of the error */
+    std::string message;   /**< error message */
+    std::string file;      /**< location of the error */
     int begin_line;
     int begin_column;
     int end_line;

@@ -1,8 +1,8 @@
 #ifndef OTest2OTEST2_PARSER_H_
 #define OTest2OTEST2_PARSER_H_
 
-#include <datstr/dstring.h>
 #include <iosfwd>
+#include <string>
 
 namespace OTest2 {
 
@@ -11,14 +11,11 @@ class Generator;
 /**
  * @brief Parse a test specification file
  *
- * @param is_ Input stream
- * @param filename_ Name of the stream (used for the location tracking)
+ * @param filename_ Name of the input file
  * @param generator_ Generator of the output file
  */
 void parse(
-    std::istream& is_,
-    const dstring& filename_,
-    Generator& generator_);
+    const std::string& filename_);
 
 } /* -- namespace OTest2 */
 

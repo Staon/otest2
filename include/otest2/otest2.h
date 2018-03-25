@@ -22,19 +22,28 @@
 
 #ifndef OTEST2_PARSER_ACTIVE
 
+#define TEST_START_UP()
+#define TEST_TEAR_DOWN()
 #define TEST_SUITE(name_) void name_()
 #define TEST_CASE(name_)
 #define TEST_STATE(name_)
-#define TEST_CTOR(initializers_)
-#define TEST_DTOR()
 
 #else /* -- OTEST2_PARSER_ACTIVE */
 
+namespace OTest2 {
+
+struct StartUpMark { };
+struct TearDownMark { };
+struct CaseMark { };
+struct StateMark { };
+
+} /* -- namespace OTest2 */
+
+#define TEST_START_UP() OTest2::StartUpMark otest2_start_up_mark;
+#define TEST_TEAR_DOWN() OTest2::TearDownMark otest2_tear_down_mark;
 #define TEST_SUITE(name_) void name_() __attribute__((annotate("otest2::suite")))
-#define TEST_CASE(name_)
-#define TEST_STATE(name_)
-#define TEST_CTOR(initializers_)
-#define TEST_DTOR()
+#define TEST_CASE(name_) OTest2::CaseMark name_;
+#define TEST_STATE(name_) OTest2::StateMark name_;
 
 #endif /* -- OTEST2_PARSER_ACTIVE */
 

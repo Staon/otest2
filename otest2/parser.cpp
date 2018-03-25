@@ -1,7 +1,17 @@
 #include "parser.h"
 
-#include <clang-c/Index.h>
+#include <clang/AST/ASTConsumer.h>
+#include <clang/AST/ASTContext.h>
+#include <clang/AST/RecursiveASTVisitor.h>
+#include <clang/Basic/SourceManager.h>
+#include <clang/Frontend/FrontendAction.h>
+#include <clang/Frontend/CompilerInstance.h>
+#include <clang/Tooling/CommonOptionsParser.h>
+#include <clang/Tooling/Tooling.h>
 #include <iostream>
+#include <llvm/Support/raw_ostream.h>
+#include <memory>
+#include <sstream>
 #include <string>
 
 #include "error.h"
@@ -16,75 +26,37 @@ const std::string START_UP_MARK("OTest2::StartUpMark");
 const std::string TEAR_DOWN_MARK("OTest2::TearDownMark");
 const std::string CASE_MARK("OTest2::CaseMark");
 const std::string STATE_MARK("OTest2::StateMark");
-
-template<typename Function_>
-class ScopeGuard {
-  private:
-    Function_ function;
-
-  public:
-    ScopeGuard(
-        Function_ function_) :
-      function(function_) {
-
-    }
-
-    ~ScopeGuard() {
-      function();
-    }
-};
-
-template<typename Function_>
-ScopeGuard<Function_> scopeGuard(
-    Function_ function_) {
-  return ScopeGuard<Function_>(function_);
-}
-
-void throwClangError(
-    const std::string& msgbase_,
-    CXErrorCode info_) {
-  std::string message_(msgbase_);
-  message_ += ": ";
-  switch(info_) {
-    case CXError_Failure:
-      message_ += "generic failure";
-      break;
-    case CXError_Crashed:
-      message_ += "crashed";
-      break;
-    case CXError_InvalidArguments:
-      message_ += "invalid arguments";
-      break;
-    case CXError_ASTReadError:
-      message_ += "AST read error";
-      break;
-    default:
-      message_ += "unknown error";
-      break;
-  }
-
-  throw Error(message_);
-}
-
-std::string getClangString(
-    CXString str_) {
-  std::string retval_(clang_getCString(str_));
-  clang_disposeString(str_);
-  return retval_;
-}
+const std::string ANONYMOUS_STATE("AnonymousState");
 
 Location createLocation(
-    CXSourceLocation loc_) {
-  unsigned int line_;
-  unsigned int column_;
-  clang_getSpellingLocation(loc_, nullptr, &line_, &column_, nullptr);
-  return Location(line_, column_);
+    clang::SourceManager* srcmgr_,
+    const clang::SourceLocation& loc_) {
+  clang::PresumedLoc ploc_(srcmgr_->getPresumedLoc(loc_));
+  return Location(ploc_.getLine(), ploc_.getColumn());
+}
+
+template<typename Node_>
+clang::SourceRange getNodeRange(
+    clang::SourceManager* srcmgr_,
+    clang::LangOptions* langopts_,
+    Node_* node_) {
+  clang::SourceRange range_(node_->getSourceRange());
+
+  /* -- adjust range at the end of last token */
+  clang::SourceLocation true_end_(
+      clang::Lexer::getLocForEndOfToken(
+          range_.getEnd(),
+          0,
+          *srcmgr_,
+          *langopts_));
+
+  return clang::SourceRange(range_.getBegin(), true_end_);
 }
 
 struct ParserContext {
     /* -- error reporting */
-    bool failure;
-    ParserException exception;
+    bool* failure;
+    ParserException* exception;
 
     /* -- parser state */
     enum State {
@@ -105,490 +77,773 @@ struct ParserContext {
       STATE_BEGIN,
     };
     State state;
+    clang::ASTContext* comp_context;
+    clang::SourceManager* srcmgr;
+    clang::LangOptions* langopts;
 
     /* -- output generation */
     Generator* generator;
     Location last_location;
 
     explicit ParserContext(
-        Generator* generator_);
+        clang::ASTContext* comp_context_,
+        clang::SourceManager* srcmgr_,
+        clang::LangOptions* langopts_,
+        Generator* generator_,
+        bool* failure_,
+        ParserException* exception_);
 
+    template<typename Node_>
     void setError(
         const std::string& message_,
-        CXCursor cursor_);
+        Node_* node_);
+    template<typename Node_>
     void copyInput(
-        CXCursor cursor_,
+        Node_* node_,
         bool end_ = false);
-    void copyInputOfCursor(
-        CXCursor cursor_);
+    template<typename Node_>
+    void copyInputOfNode(
+        Node_* node_);
+    template<typename Node_>
     void moveToEnd(
-        CXCursor cursor_);
+        Node_* node_);
 };
 
+
 ParserContext::ParserContext(
-    Generator* generator_) :
-  failure(false),
-  exception(),
+    clang::ASTContext* comp_context_,
+    clang::SourceManager* srcmgr_,
+    clang::LangOptions* langopts_,
+    Generator* generator_,
+    bool* failure_,
+    ParserException* exception_) :
+  failure(failure_),
+  exception(exception_),
   state(ROOT),
+  comp_context(comp_context_),
+  srcmgr(srcmgr_),
+  langopts(langopts_),
   generator(generator_),
   last_location() {
 
 }
 
+template<typename Node_>
 void ParserContext::setError(
     const std::string& message_,
-    CXCursor cursor_) {
+    Node_* node_) {
   /* -- get error location */
-  CXSourceRange range_(clang_getCursorExtent(cursor_));
-  CXSourceLocation begin_(clang_getRangeStart(range_));
-  CXFile file_;
-  unsigned int beg_line_;
-  unsigned int beg_column_;
-  unsigned int offset_;
-  clang_getSpellingLocation(begin_, &file_, &beg_line_, &beg_column_, nullptr);
-  std::string filename_(getClangString(clang_getFileName(file_)));
-  CXSourceLocation end_(clang_getRangeEnd(range_));
-  unsigned int end_line_;
-  unsigned int end_column_;
-  clang_getSpellingLocation(end_, nullptr, &end_line_, &end_column_, nullptr);
+  clang::SourceLocation beg_(node_->getLocStart());
+  clang::SourceLocation end_(node_->getLocEnd());
+  clang::PresumedLoc pbeg_(srcmgr->getPresumedLoc(beg_));
+  clang::PresumedLoc pend_(srcmgr->getPresumedLoc(end_));
 
   /* -- fill the exception */
-  failure = true;
-  exception.setException(
+  *failure = true;
+  exception->setException(
       message_,
-      filename_,
-      beg_line_,
-      beg_column_,
-      end_line_,
-      end_column_);
+      pbeg_.getFilename(),
+      pbeg_.getLine(),
+      pbeg_.getColumn(),
+      pend_.getLine(),
+      pend_.getColumn());
 }
 
+template<typename Node_>
 void ParserContext::copyInput(
-    CXCursor cursor_,
+    Node_* node_,
     bool end_) {
-  CXSourceRange range_(clang_getCursorExtent(cursor_));
-  CXSourceLocation loc_;
+  /* -- get node's location */
+  clang::SourceRange range_(getNodeRange(srcmgr, langopts, node_));
+  clang::SourceLocation loc_;
   if(!end_)
-    loc_ = clang_getRangeStart(range_);
+    loc_ = range_.getBegin();
   else
-    loc_ = clang_getRangeEnd(range_);
-  Location l2_(createLocation(loc_));
+    loc_ = range_.getEnd();
+  Location l2_(createLocation(srcmgr, loc_));
 
-  if(last_location < l2_)
+  /* -- get content of the input file */
+  if(last_location < l2_) {
     generator->copySource(last_location, l2_);
+  }
 }
 
-void ParserContext::copyInputOfCursor(
-    CXCursor cursor_) {
-  CXSourceRange range_(clang_getCursorExtent(cursor_));
-  CXSourceLocation beg_(clang_getRangeStart(range_));
-  CXSourceLocation end_(clang_getRangeEnd(range_));
-  generator->copySource(createLocation(beg_), createLocation(end_));
+template<typename Node_>
+void ParserContext::copyInputOfNode(
+    Node_* node_) {
+  clang::SourceRange range_(getNodeRange(srcmgr, langopts, node_));
+  generator->copySource(
+      createLocation(srcmgr, range_.getBegin()),
+      createLocation(srcmgr, range_.getEnd()));
 }
 
+template<typename Node_>
 void ParserContext::moveToEnd(
-    CXCursor cursor_) {
-  CXSourceRange range_(clang_getCursorExtent(cursor_));
-  CXSourceLocation end_(clang_getRangeEnd(range_));
-  last_location = createLocation(end_);
+    Node_* node_) {
+  clang::SourceRange range_(getNodeRange(srcmgr, langopts, node_));
+  last_location = createLocation(srcmgr, range_.getEnd());
 }
 
-ParserContext* getContext(
-    CXClientData udata_) {
-  return static_cast<ParserContext*>(udata_);
-}
+class SuiteVisitor : public clang::RecursiveASTVisitor<SuiteVisitor> {
+  private:
+    ParserContext* context;
 
-CXChildVisitResult cursorPrinter(
-    CXCursor cursor_,
-    CXCursor parent_,
-    CXClientData udata_) {
-  std::string spelling_(getClangString(clang_getCursorSpelling(cursor_)));
-  std::string kind_(getClangString(clang_getCursorKindSpelling(clang_getCursorKind(cursor_))));
+    clang::VarDecl* getVarDecl(
+        clang::Stmt* stmt_);
+    clang::CompoundStmt* getCompound(
+        clang::Stmt* stmt_);
 
-  /* -- parse location */
-  CXSourceRange range_(clang_getCursorExtent(cursor_));
-  CXSourceLocation begin_(clang_getRangeStart(range_));
-  CXSourceLocation end_(clang_getRangeEnd(range_));
-  std::cout << spelling_ << "(" << kind_ << ") at " << createLocation(begin_)
-            << "-" << createLocation(end_) << std::endl;
+    bool parseVariable(
+        clang::VarDecl* vardecl_);
+    bool parseCaseBody(
+        clang::Stmt* stmt_);
+    bool parseSuiteBody(
+        clang::Stmt* stmt_);
+    bool parseSuite(
+        clang::FunctionDecl* fce_);
 
-  return CXChildVisit_Recurse;
-}
+  public:
+    explicit SuiteVisitor(
+        ParserContext* context_);
+    virtual ~SuiteVisitor();
 
-struct VariableInfo {
-    std::string name;
-    CXType type;
-    std::string typestr;
-    bool init_present;
-    CXCursor initializer;
-    Location begin;
-    Location end;
-
-    VariableInfo();
+    bool VisitFunctionDecl(
+        clang::FunctionDecl* fce_);
 };
 
-VariableInfo::VariableInfo() :
-    name(),
-    type(),
-    typestr(),
-    init_present(false),
-    initializer(),
-    begin(),
-    end() {
+SuiteVisitor::SuiteVisitor(
+    ParserContext* context_) :
+  context(context_) {
 
 }
 
-CXChildVisitResult cursorVariableInitializer(
-    CXCursor cursor_,
-    CXCursor parent_,
-    CXClientData udata_) {
-  VariableInfo* info_(static_cast<VariableInfo*>(udata_));
+SuiteVisitor::~SuiteVisitor() {
 
-  CXCursorKind kind_(clang_getCursorKind(cursor_));
-  if(clang_isExpression(kind_)) {
-    if(!info_->init_present) {
-      info_->init_present = true;
-      info_->initializer = cursor_;
-      return CXChildVisit_Continue;
+}
+
+clang::VarDecl* SuiteVisitor::getVarDecl(
+    clang::Stmt* stmt_) {
+  /* -- check the declaration statement */
+  if(!clang::isa<clang::DeclStmt>(stmt_)) {
+    context->setError("invalid declaration statement", stmt_);
+    return nullptr;
+  }
+
+  /* -- there must be exactly one variable */
+  clang::DeclStmt* declstmt_(clang::cast<clang::DeclStmt>(stmt_));
+  if(declstmt_->decl_begin() == declstmt_->decl_end()
+     || !clang::isa<clang::VarDecl>(*declstmt_->decl_begin())
+     || (declstmt_->decl_begin() + 1) != declstmt_->decl_end()) {
+    context->setError("invalid declaration statement", declstmt_);
+    return nullptr;
+  }
+  return clang::cast<clang::VarDecl>(*declstmt_->decl_begin());
+}
+
+clang::CompoundStmt* SuiteVisitor::getCompound(
+    clang::Stmt* stmt_) {
+  if(!clang::isa<clang::CompoundStmt>(stmt_)) {
+    context->setError("not compound statement", stmt_);
+    return nullptr;
+  }
+  return clang::cast<clang::CompoundStmt>(stmt_);
+}
+
+bool SuiteVisitor::parseVariable(
+    clang::VarDecl* vardecl_) {
+  std::string varname_(vardecl_->getNameAsString());
+  std::string type_(vardecl_->getType().getAsString());
+
+  clang::Expr* init_(vardecl_->getInit());
+  if(init_ == nullptr) {
+    /* -- no initializer */
+    context->generator->appendVariable(varname_, type_);
+  }
+  else {
+    /* -- variable with initializer */
+    if(vardecl_->getInitStyle() != clang::VarDecl::CallInit) {
+      context->setError("only the callinit is supported", vardecl_);
+      return false;
     }
 
-    /* -- repeated expression */
-    return CXChildVisit_Break;
-  }
+    /* -- get range of the expression */
+    clang::SourceRange range_(
+        getNodeRange(context->srcmgr, context->langopts, init_));
 
-  return CXChildVisit_Continue;
-}
+    std::cout << init_->getStmtClassName() << std::endl;
 
-CXChildVisitResult cursorVariable(
-    CXCursor cursor_,
-    CXCursor parent_,
-    CXClientData udata_) {
-  VariableInfo* info_(static_cast<VariableInfo*>(udata_));
-
-  CXCursorKind kind_(clang_getCursorKind(cursor_));
-  if(kind_ == CXCursor_VarDecl && info_->name.empty()) {
-    /* -- variable name */
-    info_->name = getClangString(clang_getCursorSpelling(cursor_));
-
-    /* -- variable type */
-    info_->type = clang_getCursorType(cursor_);
-    info_->typestr = getClangString(clang_getTypeSpelling(info_->type));
-
-    /* -- get variable location */
-    CXSourceRange range_(clang_getCursorExtent(cursor_));
-    CXSourceLocation begin_(clang_getRangeStart(range_));
-    CXSourceLocation end_(clang_getRangeEnd(range_));
-    info_->begin = createLocation(begin_);
-    info_->end = createLocation(end_);
-
-    /* -- get initializer */
-    if(clang_visitChildren(cursor_, cursorVariableInitializer, udata_))
-      return CXChildVisit_Break;
-
-    clang_visitChildren(cursor_, cursorPrinter, udata_);
-
-    std::cout << info_->name << ' ' << info_->typestr << std::endl;
-    std::cout << "  " << (info_->init_present ? "yes" : "no") << std::endl;
-
-    return CXChildVisit_Continue;
-  }
-
-  return CXChildVisit_Break;
-}
-
-CXChildVisitResult cursorCaseBodyInside(
-    CXCursor cursor_,
-    CXCursor parent_,
-    CXClientData udata_) {
-  auto pc_(getContext(udata_));
-
-  CXCursorKind kind_(clang_getCursorKind(cursor_));
-  switch(kind_) {
-    case CXCursor_DeclStmt: {
-      /* -- parse the variable */
-      VariableInfo varinfo_;
-      if(clang_visitChildren(cursor_, cursorVariable, &varinfo_)) {
-        pc_->setError("a variable is expected", cursor_);
-        return CXChildVisit_Break;
+    /* -- adjust the range for constructor call */
+    if(clang::isa<clang::CXXConstructExpr>(init_)) {
+      clang::CXXConstructExpr* ctrexpr_(
+          clang::cast<clang::CXXConstructExpr>(init_));
+      const int argnum_(ctrexpr_->getNumArgs());
+      if(argnum_ <= 0) {
+        range_ = clang::SourceRange(range_.getEnd(), range_.getEnd());
       }
+      else {
+        clang::SourceRange first_(
+            getNodeRange(
+                context->srcmgr,
+                context->langopts,
+                ctrexpr_->getArg(0)));
+        clang::SourceRange last_(
+            getNodeRange(
+                context->srcmgr,
+                context->langopts,
+                ctrexpr_->getArg(argnum_ - 1)));
+        range_ = clang::SourceRange(first_.getBegin(), last_.getEnd());
+      }
+    }
 
-      switch(pc_->state) {
-        case ParserContext::CASE_VAR:
-          /* -- suite constructor */
-          if(varinfo_.typestr == START_UP_MARK) {
-            pc_->state = ParserContext::CASE_START_UP;
-            return CXChildVisit_Continue;
-          }
-          /* -- missing break is expected */
+    /* -- notify the generator */
+    context->generator->appendVariableInit(
+        varname_,
+        type_,
+        createLocation(context->srcmgr, range_.getBegin()),
+        createLocation(context->srcmgr, range_.getEnd()));
+  }
 
-        case ParserContext::CASE_START_UP_END:
-          /* -- suite destructor */
-          if(varinfo_.typestr == TEAR_DOWN_MARK) {
-            pc_->state = ParserContext::CASE_TEAR_DOWN;
-            return CXChildVisit_Continue;
-          }
-          /* -- missing break is expected */
+  return true;
+}
 
-        case ParserContext::CASE_TEAR_DOWN_END:
-        case ParserContext::CASE_NEXT_STATE:
-          if(varinfo_.typestr == STATE_MARK) {
-            /* -- beginning of a case */
-            pc_->state = ParserContext::STATE_BEGIN;
-            pc_->generator->enterState(varinfo_.name);
-
-            return CXChildVisit_Continue;
-          }
-          /* -- missing break is expected */
-
-          if(pc_->state == ParserContext::CASE_VAR) {
-            /* -- TODO: case variable */
-            return CXChildVisit_Continue;
-          }
+bool SuiteVisitor::parseCaseBody(
+    clang::Stmt* stmt_) {
+  for(
+      auto iter_(stmt_->child_begin());
+      iter_ != stmt_->child_end();
+      ++iter_) {
+    switch(context->state) {
+      case ParserContext::CASE_VAR: {
+        if(clang::isa<clang::CompoundStmt>(*iter_)) {
+          /* -- anonymous state */
+          context->state = ParserContext::CASE_FINISHED;
+          context->generator->caseStartUp();
+          context->generator->emptyBody();
+          context->generator->caseTearDown();
+          context->generator->emptyBody();
+          context->generator->enterState(ANONYMOUS_STATE);
+          context->copyInputOfNode(*iter_);
+          context->generator->leaveState();
           break;
+        }
+        else {
+          clang::VarDecl* vardecl_(getVarDecl(*iter_));
+          if(vardecl_ == nullptr)
+            return false;
+          std::string type_(vardecl_->getType().getAsString());
 
-        default:
+          if(type_ == START_UP_MARK) {
+            /* -- switch state and notify the generator */
+            context->state = ParserContext::CASE_START_UP;
+            context->generator->caseStartUp();
+            break;
+          }
+
+          if(type_ == TEAR_DOWN_MARK) {
+            /* -- switch state and notify the generator */
+            context->state = ParserContext::CASE_TEAR_DOWN;
+            context->generator->caseStartUp();
+            context->generator->emptyBody();
+            context->generator->caseTearDown();
+            break;
+          }
+
+          if(type_ == STATE_MARK) {
+            context->state = ParserContext::CASE_BEGIN;
+            context->generator->caseStartUp();
+            context->generator->emptyBody();
+            context->generator->caseTearDown();
+            context->generator->emptyBody();
+            context->generator->enterState(vardecl_->getNameAsString());
+            break;
+          }
+
+          /* -- case variable */
+          if(!parseVariable(vardecl_))
+            return false;
+
           break;
+        }
       }
 
-      pc_->setError("invalid case body", cursor_);
-      return CXChildVisit_Break;
+      case ParserContext::CASE_START_UP: {
+        clang::CompoundStmt* block_(getCompound(*iter_));
+        if(block_ == nullptr)
+          return false;
+        context->state = ParserContext::CASE_START_UP_END;
+        context->copyInputOfNode(block_);
+        context->generator->leaveState();
+        break;
+      }
+
+      case ParserContext::CASE_START_UP_END: {
+        if(clang::isa<clang::CompoundStmt>(*iter_)) {
+          /* -- anonymous state */
+          context->state = ParserContext::CASE_FINISHED;
+          context->generator->caseTearDown();
+          context->generator->emptyBody();
+          context->generator->enterState(ANONYMOUS_STATE);
+          context->copyInputOfNode(*iter_);
+          break;
+        }
+        else {
+          clang::VarDecl* vardecl_(getVarDecl(*iter_));
+          if(vardecl_ == nullptr)
+            return false;
+          std::string type_(vardecl_->getType().getAsString());
+
+          if(type_ == TEAR_DOWN_MARK) {
+            /* -- switch state and notify the generator */
+            context->state = ParserContext::CASE_TEAR_DOWN;
+            context->generator->caseTearDown();
+
+            continue;
+          }
+
+          if(type_ == STATE_MARK) {
+            context->state = ParserContext::STATE_BEGIN;
+            context->generator->caseTearDown();
+            context->generator->emptyBody();
+            context->generator->enterState(vardecl_->getNameAsString());
+
+            continue;
+          }
+
+          context->setError("invalid suite item", *iter_);
+          return false;
+        }
+      }
+
+      case ParserContext::CASE_TEAR_DOWN: {
+        clang::CompoundStmt* block_(getCompound(*iter_));
+        if(block_ == nullptr)
+          return false;
+        context->state = ParserContext::CASE_TEAR_DOWN_END;
+        context->copyInputOfNode(block_);
+        break;
+      }
+
+      case ParserContext::CASE_TEAR_DOWN_END: {
+        if(clang::isa<clang::CompoundStmt>(*iter_)) {
+          /* -- anonymous state */
+          context->state = ParserContext::CASE_FINISHED;
+          context->generator->enterState(ANONYMOUS_STATE);
+          context->copyInputOfNode(*iter_);
+          context->generator->leaveState();
+          break;
+        }
+        else {
+          clang::VarDecl* vardecl_(getVarDecl(*iter_));
+          if(vardecl_ == nullptr)
+            return false;
+          std::string type_(vardecl_->getType().getAsString());
+
+          if(type_ == STATE_MARK) {
+            context->state = ParserContext::STATE_BEGIN;
+            context->generator->enterState(vardecl_->getNameAsString());
+
+            continue;
+          }
+
+          context->setError("invalid suite item", *iter_);
+          return false;
+        }
+      }
+
+      case ParserContext::STATE_BEGIN: {
+        clang::CompoundStmt* block_(getCompound(*iter_));
+        if(block_ == nullptr)
+          return false;
+        context->copyInputOfNode(*iter_);
+        context->generator->leaveState();
+        context->state = ParserContext::CASE_TEAR_DOWN_END;
+        break;
+      }
+
+      default:
+        context->setError("invalid suite item", *iter_);
+        return false;
     }
-    case CXCursor_CompoundStmt:
-      switch(pc_->state) {
-        case ParserContext::CASE_START_UP:
-          /* -- suite constructor */
-          pc_->copyInputOfCursor(cursor_);
-          pc_->state = ParserContext::CASE_START_UP_END;
-          return CXChildVisit_Continue;
-
-        case ParserContext::CASE_TEAR_DOWN:
-          /* -- suite destructor */
-          pc_->copyInputOfCursor(cursor_);
-          pc_->state = ParserContext::CASE_TEAR_DOWN_END;
-          return CXChildVisit_Continue;
-
-        case ParserContext::STATE_BEGIN:
-          /* -- copy the body of the state */
-          pc_->copyInputOfCursor(cursor_);
-
-          /* -- allow another case */
-          pc_->state = ParserContext::CASE_NEXT_STATE;
-
-          return CXChildVisit_Continue;
-
-        case ParserContext::CASE_VAR:
-        case ParserContext::CASE_START_UP_END:
-        case ParserContext::CASE_TEAR_DOWN_END:
-          /* -- test case without states */
-          pc_->generator->enterState("Init");
-          pc_->copyInputOfCursor(cursor_);
-
-          /* -- no other states are allowed */
-          pc_->state = ParserContext::CASE_FINISHED;
-
-          return CXChildVisit_Continue;
-
-        default:
-          pc_->setError("expected a test state", cursor_);
-          return CXChildVisit_Break;
-      }
-    default:
-      pc_->setError("invalid case body", cursor_);
-      return CXChildVisit_Break;
   }
+
+  /* -- handle empty suite */
+  switch(context->state) {
+    case ParserContext::CASE_VAR:
+      context->generator->caseStartUp();
+      context->generator->emptyBody();
+      /* -- missing break is expected */
+    case ParserContext::CASE_START_UP_END:
+      context->generator->caseTearDown();
+      context->generator->emptyBody();
+      break;
+    case ParserContext::CASE_TEAR_DOWN_END:
+    case ParserContext::CASE_FINISHED:
+      break;
+    default:
+      context->setError("invalid format of the case", stmt_);
+      return false;
+  }
+
+  return true;
 }
 
-CXChildVisitResult cursorSuiteBodyInside(
-    CXCursor cursor_,
-    CXCursor parent_,
-    CXClientData udata_) {
-  auto pc_(getContext(udata_));
+bool SuiteVisitor::parseSuiteBody(
+    clang::Stmt* stmt_) {
+  for(
+      auto iter_(stmt_->child_begin());
+      iter_ != stmt_->child_end();
+      ++iter_) {
+    switch(context->state) {
+      case ParserContext::SUITE_VAR: {
+        clang::VarDecl* vardecl_(getVarDecl(*iter_));
+        if(vardecl_ == nullptr)
+          return false;
+        std::string type_(vardecl_->getType().getAsString());
 
-  CXCursorKind kind_(clang_getCursorKind(cursor_));
-  switch(kind_) {
-    case CXCursor_DeclStmt: {
-      /* -- parse the variable */
-      VariableInfo varinfo_;
-      if(clang_visitChildren(cursor_, cursorVariable, &varinfo_)) {
-        pc_->setError("a variable is expected", cursor_);
-        return CXChildVisit_Break;
+        if(type_ == START_UP_MARK) {
+          /* -- switch state and notify the generator */
+          context->state = ParserContext::SUITE_START_UP;
+          context->generator->suiteStartUp();
+          break;
+        }
+
+        if(type_ == TEAR_DOWN_MARK) {
+          /* -- switch state and notify the generator */
+          context->state = ParserContext::SUITE_TEAR_DOWN;
+          context->generator->suiteStartUp();
+          context->generator->emptyBody();
+          context->generator->suiteTearDown();
+          break;
+        }
+
+        if(type_ == CASE_MARK) {
+          context->state = ParserContext::CASE_BEGIN;
+          context->generator->suiteStartUp();
+          context->generator->emptyBody();
+          context->generator->suiteTearDown();
+          context->generator->emptyBody();
+          context->generator->enterCase(vardecl_->getNameAsString());
+          break;
+        }
+
+        /* -- suite variable */
+        if(!parseVariable(vardecl_))
+          return false;
+
+        break;
       }
 
-      switch(pc_->state) {
-        case ParserContext::SUITE_VAR:
-          /* -- suite constructor */
-          if(varinfo_.typestr == START_UP_MARK) {
-            pc_->state = ParserContext::SUITE_START_UP;
-            return CXChildVisit_Continue;
-          }
-          /* -- missing break is expected */
-
-        case ParserContext::SUITE_START_UP_END:
-          /* -- suite destructor */
-          if(varinfo_.typestr == TEAR_DOWN_MARK) {
-            pc_->state = ParserContext::SUITE_TEAR_DOWN;
-            return CXChildVisit_Continue;
-          }
-          /* -- missing break is expected */
-
-        case ParserContext::SUITE_TEAR_DOWN_END:
-          if(varinfo_.typestr == CASE_MARK) {
-            /* -- beginning of a case */
-            pc_->state = ParserContext::CASE_BEGIN;
-            pc_->generator->enterCase(varinfo_.name);
-
-            return CXChildVisit_Continue;
-          }
-          /* -- missing break is expected */
-
-          if(pc_->state == ParserContext::SUITE_VAR) {
-            /* -- TODO: suite variable */
-            return CXChildVisit_Continue;
-
-          }
-
-        default:
-          pc_->setError("expected a suite variable", cursor_);
-          return CXChildVisit_Break;
+      case ParserContext::SUITE_START_UP: {
+        clang::CompoundStmt* block_(getCompound(*iter_));
+        if(block_ == nullptr)
+          return false;
+        context->state = ParserContext::SUITE_START_UP_END;
+        context->copyInputOfNode(block_);
+        break;
       }
 
-      pc_->setError("invalid suite body", cursor_);
-      return CXChildVisit_Break;
+      case ParserContext::SUITE_START_UP_END: {
+        clang::VarDecl* vardecl_(getVarDecl(*iter_));
+        if(vardecl_ == nullptr)
+          return false;
+        std::string type_(vardecl_->getType().getAsString());
+
+        if(type_ == TEAR_DOWN_MARK) {
+          /* -- switch state and notify the generator */
+          context->state = ParserContext::SUITE_TEAR_DOWN;
+          context->generator->suiteTearDown();
+
+          continue;
+        }
+
+        if(type_ == CASE_MARK) {
+          context->state = ParserContext::CASE_BEGIN;
+          context->generator->suiteTearDown();
+          context->generator->emptyBody();
+          context->generator->enterCase(vardecl_->getNameAsString());
+
+          continue;
+        }
+
+        context->setError("invalid suite item", *iter_);
+        return false;
+      }
+
+      case ParserContext::SUITE_TEAR_DOWN: {
+        clang::CompoundStmt* block_(getCompound(*iter_));
+        if(block_ == nullptr)
+          return false;
+        context->state = ParserContext::SUITE_TEAR_DOWN_END;
+        context->copyInputOfNode(block_);
+        break;
+      }
+
+      case ParserContext::SUITE_TEAR_DOWN_END: {
+        clang::VarDecl* vardecl_(getVarDecl(*iter_));
+        if(vardecl_ == nullptr)
+          return false;
+        std::string type_(vardecl_->getType().getAsString());
+
+        if(type_ == CASE_MARK) {
+          context->state = ParserContext::CASE_BEGIN;
+          context->generator->enterCase(vardecl_->getNameAsString());
+
+          continue;
+        }
+
+        context->setError("invalid suite item", *iter_);
+        return false;
+      }
+
+      case ParserContext::CASE_BEGIN: {
+        clang::CompoundStmt* block_(getCompound(*iter_));
+        if(block_ == nullptr)
+          return false;
+        context->state = ParserContext::CASE_VAR;
+        if(!parseCaseBody(*iter_))
+          return false;
+        context->generator->leaveCase();
+        context->state = ParserContext::SUITE_TEAR_DOWN_END;
+        break;
+      }
+
+      default:
+        context->setError("invalid suite item", *iter_);
+        return false;
     }
-    case CXCursor_CompoundStmt:
-      switch(pc_->state) {
-        case ParserContext::SUITE_START_UP:
-          /* -- suite constructor */
-          pc_->copyInputOfCursor(cursor_);
-          pc_->state = ParserContext::SUITE_START_UP_END;
-          return CXChildVisit_Continue;
-        case ParserContext::SUITE_TEAR_DOWN:
-          /* -- suite destructor */
-          pc_->copyInputOfCursor(cursor_);
-          pc_->state = ParserContext::SUITE_TEAR_DOWN_END;
-          return CXChildVisit_Continue;
-        case ParserContext::CASE_BEGIN:
-          /* -- parse the case */
-          pc_->state = ParserContext::CASE_VAR;
-          if(clang_visitChildren(cursor_, cursorCaseBodyInside, udata_))
-            return CXChildVisit_Break;
+  }
 
-          /* -- allow another case */
-          pc_->state = ParserContext::SUITE_TEAR_DOWN_END;
+  /* -- handle empty suite */
+  switch(context->state) {
+    case ParserContext::SUITE_VAR:
+      context->generator->suiteStartUp();
+      context->generator->emptyBody();
+      /* -- missing break is expected */
+    case ParserContext::SUITE_START_UP_END:
+      context->generator->suiteTearDown();
+      context->generator->emptyBody();
+      break;
+    case ParserContext::SUITE_TEAR_DOWN_END:
+      break;
+    default:
+      context->setError("invalid format of the suite", stmt_);
+      return false;
+  }
 
-          return CXChildVisit_Continue;
-        default:
-          pc_->setError("expected a test case", cursor_);
-          return CXChildVisit_Break;
+  return true;
+}
+
+bool SuiteVisitor::parseSuite(
+    clang::FunctionDecl* fce_) {
+  if(!fce_->hasBody()) {
+    context->setError("the suite must have a body", fce_);
+    return false;
+  }
+
+  /* -- copy the input file */
+  context->copyInput(fce_);
+
+  /* -- enter the suite */
+  std::string suitename_(fce_->getNameAsString());
+  context->generator->enterSuite(suitename_);
+
+  /* -- parse body of the suite */
+  context->state = ParserContext::SUITE_VAR;
+  clang::Stmt* body_(fce_->getBody());
+  if(!parseSuiteBody(body_))
+    return false;
+  context->state = ParserContext::ROOT;
+
+  /* -- leave the suite */
+  context->generator->leaveSuite();
+
+  /* -- skip the body of the function */
+  context->moveToEnd(fce_);
+
+  return true;
+}
+
+bool SuiteVisitor::VisitFunctionDecl(
+    clang::FunctionDecl* fce_) {
+  if(fce_->hasAttrs()) {
+    auto iter_(fce_->attr_begin());
+    for(
+        auto iter_(fce_->attr_begin());
+        iter_ != fce_->attr_end();
+        ++iter_) {
+      if((*iter_)->getKind() == clang::attr::Annotate) {
+        auto sa_(clang::cast<clang::AnnotateAttr>(*iter_));
+        auto str_(sa_->getAnnotation());
+        if(str_.data() == SUITE_ANNOTATION) {
+          if(!parseSuite(fce_))
+            return false;
+        }
       }
-    default:
-      pc_->setError("invalid suite body", cursor_);
-      return CXChildVisit_Break;
+    }
   }
+
+  return true;
 }
 
-CXChildVisitResult cursorSuiteBody(
-    CXCursor cursor_,
-    CXCursor parent_,
-    CXClientData udata_) {
-  auto pc_(getContext(udata_));
+class ParserConsumer : public clang::ASTConsumer {
+  private:
+    ParserContext context;
+    SuiteVisitor visitor;
 
-  CXCursorKind kind_(clang_getCursorKind(cursor_));
-  switch(kind_) {
-    case CXCursor_AnnotateAttr:
-      /* -- I expect the otest2::suite annotation */
-      return CXChildVisit_Continue;
-    case CXCursor_CompoundStmt:
-      /* -- parse suite body */
-      pc_->state = ParserContext::SUITE_VAR;
-      if(clang_visitChildren(cursor_, cursorSuiteBodyInside, udata_))
-        return CXChildVisit_Break;
+  public:
+    explicit ParserConsumer(
+        Generator* generator_,
+        bool* failure_,
+        ParserException* exception_,
+        clang::ASTContext* comp_context_,
+        clang::SourceManager* srcmgr_,
+        clang::LangOptions* langopts_);
+    virtual ~ParserConsumer();
 
-      /* -- skip the source of the suite */
-      pc_->moveToEnd(cursor_);
+    void HandleTranslationUnit(
+        clang::ASTContext& context_) final;
+};
 
-      return CXChildVisit_Continue;
-    default:
-      pc_->setError("invalid suite body", cursor_);
-      return CXChildVisit_Break;
-  }
+ParserConsumer::ParserConsumer(
+    Generator* generator_,
+    bool* failure_,
+    ParserException* exception_,
+    clang::ASTContext* comp_context_,
+    clang::SourceManager* srcmgr_,
+    clang::LangOptions* langopts_) :
+  context(comp_context_, srcmgr_, langopts_, generator_, failure_, exception_),
+  visitor(&context) {
+
 }
 
-CXChildVisitResult cursorSuite(
-    CXCursor cursor_,
-    CXCursor parent_,
-    CXClientData udata_) {
-  auto pc_(getContext(udata_));
 
-  CXCursorKind kind_(clang_getCursorKind(cursor_));
-  if(kind_ == CXCursor_AnnotateAttr
-     && getClangString(clang_getCursorSpelling(cursor_)) == SUITE_ANNOTATION) {
-    /* -- copy the input file */
-    pc_->copyInput(parent_);
+ParserConsumer::~ParserConsumer() {
 
-    /* -- generate the suite entering code */
-    std::string suitename_(getClangString(clang_getCursorSpelling(parent_)));
-    pc_->generator->enterSuite(suitename_);
-
-    /* -- parse the suite */
-    if(clang_visitChildren(parent_, cursorSuiteBody, udata_))
-      return CXChildVisit_Break;
-  }
-  return CXChildVisit_Recurse;
 }
+
+void ParserConsumer::HandleTranslationUnit(
+    clang::ASTContext& context_) {
+  /* -- opening braces of the file */
+  context.generator->beginFile();
+
+  /* -- traverse the tree */
+  visitor.TraverseDecl(context_.getTranslationUnitDecl());
+
+  /* -- close the file */
+  context.generator->endFile(context.last_location);
+}
+
+class ParserAction : public clang::ASTFrontendAction {
+  private:
+    Generator* generator;
+    bool* failure;
+    ParserException* exception;
+
+  public:
+    explicit ParserAction(
+        Generator* generator_,
+        bool* failure_,
+        ParserException* exception_);
+    virtual ~ParserAction();
+
+    /* -- avoid copying */
+    ParserAction(
+        const ParserAction&) = delete;
+    ParserAction& operator =(
+        const ParserAction&) = delete;
+
+    std::unique_ptr<clang::ASTConsumer> CreateASTConsumer(
+        clang::CompilerInstance& ci_,
+        clang::StringRef) final;
+};
+
+ParserAction::ParserAction(
+    Generator* generator_,
+    bool* failure_,
+    ParserException* exception_) :
+  generator(generator_),
+  failure(failure_),
+  exception(exception_) {
+
+}
+
+ParserAction::~ParserAction() {
+
+}
+
+std::unique_ptr<clang::ASTConsumer> ParserAction::CreateASTConsumer(
+    clang::CompilerInstance& ci_,
+    clang::StringRef strref_) {
+  return std::make_unique<ParserConsumer>(
+      generator,
+      failure,
+      exception,
+      &ci_.getASTContext(),
+      &ci_.getSourceManager(),
+      &ci_.getLangOpts());
+}
+
+class FrontendFactory : public clang::tooling::FrontendActionFactory {
+  private:
+    Generator* generator;
+    bool* failure;
+    ParserException* exception;
+
+  public:
+    explicit FrontendFactory(
+        Generator* generator_,
+        bool* failure_,
+        ParserException* exception_);
+    virtual ~FrontendFactory();
+
+    clang::FrontendAction* create();
+};
+
+FrontendFactory::FrontendFactory(
+    Generator* generator_,
+    bool* failure_,
+    ParserException* exception_) :
+  generator(generator_),
+  failure(failure_),
+  exception(exception_) {
+
+}
+
+FrontendFactory::~FrontendFactory() {
+
+}
+
+clang::FrontendAction* FrontendFactory::create() {
+  return new ParserAction(generator, failure, exception);
+}
+
+/* -- command line options */
+llvm::cl::OptionCategory ParserOptCategory("otest2 options");
+llvm::cl::extrahelp CommonHelp(
+    clang::tooling::CommonOptionsParser::HelpMessage);
+llvm::cl::extrahelp MoreHelp("\nOTest2 preprocessor");
 
 void parse(
     const std::string& filename_) {
-  /* -- open the Clang index */
-  CXIndex index_(clang_createIndex(1, 1));
-  auto sg1_(scopeGuard([&index_]() { clang_disposeIndex(index_); }));
-
-  /* -- parse the input file */
-  const char* args_[] = {
-      "-std=c++11",    /* -- I need the C++11 features */
-      "-DOTEST2_PARSER_ACTIVE", /* -- define the parser's ID macro */
+  /* -- parse the file */
+  const char* argv_[] = {
+      "otest2",
+      "--extra-arg=--std=c++11",
+      "--extra-arg=-DOTEST2_PARSER_ACTIVE",
+      filename_.c_str()
   };
-  CXTranslationUnit tu_;
-  CXErrorCode info_(
-      clang_parseTranslationUnit2(
-          index_,
-          "example.cpp",
-          args_,
-          sizeof(args_) / sizeof(const char*),
-          nullptr,
-          0,
-          CXTranslationUnit_None,
-          &tu_));
-  if(info_ != CXError_Success)
-    throwClangError("Clang parser failed", info_);
-  auto sg2_(scopeGuard([&tu_](){ clang_disposeTranslationUnit(tu_); }));
-
-  /* -- report first diagnostic error */
-  const int diag_errors_(clang_getNumDiagnostics(tu_));
-  if(diag_errors_ > 0) {
-    CXDiagnostic diag_(clang_getDiagnostic(tu_, 0));
-    std::string errmsg_("diagnostic error: ");
-    CXString message_(
-        clang_formatDiagnostic(
-            diag_,
-            clang_defaultDiagnosticDisplayOptions()));
-    auto scopeGuard([&message_](){ clang_disposeString(message_); });
-    errmsg_ += clang_getCString(message_);
-    throw Error(errmsg_);
-  }
-
-  /* -- parse the AST */
-  CXCursor cursor_(clang_getTranslationUnitCursor(tu_));
-  GeneratorPrinter printer_;
-  ParserContext context_(&printer_);
-  clang_visitChildren(cursor_, cursorSuite, &context_);
+  int argc_(sizeof(argv_) / sizeof(const char*));
+  clang::tooling::CommonOptionsParser options_(argc_, argv_, ParserOptCategory);
+  clang::tooling::ClangTool tool_(
+      options_.getCompilations(), options_.getSourcePathList());
+  GeneratorPrinter generator_;
+  bool failure_(false);
+  ParserException exception_;
+  tool_.run(new FrontendFactory(&generator_, &failure_, &exception_));
 
   /* -- report an error */
-  if(context_.failure)
-    throw ParserException(std::move(context_.exception));
-
-  /* -- copy rest of the file */
-  context_.copyInput(cursor_, true);
+  if(failure_)
+    throw ParserException(std::move(exception_));
 }
 
 } /* -- namespace OTest2 */

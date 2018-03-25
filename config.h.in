@@ -1,7 +1,7 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
-/* define if the compiler supports basic C++11 syntax */
-#undef HAVE_CXX11
+/* define if the compiler supports basic C++14 syntax */
+#undef HAVE_CXX14
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
@@ -11,6 +11,9 @@
 
 /* Define to 1 if you have the `clang' library (-lclang). */
 #undef HAVE_LIBCLANG
+
+/* Define to 1 if you have the `LLVM' library (-lLLVM). */
+#undef HAVE_LIBLLVM
 
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
@@ -41,6 +44,9 @@
 
 /* Define to the sub-directory where libtool stores uninstalled libraries. */
 #undef LT_OBJDIR
+
+/* Define if debugging is disabled */
+#undef NDEBUG
 
 /* Name of package */
 #undef PACKAGE

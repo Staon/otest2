@@ -52,13 +52,28 @@ class GeneratorPrinter : public Generator {
         const Location& end_);
     virtual void enterSuite(
         const std::string& name_);
+    virtual void suiteStartUp();
+    virtual void suiteTearDown();
     virtual void enterCase(
         const std::string& name_);
+    virtual void caseStartUp();
+    virtual void caseTearDown();
     virtual void enterState(
         const std::string& name_);
+    virtual void appendVariable(
+        const std::string& name_,
+        const std::string& type_);
+    virtual void appendVariableInit(
+        const std::string& name_,
+        const std::string& type_,
+        const Location& ibegin_,
+        const Location& iend_);
+    virtual void emptyBody();
     virtual void leaveState();
     virtual void leaveCase();
     virtual void leaveSuite();
+    virtual void endFile(
+        const Location& last_);
 };
 
 } /* namespace OTest2 */

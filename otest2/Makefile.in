@@ -91,10 +91,11 @@ host_triplet = @host@
 bin_PROGRAMS = otest2$(EXEEXT)
 subdir = otest2
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/m4/cxx11.m4 \
-	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
-	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
-	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/m4/ax_check_enable_debug.m4 \
+	$(top_srcdir)/m4/cxx11.m4 $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
@@ -226,7 +227,7 @@ EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
 GREP = @GREP@
-HAVE_CXX11 = @HAVE_CXX11@
+HAVE_CXX14 = @HAVE_CXX14@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -353,7 +354,24 @@ otest2_SOURCES = \
     parser.cpp \
     parser.h
 
-otest2_LDFLAGS = -L$(top_srcdir)/lib -lotest2
+otest2_LDFLAGS = \
+    -L$(top_srcdir)/lib \
+    -lotest2 \
+    -lclangTooling \
+    -lclangFrontend \
+    -lclangSerialization \
+    -lclangDriver \
+    -lclangRewriteFrontend \
+    -lclangRewrite \
+    -lclangParse \
+    -lclangSema \
+    -lclangAnalysis \
+    -lclangAST \
+    -lclangASTMatchers \
+    -lclangEdit \
+    -lclangLex \
+    -lclangBasic
+
 all: all-am
 
 .SUFFIXES:

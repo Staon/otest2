@@ -55,8 +55,8 @@ class Generator {
     /**
      * @brief Copy part of the source file
      *
-     * @param begin_ Beginning location (including)
-     * @param end_ End location (including)
+     * @param begin_ Beginning of the source area
+     * @param end_ End of the source area (just one character after)
      */
     virtual void copySource(
         const Location& begin_,
@@ -71,6 +71,16 @@ class Generator {
         const std::string& name_) = 0;
 
     /**
+     * @brief Generate preamble of the suite's start up function
+     */
+    virtual void suiteStartUp() = 0;
+
+    /**
+     * @brief Generate preamble of the suite's tear down function
+     */
+    virtual void suiteTearDown() = 0;
+
+    /**
      * @brief Beginning of a test case
      *
      * @param name_ Name of the case
@@ -79,12 +89,51 @@ class Generator {
         const std::string& name_) = 0;
 
     /**
+     * @brief Generate declaration of the case's start-up function
+     */
+    virtual void caseStartUp() = 0;
+
+    /**
+     * @brief Generate declaration of the case's tear down function
+     */
+    virtual void caseTearDown() = 0;
+
+    /**
      * @brief Beginning of a test state
      *
      * @param name_ Name of the state
      */
     virtual void enterState(
         const std::string& name_) = 0;
+
+    /**
+     * @brief Generate empty function body
+     */
+    virtual void emptyBody() = 0;
+
+    /**
+     * @brief Append a variable without initializer
+     *
+     * @param name_ Name of the variable
+     * @param type_ Name of the type
+     */
+    virtual void appendVariable(
+        const std::string& name_,
+        const std::string& type_) = 0;
+
+    /**
+     * @brief Append a variable with an initializer
+     *
+     * @param name_ Name of the variable
+     * @param type_ Name of the type
+     * @param ibegin_ Beginning of the initializer in the source file
+     * @param iend_ End of the initializer in the source file
+     */
+    virtual void appendVariableInit(
+        const std::string& name_,
+        const std::string& type_,
+        const Location& ibegin_,
+        const Location& iend_) = 0;
 
     /**
      * @brief End of current test state
@@ -101,44 +150,13 @@ class Generator {
      */
     virtual void leaveSuite() = 0;
 
-//    /**
-//     * @brief Append new variable
-//     *
-//     * @param name_ Name of the variable
-//     * @param declaration_ Declaration of the variable
-//     */
-//    virtual void appendVariable(
-//        const dstring& name_,
-//        const DeclarationPtr& declaration_) = 0;
-//
-//    /**
-//     * @brief Finish declaration section of current suite/case/state
-//     */
-//    virtual void finishDeclarations() = 0;
-//
-//    /**
-//     * @brief Set variable initializer
-//     *
-//     * @param name_ Name of the variable
-//     * @param body_ Body of the initializer
-//     * @return True if the initializer is set. False if the variable
-//     *     doesn't exist.
-//     */
-//    virtual bool setInitializer(
-//        const dstring& name_,
-//        const dstring& body_) = 0;
-//
-//    /**
-//     * @brief Set body of the ctor of current object
-//     */
-//    virtual void setCtorBody(
-//        const dstring& body_) = 0;
-//
-//    /**
-//     * @brief Set body of the dtor of current object
-//     */
-//    virtual void setDtorBody(
-//        const dstring& body_) = 0;
+    /**
+     * @brief Finish the file and copy rest of the source file
+     *
+     * @param last_ Last copied location in the source file
+     */
+    virtual void endFile(
+        const Location& last_) = 0;
 };
 
 } /* -- namespace OTest2 */

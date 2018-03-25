@@ -40,7 +40,8 @@ void GeneratorPrinter::beginFile() {
 void GeneratorPrinter::copySource(
     const Location& begin_,
     const Location& end_) {
-  std::cout << "copy source: " << begin_ << '-' << end_ << std::endl;
+  std::cout << "copy source: "
+      << " " << begin_ << "-" << end_ << std::endl;
 }
 
 void GeneratorPrinter::enterSuite(
@@ -48,14 +49,49 @@ void GeneratorPrinter::enterSuite(
   std::cout << "enter suite: " << name_ << std::endl;
 }
 
+void GeneratorPrinter::suiteStartUp() {
+  std::cout << "suite start up" << std::endl;
+}
+
+void GeneratorPrinter::suiteTearDown() {
+  std::cout << "suite tear down" << std::endl;
+}
+
 void GeneratorPrinter::enterCase(
     const std::string& name_) {
   std::cout << "enter case: " << name_ << std::endl;
 }
 
+void GeneratorPrinter::caseStartUp() {
+  std::cout << "case start up" << std::endl;
+}
+
+void GeneratorPrinter::caseTearDown() {
+  std::cout << "case tear down" << std::endl;
+}
+
 void GeneratorPrinter::enterState(
     const std::string& name_) {
   std::cout << "enter state: " << name_ << std::endl;
+}
+
+void GeneratorPrinter::appendVariable(
+    const std::string& name_,
+    const std::string& type_) {
+  std::cout << "variable: " << name_ << " " << type_ << std::endl;
+}
+
+void GeneratorPrinter::appendVariableInit(
+    const std::string& name_,
+    const std::string& type_,
+    const Location& ibegin_,
+    const Location& iend_) {
+  std::cout << "variable: " << name_ << " " << type_ << " "
+      << ibegin_ << "-" << iend_ << std::endl;
+}
+
+void GeneratorPrinter::emptyBody() {
+  std::cout << "empty body" << std::endl;
 }
 
 void GeneratorPrinter::leaveState() {
@@ -68,6 +104,11 @@ void GeneratorPrinter::leaveCase() {
 
 void GeneratorPrinter::leaveSuite() {
   std::cout << "leave suite" << std::endl;
+}
+
+void GeneratorPrinter::endFile(
+    const Location& last_) {
+  std::cout << "end file " << last_ << std::endl;
 }
 
 } /* namespace OTest2 */

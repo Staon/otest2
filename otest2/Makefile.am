@@ -34,4 +34,20 @@ otest2_SOURCES = \
     main.cpp \
     parser.cpp \
     parser.h
-otest2_LDFLAGS = -L$(top_srcdir)/lib -lotest2
+otest2_LDFLAGS = \
+    -L$(top_srcdir)/lib \
+    -lotest2 \
+    -lclangTooling \
+    -lclangFrontend \
+    -lclangSerialization \
+    -lclangDriver \
+    -lclangRewriteFrontend \
+    -lclangRewrite \
+    -lclangParse \
+    -lclangSema \
+    -lclangAnalysis \
+    -lclangAST \
+    -lclangASTMatchers \
+    -lclangEdit \
+    -lclangLex \
+    -lclangBasic

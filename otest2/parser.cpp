@@ -266,18 +266,36 @@ bool SuiteVisitor::parseVariable(
       return false;
     }
 
+    /* -- expression with cleanups is a wrapper, I nest into it. */
+    if(clang::isa<clang::ExprWithCleanups>(init_)) {
+      init_ = clang::cast<clang::ExprWithCleanups>(init_)->getSubExpr();
+    }
+
     /* -- get range of the expression */
     clang::SourceRange range_(
         getNodeRange(context->srcmgr, context->langopts, init_));
 
-    std::cout << init_->getStmtClassName() << std::endl;
+//    std::cout << init_->getStmtClassName() << std::endl;
 
     /* -- adjust the range for constructor call */
     if(clang::isa<clang::CXXConstructExpr>(init_)) {
       clang::CXXConstructExpr* ctrexpr_(
           clang::cast<clang::CXXConstructExpr>(init_));
       const int argnum_(ctrexpr_->getNumArgs());
-      if(argnum_ <= 0) {
+
+      /* -- find first and last non-default argument */
+      int last_index_(-1);
+      if(argnum_ > 0) {
+        for(int i_(0); i_ < argnum_; ++i_) {
+          clang::Expr *arg_(ctrexpr_->getArg(i_));
+          if(clang::isa<clang::CXXDefaultArgExpr>(arg_))
+            break;
+          last_index_ = i_;
+        }
+      }
+
+      /* -- get source range of the arguments */
+      if(last_index_ < 0) {
         range_ = clang::SourceRange(range_.getEnd(), range_.getEnd());
       }
       else {
@@ -290,7 +308,7 @@ bool SuiteVisitor::parseVariable(
             getNodeRange(
                 context->srcmgr,
                 context->langopts,
-                ctrexpr_->getArg(argnum_ - 1)));
+                ctrexpr_->getArg(last_index_)));
         range_ = clang::SourceRange(first_.getBegin(), last_.getEnd());
       }
     }

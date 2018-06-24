@@ -132,7 +132,8 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libotest2_la_LIBADD =
-am_libotest2_la_OBJECTS = exc.lo
+am_libotest2_la_OBJECTS = exc.lo registry.lo suite.lo suitefactory.lo \
+	suitegenerated.lo
 libotest2_la_OBJECTS = $(am_libotest2_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -343,7 +344,13 @@ top_srcdir = @top_srcdir@
 AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/include/otest2
 AM_CXXFLAGS = 
 lib_LTLIBRARIES = libotest2.la
-libotest2_la_SOURCES = exc.cpp
+libotest2_la_SOURCES = \
+    exc.cpp \
+    registry.cpp \
+    suite.cpp \
+    suitefactory.cpp \
+    suitegenerated.cpp
+
 all: all-am
 
 .SUFFIXES:
@@ -423,6 +430,10 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exc.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/registry.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/suite.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/suitefactory.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/suitegenerated.Plo@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

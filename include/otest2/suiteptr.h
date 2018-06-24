@@ -18,39 +18,16 @@
  */
 
 
-#ifndef OTest2__INCLUDE_OTEST2_GENERUTILS_H_
-#define OTest2__INCLUDE_OTEST2_GENERUTILS_H_
+#ifndef OTest2__INCLUDE_OTEST2_SUITEPTR_H_
+#define OTest2__INCLUDE_OTEST2_SUITEPTR_H_
 
 #include <memory>
 
-#include <otest2/suitefactory.h>
-
 namespace OTest2 {
 
-template<typename T_>
-struct TypeOfMine {
-    typedef T_ Type;
-};
+class Suite;
+typedef std::shared_ptr<Suite> SuitePtr;
 
-template<typename T_>
-struct TypeOfParent {
-    typedef const T_& Type;
-};
+}  /* -- namespace OTest2 */
 
-template<typename T_>
-struct TypeOfParent<T_&> {
-    typedef T_& Type;
-};
-
-template<typename Suite_>
-class SuiteGeneratedFactory : public SuiteFactory {
-  public:
-    virtual SuitePtr createSuite(
-        const Context& context_) {
-      return std::make_shared<Suite_>(context_);
-    }
-};
-
-} /* -- namespace OTest2 */
-
-#endif /* OTest2__INCLUDE_OTEST2_GENERUTILS_H_ */
+#endif /* OTest2__INCLUDE_OTEST2_SUITEPTR_H_ */

@@ -19,4 +19,9 @@ AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/include/otest2
 AM_CXXFLAGS =
 
 lib_LTLIBRARIES = libotest2.la
-libotest2_la_SOURCES = exc.cpp
+libotest2_la_SOURCES = \
+    exc.cpp \
+    registry.cpp \
+    suite.cpp \
+    suitefactory.cpp \
+    suitegenerated.cpp

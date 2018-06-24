@@ -17,40 +17,46 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef OTest2__INCLUDE_OTEST2_SUITEFACTORY_H_
+#define OTest2__INCLUDE_OTEST2_SUITEFACTORY_H_
 
-#ifndef OTest2__INCLUDE_OTEST2_GENERUTILS_H_
-#define OTest2__INCLUDE_OTEST2_GENERUTILS_H_
-
-#include <memory>
-
-#include <otest2/suitefactory.h>
+#include <otest2/suiteptr.h>
 
 namespace OTest2 {
 
-template<typename T_>
-struct TypeOfMine {
-    typedef T_ Type;
-};
+class Context;
 
-template<typename T_>
-struct TypeOfParent {
-    typedef const T_& Type;
-};
-
-template<typename T_>
-struct TypeOfParent<T_&> {
-    typedef T_& Type;
-};
-
-template<typename Suite_>
-class SuiteGeneratedFactory : public SuiteFactory {
+/**
+ * @brief Simple interface for creation of a suite object
+ */
+class SuiteFactory {
   public:
+    /* -- avoid copying */
+    SuiteFactory(
+        const SuiteFactory&) = delete;
+    SuiteFactory& operator =(
+        const SuiteFactory&) = delete;
+
+    /**
+     * @brief Ctor
+     */
+    SuiteFactory();
+
+    /**
+     * @brief Dtor
+     */
+    virtual ~SuiteFactory();
+
+    /**
+     * @brief Create the suite
+     *
+     * @param context_ OTest2 context
+     * @return The suite
+     */
     virtual SuitePtr createSuite(
-        const Context& context_) {
-      return std::make_shared<Suite_>(context_);
-    }
+        const Context& context_) = 0;
 };
 
-} /* -- namespace OTest2 */
+} /* namespace OTest2 */
 
-#endif /* OTest2__INCLUDE_OTEST2_GENERUTILS_H_ */
+#endif /* OTest2__INCLUDE_OTEST2_SUITEFACTORY_H_ */

@@ -1,3 +1,7 @@
 /Makefile
 /exc.lo
 /libotest2.la
+/registry.lo
+/suite.lo
+/suitefactory.lo
+/suitegenerated.lo

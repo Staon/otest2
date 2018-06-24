@@ -17,40 +17,17 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-#ifndef OTest2__INCLUDE_OTEST2_GENERUTILS_H_
-#define OTest2__INCLUDE_OTEST2_GENERUTILS_H_
-
-#include <memory>
-
-#include <otest2/suitefactory.h>
+#include "/home/ondrej/programovani/otest2/include/otest2/suitefactory.h"
 
 namespace OTest2 {
 
-template<typename T_>
-struct TypeOfMine {
-    typedef T_ Type;
-};
+SuiteFactory::SuiteFactory() {
+  // TODO Auto-generated constructor stub
 
-template<typename T_>
-struct TypeOfParent {
-    typedef const T_& Type;
-};
+}
 
-template<typename T_>
-struct TypeOfParent<T_&> {
-    typedef T_& Type;
-};
+SuiteFactory::~SuiteFactory() {
+  // TODO Auto-generated destructor stub
+}
 
-template<typename Suite_>
-class SuiteGeneratedFactory : public SuiteFactory {
-  public:
-    virtual SuitePtr createSuite(
-        const Context& context_) {
-      return std::make_shared<Suite_>(context_);
-    }
-};
-
-} /* -- namespace OTest2 */
-
-#endif /* OTest2__INCLUDE_OTEST2_GENERUTILS_H_ */
+} /* namespace OTest2 */

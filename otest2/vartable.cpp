@@ -83,20 +83,17 @@ void VarTable::appendVariableWithInit(
 void VarTable::printDeclarations(
     std::ostream& os_,
     int indent_) const {
-  for(
-      Order::const_iterator iter_(order.begin());
-      iter_ != order.end();
-      ++iter_) {
-    Variables::const_iterator var_(variables.find(*iter_));
+  for(const std::string& name_ : order) {
+    Variables::const_iterator var_(variables.find(name_));
 
     Formatting::printIndent(os_, indent_);
     if((*var_).second.mine) {
       os_ << "typename ::OTest2::TypeOfMine<" << (*var_).second.declaration
-          << ">::Type " << *iter_ << ";\n";
+          << ">::Type " << name_ << ";\n";
     }
     else {
       os_ << "typename ::OTest2::TypeOfParent<" << (*var_).second.declaration
-          << ">::Type " << *iter_ << ";\n";
+          << ">::Type " << name_ << ";\n";
     }
   }
 }
@@ -104,21 +101,18 @@ void VarTable::printDeclarations(
 void VarTable::printInitializers(
     std::ostream& os_,
     int indent_) const {
-  for(
-      Order::const_iterator iter_(order.begin());
-      iter_ != order.end();
-      ++iter_) {
-    Variables::const_iterator var_(variables.find(*iter_));
+  for(const std::string& name_ : order) {
+    Variables::const_iterator var_(variables.find(name_));
 
     os_ << ",\n";
     Formatting::printIndent(os_, indent_);
     if((*var_).second.mine) {
-      os_ << *iter_ << '(';
+      os_ << name_ << '(';
       os_ << (*var_).second.initializer;
       os_ << ')';
     }
     else
-      os_ << *iter_ << '(' << *iter_ << "_)";
+      os_ << name_ << '(' << name_ << "_)";
   }
 }
 

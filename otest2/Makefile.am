@@ -25,15 +25,26 @@ otest2_SOURCES = \
     error.h \
     excparser.cpp \
     excparser.h \
+    excreader.cpp \
+    excreader.h \
+    filereader.cpp \
+    filereader.h \
+    formatting.cpp \
+    formatting.h \
     generator.cpp \
     generator.h \
     generatorprinter.cpp \
     generatorprinter.h \
+    generatorstd.cpp \
+    generatorstd.h \
     location.cpp \
     location.h \
     main.cpp \
     parser.cpp \
-    parser.h
+    parser.h \
+    vartable.cpp \
+    vartable.h
+    
 otest2_LDFLAGS = \
     -L$(top_srcdir)/lib \
     -lotest2 \

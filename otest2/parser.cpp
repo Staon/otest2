@@ -8,6 +8,7 @@
 #include <clang/Frontend/CompilerInstance.h>
 #include <clang/Tooling/CommonOptionsParser.h>
 #include <clang/Tooling/Tooling.h>
+#include <fstream>
 #include <iostream>
 #include <llvm/Support/raw_ostream.h>
 #include <memory>
@@ -16,7 +17,9 @@
 
 #include "error.h"
 #include "excparser.h"
+#include "filereader.h"
 #include "generatorprinter.h"
+#include "generatorstd.h"
 #include "location.h"
 
 namespace OTest2 {
@@ -390,7 +393,6 @@ bool SuiteVisitor::parseCaseBody(
           return false;
         context->state = ParserContext::CASE_START_UP_END;
         context->copyInputOfNode(block_);
-        context->generator->leaveState();
         break;
       }
 
@@ -854,7 +856,10 @@ void parse(
   clang::tooling::CommonOptionsParser options_(argc_, argv_, ParserOptCategory);
   clang::tooling::ClangTool tool_(
       options_.getCompilations(), options_.getSourcePathList());
-  GeneratorPrinter generator_;
+  std::ifstream ifs_(filename_);
+  FileReader reader_(&ifs_);
+  GeneratorStd generator_(&std::cout, &reader_);
+//  GeneratorPrinter generator_;
   bool failure_(false);
   ParserException exception_;
   tool_.run(new FrontendFactory(&generator_, &failure_, &exception_));

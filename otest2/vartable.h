@@ -1,50 +1,33 @@
 #ifndef OTest2OTEST2_VARTABLE_H_
 #define OTest2OTEST2_VARTABLE_H_
 
-#include <datstr/dstring.h>
-#include <datstr/intrusiveptrdecl.h>
-#include <datstr/referencecounter.h>
 #include <iosfwd>
 #include <map>
+#include <memory>
+#include <string>
 #include <vector>
-
-#include "declaration.h"
 
 namespace OTest2 {
 
 class VarTable;
-
-typedef cIntrusivePtrFull<VarTable> VarTablePtr;
+typedef std::shared_ptr<VarTable> VarTablePtr;
 
 /**
  * @brief Table of variables
  */
 class VarTable {
   private:
-    ReferenceCounter refcount;
-
-    dstring name;
+    std::string name;
     VarTablePtr level;
     struct Record {
         bool mine;
-        DeclarationPtr declaration;
-        dstring initializer;
+        std::string declaration;
+        std::string initializer;
     };
-    typedef std::map<dstring, Record> Variables;
+    typedef std::map<std::string, Record> Variables;
     Variables variables;
-    typedef std::vector<dstring> Order;
+    typedef std::vector<std::string> Order;
     Order order;
-
-    /* -- avoid copying */
-    VarTable(
-        const VarTable&);
-    VarTable& operator =(
-        const VarTable&);
-
-    /* -- intrusive pointer */
-    void incRef();
-    void decRef();
-    friend class cIntrusivePtrFull<VarTable>;
 
   public:
     /**
@@ -55,25 +38,31 @@ class VarTable {
      *     be null.
      */
     explicit VarTable(
-        const dstring& name_,
-        VarTable* level_);
+        const std::string& name_,
+        VarTablePtr level_);
 
     /**
      * @brief Dtor
      */
     ~VarTable();
 
+    /* -- avoid copying */
+    VarTable(
+        const VarTable&) = delete;
+    VarTable& operator =(
+        const VarTable&) = delete;
+
     /**
      * @brief Get name of the level
      *
      * @return The name
      */
-    const dstring& getName() const;
+    const std::string& getName() const;
 
     /**
      * @brief Get previous variable level
      */
-    const VarTablePtr& getPrevLevel() const;
+    VarTablePtr getPrevLevel() const;
 
     /**
      * @brief Append new variable
@@ -82,19 +71,20 @@ class VarTable {
      * @param declaration_ Variable's declaration
      */
     void appendVariable(
-        const dstring& name_,
-        const DeclarationPtr& declaration_);
+        const std::string& name_,
+        const std::string& declaration_);
 
     /**
-     * @brief Set initializer of a variable
+     * @brief Append new variable
      *
      * @param name_ Name of the variable
-     * @param body_ Body of the initializer
-     * @return True if the initializer is set
+     * @param declaration_ Variable's declaration
+     * @param initializer_ Variable's initializer
      */
-    bool setInitializer(
-        const dstring& name_,
-        const dstring& body_);
+    void appendVariableWithInit(
+        const std::string& name_,
+        const std::string& declaration_,
+        const std::string& initializer_);
 
     /**
      * @brief Print declarations
@@ -113,6 +103,16 @@ class VarTable {
      * @param indent_ Indentation level
      */
     void printInitializers(
+        std::ostream& os_,
+        int indent_) const;
+
+    /**
+     * @brief Print constructor parameters
+     *
+     * @param os_ An output stream
+     * @param indent_ Indentation level
+     */
+    void printParameters(
         std::ostream& os_,
         int indent_) const;
 };

@@ -79,8 +79,17 @@ int Location::compare(
   if(column < l2_.column)
     return -1;
   if(column > l2_.column)
-    return -1;
+    return 1;
   return 0;
+}
+
+void Location::incChar() {
+  ++column;
+}
+
+void Location::nextLine() {
+  ++line;
+  column = 1;
 }
 
 std::ostream& Location::printObject(

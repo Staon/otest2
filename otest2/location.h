@@ -91,6 +91,16 @@ class Location {
         const Location& l2_) const;
 
     /**
+     * @brief Move location to next character
+     */
+    void incChar();
+
+    /**
+     * @brief Move location to next line
+     */
+    void nextLine();
+
+    /**
      * @brief Print the location
      *
      * @param os_ An output stream

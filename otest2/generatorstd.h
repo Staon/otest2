@@ -7,6 +7,8 @@
 
 namespace OTest2 {
 
+class FileReader;
+
 /**
  * @brief Standard code generator
  */
@@ -26,9 +28,11 @@ class GeneratorStd : public Generator {
      * @brief Ctor
      *
      * @param output_ An output stream. The ownership is not taken.
+     * @param reader_ A reader of the input file. The ownership is not taken.
      */
     explicit GeneratorStd(
-        std::ostream* output_);
+        std::ostream* output_,
+        FileReader* reader_);
 
     /**
      * @brief Dtor
@@ -37,28 +41,33 @@ class GeneratorStd : public Generator {
 
     /* -- generator interface */
     virtual void beginFile();
-    virtual void dumpString(
-        const dstring& string_);
+    virtual void copySource(
+        const Location& begin_,
+        const Location& end_);
     virtual void enterSuite(
-        const dstring& name_);
-    virtual void enterState(
-        const dstring& name_);
-    virtual void leaveState();
+        const std::string& name_);
+    virtual void suiteStartUp();
+    virtual void suiteTearDown();
     virtual void enterCase(
-        const dstring& name_);
+        const std::string& name_);
+    virtual void caseStartUp();
+    virtual void caseTearDown();
+    virtual void enterState(
+        const std::string& name_);
+    virtual void emptyBody();
+    virtual void appendVariable(
+        const std::string& name_,
+        const std::string& type_);
+    virtual void appendVariableInit(
+        const std::string& name_,
+        const std::string& type_,
+        const Location& ibegin_,
+        const Location& iend_);
+    virtual void leaveState();
     virtual void leaveCase();
     virtual void leaveSuite();
-    virtual void appendVariable(
-        const dstring& name_,
-        const DeclarationPtr& declaration_);
-    virtual void finishDeclarations();
-    virtual bool setInitializer(
-        const dstring& name_,
-        const dstring& body_);
-    virtual void setCtorBody(
-        const dstring& body_);
-    virtual void setDtorBody(
-        const dstring& body_);
+    virtual void endFile(
+        const Location& last_);
 };
 
 } /* -- namespace OTest2 */

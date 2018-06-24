@@ -106,8 +106,10 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_otest2_OBJECTS = error.$(OBJEXT) excparser.$(OBJEXT) \
+	excreader.$(OBJEXT) filereader.$(OBJEXT) formatting.$(OBJEXT) \
 	generator.$(OBJEXT) generatorprinter.$(OBJEXT) \
-	location.$(OBJEXT) main.$(OBJEXT) parser.$(OBJEXT)
+	generatorstd.$(OBJEXT) location.$(OBJEXT) main.$(OBJEXT) \
+	parser.$(OBJEXT) vartable.$(OBJEXT)
 otest2_OBJECTS = $(am_otest2_OBJECTS)
 otest2_LDADD = $(LDADD)
 AM_V_lt = $(am__v_lt_@AM_V@)
@@ -344,15 +346,25 @@ otest2_SOURCES = \
     error.h \
     excparser.cpp \
     excparser.h \
+    excreader.cpp \
+    excreader.h \
+    filereader.cpp \
+    filereader.h \
+    formatting.cpp \
+    formatting.h \
     generator.cpp \
     generator.h \
     generatorprinter.cpp \
     generatorprinter.h \
+    generatorstd.cpp \
+    generatorstd.h \
     location.cpp \
     location.h \
     main.cpp \
     parser.cpp \
-    parser.h
+    parser.h \
+    vartable.cpp \
+    vartable.h
 
 otest2_LDFLAGS = \
     -L$(top_srcdir)/lib \
@@ -467,11 +479,16 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/error.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/excparser.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/excreader.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/filereader.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/formatting.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generator.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generatorprinter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generatorstd.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/location.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/parser.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/vartable.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

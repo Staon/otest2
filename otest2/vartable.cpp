@@ -1,37 +1,23 @@
 #include "vartable.h"
 
-#include <algorith>
-#include <astraios/dstream.h>
-#include <datstr/intrusiveptrimpl.h>
-#include <ondrart/oassert.h>
+#include <algorithm>
+#include <assert.h>
+#include <ostream>
+#include <sstream>
 
-#include "declcore.h"
-
-template class cIntrusivePtrFull< ::OTest2::VarTable >;
+#include "formatting.h"
 
 namespace OTest2 {
 
-namespace {
-
-void printIndent(
-    std::ostream& os_,
-    int indent_) {
-  for(; indent_ > 0; --indent_)
-    os_ << "  ";
-}
-
-} /* -- namespace */
-
 VarTable::VarTable(
-    const dstring& name_,
-    VarTable* level_) :
-  refcount(),
+    const std::string& name_,
+    VarTablePtr level_) :
   name(name_),
   level(level_),
   variables() {
-  OASSERT_1(!name.IsNullEmpty());
+  assert(!name.empty());
 
-  if(level.IsNotNull()) {
+  if(level != nullptr) {
     /* -- copy variables from previous level */
     for(
         Order::const_iterator iter_(level -> order.begin());
@@ -44,10 +30,7 @@ VarTable::VarTable(
       Variables::const_iterator var_(level -> variables.find(*iter_));
       Record record_;
       record_.mine = false;
-      record_.declaration = (*var_).second.declaration -> makeReference();
-      dstrostream dos_(record_.initializer);
-      dos_ << level -> getName() << " -> " << *iter_;
-      dos_.str();
+      record_.declaration = (*var_).second.declaration;
       variables.insert(Variables::value_type(*iter_, record_));
     }
   }
@@ -57,27 +40,25 @@ VarTable::~VarTable() {
 
 }
 
-void VarTable::incRef() {
-  refcount.incRef();
-}
-
-void VarTable::decRef() {
-  if(!refcount.decRef())
-    delete this;
-}
-
-const dstring& VarTable::getName() const {
+const std::string& VarTable::getName() const {
   return name;
 }
 
-const VarTablePtr& VarTable::getPrevLevel() const {
+VarTablePtr VarTable::getPrevLevel() const {
   return level;
 }
 
 void VarTable::appendVariable(
-    const dstring& name_,
-    const DeclarationPtr& declaration_) {
-  OASSERT_1(!name_.IsNullEmpty() && declaration_.IsNotNull());
+    const std::string& name_,
+    const std::string& declaration_) {
+  appendVariableWithInit(name_, declaration_, "");
+}
+
+void VarTable::appendVariableWithInit(
+    const std::string& name_,
+    const std::string& declaration_,
+    const std::string& initializer_) {
+  assert(!name_.empty());
 
   Variables::iterator iter_(variables.find(name_));
   if(iter_ == variables.end()) {
@@ -85,6 +66,7 @@ void VarTable::appendVariable(
     Record record_;
     record_.mine = true;
     record_.declaration = declaration_;
+    record_.initializer = initializer_;
     variables.insert(Variables::value_type(name_, record_));
     order.push_back(name_);
   }
@@ -92,24 +74,10 @@ void VarTable::appendVariable(
     /* -- overwrite */
     (*iter_).second.mine = true;
     (*iter_).second.declaration = declaration_;
-    (*iter_).second.initializer.SetNull();
+    (*iter_).second.initializer = initializer_;
     order.erase(std::remove(order.begin(), order.end(), name_));
     order.push_back(name_);
   }
-}
-
-bool VarTable::setInitializer(
-    const dstring& name_,
-    const dstring& body_) {
-  OASSERT_1(!name_.IsNullEmpty() && !body_.IsNull());
-
-  Variables::iterator iter_(variables.find(name_));
-  if(iter_ != variables.end() && (*iter_).second.mine) {
-    (*iter_).second.initializer = body_;
-    return true;
-  }
-  else
-    return false;
 }
 
 void VarTable::printDeclarations(
@@ -121,30 +89,50 @@ void VarTable::printDeclarations(
       ++iter_) {
     Variables::const_iterator var_(variables.find(*iter_));
 
-    printIndent(os_, indent_);
-    DeclCorePtr core_(new DeclCore(*iter_));
-    core_ -> applyRightDecl((*var_).second.declaration.ObjectAddr());
-    core_ -> printDeclaration(os_);
-    os_ << ";\n";
+    Formatting::printIndent(os_, indent_);
+    if((*var_).second.mine) {
+      os_ << "typename ::OTest2::TypeOfMine<" << (*var_).second.declaration
+          << ">::Type " << *iter_ << ";\n";
+    }
+    else {
+      os_ << "typename ::OTest2::TypeOfParent<" << (*var_).second.declaration
+          << ">::Type " << *iter_ << ";\n";
+    }
   }
 }
 
 void VarTable::printInitializers(
     std::ostream& os_,
     int indent_) const {
-  bool first_(true);
   for(
       Order::const_iterator iter_(order.begin());
       iter_ != order.end();
       ++iter_) {
     Variables::const_iterator var_(variables.find(*iter_));
 
-    if(!(*var_).second.initializer.IsNullEmpty()) {
-      os_ << ",\n";
-      printIndent(os_, indent_);
+    os_ << ",\n";
+    Formatting::printIndent(os_, indent_);
+    if((*var_).second.mine) {
       os_ << *iter_ << '(';
       os_ << (*var_).second.initializer;
       os_ << ')';
+    }
+    else
+      os_ << *iter_ << '(' << *iter_ << "_)";
+  }
+}
+
+void VarTable::printParameters(
+    std::ostream& os_,
+    int indent_) const {
+  for(const std::string& name_ : order) {
+    Variables::const_iterator var_(variables.find(name_));
+    if(!(*var_).second.mine) {
+      os_ << ",\n";
+      Formatting::printIndent(os_, indent_);
+      os_ << "typename ::OTest2::TypeOfParent<" << (*var_).second.declaration
+          << ">::Type " << name_ << "_";
+
     }
   }
 }

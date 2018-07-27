@@ -17,52 +17,51 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OTest2__OTEST2_ERROR_H_
-#define OTest2__OTEST2_ERROR_H_
+#ifndef OTest2__INCLUDE_OTEST2_STATEREGISTRY_H_
+#define OTest2__INCLUDE_OTEST2_STATEREGISTRY_H_
 
 #include <string>
 
-#include <exc.h>
+#include <otest2/stateptr.h>
 
 namespace OTest2 {
 
 /**
- * @brief Generic error exception
+ * @brief Registry of test states
  */
-class Error : public Exception {
+class StateRegistry {
   private:
-    std::string message;
+    struct Impl;
+    Impl* pimpl;
 
   public:
-    /**
-     * @brief Ctor
-     *
-     * @param message_ An error message
-     */
-    explicit Error(
-        const std::string& message_);
+    /* -- avoid copying */
+    StateRegistry(
+        const StateRegistry&) = delete;
+    StateRegistry& operator =(
+        const StateRegistry&) = delete;
 
     /**
-     * @brief Move ctor
+     * @brief Ctor
      */
-    Error(
-        Error&& exc_);
+    StateRegistry();
 
     /**
      * @brief Dtor
      */
-    virtual ~Error();
+    ~StateRegistry();
 
-    /* -- avoid copying */
-    Error(
-        const Error&) = delete;
-    Error& operator =(
-        const Error&) = delete;
-
-    /* -- exception interface */
-    virtual std::string reason() const;
+    /**
+     * @brief Register new state
+     *
+     * @param name_ Name of the state
+     * @param state_ The state
+     */
+    void registerState(
+        const std::string& name_,
+        StatePtr state_);
 };
 
 } /* namespace OTest2 */
 
-#endif /* OTest2__OTEST2_ERROR_H_ */
+#endif /* OTest2__INCLUDE_OTEST2_STATEREGISTRY_H_ */

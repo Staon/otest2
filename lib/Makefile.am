@@ -27,6 +27,9 @@ libotest2_la_SOURCES = \
     context.cpp \
     exc.cpp \
     registry.cpp \
+    state.cpp \
+    stategenerated.cpp \
+    stateregistry.cpp \
     suite.cpp \
     suitefactory.cpp \
     suitegenerated.cpp

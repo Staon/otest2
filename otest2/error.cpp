@@ -24,7 +24,7 @@
 namespace OTest2 {
 
 Error::Error(
-    const std::string message_) :
+    const std::string& message_) :
   message(message_) {
 
 }

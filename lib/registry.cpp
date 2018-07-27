@@ -22,6 +22,8 @@
 #include <assert.h>
 #include <map>
 
+#include <utils.h>
+
 namespace OTest2 {
 
 struct Registry::Impl {
@@ -58,8 +60,7 @@ Registry::Registry() :
 }
 
 Registry::~Registry() {
-  delete pimpl;
-  pimpl = nullptr;
+  odelete(pimpl);
 }
 
 void Registry::registerSuite(

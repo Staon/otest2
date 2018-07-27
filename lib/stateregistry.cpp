@@ -17,7 +17,7 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <caseregistry.h>
+#include <stateregistry.h>
 
 #include <assert.h>
 #include <map>
@@ -26,12 +26,12 @@
 
 namespace OTest2 {
 
-struct CaseRegistry::Impl {
+struct StateRegistry::Impl {
   public:
-    CaseRegistry* owner;
+    StateRegistry* owner;
 
-    typedef std::map<std::string, CaseFactoryPtr> CaseRegistryMap;
-    CaseRegistryMap registry;
+    typedef std::map<std::string, StatePtr> States;
+    States states;
 
     /* -- avoid copying */
     Impl(
@@ -40,35 +40,34 @@ struct CaseRegistry::Impl {
         const Impl&) = delete;
 
     explicit Impl(
-        CaseRegistry* owner_);
+        StateRegistry* owner_);
     ~Impl();
 };
 
-CaseRegistry::Impl::Impl(
-    CaseRegistry* owner_) :
+StateRegistry::Impl::Impl(
+    StateRegistry* owner_) :
   owner(owner_) {
 
 }
 
-CaseRegistry::Impl::~Impl() {
+StateRegistry::Impl::~Impl() {
 
 }
 
-CaseRegistry::CaseRegistry() :
+StateRegistry::StateRegistry() :
   pimpl(new Impl(this)) {
 
 }
 
-CaseRegistry::~CaseRegistry() {
+StateRegistry::~StateRegistry() {
   odelete(pimpl);
 }
 
-void CaseRegistry::registerCase(
+void StateRegistry::registerState(
     const std::string& name_,
-    CaseFactoryPtr case_factory_) {
-  assert(!name_.empty() && case_factory_ != nullptr);
-  pimpl->registry.insert(
-      Impl::CaseRegistryMap::value_type(name_, case_factory_));
+    StatePtr state_) {
+  assert(!name_.empty() && state_ != nullptr);
+  pimpl->states.insert(Impl::States::value_type(name_, state_));
 }
 
 } /* namespace OTest2 */

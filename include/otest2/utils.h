@@ -17,16 +17,24 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <casefactory.h>
+
+#ifndef OTest2__INCLUDE_OTEST2_UTILS_H_
+#define OTest2__INCLUDE_OTEST2_UTILS_H_
 
 namespace OTest2 {
 
-CaseFactory::CaseFactory() {
-
+/**
+ * @brief Delete a pointer and set it invalid
+ *
+ * @param object_ The pointer
+ */
+template<typename T_>
+void odelete(
+    T_*& object_) {
+  delete object_;
+  object_ = nullptr;
 }
 
-CaseFactory::~CaseFactory() {
+} /* -- namespace OTest2 */
 
-}
-
-} /* namespace OTest2 */
+#endif /* OTest2__INCLUDE_OTEST2_UTILS_H_ */

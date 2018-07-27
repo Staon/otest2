@@ -17,16 +17,16 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <casefactory.h>
+#ifndef OTest2__INCLUDE_OTEST2_STATEPTR_H_
+#define OTest2__INCLUDE_OTEST2_STATEPTR_H_
+
+#include <memory>
 
 namespace OTest2 {
 
-CaseFactory::CaseFactory() {
+class State;
+typedef std::shared_ptr<State> StatePtr;
 
-}
+} /* -- namespace OTest2 */
 
-CaseFactory::~CaseFactory() {
-
-}
-
-} /* namespace OTest2 */
+#endif /* OTest2__INCLUDE_OTEST2_STATEPTR_H_ */

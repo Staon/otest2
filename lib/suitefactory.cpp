@@ -17,17 +17,16 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "/home/ondrej/programovani/otest2/include/otest2/suitefactory.h"
+#include <suitefactory.h>
 
 namespace OTest2 {
 
 SuiteFactory::SuiteFactory() {
-  // TODO Auto-generated constructor stub
 
 }
 
 SuiteFactory::~SuiteFactory() {
-  // TODO Auto-generated destructor stub
+
 }
 
 } /* namespace OTest2 */

@@ -35,6 +35,10 @@ struct GeneratorStd::Impl {
     typedef std::vector<std::string> Cases;
     Cases cases;
 
+    /* -- list of states */
+    typedef std::vector<std::string> States;
+    States states;
+
   private:
     /* -- avoid copying */
     Impl(
@@ -197,7 +201,7 @@ void GeneratorStd::caseStartUp() {
   pimpl->variables->printInitializers(*pimpl->output, pimpl->indent + 1);
   *pimpl->output
       << " {\n"
-      << "\n"
+      << "          registerAllStates(context_);\n"
       << "        }\n"
       << "\n"
       << "        virtual ~" << pimpl->testcase << "() {\n"
@@ -222,6 +226,7 @@ void GeneratorStd::enterState(
 
   pimpl->state = state_;
   pimpl->variables = std::make_shared<VarTable>("state_", pimpl -> variables);
+  pimpl->states.push_back(state_);
   pimpl->indent += 2;
 
   *pimpl->output
@@ -284,18 +289,41 @@ void GeneratorStd::leaveState() {
 
   *pimpl->output
       << "\n"
-      << "        };";
+      << "        };\n\n";
+
+  pimpl->indent -= 2;
+
+  /* -- generate the factory method of the state */
+  *pimpl->output
+      << "        StatePtr createState_" << pimpl->state << "(\n"
+      << "            const Context& context_) {\n"
+      << "          return std::make_shared<" << pimpl->state << ">(\n"
+      << "              context_";
+  pimpl->variables->printArguments(*pimpl->output, pimpl->indent + 3);
+  *pimpl->output
+      << ");\n"
+      << "        }";
 
   pimpl->state.clear();
   pimpl->variables = pimpl->variables->getPrevLevel();
-  pimpl->indent -= 2;
 }
 
 void GeneratorStd::leaveCase() {
   assert(!pimpl->suite.empty() && !pimpl->testcase.empty() && pimpl->state.empty());
 
-
+  /* -- generate registration of the states */
   *pimpl->output
+      << "\n\n"
+      << "        void registerAllStates(\n"
+      << "            const Context& context_) {\n";
+  for(const auto& state_ : pimpl->states) {
+    *pimpl->output
+      << "          registerState(\n"
+      << "              \"" << state_ << "\",\n"
+      << "              createState_" << state_ << "(context_));\n";
+  }
+  *pimpl->output
+      << "        }\n"
       << "\n"
       << "    };\n\n";
 
@@ -314,6 +342,7 @@ void GeneratorStd::leaveCase() {
 
   pimpl->testcase.clear();
   pimpl->variables = pimpl->variables->getPrevLevel();
+  pimpl->states.clear();
 }
 
 void GeneratorStd::leaveSuite() {

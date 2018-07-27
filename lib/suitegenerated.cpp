@@ -1,6 +1,7 @@
 #include <suitegenerated.h>
 
 #include <caseregistry.h>
+#include <utils.h>
 
 namespace OTest2 {
 
@@ -39,8 +40,7 @@ SuiteGenerated::SuiteGenerated(
 }
 
 SuiteGenerated::~SuiteGenerated() {
-  delete pimpl;
-  pimpl = nullptr;
+  odelete(pimpl);
 }
 
 void SuiteGenerated::registerCase(

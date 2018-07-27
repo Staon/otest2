@@ -133,8 +133,9 @@ am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libotest2_la_LIBADD =
 am_libotest2_la_OBJECTS = case.lo casefactory.lo casegenerated.lo \
-	caseregistry.lo context.lo exc.lo registry.lo suite.lo \
-	suitefactory.lo suitegenerated.lo
+	caseregistry.lo context.lo exc.lo registry.lo state.lo \
+	stategenerated.lo stateregistry.lo suite.lo suitefactory.lo \
+	suitegenerated.lo
 libotest2_la_OBJECTS = $(am_libotest2_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -353,6 +354,9 @@ libotest2_la_SOURCES = \
     context.cpp \
     exc.cpp \
     registry.cpp \
+    state.cpp \
+    stategenerated.cpp \
+    stateregistry.cpp \
     suite.cpp \
     suitefactory.cpp \
     suitegenerated.cpp
@@ -442,6 +446,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/context.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exc.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/registry.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/state.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stategenerated.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stateregistry.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/suite.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/suitefactory.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/suitegenerated.Plo@am__quote@

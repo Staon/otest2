@@ -12,13 +12,14 @@ class Context;
  */
 class StateGenerated : public State {
   private:
-    /* -- avoid copying */
-    StateGenerated(
-        const StateGenerated&);
-    StateGenerated& operator =(
-        const StateGenerated&);
 
   public:
+    /* -- avoid copying */
+    StateGenerated(
+        const StateGenerated&) = delete;
+    StateGenerated& operator =(
+        const StateGenerated&) = delete;
+
     /**
      * @brief Ctor
      *

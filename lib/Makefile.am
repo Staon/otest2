@@ -20,6 +20,11 @@ AM_CXXFLAGS =
 
 lib_LTLIBRARIES = libotest2.la
 libotest2_la_SOURCES = \
+    case.cpp \
+    casefactory.cpp \
+    casegenerated.cpp \
+    caseregistry.cpp \
+    context.cpp \
     exc.cpp \
     registry.cpp \
     suite.cpp \

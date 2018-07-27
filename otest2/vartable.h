@@ -115,6 +115,16 @@ class VarTable {
     void printParameters(
         std::ostream& os_,
         int indent_) const;
+
+    /**
+     * @brief Print constructor arguments (invocation)
+     *
+     * @param os_ An output stream
+     * @param indent_ Indentation level
+     */
+    void printArguments(
+        std::ostream& os_,
+        int indent_) const;
 };
 
 } /* -- namespace OTest2 */

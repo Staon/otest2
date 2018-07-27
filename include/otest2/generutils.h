@@ -23,7 +23,10 @@
 
 #include <memory>
 
+#include <otest2/casefactory.h>
+#include <otest2/caseptr.h>
 #include <otest2/suitefactory.h>
+#include <otest2/suiteptr.h>
 
 namespace OTest2 {
 
@@ -45,9 +48,54 @@ struct TypeOfParent<T_&> {
 template<typename Suite_>
 class SuiteGeneratedFactory : public SuiteFactory {
   public:
+    /* -- avoid copying */
+    SuiteGeneratedFactory(
+        const SuiteGeneratedFactory&) = delete;
+    SuiteGeneratedFactory& operator =(
+        const SuiteGeneratedFactory&) = delete;
+
+    SuiteGeneratedFactory() {
+
+    }
+
+    virtual ~SuiteGeneratedFactory() {
+
+    }
+
     virtual SuitePtr createSuite(
         const Context& context_) {
       return std::make_shared<Suite_>(context_);
+    }
+};
+
+template<typename Suite_, typename Case_>
+class CaseGeneratedFactory : public CaseFactory {
+  private:
+    Suite_* suite;
+    CasePtr (Suite_::* factory_method)(const Context&);
+
+  public:
+    /* -- avoid copying */
+    CaseGeneratedFactory(
+        const CaseGeneratedFactory&) = delete;
+    CaseGeneratedFactory& operator =(
+        const CaseGeneratedFactory&) = delete;
+
+    explicit CaseGeneratedFactory(
+        Suite_* suite_,
+        CasePtr (Suite_::* factory_method_)(const Context&)) :
+          suite(suite_),
+          factory_method(factory_method_) {
+
+    }
+
+    virtual ~CaseGeneratedFactory() {
+
+    }
+
+    virtual CasePtr createCase(
+        const Context& context_) {
+      return suite->*factory_method(context_);
     }
 };
 

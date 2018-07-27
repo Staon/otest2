@@ -131,4 +131,18 @@ void VarTable::printParameters(
   }
 }
 
+void VarTable::printArguments(
+    std::ostream& os_,
+    int indent_) const {
+  for(const std::string& name_ : order) {
+    Variables::const_iterator var_(variables.find(name_));
+    if(!(*var_).second.mine) {
+      os_ << ",\n";
+      Formatting::printIndent(os_, indent_);
+      os_ << name_;
+
+    }
+  }
+}
+
 } /* -- namespace OTest2 */

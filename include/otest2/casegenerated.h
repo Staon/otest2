@@ -12,13 +12,14 @@ class Context;
  */
 class CaseGenerated : public Case {
   private:
-    /* -- avoid copying */
-    CaseGenerated(
-        const CaseGenerated&);
-    CaseGenerated& operator =(
-        const CaseGenerated&);
 
   public:
+    /* -- avoid copying */
+    CaseGenerated(
+        const CaseGenerated&) = delete;
+    CaseGenerated& operator =(
+        const CaseGenerated&) = delete;
+
     /**
      * @brief Ctor
      *

@@ -2,6 +2,7 @@
 *.lst
 *.err
 *.o
+*.lo
 *.hh
 *.l.cpp
 *.tab.cpp

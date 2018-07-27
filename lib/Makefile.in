@@ -132,8 +132,9 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libotest2_la_LIBADD =
-am_libotest2_la_OBJECTS = exc.lo registry.lo suite.lo suitefactory.lo \
-	suitegenerated.lo
+am_libotest2_la_OBJECTS = case.lo casefactory.lo casegenerated.lo \
+	caseregistry.lo context.lo exc.lo registry.lo suite.lo \
+	suitefactory.lo suitegenerated.lo
 libotest2_la_OBJECTS = $(am_libotest2_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -345,6 +346,11 @@ AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/include/otest2
 AM_CXXFLAGS = 
 lib_LTLIBRARIES = libotest2.la
 libotest2_la_SOURCES = \
+    case.cpp \
+    casefactory.cpp \
+    casegenerated.cpp \
+    caseregistry.cpp \
+    context.cpp \
     exc.cpp \
     registry.cpp \
     suite.cpp \
@@ -429,6 +435,11 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/case.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/casefactory.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/casegenerated.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/caseregistry.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/context.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exc.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/registry.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/suite.Plo@am__quote@

@@ -1,6 +1,9 @@
 #ifndef OTest2INCLUDE_SUITEGENERATED_H_
 #define OTest2INCLUDE_SUITEGENERATED_H_
 
+#include <string>
+
+#include <otest2/casefactoryptr.h>
 #include <otest2/suite.h>
 
 namespace OTest2 {
@@ -12,13 +15,16 @@ class Context;
  */
 class SuiteGenerated : public Suite {
   private:
-    /* -- avoid copying */
-    SuiteGenerated(
-        const SuiteGenerated&);
-    SuiteGenerated& operator =(
-        const SuiteGenerated&);
+    struct Impl;
+    Impl* pimpl;
 
   public:
+    /* -- avoid copying */
+    SuiteGenerated(
+        const SuiteGenerated&) = delete;
+    SuiteGenerated& operator =(
+        const SuiteGenerated&) = delete;
+
     /**
      * @brief Ctor
      *
@@ -31,6 +37,17 @@ class SuiteGenerated : public Suite {
      * @brief Dtor
      */
     virtual ~SuiteGenerated();
+
+  protected:
+    /**
+     * @brief Register new test case
+     *
+     * @param name_ Name of the test case
+     * @param case_factory_ A factory of the test case
+     */
+    void registerCase(
+        const std::string& name_,
+        CaseFactoryPtr case_factory_);
 };
 
 } /* -- namespace OTest2 */

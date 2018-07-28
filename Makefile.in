@@ -329,7 +329,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 ACLOCAL_AMFLAGS = -I m4 
 AUTOMAKE_OPTIONS = foreign
-SUBDIRS = lib otest2
+SUBDIRS = lib otest2 sandbox
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 

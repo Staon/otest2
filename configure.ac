@@ -41,5 +41,5 @@ AC_FUNC_ERROR_AT_LINE
 # Checks libclang headers
 #AC_CHECK_HEADER(clang-c/Index.h,,[AC_MSG_ERROR(The header clang-c/Index.h is not detected!)])
 
-AC_CONFIG_FILES([Makefile lib/Makefile otest2/Makefile])
+AC_CONFIG_FILES([Makefile lib/Makefile otest2/Makefile sandbox/Makefile])
 AC_OUTPUT

@@ -95,7 +95,7 @@ class CaseGeneratedFactory : public CaseFactory {
 
     virtual CasePtr createCase(
         const Context& context_) {
-      return suite->*factory_method(context_);
+      return (suite->*factory_method)(context_);
     }
 };
 

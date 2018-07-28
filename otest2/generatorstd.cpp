@@ -295,8 +295,8 @@ void GeneratorStd::leaveState() {
 
   /* -- generate the factory method of the state */
   *pimpl->output
-      << "        StatePtr createState_" << pimpl->state << "(\n"
-      << "            const Context& context_) {\n"
+      << "        ::OTest2::StatePtr createState_" << pimpl->state << "(\n"
+      << "            const ::OTest2::Context& context_) {\n"
       << "          return std::make_shared<" << pimpl->state << ">(\n"
       << "              context_";
   pimpl->variables->printArguments(*pimpl->output, pimpl->indent + 3);
@@ -315,7 +315,7 @@ void GeneratorStd::leaveCase() {
   *pimpl->output
       << "\n\n"
       << "        void registerAllStates(\n"
-      << "            const Context& context_) {\n";
+      << "            const ::OTest2::Context& context_) {\n";
   for(const auto& state_ : pimpl->states) {
     *pimpl->output
       << "          registerState(\n"
@@ -331,8 +331,8 @@ void GeneratorStd::leaveCase() {
 
   /* -- generate the factory method of the case */
   *pimpl->output
-      << "    CasePtr createCase_" << pimpl->testcase << "(\n"
-      << "        const Context& context_) {\n"
+      << "    ::OTest2::CasePtr createCase_" << pimpl->testcase << "(\n"
+      << "        const ::OTest2::Context& context_) {\n"
       << "      return std::make_shared<" << pimpl->testcase << ">(\n"
       << "          context_";
   pimpl->variables->printArguments(*pimpl->output, pimpl->indent + 3);

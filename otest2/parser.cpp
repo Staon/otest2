@@ -686,7 +686,6 @@ bool SuiteVisitor::parseSuite(
 bool SuiteVisitor::VisitFunctionDecl(
     clang::FunctionDecl* fce_) {
   if(fce_->hasAttrs()) {
-    auto iter_(fce_->attr_begin());
     for(
         auto iter_(fce_->attr_begin());
         iter_ != fce_->attr_end();

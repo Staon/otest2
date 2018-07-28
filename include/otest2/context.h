@@ -3,22 +3,29 @@
 
 namespace OTest2 {
 
+class CommandStack;
+class Reporter;
+
 /**
  * @brief OTest2 runtime context
  */
 class Context {
-  private:
+  public:
+    CommandStack* const command_stack;
+    Reporter* const reporter;
+
     /* -- avoid copying */
     Context(
-        const Context&);
+        const Context&) = delete;
     Context& operator =(
-        const Context&);
+        const Context&) = delete;
 
-  public:
     /**
      * @brief Ctor
      */
-    Context();
+    explicit Context(
+        CommandStack* command_stack_,
+        Reporter* reporter_);
 
     /**
      * @brief Dtor

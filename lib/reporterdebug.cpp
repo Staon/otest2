@@ -17,21 +17,36 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <reporterdebug.h>
+
+#include <assert.h>
 #include <iostream>
-#include <otest2/registry.h>
-#include <otest2/reporterdebug.h>
-#include <otest2/runnerordinary.h>
 
-int main(
-    int argc_,
-    char* argv_[]) {
-  ::OTest2::ReporterDebug reporter_(&std::cout);
-  ::OTest2::RunnerOrdinary runner_(
-      &reporter_, &::OTest2::Registry::instance(), "sandbox");
-  int delay_(0);
-  do {
-    delay_ = runner_.runNext();
-  } while(delay_ >= 0);
+namespace OTest2 {
 
-  return 0;
+ReporterDebug::ReporterDebug(
+    std::ostream* os_) :
+  os(os_) {
+  assert(os != nullptr);
+
 }
+
+
+ReporterDebug::~ReporterDebug() {
+
+}
+
+void ReporterDebug::enterTest(
+    const Context& context_,
+    const std::string& name_) {
+  *os << "enterTest(" << name_ << ")" << std::endl;
+}
+
+void ReporterDebug::leaveTest(
+    const Context& context_,
+    const std::string& name_,
+    bool result_) {
+  *os << "leaveTest(" << name_ << ", " << result_ << ")" << std::endl;
+}
+
+} /* namespace OTest2 */

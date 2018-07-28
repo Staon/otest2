@@ -133,9 +133,11 @@ am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libotest2_la_LIBADD =
 am_libotest2_la_OBJECTS = case.lo casefactory.lo casegenerated.lo \
-	caseregistry.lo context.lo exc.lo registry.lo state.lo \
-	stategenerated.lo stateregistry.lo suite.lo suitefactory.lo \
-	suitegenerated.lo
+	caseregistry.lo cmdnextsuite.lo cmdstarttest.lo cmdstoptest.lo \
+	command.lo commandstack.lo context.lo exc.lo registry.lo \
+	reporter.lo reporterdebug.lo runner.lo runnerordinary.lo \
+	state.lo stategenerated.lo stateregistry.lo suite.lo \
+	suitefactory.lo suitegenerated.lo
 libotest2_la_OBJECTS = $(am_libotest2_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -344,16 +346,25 @@ top_srcdir = @top_srcdir@
 # along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
 # 
 AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/include/otest2
-AM_CXXFLAGS = 
+AM_CXXFLAGS = -Wall -Werror
 lib_LTLIBRARIES = libotest2.la
 libotest2_la_SOURCES = \
     case.cpp \
     casefactory.cpp \
     casegenerated.cpp \
     caseregistry.cpp \
+    cmdnextsuite.cpp \
+    cmdstarttest.cpp \
+    cmdstoptest.cpp \
+    command.cpp \
+    commandstack.cpp \
     context.cpp \
     exc.cpp \
     registry.cpp \
+    reporter.cpp \
+    reporterdebug.cpp \
+    runner.cpp \
+    runnerordinary.cpp \
     state.cpp \
     stategenerated.cpp \
     stateregistry.cpp \
@@ -443,9 +454,18 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/casefactory.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/casegenerated.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/caseregistry.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cmdnextsuite.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cmdstarttest.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cmdstoptest.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/command.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/commandstack.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/context.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exc.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/registry.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reporter.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reporterdebug.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runner.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runnerordinary.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/state.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stategenerated.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stateregistry.Plo@am__quote@

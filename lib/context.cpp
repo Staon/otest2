@@ -2,7 +2,11 @@
 
 namespace OTest2 {
 
-Context::Context() {
+Context::Context(
+    CommandStack* command_stack_,
+    Reporter* reporter_) :
+  command_stack(command_stack_),
+  reporter(reporter_) {
 
 }
 

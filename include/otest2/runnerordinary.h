@@ -1,0 +1,73 @@
+/*
+ * Copyright (C) 2018 Ondrej Starek
+ *
+ * This file is part of OTest2.
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#ifndef OTest2__INCLUDE_OTEST2_RUNNERORDINARY_H_
+#define OTest2__INCLUDE_OTEST2_RUNNERORDINARY_H_
+
+#include <string>
+
+#include <otest2/runner.h>
+
+namespace OTest2 {
+
+class Registry;
+class Reporter;
+
+/**
+ * @brief Ordinary implementation of the Runner interface
+ *
+ * This implementation keeps a stack of commands and runs them until the stack
+ * is empty.
+ */
+class RunnerOrdinary : public Runner {
+  private:
+    struct Impl;
+    Impl* pimpl;
+
+  public:
+    /* -- avoid copying */
+    RunnerOrdinary(
+        const RunnerOrdinary&) = delete;
+    RunnerOrdinary& operator =(
+        const RunnerOrdinary&) = delete;
+
+    /**
+     * @brief Ctor
+     *
+     * @param reporter_ A reporter object. The ownership is not taken.
+     * @param registry_ A registry of suites to be run. The ownership is not taken.
+     * @param name_ Name of the test (shown in the test report)
+     */
+    explicit RunnerOrdinary(
+        Reporter* reporter_,
+        Registry* registry_,
+        const std::string& name_);
+
+    /**
+     * @brief Dtor
+     */
+    virtual ~RunnerOrdinary();
+
+    /* -- runnter interface */
+    virtual int runNext() override;
+};
+
+} /* namespace OTest2 */
+
+#endif /* OTest2__INCLUDE_OTEST2_RUNNERORDINARY_H_ */

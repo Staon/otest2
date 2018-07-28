@@ -16,7 +16,7 @@
 # along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
 # 
 AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/include/otest2
-AM_CXXFLAGS =
+AM_CXXFLAGS = -Wall -Werror
 
 lib_LTLIBRARIES = libotest2.la
 libotest2_la_SOURCES = \
@@ -24,9 +24,18 @@ libotest2_la_SOURCES = \
     casefactory.cpp \
     casegenerated.cpp \
     caseregistry.cpp \
+    cmdnextsuite.cpp \
+    cmdstarttest.cpp \
+    cmdstoptest.cpp \
+    command.cpp \
+    commandstack.cpp \
     context.cpp \
     exc.cpp \
     registry.cpp \
+    reporter.cpp \
+    reporterdebug.cpp \
+    runner.cpp \
+    runnerordinary.cpp \
     state.cpp \
     stategenerated.cpp \
     stateregistry.cpp \

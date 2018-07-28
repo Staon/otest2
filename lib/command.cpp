@@ -17,21 +17,22 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
-#include <otest2/registry.h>
-#include <otest2/reporterdebug.h>
-#include <otest2/runnerordinary.h>
+#include <command.h>
 
-int main(
-    int argc_,
-    char* argv_[]) {
-  ::OTest2::ReporterDebug reporter_(&std::cout);
-  ::OTest2::RunnerOrdinary runner_(
-      &reporter_, &::OTest2::Registry::instance(), "sandbox");
-  int delay_(0);
-  do {
-    delay_ = runner_.runNext();
-  } while(delay_ >= 0);
+namespace OTest2 {
 
-  return 0;
+Command::Command() {
+
 }
+
+Command::~Command() {
+
+}
+
+bool Command::shouldWait(
+    const Context& context_,
+    int& delay_) {
+  return false;
+}
+
+} /* namespace OTest2 */

@@ -65,6 +65,15 @@ class Registry {
         SuiteFactoryPtr suite_factory_);
 
     /**
+     * @brief Get a suite factory at specified index
+     *
+     * @param index_ The index. Zero based.
+     * @return The suite factory or nullptr if the index is out of the bounds.
+     */
+    SuiteFactoryPtr getSuite(
+        int index_);
+
+    /**
      * @brief Access of the global instance
      *
      * The global instance is used for automatic registering of suites.

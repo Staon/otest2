@@ -17,24 +17,22 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <otest2/registry.h>
+#include <commandstack.h>
 
 #include <assert.h>
-#include <map>
 #include <vector>
 
+#include <command.h>
 #include <utils.h>
 
 namespace OTest2 {
 
-struct Registry::Impl {
+struct CommandStack::Impl {
   public:
-    Registry* owner;
+    CommandStack* owner;
 
-    typedef std::map<std::string, SuiteFactoryPtr> SuiteRegistry;
-    SuiteRegistry registry;
-    typedef std::vector<SuiteFactoryPtr> Order;
-    Order order;
+    typedef std::vector<CommandPtr> Stack;
+    Stack stack;
 
     /* -- avoid copying */
     Impl(
@@ -43,51 +41,47 @@ struct Registry::Impl {
         const Impl&) = delete;
 
     explicit Impl(
-        Registry* owner_);
+        CommandStack* owner_);
     ~Impl();
 };
 
-Registry::Impl::Impl(
-    Registry* owner_) :
+CommandStack::Impl::Impl(
+    CommandStack* owner_) :
   owner(owner_) {
 
 }
 
-Registry::Impl::~Impl() {
+CommandStack::Impl::~Impl() {
 
 }
 
-Registry::Registry() :
+CommandStack::CommandStack() :
   pimpl(new Impl(this)) {
 
 }
 
-Registry::~Registry() {
+CommandStack::~CommandStack() {
   odelete(pimpl);
 }
 
-void Registry::registerSuite(
-    const std::string& name_,
-    SuiteFactoryPtr suite_factory_) {
-  assert(!name_.empty() && suite_factory_ != nullptr);
-  pimpl->registry.insert(Impl::SuiteRegistry::value_type(name_, suite_factory_));
-  pimpl->order.push_back(suite_factory_);
+void CommandStack::pushCommand(
+    CommandPtr command_) {
+  assert(command_ != nullptr);
+  pimpl->stack.push_back(command_);
 }
 
-SuiteFactoryPtr Registry::getSuite(
-    int index_) {
-  if(index_ >= 0
-     && static_cast<Impl::Order::size_type>(index_) < pimpl->order.size()) {
-    return pimpl->order[index_];
-  }
-  else {
-    return nullptr;
-  }
+CommandPtr CommandStack::topCommand() const {
+  assert(!pimpl->stack.empty());
+  return pimpl->stack.back();
 }
 
-Registry& Registry::instance() {
-  static Registry registry_;
-  return registry_;
+void CommandStack::popCommand() {
+  assert(!pimpl->stack.empty());
+  pimpl->stack.pop_back();
+}
+
+bool CommandStack::empty() const {
+  return pimpl->stack.empty();
 }
 
 } /* namespace OTest2 */

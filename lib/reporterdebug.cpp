@@ -42,6 +42,19 @@ void ReporterDebug::enterTest(
   *os << "enterTest(" << name_ << ")" << std::endl;
 }
 
+void ReporterDebug::enterSuite(
+    const Context& context_,
+    const std::string& name_) {
+  *os << "enterSuite(" << name_ << ")" << std::endl;
+}
+
+void ReporterDebug::leaveSuite(
+    const Context& context_,
+    const std::string& name_,
+    bool result_) {
+  *os << "leaveSuite(" << name_ << ", " << result_ << ")" << std::endl;
+}
+
 void ReporterDebug::leaveTest(
     const Context& context_,
     const std::string& name_,

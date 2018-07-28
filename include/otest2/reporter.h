@@ -58,6 +58,28 @@ class Reporter {
         const std::string& name_) = 0;
 
     /**
+     * @brief Enter a suite
+     *
+     * @param context_ the OTest2 context
+     * @param name_ Name of the suite
+     */
+    virtual void enterSuite(
+        const Context& context_,
+        const std::string& name_) = 0;
+
+    /**
+     * @brief Leave a suite
+     *
+     * @param context_ the OTest2 context
+     * @param name_ Name of the suite
+     * @param result_ Result of the suite
+     */
+    virtual void leaveSuite(
+        const Context& context_,
+        const std::string& name_,
+        bool result_) = 0;
+
+    /**
      * @brief Leave entire test
      *
      * @param context_ the OTest2 context

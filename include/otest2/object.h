@@ -17,17 +17,40 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef OTest2__INCLUDE_OTEST2_OBJECT_H_
+#define OTest2__INCLUDE_OTEST2_OBJECT_H_
 
-#ifndef OTest2__INCLUDE_OTEST2_SUITEPTR_H_
-#define OTest2__INCLUDE_OTEST2_SUITEPTR_H_
-
-#include <otest2/objectptr.h>
+#include <string>
 
 namespace OTest2 {
 
-class Suite;
-typedef ObjectPtr<Suite> SuitePtr;
+/**
+ * @brief Generic testing object
+ */
+class Object {
+  public:
+    /* -- avoid copying */
+    Object(
+        const Object&) = delete;
+    Object& operator =(
+        const Object&) = delete;
 
-}  /* -- namespace OTest2 */
+    /**
+     * @brief Ctor
+     */
+    Object();
 
-#endif /* OTest2__INCLUDE_OTEST2_SUITEPTR_H_ */
+    /**
+     * @brief Dtor
+     */
+    virtual ~Object();
+
+    /**
+     * @brief Get object's name
+     */
+    virtual std::string getName() const = 0;
+};
+
+} /* namespace OTest2 */
+
+#endif /* OTest2__INCLUDE_OTEST2_OBJECT_H_ */

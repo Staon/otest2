@@ -35,7 +35,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
     explicit ExampleSuite(
         const ::OTest2::Context& context_) :
-      ::OTest2::SuiteGenerated(context_),
+      ::OTest2::SuiteGenerated(context_, "ExampleSuite"),
       suite_text("foo") {
       registerAllCases();
     }
@@ -357,7 +357,7 @@ class SecondSuite : public ::OTest2::SuiteGenerated {
 
     explicit SecondSuite(
         const ::OTest2::Context& context_) :
-      ::OTest2::SuiteGenerated(context_) {
+      ::OTest2::SuiteGenerated(context_, "SecondSuite") {
       registerAllCases();
     }
 

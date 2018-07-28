@@ -137,7 +137,7 @@ void GeneratorStd::suiteStartUp() {
       << "\n"
       << "    explicit " << pimpl->suite << "(\n"
       << "        const ::OTest2::Context& context_) :\n"
-      << "      ::OTest2::SuiteGenerated(context_)";
+      << "      ::OTest2::SuiteGenerated(context_, \"" << pimpl->suite << "\")";
   pimpl->variables->printInitializers(*pimpl->output, pimpl->indent + 1);
   *pimpl->output
       << " {\n"

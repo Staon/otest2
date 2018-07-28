@@ -24,13 +24,18 @@ libotest2_la_SOURCES = \
     casefactory.cpp \
     casegenerated.cpp \
     caseregistry.cpp \
+    cmddestroysuite.cpp \
+    cmdnextcase.cpp \
     cmdnextsuite.cpp \
+    cmdstartsuite.cpp \
     cmdstarttest.cpp \
     cmdstoptest.cpp \
     command.cpp \
     commandstack.cpp \
     context.cpp \
+    contextobject.cpp \
     exc.cpp \
+    object.cpp \
     registry.cpp \
     reporter.cpp \
     reporterdebug.cpp \
@@ -41,4 +46,5 @@ libotest2_la_SOURCES = \
     stateregistry.cpp \
     suite.cpp \
     suitefactory.cpp \
-    suitegenerated.cpp
+    suitegenerated.cpp \
+    suiteordinary.cpp

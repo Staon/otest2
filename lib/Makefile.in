@@ -133,11 +133,13 @@ am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libotest2_la_LIBADD =
 am_libotest2_la_OBJECTS = case.lo casefactory.lo casegenerated.lo \
-	caseregistry.lo cmdnextsuite.lo cmdstarttest.lo cmdstoptest.lo \
-	command.lo commandstack.lo context.lo exc.lo registry.lo \
-	reporter.lo reporterdebug.lo runner.lo runnerordinary.lo \
-	state.lo stategenerated.lo stateregistry.lo suite.lo \
-	suitefactory.lo suitegenerated.lo
+	caseregistry.lo cmddestroysuite.lo cmdnextcase.lo \
+	cmdnextsuite.lo cmdstartsuite.lo cmdstarttest.lo \
+	cmdstoptest.lo command.lo commandstack.lo context.lo \
+	contextobject.lo exc.lo object.lo registry.lo reporter.lo \
+	reporterdebug.lo runner.lo runnerordinary.lo state.lo \
+	stategenerated.lo stateregistry.lo suite.lo suitefactory.lo \
+	suitegenerated.lo suiteordinary.lo
 libotest2_la_OBJECTS = $(am_libotest2_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -353,13 +355,18 @@ libotest2_la_SOURCES = \
     casefactory.cpp \
     casegenerated.cpp \
     caseregistry.cpp \
+    cmddestroysuite.cpp \
+    cmdnextcase.cpp \
     cmdnextsuite.cpp \
+    cmdstartsuite.cpp \
     cmdstarttest.cpp \
     cmdstoptest.cpp \
     command.cpp \
     commandstack.cpp \
     context.cpp \
+    contextobject.cpp \
     exc.cpp \
+    object.cpp \
     registry.cpp \
     reporter.cpp \
     reporterdebug.cpp \
@@ -370,7 +377,8 @@ libotest2_la_SOURCES = \
     stateregistry.cpp \
     suite.cpp \
     suitefactory.cpp \
-    suitegenerated.cpp
+    suitegenerated.cpp \
+    suiteordinary.cpp
 
 all: all-am
 
@@ -454,13 +462,18 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/casefactory.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/casegenerated.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/caseregistry.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cmddestroysuite.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cmdnextcase.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cmdnextsuite.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cmdstartsuite.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cmdstarttest.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cmdstoptest.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/command.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/commandstack.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/context.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/contextobject.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exc.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/object.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/registry.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reporter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reporterdebug.Plo@am__quote@
@@ -472,6 +485,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/suite.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/suitefactory.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/suitegenerated.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/suiteordinary.Plo@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

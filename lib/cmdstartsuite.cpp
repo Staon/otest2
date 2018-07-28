@@ -17,46 +17,31 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cmdnextsuite.h>
+#include <cmdstartsuite.h>
 
 #include <assert.h>
-#include <memory>
 
-#include <commandstack.h>
 #include <context.h>
-#include <registry.h>
-#include <suitefactory.h>
-#include <suitefactoryptr.h>
-#include <suite.h>
-#include <suiteptr.h>
+#include <reporter.h>
+#include <suiteordinary.h>
 
 namespace OTest2 {
 
-CmdNextSuite::CmdNextSuite(
-    Registry* registry_,
-    int current_) :
-  registry(registry_),
-  current(current_) {
-  assert(registry != nullptr && current >= 0);
+CmdStartSuite::CmdStartSuite(
+    SuiteOrdinaryPtr suite_) :
+  suite(suite_) {
+  assert(!suite.isNull());
 
 }
 
-CmdNextSuite::~CmdNextSuite() {
+CmdStartSuite::~CmdStartSuite() {
 
 }
 
-void CmdNextSuite::run(
+void CmdStartSuite::run(
     const Context& context_) {
-  SuiteFactoryPtr factory_(registry->getSuite(current));
-  if(factory_ != nullptr) {
-    /* -- schedule run of next suite */
-    context_.command_stack->pushCommand(
-        std::make_shared<CmdNextSuite>(registry, current + 1));
-
-    /* -- create the suite */
-    SuitePtr suite_(factory_->createSuite(context_));
-    suite_->scheduleRun(context_, suite_);
-  }
+  /* -- report start of the suite */
+  context_.reporter->enterSuite(context_, suite->getName());
 }
 
-} /* -- namespace OTest2 */
+} /* namespace OTest2 */

@@ -17,17 +17,40 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-#ifndef OTest2__INCLUDE_OTEST2_SUITEPTR_H_
-#define OTest2__INCLUDE_OTEST2_SUITEPTR_H_
-
-#include <otest2/objectptr.h>
+#ifndef OTest2__INCLUDE_OTEST2_CONTEXTOBJECT_H_
+#define OTest2__INCLUDE_OTEST2_CONTEXTOBJECT_H_
 
 namespace OTest2 {
 
-class Suite;
-typedef ObjectPtr<Suite> SuitePtr;
+class Context;
 
-}  /* -- namespace OTest2 */
+/**
+ * @brief A generix interface of objects which offers OTest2 context
+ */
+class ContextObject {
+  public:
+    /* -- avoid copying */
+    ContextObject(
+        const ContextObject&) = delete;
+    ContextObject& operator =(
+        const ContextObject&) = delete;
 
-#endif /* OTest2__INCLUDE_OTEST2_SUITEPTR_H_ */
+    /**
+     * @brief Ctor
+     */
+    ContextObject();
+
+    /**
+     * @brief Dtor
+     */
+    virtual ~ContextObject();
+
+    /**
+     * @brief Get the OTest2 context
+     */
+    virtual const Context& otest2Context() const = 0;
+};
+
+} /* namespace OTest2 */
+
+#endif /* OTest2__INCLUDE_OTEST2_CONTEXTOBJECT_H_ */

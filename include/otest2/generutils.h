@@ -64,7 +64,7 @@ class SuiteGeneratedFactory : public SuiteFactory {
 
     virtual SuitePtr createSuite(
         const Context& context_) {
-      return std::make_shared<Suite_>(context_);
+      return makePointer<Suite_>(context_);
     }
 };
 

@@ -17,17 +17,16 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-#ifndef OTest2__INCLUDE_OTEST2_SUITEPTR_H_
-#define OTest2__INCLUDE_OTEST2_SUITEPTR_H_
-
-#include <otest2/objectptr.h>
+#include <object.h>
 
 namespace OTest2 {
 
-class Suite;
-typedef ObjectPtr<Suite> SuitePtr;
+Object::Object() {
 
-}  /* -- namespace OTest2 */
+}
 
-#endif /* OTest2__INCLUDE_OTEST2_SUITEPTR_H_ */
+Object::~Object() {
+
+}
+
+} /* namespace OTest2 */

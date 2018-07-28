@@ -17,46 +17,39 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cmdnextsuite.h>
+#include <suiteordinary.h>
 
 #include <assert.h>
 #include <memory>
 
+#include <cmddestroysuite.h>
+#include <cmdnextcase.h>
+#include <cmdstartsuite.h>
+#include <commandptr.h>
 #include <commandstack.h>
 #include <context.h>
-#include <registry.h>
-#include <suitefactory.h>
-#include <suitefactoryptr.h>
-#include <suite.h>
-#include <suiteptr.h>
 
 namespace OTest2 {
 
-CmdNextSuite::CmdNextSuite(
-    Registry* registry_,
-    int current_) :
-  registry(registry_),
-  current(current_) {
-  assert(registry != nullptr && current >= 0);
-
-}
-
-CmdNextSuite::~CmdNextSuite() {
-
-}
-
-void CmdNextSuite::run(
+SuiteOrdinary::SuiteOrdinary(
     const Context& context_) {
-  SuiteFactoryPtr factory_(registry->getSuite(current));
-  if(factory_ != nullptr) {
-    /* -- schedule run of next suite */
-    context_.command_stack->pushCommand(
-        std::make_shared<CmdNextSuite>(registry, current + 1));
 
-    /* -- create the suite */
-    SuitePtr suite_(factory_->createSuite(context_));
-    suite_->scheduleRun(context_, suite_);
-  }
 }
 
-} /* -- namespace OTest2 */
+SuiteOrdinary::~SuiteOrdinary() {
+
+}
+
+void SuiteOrdinary::scheduleRun(
+    const Context& context_,
+    SuitePtr this_ptr_) {
+  auto so_(this_ptr_.staticCast<SuiteOrdinary>());
+  assert(so_.get() == this);
+
+  /* -- schedule the commands */
+  context_.command_stack->pushCommand(std::make_shared<CmdDestroySuite>(so_));
+  context_.command_stack->pushCommand(std::make_shared<CmdNextCase>(so_, 0));
+  context_.command_stack->pushCommand(std::make_shared<CmdStartSuite>(so_));
+}
+
+} /* namespace OTest2 */

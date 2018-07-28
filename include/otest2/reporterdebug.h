@@ -56,6 +56,13 @@ class ReporterDebug : public Reporter {
     virtual void enterTest(
         const Context& context_,
         const std::string& name_);
+    virtual void enterSuite(
+        const Context& context_,
+        const std::string& name_);
+    virtual void leaveSuite(
+        const Context& context_,
+        const std::string& name_,
+        bool result_);
     virtual void leaveTest(
         const Context& context_,
         const std::string& name_,

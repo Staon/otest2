@@ -17,34 +17,28 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cmdstartsuite.h>
+#include <cmdstopcase.h>
 
 #include <assert.h>
 
-#include <context.h>
-#include <reporter.h>
-#include <suiteordinary.h>
+#include <caseordinary.h>
 
 namespace OTest2 {
 
-CmdStartSuite::CmdStartSuite(
-    SuiteOrdinaryPtr suite_) :
-  suite(suite_) {
-  assert(!suite.isNull());
+CmdStopCase::CmdStopCase(
+    CaseOrdinaryPtr case_) :
+  testcase(case_) {
+  assert(!testcase.isNull());
 
 }
 
-CmdStartSuite::~CmdStartSuite() {
+CmdStopCase::~CmdStopCase() {
 
 }
 
-void CmdStartSuite::run(
+void CmdStopCase::run(
     const Context& context_) {
-  /* -- report start of the suite */
-  context_.reporter->enterSuite(context_, suite->getName());
-
-  /* -- begin initialization of the suite */
-  suite->startUpSuite(context_);
+  testcase->tearDownCase(context_);
 }
 
 } /* namespace OTest2 */

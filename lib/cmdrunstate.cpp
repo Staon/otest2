@@ -17,34 +17,52 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cmdstartsuite.h>
+#include <cmdrunstate.h>
 
 #include <assert.h>
 
 #include <context.h>
 #include <reporter.h>
-#include <suiteordinary.h>
+#include <stateordinary.h>
 
 namespace OTest2 {
 
-CmdStartSuite::CmdStartSuite(
-    SuiteOrdinaryPtr suite_) :
-  suite(suite_) {
-  assert(!suite.isNull());
+CmdRunState::CmdRunState(
+    StateOrdinaryPtr state_,
+    bool wait_before_,
+    int delay_) :
+  state(state_),
+  wait_before(wait_before_),
+  delay(delay_) {
+  assert(!state.isNull() && (!wait_before || delay >= 0));
 
 }
 
-CmdStartSuite::~CmdStartSuite() {
+CmdRunState::~CmdRunState() {
 
 }
 
-void CmdStartSuite::run(
+bool CmdRunState::shouldWait(
+    const Context& context_,
+    int& delay_) {
+  if(wait_before) {
+    delay_ = delay;
+    return true;
+  }
+  else
+    return false;
+}
+
+void CmdRunState::run(
     const Context& context_) {
-  /* -- report start of the suite */
-  context_.reporter->enterSuite(context_, suite->getName());
+  /* -- report the state entrance */
+  context_.reporter->enterState(context_, state->getName());
 
-  /* -- begin initialization of the suite */
-  suite->startUpSuite(context_);
+  /* -- execute the state */
+  state->executeState(context_);
+
+  /* -- report end of the state */
+  context_.reporter->leaveState(context_, state->getName(), true);
 }
 
 } /* namespace OTest2 */

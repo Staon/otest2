@@ -22,7 +22,10 @@
 #include <assert.h>
 #include <memory>
 
+#include <cmddestroycase.h>
+#include <cmdfirststate.h>
 #include <cmdstartcase.h>
+#include <cmdstopcase.h>
 #include <commandptr.h>
 #include <commandstack.h>
 #include <context.h>
@@ -41,13 +44,14 @@ CaseOrdinary::~CaseOrdinary() {
 void CaseOrdinary::scheduleRun(
     const Context& context_,
     CasePtr this_ptr_) {
-  auto so_(this_ptr_.staticCast<CaseOrdinary>());
-  assert(so_.get() == this);
+  auto co_(this_ptr_.staticCast<CaseOrdinary>());
+  assert(co_.get() == this);
 
-//  /* -- schedule the commands */
-//  context_.command_stack->pushCommand(std::make_shared<CmdDestroySuite>(so_));
-//  context_.command_stack->pushCommand(std::make_shared<CmdNextCase>(so_, 0));
-  context_.command_stack->pushCommand(std::make_shared<CmdStartCase>(so_));
+  /* -- schedule the commands */
+  context_.command_stack->pushCommand(std::make_shared<CmdDestroyCase>(co_));
+  context_.command_stack->pushCommand(std::make_shared<CmdStopCase>(co_));
+  context_.command_stack->pushCommand(std::make_shared<CmdFirstState>(co_));
+  context_.command_stack->pushCommand(std::make_shared<CmdStartCase>(co_));
 }
 
 } /* namespace OTest2 */

@@ -17,34 +17,46 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cmdstartsuite.h>
+#ifndef OTest2__INCLUDE_OTEST2_CMDSTOPCASE_H_
+#define OTest2__INCLUDE_OTEST2_CMDSTOPCASE_H_
 
-#include <assert.h>
-
-#include <context.h>
-#include <reporter.h>
-#include <suiteordinary.h>
+#include <otest2/command.h>
+#include <otest2/caseordinaryptr.h>
 
 namespace OTest2 {
 
-CmdStartSuite::CmdStartSuite(
-    SuiteOrdinaryPtr suite_) :
-  suite(suite_) {
-  assert(!suite.isNull());
+/**
+ * @brief Stop a running suite
+ */
+class CmdStopCase : public Command {
+  private:
+    CaseOrdinaryPtr testcase;
 
-}
+  public:
+    /* -- avoid copying */
+    CmdStopCase(
+        const CmdStopCase&) = delete;
+    CmdStopCase& operator =(
+        const CmdStopCase&) = delete;
 
-CmdStartSuite::~CmdStartSuite() {
+    /**
+     * @brief Ctor
+     *
+     * @param case_ The ending case
+     */
+    explicit CmdStopCase(
+        CaseOrdinaryPtr case_);
 
-}
+    /**
+     * @brief Dtor
+     */
+    virtual ~CmdStopCase();
 
-void CmdStartSuite::run(
-    const Context& context_) {
-  /* -- report start of the suite */
-  context_.reporter->enterSuite(context_, suite->getName());
-
-  /* -- begin initialization of the suite */
-  suite->startUpSuite(context_);
-}
+    /* -- command interface */
+    virtual void run(
+        const Context& context_);
+};
 
 } /* namespace OTest2 */
+
+#endif /* OTest2__INCLUDE_OTEST2_CMDSTOPCASE_H_ */

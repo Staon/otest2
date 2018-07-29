@@ -17,58 +17,53 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OTest2__INCLUDE_OTEST2_STATEREGISTRY_H_
-#define OTest2__INCLUDE_OTEST2_STATEREGISTRY_H_
+#ifndef OTest2__INCLUDE_OTEST2_STATEORDINARY_H_
+#define OTest2__INCLUDE_OTEST2_STATEORDINARY_H_
 
-#include <string>
-
-#include <otest2/stateptr.h>
+#include <otest2/state.h>
 
 namespace OTest2 {
 
-/**
- * @brief Registry of test states
- */
-class StateRegistry {
-  private:
-    struct Impl;
-    Impl* pimpl;
+class Context;
 
+/**
+ * @brief Ordinary state class
+ */
+class StateOrdinary : public State {
   public:
     /* -- avoid copying */
-    StateRegistry(
-        const StateRegistry&) = delete;
-    StateRegistry& operator =(
-        const StateRegistry&) = delete;
+    StateOrdinary(
+        const StateOrdinary&) = delete;
+    StateOrdinary& operator =(
+        const StateOrdinary&) = delete;
 
     /**
      * @brief Ctor
+     *
+     * @param context_ The OTest2 context
      */
-    StateRegistry();
+    explicit StateOrdinary(
+        const Context& context_);
 
     /**
      * @brief Dtor
      */
-    ~StateRegistry();
+    virtual ~StateOrdinary();
 
     /**
-     * @brief Register new state
+     * @brief Run the state
      *
-     * @param name_ Name of the state
-     * @param state_ The state
+     * @param context_ The OTest2 context
      */
-    void registerState(
-        const std::string& name_,
-        StatePtr state_);
+    virtual void executeState(
+        const Context& context_) = 0;
 
-    /**
-     * @brief Get the initial state
-     *
-     * @return The state or the nullptr if the registry is empty.
-     */
-    StatePtr getFirstState() const;
+    /* -- state interface */
+    virtual void scheduleRun(
+        const Context& context_,
+        StatePtr this_ptr_);
 };
 
 } /* namespace OTest2 */
 
-#endif /* OTest2__INCLUDE_OTEST2_STATEREGISTRY_H_ */
+#endif /* OTest2__INCLUDE_OTEST2_STATEORDINARY_H_ */

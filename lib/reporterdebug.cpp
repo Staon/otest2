@@ -54,6 +54,19 @@ void ReporterDebug::enterCase(
   *os << "enterCase(" << name_ << ")" << std::endl;
 }
 
+void ReporterDebug::enterState(
+    const Context& context_,
+    const std::string& name_) {
+  *os << "enterState(" << name_ << ")" << std::endl;
+}
+
+void ReporterDebug::leaveState(
+    const Context& context_,
+    const std::string& name_,
+    bool result_) {
+  *os << "leaveState(" << name_ << ", " << result_ << ")" << std::endl;
+}
+
 void ReporterDebug::leaveCase(
     const Context& context_,
     const std::string& name_,

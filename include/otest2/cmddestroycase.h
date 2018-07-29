@@ -17,34 +17,43 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cmdstartsuite.h>
+#ifndef OTest2__INCLUDE_OTEST2_CMDDESTROYCASE_H_
+#define OTest2__INCLUDE_OTEST2_CMDDESTROYCASE_H_
 
-#include <assert.h>
-
-#include <context.h>
-#include <reporter.h>
-#include <suiteordinary.h>
+#include <otest2/command.h>
+#include <otest2/caseordinaryptr.h>
 
 namespace OTest2 {
 
-CmdStartSuite::CmdStartSuite(
-    SuiteOrdinaryPtr suite_) :
-  suite(suite_) {
-  assert(!suite.isNull());
+class CmdDestroyCase : public Command {
+  private:
+    CaseOrdinaryPtr testcase;
 
-}
+  public:
+    /* -- avoid copying */
+    CmdDestroyCase(
+        const CmdDestroyCase&) = delete;
+    CmdDestroyCase& operator =(
+        const CmdDestroyCase&) = delete;
 
-CmdStartSuite::~CmdStartSuite() {
+    /**
+     * @brief Ctor
+     *
+     * @param case_ The case being destroyed
+     */
+    explicit CmdDestroyCase(
+        CaseOrdinaryPtr case_);
 
-}
+    /**
+     * @brief Dtor
+     */
+    virtual ~CmdDestroyCase();
 
-void CmdStartSuite::run(
-    const Context& context_) {
-  /* -- report start of the suite */
-  context_.reporter->enterSuite(context_, suite->getName());
-
-  /* -- begin initialization of the suite */
-  suite->startUpSuite(context_);
-}
+    /* -- command interface */
+    virtual void run(
+        const Context& context_);
+};
 
 } /* namespace OTest2 */
+
+#endif /* OTest2__INCLUDE_OTEST2_CMDDESTROYCASE_H_ */

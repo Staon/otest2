@@ -25,6 +25,7 @@
 #include <cmddestroysuite.h>
 #include <cmdnextcase.h>
 #include <cmdstartsuite.h>
+#include <cmdstopsuite.h>
 #include <commandptr.h>
 #include <commandstack.h>
 #include <context.h>
@@ -48,6 +49,7 @@ void SuiteOrdinary::scheduleRun(
 
   /* -- schedule the commands */
   context_.command_stack->pushCommand(std::make_shared<CmdDestroySuite>(so_));
+  context_.command_stack->pushCommand(std::make_shared<CmdStopSuite>(so_));
   context_.command_stack->pushCommand(std::make_shared<CmdNextCase>(so_, 0));
   context_.command_stack->pushCommand(std::make_shared<CmdStartSuite>(so_));
 }

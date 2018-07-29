@@ -64,10 +64,10 @@ const Context& SuiteGenerated::otest2Context() const {
   return *pimpl->context;
 }
 
-void SuiteGenerated::registerCase(
-    const std::string& name_,
-    CaseFactoryPtr case_factory_) {
-  pimpl->case_registry.registerCase(name_, case_factory_);
+CaseFactoryPtr SuiteGenerated::getCase(
+    const Context& context_,
+    int index_) const {
+  return pimpl->case_registry.getCase(index_);
 }
 
 void SuiteGenerated::startUpSuite(
@@ -78,6 +78,12 @@ void SuiteGenerated::startUpSuite(
 void SuiteGenerated::tearDownSuite(
     const Context& context_) {
 
+}
+
+void SuiteGenerated::registerCase(
+    const std::string& name_,
+    CaseFactoryPtr case_factory_) {
+  pimpl->case_registry.registerCase(name_, case_factory_);
 }
 
 } /* -- namespace OTest2 */

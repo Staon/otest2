@@ -47,6 +47,15 @@ class SuiteGenerated : public SuiteOrdinary, public ContextObject {
     /* -- context object */
     virtual const Context& otest2Context() const;
 
+    /* -- suite ordinary */
+    virtual CaseFactoryPtr getCase(
+        const Context& context_,
+        int index_) const;
+    virtual void startUpSuite(
+        const Context& context_);
+    virtual void tearDownSuite(
+        const Context& context_);
+
   protected:
     /**
      * @brief Register new test case
@@ -57,13 +66,6 @@ class SuiteGenerated : public SuiteOrdinary, public ContextObject {
     void registerCase(
         const std::string& name_,
         CaseFactoryPtr case_factory_);
-
-  private:
-    /* -- suite ordinary */
-    virtual void startUpSuite(
-        const Context& context_);
-    virtual void tearDownSuite(
-        const Context& context_);
 };
 
 } /* -- namespace OTest2 */

@@ -60,6 +60,16 @@ class CaseRegistry {
     void registerCase(
         const std::string& name_,
         CaseFactoryPtr case_factory_);
+
+    /**
+     * @brief Get a test case at specified index
+     *
+     * @param index_ The index (zero based)
+     * @return The test case object or the nullptr if the index is out of
+     *     the bounds.
+     */
+    CaseFactoryPtr getCase(
+        int index_) const;
 };
 
 } /* namespace OTest2 */

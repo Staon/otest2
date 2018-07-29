@@ -1,6 +1,9 @@
 #ifndef OTest2INCLUDE_STATE_H_
 #define OTest2INCLUDE_STATE_H_
 
+#include <otest2/object.h>
+#include <otest2/stateptr.h>
+
 namespace OTest2 {
 
 class Context;
@@ -8,7 +11,7 @@ class Context;
 /**
  * @brief Generic test state interface
  */
-class State {
+class State : public Object {
   private:
     /* -- avoid copying */
     State(
@@ -28,12 +31,14 @@ class State {
     virtual ~State();
 
     /**
-     * @brief Execute the state
+     * @brief Schedule run of the state
      *
-     * @param context_ OTest2 context
+     * @param context_ The otest2 context
+     * @param this_ptr_ A smart pointer which keeps lifetime of this state
      */
-    virtual void runState(
-        const Context& context_) = 0;
+    virtual void scheduleRun(
+        const Context& context_,
+        StatePtr this_ptr_) = 0;
 };
 
 } /* -- namespace OTest2 */

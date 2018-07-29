@@ -17,34 +17,35 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cmdstartsuite.h>
+#include <stateordinary.h>
 
 #include <assert.h>
+#include <memory>
 
+#include <cmdrunstate.h>
+#include <commandstack.h>
 #include <context.h>
-#include <reporter.h>
-#include <suiteordinary.h>
+#include <state.h>
 
 namespace OTest2 {
 
-CmdStartSuite::CmdStartSuite(
-    SuiteOrdinaryPtr suite_) :
-  suite(suite_) {
-  assert(!suite.isNull());
-
-}
-
-CmdStartSuite::~CmdStartSuite() {
-
-}
-
-void CmdStartSuite::run(
+StateOrdinary::StateOrdinary(
     const Context& context_) {
-  /* -- report start of the suite */
-  context_.reporter->enterSuite(context_, suite->getName());
 
-  /* -- begin initialization of the suite */
-  suite->startUpSuite(context_);
+}
+
+StateOrdinary::~StateOrdinary() {
+
+}
+
+void StateOrdinary::scheduleRun(
+    const Context& context_,
+    StatePtr this_ptr_) {
+  auto so_(this_ptr_.staticCast<StateOrdinary>());
+  assert(so_.get() == this);
+
+  /* -- schedule the commands */
+  context_.command_stack->pushCommand(std::make_shared<CmdRunState>(so_, false, -1));
 }
 
 } /* namespace OTest2 */

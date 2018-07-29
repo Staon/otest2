@@ -30,6 +30,7 @@ struct StateRegistry::Impl {
   public:
     StateRegistry* owner;
 
+    StatePtr first_state;
     typedef std::map<std::string, StatePtr> States;
     States states;
 
@@ -46,7 +47,9 @@ struct StateRegistry::Impl {
 
 StateRegistry::Impl::Impl(
     StateRegistry* owner_) :
-  owner(owner_) {
+  owner(owner_),
+  first_state(),
+  states() {
 
 }
 
@@ -66,8 +69,14 @@ StateRegistry::~StateRegistry() {
 void StateRegistry::registerState(
     const std::string& name_,
     StatePtr state_) {
-  assert(!name_.empty() && state_ != nullptr);
+  assert(!name_.empty() && !state_.isNull());
   pimpl->states.insert(Impl::States::value_type(name_, state_));
+  if(pimpl->first_state.isNull())
+    pimpl->first_state = state_;
+}
+
+StatePtr StateRegistry::getFirstState() const {
+  return pimpl->first_state;
 }
 
 } /* namespace OTest2 */

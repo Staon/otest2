@@ -43,6 +43,13 @@ class CaseGenerated : public CaseOrdinary {
     /* -- object interface */
     virtual std::string getName() const;
 
+    /* -- case ordinary interface */
+    virtual StatePtr getFirstState() const;
+    virtual void startUpCase(
+        const Context& context_);
+    virtual void tearDownCase(
+        const Context& context_);
+
   protected:
     /**
      * @brief Register new test state
@@ -53,13 +60,6 @@ class CaseGenerated : public CaseOrdinary {
     void registerState(
         const std::string& name_,
         StatePtr state_);
-
-  private:
-    /* -- case ordinary */
-    virtual void startUpCase(
-        const Context& context_);
-    virtual void tearDownCase(
-        const Context& context_);
 };
 
 } /* -- namespace OTest2 */

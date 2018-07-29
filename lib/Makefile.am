@@ -25,12 +25,17 @@ libotest2_la_SOURCES = \
     casegenerated.cpp \
     caseordinary.cpp \
     caseregistry.cpp \
+    cmddestroycase.cpp \
     cmddestroysuite.cpp \
+    cmdfirststate.cpp \
     cmdnextcase.cpp \
     cmdnextsuite.cpp \
+    cmdrunstate.cpp \
     cmdstartcase.cpp \
     cmdstartsuite.cpp \
     cmdstarttest.cpp \
+    cmdstopcase.cpp \
+    cmdstopsuite.cpp \
     cmdstoptest.cpp \
     command.cpp \
     commandstack.cpp \
@@ -45,6 +50,7 @@ libotest2_la_SOURCES = \
     runnerordinary.cpp \
     state.cpp \
     stategenerated.cpp \
+    stateordinary.cpp \
     stateregistry.cpp \
     suite.cpp \
     suitefactory.cpp \

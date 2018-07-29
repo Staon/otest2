@@ -1,5 +1,8 @@
 #include <casegenerated.h>
 
+#include <string>
+
+#include <stateptr.h>
 #include <stateregistry.h>
 #include <utils.h>
 
@@ -53,10 +56,8 @@ std::string CaseGenerated::getName() const {
   return pimpl->name;
 }
 
-void CaseGenerated::registerState(
-    const std::string& name_,
-    StatePtr state_) {
-  pimpl->state_registry.registerState(name_, state_);
+StatePtr CaseGenerated::getFirstState() const {
+  return pimpl->state_registry.getFirstState();
 }
 
 void CaseGenerated::startUpCase(
@@ -67,6 +68,12 @@ void CaseGenerated::startUpCase(
 void CaseGenerated::tearDownCase(
     const Context& context_) {
 
+}
+
+void CaseGenerated::registerState(
+    const std::string& name_,
+    StatePtr state_) {
+  pimpl->state_registry.registerState(name_, state_);
 }
 
 } /* -- namespace OTest2 */

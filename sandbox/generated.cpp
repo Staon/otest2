@@ -128,7 +128,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
                 typename ::OTest2::TypeOfParent<int std::__cxx11::string::*>::Type mptr_,
                 typename ::OTest2::TypeOfParent<int (std::__cxx11::string::*)(int)>::Type mfce_,
                 typename ::OTest2::TypeOfParent<std::unique_ptr<std::string>>::Type temp1_) :
-              ::OTest2::StateGenerated(context_),
+              ::OTest2::StateGenerated(context_, "AnonymousState"),
               suite_text(suite_text_),
               case_var(case_var_),
               case_fce(case_fce_),
@@ -157,7 +157,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
         ::OTest2::StatePtr createState_AnonymousState(
             const ::OTest2::Context& context_) {
-          return std::make_shared<AnonymousState>(
+          return ::OTest2::makePointer<AnonymousState>(
               context_,
               suite_text,
               case_var,
@@ -239,7 +239,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
                 typename ::OTest2::TypeOfParent<std::string>::Type suite_text_,
                 typename ::OTest2::TypeOfParent<int>::Type case_a__,
                 typename ::OTest2::TypeOfParent<std::string>::Type case_b__) :
-              ::OTest2::StateGenerated(context_),
+              ::OTest2::StateGenerated(context_, "FirstState"),
               suite_text(suite_text_),
               case_a_(case_a__),
               case_b_(case_b__) {
@@ -260,7 +260,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
         ::OTest2::StatePtr createState_FirstState(
             const ::OTest2::Context& context_) {
-          return std::make_shared<FirstState>(
+          return ::OTest2::makePointer<FirstState>(
               context_,
               suite_text,
               case_a_,
@@ -285,7 +285,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
                 typename ::OTest2::TypeOfParent<std::string>::Type suite_text_,
                 typename ::OTest2::TypeOfParent<int>::Type case_a__,
                 typename ::OTest2::TypeOfParent<std::string>::Type case_b__) :
-              ::OTest2::StateGenerated(context_),
+              ::OTest2::StateGenerated(context_, "SecondState"),
               suite_text(suite_text_),
               case_a_(case_a__),
               case_b_(case_b__) {
@@ -304,7 +304,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
         ::OTest2::StatePtr createState_SecondState(
             const ::OTest2::Context& context_) {
-          return std::make_shared<SecondState>(
+          return ::OTest2::makePointer<SecondState>(
               context_,
               suite_text,
               case_a_,

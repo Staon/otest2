@@ -20,6 +20,7 @@
 #ifndef OTest2__INCLUDE_OTEST2_SUITEORDINARY_H_
 #define OTest2__INCLUDE_OTEST2_SUITEORDINARY_H_
 
+#include <otest2/casefactoryptr.h>
 #include <otest2/suite.h>
 
 namespace OTest2 {
@@ -53,12 +54,17 @@ class SuiteOrdinary : public Suite {
      */
     virtual ~SuiteOrdinary();
 
-    /* -- suite */
-    virtual void scheduleRun(
+    /**
+     * @brief Get a test case at specified index
+     *
+     * @param context_ The OTest2 context
+     * @param index_ Index of the test case (zero based)
+     * @return The test case or the nullptr if the index is out of the bounds.
+     */
+    virtual CaseFactoryPtr getCase(
         const Context& context_,
-        SuitePtr this_ptr_);
+        int index_) const = 0;
 
-  private:
     /**
      * @brief Initialize the suite
      *
@@ -74,6 +80,11 @@ class SuiteOrdinary : public Suite {
      */
     virtual void tearDownSuite(
         const Context& context_) = 0;
+
+    /* -- suite */
+    virtual void scheduleRun(
+        const Context& context_,
+        SuitePtr this_ptr_);
 };
 
 } /* namespace OTest2 */

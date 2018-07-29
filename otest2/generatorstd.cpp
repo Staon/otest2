@@ -249,7 +249,7 @@ void GeneratorStd::enterState(
   pimpl->variables->printParameters(*pimpl->output, pimpl->indent + 2);
   *pimpl -> output
       << ") :\n"
-      << "              ::OTest2::StateGenerated(context_)";
+      << "              ::OTest2::StateGenerated(context_, \"" << state_ << "\")";
   pimpl->variables->printInitializers(*pimpl->output, pimpl->indent + 1);
   *pimpl->output
       << " {\n"
@@ -298,7 +298,7 @@ void GeneratorStd::leaveState() {
   *pimpl->output
       << "        ::OTest2::StatePtr createState_" << pimpl->state << "(\n"
       << "            const ::OTest2::Context& context_) {\n"
-      << "          return std::make_shared<" << pimpl->state << ">(\n"
+      << "          return ::OTest2::makePointer<" << pimpl->state << ">(\n"
       << "              context_";
   pimpl->variables->printArguments(*pimpl->output, pimpl->indent + 3);
   *pimpl->output

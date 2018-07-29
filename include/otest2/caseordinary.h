@@ -21,6 +21,7 @@
 #define OTest2__INCLUDE_OTEST2_CASEORDINARY_H_
 
 #include <otest2/case.h>
+#include <otest2/stateptr.h>
 
 namespace OTest2 {
 
@@ -53,12 +54,13 @@ class CaseOrdinary : public Case {
      */
     virtual ~CaseOrdinary();
 
-    /* -- suite */
-    virtual void scheduleRun(
-        const Context& context_,
-        CasePtr this_ptr_);
+    /**
+     * @brief Get the initial state
+     *
+     * @return The state or nullptr if the case doesn't contain any one.
+     */
+    virtual StatePtr getFirstState() const = 0;
 
-  private:
     /**
      * @brief Initialize the case
      *
@@ -74,6 +76,11 @@ class CaseOrdinary : public Case {
      */
     virtual void tearDownCase(
         const Context& context_) = 0;
+
+    /* -- suite */
+    virtual void scheduleRun(
+        const Context& context_,
+        CasePtr this_ptr_);
 };
 
 } /* namespace OTest2 */

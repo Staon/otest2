@@ -42,6 +42,9 @@ void CmdStartCase::run(
     const Context& context_) {
   /* -- report start of the suite */
   context_.reporter->enterCase(context_, testcase->getName());
+
+  /* -- initialize the case */
+  testcase->startUpCase(context_);
 }
 
 } /* namespace OTest2 */

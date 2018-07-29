@@ -17,58 +17,46 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OTest2__INCLUDE_OTEST2_STATEREGISTRY_H_
-#define OTest2__INCLUDE_OTEST2_STATEREGISTRY_H_
+#ifndef OTest2__INCLUDE_OTEST2_CMDSTOPSUITE_H_
+#define OTest2__INCLUDE_OTEST2_CMDSTOPSUITE_H_
 
-#include <string>
-
-#include <otest2/stateptr.h>
+#include <otest2/command.h>
+#include <otest2/suiteordinaryptr.h>
 
 namespace OTest2 {
 
 /**
- * @brief Registry of test states
+ * @brief Stop a running suite
  */
-class StateRegistry {
+class CmdStopSuite : public Command {
   private:
-    struct Impl;
-    Impl* pimpl;
+    SuiteOrdinaryPtr suite;
 
   public:
     /* -- avoid copying */
-    StateRegistry(
-        const StateRegistry&) = delete;
-    StateRegistry& operator =(
-        const StateRegistry&) = delete;
+    CmdStopSuite(
+        const CmdStopSuite&) = delete;
+    CmdStopSuite& operator =(
+        const CmdStopSuite&) = delete;
 
     /**
      * @brief Ctor
+     *
+     * @param suite_ The ending suite
      */
-    StateRegistry();
+    explicit CmdStopSuite(
+        SuiteOrdinaryPtr suite_);
 
     /**
      * @brief Dtor
      */
-    ~StateRegistry();
+    virtual ~CmdStopSuite();
 
-    /**
-     * @brief Register new state
-     *
-     * @param name_ Name of the state
-     * @param state_ The state
-     */
-    void registerState(
-        const std::string& name_,
-        StatePtr state_);
-
-    /**
-     * @brief Get the initial state
-     *
-     * @return The state or the nullptr if the registry is empty.
-     */
-    StatePtr getFirstState() const;
+    /* -- command interface */
+    virtual void run(
+        const Context& context_);
 };
 
 } /* namespace OTest2 */
 
-#endif /* OTest2__INCLUDE_OTEST2_STATEREGISTRY_H_ */
+#endif /* OTest2__INCLUDE_OTEST2_CMDSTOPSUITE_H_ */

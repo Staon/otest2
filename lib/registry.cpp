@@ -70,8 +70,10 @@ void Registry::registerSuite(
     const std::string& name_,
     SuiteFactoryPtr suite_factory_) {
   assert(!name_.empty() && suite_factory_ != nullptr);
-  pimpl->registry.insert(Impl::SuiteRegistry::value_type(name_, suite_factory_));
-  pimpl->order.push_back(suite_factory_);
+  auto result_(pimpl->registry.insert(
+      Impl::SuiteRegistry::value_type(name_, suite_factory_)));
+  if(result_.second)
+    pimpl->order.push_back(suite_factory_);
 }
 
 SuiteFactoryPtr Registry::getSuite(

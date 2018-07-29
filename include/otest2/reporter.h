@@ -78,6 +78,28 @@ class Reporter {
         const std::string& name_) = 0;
 
     /**
+     * @brief Enter a state
+     *
+     * @param context_ the OTest2 context
+     * @param name_ Name of the state
+     */
+    virtual void enterState(
+        const Context& context_,
+        const std::string& name_) = 0;
+
+    /**
+     * @brief Leave a state
+     *
+     * @param context_ the OTest2 context
+     * @param name_ Name of the state
+     * @param result_ Result of the state
+     */
+    virtual void leaveState(
+        const Context& context_,
+        const std::string& name_,
+        bool result_) = 0;
+
+    /**
      * @brief Leave a case
      *
      * @param context_ the OTest2 context

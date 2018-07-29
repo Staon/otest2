@@ -20,7 +20,16 @@
 #include <cmdnextcase.h>
 
 #include <assert.h>
+#include <memory>
 
+#include <case.h>
+#include <casefactory.h>
+#include <casefactoryptr.h>
+#include <caseptr.h>
+#include <cmdstartcase.h>
+#include <commandptr.h>
+#include <commandstack.h>
+#include <context.h>
 #include <suiteordinary.h>
 
 namespace OTest2 {
@@ -40,7 +49,17 @@ CmdNextCase::~CmdNextCase() {
 
 void CmdNextCase::run(
     const Context& context_) {
-  /* -- TODO */
+  /* -- get the case factory */
+  CaseFactoryPtr factory_(suite->getCase(context_, current));
+  if(factory_ != nullptr) {
+    /* -- There is a case at the index. Schedule run of next one. */
+    context_.command_stack->pushCommand(
+        std::make_shared<CmdNextCase>(suite, current + 1));
+
+    /* -- Schedule run of the test case */
+    CasePtr testcase_(factory_->createCase(context_));
+    testcase_->scheduleRun(context_, testcase_);
+  }
 }
 
 } /* namespace OTest2 */

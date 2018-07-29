@@ -21,6 +21,7 @@
 
 #include <assert.h>
 #include <map>
+#include <vector>
 
 #include <utils.h>
 
@@ -32,6 +33,8 @@ struct CaseRegistry::Impl {
 
     typedef std::map<std::string, CaseFactoryPtr> CaseRegistryMap;
     CaseRegistryMap registry;
+    typedef std::vector<CaseFactoryPtr> Order;
+    Order order;
 
     /* -- avoid copying */
     Impl(
@@ -67,8 +70,18 @@ void CaseRegistry::registerCase(
     const std::string& name_,
     CaseFactoryPtr case_factory_) {
   assert(!name_.empty() && case_factory_ != nullptr);
-  pimpl->registry.insert(
-      Impl::CaseRegistryMap::value_type(name_, case_factory_));
+  auto result_(pimpl->registry.insert(
+      Impl::CaseRegistryMap::value_type(name_, case_factory_)));
+  if(result_.second)
+    pimpl->order.push_back(case_factory_);
+}
+
+CaseFactoryPtr CaseRegistry::getCase(
+    int index_) const {
+  if(index_ >= 0 && static_cast<Impl::Order::size_type>(index_) < pimpl->order.size())
+    return pimpl->order[index_];
+  else
+    return nullptr;
 }
 
 } /* namespace OTest2 */

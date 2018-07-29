@@ -23,10 +23,12 @@ libotest2_la_SOURCES = \
     case.cpp \
     casefactory.cpp \
     casegenerated.cpp \
+    caseordinary.cpp \
     caseregistry.cpp \
     cmddestroysuite.cpp \
     cmdnextcase.cpp \
     cmdnextsuite.cpp \
+    cmdstartcase.cpp \
     cmdstartsuite.cpp \
     cmdstarttest.cpp \
     cmdstoptest.cpp \

@@ -92,6 +92,7 @@ void GeneratorStd::beginFile() {
       << "\n"
       << "#include <otest2/casegenerated.h>\n"
       << "#include <otest2/generutils.h>\n"
+      << "#include <otest2/objectptr.h>\n"
       << "#include <otest2/registry.h>\n"
       << "#include <otest2/stategenerated.h>\n"
       << "#include <otest2/suitegenerated.h>\n"
@@ -197,7 +198,7 @@ void GeneratorStd::caseStartUp() {
   pimpl->variables->printParameters(*pimpl->output, pimpl->indent + 2);
   *pimpl->output
       << ") :\n"
-      << "          ::OTest2::CaseGenerated(context_)";
+      << "          ::OTest2::CaseGenerated(context_, \"" << pimpl->testcase << "\")";
   pimpl->variables->printInitializers(*pimpl->output, pimpl->indent + 1);
   *pimpl->output
       << " {\n"
@@ -333,7 +334,7 @@ void GeneratorStd::leaveCase() {
   *pimpl->output
       << "    ::OTest2::CasePtr createCase_" << pimpl->testcase << "(\n"
       << "        const ::OTest2::Context& context_) {\n"
-      << "      return std::make_shared<" << pimpl->testcase << ">(\n"
+      << "      return ::OTest2::makePointer<" << pimpl->testcase << ">(\n"
       << "          context_";
   pimpl->variables->printArguments(*pimpl->output, pimpl->indent + 3);
   *pimpl->output

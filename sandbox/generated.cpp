@@ -7,6 +7,7 @@
 
 #include <otest2/casegenerated.h>
 #include <otest2/generutils.h>
+#include <otest2/objectptr.h>
 #include <otest2/registry.h>
 #include <otest2/stategenerated.h>
 #include <otest2/suitegenerated.h>
@@ -75,7 +76,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
         explicit FirstCase(
             const ::OTest2::Context& context_,
             typename ::OTest2::TypeOfParent<std::string>::Type suite_text_) :
-          ::OTest2::CaseGenerated(context_),
+          ::OTest2::CaseGenerated(context_, "FirstCase"),
           suite_text(suite_text_),
           case_var(),
           case_fce(),
@@ -179,7 +180,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
     ::OTest2::CasePtr createCase_FirstCase(
         const ::OTest2::Context& context_) {
-      return std::make_shared<FirstCase>(
+      return ::OTest2::makePointer<FirstCase>(
           context_,
           suite_text);
     }
@@ -201,7 +202,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
         explicit SecondCase(
             const ::OTest2::Context& context_,
             typename ::OTest2::TypeOfParent<std::string>::Type suite_text_) :
-          ::OTest2::CaseGenerated(context_),
+          ::OTest2::CaseGenerated(context_, "SecondCase"),
           suite_text(suite_text_),
           case_a_(1000),
           case_b_("a") {
@@ -324,7 +325,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
     ::OTest2::CasePtr createCase_SecondCase(
         const ::OTest2::Context& context_) {
-      return std::make_shared<SecondCase>(
+      return ::OTest2::makePointer<SecondCase>(
           context_,
           suite_text);
     }

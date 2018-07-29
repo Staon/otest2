@@ -17,17 +17,16 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-#ifndef OTest2__INCLUDE_OTEST2_CASEPTR_H_
-#define OTest2__INCLUDE_OTEST2_CASEPTR_H_
+#ifndef OTest2__INCLUDE_OTEST2_CASEORDINARYPTR_H_
+#define OTest2__INCLUDE_OTEST2_CASEORDINARYPTR_H_
 
 #include <otest2/objectptr.h>
 
 namespace OTest2 {
 
-class Case;
-typedef ObjectPtr<Case> CasePtr;
+class CaseOrdinary;
+typedef ObjectPtr<CaseOrdinary> CaseOrdinaryPtr;
 
 } /* -- namespace OTest2 */
 
-#endif /* OTest2__INCLUDE_OTEST2_CASEPTR_H_ */
+#endif /* OTest2__INCLUDE_OTEST2_CASEORDINARYPTR_H_ */

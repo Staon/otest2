@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include <otest2/case.h>
+#include <otest2/caseordinary.h>
 #include <otest2/stateptr.h>
 
 namespace OTest2 {
@@ -13,7 +13,7 @@ class Context;
 /**
  * @brief Common implementation of a generated test case
  */
-class CaseGenerated : public Case {
+class CaseGenerated : public CaseOrdinary {
   private:
     struct Impl;
     Impl* pimpl;
@@ -29,14 +29,19 @@ class CaseGenerated : public Case {
      * @brief Ctor
      *
      * @param context_ OTest2 context
+     * @param name_ Name of the test case
      */
     explicit CaseGenerated(
-        const Context& context_);
+        const Context& context_,
+        const std::string& name_);
 
     /**
      * @brief Dtor
      */
     virtual ~CaseGenerated();
+
+    /* -- object interface */
+    virtual std::string getName() const;
 
   protected:
     /**
@@ -48,6 +53,13 @@ class CaseGenerated : public Case {
     void registerState(
         const std::string& name_,
         StatePtr state_);
+
+  private:
+    /* -- case ordinary */
+    virtual void startUpCase(
+        const Context& context_);
+    virtual void tearDownCase(
+        const Context& context_);
 };
 
 } /* -- namespace OTest2 */

@@ -17,17 +17,31 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <cmdstartcase.h>
 
-#ifndef OTest2__INCLUDE_OTEST2_CASEPTR_H_
-#define OTest2__INCLUDE_OTEST2_CASEPTR_H_
+#include <assert.h>
 
-#include <otest2/objectptr.h>
+#include <context.h>
+#include <reporter.h>
+#include <caseordinary.h>
 
 namespace OTest2 {
 
-class Case;
-typedef ObjectPtr<Case> CasePtr;
+CmdStartCase::CmdStartCase(
+    CaseOrdinaryPtr case_) :
+  testcase(case_) {
+  assert(!testcase.isNull());
 
-} /* -- namespace OTest2 */
+}
 
-#endif /* OTest2__INCLUDE_OTEST2_CASEPTR_H_ */
+CmdStartCase::~CmdStartCase() {
+
+}
+
+void CmdStartCase::run(
+    const Context& context_) {
+  /* -- report start of the suite */
+  context_.reporter->enterCase(context_, testcase->getName());
+}
+
+} /* namespace OTest2 */

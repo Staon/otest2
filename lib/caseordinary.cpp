@@ -17,17 +17,37 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <caseordinary.h>
 
-#ifndef OTest2__INCLUDE_OTEST2_CASEPTR_H_
-#define OTest2__INCLUDE_OTEST2_CASEPTR_H_
+#include <assert.h>
+#include <memory>
 
-#include <otest2/objectptr.h>
+#include <cmdstartcase.h>
+#include <commandptr.h>
+#include <commandstack.h>
+#include <context.h>
 
 namespace OTest2 {
 
-class Case;
-typedef ObjectPtr<Case> CasePtr;
+CaseOrdinary::CaseOrdinary(
+    const Context& context_) {
 
-} /* -- namespace OTest2 */
+}
 
-#endif /* OTest2__INCLUDE_OTEST2_CASEPTR_H_ */
+CaseOrdinary::~CaseOrdinary() {
+
+}
+
+void CaseOrdinary::scheduleRun(
+    const Context& context_,
+    CasePtr this_ptr_) {
+  auto so_(this_ptr_.staticCast<CaseOrdinary>());
+  assert(so_.get() == this);
+
+//  /* -- schedule the commands */
+//  context_.command_stack->pushCommand(std::make_shared<CmdDestroySuite>(so_));
+//  context_.command_stack->pushCommand(std::make_shared<CmdNextCase>(so_, 0));
+  context_.command_stack->pushCommand(std::make_shared<CmdStartCase>(so_));
+}
+
+} /* namespace OTest2 */

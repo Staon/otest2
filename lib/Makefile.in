@@ -138,7 +138,7 @@ am_libotest2_la_OBJECTS = case.lo casefactory.lo casegenerated.lo \
 	cmdnextsuite.lo cmdrunstate.lo cmdstartcase.lo \
 	cmdstartsuite.lo cmdstarttest.lo cmdstoptest.lo command.lo \
 	commandstack.lo context.lo contextobject.lo exc.lo object.lo \
-	registry.lo reporter.lo reporterdebug.lo runner.lo \
+	registry.lo reporter.lo reporterdebug.lo runcode.lo runner.lo \
 	runnerordinary.lo semanticstack.lo state.lo stategenerated.lo \
 	stateordinary.lo stateregistry.lo suite.lo suitefactory.lo \
 	suitegenerated.lo suiteordinary.lo
@@ -181,6 +181,24 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_@AM_V@)
+am__v_CC_ = $(am__v_CC_@AM_DEFAULT_V@)
+am__v_CC_0 = @echo "  CC      " $@;
+am__v_CC_1 = 
+CCLD = $(CC)
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_@AM_V@)
+am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
+am__v_CCLD_0 = @echo "  CCLD    " $@;
+am__v_CCLD_1 = 
 SOURCES = $(libotest2_la_SOURCES)
 DIST_SOURCES = $(libotest2_la_SOURCES)
 am__can_run_installinfo = \
@@ -378,6 +396,7 @@ libotest2_la_SOURCES = \
     registry.cpp \
     reporter.cpp \
     reporterdebug.cpp \
+    runcode.cpp runcode.h \
     runner.cpp \
     runnerordinary.cpp \
     semanticstack.cpp \
@@ -493,6 +512,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/registry.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reporter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reporterdebug.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runcode.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runner.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runnerordinary.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/semanticstack.Plo@am__quote@

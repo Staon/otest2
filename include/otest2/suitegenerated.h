@@ -66,6 +66,17 @@ class SuiteGenerated : public SuiteOrdinary, public ContextObject {
     void registerCase(
         const std::string& name_,
         CaseFactoryPtr case_factory_);
+
+  private:
+    /**
+     * @brief User start-up code
+     */
+    virtual void startUp() = 0;
+
+    /**
+     * @brief User clean-up code
+     */
+    virtual void tearDown() = 0;
 };
 
 } /* -- namespace OTest2 */

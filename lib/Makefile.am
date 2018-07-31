@@ -45,6 +45,7 @@ libotest2_la_SOURCES = \
     registry.cpp \
     reporter.cpp \
     reporterdebug.cpp \
+    runcode.cpp runcode.h \
     runner.cpp \
     runnerordinary.cpp \
     semanticstack.cpp \

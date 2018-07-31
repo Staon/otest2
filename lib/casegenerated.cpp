@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include "runcode.h"
 #include <stateptr.h>
 #include <stateregistry.h>
 #include <utils.h>
@@ -62,12 +63,16 @@ StatePtr CaseGenerated::getFirstState() const {
 
 void CaseGenerated::startUpCase(
     const Context& context_) {
-
+  runUserCode(context_, [this](const Context& context_) {
+    startUp();
+  });
 }
 
 void CaseGenerated::tearDownCase(
     const Context& context_) {
-
+  runUserCode(context_, [this](const Context& context_) {
+    tearDown();
+  });
 }
 
 void CaseGenerated::registerState(

@@ -60,6 +60,17 @@ class CaseGenerated : public CaseOrdinary {
     void registerState(
         const std::string& name_,
         StatePtr state_);
+
+  private:
+    /**
+     * @brief User start-up code
+     */
+    virtual void startUp() = 0;
+
+    /**
+     * @brief User clean-up code
+     */
+    virtual void tearDown() = 0;
 };
 
 } /* -- namespace OTest2 */

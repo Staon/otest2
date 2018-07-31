@@ -4,6 +4,7 @@
 
 #include <caseregistry.h>
 #include <context.h>
+#include "runcode.h"
 #include <utils.h>
 
 namespace OTest2 {
@@ -72,12 +73,16 @@ CaseFactoryPtr SuiteGenerated::getCase(
 
 void SuiteGenerated::startUpSuite(
     const Context& context_) {
-
+  runUserCode(context_, [this](const Context& context_) {
+    startUp();
+  });
 }
 
 void SuiteGenerated::tearDownSuite(
     const Context& context_) {
-
+  runUserCode(context_, [this](const Context& context_){
+    tearDown();
+  });
 }
 
 void SuiteGenerated::registerCase(

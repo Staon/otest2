@@ -45,6 +45,12 @@ class StateGenerated : public StateOrdinary {
     /* -- ordinary state interface */
     virtual void executeState(
         const Context& context_);
+
+  private:
+    /**
+     * @brief The user code
+     */
+    virtual void runState() = 0;
 };
 
 } /* -- namespace OTest2 */

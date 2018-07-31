@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include "runcode.h"
 #include <utils.h>
 
 namespace OTest2 {
@@ -56,7 +57,9 @@ std::string StateGenerated::getName() const {
 
 void StateGenerated::executeState(
     const Context& context_) {
-
+  runUserCode(context_, [this](const Context& context_) {
+    runState();
+  });
 }
 
 } /* -- namespace OTest2 */

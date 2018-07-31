@@ -15,13 +15,15 @@ TEST_SUITE(ExampleSuite) {
   TEST_START_UP() {
     /* -- make the string upper */
     suite_text = "foo";
+
+    std::cout << "StartUp" << std::endl;
   }
 
   TEST_CASE(FirstCase) {
     std::string (*(*case_var[10][20])())(std::string const * const);
     void (*case_fce)(int, const char* foo_);
     char (*(*fce2)())[10];
-    const char* (* const(*fce3)())[10];
+    const char* (* const(*fce3)())[10](nullptr);
     int std::string::* mptr;
     int (std::string::* mfce)(int);
     std::unique_ptr<std::string> temp1;
@@ -41,6 +43,8 @@ TEST_SUITE(ExampleSuite) {
           << case_fce << std::endl
           << fce2 << std::endl
           << fce3 << std::endl;
+
+      throw "ahoj";
     }
   }
 

@@ -48,6 +48,8 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
     virtual void startUp() {
     /* -- make the string upper */
     suite_text = "foo";
+
+    std::cout << "StartUp" << std::endl;
   }
 
     virtual void tearDown() {
@@ -81,7 +83,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
           case_var(),
           case_fce(),
           fce2(),
-          fce3(),
+          fce3(nullptr),
           mptr(),
           mfce(),
           temp1() {
@@ -144,14 +146,15 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
             }
 
-            virtual void runState(
-                const ::OTest2::Context& context_) {
+            virtual void runState() {
       std::cout
           << suite_text << std::endl
           << case_var << std::endl
           << case_fce << std::endl
           << fce2 << std::endl
           << fce3 << std::endl;
+
+      throw "ahoj";
     }
         };
 
@@ -250,8 +253,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
             }
 
-            virtual void runState(
-                const ::OTest2::Context& context_) {
+            virtual void runState() {
       int a_(10);
       int b_(a_ + 10);
       int c_(1010);
@@ -296,8 +298,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
             }
 
-            virtual void runState(
-                const ::OTest2::Context& context_) {
+            virtual void runState() {
 
     }
         };

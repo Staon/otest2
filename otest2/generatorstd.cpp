@@ -260,8 +260,7 @@ void GeneratorStd::enterState(
       << "\n"
       << "            }\n"
       << "\n"
-      << "            virtual void runState(\n"
-      << "                const ::OTest2::Context& context_) ";
+      << "            virtual void runState() ";
 }
 
 void GeneratorStd::emptyBody() {

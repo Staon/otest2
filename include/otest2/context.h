@@ -5,6 +5,7 @@ namespace OTest2 {
 
 class CommandStack;
 class Reporter;
+class SemanticStack;
 
 /**
  * @brief OTest2 runtime context
@@ -12,6 +13,7 @@ class Reporter;
 class Context {
   public:
     CommandStack* const command_stack;
+    SemanticStack* const semantic_stack;
     Reporter* const reporter;
 
     /* -- avoid copying */
@@ -25,6 +27,7 @@ class Context {
      */
     explicit Context(
         CommandStack* command_stack_,
+        SemanticStack* semantic_stack_,
         Reporter* reporter_);
 
     /**

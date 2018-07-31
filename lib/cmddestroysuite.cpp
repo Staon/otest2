@@ -23,6 +23,7 @@
 
 #include <context.h>
 #include <reporter.h>
+#include <semanticstack.h>
 #include <suiteordinary.h>
 
 namespace OTest2 {
@@ -40,8 +41,15 @@ CmdDestroySuite::~CmdDestroySuite() {
 
 void CmdDestroySuite::run(
     const Context& context_) {
+  /* -- clean up the suite */
+  suite->tearDownSuite(context_);
+
   /* -- report finishing of the suite */
-  context_.reporter->leaveSuite(context_, suite->getName(), true);
+  context_.reporter->leaveSuite(
+      context_, suite->getName(), context_.semantic_stack->top());
+
+  /* -- return the value */
+  context_.semantic_stack->popAnd();
 }
 
 } /* namespace OTest2 */

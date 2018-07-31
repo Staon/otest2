@@ -20,10 +20,15 @@
 #include <cmdstartcase.h>
 
 #include <assert.h>
+#include <memory>
 
+#include <cmddestroycase.h>
+#include <cmdfirststate.h>
+#include <commandstack.h>
 #include <context.h>
 #include <reporter.h>
 #include <caseordinary.h>
+#include <semanticstack.h>
 
 namespace OTest2 {
 
@@ -43,8 +48,25 @@ void CmdStartCase::run(
   /* -- report start of the suite */
   context_.reporter->enterCase(context_, testcase->getName());
 
+  /* -- prepare the return value */
+  context_.semantic_stack->push(true);
+
   /* -- initialize the case */
   testcase->startUpCase(context_);
+  if(!context_.semantic_stack->top()) {
+    /* -- the initialization failed */
+    context_.reporter->leaveCase(context_, testcase->getName(), false);
+    context_.semantic_stack->popAnd();
+  }
+  else {
+    /* -- clean-up of the case */
+    context_.command_stack->pushCommand(
+        std::make_shared<CmdDestroyCase>(testcase));
+
+    /* -- run first test state */
+    context_.command_stack->pushCommand(
+        std::make_shared<CmdFirstState>(testcase));
+  }
 }
 
 } /* namespace OTest2 */

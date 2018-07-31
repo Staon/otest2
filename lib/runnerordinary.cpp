@@ -29,6 +29,7 @@
 #include <commandstack.h>
 #include <context.h>
 #include <reporter.h>
+#include <semanticstack.h>
 #include <utils.h>
 
 namespace OTest2 {
@@ -37,7 +38,8 @@ struct RunnerOrdinary::Impl {
   public:
     RunnerOrdinary* owner;
 
-    CommandStack stack;
+    CommandStack command_stack;
+    SemanticStack semantic_stack;
     Registry* registry;
     std::string name;
     Context context;
@@ -62,14 +64,16 @@ RunnerOrdinary::Impl::Impl(
     Registry* registry_,
     const std::string& name_) :
   owner(owner_),
-  stack(),
+  command_stack(),
+  semantic_stack(),
   registry(registry_),
   name(name_),
-  context(&stack, reporter_) {
+  context(&command_stack, &semantic_stack, reporter_) {
   assert(registry != nullptr && context.reporter != nullptr);
 
   /* -- prepare start of the test */
-  stack.pushCommand(std::make_shared<CmdStartTest>(name, registry));
+  command_stack.pushCommand(std::make_shared<CmdStartTest>(name, registry));
+  semantic_stack.push(true); /* -- test passes by default */
 }
 
 RunnerOrdinary::Impl::~Impl() {
@@ -90,8 +94,8 @@ RunnerOrdinary::~RunnerOrdinary() {
 
 int RunnerOrdinary::runNext() {
   bool first_command_(true);
-  while(!pimpl->stack.empty()) {
-    CommandPtr cmd_(pimpl->stack.topCommand());
+  while(!pimpl->command_stack.empty()) {
+    CommandPtr cmd_(pimpl->command_stack.topCommand());
 
     /* -- check whether we should get back into the main loop */
     int delay_(0);
@@ -102,7 +106,7 @@ int RunnerOrdinary::runNext() {
 
     /* -- run the command */
     first_command_ = false;
-    pimpl->stack.popCommand();
+    pimpl->command_stack.popCommand();
     cmd_->run(pimpl->context);
   }
 

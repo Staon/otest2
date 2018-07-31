@@ -17,28 +17,21 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cmdstopcase.h>
-
-#include <assert.h>
-
-#include <caseordinary.h>
+#include <cmddummy.h>
 
 namespace OTest2 {
 
-CmdStopCase::CmdStopCase(
-    CaseOrdinaryPtr case_) :
-  testcase(case_) {
-  assert(!testcase.isNull());
+CmdDummy::CmdDummy() {
 
 }
 
-CmdStopCase::~CmdStopCase() {
+CmdDummy::~CmdDummy() {
 
 }
 
-void CmdStopCase::run(
+void CmdDummy::run(
     const Context& context_) {
-  testcase->tearDownCase(context_);
+  /* -- nothing to do */
 }
 
 } /* namespace OTest2 */

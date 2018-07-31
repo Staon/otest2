@@ -22,10 +22,7 @@
 #include <assert.h>
 #include <memory>
 
-#include <cmddestroycase.h>
-#include <cmdfirststate.h>
 #include <cmdstartcase.h>
-#include <cmdstopcase.h>
 #include <commandptr.h>
 #include <commandstack.h>
 #include <context.h>
@@ -48,9 +45,6 @@ void CaseOrdinary::scheduleRun(
   assert(co_.get() == this);
 
   /* -- schedule the commands */
-  context_.command_stack->pushCommand(std::make_shared<CmdDestroyCase>(co_));
-  context_.command_stack->pushCommand(std::make_shared<CmdStopCase>(co_));
-  context_.command_stack->pushCommand(std::make_shared<CmdFirstState>(co_));
   context_.command_stack->pushCommand(std::make_shared<CmdStartCase>(co_));
 }
 

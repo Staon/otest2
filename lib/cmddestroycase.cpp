@@ -24,6 +24,7 @@
 #include <context.h>
 #include <reporter.h>
 #include <caseordinary.h>
+#include <semanticstack.h>
 
 namespace OTest2 {
 
@@ -40,8 +41,15 @@ CmdDestroyCase::~CmdDestroyCase() {
 
 void CmdDestroyCase::run(
     const Context& context_) {
+  /* -- clean up the case */
+  testcase->tearDownCase(context_);
+
   /* -- report finishing of the suite */
-  context_.reporter->leaveCase(context_, testcase->getName(), true);
+  context_.reporter->leaveCase(
+      context_, testcase->getName(), context_.semantic_stack->top());
+
+  /* -- return the case value */
+  context_.semantic_stack->popAnd();
 }
 
 } /* namespace OTest2 */

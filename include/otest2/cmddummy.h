@@ -17,28 +17,39 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cmdstopsuite.h>
+#ifndef OTest2__INCLUDE_OTEST2_CMDDUMMY_H_
+#define OTest2__INCLUDE_OTEST2_CMDDUMMY_H_
 
-#include <assert.h>
-
-#include <suiteordinary.h>
+#include <otest2/command.h>
 
 namespace OTest2 {
 
-CmdStopSuite::CmdStopSuite(
-    SuiteOrdinaryPtr suite_) :
-  suite(suite_) {
-  assert(!suite.isNull());
+/**
+ * @brief Dummy (NOP) command
+ */
+class CmdDummy : public Command {
+  public:
+    /* -- avoid copying */
+    CmdDummy(
+        const CmdDummy&) = delete;
+    CmdDummy& operator =(
+        const CmdDummy&) = delete;
 
-}
+    /**
+     * @brief Ctor
+     */
+    CmdDummy();
 
-CmdStopSuite::~CmdStopSuite() {
+    /**
+     * @brief Dtor
+     */
+    virtual ~CmdDummy();
 
-}
-
-void CmdStopSuite::run(
-    const Context& context_) {
-  suite->tearDownSuite(context_);
-}
+    /* -- command interface */
+    virtual void run(
+        const Context& context_);
+};
 
 } /* namespace OTest2 */
+
+#endif /* OTest2__INCLUDE_OTEST2_CMDDUMMY_H_ */

@@ -20,9 +20,14 @@
 #include <cmdstartsuite.h>
 
 #include <assert.h>
+#include <memory>
 
+#include <cmddestroysuite.h>
+#include <cmdnextcase.h>
+#include <commandstack.h>
 #include <context.h>
 #include <reporter.h>
+#include <semanticstack.h>
 #include <suiteordinary.h>
 
 namespace OTest2 {
@@ -43,8 +48,25 @@ void CmdStartSuite::run(
   /* -- report start of the suite */
   context_.reporter->enterSuite(context_, suite->getName());
 
+  /* -- prepare suite's result */
+  context_.semantic_stack->push(true);
+
   /* -- begin initialization of the suite */
   suite->startUpSuite(context_);
+  if(!context_.semantic_stack->top()) {
+    /* -- initialization failed */
+    context_.reporter->leaveSuite(context_, suite->getName(), false);
+    context_.semantic_stack->popAnd();
+  }
+  else {
+    /* -- initialization passed - push the clean-up command */
+    context_.command_stack->pushCommand(
+        std::make_shared<CmdDestroySuite>(suite));
+
+    /* -- run the suite */
+    context_.command_stack->pushCommand(
+        std::make_shared<CmdNextCase>(suite, 0));
+  }
 }
 
 } /* namespace OTest2 */

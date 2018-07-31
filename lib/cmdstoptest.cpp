@@ -21,6 +21,7 @@
 
 #include <context.h>
 #include <reporter.h>
+#include <semanticstack.h>
 
 namespace OTest2 {
 
@@ -37,7 +38,11 @@ CmdStopTest::~CmdStopTest() {
 void CmdStopTest::run(
     const Context& context_) {
   /* -- report the end of the test */
-  context_.reporter->leaveTest(context_, name, true);
+  context_.reporter->leaveTest(
+      context_, name, context_.semantic_stack->top());
+
+  /* -- clean up the stack */
+  context_.semantic_stack->pop();
 }
 
 } /* -- namespace OTest2 */

@@ -45,7 +45,8 @@ void StateOrdinary::scheduleRun(
   assert(so_.get() == this);
 
   /* -- schedule the commands */
-  context_.command_stack->pushCommand(std::make_shared<CmdRunState>(so_, false, -1));
+  context_.command_stack->pushCommand(
+      std::make_shared<CmdRunState>(so_, false, -1));
 }
 
 } /* namespace OTest2 */

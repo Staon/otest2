@@ -20,9 +20,13 @@
 #include <cmdrunstate.h>
 
 #include <assert.h>
+#include <memory>
 
+#include <cmddummy.h>
+#include <commandstack.h>
 #include <context.h>
 #include <reporter.h>
+#include <semanticstack.h>
 #include <stateordinary.h>
 
 namespace OTest2 {
@@ -58,11 +62,23 @@ void CmdRunState::run(
   /* -- report the state entrance */
   context_.reporter->enterState(context_, state->getName());
 
+  /* -- Prepare a dummy command. The test state can replace it by
+   *    a command switching another state. */
+  context_.command_stack->pushCommand(std::make_shared<CmdDummy>());
+  /* -- prepare the return value of the state */
+  context_.semantic_stack->push(true);
   /* -- execute the state */
   state->executeState(context_);
 
   /* -- report end of the state */
-  context_.reporter->leaveState(context_, state->getName(), true);
+  context_.reporter->leaveState(
+      context_, state->getName(), context_.semantic_stack->top());
+
+  /* -- note: I don't do that yet, but if you want to stop the test
+   *    if an error happens all you must do is just popping of last command. */
+
+  /* -- return the value */
+  context_.semantic_stack->popAnd();
 }
 
 } /* namespace OTest2 */

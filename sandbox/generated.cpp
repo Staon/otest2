@@ -283,8 +283,10 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
       int a_(10);
       int b_(a_ + 10);
       int c_(1010);
+
+      testAssert(a_ == b_);
     }
-#line 288 "generated.cpp"
+#line 290 "generated.cpp"
 
         };
 
@@ -327,11 +329,11 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
             }
 
             virtual void runState() 
-#line 65 "example.cpp"
+#line 67 "example.cpp"
 {
 
     }
-#line 335 "generated.cpp"
+#line 337 "generated.cpp"
 
         };
 
@@ -378,11 +380,11 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
     }
 };
 
-#line 69 "example.cpp"
+#line 71 "example.cpp"
 
 
 
-#line 386 "generated.cpp"
+#line 388 "generated.cpp"
 class SecondSuite : public ::OTest2::SuiteGenerated {
   private:
 
@@ -432,7 +434,7 @@ class SuiteRegistrator {
 
 } /* -- namespace */
 
-#line 73 "example.cpp"
+#line 75 "example.cpp"
 
 
 } /* -- namespace Test */

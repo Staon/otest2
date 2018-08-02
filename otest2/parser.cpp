@@ -187,6 +187,33 @@ void ParserContext::moveToEnd(
   last_location = createLocation(srcmgr, range_.getEnd());
 }
 
+class AssertVisitor : public clang::RecursiveASTVisitor<AssertVisitor> {
+  public:
+    explicit AssertVisitor();
+    virtual ~AssertVisitor();
+
+    bool VisitCallExpr(
+        clang::CallExpr* expr_);
+};
+
+AssertVisitor::AssertVisitor() {
+
+}
+
+AssertVisitor::~AssertVisitor() {
+
+}
+
+bool AssertVisitor::VisitCallExpr(
+    clang::CallExpr* expr_) {
+  auto callee_(expr_->getReferencedDeclOfCallee());
+  if(callee_->isFunctionOrFunctionTemplate()) {
+    auto fce_(callee_->getAsFunction());
+    std::cout << "\n\nassertion: " << fce_->getNameAsString() << std::endl;
+  }
+  return true;
+}
+
 class SuiteVisitor : public clang::RecursiveASTVisitor<SuiteVisitor> {
   private:
     ParserContext* context;
@@ -429,7 +456,7 @@ bool SuiteVisitor::parseCaseBody(
             continue;
           }
 
-          context->setError("invalid suite item", *iter_);
+          context->setError("invalid case item", *iter_);
           return false;
         }
       }
@@ -465,7 +492,7 @@ bool SuiteVisitor::parseCaseBody(
             continue;
           }
 
-          context->setError("invalid suite item", *iter_);
+          context->setError("invalid case item", *iter_);
           return false;
         }
       }
@@ -477,11 +504,16 @@ bool SuiteVisitor::parseCaseBody(
         context->copyInputOfNode(*iter_);
         context->generator->leaveState();
         context->state = ParserContext::CASE_TEAR_DOWN_END;
+
+        std::cout << "\n\nvisiting" << std::endl;
+        AssertVisitor visitor_;
+        visitor_.TraverseCompoundStmt(block_);
+
         break;
       }
 
       default:
-        context->setError("invalid suite item", *iter_);
+        context->setError("invalid case item", *iter_);
         return false;
     }
   }

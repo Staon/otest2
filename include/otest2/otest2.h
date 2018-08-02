@@ -20,13 +20,24 @@
 #ifndef OTest2__INCLUDE_OTEST2_OTEST2_H_
 #define OTest2__INCLUDE_OTEST2_OTEST2_H_
 
+namespace OTest2 {
+
+namespace Assertions {
+
+void testAssert(bool condition_);
+
+} /* -- namespace Assertions */
+
+} /* -- namespace OTest2 */
+
 #ifndef OTEST2_PARSER_ACTIVE
 
-#define TEST_START_UP()
-#define TEST_TEAR_DOWN()
-#define TEST_SUITE(name_) void name_()
-#define TEST_CASE(name_)
-#define TEST_STATE(name_)
+#define TEST_START_UP() void startUp()
+#define TEST_TEAR_DOWN() void tearDown()
+#define TEST_SUITE(name_) namespace name_ { using namespace ::OTest2::Assertions; } namespace name_
+#define TEST_CASE(name_) namespace name_
+#define TEST_STATE(name_) void name_()
+#define TEST_SIMPLE() TEST_STATE(AnonymousState)
 
 #else /* -- OTEST2_PARSER_ACTIVE */
 
@@ -39,11 +50,14 @@ struct StateMark { };
 
 } /* -- namespace OTest2 */
 
+using namespace ::OTest2::Assertions;
+
 #define TEST_START_UP() OTest2::StartUpMark otest2_start_up_mark;
 #define TEST_TEAR_DOWN() OTest2::TearDownMark otest2_tear_down_mark;
 #define TEST_SUITE(name_) void name_() __attribute__((annotate("otest2::suite")))
 #define TEST_CASE(name_) OTest2::CaseMark name_;
 #define TEST_STATE(name_) OTest2::StateMark name_;
+#define TEST_SIMPLE() TEST_STATE(AnonymousState)
 
 #endif /* -- OTEST2_PARSER_ACTIVE */
 

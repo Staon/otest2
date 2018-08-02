@@ -19,6 +19,8 @@
 
 #include <contextobject.h>
 
+#include <iostream>
+
 namespace OTest2 {
 
 ContextObject::ContextObject() {
@@ -27,6 +29,11 @@ ContextObject::ContextObject() {
 
 ContextObject::~ContextObject() {
 
+}
+
+void ContextObject::testAssert(
+    bool condition_) {
+  std::cout << "assert: " << condition_ << std::endl;
 }
 
 } /* namespace OTest2 */

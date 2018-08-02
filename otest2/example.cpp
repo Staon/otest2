@@ -36,7 +36,7 @@ TEST_SUITE(ExampleSuite) {
 
     }
 
-    {
+    TEST_SIMPLE() {
       std::cout
           << suite_text << std::endl
           << case_var << std::endl
@@ -60,6 +60,8 @@ TEST_SUITE(ExampleSuite) {
       int a_(10);
       int b_(a_ + 10);
       int c_(1010);
+
+      testAssert(a_ == b_);
     }
 
     TEST_STATE(SecondState) {

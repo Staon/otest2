@@ -49,6 +49,9 @@ class ContextObject {
      * @brief Get the OTest2 context
      */
     virtual const Context& otest2Context() const = 0;
+
+    void testAssert(
+        bool condition_);
 };
 
 } /* namespace OTest2 */

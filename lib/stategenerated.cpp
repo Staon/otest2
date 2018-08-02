@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include <context.h>
 #include "runcode.h"
 #include <utils.h>
 
@@ -11,6 +12,7 @@ struct StateGenerated::Impl {
   public:
     StateGenerated* owner;
 
+    const Context* context;
     std::string name;
 
     /* -- avoid copying */
@@ -31,6 +33,7 @@ StateGenerated::Impl::Impl(
     const Context& context_,
     const std::string& name_) :
   owner(owner_),
+  context(&context_),
   name(name_) {
 
 }
@@ -60,6 +63,10 @@ void StateGenerated::executeState(
   runUserCode(context_, [this](const Context& context_) {
     runState();
   });
+}
+
+const Context& StateGenerated::otest2Context() const {
+  return *pimpl->context;
 }
 
 } /* -- namespace OTest2 */

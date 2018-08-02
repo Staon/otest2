@@ -12,6 +12,8 @@
 #include <otest2/stategenerated.h>
 #include <otest2/suitegenerated.h>
 
+
+#line 1 "example.cpp"
 #include "../include/otest2/otest2.h"
 
 #include <iostream>
@@ -23,6 +25,8 @@ namespace Test {
 /**
  * @brief Example test suite
  */
+
+#line 30 "generated.cpp"
 class ExampleSuite : public ::OTest2::SuiteGenerated {
   private:
     typename ::OTest2::TypeOfMine<std::string>::Type suite_text;
@@ -45,12 +49,16 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
     }
 
-    virtual void startUp() {
+    virtual void startUp() 
+#line 15 "example.cpp"
+{
     /* -- make the string upper */
     suite_text = "foo";
 
     std::cout << "StartUp" << std::endl;
   }
+#line 61 "generated.cpp"
+
 
     virtual void tearDown() {
 
@@ -94,13 +102,21 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
         }
 
-        virtual void startUp() {
+        virtual void startUp() 
+#line 31 "example.cpp"
+{
 
     }
+#line 111 "generated.cpp"
 
-        virtual void tearDown() {
+
+        virtual void tearDown() 
+#line 35 "example.cpp"
+{
 
     }
+#line 119 "generated.cpp"
+
 
         class AnonymousState : public ::OTest2::StateGenerated {
           private:
@@ -146,7 +162,9 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
             }
 
-            virtual void runState() {
+            virtual void runState() 
+#line 39 "example.cpp"
+{
       std::cout
           << suite_text << std::endl
           << case_var << std::endl
@@ -156,6 +174,8 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
       throw "ahoj";
     }
+#line 178 "generated.cpp"
+
         };
 
         ::OTest2::StatePtr createState_AnonymousState(
@@ -216,9 +236,13 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
         }
 
-        virtual void startUp() {
+        virtual void startUp() 
+#line 55 "example.cpp"
+{
 
     }
+#line 245 "generated.cpp"
+
 
         virtual void tearDown() {
 
@@ -253,11 +277,15 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
             }
 
-            virtual void runState() {
+            virtual void runState() 
+#line 59 "example.cpp"
+{
       int a_(10);
       int b_(a_ + 10);
       int c_(1010);
     }
+#line 288 "generated.cpp"
+
         };
 
         ::OTest2::StatePtr createState_FirstState(
@@ -298,9 +326,13 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
             }
 
-            virtual void runState() {
+            virtual void runState() 
+#line 65 "example.cpp"
+{
 
     }
+#line 335 "generated.cpp"
+
         };
 
         ::OTest2::StatePtr createState_SecondState(
@@ -346,7 +378,11 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
     }
 };
 
+#line 69 "example.cpp"
 
+
+
+#line 386 "generated.cpp"
 class SecondSuite : public ::OTest2::SuiteGenerated {
   private:
 
@@ -395,5 +431,8 @@ class SuiteRegistrator {
 } registrator_of_generated_suites;
 
 } /* -- namespace */
+
+#line 73 "example.cpp"
+
 
 } /* -- namespace Test */

@@ -857,7 +857,7 @@ void parse(
       options_.getCompilations(), options_.getSourcePathList());
   std::ifstream ifs_(filename_);
   FileReader reader_(&ifs_);
-  GeneratorStd generator_(&std::cout, &reader_);
+  GeneratorStd generator_(&std::cout, &reader_, filename_, "generated.cpp");
 //  GeneratorPrinter generator_;
   bool failure_(false);
   ParserException exception_;

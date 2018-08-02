@@ -108,8 +108,8 @@ PROGRAMS = $(bin_PROGRAMS)
 am_otest2_OBJECTS = error.$(OBJEXT) excparser.$(OBJEXT) \
 	excreader.$(OBJEXT) filereader.$(OBJEXT) formatting.$(OBJEXT) \
 	generator.$(OBJEXT) generatorprinter.$(OBJEXT) \
-	generatorstd.$(OBJEXT) location.$(OBJEXT) main.$(OBJEXT) \
-	parser.$(OBJEXT) vartable.$(OBJEXT)
+	generatorstd.$(OBJEXT) lcstream.$(OBJEXT) location.$(OBJEXT) \
+	main.$(OBJEXT) parser.$(OBJEXT) vartable.$(OBJEXT)
 otest2_OBJECTS = $(am_otest2_OBJECTS)
 otest2_LDADD = $(LDADD)
 AM_V_lt = $(am__v_lt_@AM_V@)
@@ -358,6 +358,8 @@ otest2_SOURCES = \
     generatorprinter.h \
     generatorstd.cpp \
     generatorstd.h \
+    lcstream.cpp \
+    lcstream.h \
     location.cpp \
     location.h \
     main.cpp \
@@ -485,6 +487,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generator.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generatorprinter.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/generatorstd.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lcstream.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/location.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/parser.Po@am__quote@

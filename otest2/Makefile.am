@@ -37,6 +37,8 @@ otest2_SOURCES = \
     generatorprinter.h \
     generatorstd.cpp \
     generatorstd.h \
+    lcstream.cpp \
+    lcstream.h \
     location.cpp \
     location.h \
     main.cpp \

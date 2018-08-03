@@ -12,6 +12,8 @@
 #include <otest2/stategenerated.h>
 #include <otest2/suitegenerated.h>
 
+
+#line 1 "example.cpp"
 #include "../include/otest2/otest2.h"
 
 #include <iostream>
@@ -23,6 +25,8 @@ namespace Test {
 /**
  * @brief Example test suite
  */
+
+#line 30 "generated.cpp"
 class ExampleSuite : public ::OTest2::SuiteGenerated {
   private:
     typename ::OTest2::TypeOfMine<std::string>::Type suite_text;
@@ -53,7 +57,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
     std::cout << "StartUp" << std::endl;
   }
-#line 57 "generated.cpp"
+#line 61 "generated.cpp"
 
 
     virtual void tearDown() {
@@ -103,7 +107,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 {
 
     }
-#line 107 "generated.cpp"
+#line 111 "generated.cpp"
 
 
         virtual void tearDown() 
@@ -111,7 +115,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 {
 
     }
-#line 115 "generated.cpp"
+#line 119 "generated.cpp"
 
 
         class AnonymousState : public ::OTest2::StateGenerated {
@@ -170,7 +174,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
       throw "ahoj";
     }
-#line 174 "generated.cpp"
+#line 178 "generated.cpp"
 
         };
 
@@ -237,7 +241,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 {
 
     }
-#line 241 "generated.cpp"
+#line 245 "generated.cpp"
 
 
         virtual void tearDown() {
@@ -283,7 +287,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
       testAssert("generated.cpp", 64, "a_ == b_", a_ == b_);
       testAssert("generated.cpp", 65, "case_b_ == \"a\"", case_b_ == "a");
     }
-#line 287 "generated.cpp"
+#line 291 "generated.cpp"
 
         };
 
@@ -330,7 +334,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 {
 
     }
-#line 334 "generated.cpp"
+#line 338 "generated.cpp"
 
         };
 
@@ -377,7 +381,11 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
     }
 };
 
+#line 72 "example.cpp"
 
+
+
+#line 389 "generated.cpp"
 class SecondSuite : public ::OTest2::SuiteGenerated {
   private:
 

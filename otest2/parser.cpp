@@ -164,7 +164,9 @@ void ParserContext::copyInput(
 
   /* -- get content of the input file */
   if(last_location < l2_) {
+    generator->startUserArea(last_location);
     generator->copySource(last_location, l2_);
+    generator->endUserArea(l2_);
   }
 }
 

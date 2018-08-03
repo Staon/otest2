@@ -32,8 +32,12 @@ ContextObject::~ContextObject() {
 }
 
 void ContextObject::testAssert(
+    const std::string& file_,
+    int lineno_,
+    const std::string& expression_,
     bool condition_) {
-  std::cout << "assert: " << condition_ << std::endl;
+  std::cout << "assert: " << file_ << " " << lineno_
+      << " '" << expression_ << "': " << condition_ << std::endl;
 }
 
 } /* namespace OTest2 */

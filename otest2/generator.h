@@ -53,6 +53,14 @@ class Generator {
     virtual void beginFile() = 0;
 
     /**
+     * @brief Begin of an area of user written code
+     *
+     * @param begin_ Location of the beginning of the area
+     */
+    virtual void startUserArea(
+        const Location& begin_) = 0;
+
+    /**
      * @brief Copy part of the source file
      *
      * @param begin_ Beginning of the source area
@@ -60,6 +68,31 @@ class Generator {
      */
     virtual void copySource(
         const Location& begin_,
+        const Location& end_) = 0;
+
+    /**
+     * @brief Make a test assertion
+     *
+     * This method dump arguments of an assertion into the output
+     * stream. Just before them it inserts information about file
+     * and line number.
+     *
+     * @param begin_ Beginning location of the assertion arguments.
+     * @param end_ Ending location of the assertion arguments.
+     * @param insert_expr_ If it's true, a string containing the arguments
+     *     is inserted as an argument too.
+     */
+    virtual void makeAssertion(
+        const Location& begin_,
+        const Location& end_,
+        bool insert_expr_) = 0;
+
+    /**
+     * @brief End of the user area
+     *
+     * @param end_ End of the user area
+     */
+    virtual void endUserArea(
         const Location& end_) = 0;
 
     /**

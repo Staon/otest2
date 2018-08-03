@@ -45,8 +45,16 @@ class GeneratorStd : public Generator {
 
     /* -- generator interface */
     virtual void beginFile();
+    virtual void startUserArea(
+        const Location& begin_);
     virtual void copySource(
         const Location& begin_,
+        const Location& end_);
+    virtual void makeAssertion(
+        const Location& begin_,
+        const Location& end_,
+        bool insert_expr_);
+    virtual void endUserArea(
         const Location& end_);
     virtual void enterSuite(
         const std::string& name_);

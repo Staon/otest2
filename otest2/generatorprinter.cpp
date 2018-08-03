@@ -37,11 +37,28 @@ void GeneratorPrinter::beginFile() {
   std::cout << "begin file" << std::endl;
 }
 
+void GeneratorPrinter::startUserArea(
+    const Location& begin_) {
+  std::cout << "begin user area: " << begin_ << std::endl;
+}
+
 void GeneratorPrinter::copySource(
     const Location& begin_,
     const Location& end_) {
-  std::cout << "copy source: "
-      << " " << begin_ << "-" << end_ << std::endl;
+  std::cout << "copy source: " << begin_ << "-" << end_ << std::endl;
+}
+
+void GeneratorPrinter::makeAssertion(
+    const Location& begin_,
+    const Location& end_,
+    bool insert_expr_) {
+  std::cout << "make assertion: " << begin_ << " " << end_
+      << " " << insert_expr_ << std::endl;
+}
+
+void GeneratorPrinter::endUserArea(
+    const Location& end_) {
+  std::cout << "end user area: " << end_ << std::endl;
 }
 
 void GeneratorPrinter::enterSuite(

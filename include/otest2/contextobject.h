@@ -20,6 +20,8 @@
 #ifndef OTest2__INCLUDE_OTEST2_CONTEXTOBJECT_H_
 #define OTest2__INCLUDE_OTEST2_CONTEXTOBJECT_H_
 
+#include <string>
+
 namespace OTest2 {
 
 class Context;
@@ -51,6 +53,9 @@ class ContextObject {
     virtual const Context& otest2Context() const = 0;
 
     void testAssert(
+        const std::string& file_,
+        int lineno_,
+        const std::string& expression_,
         bool condition_);
 };
 

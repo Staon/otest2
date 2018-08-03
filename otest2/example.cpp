@@ -62,6 +62,7 @@ TEST_SUITE(ExampleSuite) {
       int c_(1010);
 
       testAssert(a_ == b_);
+      testAssert(case_b_ == "a");
     }
 
     TEST_STATE(SecondState) {

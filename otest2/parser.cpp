@@ -103,10 +103,7 @@ struct ParserContext {
     template<typename Node_>
     void copyInput(
         Node_* node_,
-        bool end_ = false);
-    template<typename Node_>
-    void copyInputOfNode(
-        Node_* node_);
+        bool end_);
     template<typename Node_>
     void moveToEnd(
         Node_* node_);
@@ -172,15 +169,6 @@ void ParserContext::copyInput(
 }
 
 template<typename Node_>
-void ParserContext::copyInputOfNode(
-    Node_* node_) {
-  clang::SourceRange range_(getNodeRange(srcmgr, langopts, node_));
-  generator->copySource(
-      createLocation(srcmgr, range_.getBegin()),
-      createLocation(srcmgr, range_.getEnd()));
-}
-
-template<typename Node_>
 void ParserContext::moveToEnd(
     Node_* node_) {
   clang::SourceRange range_(getNodeRange(srcmgr, langopts, node_));
@@ -188,15 +176,27 @@ void ParserContext::moveToEnd(
 }
 
 class AssertVisitor : public clang::RecursiveASTVisitor<AssertVisitor> {
+  private:
+    ParserContext* context;
+    Location current;
+
   public:
-    explicit AssertVisitor();
+    explicit AssertVisitor(
+        ParserContext* context_,
+        const Location& curr_);
     virtual ~AssertVisitor();
 
     bool VisitCallExpr(
         clang::CallExpr* expr_);
+
+    Location getCurrentLocation() const;
 };
 
-AssertVisitor::AssertVisitor() {
+AssertVisitor::AssertVisitor(
+    ParserContext* context_,
+    const Location& curr_) :
+  context(context_),
+  current(curr_) {
 
 }
 
@@ -206,12 +206,61 @@ AssertVisitor::~AssertVisitor() {
 
 bool AssertVisitor::VisitCallExpr(
     clang::CallExpr* expr_) {
-  auto callee_(expr_->getReferencedDeclOfCallee());
-  if(callee_->isFunctionOrFunctionTemplate()) {
-    auto fce_(callee_->getAsFunction());
-    std::cout << "\n\nassertion: " << fce_->getNameAsString() << std::endl;
+  /* -- This is an invocation of a function. Check whether the function
+   *    is one of my assertions. Firstly, get the name of the function. */
+  auto callee_(expr_->getCallee());
+  if(!clang::isa<clang::ImplicitCastExpr>(callee_))
+    return true;
+  auto cast_(clang::cast<clang::ImplicitCastExpr>(callee_));
+  auto declref_(cast_->getReferencedDeclOfCallee());
+  if(declref_ == nullptr)
+    return true;
+//  This might be helpful in the future.
+//  if(clang::isa<clang::CXXMethodDecl>(declref_)) {
+//    auto method_(clang::cast<clang::CXXMethodDecl>(declref_));
+//    return true;
+//  }
+  if(!clang::isa<clang::FunctionDecl>(declref_))
+    return true;
+  auto fce_(clang::cast<clang::FunctionDecl>(declref_));
+  auto fcename_(fce_->getQualifiedNameAsString());
+  if(fcename_ != "OTest2::Assertions::testAssert")
+      return true;
+
+  /* -- find first and last non-default argument */
+  const int argnum_(expr_->getNumArgs());
+  int last_index_(-1);
+  if(argnum_ > 0) {
+    for(int i_(0); i_ < argnum_; ++i_) {
+      clang::Expr *arg_(expr_->getArg(i_));
+      if(clang::isa<clang::CXXDefaultArgExpr>(arg_))
+        break;
+      last_index_ = i_;
+    }
   }
+  if(last_index_ < 0 || last_index_ > 1)
+    return true;  /* -- invalid number of arguments */
+
+  /* -- get ranges of the arguments */
+  auto begarg_(expr_->getArg(0));
+  auto endarg_(expr_->getArg(last_index_));
+  clang::SourceRange begrange_(
+      getNodeRange(context->srcmgr, context->langopts, begarg_));
+  clang::SourceRange endrange_(
+      getNodeRange(context->srcmgr, context->langopts, endarg_));
+
+  /* -- generate the output */
+  auto b_(createLocation(context->srcmgr, begrange_.getBegin()));
+  auto e_(createLocation(context->srcmgr, endrange_.getEnd()));
+  context->generator->copySource(current, b_);
+  context->generator->makeAssertion(b_, e_, true);
+  current = e_;
+
   return true;
+}
+
+Location AssertVisitor::getCurrentLocation() const {
+  return current;
 }
 
 class SuiteVisitor : public clang::RecursiveASTVisitor<SuiteVisitor> {
@@ -225,6 +274,8 @@ class SuiteVisitor : public clang::RecursiveASTVisitor<SuiteVisitor> {
 
     bool parseVariable(
         clang::VarDecl* vardecl_);
+    bool parseCodeBlock(
+        clang::Stmt* stmt_);
     bool parseCaseBody(
         clang::Stmt* stmt_);
     bool parseSuiteBody(
@@ -354,6 +405,35 @@ bool SuiteVisitor::parseVariable(
   return true;
 }
 
+bool SuiteVisitor::parseCodeBlock(
+    clang::Stmt* stmt_) {
+  /* -- get source range of the block */
+  clang::SourceRange range_(
+      getNodeRange(context->srcmgr, context->langopts, stmt_));
+  Location begin_(createLocation(context->srcmgr, range_.getBegin()));
+  Location end_(createLocation(context->srcmgr, range_.getEnd()));
+
+  /* -- open the user area */
+  context->generator->startUserArea(begin_);
+
+  /* -- visit the block (manipulate all assertions) */
+  AssertVisitor visitor_(
+      context, createLocation(context->srcmgr, range_.getBegin()));
+  visitor_.TraverseStmt(stmt_);
+  if(*context->failure)
+    return false;
+
+  /* -- finish rest of the block after last assertion */
+  context->generator->copySource(
+      visitor_.getCurrentLocation(),
+      createLocation(context->srcmgr, range_.getEnd()));
+
+  /* -- close the user area */
+  context->generator->endUserArea(end_);
+
+  return true;
+}
+
 bool SuiteVisitor::parseCaseBody(
     clang::Stmt* stmt_) {
   for(
@@ -362,56 +442,42 @@ bool SuiteVisitor::parseCaseBody(
       ++iter_) {
     switch(context->state) {
       case ParserContext::CASE_VAR: {
-        if(clang::isa<clang::CompoundStmt>(*iter_)) {
-          /* -- anonymous state */
-          context->state = ParserContext::CASE_FINISHED;
+        clang::VarDecl* vardecl_(getVarDecl(*iter_));
+        if(vardecl_ == nullptr)
+          return false;
+        std::string type_(vardecl_->getType().getAsString());
+
+        if(type_ == START_UP_MARK) {
+          /* -- switch state and notify the generator */
+          context->state = ParserContext::CASE_START_UP;
+          context->generator->caseStartUp();
+          break;
+        }
+
+        if(type_ == TEAR_DOWN_MARK) {
+          /* -- switch state and notify the generator */
+          context->state = ParserContext::CASE_TEAR_DOWN;
+          context->generator->caseStartUp();
+          context->generator->emptyBody();
+          context->generator->caseTearDown();
+          break;
+        }
+
+        if(type_ == STATE_MARK) {
+          context->state = ParserContext::CASE_BEGIN;
           context->generator->caseStartUp();
           context->generator->emptyBody();
           context->generator->caseTearDown();
           context->generator->emptyBody();
-          context->generator->enterState(ANONYMOUS_STATE);
-          context->copyInputOfNode(*iter_);
-          context->generator->leaveState();
+          context->generator->enterState(vardecl_->getNameAsString());
           break;
         }
-        else {
-          clang::VarDecl* vardecl_(getVarDecl(*iter_));
-          if(vardecl_ == nullptr)
-            return false;
-          std::string type_(vardecl_->getType().getAsString());
 
-          if(type_ == START_UP_MARK) {
-            /* -- switch state and notify the generator */
-            context->state = ParserContext::CASE_START_UP;
-            context->generator->caseStartUp();
-            break;
-          }
+        /* -- case variable */
+        if(!parseVariable(vardecl_))
+          return false;
 
-          if(type_ == TEAR_DOWN_MARK) {
-            /* -- switch state and notify the generator */
-            context->state = ParserContext::CASE_TEAR_DOWN;
-            context->generator->caseStartUp();
-            context->generator->emptyBody();
-            context->generator->caseTearDown();
-            break;
-          }
-
-          if(type_ == STATE_MARK) {
-            context->state = ParserContext::CASE_BEGIN;
-            context->generator->caseStartUp();
-            context->generator->emptyBody();
-            context->generator->caseTearDown();
-            context->generator->emptyBody();
-            context->generator->enterState(vardecl_->getNameAsString());
-            break;
-          }
-
-          /* -- case variable */
-          if(!parseVariable(vardecl_))
-            return false;
-
-          break;
-        }
+        break;
       }
 
       case ParserContext::CASE_START_UP: {
@@ -419,46 +485,36 @@ bool SuiteVisitor::parseCaseBody(
         if(block_ == nullptr)
           return false;
         context->state = ParserContext::CASE_START_UP_END;
-        context->copyInputOfNode(block_);
+        if(!parseCodeBlock(*iter_))
+          return false;
         break;
       }
 
       case ParserContext::CASE_START_UP_END: {
-        if(clang::isa<clang::CompoundStmt>(*iter_)) {
-          /* -- anonymous state */
-          context->state = ParserContext::CASE_FINISHED;
+        clang::VarDecl* vardecl_(getVarDecl(*iter_));
+        if(vardecl_ == nullptr)
+          return false;
+        std::string type_(vardecl_->getType().getAsString());
+
+        if(type_ == TEAR_DOWN_MARK) {
+          /* -- switch state and notify the generator */
+          context->state = ParserContext::CASE_TEAR_DOWN;
+          context->generator->caseTearDown();
+
+          continue;
+        }
+
+        if(type_ == STATE_MARK) {
+          context->state = ParserContext::STATE_BEGIN;
           context->generator->caseTearDown();
           context->generator->emptyBody();
-          context->generator->enterState(ANONYMOUS_STATE);
-          context->copyInputOfNode(*iter_);
-          break;
+          context->generator->enterState(vardecl_->getNameAsString());
+
+          continue;
         }
-        else {
-          clang::VarDecl* vardecl_(getVarDecl(*iter_));
-          if(vardecl_ == nullptr)
-            return false;
-          std::string type_(vardecl_->getType().getAsString());
 
-          if(type_ == TEAR_DOWN_MARK) {
-            /* -- switch state and notify the generator */
-            context->state = ParserContext::CASE_TEAR_DOWN;
-            context->generator->caseTearDown();
-
-            continue;
-          }
-
-          if(type_ == STATE_MARK) {
-            context->state = ParserContext::STATE_BEGIN;
-            context->generator->caseTearDown();
-            context->generator->emptyBody();
-            context->generator->enterState(vardecl_->getNameAsString());
-
-            continue;
-          }
-
-          context->setError("invalid case item", *iter_);
-          return false;
-        }
+        context->setError("invalid case item", *iter_);
+        return false;
       }
 
       case ParserContext::CASE_TEAR_DOWN: {
@@ -466,48 +522,36 @@ bool SuiteVisitor::parseCaseBody(
         if(block_ == nullptr)
           return false;
         context->state = ParserContext::CASE_TEAR_DOWN_END;
-        context->copyInputOfNode(block_);
+        if(!parseCodeBlock(*iter_))
+          return false;
         break;
       }
 
       case ParserContext::CASE_TEAR_DOWN_END: {
-        if(clang::isa<clang::CompoundStmt>(*iter_)) {
-          /* -- anonymous state */
-          context->state = ParserContext::CASE_FINISHED;
-          context->generator->enterState(ANONYMOUS_STATE);
-          context->copyInputOfNode(*iter_);
-          context->generator->leaveState();
-          break;
-        }
-        else {
-          clang::VarDecl* vardecl_(getVarDecl(*iter_));
-          if(vardecl_ == nullptr)
-            return false;
-          std::string type_(vardecl_->getType().getAsString());
-
-          if(type_ == STATE_MARK) {
-            context->state = ParserContext::STATE_BEGIN;
-            context->generator->enterState(vardecl_->getNameAsString());
-
-            continue;
-          }
-
-          context->setError("invalid case item", *iter_);
+        clang::VarDecl* vardecl_(getVarDecl(*iter_));
+        if(vardecl_ == nullptr)
           return false;
+        std::string type_(vardecl_->getType().getAsString());
+
+        if(type_ == STATE_MARK) {
+          context->state = ParserContext::STATE_BEGIN;
+          context->generator->enterState(vardecl_->getNameAsString());
+
+          continue;
         }
+
+        context->setError("invalid case item", *iter_);
+        return false;
       }
 
       case ParserContext::STATE_BEGIN: {
         clang::CompoundStmt* block_(getCompound(*iter_));
         if(block_ == nullptr)
           return false;
-        context->copyInputOfNode(*iter_);
+        if(!parseCodeBlock(*iter_))
+          return false;
         context->generator->leaveState();
         context->state = ParserContext::CASE_TEAR_DOWN_END;
-
-        std::cout << "\n\nvisiting" << std::endl;
-        AssertVisitor visitor_;
-        visitor_.TraverseCompoundStmt(block_);
 
         break;
       }
@@ -590,7 +634,8 @@ bool SuiteVisitor::parseSuiteBody(
         if(block_ == nullptr)
           return false;
         context->state = ParserContext::SUITE_START_UP_END;
-        context->copyInputOfNode(block_);
+        if(!parseCodeBlock(*iter_))
+          return false;
         break;
       }
 
@@ -626,7 +671,8 @@ bool SuiteVisitor::parseSuiteBody(
         if(block_ == nullptr)
           return false;
         context->state = ParserContext::SUITE_TEAR_DOWN_END;
-        context->copyInputOfNode(block_);
+        if(!parseCodeBlock(*iter_))
+          return false;
         break;
       }
 
@@ -693,7 +739,7 @@ bool SuiteVisitor::parseSuite(
   }
 
   /* -- copy the input file */
-  context->copyInput(fce_);
+  context->copyInput(fce_, false);
 
   /* -- enter the suite */
   std::string suitename_(fce_->getNameAsString());
@@ -781,7 +827,8 @@ void ParserConsumer::HandleTranslationUnit(
   visitor.TraverseDecl(context_.getTranslationUnitDecl());
 
   /* -- close the file */
-  context.generator->endFile(context.last_location);
+  if(!*context.failure)
+    context.generator->endFile(context.last_location);
 }
 
 class ParserAction : public clang::ASTFrontendAction {

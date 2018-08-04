@@ -41,22 +41,11 @@ void testAssert(bool condition_);
 
 #else /* -- OTEST2_PARSER_ACTIVE */
 
-namespace OTest2 {
-
-struct StartUpMark { };
-struct TearDownMark { };
-struct CaseMark { };
-struct StateMark { };
-
-} /* -- namespace OTest2 */
-
-using namespace ::OTest2::Assertions;
-
-#define TEST_START_UP() OTest2::StartUpMark otest2_start_up_mark;
-#define TEST_TEAR_DOWN() OTest2::TearDownMark otest2_tear_down_mark;
-#define TEST_SUITE(name_) void name_() __attribute__((annotate("otest2::suite")))
-#define TEST_CASE(name_) OTest2::CaseMark name_;
-#define TEST_STATE(name_) OTest2::StateMark name_;
+#define TEST_START_UP() void startUp() __attribute__((annotate("otest2::startUp")))
+#define TEST_TEAR_DOWN() void tearDown() __attribute__((annotate("otest2::tearDown")))
+#define TEST_SUITE(name_) namespace name_ { using namespace ::OTest2::Assertions; } namespace name_ __attribute__((annotate("otest2::suite")))
+#define TEST_CASE(name_) namespace name_ __attribute__((annotate("otest2::case")))
+#define TEST_STATE(name_) void name_() __attribute__((annotate("otest2::state")))
 #define TEST_SIMPLE() TEST_STATE(AnonymousState)
 
 #endif /* -- OTEST2_PARSER_ACTIVE */

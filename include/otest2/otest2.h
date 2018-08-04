@@ -24,7 +24,26 @@ namespace OTest2 {
 
 namespace Assertions {
 
-void testAssert(bool condition_);
+/**
+ * @brief Generic assertion
+ *
+ * @param condition_ A condition. True means the assertion passes.
+ */
+void testAssert(
+    bool condition_);
+
+/**
+ * @brief Comparing of two values
+ *
+ * The assertion passes if the values are the same.
+ *
+ * @param expected_ Expected value
+ * @param actual_ Actual value
+ */
+template<typename A_, typename B_>
+void testAssertEqual(
+    A_ expected_,
+    B_ actual_);
 
 } /* -- namespace Assertions */
 

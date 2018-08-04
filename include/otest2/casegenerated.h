@@ -23,6 +23,7 @@
 #include <string>
 
 #include <otest2/caseordinary.h>
+#include <otest2/contextobject.h>
 #include <otest2/stateptr.h>
 
 namespace OTest2 {
@@ -32,7 +33,7 @@ class Context;
 /**
  * @brief Common implementation of a generated test case
  */
-class CaseGenerated : public CaseOrdinary {
+class CaseGenerated : public CaseOrdinary, public ContextObject {
   private:
     struct Impl;
     Impl* pimpl;
@@ -68,6 +69,9 @@ class CaseGenerated : public CaseOrdinary {
         const Context& context_);
     virtual void tearDownCase(
         const Context& context_);
+
+    /* -- context object */
+    virtual const Context& otest2Context() const;
 
   protected:
     /**

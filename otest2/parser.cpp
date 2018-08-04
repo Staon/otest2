@@ -30,6 +30,7 @@
 #include <fstream>
 #include <iostream>
 #include <llvm/Support/raw_ostream.h>
+#include <map>
 #include <memory>
 #include <sstream>
 #include <string>
@@ -189,6 +190,13 @@ void ParserContext::moveToEnd(
 
 class AssertVisitor : public clang::RecursiveASTVisitor<AssertVisitor> {
   private:
+    struct AssertRecord {
+      int argnum;
+      bool exprstring;
+    };
+    const static std::string ASSERT_NS;
+    const static std::map<std::string, AssertRecord> assertions;
+
     ParserContext* context;
     Location current;
 
@@ -202,6 +210,12 @@ class AssertVisitor : public clang::RecursiveASTVisitor<AssertVisitor> {
         clang::CallExpr* expr_);
 
     Location getCurrentLocation() const;
+};
+
+const std::string AssertVisitor::ASSERT_NS("OTest2::Assertions::");
+const std::map<std::string, AssertVisitor::AssertRecord> AssertVisitor::assertions{
+  {AssertVisitor::ASSERT_NS + "testAssert", {1, true}},
+  {AssertVisitor::ASSERT_NS + "testAssertEqual", {2, false}},
 };
 
 AssertVisitor::AssertVisitor(
@@ -236,8 +250,9 @@ bool AssertVisitor::VisitCallExpr(
     return true;
   auto fce_(clang::cast<clang::FunctionDecl>(declref_));
   auto fcename_(fce_->getQualifiedNameAsString());
-  if(fcename_ != "OTest2::Assertions::testAssert")
-      return true;
+  auto assert_record_(assertions.find(fcename_));
+  if(assert_record_ == assertions.end())
+    return true;
 
   /* -- find first and last non-default argument */
   const int argnum_(expr_->getNumArgs());
@@ -250,8 +265,10 @@ bool AssertVisitor::VisitCallExpr(
       last_index_ = i_;
     }
   }
-  if(last_index_ < 0 || last_index_ > 1)
-    return true;  /* -- invalid number of arguments */
+  if(last_index_ < 0 || last_index_ >= (*assert_record_).second.argnum) {
+    context->setError("invalid number of function arguments", fce_);
+    return false;
+  }
 
   /* -- get ranges of the arguments */
   auto begarg_(expr_->getArg(0));
@@ -265,7 +282,8 @@ bool AssertVisitor::VisitCallExpr(
   auto b_(createLocation(context->srcmgr, begrange_.getBegin()));
   auto e_(createLocation(context->srcmgr, endrange_.getEnd()));
   context->generator->copySource(current, b_);
-  context->generator->makeAssertion(b_, e_, true);
+  context->generator->makeAssertion(
+      b_, e_, (*assert_record_).second.exprstring);
   current = e_;
 
   return true;

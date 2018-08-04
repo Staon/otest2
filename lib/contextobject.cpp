@@ -31,13 +31,23 @@ ContextObject::~ContextObject() {
 
 }
 
+void ContextObject::otest2AssertionGeneric(
+    const std::string& file_,
+    int lineno_,
+    const std::string& expression_,
+    const std::string& message_,
+    bool condition_) {
+  std::cout << "assert: " << file_ << " " << lineno_
+      << " '" << expression_ << "' " << message_ << ": "
+      << condition_ << std::endl;
+}
+
 void ContextObject::testAssert(
     const std::string& file_,
     int lineno_,
     const std::string& expression_,
     bool condition_) {
-  std::cout << "assert: " << file_ << " " << lineno_
-      << " '" << expression_ << "': " << condition_ << std::endl;
+  otest2AssertionGeneric(file_, lineno_, expression_, "", condition_);
 }
 
 } /* namespace OTest2 */

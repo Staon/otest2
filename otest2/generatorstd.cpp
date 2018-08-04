@@ -160,6 +160,7 @@ void GeneratorStd::beginFile() {
       << "#include <string>\n"
       << "\n"
       << "#include <otest2/casegenerated.h>\n"
+      << "#include <otest2/contextobjectimpl.h>\n"
       << "#include <otest2/generutils.h>\n"
       << "#include <otest2/objectptr.h>\n"
       << "#include <otest2/registry.h>\n"

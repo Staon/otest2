@@ -21,6 +21,7 @@
 
 #include <string>
 
+#include <context.h>
 #include "runcode.h"
 #include <stateptr.h>
 #include <stateregistry.h>
@@ -32,6 +33,7 @@ struct CaseGenerated::Impl {
   public:
     CaseGenerated* owner;
 
+    const Context* context;
     std::string name;
     StateRegistry state_registry;
 
@@ -43,14 +45,17 @@ struct CaseGenerated::Impl {
 
     explicit Impl(
         CaseGenerated* owner_,
+        const Context& context_,
         const std::string& name_);
     ~Impl();
 };
 
 CaseGenerated::Impl::Impl(
     CaseGenerated* owner_,
+    const Context& context_,
     const std::string& name_) :
   owner(owner_),
+  context(&context_),
   name(name_),
   state_registry() {
 
@@ -64,7 +69,7 @@ CaseGenerated::CaseGenerated(
     const Context& context_,
     const std::string& name_) :
   CaseOrdinary(context_),
-  pimpl(new Impl(this, name_)) {
+  pimpl(new Impl(this, context_, name_)) {
 
 }
 
@@ -92,6 +97,10 @@ void CaseGenerated::tearDownCase(
   runUserCode(context_, [this](const Context& context_) {
     tearDown();
   });
+}
+
+const Context& CaseGenerated::otest2Context() const {
+  return *pimpl->context;
 }
 
 void CaseGenerated::registerState(

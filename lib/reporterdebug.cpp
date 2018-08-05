@@ -60,6 +60,16 @@ void ReporterDebug::enterState(
   *os << "enterState(" << name_ << ")" << std::endl;
 }
 
+void ReporterDebug::reportAssert(
+    const Context& context_,
+    bool condition_,
+    const std::string& message_,
+    const std::string& file_,
+    int lineno_) {
+  *os << "assert at " << file_ << ":" << lineno_ << ": " << message_
+      << " " << condition_ << std::endl;
+}
+
 void ReporterDebug::leaveState(
     const Context& context_,
     const std::string& name_,

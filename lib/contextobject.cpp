@@ -20,6 +20,11 @@
 #include <contextobject.h>
 
 #include <iostream>
+#include <sstream>
+
+#include <context.h>
+#include <reporter.h>
+#include <semanticstack.h>
 
 namespace OTest2 {
 
@@ -31,15 +36,29 @@ ContextObject::~ContextObject() {
 
 }
 
-void ContextObject::otest2AssertionGeneric(
+void ContextObject::otest2AssertGeneric(
     const std::string& file_,
     int lineno_,
     const std::string& expression_,
     const std::string& message_,
     bool condition_) {
-  std::cout << "assert: " << file_ << " " << lineno_
-      << " '" << expression_ << "' " << message_ << ": "
-      << condition_ << std::endl;
+  const Context& context_(otest2Context());
+
+  /* -- change the result of current object */
+  if(!condition_)
+    context_.semantic_stack->setTop(false);
+
+  /* -- report the assertion */
+  std::ostringstream sos_;
+  if(!expression_.empty())
+    sos_ << expression_;
+  if(!message_.empty()) {
+    if(!expression_.empty())
+      sos_ << " ";
+    sos_ << message_;
+  }
+  context_.reporter->reportAssert(
+      context_, condition_, sos_.str(), file_, lineno_);
 }
 
 void ContextObject::testAssert(
@@ -47,7 +66,7 @@ void ContextObject::testAssert(
     int lineno_,
     const std::string& expression_,
     bool condition_) {
-  otest2AssertionGeneric(file_, lineno_, expression_, "", condition_);
+  otest2AssertGeneric(file_, lineno_, expression_, "", condition_);
 }
 
 } /* namespace OTest2 */

@@ -20,7 +20,6 @@
 #ifndef OTest2__INCLUDE_OTEST2_CONTEXTOBJECT_H_
 #define OTest2__INCLUDE_OTEST2_CONTEXTOBJECT_H_
 
-#include <sstream>
 #include <string>
 
 namespace OTest2 {
@@ -32,7 +31,7 @@ class Context;
  */
 class ContextObject {
   private:
-    void otest2AssertionGeneric(
+    void otest2AssertGeneric(
         const std::string& file_,
         int lineno_,
         const std::string& expression_,

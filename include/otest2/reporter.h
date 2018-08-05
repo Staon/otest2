@@ -88,6 +88,22 @@ class Reporter {
         const std::string& name_) = 0;
 
     /**
+     * @brief Report a test assertion
+     *
+     * @param context_ the context
+     * @param condition_ result of the assertion
+     * @param message_ text description of the assertion
+     * @param file_ name of the source file
+     * @param lineno_ the number of line
+     */
+    virtual void reportAssert(
+        const Context& context_,
+        bool condition_,
+        const std::string& message_,
+        const std::string& file_,
+        int lineno_) = 0;
+
+    /**
      * @brief Leave a state
      *
      * @param context_ the OTest2 context

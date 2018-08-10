@@ -42,6 +42,8 @@ otest2_SOURCES = \
     location.cpp \
     location.h \
     main.cpp \
+    options.cpp \
+    options.h \
     parser.cpp \
     parser.h \
     vartable.cpp \

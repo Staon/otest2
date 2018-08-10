@@ -17,25 +17,31 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OTest2OTEST2_PARSER_H_
-#define OTest2OTEST2_PARSER_H_
+#include "options.h"
 
-#include <iosfwd>
-#include <string>
+#include <regex>
 
 namespace OTest2 {
 
-class Generator;
-class Options;
+Options::Options() {
 
-/**
- * @brief Parse a test specification file
- *
- * @param options_ Parser options
- */
-void parse(
-    const Options& options_);
+}
 
-} /* -- namespace OTest2 */
+Options::~Options() {
 
-#endif /* -- OTest2OTEST2_PARSER_H_ */
+}
+
+bool Options::validateOptions() {
+  /* -- the infile is mandatory */
+  if(infile.empty())
+    return false;
+
+  /* -- compute output file, if it's not specified */
+  if(outfile.empty()) {
+    outfile = std::regex_replace(infile, std::regex("[.]ot2$"), "") + ".cpp";
+  }
+
+  return true;
+}
+
+} /* namespace OTest2 */

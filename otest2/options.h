@@ -17,25 +17,49 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OTest2OTEST2_PARSER_H_
-#define OTest2OTEST2_PARSER_H_
+#ifndef OTest2__OTEST2_OPTIONS_H_
+#define OTest2__OTEST2_OPTIONS_H_
 
-#include <iosfwd>
 #include <string>
+#include <vector>
 
 namespace OTest2 {
 
-class Generator;
-class Options;
-
 /**
- * @brief Parse a test specification file
- *
- * @param options_ Parser options
+ * @brief Options of the otest2 parser
  */
-void parse(
-    const Options& options_);
+struct Options {
+  public:
+    std::string infile;
+    std::string outfile;
+    std::vector<std::string> includes;
 
-} /* -- namespace OTest2 */
+    /* -- avoid copying */
+    Options(
+        const Options&) = delete;
+    Options& operator =(
+        const Options&) = delete;
 
-#endif /* -- OTest2OTEST2_PARSER_H_ */
+    /**
+     * @brief Ctor
+     */
+    Options();
+
+    /**
+     * @brief Dtor
+     */
+    ~Options();
+
+    /**
+     * @brief This method validates the options
+     *
+     * The method validates and computes default option values
+     *
+     * @return True if the values are OK
+     */
+    bool validateOptions();
+};
+
+} /* namespace OTest2 */
+
+#endif /* OTest2__OTEST2_OPTIONS_H_ */

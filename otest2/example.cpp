@@ -1,4 +1,4 @@
-#include "../include/otest2/otest2.h"
+#include <otest2/otest2.h>
 
 #include <iostream>
 #include <memory>

@@ -15,7 +15,7 @@
 
 
 #line 1 "example.cpp"
-#include "../include/otest2/otest2.h"
+#include <otest2/otest2.h>
 
 #include <iostream>
 #include <memory>
@@ -27,7 +27,7 @@ namespace Test {
  * @brief Example test suite
  */
 
-#line 31 "generated.cpp"
+#line 31 "../sandbox/generated.cpp"
 class ExampleSuite : public ::OTest2::SuiteGenerated {
   private:
     typename ::OTest2::TypeOfMine<std::string>::Type suite_text;
@@ -58,7 +58,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
     std::cout << "StartUp" << std::endl;
   }
-#line 62 "generated.cpp"
+#line 62 "../sandbox/generated.cpp"
 
 
     virtual void tearDown() {
@@ -108,7 +108,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 {
 
     }
-#line 112 "generated.cpp"
+#line 112 "../sandbox/generated.cpp"
 
 
         virtual void tearDown() 
@@ -116,7 +116,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 {
 
     }
-#line 120 "generated.cpp"
+#line 120 "../sandbox/generated.cpp"
 
 
         class AnonymousState : public ::OTest2::StateGenerated {
@@ -175,7 +175,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
       throw "ahoj";
     }
-#line 179 "generated.cpp"
+#line 179 "../sandbox/generated.cpp"
 
         };
 
@@ -242,7 +242,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 {
 
     }
-#line 246 "generated.cpp"
+#line 246 "../sandbox/generated.cpp"
 
 
         virtual void tearDown() {
@@ -285,12 +285,12 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
       int b_(a_ + 10);
       int c_(1010);
 
-      testAssert("generated.cpp", 64, "a_ == b_", a_ == b_);
-      testAssert("generated.cpp", 65, "case_b_ == \"a\"", case_b_ == "a");
+      testAssert("../sandbox/generated.cpp", 64, "a_ == b_", a_ == b_);
+      testAssert("../sandbox/generated.cpp", 65, "case_b_ == \"a\"", case_b_ == "a");
 
-      testAssertEqual("generated.cpp", 67, a_, c_);
+      testAssertEqual("../sandbox/generated.cpp", 67, a_, c_);
     }
-#line 294 "generated.cpp"
+#line 294 "../sandbox/generated.cpp"
 
         };
 
@@ -337,7 +337,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 {
 
     }
-#line 341 "generated.cpp"
+#line 341 "../sandbox/generated.cpp"
 
         };
 
@@ -388,7 +388,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
 
 
-#line 392 "generated.cpp"
+#line 392 "../sandbox/generated.cpp"
 class SecondSuite : public ::OTest2::SuiteGenerated {
   private:
 

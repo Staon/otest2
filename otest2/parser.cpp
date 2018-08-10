@@ -34,13 +34,17 @@
 #include <memory>
 #include <sstream>
 #include <string>
+#include <unistd.h>
+#include <vector>
 
 #include "error.h"
+#include <exc.h>
 #include "excparser.h"
 #include "filereader.h"
 #include "generatorprinter.h"
 #include "generatorstd.h"
 #include "location.h"
+#include "options.h"
 
 namespace OTest2 {
 
@@ -119,7 +123,6 @@ struct ParserContext {
     void moveToEnd(
         Node_* node_);
 };
-
 
 ParserContext::ParserContext(
     clang::ASTContext* comp_context_,
@@ -1012,6 +1015,52 @@ clang::FrontendAction* FrontendFactory::create() {
   return new ParserAction(generator, failure, exception);
 }
 
+class ParserFailure : public Exception {
+  public:
+    /**
+     * @brief Ctor
+     */
+    ParserFailure();
+
+    /**
+     * @brief Move ctor
+     */
+    ParserFailure(
+        ParserFailure&& exc_);
+
+    /**
+     * @brief Dtor
+     */
+    virtual ~ParserFailure();
+
+    /* -- avoid copying */
+    ParserFailure(
+        const ParserFailure&) = delete;
+    ParserFailure& operator =(
+        const ParserFailure&) = delete;
+
+    /* -- exception interface */
+    virtual std::string reason() const;
+};
+
+ParserFailure::ParserFailure() {
+
+}
+
+ParserFailure::ParserFailure(
+    ParserFailure&& exc_) :
+  Exception(std::move(exc_)) {
+
+}
+
+ParserFailure::~ParserFailure() {
+
+}
+
+std::string ParserFailure::reason() const {
+  return "the parser failed";
+}
+
 /* -- command line options */
 llvm::cl::OptionCategory ParserOptCategory("otest2 options");
 llvm::cl::extrahelp CommonHelp(
@@ -1019,25 +1068,57 @@ llvm::cl::extrahelp CommonHelp(
 llvm::cl::extrahelp MoreHelp("\nOTest2 preprocessor");
 
 void parse(
-    const std::string& filename_) {
-  /* -- parse the file */
-  const char* argv_[] = {
-      "otest2",
-      "--extra-arg=--std=c++11",
-      "--extra-arg=-DOTEST2_PARSER_ACTIVE",
-      filename_.c_str()
-  };
-  int argc_(sizeof(argv_) / sizeof(const char*));
-  clang::tooling::CommonOptionsParser options_(argc_, argv_, ParserOptCategory);
-  clang::tooling::ClangTool tool_(
-      options_.getCompilations(), options_.getSourcePathList());
-  std::ifstream ifs_(filename_);
+    const Options& options_) {
+  /* -- prepare the options */
+  std::vector<std::string> opts_;
+  opts_.push_back("otest2");
+  opts_.push_back("--extra-arg=--std=c++11");
+  opts_.push_back("--extra-arg=-DOTEST2_PARSER_ACTIVE");
+  for(const auto& path_ : options_.includes) {
+    opts_.push_back("--extra-arg=-I" + path_);
+  }
+  opts_.push_back(options_.infile);
+
+  std::vector<const char*> argv_;
+  for(const auto& arg_ : opts_)
+    argv_.push_back(arg_.c_str());
+
+  /* -- prepare the reader and the output generator */
+  std::ifstream ifs_(options_.infile);
   FileReader reader_(&ifs_);
-  GeneratorStd generator_(&std::cout, &reader_, filename_, "generated.cpp");
+  std::ostream *os_(nullptr);
+  std::ofstream ofs_;
+  if(options_.outfile == "-") {
+    os_ = &std::cout;
+  }
+  else {
+    ofs_.open(options_.outfile);
+    os_ = &ofs_;
+  }
+  GeneratorStd generator_(
+      os_,
+      &reader_,
+      options_.infile,
+      options_.outfile);
 //  GeneratorPrinter generator_;
+
+  /* -- parse the file */
+  int argc_(argv_.size());
+  clang::tooling::CommonOptionsParser parseropts_(
+      argc_, argv_.data(), ParserOptCategory);
+  clang::tooling::ClangTool tool_(
+      parseropts_.getCompilations(),
+      parseropts_.getSourcePathList());
   bool failure_(false);
   ParserException exception_;
-  tool_.run(new FrontendFactory(&generator_, &failure_, &exception_));
+  int retval_(
+      tool_.run(new FrontendFactory(&generator_, &failure_, &exception_)));
+  if(retval_) {
+    /* -- remove the half created file */
+    unlink(options_.outfile.c_str());
+
+    throw ParserFailure();
+  }
 
   /* -- report an error */
   if(failure_)

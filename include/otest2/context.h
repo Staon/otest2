@@ -24,6 +24,7 @@ namespace OTest2 {
 
 class CommandStack;
 class Reporter;
+class RunnerFilter;
 class SemanticStack;
 
 /**
@@ -34,6 +35,7 @@ class Context {
     CommandStack* const command_stack;
     SemanticStack* const semantic_stack;
     Reporter* const reporter;
+    RunnerFilter* const runner_filter;
 
     /* -- avoid copying */
     Context(
@@ -47,7 +49,8 @@ class Context {
     explicit Context(
         CommandStack* command_stack_,
         SemanticStack* semantic_stack_,
-        Reporter* reporter_);
+        Reporter* reporter_,
+        RunnerFilter* runner_filter_);
 
     /**
      * @brief Dtor

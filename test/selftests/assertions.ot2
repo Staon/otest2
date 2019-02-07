@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2019 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -16,25 +16,24 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include <otest2/otest2.h>
 
-#include <context.h>
+#include <string>
 
 namespace OTest2 {
 
-Context::Context(
-    CommandStack* command_stack_,
-    SemanticStack* semantic_stack_,
-    Reporter* reporter_,
-    RunnerFilter* runner_filter_) :
-  command_stack(command_stack_),
-  semantic_stack(semantic_stack_),
-  reporter(reporter_),
-  runner_filter(runner_filter_) {
+namespace SelfTest {
 
+/**
+ * @brief This suite tests the assertion functions
+ */
+TEST_SUITE(AssertionsSuite) {
+  TEST_CASE(FirstCase) {
+    TEST_SIMPLE() {
+    }
+  }
 }
 
-Context::~Context() {
-
-}
+} /* -- namespace SelfTest */
 
 } /* -- namespace OTest2 */

@@ -48,12 +48,15 @@ class GeneratorStd : public Generator {
      *
      * @param output_ An output stream. The ownership is not taken.
      * @param reader_ A reader of the input file. The ownership is not taken.
+     * @param domain_ Name of the testing domain. Each domain can be run
+     *     separately.
      * @param infile_ Name of the input file as used in the #line directive
      * @param outfile_ Name of the output file as used in the #line directive
      */
     explicit GeneratorStd(
         std::ostream* output_,
         FileReader* reader_,
+        const std::string& domain_,
         const std::string& infile_,
         const std::string& outfile_);
 

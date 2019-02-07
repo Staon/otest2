@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2019 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -17,24 +17,29 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <context.h>
+#include <runnerfilterentire.h>
+
+#include <registry.h>
 
 namespace OTest2 {
 
-Context::Context(
-    CommandStack* command_stack_,
-    SemanticStack* semantic_stack_,
-    Reporter* reporter_,
-    RunnerFilter* runner_filter_) :
-  command_stack(command_stack_),
-  semantic_stack(semantic_stack_),
-  reporter(reporter_),
-  runner_filter(runner_filter_) {
+RunnerFilterEntire::RunnerFilterEntire() {
 
 }
 
-Context::~Context() {
+RunnerFilterEntire::~RunnerFilterEntire() {
 
 }
 
-} /* -- namespace OTest2 */
+bool RunnerFilterEntire::filterSuite(
+    const std::string& suite_name_) const {
+  return false;
+}
+
+bool RunnerFilterEntire::filterCase(
+    const std::string& suite_name_,
+    const std::string& case_name_) const {
+  return false;
+}
+
+} /* namespace OTest2 */

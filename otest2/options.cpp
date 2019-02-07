@@ -23,7 +23,8 @@
 
 namespace OTest2 {
 
-Options::Options() {
+Options::Options() :
+  domain("default") {
 
 }
 

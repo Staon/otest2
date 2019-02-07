@@ -17902,7 +17902,7 @@ fi
 # Checks libclang headers
 #AC_CHECK_HEADER(clang-c/Index.h,,[AC_MSG_ERROR(The header clang-c/Index.h is not detected!)])
 
-ac_config_files="$ac_config_files Makefile lib/Makefile otest2/Makefile sandbox/Makefile"
+ac_config_files="$ac_config_files Makefile lib/Makefile otest2/Makefile test/Makefile test/selftests/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -19024,7 +19024,8 @@ do
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "lib/Makefile") CONFIG_FILES="$CONFIG_FILES lib/Makefile" ;;
     "otest2/Makefile") CONFIG_FILES="$CONFIG_FILES otest2/Makefile" ;;
-    "sandbox/Makefile") CONFIG_FILES="$CONFIG_FILES sandbox/Makefile" ;;
+    "test/Makefile") CONFIG_FILES="$CONFIG_FILES test/Makefile" ;;
+    "test/selftests/Makefile") CONFIG_FILES="$CONFIG_FILES test/selftests/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac

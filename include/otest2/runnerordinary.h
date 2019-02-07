@@ -28,6 +28,7 @@ namespace OTest2 {
 
 class Registry;
 class Reporter;
+class RunnerFilter;
 
 /**
  * @brief Ordinary implementation of the Runner interface
@@ -52,11 +53,14 @@ class RunnerOrdinary : public Runner {
      *
      * @param reporter_ A reporter object. The ownership is not taken.
      * @param registry_ A registry of suites to be run. The ownership is not taken.
+     * @param runner_filter_ A runner filter - an object which allows specification
+     *     of tests which should be run.
      * @param name_ Name of the test (shown in the test report)
      */
     explicit RunnerOrdinary(
         Reporter* reporter_,
         Registry* registry_,
+        RunnerFilter* runner_filter_,
         const std::string& name_);
 
     /**

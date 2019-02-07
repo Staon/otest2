@@ -86,8 +86,9 @@ const Context& SuiteGenerated::otest2Context() const {
 
 CaseFactoryPtr SuiteGenerated::getCase(
     const Context& context_,
-    int index_) const {
-  return pimpl->case_registry.getCase(index_);
+    int index_,
+    std::string* name_) const {
+  return pimpl->case_registry.getCase(index_, name_);
 }
 
 void SuiteGenerated::startUpSuite(

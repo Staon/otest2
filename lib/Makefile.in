@@ -138,10 +138,11 @@ am_libotest2_la_OBJECTS = case.lo casefactory.lo casegenerated.lo \
 	cmdnextsuite.lo cmdrunstate.lo cmdstartcase.lo \
 	cmdstartsuite.lo cmdstarttest.lo cmdstoptest.lo command.lo \
 	commandstack.lo context.lo contextobject.lo exc.lo object.lo \
-	registry.lo reporter.lo reporterdebug.lo runcode.lo runner.lo \
-	runnerordinary.lo semanticstack.lo state.lo stategenerated.lo \
-	stateordinary.lo stateregistry.lo suite.lo suitefactory.lo \
-	suitegenerated.lo suiteordinary.lo
+	registry.lo reporter.lo reporterconsole.lo reporterdebug.lo \
+	runcode.lo runner.lo runnerfilter.lo runnerfilterentire.lo \
+	runnerfilterone.lo runnerordinary.lo semanticstack.lo state.lo \
+	stategenerated.lo stateordinary.lo stateregistry.lo suite.lo \
+	suitefactory.lo suitegenerated.lo suiteordinary.lo
 libotest2_la_OBJECTS = $(am_libotest2_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -395,9 +396,13 @@ libotest2_la_SOURCES = \
     object.cpp \
     registry.cpp \
     reporter.cpp \
+    reporterconsole.cpp \
     reporterdebug.cpp \
     runcode.cpp runcode.h \
     runner.cpp \
+    runnerfilter.cpp \
+    runnerfilterentire.cpp \
+    runnerfilterone.cpp \
     runnerordinary.cpp \
     semanticstack.cpp \
     state.cpp \
@@ -422,9 +427,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu lib/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign lib/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu lib/Makefile
+	  $(AUTOMAKE) --foreign lib/Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \
@@ -511,9 +516,13 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/object.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/registry.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reporter.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reporterconsole.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reporterdebug.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runcode.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runner.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runnerfilter.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runnerfilterentire.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runnerfilterone.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runnerordinary.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/semanticstack.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/state.Plo@am__quote@

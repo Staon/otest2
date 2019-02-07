@@ -21,10 +21,12 @@
 
 #include <assert.h>
 #include <memory>
+#include <string>
 
 #include <commandstack.h>
 #include <context.h>
 #include <registry.h>
+#include <runnerfilter.h>
 #include <suitefactory.h>
 #include <suitefactoryptr.h>
 #include <suite.h>
@@ -47,15 +49,18 @@ CmdNextSuite::~CmdNextSuite() {
 
 void CmdNextSuite::run(
     const Context& context_) {
-  SuiteFactoryPtr factory_(registry->getSuite(current));
+  std::string suite_name_;
+  SuiteFactoryPtr factory_(registry->getSuite(current, &suite_name_));
   if(factory_ != nullptr) {
     /* -- schedule run of next suite */
     context_.command_stack->pushCommand(
         std::make_shared<CmdNextSuite>(registry, current + 1));
 
-    /* -- create the suite */
-    SuitePtr suite_(factory_->createSuite(context_));
-    suite_->scheduleRun(context_, suite_);
+    /* -- create and run the suite if it's not filtered */
+    if(!context_.runner_filter->filterSuite(suite_name_)) {
+      SuitePtr suite_(factory_->createSuite(context_));
+      suite_->scheduleRun(context_, suite_);
+    }
   }
 }
 

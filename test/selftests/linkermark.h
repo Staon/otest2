@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2019 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -17,24 +17,18 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <context.h>
+
+#ifndef OTest2__TEST_SELFTESTS_LINKERMARK_H_
+#define OTest2__TEST_SELFTESTS_LINKERMARK_H_
 
 namespace OTest2 {
 
-Context::Context(
-    CommandStack* command_stack_,
-    SemanticStack* semantic_stack_,
-    Reporter* reporter_,
-    RunnerFilter* runner_filter_) :
-  command_stack(command_stack_),
-  semantic_stack(semantic_stack_),
-  reporter(reporter_),
-  runner_filter(runner_filter_) {
+namespace SelfTest {
 
-}
+extern char const* const SELF_TEST_NAME;
 
-Context::~Context() {
-
-}
+}  /* -- namespace SelfTest */
 
 } /* -- namespace OTest2 */
+
+#endif /* OTest2__TEST_SELFTESTS_LINKERMARK_H_ */

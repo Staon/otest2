@@ -1100,6 +1100,7 @@ void parse(
   GeneratorStd generator_(
       os_,
       &reader_,
+      options_.domain,
       options_.infile,
       options_.outfile);
 //  GeneratorPrinter generator_;

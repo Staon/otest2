@@ -20,6 +20,8 @@
 #ifndef OTest2__INCLUDE_OTEST2_SUITEORDINARY_H_
 #define OTest2__INCLUDE_OTEST2_SUITEORDINARY_H_
 
+#include <string>
+
 #include <otest2/casefactoryptr.h>
 #include <otest2/suite.h>
 
@@ -57,13 +59,16 @@ class SuiteOrdinary : public Suite {
     /**
      * @brief Get a test case at specified index
      *
-     * @param context_ The OTest2 context
-     * @param index_ Index of the test case (zero based)
+     * @param[in] context_ The OTest2 context
+     * @param[in] index_ Index of the test case (zero based)
+     * @param[out] name_ Filled name of the test case if it's found and
+     *     the pointer is not null.
      * @return The test case or the nullptr if the index is out of the bounds.
      */
     virtual CaseFactoryPtr getCase(
         const Context& context_,
-        int index_) const = 0;
+        int index_,
+        std::string* name_) const = 0;
 
     /**
      * @brief Initialize the suite

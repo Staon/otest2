@@ -37,7 +37,7 @@ struct TypeOfMine {
 
 template<typename T_>
 struct TypeOfParent {
-    typedef const T_& Type;
+    typedef T_& Type;
 };
 
 template<typename T_>

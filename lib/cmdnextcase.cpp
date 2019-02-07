@@ -21,6 +21,7 @@
 
 #include <assert.h>
 #include <memory>
+#include <string>
 
 #include <case.h>
 #include <casefactory.h>
@@ -30,6 +31,7 @@
 #include <commandptr.h>
 #include <commandstack.h>
 #include <context.h>
+#include <runnerfilter.h>
 #include <suiteordinary.h>
 
 namespace OTest2 {
@@ -50,15 +52,18 @@ CmdNextCase::~CmdNextCase() {
 void CmdNextCase::run(
     const Context& context_) {
   /* -- get the case factory */
-  CaseFactoryPtr factory_(suite->getCase(context_, current));
+  std::string case_name_;
+  CaseFactoryPtr factory_(suite->getCase(context_, current, &case_name_));
   if(factory_ != nullptr) {
     /* -- There is a case at the index. Schedule run of next one. */
     context_.command_stack->pushCommand(
         std::make_shared<CmdNextCase>(suite, current + 1));
 
     /* -- Schedule run of the test case */
-    CasePtr testcase_(factory_->createCase(context_));
-    testcase_->scheduleRun(context_, testcase_);
+    if(!context_.runner_filter->filterCase(suite->getName(), case_name_)) {
+      CasePtr testcase_(factory_->createCase(context_));
+      testcase_->scheduleRun(context_, testcase_);
+    }
   }
 }
 

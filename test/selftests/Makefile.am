@@ -1,4 +1,4 @@
-# Copyright (C) 2018 Ondrej Starek
+# Copyright (C) 2019 Ondrej Starek
 # 
 # This file is part of OTest2.
 # 
@@ -14,16 +14,17 @@
 # 
 # You should have received a copy of the GNU Lesser General Public License
 # along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
-# 
-AM_CPPFLAGS = -I$(top_srcdir)/include
+#
+include_flags = -I$(top_srcdir)/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include/
+AM_CPPFLAGS = $(include_flags)
 AM_CXXFLAGS = -Wall -Wno-comment -Wno-unused-variable -Werror
 
-bin_PROGRAMS = sandbox
+OTEST2 = $(top_srcdir)/otest2/otest2
+SUFFIXES = .ot2
+.ot2.cpp:
+	$(OTEST2) -o $@ -d selftest $(include_flags) $<
 
-sandbox_SOURCES = \
-	generated.cpp \
-	main.cpp
-    
-sandbox_LDFLAGS = \
-    -L$(top_srcdir)/lib \
-    -lotest2
+lib_LTLIBRARIES = libselftest.la
+libselftest_la_SOURCES = \
+	assertions.ot2 \
+	linkermark.cpp

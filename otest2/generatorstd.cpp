@@ -40,6 +40,9 @@ struct GeneratorStd::Impl {
     LCStream output;
     FileReader* reader;
 
+    /* -- testing domain which is used for registration of the suites */
+    std::string domain;
+
     /* -- names of the input and output files as they are used in
      *    the #line directives. */
     std::string infile;
@@ -78,6 +81,7 @@ struct GeneratorStd::Impl {
         GeneratorStd* owner_,
         std::ostream* output_,
         FileReader* reader_,
+        const std::string& domain_,
         const std::string& infile_,
         const std::string& outfile_);
     ~Impl();
@@ -93,11 +97,13 @@ GeneratorStd::Impl::Impl(
     GeneratorStd* owner_,
     std::ostream* output_,
     FileReader* reader_,
+    const std::string& domain_,
     const std::string& infile_,
     const std::string& outfile_) :
   owner(owner_),
   output(output_),
   reader(reader_),
+  domain(domain_),
   infile(infile_),
   outfile(outfile_),
   variables(),
@@ -140,9 +146,10 @@ void GeneratorStd::Impl::writeGenerLineDirective() {
 GeneratorStd::GeneratorStd(
     std::ostream* output_,
     FileReader* reader_,
+    const std::string& domain_,
     const std::string& infile_,
     const std::string& outfile_) :
-  pimpl(new Impl(this, output_, reader_, infile_, outfile_)) {
+  pimpl(new Impl(this, output_, reader_, domain_, infile_, outfile_)) {
 
 }
 
@@ -485,7 +492,10 @@ void GeneratorStd::endFile(
       << "    SuiteRegistrator() {\n";
   for(const std::string& suite_ : pimpl->suites) {
     pimpl->output
-        << "      ::OTest2::Registry::instance().registerSuite(\n"
+        << "      ::OTest2::Registry::instance(";
+    pimpl->writeCString(pimpl->domain);
+    pimpl->output
+        << ").registerSuite(\n"
         << "          \"" << suite_ << "\",\n"
         << "          std::make_shared< ::OTest2::SuiteGeneratedFactory<" << suite_ << "> >());\n";
   }

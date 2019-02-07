@@ -67,18 +67,26 @@ class Registry {
     /**
      * @brief Get a suite factory at specified index
      *
-     * @param index_ The index. Zero based.
+     * @param[in] index_ The index. Zero based.
+     * @param[out] name_ Name of the suite. If the pointer is not null and
+     *     the suite is found, name of the suite is filled in.
      * @return The suite factory or nullptr if the index is out of the bounds.
      */
     SuiteFactoryPtr getSuite(
-        int index_);
+        int index_,
+        std::string* name_ = nullptr) const;
 
     /**
-     * @brief Access of the global instance
+     * @brief Access of the global instances
      *
-     * The global instance is used for automatic registering of suites.
+     * The global instances are used for automatic registering of suites.
+     *
+     * @param domain_ A test domain name. There can be several test domains.
+     *     Each has own registry and can be run separately. The name is
+     *     an unique identifier.
      */
-    static Registry& instance();
+    static Registry& instance(
+        const std::string& domain_);
 };
 
 } /* namespace OTest2 */

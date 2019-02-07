@@ -69,7 +69,8 @@ class SuiteGenerated : public SuiteOrdinary, public ContextObject {
     /* -- suite ordinary */
     virtual CaseFactoryPtr getCase(
         const Context& context_,
-        int index_) const;
+        int index_,
+        std::string* name_) const;
     virtual void startUpSuite(
         const Context& context_);
     virtual void tearDownSuite(

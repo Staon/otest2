@@ -31,9 +31,9 @@ struct Registry::Impl {
   public:
     Registry* owner;
 
-    typedef std::map<std::string, SuiteFactoryPtr> SuiteRegistry;
+    typedef std::map<std::string, int> SuiteRegistry;
     SuiteRegistry registry;
-    typedef std::vector<SuiteFactoryPtr> Order;
+    typedef std::vector<std::pair<std::string, SuiteFactoryPtr> > Order;
     Order order;
 
     /* -- avoid copying */
@@ -71,25 +71,39 @@ void Registry::registerSuite(
     SuiteFactoryPtr suite_factory_) {
   assert(!name_.empty() && suite_factory_ != nullptr);
   auto result_(pimpl->registry.insert(
-      Impl::SuiteRegistry::value_type(name_, suite_factory_)));
+      Impl::SuiteRegistry::value_type(name_, pimpl->order.size())));
   if(result_.second)
-    pimpl->order.push_back(suite_factory_);
+    pimpl->order.push_back(Impl::Order::value_type(name_, suite_factory_));
 }
 
 SuiteFactoryPtr Registry::getSuite(
-    int index_) {
+    int index_,
+    std::string* name_) const {
   if(index_ >= 0
      && static_cast<Impl::Order::size_type>(index_) < pimpl->order.size()) {
-    return pimpl->order[index_];
+    if(name_ != nullptr)
+      *name_ = pimpl->order[index_].first;
+    return pimpl->order[index_].second;
   }
   else {
     return nullptr;
   }
 }
 
-Registry& Registry::instance() {
-  static Registry registry_;
-  return registry_;
+Registry& Registry::instance(
+    const std::string& domain_) {
+  typedef std::map<std::string, Registry> TestDomains;
+  static TestDomains domains_;
+  auto iter_(domains_.find(domain_));
+  if(iter_ == domains_.end()) {
+    auto insert_ret_(domains_.emplace(
+        std::piecewise_construct,
+        std::forward_as_tuple(domain_),
+        std::forward_as_tuple()));
+    assert(insert_ret_.second);
+    iter_ = insert_ret_.first;
+  }
+  return (*iter_).second;
 }
 
 } /* namespace OTest2 */

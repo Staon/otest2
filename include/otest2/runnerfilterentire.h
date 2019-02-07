@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2019 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -17,50 +17,42 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OTest2__OTEST2_OPTIONS_H_
-#define OTest2__OTEST2_OPTIONS_H_
+#ifndef OTest2__INCLUDE_OTEST2_RUNNERFILTERENTIRE_H_
+#define OTest2__INCLUDE_OTEST2_RUNNERFILTERENTIRE_H_
 
-#include <string>
-#include <vector>
+#include <otest2/runnerfilter.h>
 
 namespace OTest2 {
 
 /**
- * @brief Options of the otest2 parser
+ * @brief Simple runner filter which allows all suites and test cases
  */
-struct Options {
+class RunnerFilterEntire : public RunnerFilter {
   public:
-    std::string domain;
-    std::string infile;
-    std::string outfile;
-    std::vector<std::string> includes;
-
     /* -- avoid copying */
-    Options(
-        const Options&) = delete;
-    Options& operator =(
-        const Options&) = delete;
+    RunnerFilterEntire(
+        const RunnerFilterEntire&) = delete;
+    RunnerFilterEntire& operator =(
+        const RunnerFilterEntire&) = delete;
 
     /**
      * @brief Ctor
      */
-    Options();
+    RunnerFilterEntire();
 
     /**
      * @brief Dtor
      */
-    ~Options();
+    virtual ~RunnerFilterEntire();
 
-    /**
-     * @brief This method validates the options
-     *
-     * The method validates and computes default option values
-     *
-     * @return True if the values are OK
-     */
-    bool validateOptions();
+    /* -- the runner filter interface */
+    virtual bool filterSuite(
+        const std::string& suite_name_) const;
+    virtual bool filterCase(
+        const std::string& suite_name_,
+        const std::string& case_name_) const;
 };
 
 } /* namespace OTest2 */
 
-#endif /* OTest2__OTEST2_OPTIONS_H_ */
+#endif /* OTest2__INCLUDE_OTEST2_RUNNERFILTERENTIRE_H_ */

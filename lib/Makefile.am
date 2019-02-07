@@ -44,9 +44,13 @@ libotest2_la_SOURCES = \
     object.cpp \
     registry.cpp \
     reporter.cpp \
+    reporterconsole.cpp \
     reporterdebug.cpp \
     runcode.cpp runcode.h \
     runner.cpp \
+    runnerfilter.cpp \
+    runnerfilterentire.cpp \
+    runnerfilterone.cpp \
     runnerordinary.cpp \
     semanticstack.cpp \
     state.cpp \

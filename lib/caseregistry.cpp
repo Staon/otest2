@@ -31,9 +31,9 @@ struct CaseRegistry::Impl {
   public:
     CaseRegistry* owner;
 
-    typedef std::map<std::string, CaseFactoryPtr> CaseRegistryMap;
+    typedef std::map<std::string, int> CaseRegistryMap;
     CaseRegistryMap registry;
-    typedef std::vector<CaseFactoryPtr> Order;
+    typedef std::vector<std::pair<std::string, CaseFactoryPtr> > Order;
     Order order;
 
     /* -- avoid copying */
@@ -71,15 +71,19 @@ void CaseRegistry::registerCase(
     CaseFactoryPtr case_factory_) {
   assert(!name_.empty() && case_factory_ != nullptr);
   auto result_(pimpl->registry.insert(
-      Impl::CaseRegistryMap::value_type(name_, case_factory_)));
+      Impl::CaseRegistryMap::value_type(name_, pimpl->order.size())));
   if(result_.second)
-    pimpl->order.push_back(case_factory_);
+    pimpl->order.push_back(Impl::Order::value_type(name_, case_factory_));
 }
 
 CaseFactoryPtr CaseRegistry::getCase(
-    int index_) const {
-  if(index_ >= 0 && static_cast<Impl::Order::size_type>(index_) < pimpl->order.size())
-    return pimpl->order[index_];
+    int index_,
+    std::string* name_) const {
+  if(index_ >= 0 && static_cast<Impl::Order::size_type>(index_) < pimpl->order.size()) {
+    if(name_ != nullptr)
+      *name_ = pimpl->order[index_].first;
+    return pimpl->order[index_].second;
+  }
   else
     return nullptr;
 }

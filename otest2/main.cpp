@@ -35,11 +35,13 @@ void printHelp(
   os_ << std::endl;
   os_ << "  OTest2 preprocessor" << std::endl;
   os_ << std::endl;
-  os_ << "Usage: otest2 [-o outfile] [-I path] infile" << std::endl;
+  os_ << "Usage: otest2 [-o outfile] [-d domain] [-I path] infile" << std::endl;
   os_ << std::endl;
   os_ << "  -o outfile  --outfile=outfile  Name of the output file." << std::endl;
   os_ << "                                 By default, the name is derived" << std::endl;
   os_ << "                                 from the input filename." << std::endl;
+  os_ << "  -d domain   --domain=domain    Name of the test domain." << std::endl;
+  os_ << "                                 The default value is 'default'." << std::endl;
   os_ << "  -I path                        An include path." << std::endl;
   os_ << std::endl;
 }
@@ -52,12 +54,16 @@ void parseCommandLine(
   int opt_;
   option longopts_[] = {
       {"outfile", required_argument, nullptr, 'o'},
+      {"domain", required_argument, nullptr, 'd'},
       {nullptr, 0, nullptr, 0}
   };
-  while((opt_ = getopt_long(argc_, argv_, "o:I:", longopts_, nullptr)) != EOF) {
+  while((opt_ = getopt_long(argc_, argv_, "o:d:I:", longopts_, nullptr)) != EOF) {
     switch(opt_) {
       case 'o':
         options_.outfile = optarg;
+        break;
+      case 'd':
+        options_.domain = optarg;
         break;
       case 'I':
         options_.includes.push_back(optarg);

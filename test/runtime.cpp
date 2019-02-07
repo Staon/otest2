@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2019 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -17,21 +17,43 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
-#include <otest2/registry.h>
-#include <otest2/reporterdebug.h>
-#include <otest2/runnerordinary.h>
+#include "runtime.h"
 
-int main(
-    int argc_,
-    char* argv_[]) {
-  ::OTest2::ReporterDebug reporter_(&std::cout);
-  ::OTest2::RunnerOrdinary runner_(
-      &reporter_, &::OTest2::Registry::instance(), "sandbox");
+#include <iostream>
+
+#include <otest2/registry.h>
+#include "selftests/linkermark.h"
+
+namespace OTest2 {
+
+namespace Test {
+
+Runtime::Runtime(
+    const std::string& suite_name_,
+    const std::string& case_name_) :
+  reporter(&std::cout),
+  runner_filter(suite_name_, case_name_),
+  runner(
+      &reporter,
+      &Registry::instance("selftest"),
+      &runner_filter,
+      SelfTest::SELF_TEST_NAME) {
+
+}
+
+Runtime::~Runtime() {
+
+}
+
+bool Runtime::runTheTest() {
   int delay_(0);
   do {
-    delay_ = runner_.runNext();
+    delay_ = runner.runNext();
   } while(delay_ >= 0);
 
-  return 0;
+  return true;
 }
+
+} /* namespace Test */
+
+} /* namespace OTest2 */

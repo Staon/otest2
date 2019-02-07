@@ -64,12 +64,15 @@ class CaseRegistry {
     /**
      * @brief Get a test case at specified index
      *
-     * @param index_ The index (zero based)
+     * @param[in] index_ The index (zero based)
+     * @param[out] name_ Filled name of the case if the case is found and
+     *     the pointer is not null.
      * @return The test case object or the nullptr if the index is out of
      *     the bounds.
      */
     CaseFactoryPtr getCase(
-        int index_) const;
+        int index_,
+        std::string* name_ = nullptr) const;
 };
 
 } /* namespace OTest2 */

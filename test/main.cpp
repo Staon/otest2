@@ -17,24 +17,27 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <context.h>
+#include <iostream>
+#include <otest2/registry.h>
+#include <otest2/reporterconsole.h>
+#include <otest2/runnerordinary.h>
+#include <string>
+#include "../include/otest2/runnerfilterentire.h"
 
-namespace OTest2 {
+int main(
+    int argc_,
+    char* argv_[]) {
+  ::OTest2::ReporterConsole reporter_(&std::cout);
+  ::OTest2::RunnerFilterEntire runner_filter_;
+  ::OTest2::RunnerOrdinary runner_(
+      &reporter_,
+      &::OTest2::Registry::instance("default"),
+      &runner_filter_,
+      "selftest");
+  int delay_(0);
+  do {
+    delay_ = runner_.runNext();
+  } while(delay_ >= 0);
 
-Context::Context(
-    CommandStack* command_stack_,
-    SemanticStack* semantic_stack_,
-    Reporter* reporter_,
-    RunnerFilter* runner_filter_) :
-  command_stack(command_stack_),
-  semantic_stack(semantic_stack_),
-  reporter(reporter_),
-  runner_filter(runner_filter_) {
-
+  return 0;
 }
-
-Context::~Context() {
-
-}
-
-} /* -- namespace OTest2 */

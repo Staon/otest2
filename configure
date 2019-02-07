@@ -17732,53 +17732,7 @@ else
   as_fn_error $? "The libclang is not detected!" "$LINENO" 5
 fi
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for LLVMCreateMessage in -lLLVM" >&5
-$as_echo_n "checking for LLVMCreateMessage in -lLLVM... " >&6; }
-if ${ac_cv_lib_LLVM_LLVMCreateMessage+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lLLVM  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char LLVMCreateMessage ();
-int
-main ()
-{
-return LLVMCreateMessage ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_LLVM_LLVMCreateMessage=yes
-else
-  ac_cv_lib_LLVM_LLVMCreateMessage=no
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_LLVM_LLVMCreateMessage" >&5
-$as_echo "$ac_cv_lib_LLVM_LLVMCreateMessage" >&6; }
-if test "x$ac_cv_lib_LLVM_LLVMCreateMessage" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBLLVM 1
-_ACEOF
-
-  LIBS="-lLLVM $LIBS"
-
-else
-  as_fn_error $? "The libllvm is not detected!" "$LINENO" 5
-fi
-
+#AC_CHECK_LIB([LLVM], [LLVMCreateMessage],,[AC_MSG_ERROR(The libllvm is not detected!)])
 # Checks for header files.
 for ac_header
 do :

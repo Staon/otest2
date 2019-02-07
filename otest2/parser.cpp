@@ -1072,10 +1072,12 @@ void parse(
   /* -- prepare the options */
   std::vector<std::string> opts_;
   opts_.push_back("otest2");
-  opts_.push_back("--extra-arg=--std=c++11");
-  opts_.push_back("--extra-arg=-DOTEST2_PARSER_ACTIVE");
+  opts_.push_back("--extra-arg-before=-xc++");
+  opts_.push_back("--extra-arg-before=--driver-mode=g++");
+  opts_.push_back("--extra-arg-before=--std=c++11");
+  opts_.push_back("--extra-arg-before=-DOTEST2_PARSER_ACTIVE");
   for(const auto& path_ : options_.includes) {
-    opts_.push_back("--extra-arg=-I" + path_);
+    opts_.push_back("--extra-arg-before=-I" + path_);
   }
   opts_.push_back(options_.infile);
 

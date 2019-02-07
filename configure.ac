@@ -26,7 +26,7 @@ AX_CXX_COMPILE_STDCXX(14, noext)
 # Checks for libraries.
 # FIXME: Replace `main' with a function in `-lclang':
 AC_CHECK_LIB([clang], [clang_createIndex],,[AC_MSG_ERROR(The libclang is not detected!)])
-AC_CHECK_LIB([LLVM], [LLVMCreateMessage],,[AC_MSG_ERROR(The libllvm is not detected!)])
+#AC_CHECK_LIB([LLVM], [LLVMCreateMessage],,[AC_MSG_ERROR(The libllvm is not detected!)])
 # Checks for header files.
 AC_CHECK_HEADERS
 

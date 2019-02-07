@@ -14,7 +14,7 @@
 #include <otest2/suitegenerated.h>
 
 
-#line 1 "example.cpp"
+#line 1 "example.ot2"
 #include <otest2/otest2.h>
 
 #include <iostream>
@@ -51,7 +51,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
     }
 
     virtual void startUp() 
-#line 15 "example.cpp"
+#line 15 "example.ot2"
 {
     /* -- make the string upper */
     suite_text = "foo";
@@ -104,7 +104,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
         }
 
         virtual void startUp() 
-#line 31 "example.cpp"
+#line 31 "example.ot2"
 {
 
     }
@@ -112,7 +112,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
 
 
         virtual void tearDown() 
-#line 35 "example.cpp"
+#line 35 "example.ot2"
 {
 
     }
@@ -164,7 +164,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
             }
 
             virtual void runState() 
-#line 39 "example.cpp"
+#line 39 "example.ot2"
 {
       std::cout
           << suite_text << std::endl
@@ -238,7 +238,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
         }
 
         virtual void startUp() 
-#line 55 "example.cpp"
+#line 55 "example.ot2"
 {
 
     }
@@ -279,7 +279,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
             }
 
             virtual void runState() 
-#line 59 "example.cpp"
+#line 59 "example.ot2"
 {
       int a_(10);
       int b_(a_ + 10);
@@ -333,7 +333,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
             }
 
             virtual void runState() 
-#line 70 "example.cpp"
+#line 70 "example.ot2"
 {
 
     }
@@ -384,7 +384,7 @@ class ExampleSuite : public ::OTest2::SuiteGenerated {
     }
 };
 
-#line 74 "example.cpp"
+#line 74 "example.ot2"
 
 
 
@@ -438,7 +438,7 @@ class SuiteRegistrator {
 
 } /* -- namespace */
 
-#line 78 "example.cpp"
+#line 78 "example.ot2"
 
 
 } /* -- namespace Test */

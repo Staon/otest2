@@ -16,7 +16,7 @@
 # along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
 # 
 AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/include/otest2
-AM_CXXFLAGS =
+AM_CXXFLAGS = -fno-rtti -pthread
 
 bin_PROGRAMS = otest2
 
@@ -54,6 +54,7 @@ otest2_LDFLAGS = \
     -lotest2 \
     -lclangTooling \
     -lclangFrontend \
+    -lclangFrontendTool \
     -lclangSerialization \
     -lclangDriver \
     -lclangRewriteFrontend \
@@ -65,4 +66,139 @@ otest2_LDFLAGS = \
     -lclangASTMatchers \
     -lclangEdit \
     -lclangLex \
-    -lclangBasic
+    -lclangBasic \
+    -lLLVMAArch64AsmParser \
+    -lLLVMAArch64AsmPrinter \
+    -lLLVMAArch64CodeGen \
+    -lLLVMAArch64Desc \
+    -lLLVMAArch64Disassembler \
+    -lLLVMAArch64Info \
+    -lLLVMAArch64Utils \
+    -lLLVMAggressiveInstCombine \
+    -lLLVMAMDGPUAsmParser \
+    -lLLVMAMDGPUAsmPrinter \
+    -lLLVMAMDGPUCodeGen \
+    -lLLVMAMDGPUDesc \
+    -lLLVMAMDGPUDisassembler \
+    -lLLVMAMDGPUInfo \
+    -lLLVMAMDGPUUtils \
+    -lLLVMAnalysis \
+    -lLLVMARMAsmParser \
+    -lLLVMARMAsmPrinter \
+    -lLLVMARMCodeGen \
+    -lLLVMARMDesc \
+    -lLLVMARMDisassembler \
+    -lLLVMARMInfo \
+    -lLLVMARMUtils \
+    -lLLVMAsmParser \
+    -lLLVMAsmPrinter \
+    -lLLVMBitReader \
+    -lLLVMBitWriter \
+    -lLLVMBPFAsmParser \
+    -lLLVMBPFAsmPrinter \
+    -lLLVMBPFCodeGen \
+    -lLLVMBPFDesc \
+    -lLLVMBPFDisassembler \
+    -lLLVMBPFInfo \
+    -lLLVMCodeGen \
+    -lLLVMCore \
+    -lLLVMCoroutines \
+    -lLLVMCoverage \
+    -lLLVMDebugInfoCodeView \
+    -lLLVMDebugInfoDWARF \
+    -lLLVMDebugInfoMSF \
+    -lLLVMDebugInfoPDB \
+    -lLLVMDemangle \
+    -lLLVMDlltoolDriver \
+    -lLLVMExecutionEngine \
+    -lLLVMFuzzMutate \
+    -lLLVMGlobalISel \
+    -lLLVMHexagonAsmParser \
+    -lLLVMHexagonCodeGen \
+    -lLLVMHexagonDesc \
+    -lLLVMHexagonDisassembler \
+    -lLLVMHexagonInfo \
+    -lLLVMInstCombine \
+    -lLLVMInstrumentation \
+    -lLLVMInterpreter \
+    -lLLVMipo \
+    -lLLVMLanaiAsmParser \
+    -lLLVMLanaiAsmPrinter \
+    -lLLVMLanaiCodeGen \
+    -lLLVMLanaiDesc \
+    -lLLVMLanaiDisassembler \
+    -lLLVMLanaiInfo \
+    -lLLVMLibDriver \
+    -lLLVMLineEditor \
+    -lLLVMLinker \
+    -lLLVMLTO \
+    -lLLVMMCDisassembler \
+    -lLLVMMCJIT \
+    -lLLVMMCParser \
+    -lLLVMMipsAsmParser \
+    -lLLVMMipsAsmPrinter \
+    -lLLVMMipsCodeGen \
+    -lLLVMMipsDesc \
+    -lLLVMMipsDisassembler \
+    -lLLVMMipsInfo \
+    -lLLVMMIRParser \
+    -lLLVMMSP430AsmPrinter \
+    -lLLVMMSP430CodeGen \
+    -lLLVMMSP430Desc \
+    -lLLVMMSP430Info \
+    -lLLVMNVPTXAsmPrinter \
+    -lLLVMNVPTXCodeGen \
+    -lLLVMNVPTXDesc \
+    -lLLVMNVPTXInfo \
+    -lLLVMObjCARCOpts \
+    -lLLVMObject \
+    -lLLVMObjectYAML \
+    -lLLVMOption \
+    -lLLVMOrcJIT \
+    -lLLVMPasses \
+    -lLLVMPowerPCAsmParser \
+    -lLLVMPowerPCAsmPrinter \
+    -lLLVMPowerPCCodeGen \
+    -lLLVMPowerPCDesc \
+    -lLLVMPowerPCDisassembler \
+    -lLLVMPowerPCInfo \
+    -lLLVMProfileData \
+    -lLLVMRuntimeDyld \
+    -lLLVMScalarOpts \
+    -lLLVMSelectionDAG \
+    -lLLVMSparcAsmParser \
+    -lLLVMSparcAsmPrinter \
+    -lLLVMSparcCodeGen \
+    -lLLVMSparcDesc \
+    -lLLVMSparcDisassembler \
+    -lLLVMSparcInfo \
+    -lLLVMSymbolize \
+    -lLLVMSystemZAsmParser \
+    -lLLVMSystemZAsmPrinter \
+    -lLLVMSystemZCodeGen \
+    -lLLVMSystemZDesc \
+    -lLLVMSystemZDisassembler \
+    -lLLVMSystemZInfo \
+    -lLLVMTableGen \
+    -lLLVMTarget \
+    -lLLVMTransformUtils \
+    -lLLVMVectorize \
+    -lLLVMWindowsManifest \
+    -lLLVMXCoreAsmPrinter \
+    -lLLVMXCoreCodeGen \
+    -lLLVMXCoreDesc \
+    -lLLVMXCoreDisassembler \
+    -lLLVMXCoreInfo \
+    -lLLVMXRay \
+    -lLLVMX86AsmParser \
+    -lLLVMX86AsmPrinter \
+    -lLLVMX86CodeGen \
+    -lLLVMX86Desc \
+    -lLLVMX86Disassembler \
+    -lLLVMX86Info \
+    -lLLVMX86Utils \
+    -lLLVMMC \
+    -lLLVMBinaryFormat \
+    -lLLVMSupport \
+    -lz \
+    -ltinfo

@@ -12,9 +12,6 @@
 /* Define to 1 if you have the `clang' library (-lclang). */
 #undef HAVE_LIBCLANG
 
-/* Define to 1 if you have the `LLVM' library (-lLLVM). */
-#undef HAVE_LIBLLVM
-
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
 

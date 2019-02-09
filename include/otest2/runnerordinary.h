@@ -68,7 +68,7 @@ class RunnerOrdinary : public Runner {
      */
     virtual ~RunnerOrdinary();
 
-    /* -- runnter interface */
+    /* -- runner interface */
     virtual int runNext() override;
 };
 

@@ -105,7 +105,8 @@ CONFIG_CLEAN_VPATH_FILES =
 am_selftest_OBJECTS = assertions.$(OBJEXT) main.$(OBJEXT) \
 	runtime.$(OBJEXT)
 selftest_OBJECTS = $(am_selftest_OBJECTS)
-selftest_DEPENDENCIES = ../lib/libotest2.la selftests/libselftest.la
+selftest_DEPENDENCIES = ../lib/.libs/libotest2.la \
+	./selftests/.libs/libselftest.la
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
@@ -569,10 +570,12 @@ selftest_SOURCES = \
 	runtime.cpp
 
 selftest_LDADD = \
-	../lib/libotest2.la \
-	selftests/libselftest.la    
+	../lib/.libs/libotest2.la \
+	./selftests/.libs/libselftest.la \
+	-l:libtinfo.a
 
 TESTS = $(check_PROGRAMS)
+.PHONY = test
 SUBDIRS = selftests
 all: all-recursive
 
@@ -1107,6 +1110,7 @@ uninstall-am:
 
 .ot2.cpp:
 	$(OTEST2) -o $@ $(include_flags) $<
+test: $(check_PROGRAMS)
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

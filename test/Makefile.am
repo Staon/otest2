@@ -32,9 +32,13 @@ selftest_SOURCES = \
 	runtime.cpp
 
 selftest_LDADD = \
-	../lib/libotest2.la \
-	selftests/libselftest.la    
-
+	../lib/.libs/libotest2.la \
+	./selftests/.libs/libselftest.la \
+	-l:libtinfo.a
+	
 TESTS = $(check_PROGRAMS)
+
+.PHONY = test
+test: $(check_PROGRAMS)
 
 SUBDIRS = selftests

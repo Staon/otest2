@@ -46,6 +46,7 @@ libotest2_la_SOURCES = \
     reporter.cpp \
     reporterconsole.cpp \
     reporterdebug.cpp \
+    reporterstatistics.cpp \
     runcode.cpp runcode.h \
     runner.cpp \
     runnerfilter.cpp \
@@ -60,4 +61,5 @@ libotest2_la_SOURCES = \
     suite.cpp \
     suitefactory.cpp \
     suitegenerated.cpp \
-    suiteordinary.cpp
+    suiteordinary.cpp \
+    terminaldriver.cpp

@@ -192,7 +192,7 @@ void GeneratorStd::makeAssertion(
     const Location& end_,
     bool insert_expr_) {
   /* -- write info about file and line number */
-  pimpl->writeCString(pimpl->outfile);
+  pimpl->writeCString(pimpl->infile);
   pimpl->output << ", " << begin_.getLine() << ", ";
 
   if(insert_expr_) {

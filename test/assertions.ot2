@@ -34,7 +34,13 @@ TEST_SUITE(AssertionsSuite) {
     Runtime runtime("AssertionsSuite", "");
 
     TEST_SIMPLE() {
-      testAssert(runtime.runTheTest());
+      testAssert(!runtime.runTheTest());
+    }
+  }
+
+  TEST_CASE(SecondCase) {
+    TEST_SIMPLE() {
+
     }
   }
 }

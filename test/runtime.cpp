@@ -46,12 +46,14 @@ Runtime::~Runtime() {
 }
 
 bool Runtime::runTheTest() {
-  int delay_(0);
-  do {
-    delay_ = runner.runNext();
-  } while(delay_ >= 0);
-
-  return true;
+  RunnerResult result_;
+  while(true) {
+    result_ = runner.runNext();
+    if(result_.isFinished())
+      break;
+    /* -- TODO: handle the delay */
+  };
+  return result_.getResult();
 }
 
 } /* namespace Test */

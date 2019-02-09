@@ -41,8 +41,8 @@ void CmdStopTest::run(
   context_.reporter->leaveTest(
       context_, name, context_.semantic_stack->top());
 
-  /* -- clean up the stack */
-  context_.semantic_stack->pop();
+  /* -- note: don't touch the semantic stack. There is the result of the entire
+   *    test at the top. */
 }
 
 } /* -- namespace OTest2 */

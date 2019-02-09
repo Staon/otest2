@@ -97,7 +97,7 @@ RunnerOrdinary::~RunnerOrdinary() {
   odelete(pimpl);
 }
 
-int RunnerOrdinary::runNext() {
+RunnerResult RunnerOrdinary::runNext() {
   bool first_command_(true);
   while(!pimpl->command_stack.empty()) {
     CommandPtr cmd_(pimpl->command_stack.topCommand());
@@ -106,7 +106,7 @@ int RunnerOrdinary::runNext() {
     int delay_(0);
     if(!first_command_ && cmd_->shouldWait(pimpl->context, delay_)) {
       assert(delay_ >= 0);
-      return delay_;
+      return RunnerResult(true, false, delay_);
     }
 
     /* -- run the command */
@@ -115,7 +115,12 @@ int RunnerOrdinary::runNext() {
     cmd_->run(pimpl->context);
   }
 
-  return -1; /* -- no other work */
+  /* -- check whether the stack is finished - there is only one value
+   *    meant the result of the test. */
+  assert(pimpl->semantic_stack.isFinished());
+
+  /* -- no other work - get the test result and stop */
+  return RunnerResult(false, pimpl->semantic_stack.top(), -1);
 }
 
 } /* namespace OTest2 */

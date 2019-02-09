@@ -69,7 +69,7 @@ class RunnerOrdinary : public Runner {
     virtual ~RunnerOrdinary();
 
     /* -- runner interface */
-    virtual int runNext() override;
+    virtual RunnerResult runNext() override;
 };
 
 } /* namespace OTest2 */

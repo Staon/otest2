@@ -90,4 +90,8 @@ void SemanticStack::popAnd() {
   pimpl->stack.back() = pimpl->stack.back() && value_;
 }
 
+bool SemanticStack::isFinished() const {
+  return pimpl->stack.size() == 1;
+}
+
 } /* namespace OTest2 */

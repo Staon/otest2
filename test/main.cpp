@@ -34,10 +34,16 @@ int main(
       &::OTest2::Registry::instance("default"),
       &runner_filter_,
       "selftest");
-  int delay_(0);
-  do {
-    delay_ = runner_.runNext();
-  } while(delay_ >= 0);
+  ::OTest2::RunnerResult result_;
+  while(true) {
+    result_ = runner_.runNext();
+    if(result_.isFinished())
+      break;
+    /* -- TODO: wait for specified delay */
+  }
 
-  return 0;
+  if(result_.getResult())
+    return 0;
+  else
+    return 1;
 }

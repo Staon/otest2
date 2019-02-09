@@ -23,6 +23,90 @@
 namespace OTest2 {
 
 /**
+ * @brief Result of test run
+ *
+ * This structure is returned by the runner after one test step. There
+ * are several possible results:
+ *   - the test hasn't finished yet, wait for some time and run the runner
+ *     again,
+ *   - the test has successfully finished,
+ *   - the test has failed.
+ *
+ * The user must check the isFinished() value. If the test is finished,
+ * he can get the test result by calling the getResult() method. If the test
+ * isn't finished, he must get the delay value getDelayMS(), wait for
+ * specified time (it can be zero!) and run the test runner again.
+ */
+class RunnerResult {
+  private:
+    bool running;
+    bool result;
+    int delay_ms;
+
+  public:
+    /**
+     * @brief Default ctor - finished failed result
+     */
+    RunnerResult();
+
+    /**
+     * @brief Ctor
+     *
+     * @param running_ True if the test hasn't finished yet.
+     * @param result_ Result of the test. It's valid only if the @a running_
+     *     is false.
+     * @param delay_ms_ Delay time in milliseconds. It's valid only if the
+     *     @a running_ is true.
+     */
+    RunnerResult(
+        bool running_,
+        bool result_,
+        int delay_ms_);
+
+    /**
+     * @brief Copy ctor
+     */
+    RunnerResult(
+        const RunnerResult& src_);
+
+    /**
+     * @brief Dtor
+     */
+    ~RunnerResult();
+
+    /**
+     * @brief Swap contents
+     */
+    void swap(
+        RunnerResult& r2_) noexcept;
+
+    /**
+     * @brief Copy operator
+     */
+    RunnerResult& operator = (
+        const RunnerResult& src_);
+
+    /**
+     * @brief Check whether the test has already finished
+     */
+    bool isFinished() const;
+
+    /**
+     * @brief Get delay between two steps in milliseconds
+     *
+     * @note This value is valid only if isFinished() is false!
+     */
+    int getDelayMS() const;
+
+    /**
+     * @brief Get result of the test - true if the test has passed
+     *
+     * @note This value is valid only if isFinished() is true!
+     */
+    bool getResult() const;
+};
+
+/**
  * @brief Generic test runner
  */
 class Runner {
@@ -47,10 +131,10 @@ class Runner {
      * @brief Run next pack of work
      *
      * @param reporter_ A test reporter object. The ownership is not taken.
-     * @return A negative value means end of test running. Zero or a positive
-     *     value is a time of waiting in milliseconds before next run.
+     * @return A runner result. @sa the RunnerResult class for description
+     *     how the test result is returned.
      */
-    virtual int runNext() = 0;
+    virtual RunnerResult runNext() = 0;
 };
 
 } /* namespace OTest2 */

@@ -76,6 +76,12 @@ class SemanticStack {
      * @brief AND last two values and replace them by the result
      */
     void popAnd();
+
+    /**
+     * @brief Returns true if just one value is in the stack (result
+     *     of the entire test).
+     */
+    bool isFinished() const;
 };
 
 } /* namespace OTest2 */

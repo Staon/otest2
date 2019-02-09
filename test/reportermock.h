@@ -23,6 +23,7 @@
 #include <iosfwd>
 #include <vector>
 
+#include <otest2/assertbean.h>
 #include <otest2/reporter.h>
 
 namespace OTest2 {
@@ -77,7 +78,7 @@ class ReporterMock : public Reporter {
     /**
      * @brief Check whether the records match
      */
-    bool checkRecords(
+    AssertBean checkRecords(
         const std::vector<const char*>& data_) const;
 
     /* -- reporter interface */

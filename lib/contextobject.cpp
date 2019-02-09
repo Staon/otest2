@@ -22,6 +22,7 @@
 #include <iostream>
 #include <sstream>
 
+#include <assertbean.h>
 #include <context.h>
 #include <reporter.h>
 #include <semanticstack.h>
@@ -67,6 +68,15 @@ void ContextObject::testAssert(
     const std::string& expression_,
     bool condition_) {
   otest2AssertGeneric(file_, lineno_, expression_, "", condition_);
+}
+
+void ContextObject::testAssert(
+    const std::string& file_,
+    int lineno_,
+    const std::string& expression_,
+    const AssertBean& bean_) {
+  otest2AssertGeneric(
+      file_, lineno_, expression_, bean_.getMessage(), bean_.getCondition());
 }
 
 } /* namespace OTest2 */

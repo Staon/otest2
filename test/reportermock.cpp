@@ -24,6 +24,7 @@
 #include <string>
 #include <vector>
 
+#include <otest2/assertbean.h>
 #include <otest2/utils.h>
 
 namespace OTest2 {
@@ -99,18 +100,22 @@ std::ostream& ReporterMock::dumpRecords(
   return os_;
 }
 
-bool ReporterMock::checkRecords(
+AssertBean ReporterMock::checkRecords(
     const std::vector<const char*>& data_) const {
   /* -- check the size */
   if(pimpl->records.size() != data_.size())
-    return false;
+    return AssertBean(false, "different data size");
 
   for(std::vector<const char*>::size_type i_(0); i_ < data_.size(); ++i_) {
-    if(pimpl->records[i_] != data_[i_])
-      return false;
+    if(pimpl->records[i_] != data_[i_]) {
+      std::ostringstream oss_;
+      oss_ << "different item " << i_ << ": '" << pimpl->records[i_]
+           << "' != '" << data_[i_] << "'";
+      return AssertBean(false, oss_.str());
+    }
   }
 
-  return true;
+  return AssertBean(true, "OK");
 }
 
 void ReporterMock::enterTest(

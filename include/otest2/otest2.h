@@ -22,6 +22,8 @@
 
 namespace OTest2 {
 
+class AssertBean;
+
 namespace Assertions {
 
 /**
@@ -31,6 +33,15 @@ namespace Assertions {
  */
 void testAssert(
     bool condition_);
+
+/**
+ * @brief Generic assertion
+ *
+ * @param bean_ A bean containing assertion's condition and message.
+ *     If the condition is true, the assertion passes.
+ */
+void testAssert(
+    const AssertBean& bean_);
 
 /**
  * @brief Comparing of two values

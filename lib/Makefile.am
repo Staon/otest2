@@ -20,6 +20,7 @@ AM_CXXFLAGS = -Wall -Werror
 
 lib_LTLIBRARIES = libotest2.la
 libotest2_la_SOURCES = \
+	assertbean.cpp \
     case.cpp \
     casefactory.cpp \
     casegenerated.cpp \

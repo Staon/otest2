@@ -132,18 +132,19 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libotest2_la_LIBADD =
-am_libotest2_la_OBJECTS = case.lo casefactory.lo casegenerated.lo \
-	caseordinary.lo caseregistry.lo cmddestroycase.lo \
-	cmddestroysuite.lo cmddummy.lo cmdfirststate.lo cmdnextcase.lo \
-	cmdnextsuite.lo cmdrunstate.lo cmdstartcase.lo \
-	cmdstartsuite.lo cmdstarttest.lo cmdstoptest.lo command.lo \
-	commandstack.lo context.lo contextobject.lo exc.lo object.lo \
-	registry.lo reporter.lo reporterconsole.lo reporterdebug.lo \
-	reporterstatistics.lo runcode.lo runner.lo runnerfilter.lo \
-	runnerfilterentire.lo runnerfilterone.lo runnerordinary.lo \
-	semanticstack.lo state.lo stategenerated.lo stateordinary.lo \
-	stateregistry.lo suite.lo suitefactory.lo suitegenerated.lo \
-	suiteordinary.lo terminaldriver.lo utils.lo
+am_libotest2_la_OBJECTS = assertbean.lo case.lo casefactory.lo \
+	casegenerated.lo caseordinary.lo caseregistry.lo \
+	cmddestroycase.lo cmddestroysuite.lo cmddummy.lo \
+	cmdfirststate.lo cmdnextcase.lo cmdnextsuite.lo cmdrunstate.lo \
+	cmdstartcase.lo cmdstartsuite.lo cmdstarttest.lo \
+	cmdstoptest.lo command.lo commandstack.lo context.lo \
+	contextobject.lo exc.lo object.lo registry.lo reporter.lo \
+	reporterconsole.lo reporterdebug.lo reporterstatistics.lo \
+	runcode.lo runner.lo runnerfilter.lo runnerfilterentire.lo \
+	runnerfilterone.lo runnerordinary.lo semanticstack.lo state.lo \
+	stategenerated.lo stateordinary.lo stateregistry.lo suite.lo \
+	suitefactory.lo suitegenerated.lo suiteordinary.lo \
+	terminaldriver.lo utils.lo
 libotest2_la_OBJECTS = $(am_libotest2_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -373,6 +374,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/include/otest2
 AM_CXXFLAGS = -Wall -Werror
 lib_LTLIBRARIES = libotest2.la
 libotest2_la_SOURCES = \
+	assertbean.cpp \
     case.cpp \
     casefactory.cpp \
     casegenerated.cpp \
@@ -496,6 +498,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/assertbean.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/case.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/casefactory.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/casegenerated.Plo@am__quote@

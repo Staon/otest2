@@ -24,6 +24,7 @@
 
 namespace OTest2 {
 
+class AssertBean;
 class Context;
 
 /**
@@ -73,6 +74,20 @@ class ContextObject {
         int lineno_,
         const std::string& expression_,
         bool condition_);
+
+    /**
+     * @brief Generic assertion
+     *
+     * @param file_ Name of the file
+     * @param lineno_ Number of the line
+     * @param expression_ String representation of the condition
+     * @param bean_ Asssert's condition and message
+     */
+    void testAssert(
+        const std::string& file_,
+        int lineno_,
+        const std::string& expression_,
+        const AssertBean& bean_);
 
     /**
      * @brief Check equality of two values

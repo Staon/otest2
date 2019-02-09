@@ -29,6 +29,7 @@ check_PROGRAMS = selftest
 selftest_SOURCES = \
 	assertions.ot2 \
 	main.cpp \
+	reportermock.cpp \
 	runtime.cpp
 
 selftest_LDADD = \

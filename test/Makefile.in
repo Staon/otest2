@@ -103,7 +103,7 @@ CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am_selftest_OBJECTS = assertions.$(OBJEXT) main.$(OBJEXT) \
-	runtime.$(OBJEXT)
+	reportermock.$(OBJEXT) runtime.$(OBJEXT)
 selftest_OBJECTS = $(am_selftest_OBJECTS)
 selftest_DEPENDENCIES = ../lib/.libs/libotest2.la \
 	./selftests/.libs/libselftest.la
@@ -567,6 +567,7 @@ SUFFIXES = .ot2
 selftest_SOURCES = \
 	assertions.ot2 \
 	main.cpp \
+	reportermock.cpp \
 	runtime.cpp
 
 selftest_LDADD = \
@@ -632,6 +633,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/assertions.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/reportermock.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runtime.Po@am__quote@
 
 .cpp.o:

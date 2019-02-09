@@ -21,6 +21,9 @@
 #ifndef OTest2__INCLUDE_OTEST2_UTILS_H_
 #define OTest2__INCLUDE_OTEST2_UTILS_H_
 
+#include <iosfwd>
+#include <string>
+
 namespace OTest2 {
 
 /**
@@ -34,6 +37,13 @@ void odelete(
   delete object_;
   object_ = nullptr;
 }
+
+/**
+ * @brief Write specified string as a C string - in double quotes and escaped
+ */
+std::ostream& writeCString(
+    std::ostream& os_,
+    const std::string& text_);
 
 } /* -- namespace OTest2 */
 

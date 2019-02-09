@@ -143,7 +143,7 @@ am_libotest2_la_OBJECTS = case.lo casefactory.lo casegenerated.lo \
 	runnerfilterentire.lo runnerfilterone.lo runnerordinary.lo \
 	semanticstack.lo state.lo stategenerated.lo stateordinary.lo \
 	stateregistry.lo suite.lo suitefactory.lo suitegenerated.lo \
-	suiteordinary.lo terminaldriver.lo
+	suiteordinary.lo terminaldriver.lo utils.lo
 libotest2_la_OBJECTS = $(am_libotest2_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -415,7 +415,8 @@ libotest2_la_SOURCES = \
     suitefactory.cpp \
     suitegenerated.cpp \
     suiteordinary.cpp \
-    terminaldriver.cpp
+    terminaldriver.cpp \
+    utils.cpp
 
 all: all-am
 
@@ -538,6 +539,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/suitegenerated.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/suiteordinary.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/terminaldriver.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/utils.Plo@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

@@ -62,4 +62,5 @@ libotest2_la_SOURCES = \
     suitefactory.cpp \
     suitegenerated.cpp \
     suiteordinary.cpp \
-    terminaldriver.cpp
+    terminaldriver.cpp \
+    utils.cpp

@@ -28,6 +28,7 @@
 #include "filereader.h"
 #include "formatting.h"
 #include "lcstream.h"
+#include <utils.h>
 #include "vartable.h"
 
 namespace OTest2 {
@@ -86,8 +87,6 @@ struct GeneratorStd::Impl {
         const std::string& outfile_);
     ~Impl();
 
-    void writeCString(
-        const std::string& text_);
     void writeUserLineDirective(
         const Location& begin_);
     void writeGenerLineDirective();
@@ -115,31 +114,18 @@ GeneratorStd::Impl::~Impl() {
 
 }
 
-void GeneratorStd::Impl::writeCString(
-    const std::string& text_) {
-  output << '"';
-  for(char c_ : text_) {
-    switch(c_) {
-      case '"': output << "\\\""; break;
-      case '\\': output << "\\\\"; break;
-      default: output << c_; break;
-    }
-  }
-  output << '"';
-}
-
 void GeneratorStd::Impl::writeUserLineDirective(
     const Location& begin_) {
   output << '\n';
   output << "#line " << begin_.getLine() << " ";
-  writeCString(infile);
+  writeCString(output, infile);
   output << "\n";
 }
 
 void GeneratorStd::Impl::writeGenerLineDirective() {
   output << '\n';
   output << "#line " << (output.getLineNo() + 1) << " ";
-  writeCString(outfile);
+  writeCString(output, outfile);
   output << "\n";
 }
 
@@ -192,13 +178,13 @@ void GeneratorStd::makeAssertion(
     const Location& end_,
     bool insert_expr_) {
   /* -- write info about file and line number */
-  pimpl->writeCString(pimpl->infile);
+  writeCString(pimpl->output, pimpl->infile);
   pimpl->output << ", " << begin_.getLine() << ", ";
 
   if(insert_expr_) {
     /* -- write the string literal and the arguments */
     std::string arguments_(pimpl->reader->getPart(begin_, end_));
-    pimpl->writeCString(arguments_);
+    writeCString(pimpl->output, arguments_);
     pimpl->output << ", " << arguments_;
   }
   else {
@@ -493,7 +479,7 @@ void GeneratorStd::endFile(
   for(const std::string& suite_ : pimpl->suites) {
     pimpl->output
         << "      ::OTest2::Registry::instance(";
-    pimpl->writeCString(pimpl->domain);
+    writeCString(pimpl->output, pimpl->domain);
     pimpl->output
         << ").registerSuite(\n"
         << "          \"" << suite_ << "\",\n"

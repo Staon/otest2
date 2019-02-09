@@ -18,7 +18,9 @@
  */
 #include <otest2/otest2.h>
 
+#include <iostream>
 #include <string>
+#include <vector>
 
 #include "runtime.h"
 
@@ -34,7 +36,20 @@ TEST_SUITE(AssertionsSuite) {
     Runtime runtime("AssertionsSuite", "");
 
     TEST_SIMPLE() {
+      const std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<FirstCase>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<FirstCase>: passed",
+        "leaveSuite<AssertionsSuite>: passed",
+        "leaveTest<selftest>: passed",
+      };
+
       testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
     }
   }
 

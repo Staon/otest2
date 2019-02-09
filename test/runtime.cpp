@@ -31,7 +31,7 @@ namespace Test {
 Runtime::Runtime(
     const std::string& suite_name_,
     const std::string& case_name_) :
-  reporter(&std::cout),
+  reporter(),
   runner_filter(suite_name_, case_name_),
   runner(
       &reporter,
@@ -51,7 +51,7 @@ bool Runtime::runTheTest() {
     result_ = runner.runNext();
     if(result_.isFinished())
       break;
-    /* -- TODO: handle the delay */
+    reporter.reportDelay(result_.getDelayMS());
   };
   return result_.getResult();
 }

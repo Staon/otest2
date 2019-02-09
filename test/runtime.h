@@ -20,9 +20,10 @@
 #ifndef OTest2__TEST_RUNTIME_H_
 #define OTest2__TEST_RUNTIME_H_
 
-#include <otest2/reporterdebug.h>
 #include <otest2/runnerfilterone.h>
 #include <otest2/runnerordinary.h>
+
+#include "reportermock.h"
 
 namespace OTest2 {
 
@@ -33,7 +34,7 @@ namespace Test {
  */
 class Runtime {
   public:
-    ReporterDebug reporter;
+    ReporterMock reporter;
     RunnerFilterOne runner_filter;
     RunnerOrdinary runner;
 

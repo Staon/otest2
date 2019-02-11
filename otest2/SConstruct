@@ -1,0 +1,46 @@
+Import('*')
+env = env.Clone()
+
+# -- internal access of the OTest2 headers
+env.Append(CPPPATH = ['../include/otest2'])
+
+# -- compilation and linking flags of the libclang and LLVM
+env.Append(LIBS = [
+    'clangTooling',
+    'clangFrontend',
+    'clangFrontendTool',
+    'clangSerialization',
+    'clangDriver',
+    'clangRewriteFrontend',
+    'clangRewrite',
+    'clangParse',
+    'clangSema',
+    'clangAnalysis',
+    'clangAST',
+    'clangASTMatchers',
+    'clangEdit',
+    'clangLex',
+    'clangBasic',
+])
+env.ParseConfig("{0} --ldflags --libs --system-libs --cxxflags".format(llvmconfig))
+env.MergeFlags('-fexceptions -std=c++14')
+
+# -- libraries of mine
+env.Append(LIBS = ['otest2'], LIBPATH = ['../lib'])
+
+env.Program('otest2', [
+    'error.cpp',
+    'excparser.cpp',
+    'excreader.cpp',
+    'filereader.cpp',
+    'formatting.cpp',
+    'generator.cpp',
+    'generatorprinter.cpp',
+    'generatorstd.cpp',
+    'lcstream.cpp',
+    'location.cpp',
+    'main.cpp',
+    'options.cpp',
+    'parser.cpp',
+    'vartable.cpp',
+])

@@ -17,7 +17,7 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <generator.h>
+#include "generator.h"
 
 namespace OTest2 {
 

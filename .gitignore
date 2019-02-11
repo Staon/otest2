@@ -1,3 +1,5 @@
+*.a
+*.so
 *.lib
 *.lst
 *.err
@@ -11,7 +13,9 @@
 *.ver.cpp
 *.usage
 *.lnk
+*.ot2.cpp
 .deps
+*.dblite
 
 /.project
 /.cproject
@@ -23,3 +27,4 @@
 /config.status
 /stamp-h1
 /config.log
+/.pydevproject

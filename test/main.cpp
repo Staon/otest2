@@ -20,9 +20,9 @@
 #include <iostream>
 #include <otest2/registry.h>
 #include <otest2/reporterconsole.h>
+#include <otest2/runnerfilterentire.h>
 #include <otest2/runnerordinary.h>
 #include <string>
-#include "../include/otest2/runnerfilterentire.h"
 
 int main(
     int argc_,

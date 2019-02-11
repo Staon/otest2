@@ -1,0 +1,26 @@
+Import('*')
+env = env.Clone()
+
+env.Append(LIBPATH = ['../lib'])
+env.Append(LIBS = [
+    "otest2",
+    'tinfo',
+])
+
+# -- tested test suites
+envST = env.Clone()
+envST.Append(OTEST2DOMAIN = 'selftest')
+envST.OTest2(env.Glob('selftests/*.ot2'))
+
+# -- testing test suites
+env.OTest2Suite('selftest', [
+    env.Glob('selftests/*.ot2.cpp'),
+    'assertions.ot2',
+    'main.cpp',
+    'reportermock.cpp',
+    'runtime.cpp',
+])
+
+# -- scons check
+test_run = env.Alias('check', ['selftest'], 'test/selftest')
+env.AlwaysBuild(test_run)

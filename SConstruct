@@ -1,0 +1,73 @@
+# location of the llvm-config
+from cherrypy._cpmodpy import recursive
+AddOption(
+    '--with-llvm',
+    dest='llvmdir',
+    type='string',
+    nargs=1,
+    action='store',
+    metavar='DIR',
+    help='A directory where the llvm-config is placed in.')
+llvmdir = GetOption('llvmdir')
+if llvmdir :
+    llvmconfig = Dir(llvmdir).File('llvm-config').path
+else:
+    llvmconfig = 'llvm-config'
+
+env = Environment()
+
+# -- auto configuration
+cfg = Configure(env)
+
+# check the llvm-config utility
+if not cfg.CheckProg(llvmconfig):
+    print 'Unable to find the llvm-config utility'  
+    Exit(1)
+    
+env = cfg.Finish()
+
+# fixed environment variables
+env.Append(CPPPATH = ['#include'])
+env.Append(CXXFLAGS = '-std=c++14')
+
+# OTest2 preprocessor builder
+def otest2_preprocessor(source, target, env, for_signature):
+    cmd = ['otest2/otest2', '-o', target[0]]
+    cmd.append('-I/usr/lib/llvm-5.0/lib/clang/5.0.0/include')
+    # -- include paths
+    for path in env.Dictionary()['CPPPATH']:
+        cmd.append('-I' + str(env.Dir(path)))
+    # -- domain
+    if 'OTEST2DOMAIN' in env:
+        cmd.append('-d' + env['OTEST2DOMAIN'])
+    cmd.append(source[0])
+    return [cmd]
+def otest2_tg_scanner(node, env, path):
+    return [env.File('otest2/otest2')]
+tgscanner = env.Scanner(otest2_tg_scanner)
+from SCons.Scanner.C import CScanner
+otest2 = Builder(
+    generator = otest2_preprocessor,
+    suffix = '.ot2.cpp',
+    src_suffix = '.ot2',
+    single_source = True,
+    target_scanner = tgscanner,
+    source_scanner = CScanner())
+env.Append(BUILDERS = {'OTest2' : otest2})
+
+# Compilation of the test suite
+def otest2_compile_tests(env, target, sources):
+    new_sources = []
+    for src in sources:
+        if str(src).endswith('.ot2'):
+            new_sources.append(env.OTest2(src))
+        else:
+            new_sources.append(src)
+    return env.Program(target, new_sources)
+env.AddMethod(otest2_compile_tests, "OTest2Suite")
+
+SConscript([
+    'lib/SConstruct',
+    'otest2/SConstruct',
+    'test/SConstruct',
+], ['env', 'llvmconfig'])

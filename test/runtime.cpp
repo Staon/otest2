@@ -22,7 +22,6 @@
 #include <iostream>
 
 #include <otest2/registry.h>
-#include "selftests/linkermark.h"
 
 namespace OTest2 {
 
@@ -37,7 +36,7 @@ Runtime::Runtime(
       &reporter,
       &Registry::instance("selftest"),
       &runner_filter,
-      SelfTest::SELF_TEST_NAME) {
+      "selftest") {
 
 }
 

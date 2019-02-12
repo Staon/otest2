@@ -32,17 +32,18 @@ namespace Test {
  * @brief This suite tests the assertion functions
  */
 TEST_SUITE(AssertionsSuite) {
-  TEST_CASE(FirstCase) {
-    Runtime runtime("AssertionsSuite", "");
+  TEST_CASE(GenericAssertionPass) {
+    Runtime runtime("AssertionsSuite", "GenericAssertionPass");
 
     TEST_SIMPLE() {
-      const std::vector<const char*> data_{
+      std::vector<const char*> data_{
         "enterTest<selftest>",
         "enterSuite<AssertionsSuite>",
-        "enterCase<FirstCase>",
+        "enterCase<GenericAssertionPass>",
         "enterState<AnonymousState>",
+        "assert<1 == 1>: passed",
         "leaveState<AnonymousState>: passed",
-        "leaveCase<FirstCase>: passed",
+        "leaveCase<GenericAssertionPass>: passed",
         "leaveSuite<AssertionsSuite>: passed",
         "leaveTest<selftest>: passed",
       };
@@ -53,9 +54,157 @@ TEST_SUITE(AssertionsSuite) {
     }
   }
 
-  TEST_CASE(SecondCase) {
-    TEST_SIMPLE() {
+  TEST_CASE(GenericAssertionFail) {
+    Runtime runtime("AssertionsSuite", "GenericAssertionFail");
 
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<GenericAssertionFail>",
+        "enterState<AnonymousState>",
+        "assert<1 == 2>: failed",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<GenericAssertionFail>: failed",
+        "leaveSuite<AssertionsSuite>: failed",
+        "leaveTest<selftest>: failed",
+      };
+
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(GenericAssertionBeanPass) {
+    Runtime runtime("AssertionsSuite", "GenericAssertionBeanPass");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<GenericAssertionBeanPass>",
+        "enterState<AnonymousState>",
+        "assert<AssertBean(true, \"message 1\") message 1>: passed",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<GenericAssertionBeanPass>: passed",
+        "leaveSuite<AssertionsSuite>: passed",
+        "leaveTest<selftest>: passed",
+      };
+
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(GenericAssertionBeanFail) {
+    Runtime runtime("AssertionsSuite", "GenericAssertionBeanFail");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<GenericAssertionBeanFail>",
+        "enterState<AnonymousState>",
+        "assert<AssertBean(false, \"message 2\") message 2>: failed",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<GenericAssertionBeanFail>: failed",
+        "leaveSuite<AssertionsSuite>: failed",
+        "leaveTest<selftest>: failed",
+      };
+
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(EqualAssertionIntPass) {
+    Runtime runtime("AssertionsSuite", "EqualAssertionIntPass");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<EqualAssertionIntPass>",
+        "enterState<AnonymousState>",
+        "assert<expected: '10', actual: '10'>: passed",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<EqualAssertionIntPass>: passed",
+        "leaveSuite<AssertionsSuite>: passed",
+        "leaveTest<selftest>: passed",
+      };
+
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(EqualAssertionIntFail) {
+    Runtime runtime("AssertionsSuite", "EqualAssertionIntFail");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<EqualAssertionIntFail>",
+        "enterState<AnonymousState>",
+        "assert<expected: '9', actual: '10'>: failed",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<EqualAssertionIntFail>: failed",
+        "leaveSuite<AssertionsSuite>: failed",
+        "leaveTest<selftest>: failed",
+      };
+
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(EqualAssertionStringPass) {
+    Runtime runtime("AssertionsSuite", "EqualAssertionStringPass");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<EqualAssertionStringPass>",
+        "enterState<AnonymousState>",
+        "assert<expected: 'Fooo', actual: 'Fooo'>: passed",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<EqualAssertionStringPass>: passed",
+        "leaveSuite<AssertionsSuite>: passed",
+        "leaveTest<selftest>: passed",
+      };
+
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(EqualAssertionStringFail) {
+    Runtime runtime("AssertionsSuite", "EqualAssertionStringFail");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<EqualAssertionStringFail>",
+        "enterState<AnonymousState>",
+        "assert<expected: 'Wrong string', actual: 'Expected string'>: failed",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<EqualAssertionStringFail>: failed",
+        "leaveSuite<AssertionsSuite>: failed",
+        "leaveTest<selftest>: failed",
+      };
+
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
     }
   }
 }

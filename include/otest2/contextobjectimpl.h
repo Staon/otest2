@@ -35,7 +35,7 @@ void ContextObject::testAssertEqual(
     A_ expected_,
     B_ actual_) {
   std::ostringstream sos_;
-  sos_ << "expected: " << expected_ << ", actual: " << actual_;
+  sos_ << "expected: '" << expected_ << "', actual: '" << actual_ << "'";
   otest2AssertGeneric(
       file_, lineno_, "", sos_.str(), expected_ == actual_);
 }

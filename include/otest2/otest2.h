@@ -20,9 +20,9 @@
 #ifndef OTest2__INCLUDE_OTEST2_OTEST2_H_
 #define OTest2__INCLUDE_OTEST2_OTEST2_H_
 
-namespace OTest2 {
+#include <otest2/assertbean.h>
 
-class AssertBean;
+namespace OTest2 {
 
 namespace Assertions {
 

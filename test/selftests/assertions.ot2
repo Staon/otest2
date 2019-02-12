@@ -28,8 +28,51 @@ namespace SelfTest {
  * @brief This suite tests the assertion functions
  */
 TEST_SUITE(AssertionsSuite) {
-  TEST_CASE(FirstCase) {
+  TEST_CASE(GenericAssertionPass) {
     TEST_SIMPLE() {
+      testAssert(1 == 1);
+    }
+  }
+
+  TEST_CASE(GenericAssertionFail) {
+    TEST_SIMPLE() {
+      testAssert(1 == 2);
+    }
+  }
+
+  TEST_CASE(GenericAssertionBeanPass) {
+    TEST_SIMPLE() {
+      testAssert(AssertBean(true, "message 1"));
+    }
+  }
+
+  TEST_CASE(GenericAssertionBeanFail) {
+    TEST_SIMPLE() {
+      testAssert(AssertBean(false, "message 2"));
+    }
+  }
+
+  TEST_CASE(EqualAssertionIntPass) {
+    TEST_SIMPLE() {
+      testAssertEqual(10, 10u);
+    }
+  }
+
+  TEST_CASE(EqualAssertionIntFail) {
+    TEST_SIMPLE() {
+      testAssertEqual(9l, 10);
+    }
+  }
+
+  TEST_CASE(EqualAssertionStringPass) {
+    TEST_SIMPLE() {
+      testAssertEqual(std::string("Fooo"), "Fooo");
+    }
+  }
+
+  TEST_CASE(EqualAssertionStringFail) {
+    TEST_SIMPLE() {
+      testAssertEqual("Wrong string", std::string("Expected string"));
     }
   }
 }

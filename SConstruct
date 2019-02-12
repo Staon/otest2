@@ -1,5 +1,4 @@
 # location of the llvm-config
-from cherrypy._cpmodpy import recursive
 AddOption(
     '--with-llvm',
     dest='llvmdir',

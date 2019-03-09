@@ -176,16 +176,18 @@ void GeneratorStd::copySource(
 void GeneratorStd::makeAssertion(
     const Location& begin_,
     const Location& end_,
-    bool insert_expr_) {
+    bool insert_expr_,
+    const Location& expr_end_) {
   /* -- write info about file and line number */
   writeCString(pimpl->output, pimpl->infile);
   pimpl->output << ", " << begin_.getLine() << ", ";
 
   if(insert_expr_) {
     /* -- write the string literal and the arguments */
-    std::string arguments_(pimpl->reader->getPart(begin_, end_));
-    writeCString(pimpl->output, arguments_);
-    pimpl->output << ", " << arguments_;
+    std::string expression_(pimpl->reader->getPart(begin_, expr_end_));
+    std::string rest_args_(pimpl->reader->getPart(expr_end_, end_));
+    writeCString(pimpl->output, expression_);
+    pimpl->output << ", " << expression_ << rest_args_;
   }
   else {
     /* -- write just the arguments */

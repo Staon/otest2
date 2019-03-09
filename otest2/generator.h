@@ -79,13 +79,16 @@ class Generator {
      *
      * @param begin_ Beginning location of the assertion arguments.
      * @param end_ Ending location of the assertion arguments.
-     * @param insert_expr_ If it's true, a string containing the arguments
-     *     is inserted as an argument too.
+     * @param insert_expr_ If it's true, a string of containing the checked
+     *     expression is inserted as an argument too.
+     * @param expr_end_ Ending location of the checked expression.
+     *     The expression is expected in the range <begin_, expr_end_)
      */
     virtual void makeAssertion(
         const Location& begin_,
         const Location& end_,
-        bool insert_expr_) = 0;
+        bool insert_expr_,
+        const Location& expr_end_) = 0;
 
     /**
      * @brief End of the user area

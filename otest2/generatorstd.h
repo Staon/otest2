@@ -75,7 +75,8 @@ class GeneratorStd : public Generator {
     virtual void makeAssertion(
         const Location& begin_,
         const Location& end_,
-        bool insert_expr_);
+        bool insert_expr_,
+        const Location& expr_end_);
     virtual void endUserArea(
         const Location& end_);
     virtual void enterSuite(

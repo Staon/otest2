@@ -54,11 +54,34 @@ const std::string STATE_ANNOTATION("otest2::state");
 const std::string START_UP_ANNOTATION("otest2::startUp");
 const std::string TEAR_DOWN_ANNOTATION("otest2::tearDown");
 
+const std::string ASSERTION_MSG_ANNOTATION("otest2::assertion");
+const std::string ASSERTION_EXPR_ANNOTATION("otest2::assertionExpr");
+
 Location createLocation(
     clang::SourceManager* srcmgr_,
     const clang::SourceLocation& loc_) {
   clang::PresumedLoc ploc_(srcmgr_->getPresumedLoc(loc_));
   return Location(ploc_.getLine(), ploc_.getColumn());
+}
+
+bool hasAnnotation(
+    clang::Decl* decl_,
+    const std::string& annotation_) {
+  if(decl_->hasAttrs()) {
+    for(
+        auto iter_(decl_->attr_begin());
+        iter_ != decl_->attr_end();
+        ++iter_) {
+      if((*iter_)->getKind() == clang::attr::Annotate) {
+        auto sa_(clang::cast<clang::AnnotateAttr>(*iter_));
+        auto str_(sa_->getAnnotation());
+        if(str_.str() == annotation_) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
 }
 
 template<typename Node_>
@@ -193,13 +216,6 @@ void ParserContext::moveToEnd(
 
 class AssertVisitor : public clang::RecursiveASTVisitor<AssertVisitor> {
   private:
-    struct AssertRecord {
-      int argnum;
-      bool exprstring;
-    };
-    const static std::string ASSERT_NS;
-    const static std::map<std::string, AssertRecord> assertions;
-
     ParserContext* context;
     Location current;
 
@@ -213,12 +229,6 @@ class AssertVisitor : public clang::RecursiveASTVisitor<AssertVisitor> {
         clang::CallExpr* expr_);
 
     Location getCurrentLocation() const;
-};
-
-const std::string AssertVisitor::ASSERT_NS("OTest2::Assertions::");
-const std::map<std::string, AssertVisitor::AssertRecord> AssertVisitor::assertions{
-  {AssertVisitor::ASSERT_NS + "testAssert", {1, true}},
-  {AssertVisitor::ASSERT_NS + "testAssertEqual", {2, false}},
 };
 
 AssertVisitor::AssertVisitor(
@@ -235,8 +245,9 @@ AssertVisitor::~AssertVisitor() {
 
 bool AssertVisitor::VisitCallExpr(
     clang::CallExpr* expr_) {
-  /* -- This is an invocation of a function. Check whether the function
-   *    is one of my assertions. Firstly, get the name of the function. */
+  /* -- Any invocation of a function can be calling of an assertion.
+   *    I will get the function declaration. If the function is annotated
+   *    being an assertion, I'll process it. */
   auto callee_(expr_->getCallee());
   if(!clang::isa<clang::ImplicitCastExpr>(callee_))
     return true;
@@ -251,25 +262,36 @@ bool AssertVisitor::VisitCallExpr(
 //  }
   if(!clang::isa<clang::FunctionDecl>(declref_))
     return true;
-  auto fce_(clang::cast<clang::FunctionDecl>(declref_));
-  auto fcename_(fce_->getQualifiedNameAsString());
-  auto assert_record_(assertions.find(fcename_));
-  if(assert_record_ == assertions.end())
+
+  /* -- check the function annotation */
+  bool assertion_(false);
+  bool copy_arg_(false);
+  if(hasAnnotation(declref_, ASSERTION_EXPR_ANNOTATION)) {
+    assertion_ = true;
+    copy_arg_ = true;
+  }
+  if(hasAnnotation(declref_, ASSERTION_MSG_ANNOTATION)) {
+    assertion_ = true;
+    copy_arg_ = false;
+  }
+  if(!assertion_)
     return true;
+
+  /* -- parse name of the assertion */
+  auto fce_(clang::cast<clang::FunctionDecl>(declref_));
+  auto fcename_(fce_->getName().str());
 
   /* -- find first and last non-default argument */
   const int argnum_(expr_->getNumArgs());
   int last_index_(-1);
-  if(argnum_ > 0) {
-    for(int i_(0); i_ < argnum_; ++i_) {
-      clang::Expr *arg_(expr_->getArg(i_));
-      if(clang::isa<clang::CXXDefaultArgExpr>(arg_))
-        break;
-      last_index_ = i_;
-    }
+  for(int i_(0); i_ < argnum_; ++i_) {
+    clang::Expr *arg_(expr_->getArg(i_));
+    if(clang::isa<clang::CXXDefaultArgExpr>(arg_))
+      break;
+    last_index_ = i_;
   }
-  if(last_index_ < 0 || last_index_ >= (*assert_record_).second.argnum) {
-    context->setError("invalid number of function arguments", fce_);
+  if(last_index_ < 0) {
+    context->setError("there are no arguments of the assertion", fce_);
     return false;
   }
 
@@ -282,12 +304,13 @@ bool AssertVisitor::VisitCallExpr(
       getNodeRange(context->srcmgr, context->langopts, endarg_));
 
   /* -- generate the output */
-  auto b_(createLocation(context->srcmgr, begrange_.getBegin()));
-  auto e_(createLocation(context->srcmgr, endrange_.getEnd()));
-  context->generator->copySource(current, b_);
+  auto args_begin_(createLocation(context->srcmgr, begrange_.getBegin()));
+  auto args_end_(createLocation(context->srcmgr, endrange_.getEnd()));
+  auto msg_end_(createLocation(context->srcmgr, begrange_.getEnd()));
+  context->generator->copySource(current, args_begin_);
   context->generator->makeAssertion(
-      b_, e_, (*assert_record_).second.exprstring);
-  current = e_;
+      args_begin_, args_end_, copy_arg_, msg_end_);
+  current = args_end_;
 
   return true;
 }
@@ -302,9 +325,6 @@ class SuiteVisitor : public clang::RecursiveASTVisitor<SuiteVisitor> {
 
     clang::VarDecl* getVarDecl(
         clang::Stmt* stmt_);
-    bool hasAnnotation(
-        clang::Decl* decl_,
-        const std::string& annotation_) const;
     clang::Stmt* getFunctionBody(
         clang::FunctionDecl* fce_);
 
@@ -355,26 +375,6 @@ clang::VarDecl* SuiteVisitor::getVarDecl(
     return nullptr;
   }
   return clang::cast<clang::VarDecl>(*declstmt_->decl_begin());
-}
-
-bool SuiteVisitor::hasAnnotation(
-    clang::Decl* decl_,
-    const std::string& annotation_) const {
-  if(decl_->hasAttrs()) {
-    for(
-        auto iter_(decl_->attr_begin());
-        iter_ != decl_->attr_end();
-        ++iter_) {
-      if((*iter_)->getKind() == clang::attr::Annotate) {
-        auto sa_(clang::cast<clang::AnnotateAttr>(*iter_));
-        auto str_(sa_->getAnnotation());
-        if(str_.str() == annotation_) {
-          return true;
-        }
-      }
-    }
-  }
-  return false;
 }
 
 clang::Stmt* SuiteVisitor::getFunctionBody(

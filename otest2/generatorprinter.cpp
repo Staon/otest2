@@ -51,9 +51,10 @@ void GeneratorPrinter::copySource(
 void GeneratorPrinter::makeAssertion(
     const Location& begin_,
     const Location& end_,
-    bool insert_expr_) {
+    bool insert_expr_,
+    const Location& expr_end_) {
   std::cout << "make assertion: " << begin_ << " " << end_
-      << " " << insert_expr_ << std::endl;
+      << " " << insert_expr_ << " " << expr_end_ << std::endl;
 }
 
 void GeneratorPrinter::endUserArea(

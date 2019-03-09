@@ -22,7 +22,7 @@ env.Append(LIBS = [
     'clangLex',
     'clangBasic',
 ])
-env.ParseConfig("{0} --ldflags --libs --system-libs --cxxflags".format(llvmconfig))
+env.ParseConfig("{0} --ldflags --libs --system-libs --cxxflags".format(llvmcfg))
 env.MergeFlags('-fexceptions -std=c++14')
 
 # -- libraries of mine

@@ -1,17 +1,15 @@
 # location of the llvm-config
 AddOption(
     '--with-llvm',
-    dest='llvmdir',
+    dest='llvmcfg',
     type='string',
     nargs=1,
     action='store',
     metavar='DIR',
-    help='A directory where the llvm-config is placed in.')
-llvmdir = GetOption('llvmdir')
-if llvmdir :
-    llvmconfig = Dir(llvmdir).File('llvm-config').path
-else:
-    llvmconfig = 'llvm-config'
+    help='The llvm-config binary file.')
+llvmcfg = GetOption('llvmcfg')
+if not llvmcfg :
+    llvmcfg = 'llvm-config'
 
 env = Environment()
 
@@ -19,7 +17,7 @@ env = Environment()
 cfg = Configure(env)
 
 # check the llvm-config utility
-if not cfg.CheckProg(llvmconfig):
+if not cfg.CheckProg(llvmcfg):
     print 'Unable to find the llvm-config utility'  
     Exit(1)
     
@@ -69,4 +67,4 @@ SConscript([
     'lib/SConstruct',
     'otest2/SConstruct',
     'test/SConstruct',
-], ['env', 'llvmconfig'])
+], ['env', 'llvmcfg'])

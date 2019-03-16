@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2019 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -17,24 +17,23 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <contextobject.h>
+#include <otest2/assertions.h>
 
-#include <iostream>
-#include <sstream>
-
-#include <assertbean.h>
-#include <context.h>
-#include <reporter.h>
-#include <semanticstack.h>
+#include <otest2/assertbean.h>
 
 namespace OTest2 {
 
-ContextObject::ContextObject() {
-
+bool GenericAssertion::testAssert(
+    bool condition_) const {
+  return testAssertImpl(condition_, "", true);
 }
 
-ContextObject::~ContextObject() {
-
+bool GenericAssertion::testAssert(
+    const AssertBean& bean_) const {
+  return testAssertImpl(bean_.getCondition(), bean_.getMessage(), true);
 }
 
-} /* namespace OTest2 */
+}  /* -- namespace OTest2 */
+
+
+

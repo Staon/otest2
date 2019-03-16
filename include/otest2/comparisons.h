@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2019 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -16,30 +16,31 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
+#ifndef OTest2__INCLUDE_OTEST2_COMPARISONS_H_
+#define OTest2__INCLUDE_OTEST2_COMPARISONS_H_
 
-
-#ifndef OTest2__INCLUDE_OTEST2_CONTEXTOBJECTIMPL_H_
-#define OTest2__INCLUDE_OTEST2_CONTEXTOBJECTIMPL_H_
-
-#include <otest2/contextobject.h>
-
-#include <sstream>
-#include <string>
+#include <otest2/typetraits.h>
 
 namespace OTest2 {
 
 template<typename A_, typename B_>
-void ContextObject::testAssertEqual(
-    const std::string& file_,
-    int lineno_,
-    A_ expected_,
-    B_ actual_) {
-  std::ostringstream sos_;
-  sos_ << "expected: '" << expected_ << "', actual: '" << actual_ << "'";
-  otest2AssertGeneric(
-      file_, lineno_, "", sos_.str(), expected_ == actual_);
-}
+struct Equal {
+    bool operator()(
+        typename TypeTrait<A_>::BestArg a_,
+        typename TypeTrait<B_>::BestArg b_) const {
+      return a_ == b_;
+    }
+};
 
-} /* -- namespace OTest2 */
+template<typename A_, typename B_>
+struct Less {
+    bool operator()(
+        typename TypeTrait<A_>::BestArg a_,
+        typename TypeTrait<B_>::BestArg b_) const {
+      return a_ < b_;
+    }
+};
 
-#endif /* OTest2__INCLUDE_OTEST2_CONTEXTOBJECTIMPL_H_ */
+}  /* -- namespace OTest2 */
+
+#endif /* OTest2__INCLUDE_OTEST2_COMPARISONS_H_ */

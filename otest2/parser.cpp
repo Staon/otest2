@@ -32,6 +32,7 @@
 #include <llvm/Support/raw_ostream.h>
 #include <map>
 #include <memory>
+#include <regex>
 #include <sstream>
 #include <string>
 #include <unistd.h>
@@ -45,6 +46,7 @@
 #include "generatorstd.h"
 #include "location.h"
 #include "options.h"
+#include "typetemplate.h"
 
 namespace OTest2 {
 
@@ -54,8 +56,7 @@ const std::string STATE_ANNOTATION("otest2::state");
 const std::string START_UP_ANNOTATION("otest2::startUp");
 const std::string TEAR_DOWN_ANNOTATION("otest2::tearDown");
 
-const std::string ASSERTION_MSG_ANNOTATION("otest2::assertion");
-const std::string ASSERTION_EXPR_ANNOTATION("otest2::assertionExpr");
+const std::string ASSERTION_ANNOTATION("^otest2::assertion[(]([^,]+([,][^,]+)*)[)]$");
 
 Location createLocation(
     clang::SourceManager* srcmgr_,
@@ -64,9 +65,10 @@ Location createLocation(
   return Location(ploc_.getLine(), ploc_.getColumn());
 }
 
+template<typename Compare_>
 bool hasAnnotation(
     clang::Decl* decl_,
-    const std::string& annotation_) {
+    Compare_& cmp_) {
   if(decl_->hasAttrs()) {
     for(
         auto iter_(decl_->attr_begin());
@@ -75,13 +77,42 @@ bool hasAnnotation(
       if((*iter_)->getKind() == clang::attr::Annotate) {
         auto sa_(clang::cast<clang::AnnotateAttr>(*iter_));
         auto str_(sa_->getAnnotation());
-        if(str_.str() == annotation_) {
+        if(cmp_(str_.str())) {
           return true;
         }
       }
     }
   }
   return false;
+}
+
+struct AnnotationStringEqual {
+    std::string ref;
+    bool operator()(
+        const std::string& annotation_) {
+      return annotation_ == ref;
+    }
+};
+
+struct AnnotationRegex {
+    std::regex expr;
+    std::smatch matches;
+    AnnotationRegex(
+        const std::string& expr_) :
+      expr(expr_) {
+
+    }
+    bool operator()(
+        const std::string& annotation_) {
+      return std::regex_match(annotation_, matches, expr);
+    }
+};
+
+bool hasAnnotation(
+    clang::Decl* decl_,
+    const std::string& annotation_) {
+  AnnotationStringEqual cmp_{annotation_};
+  return hasAnnotation(decl_, cmp_);
 }
 
 template<typename Node_>
@@ -264,22 +295,46 @@ bool AssertVisitor::VisitCallExpr(
     return true;
 
   /* -- check the function annotation */
-  bool assertion_(false);
-  bool copy_arg_(false);
-  if(hasAnnotation(declref_, ASSERTION_EXPR_ANNOTATION)) {
-    assertion_ = true;
-    copy_arg_ = true;
-  }
-  if(hasAnnotation(declref_, ASSERTION_MSG_ANNOTATION)) {
-    assertion_ = true;
-    copy_arg_ = false;
-  }
-  if(!assertion_)
+  AnnotationRegex cmp_(ASSERTION_ANNOTATION);
+  if(!hasAnnotation(declref_, cmp_))
     return true;
+
+  /* -- split the annotation arguments */
+  auto annot_args_(cmp_.matches[1].str());
+  std::regex split_("(\\s*;\\s*)");
+  std::sregex_token_iterator iter_(
+      annot_args_.begin(), annot_args_.end(), split_, -1);
+  std::vector<std::string> annotation_args_(iter_, std::sregex_token_iterator());
+  if(annotation_args_.size() != 2) {
+    context->setError("invalid count of the arguments of the assertion annotation", declref_);
+    return false;
+  }
 
   /* -- parse name of the assertion */
   auto fce_(clang::cast<clang::FunctionDecl>(declref_));
   auto fcename_(fce_->getName().str());
+
+  /* -- if the function is a template function, expand deduced types into
+   *    the annotation parameters. */
+  if(fce_->isTemplateInstantiation()) {
+    std::cout << fcename_ << " is a template function" << std::endl;
+
+    const clang::TemplateArgumentList* args_(fce_->getTemplateSpecializationArgs());
+    if(args_ != nullptr) {
+      std::vector<std::string> template_params_;
+      for(int i_(0); i_ < static_cast<int>(args_->size()); ++i_) {
+        auto arg_(args_->get(i_));
+        if(arg_.getKind() == clang::TemplateArgument::Type) {
+          auto type_(arg_.getAsType());
+          template_params_.push_back(type_.getAsString());
+        }
+      }
+      if(!expandTemplates(annotation_args_, template_params_)) {
+        context->setError("invalid type template in the annotation of the assertion", declref_);
+        return false;
+      }
+    }
+  }
 
   /* -- find first and last non-default argument */
   const int argnum_(expr_->getNumArgs());
@@ -295,21 +350,32 @@ bool AssertVisitor::VisitCallExpr(
     return false;
   }
 
-  /* -- get ranges of the arguments */
+  /* -- copy source just before the assertion */
+  clang::SourceRange expr_range_(
+      getNodeRange(context->srcmgr, context->langopts, expr_));
+  auto expr_begin_(createLocation(context->srcmgr, expr_range_.getBegin()));
+  context->generator->copySource(current, expr_begin_);
+
+  /* -- Generate the assertion. I need to know the range of arguments
+   *    because I want to insert the first argument as a text (to be shown
+   *    in the assertion message. */
   auto begarg_(expr_->getArg(0));
   auto endarg_(expr_->getArg(last_index_));
   clang::SourceRange begrange_(
       getNodeRange(context->srcmgr, context->langopts, begarg_));
   clang::SourceRange endrange_(
       getNodeRange(context->srcmgr, context->langopts, endarg_));
-
-  /* -- generate the output */
   auto args_begin_(createLocation(context->srcmgr, begrange_.getBegin()));
   auto args_end_(createLocation(context->srcmgr, endrange_.getEnd()));
   auto msg_end_(createLocation(context->srcmgr, begrange_.getEnd()));
-  context->generator->copySource(current, args_begin_);
   context->generator->makeAssertion(
-      args_begin_, args_end_, copy_arg_, msg_end_);
+      annotation_args_[0],
+      annotation_args_[1],
+      args_begin_,
+      args_end_,
+      msg_end_);
+
+  /* -- keep last position for next source copying */
   current = args_end_;
 
   return true;
@@ -879,6 +945,7 @@ bool SuiteVisitor::VisitNamespaceDecl(
     if(!parseSuite(ns_))
       return false;
   }
+
   return true;
 }
 

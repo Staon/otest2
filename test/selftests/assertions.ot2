@@ -28,6 +28,8 @@ namespace SelfTest {
  * @brief This suite tests the assertion functions
  */
 TEST_SUITE(AssertionsSuite) {
+  std::string assertion_name("Foo");
+
   TEST_CASE(GenericAssertionPass) {
     TEST_SIMPLE() {
       testAssert(1 == 1);

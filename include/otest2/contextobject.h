@@ -28,17 +28,9 @@ class AssertBean;
 class Context;
 
 /**
- * @brief A generix interface of objects which offers OTest2 context
+ * @brief A generic interface of objects which offers OTest2 context
  */
 class ContextObject {
-  private:
-    void otest2AssertGeneric(
-        const std::string& file_,
-        int lineno_,
-        const std::string& expression_,
-        const std::string& message_,
-        bool condition_);
-
   public:
     /* -- avoid copying */
     ContextObject(
@@ -60,49 +52,6 @@ class ContextObject {
      * @brief Get the OTest2 context
      */
     virtual const Context& otest2Context() const = 0;
-
-    /**
-     * @brief Generic assertion
-     *
-     * @param file_ Name of the file
-     * @param lineno_ Number of the line
-     * @param expression_ String representation of the condition
-     * @param condition_ The assertion condition
-     */
-    void testAssert(
-        const std::string& file_,
-        int lineno_,
-        const std::string& expression_,
-        bool condition_);
-
-    /**
-     * @brief Generic assertion
-     *
-     * @param file_ Name of the file
-     * @param lineno_ Number of the line
-     * @param expression_ String representation of the condition
-     * @param bean_ Asssert's condition and message
-     */
-    void testAssert(
-        const std::string& file_,
-        int lineno_,
-        const std::string& expression_,
-        const AssertBean& bean_);
-
-    /**
-     * @brief Check equality of two values
-     *
-     * @param file_ Name of the file
-     * @param lineno_ Number of the line
-     * @param expected_ expected value
-     * @param actual_ actual value
-     */
-    template<typename A_, typename B_>
-    void testAssertEqual(
-        const std::string& file_,
-        int lineno_,
-        A_ expected_,
-        B_ actual_);
 };
 
 } /* namespace OTest2 */

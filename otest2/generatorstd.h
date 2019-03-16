@@ -73,9 +73,10 @@ class GeneratorStd : public Generator {
         const Location& begin_,
         const Location& end_);
     virtual void makeAssertion(
+        const std::string& assertion_class_,
+        const std::string& assertion_method_,
         const Location& begin_,
         const Location& end_,
-        bool insert_expr_,
         const Location& expr_end_);
     virtual void endUserArea(
         const Location& end_);

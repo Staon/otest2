@@ -28,8 +28,6 @@ namespace SelfTest {
  * @brief This suite tests the assertion functions
  */
 TEST_SUITE(AssertionsSuite) {
-  std::string assertion_name("Foo");
-
   TEST_CASE(GenericAssertionPass) {
     TEST_SIMPLE() {
       testAssert(1 == 1);
@@ -75,6 +73,70 @@ TEST_SUITE(AssertionsSuite) {
   TEST_CASE(EqualAssertionStringFail) {
     TEST_SIMPLE() {
       testAssertEqual("Wrong string", std::string("Expected string"));
+    }
+  }
+
+  TEST_CASE(NotEqualAssertionPass) {
+    TEST_SIMPLE() {
+      testAssertNotEqual(10, 9);
+    }
+  }
+
+  TEST_CASE(NotEqualAssertionFail) {
+    TEST_SIMPLE() {
+      testAssertNotEqual(11, 11);
+    }
+  }
+
+  TEST_CASE(LessAssertionPass) {
+    TEST_SIMPLE() {
+      testAssertLess(7, 8);
+    }
+  }
+
+  TEST_CASE(LessAssertionFail) {
+    TEST_SIMPLE() {
+      testAssertLess(7, 7);
+      testAssertLess(9, 8);
+    }
+  }
+
+  TEST_CASE(LessOrEqualAssertionPass) {
+    TEST_SIMPLE() {
+      testAssertLessOrEqual(7, 8);
+      testAssertLessOrEqual(8, 8);
+    }
+  }
+
+  TEST_CASE(LessOrEqualAssertionFail) {
+    TEST_SIMPLE() {
+      testAssertLessOrEqual(8, 7);
+    }
+  }
+
+  TEST_CASE(GreaterAssertionPass) {
+    TEST_SIMPLE() {
+      testAssertGreater(8, 7);
+    }
+  }
+
+  TEST_CASE(GreaterAssertionFail) {
+    TEST_SIMPLE() {
+      testAssertGreater(7, 7);
+      testAssertGreater(7, 8);
+    }
+  }
+
+  TEST_CASE(GreaterOrEqualAssertionPass) {
+    TEST_SIMPLE() {
+      testAssertGreaterOrEqual(8, 7);
+      testAssertGreaterOrEqual(8, 8);
+    }
+  }
+
+  TEST_CASE(GreaterOrEqualAssertionFail) {
+    TEST_SIMPLE() {
+      testAssertGreaterOrEqual(7, 8);
     }
   }
 }

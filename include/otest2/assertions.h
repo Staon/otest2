@@ -130,6 +130,18 @@ bool testAssertEqual(
     B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::OTest2::Equal<$1, $2> >");
 
 /**
+ * @brief Compare whether @a a_ is not equal to @a b_
+ *
+ * @param a_ Left operand
+ * @param b_ Right operand
+ * @return Result of the comparison
+ */
+template<typename A_, typename B_>
+bool testAssertNotEqual(
+    A_ a_,
+    B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::OTest2::NotEqual<$1, $2> >");
+
+/**
  * @brief Compare whether @a a_ is less than @a b_
  *
  * @param a_ Left operand
@@ -140,6 +152,42 @@ template<typename A_, typename B_>
 bool testAssertLess(
     A_ a_,
     B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::OTest2::Less<$1, $2> >");
+
+/**
+ * @brief Compare whether @a a_ is less than or equal to @a b_
+ *
+ * @param a_ Left operand
+ * @param b_ Right operand
+ * @return Result of the comparison
+ */
+template<typename A_, typename B_>
+bool testAssertLessOrEqual(
+    A_ a_,
+    B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::OTest2::LessOrEqual<$1, $2> >");
+
+/**
+ * @brief Compare whether @a a_ is greater than @a b_
+ *
+ * @param a_ Left operand
+ * @param b_ Right operand
+ * @return Result of the comparison
+ */
+template<typename A_, typename B_>
+bool testAssertGreater(
+    A_ a_,
+    B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::OTest2::Greater<$1, $2> >");
+
+/**
+ * @brief Compare whether @a a_ is greater than or equal to @a b_
+ *
+ * @param a_ Left operand
+ * @param b_ Right operand
+ * @return Result of the comparison
+ */
+template<typename A_, typename B_>
+bool testAssertGreaterOrEqual(
+    A_ a_,
+    B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::OTest2::GreaterOrEqual<$1, $2> >");
 
 } /* -- namespace Assertions */
 

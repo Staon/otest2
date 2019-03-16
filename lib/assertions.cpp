@@ -34,6 +34,3 @@ bool GenericAssertion::testAssert(
 }
 
 }  /* -- namespace OTest2 */
-
-
-

@@ -72,11 +72,43 @@ struct PrintTrait<Equal<A_, B_> > {
     }
 };
 template<typename A_, typename B_>
+struct PrintTrait<NotEqual<A_, B_> > {
+    static std::ostream& print(
+        std::ostream& os_,
+        const NotEqual<A_, B_>& value_) {
+      return os_ << "!=";
+    }
+};
+template<typename A_, typename B_>
 struct PrintTrait<Less<A_, B_> > {
     static std::ostream& print(
         std::ostream& os_,
         const Less<A_, B_>& value_) {
       return os_ << "<";
+    }
+};
+template<typename A_, typename B_>
+struct PrintTrait<LessOrEqual<A_, B_> > {
+    static std::ostream& print(
+        std::ostream& os_,
+        const LessOrEqual<A_, B_>& value_) {
+      return os_ << "<=";
+    }
+};
+template<typename A_, typename B_>
+struct PrintTrait<Greater<A_, B_> > {
+    static std::ostream& print(
+        std::ostream& os_,
+        const Greater<A_, B_>& value_) {
+      return os_ << ">";
+    }
+};
+template<typename A_, typename B_>
+struct PrintTrait<GreaterOrEqual<A_, B_> > {
+    static std::ostream& print(
+        std::ostream& os_,
+        const GreaterOrEqual<A_, B_>& value_) {
+      return os_ << ">=";
     }
 };
 

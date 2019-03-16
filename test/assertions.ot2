@@ -207,6 +207,230 @@ TEST_SUITE(AssertionsSuite) {
 //      runtime.reporter.dumpRecords(std::cout);
     }
   }
+
+  TEST_CASE(NotEqualAssertionPass) {
+    Runtime runtime("AssertionsSuite", "NotEqualAssertionPass");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<NotEqualAssertionPass>",
+        "enterState<AnonymousState>",
+        "assert<relation 'a != b' has failed: a = 10, b = 9>: passed",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<NotEqualAssertionPass>: passed",
+        "leaveSuite<AssertionsSuite>: passed",
+        "leaveTest<selftest>: passed",
+      };
+
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(NotEqualAssertionFail) {
+    Runtime runtime("AssertionsSuite", "NotEqualAssertionFail");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<NotEqualAssertionFail>",
+        "enterState<AnonymousState>",
+        "assert<relation 'a != b' has failed: a = 11, b = 11>: failed",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<NotEqualAssertionFail>: failed",
+        "leaveSuite<AssertionsSuite>: failed",
+        "leaveTest<selftest>: failed",
+      };
+
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(LessAssertionPass) {
+    Runtime runtime("AssertionsSuite", "LessAssertionPass");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<LessAssertionPass>",
+        "enterState<AnonymousState>",
+        "assert<relation 'a < b' has failed: a = 7, b = 8>: passed",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<LessAssertionPass>: passed",
+        "leaveSuite<AssertionsSuite>: passed",
+        "leaveTest<selftest>: passed",
+      };
+
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(LessAssertionFail) {
+    Runtime runtime("AssertionsSuite", "LessAssertionFail");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<LessAssertionFail>",
+        "enterState<AnonymousState>",
+        "assert<relation 'a < b' has failed: a = 7, b = 7>: failed",
+        "assert<relation 'a < b' has failed: a = 9, b = 8>: failed",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<LessAssertionFail>: failed",
+        "leaveSuite<AssertionsSuite>: failed",
+        "leaveTest<selftest>: failed",
+      };
+
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(LessOrEqualAssertionPass) {
+    Runtime runtime("AssertionsSuite", "LessOrEqualAssertionPass");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<LessOrEqualAssertionPass>",
+        "enterState<AnonymousState>",
+        "assert<relation 'a <= b' has failed: a = 7, b = 8>: passed",
+        "assert<relation 'a <= b' has failed: a = 8, b = 8>: passed",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<LessOrEqualAssertionPass>: passed",
+        "leaveSuite<AssertionsSuite>: passed",
+        "leaveTest<selftest>: passed",
+      };
+
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(LessOrEqualAssertionFail) {
+    Runtime runtime("AssertionsSuite", "LessOrEqualAssertionFail");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<LessOrEqualAssertionFail>",
+        "enterState<AnonymousState>",
+        "assert<relation 'a <= b' has failed: a = 8, b = 7>: failed",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<LessOrEqualAssertionFail>: failed",
+        "leaveSuite<AssertionsSuite>: failed",
+        "leaveTest<selftest>: failed",
+      };
+
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(GreaterAssertionPass) {
+    Runtime runtime("AssertionsSuite", "GreaterAssertionPass");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<GreaterAssertionPass>",
+        "enterState<AnonymousState>",
+        "assert<relation 'a > b' has failed: a = 8, b = 7>: passed",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<GreaterAssertionPass>: passed",
+        "leaveSuite<AssertionsSuite>: passed",
+        "leaveTest<selftest>: passed",
+      };
+
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(GreaterAssertionFail) {
+    Runtime runtime("AssertionsSuite", "GreaterAssertionFail");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<GreaterAssertionFail>",
+        "enterState<AnonymousState>",
+        "assert<relation 'a > b' has failed: a = 7, b = 7>: failed",
+        "assert<relation 'a > b' has failed: a = 7, b = 8>: failed",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<GreaterAssertionFail>: failed",
+        "leaveSuite<AssertionsSuite>: failed",
+        "leaveTest<selftest>: failed",
+      };
+
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(GreaterOrEqualAssertionPass) {
+    Runtime runtime("AssertionsSuite", "GreaterOrEqualAssertionPass");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<GreaterOrEqualAssertionPass>",
+        "enterState<AnonymousState>",
+        "assert<relation 'a >= b' has failed: a = 8, b = 7>: passed",
+        "assert<relation 'a >= b' has failed: a = 8, b = 8>: passed",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<GreaterOrEqualAssertionPass>: passed",
+        "leaveSuite<AssertionsSuite>: passed",
+        "leaveTest<selftest>: passed",
+      };
+
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(GreaterOrEqualAssertionFail) {
+    Runtime runtime("AssertionsSuite", "GreaterOrEqualAssertionFail");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<GreaterOrEqualAssertionFail>",
+        "enterState<AnonymousState>",
+        "assert<relation 'a >= b' has failed: a = 7, b = 8>: failed",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<GreaterOrEqualAssertionFail>: failed",
+        "leaveSuite<AssertionsSuite>: failed",
+        "leaveTest<selftest>: failed",
+      };
+
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
 }
 
 } /* -- namespace Test */

@@ -317,8 +317,6 @@ bool AssertVisitor::VisitCallExpr(
   /* -- if the function is a template function, expand deduced types into
    *    the annotation parameters. */
   if(fce_->isTemplateInstantiation()) {
-    std::cout << fcename_ << " is a template function" << std::endl;
-
     const clang::TemplateArgumentList* args_(fce_->getTemplateSpecializationArgs());
     if(args_ != nullptr) {
       std::vector<std::string> template_params_;

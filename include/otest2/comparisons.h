@@ -33,11 +33,47 @@ struct Equal {
 };
 
 template<typename A_, typename B_>
+struct NotEqual {
+    bool operator()(
+        typename TypeTrait<A_>::BestArg a_,
+        typename TypeTrait<B_>::BestArg b_) const {
+      return a_ != b_;
+    }
+};
+
+template<typename A_, typename B_>
 struct Less {
     bool operator()(
         typename TypeTrait<A_>::BestArg a_,
         typename TypeTrait<B_>::BestArg b_) const {
       return a_ < b_;
+    }
+};
+
+template<typename A_, typename B_>
+struct LessOrEqual {
+    bool operator()(
+        typename TypeTrait<A_>::BestArg a_,
+        typename TypeTrait<B_>::BestArg b_) const {
+      return a_ <= b_;
+    }
+};
+
+template<typename A_, typename B_>
+struct Greater {
+    bool operator()(
+        typename TypeTrait<A_>::BestArg a_,
+        typename TypeTrait<B_>::BestArg b_) const {
+      return a_ > b_;
+    }
+};
+
+template<typename A_, typename B_>
+struct GreaterOrEqual {
+    bool operator()(
+        typename TypeTrait<A_>::BestArg a_,
+        typename TypeTrait<B_>::BestArg b_) const {
+      return a_ >= b_;
     }
 };
 

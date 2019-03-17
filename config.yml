@@ -1,0 +1,11 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: staon/otest2-ci:latest
+    steps:
+      - checkout
+      - run:
+          name: Run Tests
+          command: |
+            scons check

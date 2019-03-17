@@ -13,7 +13,7 @@ envST.Append(OTEST2DOMAIN = 'selftest')
 envST.OTest2(env.Glob('selftests/*.ot2'))
 
 # -- testing test suites
-env.OTest2Suite('selftest', [
+env.OTest2Suite('Program', 'selftest', [
     env.Glob('selftests/*.ot2.cpp'),
     'assertions.ot2',
     'main.cpp',

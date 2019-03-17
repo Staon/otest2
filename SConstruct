@@ -53,14 +53,14 @@ otest2 = Builder(
 env.Append(BUILDERS = {'OTest2' : otest2})
 
 # Compilation of the test suite
-def otest2_compile_tests(env, target, sources):
+def otest2_compile_tests(env, builder, target, sources):
     new_sources = []
     for src in sources:
         if str(src).endswith('.ot2'):
             new_sources.append(env.OTest2(src))
         else:
             new_sources.append(src)
-    return env.Program(target, new_sources)
+    return getattr(env, builder)(target, new_sources)
 env.AddMethod(otest2_compile_tests, "OTest2Suite")
 
 SConscript([

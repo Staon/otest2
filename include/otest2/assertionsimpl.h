@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2019 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -16,30 +16,32 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
+#ifndef OTest2__INCLUDE_OTEST2_ASSERTIONSIMPL_H_
+#define OTest2__INCLUDE_OTEST2_ASSERTIONSIMPL_H_
 
-
-#ifndef OTest2__INCLUDE_OTEST2_CONTEXTOBJECTIMPL_H_
-#define OTest2__INCLUDE_OTEST2_CONTEXTOBJECTIMPL_H_
-
-#include <otest2/contextobject.h>
+#include <otest2/assertions.h>
 
 #include <sstream>
-#include <string>
+
+#include <otest2/printtraits.h>
 
 namespace OTest2 {
 
-template<typename A_, typename B_>
-void ContextObject::testAssertEqual(
-    const std::string& file_,
-    int lineno_,
-    A_ expected_,
-    B_ actual_) {
+template<typename Compare_, typename A_, typename B_>
+bool GenericAssertion::testAssertCompare(
+    A_ a_,
+    B_ b_) const {
+  Compare_ cmp_;
   std::ostringstream sos_;
-  sos_ << "expected: '" << expected_ << "', actual: '" << actual_ << "'";
-  otest2AssertGeneric(
-      file_, lineno_, "", sos_.str(), expected_ == actual_);
+  sos_ << "relation 'a ";
+  PrintTrait<Compare_>::print(sos_, cmp_);
+  sos_ << " b' has failed: a = ";
+  PrintTrait<A_>::print(sos_, a_);
+  sos_ << ", b = ";
+  PrintTrait<B_>::print(sos_, b_);
+  testAssertImpl(cmp_(a_, b_), sos_.str(), false);
 }
 
-} /* -- namespace OTest2 */
+}  /* -- namespace OTest2 */
 
-#endif /* OTest2__INCLUDE_OTEST2_CONTEXTOBJECTIMPL_H_ */
+#endif /* OTest2__INCLUDE_OTEST2_ASSERTIONSIMPL_H_ */

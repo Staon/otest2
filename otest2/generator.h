@@ -77,15 +77,19 @@ class Generator {
      * stream. Just before them it inserts information about file
      * and line number.
      *
+     * @param assertion_class_ Name of the assertion class
+     * @param assertion_method_ Name of the assertion method
      * @param begin_ Beginning location of the assertion arguments.
      * @param end_ Ending location of the assertion arguments.
-     * @param insert_expr_ If it's true, a string containing the arguments
-     *     is inserted as an argument too.
+     * @param expr_end_ Ending location of the checked expression.
+     *     The expression is expected in the range <begin_, expr_end_)
      */
     virtual void makeAssertion(
+        const std::string& assertion_class_,
+        const std::string& assertion_method_,
         const Location& begin_,
         const Location& end_,
-        bool insert_expr_) = 0;
+        const Location& expr_end_) = 0;
 
     /**
      * @brief End of the user area

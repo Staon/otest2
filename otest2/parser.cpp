@@ -32,6 +32,7 @@
 #include <llvm/Support/raw_ostream.h>
 #include <map>
 #include <memory>
+#include <regex>
 #include <sstream>
 #include <string>
 #include <unistd.h>
@@ -45,6 +46,7 @@
 #include "generatorstd.h"
 #include "location.h"
 #include "options.h"
+#include "typetemplate.h"
 
 namespace OTest2 {
 
@@ -54,11 +56,63 @@ const std::string STATE_ANNOTATION("otest2::state");
 const std::string START_UP_ANNOTATION("otest2::startUp");
 const std::string TEAR_DOWN_ANNOTATION("otest2::tearDown");
 
+const std::string ASSERTION_ANNOTATION("^otest2::assertion[(]([^,]+([,][^,]+)*)[)]$");
+
 Location createLocation(
     clang::SourceManager* srcmgr_,
     const clang::SourceLocation& loc_) {
   clang::PresumedLoc ploc_(srcmgr_->getPresumedLoc(loc_));
   return Location(ploc_.getLine(), ploc_.getColumn());
+}
+
+template<typename Compare_>
+bool hasAnnotation(
+    clang::Decl* decl_,
+    Compare_& cmp_) {
+  if(decl_->hasAttrs()) {
+    for(
+        auto iter_(decl_->attr_begin());
+        iter_ != decl_->attr_end();
+        ++iter_) {
+      if((*iter_)->getKind() == clang::attr::Annotate) {
+        auto sa_(clang::cast<clang::AnnotateAttr>(*iter_));
+        auto str_(sa_->getAnnotation());
+        if(cmp_(str_.str())) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+
+struct AnnotationStringEqual {
+    std::string ref;
+    bool operator()(
+        const std::string& annotation_) {
+      return annotation_ == ref;
+    }
+};
+
+struct AnnotationRegex {
+    std::regex expr;
+    std::smatch matches;
+    AnnotationRegex(
+        const std::string& expr_) :
+      expr(expr_) {
+
+    }
+    bool operator()(
+        const std::string& annotation_) {
+      return std::regex_match(annotation_, matches, expr);
+    }
+};
+
+bool hasAnnotation(
+    clang::Decl* decl_,
+    const std::string& annotation_) {
+  AnnotationStringEqual cmp_{annotation_};
+  return hasAnnotation(decl_, cmp_);
 }
 
 template<typename Node_>
@@ -193,13 +247,6 @@ void ParserContext::moveToEnd(
 
 class AssertVisitor : public clang::RecursiveASTVisitor<AssertVisitor> {
   private:
-    struct AssertRecord {
-      int argnum;
-      bool exprstring;
-    };
-    const static std::string ASSERT_NS;
-    const static std::map<std::string, AssertRecord> assertions;
-
     ParserContext* context;
     Location current;
 
@@ -213,12 +260,6 @@ class AssertVisitor : public clang::RecursiveASTVisitor<AssertVisitor> {
         clang::CallExpr* expr_);
 
     Location getCurrentLocation() const;
-};
-
-const std::string AssertVisitor::ASSERT_NS("OTest2::Assertions::");
-const std::map<std::string, AssertVisitor::AssertRecord> AssertVisitor::assertions{
-  {AssertVisitor::ASSERT_NS + "testAssert", {1, true}},
-  {AssertVisitor::ASSERT_NS + "testAssertEqual", {2, false}},
 };
 
 AssertVisitor::AssertVisitor(
@@ -235,8 +276,9 @@ AssertVisitor::~AssertVisitor() {
 
 bool AssertVisitor::VisitCallExpr(
     clang::CallExpr* expr_) {
-  /* -- This is an invocation of a function. Check whether the function
-   *    is one of my assertions. Firstly, get the name of the function. */
+  /* -- Any invocation of a function can be calling of an assertion.
+   *    I will get the function declaration. If the function is annotated
+   *    being an assertion, I'll process it. */
   auto callee_(expr_->getCallee());
   if(!clang::isa<clang::ImplicitCastExpr>(callee_))
     return true;
@@ -251,43 +293,88 @@ bool AssertVisitor::VisitCallExpr(
 //  }
   if(!clang::isa<clang::FunctionDecl>(declref_))
     return true;
-  auto fce_(clang::cast<clang::FunctionDecl>(declref_));
-  auto fcename_(fce_->getQualifiedNameAsString());
-  auto assert_record_(assertions.find(fcename_));
-  if(assert_record_ == assertions.end())
+
+  /* -- check the function annotation */
+  AnnotationRegex cmp_(ASSERTION_ANNOTATION);
+  if(!hasAnnotation(declref_, cmp_))
     return true;
+
+  /* -- split the annotation arguments */
+  auto annot_args_(cmp_.matches[1].str());
+  std::regex split_("(\\s*;\\s*)");
+  std::sregex_token_iterator iter_(
+      annot_args_.begin(), annot_args_.end(), split_, -1);
+  std::vector<std::string> annotation_args_(iter_, std::sregex_token_iterator());
+  if(annotation_args_.size() != 2) {
+    context->setError("invalid count of the arguments of the assertion annotation", declref_);
+    return false;
+  }
+
+  /* -- parse name of the assertion */
+  auto fce_(clang::cast<clang::FunctionDecl>(declref_));
+  auto fcename_(fce_->getName().str());
+
+  /* -- if the function is a template function, expand deduced types into
+   *    the annotation parameters. */
+  if(fce_->isTemplateInstantiation()) {
+    const clang::TemplateArgumentList* args_(fce_->getTemplateSpecializationArgs());
+    if(args_ != nullptr) {
+      std::vector<std::string> template_params_;
+      for(int i_(0); i_ < static_cast<int>(args_->size()); ++i_) {
+        auto arg_(args_->get(i_));
+        if(arg_.getKind() == clang::TemplateArgument::Type) {
+          auto type_(arg_.getAsType());
+          template_params_.push_back(type_.getAsString());
+        }
+      }
+      if(!expandTemplates(annotation_args_, template_params_)) {
+        context->setError("invalid type template in the annotation of the assertion", declref_);
+        return false;
+      }
+    }
+  }
 
   /* -- find first and last non-default argument */
   const int argnum_(expr_->getNumArgs());
   int last_index_(-1);
-  if(argnum_ > 0) {
-    for(int i_(0); i_ < argnum_; ++i_) {
-      clang::Expr *arg_(expr_->getArg(i_));
-      if(clang::isa<clang::CXXDefaultArgExpr>(arg_))
-        break;
-      last_index_ = i_;
-    }
+  for(int i_(0); i_ < argnum_; ++i_) {
+    clang::Expr *arg_(expr_->getArg(i_));
+    if(clang::isa<clang::CXXDefaultArgExpr>(arg_))
+      break;
+    last_index_ = i_;
   }
-  if(last_index_ < 0 || last_index_ >= (*assert_record_).second.argnum) {
-    context->setError("invalid number of function arguments", fce_);
+  if(last_index_ < 0) {
+    context->setError("there are no arguments of the assertion", fce_);
     return false;
   }
 
-  /* -- get ranges of the arguments */
+  /* -- copy source just before the assertion */
+  clang::SourceRange expr_range_(
+      getNodeRange(context->srcmgr, context->langopts, expr_));
+  auto expr_begin_(createLocation(context->srcmgr, expr_range_.getBegin()));
+  context->generator->copySource(current, expr_begin_);
+
+  /* -- Generate the assertion. I need to know the range of arguments
+   *    because I want to insert the first argument as a text (to be shown
+   *    in the assertion message. */
   auto begarg_(expr_->getArg(0));
   auto endarg_(expr_->getArg(last_index_));
   clang::SourceRange begrange_(
       getNodeRange(context->srcmgr, context->langopts, begarg_));
   clang::SourceRange endrange_(
       getNodeRange(context->srcmgr, context->langopts, endarg_));
-
-  /* -- generate the output */
-  auto b_(createLocation(context->srcmgr, begrange_.getBegin()));
-  auto e_(createLocation(context->srcmgr, endrange_.getEnd()));
-  context->generator->copySource(current, b_);
+  auto args_begin_(createLocation(context->srcmgr, begrange_.getBegin()));
+  auto args_end_(createLocation(context->srcmgr, endrange_.getEnd()));
+  auto msg_end_(createLocation(context->srcmgr, begrange_.getEnd()));
   context->generator->makeAssertion(
-      b_, e_, (*assert_record_).second.exprstring);
-  current = e_;
+      annotation_args_[0],
+      annotation_args_[1],
+      args_begin_,
+      args_end_,
+      msg_end_);
+
+  /* -- keep last position for next source copying */
+  current = args_end_;
 
   return true;
 }
@@ -302,9 +389,6 @@ class SuiteVisitor : public clang::RecursiveASTVisitor<SuiteVisitor> {
 
     clang::VarDecl* getVarDecl(
         clang::Stmt* stmt_);
-    bool hasAnnotation(
-        clang::Decl* decl_,
-        const std::string& annotation_) const;
     clang::Stmt* getFunctionBody(
         clang::FunctionDecl* fce_);
 
@@ -355,26 +439,6 @@ clang::VarDecl* SuiteVisitor::getVarDecl(
     return nullptr;
   }
   return clang::cast<clang::VarDecl>(*declstmt_->decl_begin());
-}
-
-bool SuiteVisitor::hasAnnotation(
-    clang::Decl* decl_,
-    const std::string& annotation_) const {
-  if(decl_->hasAttrs()) {
-    for(
-        auto iter_(decl_->attr_begin());
-        iter_ != decl_->attr_end();
-        ++iter_) {
-      if((*iter_)->getKind() == clang::attr::Annotate) {
-        auto sa_(clang::cast<clang::AnnotateAttr>(*iter_));
-        auto str_(sa_->getAnnotation());
-        if(str_.str() == annotation_) {
-          return true;
-        }
-      }
-    }
-  }
-  return false;
 }
 
 clang::Stmt* SuiteVisitor::getFunctionBody(
@@ -879,6 +943,7 @@ bool SuiteVisitor::VisitNamespaceDecl(
     if(!parseSuite(ns_))
       return false;
   }
+
   return true;
 }
 

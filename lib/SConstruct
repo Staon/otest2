@@ -4,8 +4,10 @@ env = env.Clone()
 env.Append(CPPPATH = ['../include/otest2'])
 
 # Build the library
-env.Library('otest2', [
+env.OTest2Suite('Library', 'otest2', [
     'assertbean.cpp',
+    'assertcontext.cpp',
+    'assertions.cpp',
     'case.cpp',
     'casefactory.cpp',
     'casegenerated.cpp',

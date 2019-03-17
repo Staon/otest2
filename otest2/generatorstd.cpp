@@ -152,8 +152,9 @@ void GeneratorStd::beginFile() {
       << "#include <memory>\n"
       << "#include <string>\n"
       << "\n"
+      << "#include <otest2/assertions.h>\n"
+      << "#include <otest2/assertionsimpl.h>\n"
       << "#include <otest2/casegenerated.h>\n"
-      << "#include <otest2/contextobjectimpl.h>\n"
       << "#include <otest2/generutils.h>\n"
       << "#include <otest2/objectptr.h>\n"
       << "#include <otest2/registry.h>\n"
@@ -174,23 +175,27 @@ void GeneratorStd::copySource(
 }
 
 void GeneratorStd::makeAssertion(
+    const std::string& assertion_class_,
+    const std::string& assertion_method_,
     const Location& begin_,
     const Location& end_,
-    bool insert_expr_) {
-  /* -- write info about file and line number */
+    const Location& expr_end_) {
+  pimpl->writeGenerLineDirective();
+
+  /* -- make an instance of the assertion class initialized with the filename,
+   *    line number and the checked expression. */
+  pimpl->output << assertion_class_ << "(otest2Context(), ";
   writeCString(pimpl->output, pimpl->infile);
   pimpl->output << ", " << begin_.getLine() << ", ";
+  std::string expression_(pimpl->reader->getPart(begin_, expr_end_));
+  writeCString(pimpl->output, expression_);
+  pimpl->output << ")";
 
-  if(insert_expr_) {
-    /* -- write the string literal and the arguments */
-    std::string arguments_(pimpl->reader->getPart(begin_, end_));
-    writeCString(pimpl->output, arguments_);
-    pimpl->output << ", " << arguments_;
-  }
-  else {
-    /* -- write just the arguments */
-    pimpl->reader->writePart(pimpl->output, begin_, &end_);
-  }
+  /* -- invoke the assertion method */
+  std::string rest_args_(pimpl->reader->getPart(expr_end_, end_));
+  pimpl->output << "." << assertion_method_ << "(";
+  pimpl->writeUserLineDirective(begin_);
+  pimpl->output << expression_ << rest_args_;
 }
 
 void GeneratorStd::endUserArea(
@@ -469,27 +474,29 @@ void GeneratorStd::leaveSuite() {
 void GeneratorStd::endFile(
     const Location& last_) {
   /* -- generate registration of suites */
-  pimpl->output
-      << "\n"
-      << "namespace {\n"
-      << "\n"
-      << "class SuiteRegistrator {\n"
-      << "  public:\n"
-      << "    SuiteRegistrator() {\n";
-  for(const std::string& suite_ : pimpl->suites) {
+  if(!pimpl->suites.empty()) {
     pimpl->output
-        << "      ::OTest2::Registry::instance(";
-    writeCString(pimpl->output, pimpl->domain);
+        << "\n"
+        << "namespace {\n"
+        << "\n"
+        << "class SuiteRegistrator {\n"
+        << "  public:\n"
+        << "    SuiteRegistrator() {\n";
+    for(const std::string& suite_ : pimpl->suites) {
+      pimpl->output
+          << "      ::OTest2::Registry::instance(";
+      writeCString(pimpl->output, pimpl->domain);
+      pimpl->output
+          << ").registerSuite(\n"
+          << "          \"" << suite_ << "\",\n"
+          << "          std::make_shared< ::OTest2::SuiteGeneratedFactory<" << suite_ << "> >());\n";
+    }
     pimpl->output
-        << ").registerSuite(\n"
-        << "          \"" << suite_ << "\",\n"
-        << "          std::make_shared< ::OTest2::SuiteGeneratedFactory<" << suite_ << "> >());\n";
+        << "    }\n"
+        << "} registrator_of_generated_suites;\n"
+        << "\n"
+        << "} /* -- namespace */\n";
   }
-  pimpl->output
-      << "    }\n"
-      << "} registrator_of_generated_suites;\n"
-      << "\n"
-      << "} /* -- namespace */\n";
 
   pimpl->writeUserLineDirective(last_);
   pimpl->reader->writePart(pimpl->output, last_, nullptr);

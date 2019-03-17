@@ -42,5 +42,6 @@ env.Program('otest2', [
     'main.cpp',
     'options.cpp',
     'parser.cpp',
+    'typetemplate.cpp',
     'vartable.cpp',
 ])

@@ -49,11 +49,14 @@ void GeneratorPrinter::copySource(
 }
 
 void GeneratorPrinter::makeAssertion(
+    const std::string& assertion_class_,
+    const std::string& assertion_method_,
     const Location& begin_,
     const Location& end_,
-    bool insert_expr_) {
-  std::cout << "make assertion: " << begin_ << " " << end_
-      << " " << insert_expr_ << std::endl;
+    const Location& expr_end_) {
+  std::cout << "make assertion: " << assertion_class_ << " "
+      << assertion_method_ << " " << begin_ << " " << end_
+      << " " << expr_end_ << std::endl;
 }
 
 void GeneratorPrinter::endUserArea(

@@ -52,6 +52,7 @@ struct RunnerOrdinary::Impl {
 
     explicit Impl(
         RunnerOrdinary* owner_,
+        ExcCatcher* exc_catcher_,
         Reporter* reporter_,
         Registry* registry_,
         RunnerFilter* runner_filter_,
@@ -61,6 +62,7 @@ struct RunnerOrdinary::Impl {
 
 RunnerOrdinary::Impl::Impl(
     RunnerOrdinary* owner_,
+    ExcCatcher* exc_catcher_,
     Reporter* reporter_,
     Registry* registry_,
     RunnerFilter* runner_filter_,
@@ -70,10 +72,16 @@ RunnerOrdinary::Impl::Impl(
   semantic_stack(),
   registry(registry_),
   name(name_),
-  context(&command_stack, &semantic_stack, reporter_, runner_filter_) {
+  context(
+      &command_stack,
+      &semantic_stack,
+      exc_catcher_,
+      reporter_,
+      runner_filter_) {
   assert(registry != nullptr);
   assert(context.reporter != nullptr);
   assert(context.runner_filter != nullptr);
+  assert(context.exception_catcher != nullptr);
 
   /* -- prepare start of the test */
   command_stack.pushCommand(std::make_shared<CmdStartTest>(name, registry));
@@ -85,11 +93,12 @@ RunnerOrdinary::Impl::~Impl() {
 }
 
 RunnerOrdinary::RunnerOrdinary(
+    ExcCatcher* exc_catcher_,
     Reporter* reporter_,
     Registry* registry_,
     RunnerFilter* runner_filter_,
     const std::string& name_) :
-  pimpl(new Impl(this, reporter_, registry_, runner_filter_, name_)) {
+  pimpl(new Impl(this, exc_catcher_, reporter_, registry_, runner_filter_, name_)) {
 
 }
 

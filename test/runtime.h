@@ -20,6 +20,7 @@
 #ifndef OTest2__TEST_RUNTIME_H_
 #define OTest2__TEST_RUNTIME_H_
 
+#include <otest2/exccatcherordinary.h>
 #include <otest2/runnerfilterone.h>
 #include <otest2/runnerordinary.h>
 
@@ -34,6 +35,7 @@ namespace Test {
  */
 class Runtime {
   public:
+    ExcCatcherOrdinary exc_catcher;
     ReporterMock reporter;
     RunnerFilterOne runner_filter;
     RunnerOrdinary runner;

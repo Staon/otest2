@@ -18,6 +18,7 @@
  */
 
 #include <iostream>
+#include <otest2/exccatcherordinary.h>
 #include <otest2/registry.h>
 #include <otest2/reporterconsole.h>
 #include <otest2/runnerfilterentire.h>
@@ -27,9 +28,11 @@
 int main(
     int argc_,
     char* argv_[]) {
+  ::OTest2::ExcCatcherOrdinary exc_catcher_;
   ::OTest2::ReporterConsole reporter_(&std::cout);
   ::OTest2::RunnerFilterEntire runner_filter_;
   ::OTest2::RunnerOrdinary runner_(
+      &exc_catcher_,
       &reporter_,
       &::OTest2::Registry::instance("default"),
       &runner_filter_,

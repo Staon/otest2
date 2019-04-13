@@ -23,6 +23,7 @@
 namespace OTest2 {
 
 class CommandStack;
+class ExcCatcher;
 class Reporter;
 class RunnerFilter;
 class SemanticStack;
@@ -34,6 +35,7 @@ class Context {
   public:
     CommandStack* const command_stack;
     SemanticStack* const semantic_stack;
+    ExcCatcher* const exception_catcher;
     Reporter* const reporter;
     RunnerFilter* const runner_filter;
 
@@ -49,6 +51,7 @@ class Context {
     explicit Context(
         CommandStack* command_stack_,
         SemanticStack* semantic_stack_,
+        ExcCatcher* exception_catcher_,
         Reporter* reporter_,
         RunnerFilter* runner_filter_);
 

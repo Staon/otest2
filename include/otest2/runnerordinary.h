@@ -26,6 +26,7 @@
 
 namespace OTest2 {
 
+class ExcCatcher;
 class Registry;
 class Reporter;
 class RunnerFilter;
@@ -51,6 +52,7 @@ class RunnerOrdinary : public Runner {
     /**
      * @brief Ctor
      *
+     * @param exc_catcher_ An exception catcher. The ownership is not taken.
      * @param reporter_ A reporter object. The ownership is not taken.
      * @param registry_ A registry of suites to be run. The ownership is not taken.
      * @param runner_filter_ A runner filter - an object which allows specification
@@ -58,6 +60,7 @@ class RunnerOrdinary : public Runner {
      * @param name_ Name of the test (shown in the test report)
      */
     explicit RunnerOrdinary(
+        ExcCatcher* exc_catcher_,
         Reporter* reporter_,
         Registry* registry_,
         RunnerFilter* runner_filter_,

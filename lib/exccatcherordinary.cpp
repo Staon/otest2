@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2019 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -17,26 +17,41 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <context.h>
+#include <exccatcherordinary.h>
+
+#include <exception>
+#include <sstream>
 
 namespace OTest2 {
 
-Context::Context(
-    CommandStack* command_stack_,
-    SemanticStack* semantic_stack_,
-    ExcCatcher* exception_catcher_,
-    Reporter* reporter_,
-    RunnerFilter* runner_filter_) :
-  command_stack(command_stack_),
-  semantic_stack(semantic_stack_),
-  exception_catcher(exception_catcher_),
-  reporter(reporter_),
-  runner_filter(runner_filter_) {
+ExcCatcherOrdinary::ExcCatcherOrdinary() {
 
 }
 
-Context::~Context() {
+ExcCatcherOrdinary::~ExcCatcherOrdinary() {
 
 }
 
-} /* -- namespace OTest2 */
+bool ExcCatcherOrdinary::catchException(
+    const Context& context_,
+    std::function<void(const Context&)> ftor_,
+    std::string& message_) noexcept {
+  /* -- run the functor */
+  try {
+    ftor_(context_);
+  }
+  catch(std::exception& exc_) {
+    std::ostringstream sos_;
+    sos_ << "unexpected exception: " << exc_.what();
+    message_ = sos_.str();
+    return true;
+  }
+  catch(...) {
+    message_ = "unexpected unknown exception";
+    return true;
+  }
+
+  return false;
+}
+
+} /* namespace OTest2 */

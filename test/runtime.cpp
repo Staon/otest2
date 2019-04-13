@@ -30,9 +30,11 @@ namespace Test {
 Runtime::Runtime(
     const std::string& suite_name_,
     const std::string& case_name_) :
+  exc_catcher(),
   reporter(),
   runner_filter(suite_name_, case_name_),
   runner(
+      &exc_catcher,
       &reporter,
       &Registry::instance("selftest"),
       &runner_filter,

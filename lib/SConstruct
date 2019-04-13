@@ -29,6 +29,8 @@ env.OTest2Suite('Library', 'otest2', [
     'context.cpp',
     'contextobject.cpp',
     'exc.cpp',
+    'exccatcher.cpp',
+    'exccatcherordinary.cpp',
     'object.cpp',
     'registry.cpp',
     'reporter.cpp',

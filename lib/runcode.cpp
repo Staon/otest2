@@ -24,23 +24,11 @@
 #include <string>
 
 #include <context.h>
+#include <exccatcher.h>
 #include <reporter.h>
 #include <semanticstack.h>
 
 namespace OTest2 {
-
-namespace {
-
-void reportError(
-    const Context& context_,
-    const std::string& message_) {
-  /* -- fail the testing object */
-  context_.semantic_stack->setTop(false);
-
-  /* -- TODO: report error to the reporter */
-}
-
-} /* -- namespace */
 
 bool runUserCode(
     const Context& context_,
@@ -49,16 +37,12 @@ bool runUserCode(
   context_.semantic_stack->push(true);
 
   /* -- run the functor */
-  try {
-    ftor_(context_);
-  }
-  catch(std::exception& exc_) {
-    std::ostringstream sos_;
-    sos_ << "unexpected exception: " << exc_.what();
-    reportError(context_, sos_.str());
-  }
-  catch(...) {
-    reportError(context_, "unexpected unknown exception");
+  std::string message_;
+  if(context_.exception_catcher->catchException(context_, ftor_, message_)) {
+    /* -- fail the testing object */
+    context_.semantic_stack->setTop(false);
+
+    /* -- TODO: report error to the reporter */
   }
 
   /* -- handle the return value */

@@ -59,6 +59,21 @@ void GeneratorPrinter::makeAssertion(
       << " " << expr_end_ << std::endl;
 }
 
+void GeneratorPrinter::makeTryCatchBegin(
+    const Location& begin_) {
+  std::cout << "make try-catch begin: " << begin_ << std::endl;
+}
+
+void GeneratorPrinter::makeCatchHandler(
+    const std::string& type_,
+    const std::string& varname_) {
+  std::cout << "make catch handler: " << type_ << " " << varname_ << std::endl;
+}
+
+void GeneratorPrinter::makeTryCatchEnd() {
+  std::cout << "make try-catch end" << std::endl;
+}
+
 void GeneratorPrinter::endUserArea(
     const Location& end_) {
   std::cout << "end user area: " << end_ << std::endl;

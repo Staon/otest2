@@ -17,9 +17,11 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <otest2/assertions.h>
+#include <assertions.h>
 
 #include <otest2/assertbean.h>
+#include <otest2/context.h>
+#include <otest2/exccatcher.h>
 
 namespace OTest2 {
 
@@ -31,6 +33,21 @@ bool GenericAssertion::testAssert(
 bool GenericAssertion::testAssert(
     const AssertBean& bean_) const {
   return testAssertImpl(bean_.getCondition(), bean_.getMessage(), true);
+}
+
+bool GenericAssertion::testException(
+    std::function<bool()> ftor_) const {
+  std::string message_;
+  bool result_(false);
+  if(otest2Context().exception_catcher->catchException(
+      otest2Context(),
+      [&result_, ftor_](const Context&) {
+        result_ = ftor_();
+      },
+      message_)) {
+    return testAssertImpl(false, message_, false);
+  }
+  return testAssertImpl(result_, "an exception was expected but no one occurred", false);
 }
 
 }  /* -- namespace OTest2 */

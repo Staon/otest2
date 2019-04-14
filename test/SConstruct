@@ -16,6 +16,7 @@ envST.OTest2(env.Glob('selftests/*.ot2'))
 env.OTest2Suite('Program', 'selftest', [
     env.Glob('selftests/*.ot2.cpp'),
     'assertions.ot2',
+    'exceptions.ot2',
     'main.cpp',
     'reportermock.cpp',
     'runtime.cpp',

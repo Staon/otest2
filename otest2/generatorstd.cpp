@@ -198,6 +198,32 @@ void GeneratorStd::makeAssertion(
   pimpl->output << expression_ << rest_args_;
 }
 
+void GeneratorStd::makeTryCatchBegin(
+    const Location& begin_) {
+  pimpl->output << "              ::OTest2::GenericAssertion(otest2Context(), ";
+  writeCString(pimpl->output, pimpl->infile);
+  pimpl->output << ", " << begin_.getLine() << ", \"\").testException(\n"
+      << "                  [this]()->bool {\n"
+      << "                    bool exception_happens_(false);\n"
+      << "                    try {";
+}
+
+void GeneratorStd::makeCatchHandler(
+    const std::string& type_,
+    const std::string& varname_) {
+  pimpl->output
+      << "                    }\n"
+      << "                    catch(typename ::OTest2::TypeOfMine< " << type_
+      << ">::Type " << varname_ << ") { exception_happens_ = true;";
+}
+
+void GeneratorStd::makeTryCatchEnd() {
+  pimpl->output
+      << "                    }\n"
+      << "                return exception_happens_;\n"
+      << "              });";
+}
+
 void GeneratorStd::endUserArea(
     const Location& end_) {
   pimpl->writeGenerLineDirective();

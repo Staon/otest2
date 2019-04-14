@@ -55,8 +55,8 @@ const std::string CASE_ANNOTATION("otest2::case");
 const std::string STATE_ANNOTATION("otest2::state");
 const std::string START_UP_ANNOTATION("otest2::startUp");
 const std::string TEAR_DOWN_ANNOTATION("otest2::tearDown");
-
 const std::string ASSERTION_ANNOTATION("^otest2::assertion[(]([^,]+([,][^,]+)*)[)]$");
+const std::string CATCH_ANNOTATION("otest2::catch");
 
 Location createLocation(
     clang::SourceManager* srcmgr_,
@@ -249,6 +249,7 @@ class AssertVisitor : public clang::RecursiveASTVisitor<AssertVisitor> {
   private:
     ParserContext* context;
     Location current;
+    clang::Stmt* subtree_root;
 
   public:
     explicit AssertVisitor(
@@ -256,8 +257,18 @@ class AssertVisitor : public clang::RecursiveASTVisitor<AssertVisitor> {
         const Location& curr_);
     virtual ~AssertVisitor();
 
+    static bool parseCodeBlock(
+        ParserContext* context_,
+        clang::Stmt* stmt_);
+
     bool VisitCallExpr(
         clang::CallExpr* expr_);
+    bool VisitCXXTryStmt(
+        clang::CXXTryStmt* stmt_);
+    bool dataTraverseStmtPre(
+        clang::Stmt* stmt_);
+    bool dataTraverseStmtPost(
+        clang::Stmt* stmt_);
 
     Location getCurrentLocation() const;
 };
@@ -266,12 +277,42 @@ AssertVisitor::AssertVisitor(
     ParserContext* context_,
     const Location& curr_) :
   context(context_),
-  current(curr_) {
+  current(curr_),
+  subtree_root(nullptr) {
 
 }
 
 AssertVisitor::~AssertVisitor() {
 
+}
+
+bool AssertVisitor::parseCodeBlock(
+    ParserContext* context_,
+    clang::Stmt* stmt_) {
+  /* -- get source range of the block */
+  clang::SourceRange range_(
+      getNodeRange(context_->srcmgr, context_->langopts, stmt_));
+  Location begin_(createLocation(context_->srcmgr, range_.getBegin()));
+  Location end_(createLocation(context_->srcmgr, range_.getEnd()));
+
+  /* -- open the user area */
+  context_->generator->startUserArea(begin_);
+
+  /* -- visit the block (manipulate all assertions) */
+  AssertVisitor visitor_(context_, begin_);
+  visitor_.TraverseStmt(stmt_);
+  if(*context_->failure)
+    return false;
+
+  /* -- finish rest of the block after last assertion */
+  context_->generator->copySource(
+      visitor_.getCurrentLocation(),
+      createLocation(context_->srcmgr, range_.getEnd()));
+
+  /* -- close the user area */
+  context_->generator->endUserArea(end_);
+
+  return true;
 }
 
 bool AssertVisitor::VisitCallExpr(
@@ -379,6 +420,85 @@ bool AssertVisitor::VisitCallExpr(
   return true;
 }
 
+bool AssertVisitor::VisitCXXTryStmt(
+    clang::CXXTryStmt* stmt_) {
+  /* -- sanity check, it shouldn't happen */
+  const int handlers_(stmt_->getNumHandlers());
+  if(handlers_ < 1)
+    return true;
+
+  /* -- check annotations of handlers */
+  bool all_clear_(true);
+  bool all_marked_(true);
+  for(int i_(0); i_ < handlers_; ++i_) {
+    const clang::CXXCatchStmt* handler_(stmt_->getHandler(i_));
+    auto exc_decl_(handler_->getExceptionDecl());
+    if(hasAnnotation(exc_decl_, CATCH_ANNOTATION)) {
+      all_clear_ = false;
+    }
+    else {
+      all_marked_ = false;
+    }
+  }
+  /* -- all handlers are clear => ordinary try/catch statement */
+  if(all_clear_)
+    return true;
+  /* -- some handlers are marked, some not => invalid use of the try/catch */
+  if(!all_marked_) {
+    context->setError("mixed marked and unmarked catch statements!", stmt_);
+    return false;
+  }
+
+  /* -- copy previous part of the source file */
+  clang::SourceRange range_(
+      getNodeRange(context->srcmgr, context->langopts, stmt_));
+  auto begin_(createLocation(context->srcmgr, range_.getBegin()));
+  auto end_(createLocation(context->srcmgr, range_.getEnd()));
+  context->generator->copySource(current, begin_);
+
+  /* -- begin the asserted try/catch code */
+  context->generator->endUserArea(begin_);
+  context->generator->makeTryCatchBegin(begin_);
+
+  /* -- generate the asserted try/catch statement */
+  if(!AssertVisitor::parseCodeBlock(context, stmt_->getTryBlock()))
+    return false;
+
+  for(int i_(0); i_ < handlers_; ++i_) {
+    const clang::CXXCatchStmt* handler_(stmt_->getHandler(i_));
+
+    /* -- generate catch declaration */
+    auto vardecl_(handler_->getExceptionDecl());
+    context->generator->makeCatchHandler(
+        vardecl_->getType().getAsString(), vardecl_->getNameAsString());
+
+    /* -- process content of the handler block */
+    auto handler_block_(handler_->getHandlerBlock());
+    if(!AssertVisitor::parseCodeBlock(context, handler_block_))
+      return false;
+  }
+  context->generator->makeTryCatchEnd();
+
+  /* -- skip rest of the original try/catch block */
+  context->generator->startUserArea(end_);
+  current = end_;
+  subtree_root = stmt_;
+
+  return true;
+}
+
+bool AssertVisitor::dataTraverseStmtPre(
+    clang::Stmt* stmt_) {
+  return subtree_root == nullptr;
+}
+
+bool AssertVisitor::dataTraverseStmtPost(
+    clang::Stmt* stmt_) {
+  if(subtree_root == stmt_)
+    subtree_root = nullptr;
+  return true;
+}
+
 Location AssertVisitor::getCurrentLocation() const {
   return current;
 }
@@ -394,8 +514,6 @@ class SuiteVisitor : public clang::RecursiveASTVisitor<SuiteVisitor> {
 
     bool parseVariable(
         clang::VarDecl* vardecl_);
-    bool parseCodeBlock(
-        clang::Stmt* stmt_);
     bool parseCaseBody(
         clang::NamespaceDecl* ns_);
     bool parseSuiteBody(
@@ -525,35 +643,6 @@ bool SuiteVisitor::parseVariable(
   return true;
 }
 
-bool SuiteVisitor::parseCodeBlock(
-    clang::Stmt* stmt_) {
-  /* -- get source range of the block */
-  clang::SourceRange range_(
-      getNodeRange(context->srcmgr, context->langopts, stmt_));
-  Location begin_(createLocation(context->srcmgr, range_.getBegin()));
-  Location end_(createLocation(context->srcmgr, range_.getEnd()));
-
-  /* -- open the user area */
-  context->generator->startUserArea(begin_);
-
-  /* -- visit the block (manipulate all assertions) */
-  AssertVisitor visitor_(
-      context, createLocation(context->srcmgr, range_.getBegin()));
-  visitor_.TraverseStmt(stmt_);
-  if(*context->failure)
-    return false;
-
-  /* -- finish rest of the block after last assertion */
-  context->generator->copySource(
-      visitor_.getCurrentLocation(),
-      createLocation(context->srcmgr, range_.getEnd()));
-
-  /* -- close the user area */
-  context->generator->endUserArea(end_);
-
-  return true;
-}
-
 bool SuiteVisitor::parseCaseBody(
     clang::NamespaceDecl* ns_) {
 
@@ -582,7 +671,7 @@ bool SuiteVisitor::parseCaseBody(
           if(hasAnnotation(fce_, START_UP_ANNOTATION)) {
             context->state = ParserContext::CASE_TEAR_DOWN;
             context->generator->caseStartUp();
-            if(!parseCodeBlock(body_))
+            if(!AssertVisitor::parseCodeBlock(context, body_))
               return false;
             continue;
           }
@@ -593,7 +682,7 @@ bool SuiteVisitor::parseCaseBody(
             context->generator->caseStartUp();
             context->generator->emptyBody();
             context->generator->caseTearDown();
-            if(!parseCodeBlock(body_))
+            if(!AssertVisitor::parseCodeBlock(context, body_))
               return false;
             continue;
           }
@@ -606,7 +695,7 @@ bool SuiteVisitor::parseCaseBody(
             context->generator->caseTearDown();
             context->generator->emptyBody();
             context->generator->enterState(fce_->getNameAsString());
-            if(!parseCodeBlock(body_))
+            if(!AssertVisitor::parseCodeBlock(context, body_))
               return false;
             context->generator->leaveState();
             continue;
@@ -638,7 +727,7 @@ bool SuiteVisitor::parseCaseBody(
           if(hasAnnotation(fce_, TEAR_DOWN_ANNOTATION)) {
             context->state = ParserContext::CASE_STATES;
             context->generator->caseTearDown();
-            if(!parseCodeBlock(body_))
+            if(!AssertVisitor::parseCodeBlock(context, body_))
               return false;
             continue;
           }
@@ -649,7 +738,7 @@ bool SuiteVisitor::parseCaseBody(
             context->generator->caseTearDown();
             context->generator->emptyBody();
             context->generator->enterState(fce_->getNameAsString());
-            if(!parseCodeBlock(body_))
+            if(!AssertVisitor::parseCodeBlock(context, body_))
               return false;
             context->generator->leaveState();
             continue;
@@ -686,7 +775,7 @@ bool SuiteVisitor::parseCaseBody(
           /* -- state function */
           if(hasAnnotation(fce_, STATE_ANNOTATION)) {
             context->generator->enterState(fce_->getNameAsString());
-            if(!parseCodeBlock(body_))
+            if(!AssertVisitor::parseCodeBlock(context, body_))
               return false;
             context->generator->leaveState();
             continue;
@@ -754,18 +843,18 @@ bool SuiteVisitor::parseSuiteBody(
             if(hasAnnotation(fce_, START_UP_ANNOTATION)) {
               context->state = ParserContext::SUITE_TEAR_DOWN;
               context->generator->suiteStartUp();
-              if(!parseCodeBlock(body_))
+              if(!AssertVisitor::parseCodeBlock(context, body_))
                 return false;
               continue;
             }
 
-            /* -- suite tear up */
+            /* -- suite tear down */
             if(hasAnnotation(fce_, TEAR_DOWN_ANNOTATION)) {
               context->state = ParserContext::SUITE_CASES;
               context->generator->suiteStartUp();
               context->generator->emptyBody();
               context->generator->suiteTearDown();
-              if(!parseCodeBlock(body_))
+              if(!AssertVisitor::parseCodeBlock(context, body_))
                 return false;
               continue;
             }
@@ -814,7 +903,7 @@ bool SuiteVisitor::parseSuiteBody(
             if(hasAnnotation(fce_, TEAR_DOWN_ANNOTATION)) {
               context->state = ParserContext::SUITE_CASES;
               context->generator->suiteTearDown();
-              if(!parseCodeBlock(body_))
+              if(!AssertVisitor::parseCodeBlock(context, body_))
                 return false;
               continue;
             }

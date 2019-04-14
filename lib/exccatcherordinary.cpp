@@ -21,6 +21,7 @@
 
 #include <exception>
 #include <sstream>
+#include <typeinfo>
 
 namespace OTest2 {
 

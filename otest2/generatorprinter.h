@@ -58,6 +58,12 @@ class GeneratorPrinter : public Generator {
         const Location& begin_,
         const Location& end_,
         const Location& expr_end_);
+    virtual void makeTryCatchBegin(
+        const Location& begin_);
+    virtual void makeCatchHandler(
+        const std::string& type_,
+        const std::string& varname_);
+    virtual void makeTryCatchEnd();
     virtual void endUserArea(
         const Location& end_);
     virtual void enterSuite(

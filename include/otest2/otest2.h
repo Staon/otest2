@@ -30,6 +30,8 @@
 #define TEST_CASE(name_) namespace name_
 #define TEST_STATE(name_) void name_()
 #define TEST_SIMPLE() TEST_STATE(AnonymousState)
+#define TEST_TRY try
+#define TEST_CATCH(exc_type_, name_) catch(exc_type_ name_)
 
 #else /* -- OTEST2_PARSER_ACTIVE */
 
@@ -39,6 +41,8 @@
 #define TEST_CASE(name_) namespace name_ __attribute__((annotate("otest2::case")))
 #define TEST_STATE(name_) void name_() __attribute__((annotate("otest2::state")))
 #define TEST_SIMPLE() TEST_STATE(AnonymousState)
+#define TEST_TRY try
+#define TEST_CATCH(exc_type_, name_) catch(exc_type_ __attribute__((annotate("otest2::catch"))) name_)
 
 #endif /* -- OTEST2_PARSER_ACTIVE */
 

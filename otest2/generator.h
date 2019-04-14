@@ -92,6 +92,29 @@ class Generator {
         const Location& expr_end_) = 0;
 
     /**
+     * @brief Begin asserted try/catch block
+     *
+     * @param begin_ Beginning location of the original try/catch statement
+     */
+    virtual void makeTryCatchBegin(
+        const Location& begin_) = 0;
+
+    /**
+     * @brief Generate code for one exception handler
+     *
+     * @param type_ Type of the handler variable
+     * @param varname_ Name of the handler variable
+     */
+    virtual void makeCatchHandler(
+        const std::string& type_,
+        const std::string& varname_) = 0;
+
+    /**
+     * @brief Finish the asserted try/catch block
+     */
+    virtual void makeTryCatchEnd() = 0;
+
+    /**
      * @brief End of the user area
      *
      * @param end_ End of the user area

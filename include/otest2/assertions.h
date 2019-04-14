@@ -21,6 +21,8 @@
 #ifndef OTest2__INCLUDE_OTEST2_ASSERTIONS_H_
 #define OTest2__INCLUDE_OTEST2_ASSERTIONS_H_
 
+#include <functional>
+
 #include <otest2/assertbean.h>
 #include <otest2/assertcontext.h>
 #include <otest2/comparisons.h>
@@ -82,6 +84,11 @@ class GenericAssertion : public AssertContext {
     bool testAssertCompare(
         A_ a_,
         B_ b_) const;
+
+    /* -- exception assertion - it's never used as an assertion but
+     *    it's always generated. */
+    bool testException(
+        std::function<bool()> ftor_) const;
 };
 
 namespace Assertions {

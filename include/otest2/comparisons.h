@@ -19,6 +19,8 @@
 #ifndef OTest2__INCLUDE_OTEST2_COMPARISONS_H_
 #define OTest2__INCLUDE_OTEST2_COMPARISONS_H_
 
+#include <cstring>
+
 #include <otest2/typetraits.h>
 
 namespace OTest2 {
@@ -32,12 +34,30 @@ struct Equal {
     }
 };
 
+template<>
+struct Equal<const char*, const char*> {
+    bool operator()(
+        const char* a_,
+        const char* b_) const {
+      return std::strcmp(a_, b_) == 0;
+    }
+};
+
 template<typename A_, typename B_>
 struct NotEqual {
     bool operator()(
         typename TypeTrait<A_>::BestArg a_,
         typename TypeTrait<B_>::BestArg b_) const {
       return a_ != b_;
+    }
+};
+
+template<>
+struct NotEqual<const char*, const char*> {
+    bool operator()(
+        const char* a_,
+        const char* b_) const {
+      return std::strcmp(a_, b_) != 0;
     }
 };
 
@@ -50,12 +70,30 @@ struct Less {
     }
 };
 
+template<>
+struct Less<const char*, const char*> {
+    bool operator()(
+        const char* a_,
+        const char* b_) const {
+      return std::strcmp(a_, b_) < 0;
+    }
+};
+
 template<typename A_, typename B_>
 struct LessOrEqual {
     bool operator()(
         typename TypeTrait<A_>::BestArg a_,
         typename TypeTrait<B_>::BestArg b_) const {
       return a_ <= b_;
+    }
+};
+
+template<>
+struct LessOrEqual<const char*, const char*> {
+    bool operator()(
+        const char* a_,
+        const char* b_) const {
+      return std::strcmp(a_, b_) <= 0;
     }
 };
 
@@ -68,12 +106,30 @@ struct Greater {
     }
 };
 
+template<>
+struct Greater<const char*, const char*> {
+    bool operator()(
+        const char* a_,
+        const char* b_) const {
+      return std::strcmp(a_, b_) > 0;
+    }
+};
+
 template<typename A_, typename B_>
 struct GreaterOrEqual {
     bool operator()(
         typename TypeTrait<A_>::BestArg a_,
         typename TypeTrait<B_>::BestArg b_) const {
       return a_ >= b_;
+    }
+};
+
+template<>
+struct GreaterOrEqual<const char*, const char*> {
+    bool operator()(
+        const char* a_,
+        const char* b_) const {
+      return std::strcmp(a_, b_) >= 0;
     }
 };
 

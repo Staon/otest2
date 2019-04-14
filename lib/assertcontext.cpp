@@ -66,4 +66,8 @@ bool AssertContext::testAssertImpl(
   return condition_;
 }
 
+const Context& AssertContext::otest2Context() const {
+  return *context;
+}
+
 } /* namespace OTest2 */

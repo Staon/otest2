@@ -83,6 +83,11 @@ class AssertContext {
         bool condition_,
         const std::string& message_,
         bool use_expression_) const;
+
+    /**
+     * @brief Get the OTest2 context
+     */
+    const Context& otest2Context() const;
 };
 
 } /* namespace OTest2 */

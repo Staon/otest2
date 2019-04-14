@@ -28,6 +28,8 @@ env.OTest2Suite('Library', 'otest2', [
     'commandstack.cpp',
     'context.cpp',
     'contextobject.cpp',
+    'dfltenvironment.cpp',
+    'dfltloop.cpp',
     'exc.cpp',
     'exccatcher.cpp',
     'exccatcherordinary.cpp',

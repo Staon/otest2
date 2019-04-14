@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2019 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -16,13 +16,33 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include <dfltloop.h>
 
-#include <otest2/dfltenvironment.h>
-#include <otest2/dfltloop.h>
+#include <unistd.h>
 
-int main(
-    int argc_,
-    char* argv_[]) {
-  ::OTest2::DfltEnvironment environment_(argc_, argv_);
-  return ::OTest2::defaultMainLoop(environment_.getRunner());
+#include <runner.h>
+
+namespace OTest2 {
+
+int defaultMainLoop(
+    Runner& runner_) {
+  ::OTest2::RunnerResult result_;
+  while(true) {
+    /* -- do the test step */
+    result_ = runner_.runNext();
+    if(result_.isFinished())
+      break;
+
+    /* -- wait for next step */
+    int delay_ms_(result_.getDelayMS());
+    if(delay_ms_ > 0)
+      usleep(delay_ms_ * 1000);
+  }
+
+  if(result_.getResult())
+    return 0;
+  else
+    return 1;
 }
+
+} /* -- namespace OTest2 */

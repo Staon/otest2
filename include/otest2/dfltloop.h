@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2019 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -17,12 +17,23 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <otest2/dfltenvironment.h>
-#include <otest2/dfltloop.h>
 
-int main(
-    int argc_,
-    char* argv_[]) {
-  ::OTest2::DfltEnvironment environment_(argc_, argv_);
-  return ::OTest2::defaultMainLoop(environment_.getRunner());
-}
+#ifndef OTest2__INCLUDE_OTEST2_DFLTLOOP_H_
+#define OTest2__INCLUDE_OTEST2_DFLTLOOP_H_
+
+namespace OTest2 {
+
+class Runner;
+
+/**
+ * @brief Default main loop
+ *
+ * @param runner_ Test runner used in the loop
+ * @return An exit code (return value from the main function)
+ */
+int defaultMainLoop(
+    Runner& runner_);
+
+}  /* -- namespace OTest2 */
+
+#endif /* OTest2__INCLUDE_OTEST2_DFLTLOOP_H_ */

@@ -58,3 +58,71 @@ scons --with-llvm=path-to-llvm-config check
 ```
 The processor needs to know paths to system headers. If compilation of the test suite fails try to fill correct paths
 in the root _SConstruct_ file.
+
+## How to use
+
+### Quick overview - Hello world
+
+Let's get a simple example. Create file _hello_world.ot2_:
+```c++
+#include <otest2/otest2.h>
+
+namespace HelloWorld {
+
+TEST_SUITE(HelloWorldSuite) {
+  TEST_CASE(HelloWorldCase) {
+    TEST_SIMPLE() {
+      testAssertEqual("Hello World", "Hello World 2");
+    }
+  }
+}
+
+} /* -- namespace HelloWorld */
+```
+This is a very simple test description. It defines test suite _HelloWorldSuite_ containing one test case _HelloWorldCase_.
+The test can be optionaly placed in a namespace(s), here the _HelloWorld_ namespace is used. Inside the case one assertion
+is used - comparison of two values. The values are different, hence the test must fail.
+
+Don't bother by the _TEST_SIMPLE()_ mark. At this point just accept it must be here.
+
+Now apply the OTest2 processor on the test description:
+```
+otest2 -Ipath_to_otest2_headers -Ipath_to_system_headers hello_world.ot2
+```
+The processor generates new file _hello_world.cpp_. It contains the code of the test as well as other generated code
+making registrations of the suite and the case.
+
+To run the test we must write the _main_ function. The framework doesn't offer anyone as the function can differ
+in different development environments. In our example, create a file _main.cpp_:
+```c++
+#include <otest2/dfltenvironment.h>
+#include <otest2/dfltloop.h>
+
+int main(
+    int argc_,
+    char* argv_[]) {
+  ::OTest2::DfltEnvironment environment_(argc_, argv_);
+  return ::OTest2::defaultMainLoop(environment_.getRunner());
+}
+```
+I strongly suggest creation of a code generator in you building system instead of copying of the test main file.
+
+Now compile it together:
+```
+g++ -Ipath_to_otest2_headers -std=c++11 -o hello_world hello_world.cpp main.cpp -Lpath_to_otest2_libs -lotest2 -lncurses
+```
+If everything goes OK a _hello_world_ binary will be created. Then if you run it you should get similar output:
+```
+ ============================== HelloWorldSuite ===============================
+[hello_world.ot2:26] relation 'a == b' has failed: a = 'Hello World', b = 'Hello World 2'
+  HelloWorldCase                                                      [Failed]
+ ------------------------------------------------------------------------------
+  Suite total                                                         [Failed]
+ ================================ Test results ================================
+                      Passed              Failed               Total
+  Suites                   0                   1                   1
+  Cases                    0                   1                   1
+  Checks                   0                   1                   1
+  Test total                                                          [Failed]
+ ==============================================================================
+```

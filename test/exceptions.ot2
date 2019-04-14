@@ -50,7 +50,29 @@ TEST_SUITE(ExceptionsSuite) {
 
       testAssert(!runtime.runTheTest());
       testAssert(runtime.reporter.checkRecords(data_));
-      runtime.reporter.dumpRecords(std::cout);
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(UnhandledException) {
+    Runtime runtime("ExceptionsSuite", "UnhandledException");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<ExceptionsSuite>",
+        "enterCase<UnhandledException>",
+        "enterState<AnonymousState>",
+        "error<unexpected exception: std::bad_exception>: failed",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<UnhandledException>: failed",
+        "leaveSuite<ExceptionsSuite>: failed",
+        "leaveTest<selftest>: failed",
+      };
+
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
     }
   }
 }

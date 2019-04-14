@@ -34,7 +34,6 @@ TEST_SUITE(ExceptionsSuite) {
       }
       TEST_CATCH(std::bad_exception&, exc_) {
         testAssertEqual(exc_.what(), "std::bad_exception");
-        std::cout << exc_.what() << std::endl;
       }
 
       /* -- no exception happens */
@@ -52,6 +51,12 @@ TEST_SUITE(ExceptionsSuite) {
       TEST_CATCH(std::bad_exception&, exc_) {
 
       }
+    }
+  }
+
+  TEST_CASE(UnhandledException) {
+    TEST_SIMPLE() {
+      throw std::bad_exception();
     }
   }
 }

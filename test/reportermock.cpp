@@ -157,6 +157,14 @@ void ReporterMock::reportAssert(
   pimpl->addRecord();
 }
 
+void ReporterMock::reportError(
+    const Context& context_,
+    const std::string& message_) {
+  pimpl->oss << "error<" << message_ << ">: ";
+  pimpl->printResult(false);
+  pimpl->addRecord();
+}
+
 void ReporterMock::leaveState(
     const Context& context_,
     const std::string& name_,

@@ -42,7 +42,8 @@ bool runUserCode(
     /* -- fail the testing object */
     context_.semantic_stack->setTop(false);
 
-    /* -- TODO: report error to the reporter */
+    /* -- report the failure */
+    context_.reporter->reportError(context_, message_);
   }
 
   /* -- handle the return value */

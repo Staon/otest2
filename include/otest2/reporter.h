@@ -104,6 +104,21 @@ class Reporter {
         int lineno_) = 0;
 
     /**
+     * @brief Report an error
+     *
+     * This method is used to report errors happened in the testing framework.
+     * Errors mean failure of the test. However, they cannot be located in
+     * the user code (no filename, no line number). A good example is
+     * a not handled exception caught by the framework outside the test case.
+     *
+     * @param context_ the context
+     * @param message_ text description of the error
+     */
+    virtual void reportError(
+        const Context& context_,
+        const std::string& message_) = 0;
+
+    /**
      * @brief Leave a state
      *
      * @param context_ the OTest2 context

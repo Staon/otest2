@@ -70,6 +70,12 @@ void ReporterDebug::reportAssert(
       << " " << condition_ << std::endl;
 }
 
+void ReporterDebug::reportError(
+    const Context& context_,
+    const std::string& message_) {
+  *os << "error: " << message_ << std::endl;
+}
+
 void ReporterDebug::leaveState(
     const Context& context_,
     const std::string& name_,

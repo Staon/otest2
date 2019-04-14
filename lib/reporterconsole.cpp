@@ -220,6 +220,13 @@ void ReporterConsole::reportAssert(
   }
 }
 
+void ReporterConsole::reportError(
+    const Context& context_,
+    const std::string& message_) {
+  pimpl->statistics.reportAssertion(false);
+  *pimpl->os << "error:" << message_ << std::endl;
+}
+
 void ReporterConsole::leaveState(
     const Context& context_,
     const std::string& name_,

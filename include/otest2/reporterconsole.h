@@ -75,6 +75,9 @@ class ReporterConsole : public Reporter {
         const std::string& message_,
         const std::string& file_,
         int lineno_);
+    virtual void reportError(
+        const Context& context_,
+        const std::string& message_);
     virtual void leaveState(
         const Context& context_,
         const std::string& name_,

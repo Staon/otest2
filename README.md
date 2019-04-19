@@ -189,3 +189,7 @@ are destroyed prior entering next test suite.
 
 The variable _overload_ shows a possibility to overload a suite fixture in a test case. In the scope of the test
 case the overloaded variable is used. The suite variable keeps untouched and unchanged.
+
+The order of directives is mandtory. Firstly, the fixture variables must be declared including optional initialization.
+Then the _startUp_ event must be declared and then the _tearDown_ event must be declared. All previous steps are optional.
+At the end, the content of the test object (suite, case) is declared (nested test case or the simple test directive).

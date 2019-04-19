@@ -1,0 +1,84 @@
+/*
+ * Copyright (C) 2019 Ondrej Starek
+ *
+ * This file is part of OTest2.
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include <iostream>
+#include <vector>
+
+#include "runtime.h"
+
+namespace OTest2 {
+
+namespace Test {
+
+TEST_SUITE(FixturesSuite) {
+  TEST_CASE(FixturesCase) {
+    Runtime runtime("FixturesSuite", "");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<FixturesSuite>",
+        "enterCase<Access1>",
+        "enterState<AnonymousState>",
+        "assert<relation 'a == b' has failed: a = 'test::fixture1', b = 'test::fixture1'>: passed",
+        "assert<relation 'a == b' has failed: a = 'test::fixture1_1', b = 'test::fixture1_1'>: passed",
+        "assert<relation 'a == b' has failed: a = 'modified1_1', b = 'modified1_1'>: passed",
+        "assert<relation 'a == b' has failed: a = 'modified1_2', b = 'modified1_2'>: passed",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<Access1>: passed",
+        "enterCase<Access2>",
+        "enterState<AnonymousState>",
+        "assert<relation 'a == b' has failed: a = 'test::fixture2_1', b = 'test::fixture2_1'>: passed",
+        "assert<relation 'a == b' has failed: a = 'test::fixture2_2', b = 'test::fixture2_2'>: passed",
+        "assert<relation 'a == b' has failed: a = 'modified2_1', b = 'modified2_1'>: passed",
+        "assert<relation 'a == b' has failed: a = 'modified2_2', b = 'modified2_2'>: passed",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<Access2>: passed",
+        "enterCase<Access3>",
+        "enterState<AnonymousState>",
+        "assert<relation 'a == b' has failed: a = 'modified1_1', b = 'modified1_1'>: passed",
+        "assert<relation 'a == b' has failed: a = 'test::fixture3_2', b = 'test::fixture3_2'>: passed",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<Access3>: passed",
+        "enterCase<Access4>",
+        "enterState<AnonymousState>",
+        "assert<relation 'a == b' has failed: a = 'modified4_1', b = 'modified4_1'>: passed",
+        "assert<relation 'a == b' has failed: a = 'modified4_2', b = 'modified4_2'>: passed",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<Access4>: passed",
+        "enterCase<Access5>",
+        "enterState<AnonymousState>",
+        "assert<relation 'a == b' has failed: a = 'test::fixture4_1', b = 'test::fixture4_1'>: passed",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<Access5>: passed",
+        "leaveSuite<FixturesSuite>: passed",
+        "leaveTest<selftest>: passed",
+      };
+
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+}
+
+} /* -- namespace Test */
+
+} /* -- namespace OTest2 */

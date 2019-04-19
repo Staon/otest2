@@ -1,0 +1,98 @@
+/*
+ * Copyright (C) 2019 Ondrej Starek
+ *
+ * This file is part of OTest2.
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include <string>
+
+namespace OTest2 {
+
+namespace SelfTest {
+
+TEST_SUITE(FixturesSuite) {
+  std::string prefix("test::");
+  std::string name1(prefix + "fixture1");
+
+  TEST_CASE(Access1) {
+    std::string name2(prefix + "fixture1_1");
+
+    TEST_SIMPLE() {
+      testAssertEqual(name1, "test::fixture1");
+      testAssertEqual(name2, "test::fixture1_1");
+
+      name1 = "modified1_1";
+      name2 = "modified1_2";
+
+      testAssertEqual(name1, "modified1_1");
+      testAssertEqual(name2, "modified1_2");
+    }
+  }
+
+  TEST_CASE(Access2) {
+    std::string name1(prefix + "fixture2_1");
+    std::string name2(prefix + "fixture2_2");
+
+    TEST_SIMPLE() {
+      testAssertEqual(name1, "test::fixture2_1");
+      testAssertEqual(name2, "test::fixture2_2");
+
+      name1 = "modified2_1";
+      name2 = "modified2_2";
+
+      testAssertEqual(name1, "modified2_1");
+      testAssertEqual(name2, "modified2_2");
+    }
+  }
+
+  TEST_CASE(Access3) {
+    std::string name2(prefix + "fixture3_2");
+
+    TEST_SIMPLE() {
+      testAssertEqual(name1, "modified1_1");
+      testAssertEqual(name2, "test::fixture3_2");
+    }
+  }
+
+  TEST_CASE(Access4) {
+    std::string name2(prefix + "fixture4_2");
+
+    TEST_START_UP() {
+      name1 = "modified4_1";
+      name2 = "modified4_2";
+    }
+
+    TEST_TEAR_DOWN() {
+      name1 = prefix + "fixture4_1";
+    }
+
+    TEST_SIMPLE() {
+      testAssertEqual(name1, "modified4_1");
+      testAssertEqual(name2, "modified4_2");
+    }
+  }
+
+  TEST_CASE(Access5) {
+    TEST_SIMPLE() {
+      testAssertEqual(name1, "test::fixture4_1");
+    }
+  }
+}
+
+} /* -- namespace SelfTest */
+
+} /* -- namespace OTest2 */

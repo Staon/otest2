@@ -22,6 +22,10 @@
 #include <iostream>
 #include <stdexcept>
 
+namespace OTest2 {
+
+namespace SelfTest {
+
 /**
  * @brief This suite tests the assertion functions
  */
@@ -61,4 +65,6 @@ TEST_SUITE(ExceptionsSuite) {
   }
 }
 
+} /* -- namespace SelfTest */
 
+} /* -- namespace OTest2 */

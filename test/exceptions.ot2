@@ -80,6 +80,3 @@ TEST_SUITE(ExceptionsSuite) {
 } /* -- namespace Test */
 
 } /* -- namespace OTest2 */
-
-
-

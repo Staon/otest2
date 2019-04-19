@@ -126,3 +126,66 @@ If everything goes OK a _hello_world_ binary will be created. Then if you run it
   Test total                                                          [Failed]
  ==============================================================================
 ```
+### More complicated - test fixtures
+
+The OTest2 framework supports test fixtures. Fixtures can be used either in test cases or in test suites, shared
+by all test cases in the suite. A fixture variable can be initialized by its constructor or it can be initialized
+in the _startUp_ framework event. Similarly, destruction can be done by destructor or in the _tearDown_ event.
+
+Let's get an example:
+```c++
+#include <otest2/otest2.h>
+
+#include <string>
+
+TEST_SUITE(Fixtures) {
+  std::string suite_fixture1("suite fixture 1");
+  std::string suite_fixture2;
+  std::string overload("suite value");
+
+  TEST_START_UP() {
+    suite_fixture2 = "suite fixture 2";
+  }
+
+  TEST_TEAR_DOWN() {
+    suite_fixture2 = "";
+  }
+
+  TEST_CASE(Access) {
+    std::string case_fixture1("case fixture 1");
+    std::string case_fixture2;
+    std::string overload("case value");
+
+    TEST_START_UP() {
+      case_fixture2 = "case fixture 2";
+    }
+
+    TEST_TEAR_DOWN() {
+      case_fixture2 = "";
+    }
+
+    TEST_SIMPLE() {
+      testAssertEqual(suite_fixture1, "suite fixture 1");
+      testAssertEqual(suite_fixture2, "suite fixture 2");
+      testAssertEqual(case_fixture1, "case fixture 1");
+      testAssertEqual(case_fixture2, "case fixture 2");
+      testAssertEqual(overload, "case value");
+    }
+  }
+}
+```
+In the example the variables _suite_fixture1_ and _case_fixture1_ are initialized/destructed by the constructor
+and destructor. The round brackets are mandatory, _OTest2_ processor supports neither curly braces nor the assignment
+initialization.
+
+The variables _suite_fixture2_ and _case_fixture2_ are initialized in the _startUp_ event and destructed in
+the _tearDown_ event. However, the variables are initialized by the default constructor and destructed by
+the destructor too while the testing objects are created.
+
+The _OTest2_ framework keeps a precise lifetime cycle. The test suite object or the test case object is created
+just prior to the entering and it's destroyed immediately after leaving. User can be assured that all fixtures
+of a test case are destroyed (invoked destructors) before entering of next test case. Similarly, all suite fixtures
+are destroyed prior entering next test suite.
+
+The variable _overload_ shows a possibility to overload a suite fixture in a test case. In the scope of the test
+case the overloaded variable is used. The suite variable keeps untouched and unchanged.

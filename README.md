@@ -7,8 +7,8 @@
    1. [Building Clang](#building-clang)
    2. [Building OTest2](#building-otest2)
 3. [How to use](#how-to-use)
-   1. [Quick Overview - Hello World](#quick-overview-hello-world)
-   2. [More Complicated - Test fixtures](#more-complicated-test-fixtures)
+   1. [Quick Overview - Hello World](#quick-overview---hello-world)
+   2. [More Complicated - Test fixtures](#more-complicated---test-fixtures)
    3. [Main Loop](#main-loop)
 
 ## Introduction

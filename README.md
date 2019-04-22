@@ -323,7 +323,8 @@ TEST_SUITE(AsynchronousReplySuite) {
 ```
 
 One test case runs until no next state is scheduled. The sequence of transitions can be complicated and states can
-be repeated.
+be repeated. First defined state (the _Enter_ in the example) is handled as the test state which is run after first
+entering into the test case.
 
 Now the reader is able to understand meaning of the _TEST_SIMPLE()_ directive: it's a default test state used by simple
 test cases containing only one test state.

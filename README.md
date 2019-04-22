@@ -193,3 +193,124 @@ case the overloaded variable is used. The suite variable keeps untouched and unc
 The order of directives is mandtory. Firstly, the fixture variables must be declared including optional initialization.
 Then the _startUp_ event must be declared and then the _tearDown_ event must be declared. All previous steps are optional.
 At the end, the content of the test object (suite, case) is declared (nested test case or the simple test directive).
+
+### Main Loop
+
+Try to imagine you have to create an integration test which sends some command to another service. The service is supposed
+to do something asynchronously and after a while it should notify a message back. This simple model can be a problem in
+standard testing frameworks. Because the frameworks fully control run of the testing binary, user has limited chance
+to integrate own event loop, which can take the back-message: the user can run another thread, or he can enter the own main
+loop recursively. If his library cannot handle threads correctly or if his main loop doesn't support repeated entering,
+there is no other option.
+
+The _OTest2_ supports integration of your own event loop. The framework offers an interface, which is designed to be
+invoked again and again until the test run is finished. And which can be called from almost any event loop one can
+imagine. There is only one request: a timer with millisecond precision is needed.
+
+Let see an example. Following code is a simple skeleton how to integrate the framework with the _libevent_ main
+event loop:
+
+```c++
+#include <event2/event.h>
+#include <otest2/dfltenvironment.h>
+#include <otest2/runner.h>
+#include <sys/time.h>
+
+namespace {
+
+struct Loop {
+    ::OTest2::DfltEnvironment* environment;
+    event_base* base;
+    event* ev;
+    int result_code;
+};
+
+void scheduleTimer(
+    Loop* loop_,
+    int delay_) {
+  struct timeval period_ = {delay_ / 1000, (delay_ % 1000) * 1000000};
+  event_add(loop_->ev, &period_);
+}
+
+void timerCallback(
+    evutil_socket_t,
+    short,
+    void* udata_) {
+  Loop* loop_(static_cast<Loop*>(udata_));
+
+  ::OTest2::RunnerResult result_(loop_->environment->getRunner().runNext());
+  if(!result_.isFinished()) {
+    /* -- schedule next test step */
+    scheduleTimer(loop_, result_.getDelayMS());
+  }
+  else {
+    /* -- stop the mainloop */
+    if(result_.getResult())
+        loop_->result_code =  0;
+      else
+        loop_->result_code = 1;
+    event_base_loopbreak(loop_->base);
+  }
+}
+
+} /* -- namespace */
+
+int main(
+    int argc_,
+    char* argv_[]) {
+  /* -- prepare the testing environment */
+  ::OTest2::DfltEnvironment environment_(argc_, argv_);
+
+  /* -- initialize the main loop */
+  Loop loop_;
+  loop_.environment = &environment_;
+  loop_.base = event_base_new();
+  loop_.ev = event_new(loop_.base, -1, 0, timerCallback, &loop_);
+  loop_.result_code = 0;
+  scheduleTimer(&loop_, 0);  /* -- first waking up */
+
+  /* -- enter the main loop */
+  event_base_dispatch(loop_.base);
+
+  /* -- clean up the main loop */
+  event_free(loop_.ev);
+  event_base_free(loop_.base);
+
+  return loop_.result_code;
+}
+```
+
+Look at the _timerCallback_ function. The method _runNext()_ of the interface _Runner_ is invoked. The returned
+value is a simple structure. If the test is not finished yet, a delay prior next run is got and a timer is scheduled.
+If the test is finished, a result (failed or passed) of the entire test is returned.
+
+However, there is another question. How to break a running test case and return back into the main loop? The _OTest2_
+framework offers another level in its data model. Every test case contains one or more _test states_. Transitions
+between states mean returning back into the main loop and waiting for specified time. See the example:
+
+```c++
+#include <otest2/otest2.h>
+
+TEST_SUITE(AsynchronousReplySuite) {
+  TEST_CASE(AynchronousReply) {
+    TEST_STATE(Ending);
+
+    TEST_STATE(Enter) {
+      /* ... send the message ... */
+      
+      /* -- wait one second for the asynchronous reply */
+      switchState(Ending, 1000);
+    }
+
+    TEST_STATE(Ending) {
+      /* ... check whether the message has actually arrived ... */
+    }
+  }
+}
+```
+
+One test case runs until no next state is scheduled. The sequence of transitions can be complicated and states can
+be repeated.
+
+Now the reader is able to understand meaning of the _TEST_SIMPLE()_ directive: it's a default test state used by simple
+test cases containing only one test state.

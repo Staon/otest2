@@ -56,6 +56,7 @@ const std::string STATE_ANNOTATION("otest2::state");
 const std::string START_UP_ANNOTATION("otest2::startUp");
 const std::string TEAR_DOWN_ANNOTATION("otest2::tearDown");
 const std::string ASSERTION_ANNOTATION("^otest2::assertion[(]([^,]+([,][^,]+)*)[)]$");
+const std::string SWITCH_STATE_ANNOTATION("otest2::switchState");
 const std::string CATCH_ANNOTATION("otest2::catch");
 
 Location createLocation(
@@ -335,88 +336,135 @@ bool AssertVisitor::VisitCallExpr(
   if(!clang::isa<clang::FunctionDecl>(declref_))
     return true;
 
-  /* -- check the function annotation */
+  /* -- check the assertion annotation */
   AnnotationRegex cmp_(ASSERTION_ANNOTATION);
-  if(!hasAnnotation(declref_, cmp_))
-    return true;
+  if(hasAnnotation(declref_, cmp_)) {
+    /* -- split the annotation arguments */
+    auto annot_args_(cmp_.matches[1].str());
+    std::regex split_("(\\s*;\\s*)");
+    std::sregex_token_iterator iter_(
+        annot_args_.begin(), annot_args_.end(), split_, -1);
+    std::vector<std::string> annotation_args_(iter_, std::sregex_token_iterator());
+    if(annotation_args_.size() != 2) {
+      context->setError("invalid count of the arguments of the assertion annotation", declref_);
+      return false;
+    }
 
-  /* -- split the annotation arguments */
-  auto annot_args_(cmp_.matches[1].str());
-  std::regex split_("(\\s*;\\s*)");
-  std::sregex_token_iterator iter_(
-      annot_args_.begin(), annot_args_.end(), split_, -1);
-  std::vector<std::string> annotation_args_(iter_, std::sregex_token_iterator());
-  if(annotation_args_.size() != 2) {
-    context->setError("invalid count of the arguments of the assertion annotation", declref_);
-    return false;
-  }
+    /* -- parse name of the assertion */
+    auto fce_(clang::cast<clang::FunctionDecl>(declref_));
+    auto fcename_(fce_->getName().str());
 
-  /* -- parse name of the assertion */
-  auto fce_(clang::cast<clang::FunctionDecl>(declref_));
-  auto fcename_(fce_->getName().str());
-
-  /* -- if the function is a template function, expand deduced types into
-   *    the annotation parameters. */
-  if(fce_->isTemplateInstantiation()) {
-    const clang::TemplateArgumentList* args_(fce_->getTemplateSpecializationArgs());
-    if(args_ != nullptr) {
-      std::vector<std::string> template_params_;
-      for(int i_(0); i_ < static_cast<int>(args_->size()); ++i_) {
-        auto arg_(args_->get(i_));
-        if(arg_.getKind() == clang::TemplateArgument::Type) {
-          auto type_(arg_.getAsType());
-          template_params_.push_back(type_.getAsString());
+    /* -- if the function is a template function, expand deduced types into
+     *    the annotation parameters. */
+    if(fce_->isTemplateInstantiation()) {
+      const clang::TemplateArgumentList* args_(fce_->getTemplateSpecializationArgs());
+      if(args_ != nullptr) {
+        std::vector<std::string> template_params_;
+        for(int i_(0); i_ < static_cast<int>(args_->size()); ++i_) {
+          auto arg_(args_->get(i_));
+          if(arg_.getKind() == clang::TemplateArgument::Type) {
+            auto type_(arg_.getAsType());
+            template_params_.push_back(type_.getAsString());
+          }
+        }
+        if(!expandTemplates(annotation_args_, template_params_)) {
+          context->setError("invalid type template in the annotation of the assertion", declref_);
+          return false;
         }
       }
-      if(!expandTemplates(annotation_args_, template_params_)) {
-        context->setError("invalid type template in the annotation of the assertion", declref_);
-        return false;
-      }
     }
+
+    /* -- find first and last non-default argument */
+    const int argnum_(expr_->getNumArgs());
+    int last_index_(-1);
+    for(int i_(0); i_ < argnum_; ++i_) {
+      clang::Expr *arg_(expr_->getArg(i_));
+      if(clang::isa<clang::CXXDefaultArgExpr>(arg_))
+        break;
+      last_index_ = i_;
+    }
+    if(last_index_ < 0) {
+      context->setError("there are no arguments of the assertion", fce_);
+      return false;
+    }
+
+    /* -- copy source just before the assertion */
+    clang::SourceRange expr_range_(
+        getNodeRange(context->srcmgr, context->langopts, expr_));
+    auto expr_begin_(createLocation(context->srcmgr, expr_range_.getBegin()));
+    context->generator->copySource(current, expr_begin_);
+
+    /* -- Generate the assertion. I need to know the range of arguments
+     *    because I want to insert the first argument as a text (to be shown
+     *    in the assertion message. */
+    auto begarg_(expr_->getArg(0));
+    auto endarg_(expr_->getArg(last_index_));
+    clang::SourceRange begrange_(
+        getNodeRange(context->srcmgr, context->langopts, begarg_));
+    clang::SourceRange endrange_(
+        getNodeRange(context->srcmgr, context->langopts, endarg_));
+    auto args_begin_(createLocation(context->srcmgr, begrange_.getBegin()));
+    auto args_end_(createLocation(context->srcmgr, endrange_.getEnd()));
+    auto msg_end_(createLocation(context->srcmgr, begrange_.getEnd()));
+    context->generator->makeAssertion(
+        annotation_args_[0],
+        annotation_args_[1],
+        args_begin_,
+        args_end_,
+        msg_end_);
+
+    /* -- keep last position for next source copying */
+    current = args_end_;
+
+    return true;
   }
 
-  /* -- find first and last non-default argument */
-  const int argnum_(expr_->getNumArgs());
-  int last_index_(-1);
-  for(int i_(0); i_ < argnum_; ++i_) {
-    clang::Expr *arg_(expr_->getArg(i_));
-    if(clang::isa<clang::CXXDefaultArgExpr>(arg_))
-      break;
-    last_index_ = i_;
+  /* -- check the switchState annotation */
+  if(hasAnnotation(declref_, SWITCH_STATE_ANNOTATION)) {
+    /* -- parse name of the assertion */
+    auto fce_(clang::cast<clang::FunctionDecl>(declref_));
+    auto fcename_(fce_->getName().str());
+
+    /* -- find first and last non-default argument */
+    const int argnum_(expr_->getNumArgs());
+    if(argnum_ != 2) {
+      context->setError("invalid count of the state switching function", fce_);
+      return false;
+    }
+
+    /* -- copy source just before the state switch */
+    clang::SourceRange expr_range_(
+        getNodeRange(context->srcmgr, context->langopts, expr_));
+    auto expr_begin_(createLocation(context->srcmgr, expr_range_.getBegin()));
+    auto expr_end_(createLocation(context->srcmgr, expr_range_.getEnd()));
+    context->generator->copySource(current, expr_begin_);
+
+    /* -- get the arguments */
+    auto state_(expr_->getArg(0));
+    clang::SourceRange state_range_(
+        getNodeRange(context->srcmgr, context->langopts, state_));
+    auto state_begin_(createLocation(context->srcmgr, state_range_.getBegin()));
+    auto state_end_(createLocation(context->srcmgr, state_range_.getEnd()));
+    auto delay_(expr_->getArg(1));
+    clang::SourceRange delay_range_(
+        getNodeRange(context->srcmgr, context->langopts, delay_));
+    auto delay_begin_(createLocation(context->srcmgr, delay_range_.getBegin()));
+    auto delay_end_(createLocation(context->srcmgr, delay_range_.getEnd()));
+
+    /* -- generate the state switch */
+    context->generator->makeStateSwitch(
+        state_begin_,
+        state_end_,
+        delay_begin_,
+        delay_end_);
+
+    /* -- keep last position for next source copying */
+    current = expr_end_;
+
+    return true;
   }
-  if(last_index_ < 0) {
-    context->setError("there are no arguments of the assertion", fce_);
-    return false;
-  }
 
-  /* -- copy source just before the assertion */
-  clang::SourceRange expr_range_(
-      getNodeRange(context->srcmgr, context->langopts, expr_));
-  auto expr_begin_(createLocation(context->srcmgr, expr_range_.getBegin()));
-  context->generator->copySource(current, expr_begin_);
-
-  /* -- Generate the assertion. I need to know the range of arguments
-   *    because I want to insert the first argument as a text (to be shown
-   *    in the assertion message. */
-  auto begarg_(expr_->getArg(0));
-  auto endarg_(expr_->getArg(last_index_));
-  clang::SourceRange begrange_(
-      getNodeRange(context->srcmgr, context->langopts, begarg_));
-  clang::SourceRange endrange_(
-      getNodeRange(context->srcmgr, context->langopts, endarg_));
-  auto args_begin_(createLocation(context->srcmgr, begrange_.getBegin()));
-  auto args_end_(createLocation(context->srcmgr, endrange_.getEnd()));
-  auto msg_end_(createLocation(context->srcmgr, begrange_.getEnd()));
-  context->generator->makeAssertion(
-      annotation_args_[0],
-      annotation_args_[1],
-      args_begin_,
-      args_end_,
-      msg_end_);
-
-  /* -- keep last position for next source copying */
-  current = args_end_;
-
+  /* -- no special function - let continue */
   return true;
 }
 
@@ -663,14 +711,19 @@ bool SuiteVisitor::parseCaseBody(
         /* -- start up or tear down functions */
         if(clang::isa<clang::FunctionDecl>(*iter_)) {
           auto fce_(clang::cast<clang::FunctionDecl>(*iter_));
+          /* -- skip empty declarations */
+          if(!fce_->isThisDeclarationADefinition())
+            continue;
           auto body_(getFunctionBody(fce_));
-          if(body_ == nullptr)
-            return false;
 
           /* -- suite start up */
           if(hasAnnotation(fce_, START_UP_ANNOTATION)) {
             context->state = ParserContext::CASE_TEAR_DOWN;
             context->generator->caseStartUp();
+            if(body_ == nullptr) {
+              context->setError("the startUp event must be defined!", fce_);
+              return false;
+            }
             if(!AssertVisitor::parseCodeBlock(context, body_))
               return false;
             continue;
@@ -682,6 +735,10 @@ bool SuiteVisitor::parseCaseBody(
             context->generator->caseStartUp();
             context->generator->emptyBody();
             context->generator->caseTearDown();
+            if(body_ == nullptr) {
+              context->setError("the tearDown event must be defined!", fce_);
+              return false;
+            }
             if(!AssertVisitor::parseCodeBlock(context, body_))
               return false;
             continue;
@@ -694,10 +751,12 @@ bool SuiteVisitor::parseCaseBody(
             context->generator->emptyBody();
             context->generator->caseTearDown();
             context->generator->emptyBody();
-            context->generator->enterState(fce_->getNameAsString());
-            if(!AssertVisitor::parseCodeBlock(context, body_))
-              return false;
-            context->generator->leaveState();
+            if(body_ != nullptr) {
+              context->generator->enterState(fce_->getNameAsString());
+              if(!AssertVisitor::parseCodeBlock(context, body_))
+                return false;
+              context->generator->leaveState();
+            }
             continue;
           }
 
@@ -727,6 +786,10 @@ bool SuiteVisitor::parseCaseBody(
           if(hasAnnotation(fce_, TEAR_DOWN_ANNOTATION)) {
             context->state = ParserContext::CASE_STATES;
             context->generator->caseTearDown();
+            if(body_ == nullptr) {
+              context->setError("the tearDown event must be defined!", fce_);
+              return false;
+            }
             if(!AssertVisitor::parseCodeBlock(context, body_))
               return false;
             continue;
@@ -737,10 +800,12 @@ bool SuiteVisitor::parseCaseBody(
             context->state = ParserContext::CASE_STATES;
             context->generator->caseTearDown();
             context->generator->emptyBody();
-            context->generator->enterState(fce_->getNameAsString());
-            if(!AssertVisitor::parseCodeBlock(context, body_))
-              return false;
-            context->generator->leaveState();
+            if(body_ != nullptr) {
+              context->generator->enterState(fce_->getNameAsString());
+              if(!AssertVisitor::parseCodeBlock(context, body_))
+                return false;
+              context->generator->leaveState();
+            }
             continue;
           }
 
@@ -774,10 +839,12 @@ bool SuiteVisitor::parseCaseBody(
 
           /* -- state function */
           if(hasAnnotation(fce_, STATE_ANNOTATION)) {
-            context->generator->enterState(fce_->getNameAsString());
-            if(!AssertVisitor::parseCodeBlock(context, body_))
-              return false;
-            context->generator->leaveState();
+            if(body_ != nullptr) {
+              context->generator->enterState(fce_->getNameAsString());
+              if(!AssertVisitor::parseCodeBlock(context, body_))
+                return false;
+              context->generator->leaveState();
+            }
             continue;
           }
 

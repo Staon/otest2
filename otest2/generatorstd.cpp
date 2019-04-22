@@ -198,6 +198,23 @@ void GeneratorStd::makeAssertion(
   pimpl->output << expression_ << rest_args_;
 }
 
+void GeneratorStd::makeStateSwitch(
+    const Location& state_begin_,
+    const Location& state_end_,
+    const Location& delay_begin_,
+    const Location& delay_end_) {
+  pimpl->writeGenerLineDirective();
+
+  /* -- invoke the switching function */
+  pimpl->output << "switchState(otest2Context(), ";
+  writeCString(pimpl->output, pimpl->reader->getPart(state_begin_, state_end_));
+  pimpl->output << ", ";
+  pimpl->reader->writePart(pimpl->output, delay_begin_, &delay_end_);
+  pimpl->output << ")";
+
+  pimpl->writeUserLineDirective(delay_end_);
+}
+
 void GeneratorStd::makeTryCatchBegin(
     const Location& begin_) {
   pimpl->output << "              ::OTest2::GenericAssertion(otest2Context(), ";

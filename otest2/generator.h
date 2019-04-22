@@ -92,6 +92,20 @@ class Generator {
         const Location& expr_end_) = 0;
 
     /**
+     * @brief Generate state switch
+     *
+     * @param state_begin_ Beginning location of the state name
+     * @param state_end_ Ending location of the state name
+     * @param delay_begin_ Beginning location of the delay expression
+     * @param delay_end_ End locatino of the delay expression
+     */
+    virtual void makeStateSwitch(
+        const Location& state_begin_,
+        const Location& state_end_,
+        const Location& delay_begin_,
+        const Location& delay_end_) = 0;
+
+    /**
      * @brief Begin asserted try/catch block
      *
      * @param begin_ Beginning location of the original try/catch statement

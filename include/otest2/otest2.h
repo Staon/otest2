@@ -21,12 +21,13 @@
 #define OTest2__INCLUDE_OTEST2_OTEST2_H_
 
 #include <otest2/assertions.h>
+#include <otest2/controls.h>
 
 #ifndef OTEST2_PARSER_ACTIVE
 
 #define TEST_START_UP() void startUp()
 #define TEST_TEAR_DOWN() void tearDown()
-#define TEST_SUITE(name_) namespace name_ { using namespace ::OTest2::Assertions; } namespace name_
+#define TEST_SUITE(name_) namespace name_ { using namespace ::OTest2::Assertions; using namespace ::OTest2::Controls; } namespace name_
 #define TEST_CASE(name_) namespace name_
 #define TEST_STATE(name_) void name_()
 #define TEST_SIMPLE() TEST_STATE(AnonymousState)
@@ -37,7 +38,7 @@
 
 #define TEST_START_UP() void startUp() __attribute__((annotate("otest2::startUp")))
 #define TEST_TEAR_DOWN() void tearDown() __attribute__((annotate("otest2::tearDown")))
-#define TEST_SUITE(name_) namespace name_ { using namespace ::OTest2::Assertions; } namespace name_ __attribute__((annotate("otest2::suite")))
+#define TEST_SUITE(name_) namespace name_ { using namespace ::OTest2::Assertions; using namespace ::OTest2::Controls; } namespace name_ __attribute__((annotate("otest2::suite")))
 #define TEST_CASE(name_) namespace name_ __attribute__((annotate("otest2::case")))
 #define TEST_STATE(name_) void name_() __attribute__((annotate("otest2::state")))
 #define TEST_SIMPLE() TEST_STATE(AnonymousState)

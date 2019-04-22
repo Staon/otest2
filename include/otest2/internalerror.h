@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2019 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -17,35 +17,26 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "runcode.h"
 
-#include <exception>
-#include <sstream>
+#ifndef OTest2__LIB_INTERNALERROR_H_
+#define OTest2__LIB_INTERNALERROR_H_
+
 #include <string>
-
-#include <context.h>
-#include <exccatcher.h>
-#include <internalerror.h>
-#include <semanticstack.h>
 
 namespace OTest2 {
 
-bool runUserCode(
+class Context;
+
+/**
+ * @brief Fail the running test because of an internal error
+ *
+ * @param context_ The OTest2 context
+ * @param message_ An error message
+ */
+void internalError(
     const Context& context_,
-    std::function<void(const Context&)> ftor_) noexcept {
-  /* -- prepare the return value */
-  context_.semantic_stack->push(true);
+    const std::string& message_) noexcept;
 
-  /* -- run the functor */
-  std::string message_;
-  if(context_.exception_catcher->catchException(context_, ftor_, message_))
-    internalError(context_, message_);
+}  /* -- namespace OTest2 */
 
-  /* -- handle the return value */
-  bool retval_(context_.semantic_stack->top());
-  context_.semantic_stack->popAnd();
-
-  return retval_;
-}
-
-} /* -- namespace OTest2 */
+#endif /* OTest2__LIB_INTERNALERROR_H_ */

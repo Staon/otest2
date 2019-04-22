@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2019 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -17,59 +17,51 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OTest2__INCLUDE_OTEST2_CMDRUNSTATE_H_
-#define OTest2__INCLUDE_OTEST2_CMDRUNSTATE_H_
+#ifndef OTest2__INCLUDE_OTEST2_CMDSTATE_H_
+#define OTest2__INCLUDE_OTEST2_CMDSTATE_H_
+
+#include <string>
 
 #include <otest2/caseordinaryptr.h>
 #include <otest2/command.h>
-#include <otest2/stateordinaryptr.h>
 
 namespace OTest2 {
 
-/**
- * @brief Run a state
- */
-class CmdRunState : public Command {
+class CmdState : public Command {
   private:
-    CaseOrdinaryPtr parent;
-    StateOrdinaryPtr state;
-    bool wait_before;
+    CaseOrdinaryPtr testcase;
+    std::string name;
     int delay;
 
   public:
     /* -- avoid copying */
-    CmdRunState(
-        const CmdRunState&) = delete;
-    CmdRunState& operator =(
-        const CmdRunState&) = delete;
+    CmdState(
+        const CmdState&) = delete;
+    CmdState& operator =(
+        const CmdState&) = delete;
 
     /**
      * @brief Ctor
      *
-     * @param parent_ Parent of the state being run
-     * @param state_ The state being run
-     * @param wait_before_ If it's true the delay is applied.
-     * @param delay_ Delay before run of the state in milliseconds.
+     * @param testcase_ State's parent
+     * @param name_ Name of the state
+     * @param delay_ Delay of the command in milliseconds
      */
-    explicit CmdRunState(
-        CaseOrdinaryPtr parent_,
-        StateOrdinaryPtr state_,
-        bool wait_before_,
+    explicit CmdState(
+        CaseOrdinaryPtr testcase_,
+        const std::string& name_,
         int delay_);
 
     /**
      * @brief Dtor
      */
-    virtual ~CmdRunState();
+    virtual ~CmdState();
 
     /* -- command interface */
-    virtual bool shouldWait(
-        const Context& context_,
-        int& delay_);
     virtual void run(
         const Context& context_);
 };
 
 } /* namespace OTest2 */
 
-#endif /* OTest2__INCLUDE_OTEST2_CMDRUNSTATE_H_ */
+#endif /* OTest2__INCLUDE_OTEST2_CMDSTATE_H_ */

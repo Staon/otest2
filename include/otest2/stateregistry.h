@@ -67,6 +67,15 @@ class StateRegistry {
      * @return The state or the nullptr if the registry is empty.
      */
     StatePtr getFirstState() const;
+
+    /**
+     * @brief Get state with specified @a name_
+     *
+     * @param name_ Name of the state
+     * @return The state or null pointer
+     */
+    StatePtr getState(
+        const std::string& name_) const;
 };
 
 } /* namespace OTest2 */

@@ -20,6 +20,8 @@
 #ifndef OTest2__INCLUDE_OTEST2_CASEORDINARY_H_
 #define OTest2__INCLUDE_OTEST2_CASEORDINARY_H_
 
+#include <string>
+
 #include <otest2/case.h>
 #include <otest2/stateptr.h>
 
@@ -62,6 +64,15 @@ class CaseOrdinary : public Case {
     virtual StatePtr getFirstState() const = 0;
 
     /**
+     * @brief Get state with specified @a name_
+     *
+     * @param name_ Name of the state
+     * @return The state or null pointer
+     */
+    virtual StatePtr getState(
+        const std::string& name_) const = 0;
+
+    /**
      * @brief Initialize the case
      *
      * @param context_ The otest2 context
@@ -77,7 +88,7 @@ class CaseOrdinary : public Case {
     virtual void tearDownCase(
         const Context& context_) = 0;
 
-    /* -- suite */
+    /* -- test case interface */
     virtual void scheduleRun(
         const Context& context_,
         CasePtr this_ptr_);

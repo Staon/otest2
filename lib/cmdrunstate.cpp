@@ -32,13 +32,15 @@
 namespace OTest2 {
 
 CmdRunState::CmdRunState(
+    CaseOrdinaryPtr parent_,
     StateOrdinaryPtr state_,
     bool wait_before_,
     int delay_) :
+  parent(parent_),
   state(state_),
   wait_before(wait_before_),
   delay(delay_) {
-  assert(!state.isNull() && (!wait_before || delay >= 0));
+  assert(!parent.isNull() && !state.isNull() && (!wait_before || delay >= 0));
 
 }
 
@@ -68,14 +70,11 @@ void CmdRunState::run(
   /* -- prepare the return value of the state */
   context_.semantic_stack->push(true);
   /* -- execute the state */
-  state->executeState(context_);
+  state->executeState(context_, parent);
 
   /* -- report end of the state */
   context_.reporter->leaveState(
       context_, state->getName(), context_.semantic_stack->top());
-
-  /* -- note: I don't do that yet, but if you want to stop the test
-   *    if an error happens all you must do is just popping of last command. */
 
   /* -- return the value */
   context_.semantic_stack->popAnd();

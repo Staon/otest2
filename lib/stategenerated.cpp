@@ -19,8 +19,12 @@
 
 #include <stategenerated.h>
 
+#include <assert.h>
 #include <string>
 
+#include <caseordinaryptr.h>
+#include <cmdstate.h>
+#include <commandstack.h>
 #include <context.h>
 #include "runcode.h"
 #include <utils.h>
@@ -33,6 +37,8 @@ struct StateGenerated::Impl {
 
     const Context* context;
     std::string name;
+
+    CaseOrdinaryPtr parent;
 
     /* -- avoid copying */
     Impl(
@@ -53,7 +59,8 @@ StateGenerated::Impl::Impl(
     const std::string& name_) :
   owner(owner_),
   context(&context_),
-  name(name_) {
+  name(name_),
+  parent() {
 
 }
 
@@ -78,14 +85,30 @@ std::string StateGenerated::getName() const {
 }
 
 void StateGenerated::executeState(
-    const Context& context_) {
+    const Context& context_,
+    CaseOrdinaryPtr parent_) {
+  assert(!parent_.isNull());
+
+  pimpl->parent = parent_;
   runUserCode(context_, [this](const Context& context_) {
     runState();
   });
+  pimpl->parent = CaseOrdinaryPtr();
 }
 
 const Context& StateGenerated::otest2Context() const {
   return *pimpl->context;
+}
+
+void StateGenerated::switchState(
+    const Context& context_,
+    const std::string& name_,
+    int delay_) {
+  assert(!pimpl->parent.isNull() && !name_.empty() && delay_ >= 0);
+
+  /* -- schedule the commands */
+  context_.command_stack->replaceCommand(
+      std::make_shared<CmdState>(pimpl->parent, name_, delay_));
 }
 
 } /* -- namespace OTest2 */

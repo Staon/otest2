@@ -20,6 +20,7 @@
 #ifndef OTest2INCLUDE_STATE_H_
 #define OTest2INCLUDE_STATE_H_
 
+#include <otest2/caseordinaryptr.h>
 #include <otest2/object.h>
 #include <otest2/stateptr.h>
 
@@ -53,11 +54,18 @@ class State : public Object {
      * @brief Schedule run of the state
      *
      * @param context_ The otest2 context
+     * @param parent_ A smart pointer pointing the parent of the state
      * @param this_ptr_ A smart pointer which keeps lifetime of this state
+     * @param wait_ If it's true, the run of the command is delayd
+     * @param delay_ Delay of the command in milliseconds. The value is meant
+     *     only if the @a wait_ is true.
      */
     virtual void scheduleRun(
         const Context& context_,
-        StatePtr this_ptr_) = 0;
+        CaseOrdinaryPtr parent_,
+        StatePtr this_ptr_,
+        bool delay_cmd_,
+        int delay_) = 0;
 };
 
 } /* -- namespace OTest2 */

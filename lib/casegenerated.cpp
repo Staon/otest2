@@ -85,6 +85,11 @@ StatePtr CaseGenerated::getFirstState() const {
   return pimpl->state_registry.getFirstState();
 }
 
+StatePtr CaseGenerated::getState(
+    const std::string& name_) const {
+  return pimpl->state_registry.getState(name_);
+}
+
 void CaseGenerated::startUpCase(
     const Context& context_) {
   runUserCode(context_, [this](const Context& context_) {

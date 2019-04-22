@@ -70,6 +70,13 @@ void CommandStack::pushCommand(
   pimpl->stack.push_back(command_);
 }
 
+void CommandStack::replaceCommand(
+    CommandPtr command_) {
+  assert(command_ != nullptr);
+  assert(!pimpl->stack.empty());
+  pimpl->stack.back() = command_;
+}
+
 CommandPtr CommandStack::topCommand() const {
   assert(!pimpl->stack.empty());
   return pimpl->stack.back();

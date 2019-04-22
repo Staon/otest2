@@ -65,6 +65,8 @@ class CaseGenerated : public CaseOrdinary, public ContextObject {
 
     /* -- case ordinary interface */
     virtual StatePtr getFirstState() const;
+    virtual StatePtr getState(
+        const std::string& name_) const;
     virtual void startUpCase(
         const Context& context_);
     virtual void tearDownCase(

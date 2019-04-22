@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2019 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -17,35 +17,45 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "runcode.h"
+#include <cmdstate.h>
 
-#include <exception>
+#include <assert.h>
 #include <sstream>
-#include <string>
 
+#include <caseordinary.h>
 #include <context.h>
-#include <exccatcher.h>
 #include <internalerror.h>
-#include <semanticstack.h>
+#include <reporter.h>
+#include <state.h>
 
 namespace OTest2 {
 
-bool runUserCode(
-    const Context& context_,
-    std::function<void(const Context&)> ftor_) noexcept {
-  /* -- prepare the return value */
-  context_.semantic_stack->push(true);
+CmdState::CmdState(
+    CaseOrdinaryPtr testcase_,
+    const std::string& name_,
+    int delay_) :
+  testcase(testcase_),
+  name(name_),
+  delay(delay_) {
+  assert(!testcase.isNull() && !name_.empty() && delay_ >= 0);
 
-  /* -- run the functor */
-  std::string message_;
-  if(context_.exception_catcher->catchException(context_, ftor_, message_))
-    internalError(context_, message_);
-
-  /* -- handle the return value */
-  bool retval_(context_.semantic_stack->top());
-  context_.semantic_stack->popAnd();
-
-  return retval_;
 }
 
-} /* -- namespace OTest2 */
+CmdState::~CmdState() {
+
+}
+
+void CmdState::run(
+    const Context& context_) {
+  StatePtr state_(testcase->getState(name));
+  if(!state_.isNull()) {
+    state_->scheduleRun(context_, testcase, state_, true, delay);
+  }
+  else {
+    std::ostringstream os_;
+    os_ << "invalid state name '" << name << "'";
+    internalError(context_, os_.str());
+  }
+}
+
+} /* namespace OTest2 */

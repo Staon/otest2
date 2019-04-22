@@ -59,6 +59,15 @@ void GeneratorPrinter::makeAssertion(
       << " " << expr_end_ << std::endl;
 }
 
+void GeneratorPrinter::makeStateSwitch(
+    const Location& state_begin_,
+    const Location& state_end_,
+    const Location& delay_begin_,
+    const Location& delay_end_) {
+  std::cout << "make state switch: " << state_begin_ << ", " << state_end_
+      << ", " << delay_begin_ << ", " << delay_end_ << std::endl;
+}
+
 void GeneratorPrinter::makeTryCatchBegin(
     const Location& begin_) {
   std::cout << "make try-catch begin: " << begin_ << std::endl;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2019 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -16,40 +16,30 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-#include <stateordinary.h>
-
-#include <assert.h>
-#include <memory>
-
-#include <cmdrunstate.h>
-#include <commandstack.h>
-#include <context.h>
-#include <state.h>
+#include <otest2/otest2.h>
 
 namespace OTest2 {
 
-StateOrdinary::StateOrdinary(
-    const Context& context_) {
+namespace SelfTest {
 
+TEST_SUITE(MainLoopSuite) {
+  TEST_CASE(SimpleSwitch) {
+    int cycle(0);
+
+    TEST_STATE(SecondState);
+
+    TEST_STATE(FirstState) {
+      switchState(SecondState, 100);
+    }
+
+    TEST_STATE(SecondState) {
+      ++cycle;
+      if(cycle < 3)
+        switchState(FirstState, 100 + cycle * 50);
+    }
+  }
 }
 
-StateOrdinary::~StateOrdinary() {
+}  /* -- namespace SelfTest */
 
-}
-
-void StateOrdinary::scheduleRun(
-    const Context& context_,
-    CaseOrdinaryPtr parent_,
-    StatePtr this_ptr_,
-    bool wait_,
-    int delay_) {
-  auto so_(this_ptr_.staticCast<StateOrdinary>());
-  assert(so_.get() == this);
-
-  /* -- schedule the commands */
-  context_.command_stack->pushCommand(
-      std::make_shared<CmdRunState>(parent_, so_, wait_, delay_));
-}
-
-} /* namespace OTest2 */
+}  /* -- namespace OTest2 */

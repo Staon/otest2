@@ -64,7 +64,8 @@ class StateGenerated : public StateOrdinary, public ContextObject {
 
     /* -- ordinary state interface */
     virtual void executeState(
-        const Context& context_);
+        const Context& context_,
+        CaseOrdinaryPtr parent_);
 
     /* -- context object */
     virtual const Context& otest2Context() const;
@@ -74,6 +75,22 @@ class StateGenerated : public StateOrdinary, public ContextObject {
      * @brief The user code
      */
     virtual void runState() = 0;
+
+  protected:
+    /**
+     * @brief Switch test states
+     *
+     * The method sets specified state to be run after leaving of current
+     * state.
+     *
+     * @param context_ The OTest2 context
+     * @param name_ Name of the next state
+     * @param delay_ Delay of running of the next state in milliseconds
+     */
+    void switchState(
+        const Context& context_,
+        const std::string& name_,
+        int delay_);
 };
 
 } /* -- namespace OTest2 */

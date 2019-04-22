@@ -29,7 +29,7 @@ class Context;
 
 bool runUserCode(
     const Context& context_,
-    std::function<void(const Context&)> ftor_);
+    std::function<void(const Context&)> ftor_) noexcept;
 
 } /* -- namespace OTest2 */
 

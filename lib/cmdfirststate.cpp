@@ -42,7 +42,7 @@ CmdFirstState::~CmdFirstState() {
 void CmdFirstState::run(
     const Context& context_) {
   StatePtr state_(testcase->getFirstState());
-  state_->scheduleRun(context_, state_);
+  state_->scheduleRun(context_, testcase, state_, false, -1);
 }
 
 } /* namespace OTest2 */

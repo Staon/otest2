@@ -78,6 +78,11 @@ class GeneratorStd : public Generator {
         const Location& begin_,
         const Location& end_,
         const Location& expr_end_);
+    virtual void makeStateSwitch(
+        const Location& state_begin_,
+        const Location& state_end_,
+        const Location& delay_begin_,
+        const Location& delay_end_);
     virtual void makeTryCatchBegin(
         const Location& begin_);
     virtual void makeCatchHandler(

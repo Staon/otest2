@@ -79,4 +79,14 @@ StatePtr StateRegistry::getFirstState() const {
   return pimpl->first_state;
 }
 
+StatePtr StateRegistry::getState(
+    const std::string& name_) const {
+  assert(!name_.empty());
+  auto iter_(pimpl->states.find(name_));
+  if(iter_ != pimpl->states.end())
+    return (*iter_).second;
+  else
+    return StatePtr();
+}
+
 } /* namespace OTest2 */

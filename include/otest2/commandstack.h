@@ -58,6 +58,14 @@ class CommandStack {
         CommandPtr command_);
 
     /**
+     * @brief Replace a command at the top of the stack
+     *
+     * @param command_ The new command
+     */
+    void replaceCommand(
+        CommandPtr command_);
+
+    /**
      * @brief Get the top command
      *
      * @return The command

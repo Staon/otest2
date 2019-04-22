@@ -20,6 +20,7 @@
 #ifndef OTest2__INCLUDE_OTEST2_STATEORDINARY_H_
 #define OTest2__INCLUDE_OTEST2_STATEORDINARY_H_
 
+#include <otest2/caseordinaryptr.h>
 #include <otest2/state.h>
 
 namespace OTest2 {
@@ -54,14 +55,19 @@ class StateOrdinary : public State {
      * @brief Run the state
      *
      * @param context_ The OTest2 context
+     * @param parent_ State's parent object
      */
     virtual void executeState(
-        const Context& context_) = 0;
+        const Context& context_,
+        CaseOrdinaryPtr parent_) = 0;
 
     /* -- state interface */
     virtual void scheduleRun(
         const Context& context_,
-        StatePtr this_ptr_);
+        CaseOrdinaryPtr parent_,
+        StatePtr this_ptr_,
+        bool wait_,
+        int delay_);
 };
 
 } /* namespace OTest2 */

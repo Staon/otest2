@@ -1,5 +1,18 @@
 # otest2
 
+## Table of content
+
+1. [Introduction](#introduction)
+2. [How to build](#how-to-build)
+   1. [Building Clang](#building-clang)
+   2. [Building OTest2](#building-otest2)
+3. [How to use](#how-to-use)
+   1. [Quick Overview - Hello World](#quick-overview-hello-world)
+   2. [More Complicated - Test fixtures](#more-complicated-test-fixtures)
+   3. [Main Loop](#main-loop)
+
+## Introduction
+
 _OTest2_ is a C++ framework for writing of automated tests (unit tests, integration tests, etc.).
 
 Design goals of the framework are:

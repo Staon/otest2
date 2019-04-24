@@ -9,7 +9,7 @@
 3. [How to use](#how-to-use)
    1. [Quick Overview - Hello World](#quick-overview---hello-world)
    2. [More Complicated - Test fixtures](#more-complicated---test-fixtures)
-   3. [Asserted try/catch blocks](#asserted-try-catch-blocks)
+   3. [Asserted try/catch blocks](#asserted-trycatch-blocks)
    4. [Main Loop](#main-loop)
 
 ## Introduction

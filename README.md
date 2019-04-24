@@ -9,7 +9,8 @@
 3. [How to use](#how-to-use)
    1. [Quick Overview - Hello World](#quick-overview---hello-world)
    2. [More Complicated - Test fixtures](#more-complicated---test-fixtures)
-   3. [Main Loop](#main-loop)
+   3. [Asserted try/catch blocks](#asserted-try-catch-blocks)
+   4. [Main Loop](#main-loop)
 
 ## Introduction
 
@@ -206,6 +207,39 @@ case the overloaded variable is used. The suite variable keeps untouched and unc
 The order of directives is mandtory. Firstly, the fixture variables must be declared including optional initialization.
 Then the _startUp_ event must be declared and then the _tearDown_ event must be declared. All previous steps are optional.
 At the end, the content of the test object (suite, case) is declared (nested test case or the simple test directive).
+
+### Asserted try/catch blocks
+
+How to test whether an exception is thrown? The _OTest2_ framework offers a simple construction at first sight looking
+like an ordinary try/catch block. However, there is one important difference: the exception must happen. The _OTest2_
+preprocessor inserts code which checks the occurence of the exception. If the exception doesn't happen, the test
+case will fail. See an example:
+
+```c++
+#include <otest2/otest2.h>
+
+#include <exception>
+
+TEST_SUITE(Fixtures) {
+  TEST_CASE(MainLoop) {
+    TEST_SIMPLE() {
+      TEST_TRY {
+        throw std::bad_exception();
+      }
+      TEST_CATCH(std::bad_exception&, exc_) {
+        testAssertEqual(exc_.what(), "std::bad_exception");
+      }
+    }
+  }
+}
+```
+Now try to remove the exception throwing. The test should fail.
+
+Generally, any unhandled exception thrown from a test case is considered as an error causing failure of the test case.
+If the unhandled exception is derived from the _std::exception_ class, the framework is able to print the error
+message (the _what()_ method). Otherwise, it only reports _unexpected unknown exception_. If your environment doesn't
+derive exceptions from the _std::exception_ class, you can make own implementation of the _ExcCatcher_ interface
+and inject it into the test environment.
 
 ### Main Loop
 

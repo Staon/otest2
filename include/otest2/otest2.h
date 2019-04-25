@@ -22,17 +22,21 @@
 
 #include <otest2/assertions.h>
 #include <otest2/controls.h>
+#include <otest2/glue.h>
 
 #ifndef OTEST2_PARSER_ACTIVE
 
+/* -- test structure description */
 #define TEST_START_UP() void startUp()
 #define TEST_TEAR_DOWN() void tearDown()
 #define TEST_SUITE(name_) namespace name_ { using namespace ::OTest2::Assertions; using namespace ::OTest2::Controls; } namespace name_
 #define TEST_CASE(name_) namespace name_
 #define TEST_STATE(name_) void name_()
 #define TEST_SIMPLE() TEST_STATE(AnonymousState)
-#define TEST_TRY try
-#define TEST_CATCH(exc_type_, name_) catch(exc_type_ name_)
+
+/* -- asserted try/catch block */
+#define testTry try
+#define testCatch(exc_type_, name_) catch(typename ::OTest2::TypePack<exc_type_>::Type name_)
 
 #else /* -- OTEST2_PARSER_ACTIVE */
 
@@ -42,8 +46,9 @@
 #define TEST_CASE(name_) namespace name_ __attribute__((annotate("otest2::case")))
 #define TEST_STATE(name_) void name_() __attribute__((annotate("otest2::state")))
 #define TEST_SIMPLE() TEST_STATE(AnonymousState)
-#define TEST_TRY try
-#define TEST_CATCH(exc_type_, name_) catch(exc_type_ __attribute__((annotate("otest2::catch"))) name_)
+
+#define testTry try
+#define testCatch(exc_type_, name_) catch(typename ::OTest2::TypePack<exc_type_>::Type __attribute__((annotate("otest2::catch"))) name_)
 
 #endif /* -- OTEST2_PARSER_ACTIVE */
 

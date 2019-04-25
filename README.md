@@ -210,7 +210,7 @@ At the end, the content of the test object (suite, case) is declared (nested tes
 
 ### Asserted try/catch blocks
 
-How to test whether an exception is thrown? The _OTest2_ framework offers a simple construction at first sight looking
+How to test whether an exception is thrown? The _OTest2_ framework offers a simple construction looking at first sight
 like an ordinary try/catch block. However, there is one important difference: the exception must happen. The _OTest2_
 preprocessor inserts code which checks the occurence of the exception. If the exception doesn't happen, the test
 case will fail. See an example:
@@ -223,10 +223,10 @@ case will fail. See an example:
 TEST_SUITE(Fixtures) {
   TEST_CASE(MainLoop) {
     TEST_SIMPLE() {
-      TEST_TRY {
+      testTry {
         throw std::bad_exception();
       }
-      TEST_CATCH(std::bad_exception&, exc_) {
+      testCatch(std::bad_exception&, exc_) {
         testAssertEqual(exc_.what(), "std::bad_exception");
       }
     }
@@ -235,7 +235,7 @@ TEST_SUITE(Fixtures) {
 ```
 Now try to remove the exception throwing. The test should fail.
 
-Generally, any unhandled exception thrown from a test case is considered as an error causing failure of the test case.
+Generally, any unhandled exception thrown from a test case is considered being an error causing failure of the test case.
 If the unhandled exception is derived from the _std::exception_ class, the framework is able to print the error
 message (the _what()_ method). Otherwise, it only reports _unexpected unknown exception_. If your environment doesn't
 derive exceptions from the _std::exception_ class, you can make own implementation of the _ExcCatcher_ interface

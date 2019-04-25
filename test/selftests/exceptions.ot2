@@ -33,26 +33,26 @@ TEST_SUITE(ExceptionsSuite) {
   TEST_CASE(MarkedTryCatch) {
     TEST_SIMPLE() {
       /* -- the exception happens */
-      TEST_TRY {
+      testTry {
         throw std::bad_exception();
       }
-      TEST_CATCH(std::bad_exception&, exc_) {
+      testCatch(std::bad_exception&, exc_) {
         testAssertEqual(exc_.what(), "std::bad_exception");
       }
 
       /* -- no exception happens */
-      TEST_TRY {
+      testTry {
         /* -- don't throw anything */
       }
-      TEST_CATCH(std::bad_exception&, exc_) {
+      testCatch(std::bad_exception&, exc_) {
 
       }
 
       /* -- different exception happens */
-      TEST_TRY {
+      testTry {
         throw std::invalid_argument("foo");
       }
-      TEST_CATCH(std::bad_exception&, exc_) {
+      testCatch(std::bad_exception&, exc_) {
 
       }
     }

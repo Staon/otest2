@@ -221,7 +221,7 @@ void GeneratorStd::makeTryCatchBegin(
   writeCString(pimpl->output, pimpl->infile);
   pimpl->output << ", " << begin_.getLine() << ", \"\").testException(\n"
       << "                  [this]()->bool {\n"
-      << "                    bool exception_happens_(false);\n"
+      << "                    bool otest2_exception_happens_(false);\n"
       << "                    try {";
 }
 
@@ -230,14 +230,14 @@ void GeneratorStd::makeCatchHandler(
     const std::string& varname_) {
   pimpl->output
       << "                    }\n"
-      << "                    catch(typename ::OTest2::TypeOfMine< " << type_
-      << ">::Type " << varname_ << ") { exception_happens_ = true;";
+      << "                    catch(" << type_
+      << " " << varname_ << ") { otest2_exception_happens_ = true;";
 }
 
 void GeneratorStd::makeTryCatchEnd() {
   pimpl->output
       << "                    }\n"
-      << "                return exception_happens_;\n"
+      << "                return otest2_exception_happens_;\n"
       << "              });";
 }
 

@@ -85,7 +85,7 @@ class GenericAssertion : public AssertContext {
         A_ a_,
         B_ b_) const;
 
-    /* -- exception assertion - it's never used as an assertion but
+    /* -- exception assertion - it's never used as an assertion as
      *    it's always generated. */
     bool testException(
         std::function<bool()> ftor_) const;

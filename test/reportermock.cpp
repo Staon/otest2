@@ -31,6 +31,26 @@ namespace OTest2 {
 
 namespace Test {
 
+namespace {
+
+std::ostream& formatRecord(
+    std::ostream& os_,
+    const std::string& text_) {
+  os_ << '"';
+  for(char c_ : text_) {
+    switch(c_) {
+      case '"': os_ << "\\\""; break;
+      case '\\': os_ << "\\\\"; break;
+      default: os_ << c_; break;
+    }
+  }
+  os_ << '"';
+
+  return os_;
+}
+
+} /* -- namespace */
+
 struct ReporterMock::Impl {
   public:
     typedef std::vector<std::string> Records;
@@ -92,7 +112,7 @@ std::ostream& ReporterMock::dumpRecords(
   os_ << "std::vector<const char*> data_{" << std::endl;
   for(const auto& record : pimpl->records) {
     os_ << "  ";
-    writeCString(os_, record);
+    formatRecord(os_, record);
     os_ << "," << std::endl;
   }
   os_ << "};" << std::endl;

@@ -17,7 +17,7 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <exc.h>
+#include "exc.h"
 
 namespace OTest2 {
 

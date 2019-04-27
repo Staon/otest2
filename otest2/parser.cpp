@@ -39,7 +39,7 @@
 #include <vector>
 
 #include "error.h"
-#include <exc.h>
+#include "exc.h"
 #include "excparser.h"
 #include "filereader.h"
 #include "generatorprinter.h"

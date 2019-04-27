@@ -26,9 +26,9 @@
 #include <vector>
 
 #include "filereader.h"
+#include "generfmt.h"
 #include "formatting.h"
 #include "lcstream.h"
-#include <utils.h>
 #include "vartable.h"
 
 namespace OTest2 {

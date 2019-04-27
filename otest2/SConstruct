@@ -25,11 +25,9 @@ env.Append(LIBS = [
 env.ParseConfig("{0} --ldflags --libs --system-libs --cxxflags".format(llvmcfg))
 env.MergeFlags('-fexceptions -std=c++14')
 
-# -- libraries of mine
-env.Append(LIBS = ['otest2'], LIBPATH = ['../lib'])
-
 env.Program('otest2', [
     'error.cpp',
+    'exc.cpp',
     'excparser.cpp',
     'excreader.cpp',
     'filereader.cpp',
@@ -37,6 +35,7 @@ env.Program('otest2', [
     'generator.cpp',
     'generatorprinter.cpp',
     'generatorstd.cpp',
+    'generfmt.cpp',
     'lcstream.cpp',
     'location.cpp',
     'main.cpp',

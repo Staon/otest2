@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2019 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -16,25 +16,24 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef OTest2__INCLUDE_OTEST2_UTILS_H_
-#define OTest2__INCLUDE_OTEST2_UTILS_H_
-
-#include <type_traits>
+#include <testmarkint.h>
 
 namespace OTest2 {
 
-/**
- * @brief Delete a pointer and set it invalid
- *
- * @param object_ The pointer
- */
-template<typename T_>
-void odelete(
-    T_*& object_) {
-  delete object_;
-  object_ = nullptr;
+TestMarkInt::TestMarkInt(
+    int64_t value_) :
+  value(value_) {
+
 }
 
-} /* -- namespace OTest2 */
+TestMarkInt::~TestMarkInt() {
 
-#endif /* OTest2__INCLUDE_OTEST2_UTILS_H_ */
+}
+
+bool TestMarkInt::doIsEqual(
+    const TestMark& other_,
+    long double precision_) const {
+  return value == static_cast<const TestMarkInt*>(&other_)->value;
+}
+
+} /* namespace OTest2 */

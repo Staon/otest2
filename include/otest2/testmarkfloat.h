@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2019 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -16,25 +16,40 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef OTest2__INCLUDE_OTEST2_UTILS_H_
-#define OTest2__INCLUDE_OTEST2_UTILS_H_
 
-#include <type_traits>
+#ifndef OTest2__INCLUDE_OTEST2_TESTMARKFLOAT_H_
+#define OTest2__INCLUDE_OTEST2_TESTMARKFLOAT_H_
+
+#include <otest2/testmark.h>
 
 namespace OTest2 {
 
 /**
- * @brief Delete a pointer and set it invalid
- *
- * @param object_ The pointer
+ * @brief Floating point test mark
  */
-template<typename T_>
-void odelete(
-    T_*& object_) {
-  delete object_;
-  object_ = nullptr;
-}
+class TestMarkFloat : public TestMark {
+  private:
+    long double value;
 
-} /* -- namespace OTest2 */
+    virtual bool doIsEqual(
+        const TestMark& other_,
+        long double precision_) const;
 
-#endif /* OTest2__INCLUDE_OTEST2_UTILS_H_ */
+  public:
+    /**
+     * @brief Ctor
+     *
+     * @param value_ The value of the mark
+     */
+    explicit TestMarkFloat(
+        long double value_);
+
+    /**
+     * @brief Dtor
+     */
+    virtual ~TestMarkFloat();
+};
+
+} /* namespace OTest2 */
+
+#endif /* OTest2__INCLUDE_OTEST2_TESTMARKFLOAT_H_ */

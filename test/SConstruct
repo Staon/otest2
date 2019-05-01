@@ -18,6 +18,7 @@ env.OTest2Suite('Program', 'selftest', [
     'assertions.ot2',
     'exceptions.ot2',
     'fixtures.ot2',
+    'hirschberg.ot2',
     'main.cpp',
     'mainloop.ot2',
     'reportermock.cpp',

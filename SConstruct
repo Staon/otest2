@@ -24,8 +24,9 @@ if not cfg.CheckProg(llvmcfg):
 env = cfg.Finish()
 
 # fixed environment variables
-env.Append(CPPPATH = ['#include'])
+env.Append(CPPPATH = ['#include', '#lib'])
 env.Append(CXXFLAGS = '-std=c++14')
+env.Append(CCFLAGS = '-g')
 
 # OTest2 preprocessor builder
 def otest2_preprocessor(source, target, env, for_signature):

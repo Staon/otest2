@@ -30,6 +30,7 @@ std::ostream& writeCString(
     switch(c_) {
       case '"': os_ << "\\\""; break;
       case '\\': os_ << "\\\\"; break;
+      case '\n': os_ << "\\\n"; break;
       default: os_ << c_; break;
     }
   }

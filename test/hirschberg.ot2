@@ -28,32 +28,67 @@ namespace OTest2 {
 
 namespace Test {
 
+namespace {
+
+std::string makeMark(
+    const std::string& left_,
+    const std::string& right_,
+    const std::vector<DiffRecord> diff_) {
+  std::string l_(left_);
+  std::string r_(right_);
+  for(const auto& rec_ : diff_) {
+    switch(rec_.action) {
+      case DiffAction::CHANGE:
+        l_[rec_.left_index] = '-';
+        r_[rec_.right_index] = '-';
+        break;
+      case DiffAction::INSERT:
+        l_[rec_.left_index] = '-';
+        break;
+      case DiffAction::DELETE:
+        r_[rec_.right_index] = '-';
+        break;
+      default:
+        assert(false);
+    }
+  }
+  return l_ + " " + r_;
+}
+
+std::string runHirschberg(
+    const std::string& left_,
+    const std::string& right_) {
+  std::vector<DiffRecord> diff_;
+  hirschbergDiff(
+      left_.c_str(), left_.size(), right_.c_str(), right_.size(), diff_);
+  return makeMark(left_, right_, diff_);
+}
+
+} /* -- namespace */
+
 TEST_SUITE(Hirschberg) {
   TEST_CASE(SomeStrings) {
     TEST_SIMPLE() {
-      const std::string left_("AGGTAB");
-      const std::string right_("GXTXAYB");
-      std::vector<DiffRecord> diff_;
-      hirschbergDiff(
-          left_.c_str(), left_.size(), right_.c_str(), right_.size(), diff_);
+      /* -- some random strings */
+      testAssertEqual(runHirschberg("AGGTAB", "GXTXAYB"), "-G-TAB G-T-A-B");
+      testAssertEqual(runHirschberg("banana", "ananas"), "-anana anana-");
+      testAssertEqual(
+          runHirschberg(
+              "abbcaadcccccbbbaaacccccccccbbabcabcabcabc",
+              "cbacba"),
+          "---c--------b--a--c--------b----------a-- cbacba");
 
-      for(const auto& rec_ : diff_) {
-        switch(rec_.action) {
-          case DiffAction::CHANGE:
-            std::cout << rec_.left_index << ": < " << left_.at(rec_.left_index) << std::endl;
-            std::cout << "---" << std::endl;
-            std::cout << rec_.right_index << ": > " << right_.at(rec_.right_index) << std::endl;
-            break;
-          case DiffAction::INSERT:
-            std::cout << rec_.left_index << ": < " << left_.at(rec_.left_index) << std::endl;
-            break;
-          case DiffAction::DELETE:
-            std::cout << rec_.right_index << ": > " << right_.at(rec_.right_index) << std::endl;
-            break;
-          default:
-            assert(false);
-        }
-      }
+      /* -- boundaries */
+      testAssertEqual(
+          runHirschberg(
+              "two exactly same strings",
+              "two exactly same strings"),
+          "two exactly same strings two exactly same strings");
+      testAssertEqual(
+          runHirschberg(
+              "abcdefghijklmnopqrstuvwxyz",
+              "ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
+          "-------------------------- --------------------------");
     }
   }
 }

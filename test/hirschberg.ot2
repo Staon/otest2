@@ -77,6 +77,11 @@ TEST_SUITE(Hirschberg) {
               "abbcaadcccccbbbaaacccccccccbbabcabcabcabc",
               "cbacba"),
           "---c--------b--a--c--------b----------a-- cbacba");
+      testAssertEqual(
+          runHirschberg(
+              "cbacba",
+              "abbcaadcccccbbbaaacccccccccbbabcabcabcabc"),
+          "cbacba --------------------------c---b-a-c-b-a--");
 
       /* -- boundaries */
       testAssertEqual(
@@ -89,6 +94,17 @@ TEST_SUITE(Hirschberg) {
               "abcdefghijklmnopqrstuvwxyz",
               "ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
           "-------------------------- --------------------------");
+      testAssertEqual(
+          runHirschberg(
+              "",
+              "abbcaadcccccbbbaaacccccccccbbabcabcabcabc"),
+          " -----------------------------------------");
+      testAssertEqual(
+          runHirschberg(
+              "abbcaadcccccbbbaaacccccccccbbabcabcabcabc",
+              ""),
+          "----------------------------------------- ");
+      testAssertEqual(runHirschberg("", ""), " ");
     }
   }
 }

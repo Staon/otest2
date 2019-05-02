@@ -22,7 +22,7 @@
 #include <iostream>
 #include <vector>
 
-#include <hirschberg.h>
+#include <difflogarray.h>
 
 namespace OTest2 {
 
@@ -76,7 +76,7 @@ TEST_SUITE(Hirschberg) {
           runHirschberg(
               "abbcaadcccccbbbaaacccccccccbbabcabcabcabc",
               "cbacba"),
-          "---c--------b--a--c--------b----------a-- cbacba");
+          "--------------------------c---b-a-c-b-a-- cbacba");
       testAssertEqual(
           runHirschberg(
               "cbacba",
@@ -94,6 +94,16 @@ TEST_SUITE(Hirschberg) {
               "abcdefghijklmnopqrstuvwxyz",
               "ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
           "-------------------------- --------------------------");
+      testAssertEqual(
+          runHirschberg(
+              "a",
+              "abbcaadcccccbbbaaacccccccccbbabcabcabcabc"),
+          "a --------------------------------------a--");
+      testAssertEqual(
+          runHirschberg(
+              "abbcaadcccccbbbaaacccccccccbbabcabcabcabc",
+              "c"),
+          "----------------------------------------c c");
       testAssertEqual(
           runHirschberg(
               "",

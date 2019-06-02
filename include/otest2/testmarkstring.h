@@ -40,6 +40,8 @@ class TestMarkString : public TestMark {
     virtual bool doIsEqualValue(
         const TestMark& other_,
         long double precision_) const;
+    virtual bool doIsFirstOrLastChild(
+        const TestMark* other_) const;
     virtual void doDiffArray(
         const TestMark* parent_,
         const std::string label_,

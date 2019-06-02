@@ -18,6 +18,7 @@
  */
 #include <testmark.h>
 
+#include <assert.h>
 #include <typeinfo>
 
 #include "hirschberg.h"
@@ -33,19 +34,47 @@ class TestMarkScore {
         const TestMark::DiffRecord& right_,
         DiffAction action_,
         bool& same_) const {
-      same_ = left_.me->isEqualValue(*right_.me);
-      return same_ ? 1 : -1;
+      /* -- check equality of both nodes */
+      same_ = left_.me->isEqualValue(*right_.me) && left_.label == right_.label;
+      if(same_)
+        return 1;
+
+      /* -- The nodes are not the same, discriminate beginning of new block.
+       *    Edges of container nodes are supposed to be more appropriate
+       *    beginning of a changed block than block beginning inside
+       *    a container node. */
+      if(action_ == DiffAction::SUBSTR) {
+        if(left_.parent->isFirstOrLastChild(left_.me) || right_.parent->isFirstOrLastChild(right_.me))
+          return -5;
+        else
+          return -10;
+      }
+
+      /* -- continuous change */
+      return -1;
     }
 
     int scoreDel(
         const TestMark::DiffRecord& right_,
         DiffAction action_) const {
+      if(action_ == DiffAction::SUBSTR) {
+        if(right_.parent->isFirstOrLastChild(right_.me))
+          return -5;
+        else
+          return -10;
+      }
       return -1;
     }
 
     int scoreIns(
         const TestMark::DiffRecord& left_,
         DiffAction action_) const {
+      if(action_ == DiffAction::SUBSTR) {
+        if(left_.parent->isFirstOrLastChild(left_.me))
+          return -5;
+        else
+          return -10;
+      }
       return -1;
     }
 
@@ -89,6 +118,12 @@ bool TestMark::isEqualValue(
     return doIsEqualValue(other_, precision_);
   else
     return false;
+}
+
+bool TestMark::isFirstOrLastChild(
+    const TestMark* other_) const {
+  assert(other_ != nullptr);
+  return doIsFirstOrLastChild(other_);
 }
 
 void TestMark::computeDiff(

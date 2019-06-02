@@ -77,6 +77,16 @@ class TestMark {
         const TestMark& other_,
         long double precision_) const = 0;
 
+    /**
+     * @brief Check if the specified node is the first or last child
+     *     of current node.
+     *
+     * @param other_ The other node
+     * @return True if the node is the first or the last child
+     */
+    virtual bool doIsFirstOrLastChild(
+        const TestMark* other_) const = 0;
+
   public:
     /**
      * @brief Create the array which is used as the input sequence of the diff
@@ -134,6 +144,16 @@ class TestMark {
     bool isEqualValue(
         const TestMark& other_,
         long double precision_ = DEFAULT_FLOAT_PRECISION) const;
+
+    /**
+     * @brief Check if the specified node is the first or last child
+     *     of current node.
+     *
+     * @param other_ The other node
+     * @return True if the node is the first or the last child
+     */
+    bool isFirstOrLastChild(
+        const TestMark* other_) const;
 
     /**
      * @brief Compute difference of two test marks

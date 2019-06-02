@@ -50,6 +50,13 @@ bool TestMarkList::doIsEqualPrefixed(
   return true;
 }
 
+bool TestMarkList::doIsFirstOrLastChild(
+    const TestMark* other_) const {
+  if(list.empty())
+    return false;
+  return list.front().get() == other_ || list.back().get() == other_;
+}
+
 void TestMarkList::doDiffArray(
     const TestMark* parent_,
     const std::string label_,

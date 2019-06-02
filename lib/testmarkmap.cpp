@@ -59,6 +59,14 @@ bool TestMarkMap::doIsEqualPrefixed(
   return true;
 }
 
+bool TestMarkMap::doIsFirstOrLastChild(
+    const TestMark* other_) const {
+  if(map.empty())
+    return false;
+  return (*map.begin()).second.get() == other_
+      || (*map.rbegin()).second.get() == other_;
+}
+
 void TestMarkMap::doDiffArray(
     const TestMark* parent_,
     const std::string label_,

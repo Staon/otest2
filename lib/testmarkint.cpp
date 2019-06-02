@@ -18,6 +18,8 @@
  */
 #include <testmarkint.h>
 
+#include <assert.h>
+
 namespace OTest2 {
 
 TestMarkInt::TestMarkInt(
@@ -40,6 +42,12 @@ bool TestMarkInt::doIsEqualValue(
     const TestMark& other_,
     long double precision_) const {
   return doIsEqual(other_, precision_);
+}
+
+bool TestMarkInt::doIsFirstOrLastChild(
+    const TestMark* other_) const {
+  assert(false);
+  return false;
 }
 
 void TestMarkInt::doDiffArray(

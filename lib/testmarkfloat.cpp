@@ -18,6 +18,7 @@
  */
 #include <testmarkfloat.h>
 
+#include <assert.h>
 #include <cmath>
 
 namespace OTest2 {
@@ -43,6 +44,12 @@ bool TestMarkFloat::doIsEqualValue(
     const TestMark& other_,
     long double precision_) const {
   return doIsEqual(other_, precision_);
+}
+
+bool TestMarkFloat::doIsFirstOrLastChild(
+    const TestMark* other_) const {
+  assert(false);
+  return false;
 }
 
 void TestMarkFloat::doDiffArray(

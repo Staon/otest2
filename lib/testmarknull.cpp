@@ -19,6 +19,8 @@
 
 #include <testmarknull.h>
 
+#include <assert.h>
+
 namespace OTest2 {
 
 TestMarkNull::TestMarkNull() {
@@ -39,6 +41,12 @@ bool TestMarkNull::doIsEqualValue(
     const TestMark& other_,
     long double precision_) const {
   return true;  /* -- the type of the node is enough */
+}
+
+bool TestMarkNull::doIsFirstOrLastChild(
+    const TestMark* other_) const {
+  assert(false);
+  return false;
 }
 
 void TestMarkNull::doDiffArray(

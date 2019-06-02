@@ -50,6 +50,16 @@ bool TestMarkList::doIsEqualPrefixed(
   return true;
 }
 
+void TestMarkList::doDiffArray(
+    const TestMark* parent_,
+    const std::string label_,
+    std::vector<DiffRecord> array_) const {
+  pushDiffMe(parent_, label_, array_);
+  for(const auto& item_ : list) {
+    item_->doDiffArray(this, "", array_);
+  }
+}
+
 void TestMarkList::append(
     TestMarkPtr mark_) {
   assert(mark_ != nullptr);

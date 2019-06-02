@@ -59,6 +59,16 @@ bool TestMarkMap::doIsEqualPrefixed(
   return true;
 }
 
+void TestMarkMap::doDiffArray(
+    const TestMark* parent_,
+    const std::string label_,
+    std::vector<DiffRecord> array_) const {
+  pushDiffMe(parent_, label_, array_);
+  for(const auto& item_ : map) {
+    item_.second->doDiffArray(this, item_.first, array_);
+  }
+}
+
 void TestMarkMap::append(
     const std::string& key_,
     TestMarkPtr mark_) {

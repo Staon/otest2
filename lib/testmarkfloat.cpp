@@ -39,4 +39,17 @@ bool TestMarkFloat::doIsEqual(
       <= precision_;
 }
 
+bool TestMarkFloat::doIsEqualValue(
+    const TestMark& other_,
+    long double precision_) const {
+  return doIsEqual(other_, precision_);
+}
+
+void TestMarkFloat::doDiffArray(
+    const TestMark* parent_,
+    const std::string label_,
+    std::vector<DiffRecord> array_) const {
+  pushDiffMe(parent_, label_, array_);
+}
+
 } /* namespace OTest2 */

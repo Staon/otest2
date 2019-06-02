@@ -33,9 +33,16 @@ TestMarkPrefix::~TestMarkPrefix() {
 bool TestMarkPrefix::doIsEqual(
     const TestMark& other_,
     long double precision_) const {
-  if(prefix != static_cast<const TestMarkPrefix*>(&other_)->prefix)
+  if(!doIsEqualValue(other_, precision_))
     return false;
   return doIsEqualPrefixed(other_, precision_);
+}
+
+bool TestMarkPrefix::doIsEqualValue(
+    const TestMark& other_,
+    long double precision_) const {
+  if(prefix != static_cast<const TestMarkPrefix*>(&other_)->prefix)
+    return false;
 }
 
 } /* namespace OTest2 */

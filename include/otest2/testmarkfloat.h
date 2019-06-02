@@ -34,6 +34,13 @@ class TestMarkFloat : public TestMark {
     virtual bool doIsEqual(
         const TestMark& other_,
         long double precision_) const;
+    virtual bool doIsEqualValue(
+        const TestMark& other_,
+        long double precision_) const;
+    virtual void doDiffArray(
+        const TestMark* parent_,
+        const std::string label_,
+        std::vector<DiffRecord> array_) const;
 
   public:
     /**

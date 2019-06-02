@@ -36,6 +36,9 @@ class TestMarkPrefix : public TestMark {
     virtual bool doIsEqual(
         const TestMark& other_,
         long double precision_) const;
+    virtual bool doIsEqualValue(
+        const TestMark& other_,
+        long double precision_) const;
 
     /**
      * @brief Check equality of the test mark while the prefix is equal

@@ -36,4 +36,17 @@ bool TestMarkInt::doIsEqual(
   return value == static_cast<const TestMarkInt*>(&other_)->value;
 }
 
+bool TestMarkInt::doIsEqualValue(
+    const TestMark& other_,
+    long double precision_) const {
+  return doIsEqual(other_, precision_);
+}
+
+void TestMarkInt::doDiffArray(
+    const TestMark* parent_,
+    const std::string label_,
+    std::vector<DiffRecord> array_) const {
+  pushDiffMe(parent_, label_, array_);
+}
+
 } /* namespace OTest2 */

@@ -35,4 +35,17 @@ bool TestMarkNull::doIsEqual(
   return true;  /* -- the type of the node is enough */
 }
 
+bool TestMarkNull::doIsEqualValue(
+    const TestMark& other_,
+    long double precision_) const {
+  return true;  /* -- the type of the node is enough */
+}
+
+void TestMarkNull::doDiffArray(
+    const TestMark* parent_,
+    const std::string label_,
+    std::vector<DiffRecord> array_) const {
+  pushDiffMe(parent_, label_, array_);
+}
+
 } /* namespace OTest2 */

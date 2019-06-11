@@ -23,6 +23,7 @@ env.OTest2Suite('Program', 'selftest', [
     'mainloop.ot2',
     'reportermock.cpp',
     'runtime.cpp',
+    'testmarks.ot2',
 ])
 
 # -- scons check

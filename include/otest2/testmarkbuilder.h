@@ -58,7 +58,7 @@ class TestMarkBuilder {
   private:
     class Container {
       public:
-        virtual ~Container();
+        virtual ~Container() {};
         virtual void append(
             const std::string& key_,
             TestMarkPtr mark_) = 0;
@@ -220,6 +220,13 @@ class TestMarkBuilder {
      * and appends it to upper container.
      */
     void closeContainer();
+
+    /**
+     * @brief Get constructed testmark and reset the builder
+     *
+     * @warning The builder must be finished (all containers closed)
+     */
+    TestMarkPtr stealMark() const;
 };
 
 } /* namespace OTest2 */

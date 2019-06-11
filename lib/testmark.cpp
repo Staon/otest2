@@ -105,7 +105,7 @@ void TestMark::pushDiffMe(
 bool TestMark::isEqual(
     const TestMark& other_,
     long double precision_) const {
-  if(typeid(this) == typeid(&other_))
+  if(typeid(*this) == typeid(other_))
     return doIsEqual(other_, precision_);
   else
     return false;
@@ -114,7 +114,7 @@ bool TestMark::isEqual(
 bool TestMark::isEqualValue(
     const TestMark& other_,
     long double precision_) const {
-  if(typeid(this) == typeid(&other_))
+  if(typeid(*this) == typeid(other_))
     return doIsEqualValue(other_, precision_);
   else
     return false;

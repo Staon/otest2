@@ -45,7 +45,7 @@ bool TestMarkList::doIsEqualPrefixed(
   if(list.size() != o_->list.size())
     return false;
   for(int i_(0); i_ < list.size(); ++i_)
-    if(list[i_]->isEqual(*o_->list[i_], precision_))
+    if(!list[i_]->isEqual(*o_->list[i_], precision_))
       return false;
   return true;
 }

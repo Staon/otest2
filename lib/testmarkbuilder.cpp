@@ -32,9 +32,12 @@
 namespace OTest2 {
 
 struct TestMarkBuilder::Impl {
+    TestMarkPtr root;
     class RootContainer : public Container {
       public:
-        TestMarkPtr root;
+        TestMarkPtr* root;
+        explicit RootContainer(
+            TestMarkPtr* root_);
         virtual void append(
             const std::string& key_,
             TestMarkPtr mark_);
@@ -53,11 +56,17 @@ struct TestMarkBuilder::Impl {
         TestMark* item_);
 };
 
+TestMarkBuilder::Impl::RootContainer::RootContainer(
+    TestMarkPtr* root_) :
+  root(root_) {
+  assert(root != nullptr);
+}
+
 void TestMarkBuilder::Impl::RootContainer::append(
     const std::string& key_,
     TestMarkPtr mark_) {
-  assert(key_.empty() && mark_ != nullptr && root == nullptr);
-  root = mark_;
+  assert(key_.empty() && mark_ != nullptr && *root == nullptr);
+  *root = mark_;
 }
 
 TestMark* TestMarkBuilder::Impl::RootContainer::getMark() {
@@ -85,7 +94,7 @@ void TestMarkBuilder::Impl::appendItem(
 TestMarkBuilder::TestMarkBuilder() :
   pimpl(new Impl) {
   pimpl->stack.push_back(
-      {"", std::unique_ptr<Container>(new Impl::RootContainer)});
+      {"", std::unique_ptr<Container>(new Impl::RootContainer(&pimpl->root))});
 }
 
 TestMarkBuilder::~TestMarkBuilder() {
@@ -149,6 +158,14 @@ void TestMarkBuilder::closeContainer() {
   std::unique_ptr<TestMark> container_(pimpl->stack.back().container->getMark());
   pimpl->stack.pop_back();
   pimpl->appendItem(container_.release());
+}
+
+TestMarkPtr TestMarkBuilder::stealMark() const {
+  assert(pimpl->stack.size() == 1);
+  assert(pimpl->root != nullptr);
+  TestMarkPtr retval(pimpl->root);
+  pimpl->root.reset();
+  return retval;
 }
 
 } /* namespace OTest2 */

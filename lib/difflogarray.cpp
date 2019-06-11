@@ -33,6 +33,12 @@ DiffLogBuilderArray::~DiffLogBuilderArray() {
 
 }
 
+void DiffLogBuilderArray::addMatch(
+    int left_index_,
+    int right_index_) {
+  /* -- nothing to do */
+}
+
 void DiffLogBuilderArray::addChange(
     int left_index_,
     int right_index_) {

@@ -33,6 +33,12 @@ DiffLogBuilderReverse::~DiffLogBuilderReverse() {
 
 }
 
+void DiffLogBuilderReverse::addMatch(
+    int left_index_,
+    int right_index_) {
+  next->addMatch(right_index_, left_index_);
+}
+
 void DiffLogBuilderReverse::addChange(
     int left_index_,
     int right_index_) {

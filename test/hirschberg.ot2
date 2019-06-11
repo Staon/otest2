@@ -23,6 +23,7 @@
 #include <vector>
 
 #include <difflogarray.h>
+#include <difflogblock.h>
 
 namespace OTest2 {
 
@@ -33,7 +34,7 @@ namespace {
 std::string makeMark(
     const std::string& left_,
     const std::string& right_,
-    const std::vector<DiffRecord> diff_) {
+    const DiffLogArray& diff_) {
   std::string l_(left_);
   std::string r_(right_);
   for(const auto& rec_ : diff_) {
@@ -58,9 +59,34 @@ std::string makeMark(
 std::string runHirschberg(
     const std::string& left_,
     const std::string& right_) {
-  std::vector<DiffRecord> diff_;
+  DiffLogArray diff_;
   hirschbergDiff(
       left_.c_str(), left_.size(), right_.c_str(), right_.size(), diff_);
+  return makeMark(left_, right_, diff_);
+}
+
+std::string makeMark(
+    const std::string& left_,
+    const std::string& right_,
+    const DiffLogBlocks& diff_) {
+  std::string l_(left_);
+  std::string r_(right_);
+  for(const auto& rec_ : diff_) {
+    for(int i_(rec_.left_begin); i_ < rec_.left_end; ++i_)
+      l_[i_] = '-';
+    for(int i_(rec_.right_begin); i_ < rec_.right_end; ++i_)
+      r_[i_] = '-';
+  }
+  return l_ + " " + r_;
+}
+
+std::string runHirschbergBlock(
+    const std::string& left_,
+    const std::string& right_) {
+  DiffLogBlocks diff_;
+  DiffLogBuilderBlock diff_builder_(&diff_);
+  hirschbergDiff(
+      left_.c_str(), left_.size(), right_.c_str(), right_.size(), diff_builder_);
   return makeMark(left_, right_, diff_);
 }
 
@@ -115,6 +141,59 @@ TEST_SUITE(Hirschberg) {
               ""),
           "----------------------------------------- ");
       testAssertEqual(runHirschberg("", ""), " ");
+    }
+  }
+
+  TEST_CASE(StringsBlockDiff) {
+    TEST_SIMPLE() {
+      /* -- some random strings */
+      testAssertEqual(
+          runHirschbergBlock("AGGTAB", "GXTXAYB"), "-G-TAB G-T-A-B");
+      testAssertEqual(
+          runHirschbergBlock("banana", "ananas"), "-anana anana-");
+      testAssertEqual(
+          runHirschbergBlock(
+              "abbcaadcccccbbbaaacccccccccbbabcabcabcabc",
+              "cbacba"),
+          "--------------------------c---b-a-c-b-a-- cbacba");
+      testAssertEqual(
+          runHirschbergBlock(
+              "cbacba",
+              "abbcaadcccccbbbaaacccccccccbbabcabcabcabc"),
+          "cbacba --------------------------c---b-a-c-b-a--");
+
+      /* -- boundaries */
+      testAssertEqual(
+          runHirschbergBlock(
+              "two exactly same strings",
+              "two exactly same strings"),
+          "two exactly same strings two exactly same strings");
+      testAssertEqual(
+          runHirschbergBlock(
+              "abcdefghijklmnopqrstuvwxyz",
+              "ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
+          "-------------------------- --------------------------");
+      testAssertEqual(
+          runHirschbergBlock(
+              "a",
+              "abbcaadcccccbbbaaacccccccccbbabcabcabcabc"),
+          "a --------------------------------------a--");
+      testAssertEqual(
+          runHirschbergBlock(
+              "abbcaadcccccbbbaaacccccccccbbabcabcabcabc",
+              "c"),
+          "----------------------------------------c c");
+      testAssertEqual(
+          runHirschbergBlock(
+              "",
+              "abbcaadcccccbbbaaacccccccccbbabcabcabcabc"),
+          " -----------------------------------------");
+      testAssertEqual(
+          runHirschbergBlock(
+              "abbcaadcccccbbbaaacccccccccbbabcabcabcabc",
+              ""),
+          "----------------------------------------- ");
+      testAssertEqual(runHirschbergBlock("", ""), " ");
     }
   }
 }

@@ -46,6 +46,16 @@ class DiffLogBuilder {
         const DiffLogBuilder&) = delete;
 
     /**
+     * @brief Add match of characters in both sequences
+     *
+     * @param left_index_ index in the left sequence
+     * @param right_index_ index in the right sequence
+     */
+    virtual void addMatch(
+        int left_index_,
+        int right_index_) = 0;
+
+    /**
      * @brief Add change of both sequences
      *
      * @param left_index_ index in the left sequence

@@ -16,41 +16,62 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef OTest2__LIB_DIFFLOGREVERSE_H_
-#define OTest2__LIB_DIFFLOGREVERSE_H_
 
-#include "difflogbuilder.h"
+#ifndef OTest2__LIB_DIFFLOGBLOCK_H_
+#define OTest2__LIB_DIFFLOGBLOCK_H_
+
+#include <vector>
+
+#include "hirschberg.h"
 
 namespace OTest2 {
 
 /**
- * @brief Simple decorator - inversion of operations
+ * @brief One block change
  */
-class DiffLogBuilderReverse : public DiffLogBuilder {
+struct DiffBlock {
+    int left_begin;
+    int left_end;
+    int right_begin;
+    int right_end;
+};
+
+/**
+ * @brief Ordered (indexes into the sequences) list of diff changes
+ */
+typedef std::vector<DiffBlock> DiffLogBlocks;
+
+/**
+ * @brief Log builder making records of whole blocks of changes
+ */
+class DiffLogBuilderBlock : public DiffLogBuilder {
   private:
-    DiffLogBuilder* next;
+    DiffLogBlocks* blocks;
+    bool opened_block;
+
+    void openBlock();
 
   public:
     /**
      * @brief Ctor
      *
-     * @param next_ The decorated builder. The ownership is not taken.
+     * @param blocks_ Injected array of diff blocks
      */
-    explicit DiffLogBuilderReverse(
-        DiffLogBuilder* next_);
+    explicit DiffLogBuilderBlock(
+        DiffLogBlocks* blocks_);
 
     /**
      * @brief Dtor
      */
-    virtual ~DiffLogBuilderReverse();
+    virtual ~DiffLogBuilderBlock();
 
     /* -- avoid copying */
-    DiffLogBuilderReverse(
-        const DiffLogBuilderReverse&) = delete;
-    DiffLogBuilderReverse& operator =(
-        const DiffLogBuilderReverse&) = delete;
+    DiffLogBuilderBlock(
+        const DiffLogBuilderBlock&) = delete;
+    DiffLogBuilderBlock& operator =(
+        const DiffLogBuilderBlock&) = delete;
 
-    /* -- interface of the diff log builder */
+    /* -- diff log builder interface */
     virtual void addMatch(
         int left_index_,
         int right_index_);
@@ -65,4 +86,4 @@ class DiffLogBuilderReverse : public DiffLogBuilder {
 
 } /* namespace OTest2 */
 
-#endif /* OTest2__LIB_DIFFLOGREVERSE_H_ */
+#endif /* OTest2__LIB_DIFFLOGBLOCK_H_ */

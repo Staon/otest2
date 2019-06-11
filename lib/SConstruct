@@ -32,6 +32,7 @@ env.OTest2Suite('Library', 'otest2', [
     'dfltenvironment.cpp',
     'dfltloop.cpp',
     'difflogarray.cpp',
+    'difflogblock.cpp',
     'difflogbuilder.cpp',
     'difflogreverse.cpp',
     'exccatcher.cpp',

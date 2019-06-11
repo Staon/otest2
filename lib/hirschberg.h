@@ -215,6 +215,8 @@ class Hirschberg {
             diff_log_.addDelete(i_);
           else if(change_action_ == DiffAction::CHANGE)
             diff_log_.addChange(left_begin_, i_);
+          else
+            diff_log_.addMatch(left_begin_, i_);
         }
       }
       /* -- only one column */
@@ -248,6 +250,8 @@ class Hirschberg {
             diff_log_.addInsert(i_);
           else if(change_action_ == DiffAction::CHANGE)
             diff_log_.addChange(i_, right_begin_);
+          else
+            diff_log_.addMatch(i_, right_begin_);
         }
       }
       /* -- the algorithm core */

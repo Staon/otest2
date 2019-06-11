@@ -74,6 +74,9 @@ class DiffLogBuilderArray : public DiffLogBuilder {
         const DiffLogBuilderArray&) = delete;
 
     /* -- diff log builder interface */
+    virtual void addMatch(
+        int left_index_,
+        int right_index_);
     virtual void addChange(
         int left_index_,
         int right_index_);

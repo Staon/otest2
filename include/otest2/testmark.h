@@ -19,6 +19,7 @@
 #ifndef OTest2__LIB_TESTMARK_H_
 #define OTest2__LIB_TESTMARK_H_
 
+#include <iosfwd>
 #include <string>
 #include <vector>
 
@@ -46,7 +47,7 @@ class TestMark {
     void pushDiffMe(
         const TestMark* parent_,
         const std::string& label_,
-        std::vector<DiffRecord> array_) const;
+        std::vector<DiffRecord>& array_) const;
 
   private:
     /**
@@ -99,7 +100,22 @@ class TestMark {
     virtual void doDiffArray(
         const TestMark* parent_,
         const std::string label_,
-        std::vector<DiffRecord> array_) const = 0;
+        std::vector<DiffRecord>& array_) const = 0;
+
+  private:
+    /**
+     * @copydoc printOpen()
+     */
+    virtual void doPrintOpen(
+        std::ostream& os_,
+        const std::string& prefix_) const = 0;
+
+    /**
+     * @copydoc printClose()
+     */
+    virtual void doPrintClose(
+        std::ostream& os_,
+        const std::string& prefix_) const = 0;
 
   public:
     /**
@@ -156,6 +172,34 @@ class TestMark {
         const TestMark* other_) const;
 
     /**
+     * @brief Create array for the diff algorithm
+     *
+     * @param[out] array_ The array
+     */
+    void diffArray(
+        std::vector<DiffRecord>& array_) const;
+
+    /**
+     * @brief Print opening of the node into a stream
+     *
+     * @param os_ The stream
+     * @param prefix_ Prefix just before the printed value
+     */
+    void printOpen(
+        std::ostream& os_,
+        const std::string& prefix_) const;
+
+    /**
+     * @brief Print closing of the node into a stream
+     *
+     * @param os_ The stream
+     * @param prefix_ Prefix just before the printed value
+     */
+    void printClose(
+        std::ostream& os_,
+        const std::string& prefix_) const;
+
+    /**
      * @brief Compute difference of two test marks
      *
      * @param[in] other_ The second test mark
@@ -164,6 +208,16 @@ class TestMark {
     void computeDiff(
         const TestMark& other_,
         DiffLogBuilder& diff_) const;
+
+    /**
+     * @brief Print the testmark
+     *
+     * @param os_ An output stream
+     * @param prefix_ A prefix at the beginning of each line
+     */
+    void printMark(
+        std::ostream& os_,
+        const std::string& prefix_) const;
 };
 
 } /* namespace OTest2 */

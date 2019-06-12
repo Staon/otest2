@@ -69,5 +69,6 @@ env.OTest2Suite('Library', 'otest2', [
     'testmarkmap.cpp',
     'testmarknull.cpp',
     'testmarkprefix.cpp',
+    'testmarkprinter.cpp',
     'testmarkstring.cpp',
 ])

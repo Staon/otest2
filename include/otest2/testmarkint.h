@@ -45,7 +45,13 @@ class TestMarkInt : public TestMark {
     virtual void doDiffArray(
         const TestMark* parent_,
         const std::string label_,
-        std::vector<DiffRecord> array_) const;
+        std::vector<DiffRecord>& array_) const;
+    virtual void doPrintOpen(
+        std::ostream& os_,
+        const std::string& prefix_) const;
+    virtual void doPrintClose(
+        std::ostream& os_,
+        const std::string& prefix_) const;
 
   public:
     /**

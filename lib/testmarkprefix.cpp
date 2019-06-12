@@ -18,6 +18,8 @@
  */
 #include <testmarkprefix.h>
 
+#include <iostream>
+
 namespace OTest2 {
 
 TestMarkPrefix::TestMarkPrefix(
@@ -42,6 +44,23 @@ bool TestMarkPrefix::doIsEqualValue(
     const TestMark& other_,
     long double precision_) const {
   return prefix == static_cast<const TestMarkPrefix*>(&other_)->prefix;
+}
+
+void TestMarkPrefix::doPrintOpen(
+    std::ostream& os_,
+    const std::string& prefix_) const {
+  os_ << prefix_;
+  if(!prefix.empty())
+    os_ << prefix << ' ';
+  const char* pars_(getParenthesis());
+  os_ << pars_[0] << '\n';
+}
+
+void TestMarkPrefix::doPrintClose(
+    std::ostream& os_,
+    const std::string& prefix_) const {
+  const char* pars_(getParenthesis());
+  os_ << prefix_ << pars_[1] << '\n';
 }
 
 } /* namespace OTest2 */

@@ -20,6 +20,9 @@
 
 #include <assert.h>
 #include <cmath>
+#include <iomanip>
+#include <iostream>
+#include <limits>
 
 namespace OTest2 {
 
@@ -55,8 +58,23 @@ bool TestMarkFloat::doIsFirstOrLastChild(
 void TestMarkFloat::doDiffArray(
     const TestMark* parent_,
     const std::string label_,
-    std::vector<DiffRecord> array_) const {
+    std::vector<DiffRecord>& array_) const {
   pushDiffMe(parent_, label_, array_);
+}
+
+void TestMarkFloat::doPrintOpen(
+    std::ostream& os_,
+    const std::string& prefix_) const {
+  os_ << prefix_
+      << std::setprecision(
+          std::numeric_limits<long double>::digits10 + 1)
+      << value << '\n';
+}
+
+void TestMarkFloat::doPrintClose(
+    std::ostream& os_,
+    const std::string& prefix_) const {
+  /* -- nothing to do */
 }
 
 } /* namespace OTest2 */

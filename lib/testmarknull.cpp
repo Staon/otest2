@@ -20,6 +20,7 @@
 #include <testmarknull.h>
 
 #include <assert.h>
+#include <iostream>
 
 namespace OTest2 {
 
@@ -52,8 +53,20 @@ bool TestMarkNull::doIsFirstOrLastChild(
 void TestMarkNull::doDiffArray(
     const TestMark* parent_,
     const std::string label_,
-    std::vector<DiffRecord> array_) const {
+    std::vector<DiffRecord>& array_) const {
   pushDiffMe(parent_, label_, array_);
+}
+
+void TestMarkNull::doPrintOpen(
+    std::ostream& os_,
+    const std::string& prefix_) const {
+  os_ << prefix_ << "<NULL>\n";
+}
+
+void TestMarkNull::doPrintClose(
+    std::ostream& os_,
+    const std::string& prefix_) const {
+  /* -- nothing to do */
 }
 
 } /* namespace OTest2 */

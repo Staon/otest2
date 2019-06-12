@@ -19,6 +19,7 @@
 #include <testmarkstring.h>
 
 #include <assert.h>
+#include <iostream>
 
 namespace OTest2 {
 
@@ -53,8 +54,20 @@ bool TestMarkString::doIsFirstOrLastChild(
 void TestMarkString::doDiffArray(
     const TestMark* parent_,
     const std::string label_,
-    std::vector<DiffRecord> array_) const {
+    std::vector<DiffRecord>& array_) const {
   pushDiffMe(parent_, label_, array_);
+}
+
+void TestMarkString::doPrintOpen(
+    std::ostream& os_,
+    const std::string& prefix_) const {
+  os_ << prefix_ << '"' << value << "\"\n";
+}
+
+void TestMarkString::doPrintClose(
+    std::ostream& os_,
+    const std::string& prefix_) const {
+  /* -- nothing to do */
 }
 
 } /* namespace OTest2 */

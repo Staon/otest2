@@ -22,6 +22,7 @@
 #include <typeinfo>
 
 #include "hirschberg.h"
+#include <otest2/testmarkprinter.h>
 
 namespace OTest2 {
 
@@ -98,7 +99,7 @@ TestMark::~TestMark() {
 void TestMark::pushDiffMe(
     const TestMark* parent_,
     const std::string& label_,
-    std::vector<DiffRecord> array_) const {
+    std::vector<DiffRecord>& array_) const {
   array_.push_back({parent_, this, label_});
 }
 
@@ -126,6 +127,23 @@ bool TestMark::isFirstOrLastChild(
   return doIsFirstOrLastChild(other_);
 }
 
+void TestMark::diffArray(
+    std::vector<DiffRecord>& array_) const {
+  doDiffArray(nullptr, "", array_);
+}
+
+void TestMark::printOpen(
+    std::ostream& os_,
+    const std::string& prefix_) const {
+  doPrintOpen(os_, prefix_);
+}
+
+void TestMark::printClose(
+    std::ostream& os_,
+    const std::string& prefix_) const {
+  doPrintClose(os_, prefix_);
+}
+
 void TestMark::computeDiff(
     const TestMark& other_,
     DiffLogBuilder& diff_) const {
@@ -137,6 +155,15 @@ void TestMark::computeDiff(
 
   /* -- compute the diff */
   hirschbergDiff(left_, right_, diff_, TestMarkScore());
+}
+
+void TestMark::printMark(
+    std::ostream& os_,
+    const std::string& prefix_) const {
+  std::vector<DiffRecord> array_;
+  diffArray(array_);
+  TestMarkPrinter printer_(&array_);
+  while(printer_.printLine(os_, prefix_));
 }
 
 } /* namespace OTest2 */

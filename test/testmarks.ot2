@@ -18,6 +18,8 @@
  */
 #include <otest2/otest2.h>
 
+#include <iostream>
+
 #include <otest2/testmark.h>
 #include <otest2/testmarkbuilder.h>
 
@@ -348,6 +350,30 @@ TEST_SUITE(TestMarks) {
       testAssert(!map1_mark_->isEqualValue(*int1_mark_));
       testAssert(!map1_mark_->isEqualValue(*fl1_mark_));
       testAssert(!map1_mark_->isEqualValue(*list1_mark_));
+    }
+  }
+
+  TEST_CASE(Printing) {
+    TEST_SIMPLE() {
+      TestMarkBuilder builder_;
+
+      builder_.openList("root");
+      builder_.openMap();
+      builder_.setKey("null");
+      builder_.appendNull();
+      builder_.setKey("string");
+      builder_.appendString("Value A");
+      builder_.setKey("int");
+      builder_.appendInt(-2983);
+      builder_.setKey("float");
+      builder_.appendFloat(3.141529);
+      builder_.setKey("list");
+      builder_.openList();
+      builder_.appendString("inner value");
+      builder_.closeContainer();
+      builder_.closeContainer();
+      builder_.closeContainer();
+      builder_.stealMark()->printMark(std::cout, "*  ");
     }
   }
 }

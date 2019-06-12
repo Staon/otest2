@@ -39,6 +39,12 @@ class TestMarkPrefix : public TestMark {
     virtual bool doIsEqualValue(
         const TestMark& other_,
         long double precision_) const;
+    virtual void doPrintOpen(
+        std::ostream& os_,
+        const std::string& prefix_) const;
+    virtual void doPrintClose(
+        std::ostream& os_,
+        const std::string& prefix_) const;
 
     /**
      * @brief Check equality of the test mark while the prefix is equal
@@ -50,6 +56,14 @@ class TestMarkPrefix : public TestMark {
     virtual bool doIsEqualPrefixed(
         const TestMark& other_,
         long double precision_) const = 0;
+
+    /**
+     * @brief Get parenthesis characters
+     *
+     * @return An array of two characters: first is an opening parenthesis
+     *     the second one is a closing parenthesis.
+     */
+    virtual const char* getParenthesis() const = 0;
 
   protected:
     /**

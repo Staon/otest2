@@ -60,11 +60,15 @@ bool TestMarkList::doIsFirstOrLastChild(
 void TestMarkList::doDiffArray(
     const TestMark* parent_,
     const std::string label_,
-    std::vector<DiffRecord> array_) const {
+    std::vector<DiffRecord>& array_) const {
   pushDiffMe(parent_, label_, array_);
   for(const auto& item_ : list) {
     item_->doDiffArray(this, "", array_);
   }
+}
+
+const char* TestMarkList::getParenthesis() const {
+  return "[]";
 }
 
 void TestMarkList::append(

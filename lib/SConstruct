@@ -62,6 +62,7 @@ env.OTest2Suite('Library', 'otest2', [
     'suiteordinary.cpp',
     'terminaldriver.cpp',
     'testmark.cpp',
+    'testmarkbool.cpp',
     'testmarkbuilder.cpp',
     'testmarkfloat.cpp',
     'testmarkint.cpp',

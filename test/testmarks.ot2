@@ -370,6 +370,8 @@ TEST_SUITE(TestMarks) {
       builder_.setKey("list");
       builder_.openList();
       builder_.appendString("inner value");
+      builder_.appendBool(true);
+      builder_.appendBool(false);
       builder_.closeContainer();
       builder_.closeContainer();
       builder_.closeContainer();

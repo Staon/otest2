@@ -151,6 +151,14 @@ class TestMarkBuilder {
     void appendNull();
 
     /**
+     * @brief Append a boolean mark
+     *
+     * @param value_ The boolean value
+     */
+    void appendBool(
+        bool value_);
+
+    /**
      * @brief Append an integer mark
      *
      * @param value_ The integer value

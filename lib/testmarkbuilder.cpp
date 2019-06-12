@@ -16,17 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <testmarkbuilder.h>
+#include <otest2/testmarkbuilder.h>
 
 #include <assert.h>
 #include <vector>
 
-#include <testmarkfloat.h>
-#include <testmarkint.h>
-#include <testmarklist.h>
-#include <testmarkmap.h>
-#include <testmarknull.h>
-#include <testmarkstring.h>
+#include <otest2/testmarkbool.h>
+#include <otest2/testmarkfloat.h>
+#include <otest2/testmarkint.h>
+#include <otest2/testmarklist.h>
+#include <otest2/testmarkmap.h>
+#include <otest2/testmarknull.h>
+#include <otest2/testmarkstring.h>
 #include <utils.h>
 
 namespace OTest2 {
@@ -114,6 +115,11 @@ void TestMarkBuilder::appendMark(
 
 void TestMarkBuilder::appendNull() {
   pimpl->appendItem(new TestMarkNull);
+}
+
+void TestMarkBuilder::appendBool(
+    bool value_) {
+  pimpl->appendItem(new TestMarkBool(value_));
 }
 
 void TestMarkBuilder::appendInt(

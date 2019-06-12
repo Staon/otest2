@@ -95,6 +95,51 @@ TEST_SUITE(TestMarks) {
       builder_.closeContainer();
       TestMarkPtr list8_mark_(builder_.stealMark());
 
+      /* -- maps */
+      builder_.openMap();
+      builder_.closeContainer();
+      TestMarkPtr map1_mark_(builder_.stealMark());
+      builder_.openMap();
+      builder_.closeContainer();
+      TestMarkPtr map2_mark_(builder_.stealMark());
+      builder_.openMap();
+      builder_.setKey("1");
+      builder_.appendString("Item 1");
+      builder_.closeContainer();
+      TestMarkPtr map3_mark_(builder_.stealMark());
+      builder_.openMap();
+      builder_.setKey("1");
+      builder_.appendString("Item 1");
+      builder_.closeContainer();
+      TestMarkPtr map4_mark_(builder_.stealMark());
+      builder_.openMap("Prefix2");
+      builder_.setKey("1");
+      builder_.appendString("Item 1");
+      builder_.closeContainer();
+      TestMarkPtr map5_mark_(builder_.stealMark());
+      builder_.openMap("Prefix2");
+      builder_.setKey("1");
+      builder_.appendString("Item 1");
+      builder_.closeContainer();
+      TestMarkPtr map6_mark_(builder_.stealMark());
+      builder_.openMap();
+      builder_.setKey("X");
+      builder_.appendString("Item 1");
+      builder_.closeContainer();
+      TestMarkPtr map7_mark_(builder_.stealMark());
+      builder_.openMap();
+      builder_.setKey("1");
+      builder_.appendString("Item X");
+      builder_.closeContainer();
+      TestMarkPtr map8_mark_(builder_.stealMark());
+      builder_.openMap();
+      builder_.setKey("1");
+      builder_.appendString("Item 1");
+      builder_.setKey("2");
+      builder_.appendString("Item 2");
+      builder_.closeContainer();
+      TestMarkPtr map9_mark_(builder_.stealMark());
+
       /* -- equality */
       testAssert(null1_mark_->isEqual(*null1_mark_));
       testAssert(null1_mark_->isEqual(*null2_mark_));
@@ -102,6 +147,7 @@ TEST_SUITE(TestMarks) {
       testAssert(!null1_mark_->isEqual(*int1_mark_));
       testAssert(!null1_mark_->isEqual(*fl1_mark_));
       testAssert(!null1_mark_->isEqual(*list1_mark_));
+      testAssert(!null1_mark_->isEqual(*map1_mark_));
 
       testAssert(str1_mark_->isEqual(*str1_mark_));
       testAssert(!str1_mark_->isEqual(*str2_mark_));
@@ -110,6 +156,7 @@ TEST_SUITE(TestMarks) {
       testAssert(!str1_mark_->isEqual(*int1_mark_));
       testAssert(!str1_mark_->isEqual(*fl1_mark_));
       testAssert(!str1_mark_->isEqual(*list1_mark_));
+      testAssert(!str1_mark_->isEqual(*map1_mark_));
 
       testAssert(int1_mark_->isEqual(*int1_mark_));
       testAssert(!int1_mark_->isEqual(*int2_mark_));
@@ -118,6 +165,7 @@ TEST_SUITE(TestMarks) {
       testAssert(!int1_mark_->isEqual(*str1_mark_));
       testAssert(!int1_mark_->isEqual(*fl1_mark_));
       testAssert(!int1_mark_->isEqual(*list1_mark_));
+      testAssert(!int1_mark_->isEqual(*map1_mark_));
 
       testAssert(fl1_mark_->isEqual(*fl1_mark_));
       testAssert(!fl1_mark_->isEqual(*fl2_mark_));
@@ -126,6 +174,7 @@ TEST_SUITE(TestMarks) {
       testAssert(!fl1_mark_->isEqual(*str1_mark_));
       testAssert(!fl1_mark_->isEqual(*int1_mark_));
       testAssert(!fl1_mark_->isEqual(*list1_mark_));
+      testAssert(!fl1_mark_->isEqual(*map1_mark_));
 
       testAssert(list1_mark_->isEqual(*list1_mark_));
       testAssert(list1_mark_->isEqual(*list2_mark_));
@@ -144,6 +193,52 @@ TEST_SUITE(TestMarks) {
       testAssert(!list1_mark_->isEqual(*str1_mark_));
       testAssert(!list1_mark_->isEqual(*int1_mark_));
       testAssert(!list1_mark_->isEqual(*fl1_mark_));
+      testAssert(!list1_mark_->isEqual(*map1_mark_));
+
+      testAssert(map1_mark_->isEqual(*map1_mark_));
+      testAssert(map1_mark_->isEqual(*map2_mark_));
+      testAssert(!map1_mark_->isEqual(*map3_mark_));
+      testAssert(!map1_mark_->isEqual(*map5_mark_));
+      testAssert(!map1_mark_->isEqual(*map7_mark_));
+      testAssert(!map1_mark_->isEqual(*map8_mark_));
+      testAssert(!map1_mark_->isEqual(*map9_mark_));
+      testAssert(!map3_mark_->isEqual(*map1_mark_));
+      testAssert(map3_mark_->isEqual(*map3_mark_));
+      testAssert(map3_mark_->isEqual(*map4_mark_));
+      testAssert(!map3_mark_->isEqual(*map5_mark_));
+      testAssert(!map3_mark_->isEqual(*map7_mark_));
+      testAssert(!map3_mark_->isEqual(*map8_mark_));
+      testAssert(!map3_mark_->isEqual(*map9_mark_));
+      testAssert(!map5_mark_->isEqual(*map1_mark_));
+      testAssert(!map5_mark_->isEqual(*map3_mark_));
+      testAssert(map5_mark_->isEqual(*map5_mark_));
+      testAssert(map5_mark_->isEqual(*map6_mark_));
+      testAssert(!map5_mark_->isEqual(*map7_mark_));
+      testAssert(!map5_mark_->isEqual(*map8_mark_));
+      testAssert(!map5_mark_->isEqual(*map9_mark_));
+      testAssert(!map7_mark_->isEqual(*map1_mark_));
+      testAssert(!map7_mark_->isEqual(*map3_mark_));
+      testAssert(!map7_mark_->isEqual(*map5_mark_));
+      testAssert(map7_mark_->isEqual(*map7_mark_));
+      testAssert(!map7_mark_->isEqual(*map8_mark_));
+      testAssert(!map7_mark_->isEqual(*map9_mark_));
+      testAssert(!map8_mark_->isEqual(*map1_mark_));
+      testAssert(!map8_mark_->isEqual(*map3_mark_));
+      testAssert(!map8_mark_->isEqual(*map5_mark_));
+      testAssert(!map8_mark_->isEqual(*map7_mark_));
+      testAssert(map8_mark_->isEqual(*map8_mark_));
+      testAssert(!map8_mark_->isEqual(*map9_mark_));
+      testAssert(!map9_mark_->isEqual(*map1_mark_));
+      testAssert(!map9_mark_->isEqual(*map3_mark_));
+      testAssert(!map9_mark_->isEqual(*map5_mark_));
+      testAssert(!map9_mark_->isEqual(*map7_mark_));
+      testAssert(!map9_mark_->isEqual(*map8_mark_));
+      testAssert(map9_mark_->isEqual(*map9_mark_));
+      testAssert(!map1_mark_->isEqual(*null1_mark_));
+      testAssert(!map1_mark_->isEqual(*str1_mark_));
+      testAssert(!map1_mark_->isEqual(*int1_mark_));
+      testAssert(!map1_mark_->isEqual(*fl1_mark_));
+      testAssert(!map1_mark_->isEqual(*list1_mark_));
 
       /* -- value equality */
       testAssert(null1_mark_->isEqualValue(*null1_mark_));
@@ -151,6 +246,8 @@ TEST_SUITE(TestMarks) {
       testAssert(!null1_mark_->isEqualValue(*str1_mark_));
       testAssert(!null1_mark_->isEqualValue(*int1_mark_));
       testAssert(!null1_mark_->isEqualValue(*fl1_mark_));
+      testAssert(!null1_mark_->isEqualValue(*list1_mark_));
+      testAssert(!null1_mark_->isEqualValue(*map1_mark_));
 
       testAssert(str1_mark_->isEqualValue(*str1_mark_));
       testAssert(!str1_mark_->isEqualValue(*str2_mark_));
@@ -158,6 +255,8 @@ TEST_SUITE(TestMarks) {
       testAssert(!str1_mark_->isEqualValue(*null1_mark_));
       testAssert(!str1_mark_->isEqualValue(*int1_mark_));
       testAssert(!str1_mark_->isEqualValue(*fl1_mark_));
+      testAssert(!str1_mark_->isEqualValue(*list1_mark_));
+      testAssert(!str1_mark_->isEqualValue(*map1_mark_));
 
       testAssert(int1_mark_->isEqualValue(*int1_mark_));
       testAssert(!int1_mark_->isEqualValue(*int2_mark_));
@@ -165,6 +264,8 @@ TEST_SUITE(TestMarks) {
       testAssert(!int1_mark_->isEqualValue(*null1_mark_));
       testAssert(!int1_mark_->isEqualValue(*str1_mark_));
       testAssert(!int1_mark_->isEqualValue(*fl1_mark_));
+      testAssert(!int1_mark_->isEqualValue(*list1_mark_));
+      testAssert(!int1_mark_->isEqualValue(*map1_mark_));
 
       testAssert(fl1_mark_->isEqualValue(*fl1_mark_));
       testAssert(!fl1_mark_->isEqualValue(*fl2_mark_));
@@ -172,6 +273,8 @@ TEST_SUITE(TestMarks) {
       testAssert(!fl1_mark_->isEqualValue(*null1_mark_));
       testAssert(!fl1_mark_->isEqualValue(*str1_mark_));
       testAssert(!fl1_mark_->isEqualValue(*int1_mark_));
+      testAssert(!fl1_mark_->isEqualValue(*list1_mark_));
+      testAssert(!fl1_mark_->isEqualValue(*map1_mark_));
 
       testAssert(list1_mark_->isEqualValue(*list1_mark_));
       testAssert(list1_mark_->isEqualValue(*list3_mark_));
@@ -198,6 +301,53 @@ TEST_SUITE(TestMarks) {
       testAssert(!list7_mark_->isEqualValue(*list5_mark_));
       testAssert(!list7_mark_->isEqualValue(*list6_mark_));
       testAssert(list7_mark_->isEqualValue(*list7_mark_));
+      testAssert(!list1_mark_->isEqualValue(*null1_mark_));
+      testAssert(!list1_mark_->isEqualValue(*str1_mark_));
+      testAssert(!list1_mark_->isEqualValue(*int1_mark_));
+      testAssert(!list1_mark_->isEqualValue(*fl1_mark_));
+      testAssert(!list1_mark_->isEqualValue(*map1_mark_));
+
+      testAssert(map1_mark_->isEqualValue(*map1_mark_));
+      testAssert(map1_mark_->isEqualValue(*map3_mark_));
+      testAssert(!map1_mark_->isEqualValue(*map5_mark_));
+      testAssert(map1_mark_->isEqualValue(*map7_mark_));
+      testAssert(map1_mark_->isEqualValue(*map8_mark_));
+      testAssert(map1_mark_->isEqualValue(*map9_mark_));
+      testAssert(map3_mark_->isEqualValue(*map1_mark_));
+      testAssert(map3_mark_->isEqualValue(*map3_mark_));
+      testAssert(!map3_mark_->isEqualValue(*map5_mark_));
+      testAssert(map3_mark_->isEqualValue(*map7_mark_));
+      testAssert(map3_mark_->isEqualValue(*map8_mark_));
+      testAssert(map3_mark_->isEqualValue(*map9_mark_));
+      testAssert(!map5_mark_->isEqualValue(*map1_mark_));
+      testAssert(!map5_mark_->isEqualValue(*map3_mark_));
+      testAssert(map5_mark_->isEqualValue(*map5_mark_));
+      testAssert(!map5_mark_->isEqualValue(*map7_mark_));
+      testAssert(!map5_mark_->isEqualValue(*map8_mark_));
+      testAssert(!map5_mark_->isEqualValue(*map9_mark_));
+      testAssert(map7_mark_->isEqualValue(*map1_mark_));
+      testAssert(map7_mark_->isEqualValue(*map3_mark_));
+      testAssert(!map7_mark_->isEqualValue(*map5_mark_));
+      testAssert(map7_mark_->isEqualValue(*map7_mark_));
+      testAssert(map7_mark_->isEqualValue(*map8_mark_));
+      testAssert(map7_mark_->isEqualValue(*map9_mark_));
+      testAssert(map8_mark_->isEqualValue(*map1_mark_));
+      testAssert(map8_mark_->isEqualValue(*map3_mark_));
+      testAssert(!map8_mark_->isEqualValue(*map5_mark_));
+      testAssert(map8_mark_->isEqualValue(*map7_mark_));
+      testAssert(map8_mark_->isEqualValue(*map8_mark_));
+      testAssert(map8_mark_->isEqualValue(*map9_mark_));
+      testAssert(map9_mark_->isEqualValue(*map1_mark_));
+      testAssert(map9_mark_->isEqualValue(*map3_mark_));
+      testAssert(!map9_mark_->isEqualValue(*map5_mark_));
+      testAssert(map9_mark_->isEqualValue(*map7_mark_));
+      testAssert(map9_mark_->isEqualValue(*map8_mark_));
+      testAssert(map9_mark_->isEqualValue(*map9_mark_));
+      testAssert(!map1_mark_->isEqualValue(*null1_mark_));
+      testAssert(!map1_mark_->isEqualValue(*str1_mark_));
+      testAssert(!map1_mark_->isEqualValue(*int1_mark_));
+      testAssert(!map1_mark_->isEqualValue(*fl1_mark_));
+      testAssert(!map1_mark_->isEqualValue(*list1_mark_));
     }
   }
 }

@@ -52,7 +52,7 @@ bool TestMarkMap::doIsEqualPrefixed(
   for(; liter_ != map.end(); ++liter_, ++riter_) {
     if((*liter_).first != (*riter_).first)
       return false;
-    if((*liter_).second->isEqual(*(*riter_).second, precision_))
+    if(!(*liter_).second->isEqual(*(*riter_).second, precision_))
       return false;
   }
 

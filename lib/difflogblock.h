@@ -48,6 +48,8 @@ class DiffLogBuilderBlock : public DiffLogBuilder {
   private:
     DiffLogBlocks* blocks;
     bool opened_block;
+    int curr_left;
+    int curr_right;
 
     void openBlock();
 

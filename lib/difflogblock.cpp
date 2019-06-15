@@ -44,7 +44,9 @@ void updateRecord(
 DiffLogBuilderBlock::DiffLogBuilderBlock(
     DiffLogBlocks* blocks_) :
   blocks(blocks_),
-  opened_block(false) {
+  opened_block(false),
+  curr_left(0),
+  curr_right(0) {
   assert(blocks != nullptr);
 
 }
@@ -55,7 +57,7 @@ DiffLogBuilderBlock::~DiffLogBuilderBlock() {
 
 void DiffLogBuilderBlock::openBlock() {
   if(!opened_block) {
-    blocks->push_back({-1, -1, -1, -1});
+    blocks->push_back({curr_left, curr_left, curr_right, curr_right});
     opened_block = true;
   }
   assert(!blocks->empty());
@@ -64,6 +66,8 @@ void DiffLogBuilderBlock::openBlock() {
 void DiffLogBuilderBlock::addMatch(
     int left_index_,
     int right_index_) {
+  curr_left = left_index_;
+  curr_right = right_index_;
   /* -- a match closes currently opened block of changes */
   opened_block = false;
 }
@@ -71,7 +75,10 @@ void DiffLogBuilderBlock::addMatch(
 void DiffLogBuilderBlock::addChange(
     int left_index_,
     int right_index_) {
+  curr_left = left_index_;
+  curr_right = right_index_;
   openBlock();
+
   DiffBlock& block_(blocks->back());
   updateRecord(
       block_, &DiffBlock::left_begin, &DiffBlock::left_end, left_index_);
@@ -81,7 +88,9 @@ void DiffLogBuilderBlock::addChange(
 
 void DiffLogBuilderBlock::addDelete(
     int right_index_) {
+  curr_right = right_index_;
   openBlock();
+
   DiffBlock& block_(blocks->back());
   updateRecord(
       block_, &DiffBlock::right_begin, &DiffBlock::right_end, right_index_);
@@ -89,7 +98,9 @@ void DiffLogBuilderBlock::addDelete(
 
 void DiffLogBuilderBlock::addInsert(
     int left_index_) {
+  curr_left = left_index_;
   openBlock();
+
   DiffBlock& block_(blocks->back());
   updateRecord(
       block_, &DiffBlock::left_begin, &DiffBlock::left_end, left_index_);

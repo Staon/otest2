@@ -64,6 +64,7 @@ env.OTest2Suite('Library', 'otest2', [
     'testmark.cpp',
     'testmarkbool.cpp',
     'testmarkbuilder.cpp',
+    'testmarkdiffprinter.cpp',
     'testmarkfloat.cpp',
     'testmarkint.cpp',
     'testmarklist.cpp',

@@ -22,8 +22,8 @@
 #include <iostream>
 #include <vector>
 
-#include <difflogarray.h>
-#include <difflogblock.h>
+#include <otest2/difflogarray.h>
+#include <otest2/difflogblock.h>
 
 namespace OTest2 {
 

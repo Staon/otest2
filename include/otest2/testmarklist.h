@@ -42,7 +42,7 @@ class TestMarkList : public TestMarkPrefix {
         const TestMark* other_) const;
     virtual void doDiffArray(
         const TestMark* parent_,
-        const std::string label_,
+        const std::string& label_,
         std::vector<DiffRecord>& array_) const;
     virtual const char* getParenthesis() const;
 

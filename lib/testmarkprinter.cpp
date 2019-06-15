@@ -23,10 +23,12 @@
 #include <iostream>
 #include <sstream>
 
+#include <otest2/utils.h>
+
 namespace OTest2 {
 
 struct TestMarkPrinter::Impl {
-    std::vector<TestMark::DiffRecord>* array;
+    const std::vector<TestMark::DiffRecord>* array;
     struct StackRecord {
         const TestMark::DiffRecord* mark;
         std::string prefix;
@@ -34,10 +36,11 @@ struct TestMarkPrinter::Impl {
         bool skip;
     };
     std::vector<StackRecord> stack;
-    int index;
+    int& index;
 
     explicit Impl(
-        std::vector<TestMark::DiffRecord>* array_);
+        const std::vector<TestMark::DiffRecord>* array_,
+        int& index_);
 
     /* -- avoid copying */
     Impl(
@@ -55,12 +58,13 @@ struct TestMarkPrinter::Impl {
 };
 
 TestMarkPrinter::Impl::Impl(
-    std::vector<TestMark::DiffRecord>* array_) :
+    const std::vector<TestMark::DiffRecord>* array_,
+    int& index_) :
   array(array_),
   stack(),
-  index(0) {
+  index(index_) {
   assert(array != nullptr);
-
+  index = 0;
 }
 
 void TestMarkPrinter::Impl::printTop(
@@ -69,18 +73,19 @@ void TestMarkPrinter::Impl::printTop(
   assert(!stack.empty());
 
   auto& top_(stack.back());
-
-  std::ostringstream oss_;
-  oss_ << top_.prefix;
-  for(int i_(0); i_ < top_.indent; ++i_)
-    oss_ << "  ";
-  if(open_) {
-    if(!top_.mark->label.empty())
-      oss_ << top_.mark->label << ": ";
-    top_.mark->me->printOpen(os_, oss_.str());
+  if(!top_.skip) {
+    std::ostringstream oss_;
+    oss_ << top_.prefix;
+    for(int i_(0); i_ < top_.indent; ++i_)
+      oss_ << "  ";
+    if(open_) {
+      if(!top_.mark->label.empty())
+        oss_ << top_.mark->label << ": ";
+      top_.mark->me->printOpen(os_, oss_.str());
+    }
+    else
+      top_.mark->me->printClose(os_, oss_.str());
   }
-  else
-    top_.mark->me->printClose(os_, oss_.str());
 }
 
 bool TestMarkPrinter::Impl::handleItem(
@@ -92,11 +97,13 @@ bool TestMarkPrinter::Impl::handleItem(
   /* -- out of the end */
   if(index >= array->size()) {
     /* -- finish all opened nodes */
-    while(!stack.empty()) {
+    if(!stack.empty()) {
       printTop(os_, false);
       stack.pop_back();
+      return true;
     }
 
+    /* -- empty stack, empty input sequence => final end */
     return false;
   }
 
@@ -111,11 +118,11 @@ bool TestMarkPrinter::Impl::handleItem(
 
     /* -- level(s) up from the tree */
     auto* top_(&stack.back());
-    while(top_->mark->me != curr_.parent) {
+    if(top_->mark->me != curr_.parent) {
       printTop(os_, false);
       stack.pop_back();
       assert(!stack.empty());
-      top_ = &stack.back();
+      return true;
     }
 
     /* -- level down into the tree */
@@ -130,14 +137,14 @@ bool TestMarkPrinter::Impl::handleItem(
 }
 
 TestMarkPrinter::TestMarkPrinter(
-    std::vector<TestMark::DiffRecord>* array_) :
-  pimpl(new Impl(array_)) {
+    const std::vector<TestMark::DiffRecord>* array_,
+    int& index_) :
+  pimpl(new Impl(array_, index_)) {
 
 }
 
 TestMarkPrinter::~TestMarkPrinter() {
-  delete pimpl;
-  pimpl = nullptr;
+  odelete(pimpl);
 }
 
 bool TestMarkPrinter::printLine(

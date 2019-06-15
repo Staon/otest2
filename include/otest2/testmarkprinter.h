@@ -40,10 +40,15 @@ class TestMarkPrinter {
     /**
      * @brief Ctor
      *
-     * @param array_ An injected testmark array
+     * @param[in] array_ An injected testmark array. The ownership is not
+     *     taken.
+     * @param[out] index_ A variable keeping current index in the array.
+     *     Client code can observe current index. Client code must not
+     *     change the value!
      */
     explicit TestMarkPrinter(
-        std::vector<TestMark::DiffRecord>* array_);
+        const std::vector<TestMark::DiffRecord>* array_,
+        int& index_);
 
     /**
      * @brief Dtor

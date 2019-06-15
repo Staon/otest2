@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "difflogblock.h"
+#include <otest2/difflogblock.h>
 
 #include <assert.h>
 
@@ -29,14 +29,8 @@ void updateRecord(
     int DiffBlock::* begin_,
     int DiffBlock::* end_,
     int value_) {
-  if(block_.*begin_ < 0) {
-    block_.*begin_ = value_;
-    block_.*end_ = value_ + 1;
-  }
-  else {
-    assert(block_.*end_ == value_);
-    ++(block_.*end_);
-  }
+  assert(block_.*end_ == value_);
+  ++(block_.*end_);
 }
 
 } /* -- namespace */
@@ -45,8 +39,8 @@ DiffLogBuilderBlock::DiffLogBuilderBlock(
     DiffLogBlocks* blocks_) :
   blocks(blocks_),
   opened_block(false),
-  curr_left(0),
-  curr_right(0) {
+  curr_left(-1),
+  curr_right(-1) {
   assert(blocks != nullptr);
 
 }
@@ -57,7 +51,8 @@ DiffLogBuilderBlock::~DiffLogBuilderBlock() {
 
 void DiffLogBuilderBlock::openBlock() {
   if(!opened_block) {
-    blocks->push_back({curr_left, curr_left, curr_right, curr_right});
+    blocks->push_back({
+      curr_left + 1, curr_left + 1, curr_right + 1, curr_right + 1});
     opened_block = true;
   }
   assert(!blocks->empty());
@@ -75,9 +70,9 @@ void DiffLogBuilderBlock::addMatch(
 void DiffLogBuilderBlock::addChange(
     int left_index_,
     int right_index_) {
+  openBlock();
   curr_left = left_index_;
   curr_right = right_index_;
-  openBlock();
 
   DiffBlock& block_(blocks->back());
   updateRecord(
@@ -88,8 +83,8 @@ void DiffLogBuilderBlock::addChange(
 
 void DiffLogBuilderBlock::addDelete(
     int right_index_) {
-  curr_right = right_index_;
   openBlock();
+  curr_right = right_index_;
 
   DiffBlock& block_(blocks->back());
   updateRecord(
@@ -98,8 +93,8 @@ void DiffLogBuilderBlock::addDelete(
 
 void DiffLogBuilderBlock::addInsert(
     int left_index_) {
-  curr_left = left_index_;
   openBlock();
+  curr_left = left_index_;
 
   DiffBlock& block_(blocks->back());
   updateRecord(

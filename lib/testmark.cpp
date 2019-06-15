@@ -19,9 +19,10 @@
 #include <testmark.h>
 
 #include <assert.h>
+#include <string>
 #include <typeinfo>
 
-#include "hirschberg.h"
+#include <otest2/hirschberg.h>
 #include <otest2/testmarkprinter.h>
 
 namespace OTest2 {
@@ -45,7 +46,10 @@ class TestMarkScore {
        *    beginning of a changed block than block beginning inside
        *    a container node. */
       if(action_ == DiffAction::SUBSTR) {
-        if(left_.parent->isFirstOrLastChild(left_.me) || right_.parent->isFirstOrLastChild(right_.me))
+        if(left_.parent == nullptr
+            || left_.parent->isFirstOrLastChild(left_.me)
+            || right_.parent == nullptr
+            || right_.parent->isFirstOrLastChild(right_.me))
           return -5;
         else
           return -10;
@@ -59,7 +63,8 @@ class TestMarkScore {
         const TestMark::DiffRecord& right_,
         DiffAction action_) const {
       if(action_ == DiffAction::SUBSTR) {
-        if(right_.parent->isFirstOrLastChild(right_.me))
+        if(right_.parent == nullptr
+            ||right_.parent->isFirstOrLastChild(right_.me))
           return -5;
         else
           return -10;
@@ -71,7 +76,8 @@ class TestMarkScore {
         const TestMark::DiffRecord& left_,
         DiffAction action_) const {
       if(action_ == DiffAction::SUBSTR) {
-        if(left_.parent->isFirstOrLastChild(left_.me))
+        if(left_.parent == nullptr
+            || left_.parent->isFirstOrLastChild(left_.me))
           return -5;
         else
           return -10;
@@ -146,15 +152,19 @@ void TestMark::printClose(
 
 void TestMark::computeDiff(
     const TestMark& other_,
+    std::vector<DiffRecord>& left_,
+    std::vector<DiffRecord>& right_,
     DiffLogBuilder& diff_) const {
-  /* -- prepare input array */
-  std::vector<DiffRecord> left_;
-  doDiffArray(nullptr, "", left_);
-  std::vector<DiffRecord> right_;
-  other_.doDiffArray(nullptr, "", right_);
+  /* -- prepare input arrays */
+  std::vector<DiffRecord> left_array_;
+  doDiffArray(nullptr, "", left_array_);
+  std::vector<DiffRecord> right_array_;
+  other_.doDiffArray(nullptr, "", right_array_);
 
   /* -- compute the diff */
-  hirschbergDiff(left_, right_, diff_, TestMarkScore());
+  hirschbergDiff(left_array_, right_array_, diff_, TestMarkScore());
+  left_.swap(left_array_);
+  right_.swap(right_array_);
 }
 
 void TestMark::printMark(
@@ -162,7 +172,8 @@ void TestMark::printMark(
     const std::string& prefix_) const {
   std::vector<DiffRecord> array_;
   diffArray(array_);
-  TestMarkPrinter printer_(&array_);
+  int index_;
+  TestMarkPrinter printer_(&array_, index_);
   while(printer_.printLine(os_, prefix_));
 }
 

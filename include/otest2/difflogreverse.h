@@ -19,7 +19,7 @@
 #ifndef OTest2__LIB_DIFFLOGREVERSE_H_
 #define OTest2__LIB_DIFFLOGREVERSE_H_
 
-#include "difflogbuilder.h"
+#include <otest2/difflogbuilder.h>
 
 namespace OTest2 {
 

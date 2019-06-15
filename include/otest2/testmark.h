@@ -99,7 +99,7 @@ class TestMark {
      */
     virtual void doDiffArray(
         const TestMark* parent_,
-        const std::string label_,
+        const std::string& label_,
         std::vector<DiffRecord>& array_) const = 0;
 
   private:
@@ -203,10 +203,14 @@ class TestMark {
      * @brief Compute difference of two test marks
      *
      * @param[in] other_ The second test mark
+     * @param[out] left_ Linearized this testmark
+     * @param[out] right_ Linearized other testmark
      * @param[out] diff_ Generated log
      */
     void computeDiff(
         const TestMark& other_,
+        std::vector<DiffRecord>& left_,
+        std::vector<DiffRecord>& right_,
         DiffLogBuilder& diff_) const;
 
     /**

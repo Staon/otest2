@@ -20,9 +20,9 @@
 #ifndef OTest2__LIB_DIFFLOGARRAY_H_
 #define OTest2__LIB_DIFFLOGARRAY_H_
 
-#include "hirschberg.h"
-
 #include <vector>
+
+#include <otest2/hirschberg.h>
 
 namespace OTest2 {
 

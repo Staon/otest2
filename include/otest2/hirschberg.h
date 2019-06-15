@@ -23,7 +23,7 @@
 #include <cstdint>
 #include <vector>
 
-#include "difflogreverse.h"
+#include <otest2/difflogreverse.h>
 
 namespace OTest2 {
 

@@ -19,13 +19,77 @@
 #include <otest2/otest2.h>
 
 #include <iostream>
+#include <sstream>
 
+#include <otest2/difflogblock.h>
+#include <otest2/hirschberg.h>
 #include <otest2/testmark.h>
+#include <otest2/testmarkdiffprinter.h>
 #include <otest2/testmarkbuilder.h>
 
 namespace OTest2 {
 
 namespace Test {
+
+namespace {
+
+typedef std::vector<const char*> Expected;
+
+void printDiffResult(
+    std::ostream& os_,
+    const std::string& result_) {
+  bool open_quote_(true);
+  for(char c_ : result_) {
+    if(open_quote_) {
+      os_ << '"';
+      open_quote_ = false;
+    }
+    switch(c_) {
+      case '\n':
+        os_ << "\",\n";
+        open_quote_ = true;
+        break;
+      case '"':
+        os_ << "\\\"";
+        break;
+      default:
+        os_ << c_;
+        break;
+    }
+  }
+}
+
+bool testDifference(
+    TestMarkPtr mark1_,
+    TestMarkPtr mark2_,
+    const Expected& expected_) {
+  /* -- compute the difference */
+  std::vector<TestMark::DiffRecord> array1_;
+  std::vector<TestMark::DiffRecord> array2_;
+  DiffLogBlocks diff_log_;
+  DiffLogBuilderBlock log_builder_(&diff_log_);
+  mark1_->computeDiff(*mark2_, array1_, array2_, log_builder_);
+
+  /* -- print the difference */
+  std::ostringstream oss_;
+  printTestMarkDiff(oss_, array1_, array2_, diff_log_, 3);
+
+  /* -- print the expected */
+  std::ostringstream exp_oss_;
+  for(auto line_ : expected_)
+    exp_oss_ << line_ << "\n";
+
+  if(oss_.str() != exp_oss_.str()) {
+    printDiffResult(std::cout, oss_.str());
+    std::cout << " ---- " << std::endl;
+    printDiffResult(std::cout, exp_oss_.str());
+    return false;
+  }
+  else
+    return true;
+}
+
+} /* -- namespace */
 
 TEST_SUITE(TestMarks) {
   TEST_CASE(BasicTypes) {
@@ -376,6 +440,327 @@ TEST_SUITE(TestMarks) {
       builder_.closeContainer();
       builder_.closeContainer();
       builder_.stealMark()->printMark(std::cout, "*  ");
+    }
+  }
+
+  TEST_CASE(Difference) {
+    TEST_SIMPLE() {
+      TestMarkBuilder builder_;
+
+      builder_.openList();
+      builder_.closeContainer();
+      TestMarkPtr mark1_(builder_.stealMark());
+      builder_.openList();
+      builder_.appendString("Value A");
+      builder_.closeContainer();
+      TestMarkPtr mark2_(builder_.stealMark());
+
+      /* -- both input sequences are empty */
+      testAssert(testDifference(mark1_, mark1_, Expected{}));
+      /* -- one sequence is empty: the second one is the full change */
+      testAssert(testDifference(mark1_, mark2_, Expected{
+        "  [",
+        "-   \"Value A\"",
+        "  ]",
+      }));
+      testAssert(testDifference(mark2_, mark1_, Expected{
+        "  [",
+        "+   \"Value A\"",
+        "  ]",
+      }));
+      /* -- both sequences are the same */
+      testAssert(testDifference(mark2_, mark2_, Expected{}));
+
+      /* -- change in a list */
+      builder_.openList();
+      builder_.appendString("Value B");
+      builder_.closeContainer();
+      TestMarkPtr mark3_(builder_.stealMark());
+      builder_.openList();
+      builder_.appendString("Value B");
+      builder_.appendString("Value A");
+      builder_.closeContainer();
+      TestMarkPtr mark4_(builder_.stealMark());
+      testAssert(testDifference(mark2_, mark3_, Expected{
+        "  [",
+        "-   \"Value B\"",
+        "+   \"Value A\"",
+        "  ]",
+      }));
+      testAssert(testDifference(mark3_, mark2_, Expected{
+        "  [",
+        "-   \"Value A\"",
+        "+   \"Value B\"",
+        "  ]",
+      }));
+      testAssert(testDifference(mark2_, mark4_, Expected{
+        "  [",
+        "-   \"Value B\"",
+        "    \"Value A\"",
+        "  ]",
+      }));
+      testAssert(testDifference(mark4_, mark2_, Expected{
+        "  [",
+        "+   \"Value B\"",
+        "    \"Value A\"",
+        "  ]",
+      }));
+
+      /* -- gap in context */
+      builder_.openList();
+      builder_.appendString("Value 01");
+      builder_.appendString("Value 02");
+      builder_.appendString("Value 03");
+      builder_.appendString("Value 04");
+      builder_.appendString("Value 05");
+      builder_.appendString("Value 06");
+      builder_.appendString("Value 07");
+      builder_.appendString("Value 08");
+      builder_.appendString("Value 09");
+      builder_.appendString("Value 10");
+      builder_.appendString("Value 11");
+      builder_.appendString("Value 12");
+      builder_.appendString("Value 13");
+      builder_.appendString("Value 14");
+      builder_.appendString("Value 15");
+      builder_.appendString("Value 16");
+      builder_.appendString("Value 17");
+      builder_.closeContainer();
+      TestMarkPtr mark5_(builder_.stealMark());
+      builder_.openList();
+      builder_.appendString("Value 01");
+      builder_.appendString("Value 02");
+      builder_.appendString("Value 03");
+      builder_.appendString("Value 04");
+      builder_.appendString("Insert 1");
+      builder_.appendString("Insert 2");
+      builder_.appendString("Insert 3");
+      builder_.appendString("Value 05");
+      builder_.appendString("Value 06");
+      builder_.appendString("Value 07");
+      builder_.appendString("Value 08");
+      builder_.appendString("Value 09");
+      builder_.appendString("Value 10");
+      builder_.appendString("Value 11");
+      builder_.appendString("Value 14");
+      builder_.appendString("Value 15");
+      builder_.appendString("Value 16");
+      builder_.appendString("Value 17");
+      builder_.closeContainer();
+      TestMarkPtr mark6_(builder_.stealMark());
+      testAssert(testDifference(mark6_, mark5_, Expected{
+        "  ......... ",
+        "    \"Value 02\"",
+        "    \"Value 03\"",
+        "    \"Value 04\"",
+        "+   \"Insert 1\"",
+        "+   \"Insert 2\"",
+        "+   \"Insert 3\"",
+        "    \"Value 05\"",
+        "    \"Value 06\"",
+        "    \"Value 07\"",
+        "  ......... ",
+        "    \"Value 09\"",
+        "    \"Value 10\"",
+        "    \"Value 11\"",
+        "-   \"Value 12\"",
+        "-   \"Value 13\"",
+        "    \"Value 14\"",
+        "    \"Value 15\"",
+        "    \"Value 16\"",
+        "  ......... ",
+      }));
+      testAssert(testDifference(mark5_, mark6_, Expected{
+        "  ......... ",
+        "    \"Value 02\"",
+        "    \"Value 03\"",
+        "    \"Value 04\"",
+        "-   \"Insert 1\"",
+        "-   \"Insert 2\"",
+        "-   \"Insert 3\"",
+        "    \"Value 05\"",
+        "    \"Value 06\"",
+        "    \"Value 07\"",
+        "  ......... ",
+        "    \"Value 09\"",
+        "    \"Value 10\"",
+        "    \"Value 11\"",
+        "+   \"Value 12\"",
+        "+   \"Value 13\"",
+        "    \"Value 14\"",
+        "    \"Value 15\"",
+        "    \"Value 16\"",
+        "  ......... ",
+      }));
+
+      /* -- too short gaps */
+      builder_.openList();
+      builder_.appendString("Value 01");
+      builder_.appendString("Value 02");
+      builder_.appendString("Value 03");
+      builder_.appendString("Value 04");
+      builder_.appendString("Value 05");
+      builder_.appendString("Value 06");
+      builder_.appendString("Value 07");
+      builder_.appendString("Value 08");
+      builder_.appendString("Value 09");
+      builder_.appendString("Value 10");
+      builder_.appendString("Value 11");
+      builder_.appendString("Value 12");
+      builder_.appendString("Value 13");
+      builder_.appendString("Value 14");
+      builder_.closeContainer();
+      TestMarkPtr mark7_(builder_.stealMark());
+      builder_.openList();
+      builder_.appendString("Value 01");
+      builder_.appendString("Value 02");
+      builder_.appendString("Value AA");
+      builder_.appendString("Value AB");
+      builder_.appendString("Value 06");
+      builder_.appendString("Value 07");
+      builder_.appendString("Value 08");
+      builder_.appendString("Value 09");
+      builder_.appendString("Value 10");
+      builder_.appendString("Value DD");
+      builder_.appendString("Value EE");
+      builder_.appendString("Value FF");
+      builder_.appendString("Value 13");
+      builder_.appendString("Value 14");
+      builder_.closeContainer();
+      TestMarkPtr mark8_(builder_.stealMark());
+      testAssert(testDifference(mark7_, mark8_, Expected{
+        "  [",
+        "    \"Value 01\"",
+        "    \"Value 02\"",
+        "-   \"Value AA\"",
+        "-   \"Value AB\"",
+        "+   \"Value 03\"",
+        "+   \"Value 04\"",
+        "+   \"Value 05\"",
+        "    \"Value 06\"",
+        "    \"Value 07\"",
+        "    \"Value 08\"",
+        "    \"Value 09\"",
+        "    \"Value 10\"",
+        "-   \"Value DD\"",
+        "-   \"Value EE\"",
+        "-   \"Value FF\"",
+        "+   \"Value 11\"",
+        "+   \"Value 12\"",
+        "    \"Value 13\"",
+        "    \"Value 14\"",
+        "  ]",
+      }));
+      testAssert(testDifference(mark8_, mark7_, Expected{
+        "  [",
+        "    \"Value 01\"",
+        "    \"Value 02\"",
+        "-   \"Value 03\"",
+        "-   \"Value 04\"",
+        "-   \"Value 05\"",
+        "+   \"Value AA\"",
+        "+   \"Value AB\"",
+        "    \"Value 06\"",
+        "    \"Value 07\"",
+        "    \"Value 08\"",
+        "    \"Value 09\"",
+        "    \"Value 10\"",
+        "-   \"Value 11\"",
+        "-   \"Value 12\"",
+        "+   \"Value DD\"",
+        "+   \"Value EE\"",
+        "+   \"Value FF\"",
+        "    \"Value 13\"",
+        "    \"Value 14\"",
+        "  ]",
+      }));
+
+      /* -- more real example */
+      builder_.openList("Uris");
+        builder_.openMap("Source");
+        builder_.setKey("type");
+        builder_.appendString("live");
+        builder_.setKey("codec");
+        builder_.appendString("h264");
+        builder_.setKey("protocol");
+        builder_.appendString("hls");
+        builder_.setKey("uri");
+        builder_.appendString("http://hls01/playlist.m3u8");
+        builder_.setKey("drm");
+        builder_.appendString("widevine");
+        builder_.closeContainer();
+
+        builder_.openMap("Source");
+        builder_.setKey("type");
+        builder_.appendString("live");
+        builder_.setKey("codec");
+        builder_.appendString("h264");
+        builder_.setKey("protocol");
+        builder_.appendString("hls");
+        builder_.setKey("uri");
+        builder_.appendString("http://hls02/playlist.m3u8");
+        builder_.setKey("drm");
+        builder_.appendString("widevine");
+        builder_.closeContainer();
+      builder_.closeContainer();
+      TestMarkPtr mark9_(builder_.stealMark());
+
+      builder_.openList("Uris");
+        builder_.openMap("Source");
+        builder_.setKey("type");
+        builder_.appendString("live");
+        builder_.setKey("codec");
+        builder_.appendString("h264");
+        builder_.setKey("protocol");
+        builder_.appendString("hls");
+        builder_.setKey("uri");
+        builder_.appendString("http://hls01/playlist.m3u8");
+        builder_.setKey("drm");
+        builder_.appendString("widevine");
+        builder_.closeContainer();
+
+        builder_.openMap("Source");
+        builder_.setKey("type");
+        builder_.appendString("live");
+        builder_.setKey("codec");
+        builder_.appendString("h264");
+        builder_.setKey("protocol");
+        builder_.appendString("hls");
+        builder_.setKey("uri");
+        builder_.appendString("http://hls03/playlist.m3u8");
+        builder_.setKey("drm");
+        builder_.appendString("widevine");
+        builder_.closeContainer();
+
+        builder_.openMap("Source");
+        builder_.setKey("type");
+        builder_.appendString("live");
+        builder_.setKey("codec");
+        builder_.appendString("h264");
+        builder_.setKey("protocol");
+        builder_.appendString("hls");
+        builder_.setKey("uri");
+        builder_.appendString("http://hls02/playlist.m3u8");
+        builder_.setKey("drm");
+        builder_.appendString("widevine");
+        builder_.closeContainer();
+      builder_.closeContainer();
+      TestMarkPtr mark10_(builder_.stealMark());
+
+      testAssert(testDifference(mark10_, mark9_, Expected{
+        "  ......... ",
+        "      drm: \"widevine\"",
+        "      protocol: \"hls\"",
+        "      type: \"live\"",
+        "+     uri: \"http://hls03/playlist.m3u8\"",
+        "+   Source {",
+        "+     codec: \"h264\"",
+        "+     drm: \"widevine\"",
+        "+     protocol: \"hls\"",
+        "+     type: \"live\"",
+        "      uri: \"http://hls02/playlist.m3u8\"",
+        "+   }",
+      }));
     }
   }
 }

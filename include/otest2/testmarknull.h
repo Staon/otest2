@@ -40,7 +40,7 @@ class TestMarkNull : public TestMark {
         const TestMark* other_) const;
     virtual void doDiffArray(
         const TestMark* parent_,
-        const std::string label_,
+        const std::string& label_,
         std::vector<DiffRecord>& array_) const;
     virtual void doPrintOpen(
         std::ostream& os_,

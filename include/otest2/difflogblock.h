@@ -22,7 +22,7 @@
 
 #include <vector>
 
-#include "hirschberg.h"
+#include <otest2/hirschberg.h>
 
 namespace OTest2 {
 

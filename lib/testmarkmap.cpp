@@ -59,21 +59,22 @@ bool TestMarkMap::doIsEqualPrefixed(
   return true;
 }
 
-bool TestMarkMap::doIsFirstOrLastChild(
-    const TestMark* other_) const {
-  if(map.empty())
-    return false;
-  return (*map.begin()).second.get() == other_
-      || (*map.rbegin()).second.get() == other_;
+void TestMarkMap::doDiffArray(
+    int level_,
+    std::vector<LinearizedRecord>& array_) const
+{
+  for(const auto& item_ : map) {
+    array_.push_back({level_, item_.second.get(), item_.first});
+  }
 }
 
-void TestMarkMap::doDiffArray(
-    const TestMark* parent_,
+void TestMarkMap::doLinearizedMark(
+    int level_,
     const std::string& label_,
-    std::vector<DiffRecord>& array_) const {
-  pushDiffMe(parent_, label_, array_);
+    std::vector<LinearizedRecord>& array_) const {
+  array_.push_back({level_, this, label_});
   for(const auto& item_ : map) {
-    item_.second->doDiffArray(this, item_.first, array_);
+    item_.second->doLinearizedMark(level_ + 1, item_.first, array_);
   }
 }
 

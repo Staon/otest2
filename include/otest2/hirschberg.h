@@ -21,6 +21,7 @@
 
 #include <assert.h>
 #include <cstdint>
+#include <tuple>
 #include <vector>
 
 #include <otest2/difflogreverse.h>
@@ -40,24 +41,27 @@ enum class DiffAction : uint8_t {
 template<typename Type_>
 class DiffScoreLCS {
   public:
-    int scoreSub(
-        Type_ left_,
-        Type_ right_,
-        DiffAction action_,
-        bool& same_) const {
-      same_ = left_ == right_;
-      return same_ ? 1 : -1;
+    std::tuple<bool, int> scoreSub(
+        int step_,
+        const Type_ left_[],
+        int left_index_,
+        const Type_ right_[],
+        int right_index_) const {
+      bool same_(left_[left_index_] == right_[right_index_]);
+      return std::make_tuple(same_, same_ ? 1 : -1);
     }
 
     int scoreDel(
-        Type_ right_,
-        DiffAction action_) const {
+        int step_,
+        const Type_ right_[],
+        int right_index_) const {
       return -1;
     }
 
     int scoreIns(
-        Type_ left_,
-        DiffAction action_) const {
+        int step_,
+        const Type_ left_[],
+        int left_index_) const {
       return -1;
     }
 
@@ -78,19 +82,23 @@ class Hirschberg {
 
     static ScoreRecord selectAction(
         const ScoreFce_& score_fce_,
-        Type_ left_,
-        Type_ right_,
+        int step_,
+        const Type_ left_[],
+        int left_index_,
+        const Type_ right_[],
+        int right_index_,
         const ScoreRecord& sub_prev_,
         const ScoreRecord& del_prev_,
         const ScoreRecord& ins_prev_) {
       /* -- compute scores for subsequence, insertion and deletion */
       bool same_;
-      int sub_score_(
-          sub_prev_.score + score_fce_.scoreSub(left_, right_, sub_prev_.action, same_));
+      auto sub_result_(score_fce_.scoreSub(
+          step_, left_, left_index_, right_, right_index_));
+      int sub_score_(sub_prev_.score + std::get<1>(sub_result_));
       int del_score_(
-          del_prev_.score + score_fce_.scoreDel(right_, del_prev_.action));
+          del_prev_.score + score_fce_.scoreDel(step_, right_, right_index_));
       int ins_score_(
-          ins_prev_.score + score_fce_.scoreIns(left_, ins_prev_.action));
+          ins_prev_.score + score_fce_.scoreIns(step_, left_, left_index_));
 
       /* -- find the extreme */
       if(score_fce_.betterScore(del_score_, ins_score_)) {
@@ -98,7 +106,7 @@ class Hirschberg {
           return {DiffAction::DELETE, del_score_};
         }
         else {
-          if(same_)
+          if(std::get<0>(sub_result_))
             return {DiffAction::SUBSTR, sub_score_};
           else
             return {DiffAction::CHANGE, sub_score_};
@@ -109,7 +117,7 @@ class Hirschberg {
           return {DiffAction::INSERT, ins_score_};
         }
         else {
-          if(same_)
+          if(std::get<0>(sub_result_))
             return {DiffAction::SUBSTR, sub_score_};
           else
             return {DiffAction::CHANGE, sub_score_};
@@ -136,8 +144,9 @@ class Hirschberg {
         score_[i_] = {
             DiffAction::INSERT,
             score_[i_ - 1].score + score_fce_.scoreIns(
-                left_[left_begin_ + (i_ - 1) * step_],
-                score_[i_ - 1].action)};
+                step_,
+                left_,
+                left_begin_ + (i_ - 1) * step_)};
       }
 
       /* -- compute the scores */
@@ -145,14 +154,15 @@ class Hirschberg {
       for(; right_begin_ != right_end_; right_begin_ += step_) {
         next_line_[0] = {
             DiffAction::DELETE,
-            score_[0].score + score_fce_.scoreDel(
-                right_[right_begin_],
-                score_[0].action)};
+            score_[0].score + score_fce_.scoreDel(step_, right_,right_begin_)};
         for(int i_(1); i_ < left_len_; ++i_) {
           next_line_[i_] = selectAction(
               score_fce_,
-              left_[left_begin_ + (i_ - 1) * step_],
-              right_[right_begin_],
+              step_,
+              left_,
+              left_begin_ + (i_ - 1) * step_,
+              right_,
+              right_begin_,
               score_[i_ - 1],
               score_[i_],
               next_line_[i_ - 1]);
@@ -189,17 +199,20 @@ class Hirschberg {
         ScoreRecord last_sub_{DiffAction::SUBSTR, 0};
         ScoreRecord last_del_{
           DiffAction::INSERT,
-          score_fce_.scoreIns(left_[left_begin_], DiffAction::SUBSTR)};
+          score_fce_.scoreIns(1, left_, left_begin_)};
         int index_(-1);
         DiffAction change_action_;
         for(int i_(right_begin_); i_ < right_end_; ++i_) {
           ScoreRecord last_ins_{
             DiffAction::DELETE,
-            last_sub_.score + score_fce_.scoreDel(right_[i_], last_sub_.action)};
+            last_sub_.score + score_fce_.scoreDel(1, right_, i_)};
           last_del_ = selectAction(
               score_fce_,
-              left_[left_begin_],
-              right_[i_],
+              1,
+              left_,
+              left_begin_,
+              right_,
+              i_,
               last_sub_,
               last_del_,
               last_ins_);
@@ -224,17 +237,20 @@ class Hirschberg {
         ScoreRecord last_sub_{DiffAction::SUBSTR, 0};
         ScoreRecord last_ins_{
           DiffAction::DELETE,
-          score_fce_.scoreDel(right_[right_begin_], DiffAction::SUBSTR)};
+          score_fce_.scoreDel(1, right_, right_begin_)};
         int index_(-1);
         DiffAction change_action_;
         for(int i_(left_begin_); i_ < left_end_; ++i_) {
           ScoreRecord last_del_{
             DiffAction::INSERT,
-            last_sub_.score + score_fce_.scoreIns(left_[i_], last_sub_.action)};
+            last_sub_.score + score_fce_.scoreIns(1, left_, i_)};
           last_ins_ = selectAction(
               score_fce_,
-              left_[i_],
-              right_[right_begin_],
+              1,
+              left_,
+              i_,
+              right_,
+              right_begin_,
               last_sub_,
               last_del_,
               last_ins_);

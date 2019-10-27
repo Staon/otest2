@@ -26,8 +26,8 @@ namespace OTest2 {
 
 void printTestMarkDiff(
     std::ostream& os_,
-    const std::vector<TestMark::DiffRecord>& left_,
-    const std::vector<TestMark::DiffRecord>& right_,
+    const std::vector<TestMark::LinearizedRecord>& left_,
+    const std::vector<TestMark::LinearizedRecord>& right_,
     const DiffLogBlocks& diff_log_,
     int context_) {
   int left_line_(0);

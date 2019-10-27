@@ -21,10 +21,13 @@
 #include <assert.h>
 #include <iostream>
 
+#include <otest2/testmarkhash.h>
+
 namespace OTest2 {
 
 TestMarkInt::TestMarkInt(
     int64_t value_) :
+  TestMark(TestMarkHash::hashBasicType("int", value_)),
   value(value_) {
 
 }
@@ -45,17 +48,18 @@ bool TestMarkInt::doIsEqualValue(
   return doIsEqual(other_, precision_);
 }
 
-bool TestMarkInt::doIsFirstOrLastChild(
-    const TestMark* other_) const {
-  assert(false);
-  return false;
+void TestMarkInt::doDiffArray(
+    int level_,
+    std::vector<LinearizedRecord>& array_) const
+{
+  /* -- there are no children */
 }
 
-void TestMarkInt::doDiffArray(
-    const TestMark* parent_,
+void TestMarkInt::doLinearizedMark(
+    int level_,
     const std::string& label_,
-    std::vector<DiffRecord>& array_) const {
-  pushDiffMe(parent_, label_, array_);
+    std::vector<LinearizedRecord>& array_) const {
+  array_.push_back({level_, this, label_});
 }
 
 void TestMarkInt::doPrintOpen(

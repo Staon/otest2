@@ -28,9 +28,9 @@
 namespace OTest2 {
 
 struct TestMarkPrinter::Impl {
-    const std::vector<TestMark::DiffRecord>* array;
+    const std::vector<TestMark::LinearizedRecord>* array;
     struct StackRecord {
-        const TestMark::DiffRecord* mark;
+        const TestMark::LinearizedRecord* mark;
         std::string prefix;
         int indent;
         bool skip;
@@ -39,7 +39,7 @@ struct TestMarkPrinter::Impl {
     int& index;
 
     explicit Impl(
-        const std::vector<TestMark::DiffRecord>* array_,
+        const std::vector<TestMark::LinearizedRecord>* array_,
         int& index_);
 
     /* -- avoid copying */
@@ -58,7 +58,7 @@ struct TestMarkPrinter::Impl {
 };
 
 TestMarkPrinter::Impl::Impl(
-    const std::vector<TestMark::DiffRecord>* array_,
+    const std::vector<TestMark::LinearizedRecord>* array_,
     int& index_) :
   array(array_),
   stack(),
@@ -118,7 +118,7 @@ bool TestMarkPrinter::Impl::handleItem(
 
     /* -- level(s) up from the tree */
     auto* top_(&stack.back());
-    if(top_->mark->me != curr_.parent) {
+    if(top_->mark->level + 1 != curr_.level) {
       printTop(os_, false);
       stack.pop_back();
       assert(!stack.empty());
@@ -137,7 +137,7 @@ bool TestMarkPrinter::Impl::handleItem(
 }
 
 TestMarkPrinter::TestMarkPrinter(
-    const std::vector<TestMark::DiffRecord>* array_,
+    const std::vector<TestMark::LinearizedRecord>* array_,
     int& index_) :
   pimpl(new Impl(array_, index_)) {
 

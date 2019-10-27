@@ -22,9 +22,12 @@
 #include <assert.h>
 #include <iostream>
 
+#include <otest2/testmarkhash.h>
+
 namespace OTest2 {
 
-TestMarkNull::TestMarkNull() {
+TestMarkNull::TestMarkNull() :
+  TestMark(TestMarkHash::hashBasicType("null", nullptr)) {
 
 }
 
@@ -44,17 +47,18 @@ bool TestMarkNull::doIsEqualValue(
   return true;  /* -- the type of the node is enough */
 }
 
-bool TestMarkNull::doIsFirstOrLastChild(
-    const TestMark* other_) const {
-  assert(false);
-  return false;
+void TestMarkNull::doDiffArray(
+    int level_,
+    std::vector<LinearizedRecord>& array_) const
+{
+  /* -- there are no children */
 }
 
-void TestMarkNull::doDiffArray(
-    const TestMark* parent_,
+void TestMarkNull::doLinearizedMark(
+    int level_,
     const std::string& label_,
-    std::vector<DiffRecord>& array_) const {
-  pushDiffMe(parent_, label_, array_);
+    std::vector<LinearizedRecord>& array_) const {
+  array_.push_back({level_, this, label_});
 }
 
 void TestMarkNull::doPrintOpen(

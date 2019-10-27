@@ -23,6 +23,7 @@
 
 #include <otest2/testmarkbool.h>
 #include <otest2/testmarkfloat.h>
+#include <otest2/testmarkhash.h>
 #include <otest2/testmarkint.h>
 #include <otest2/testmarklist.h>
 #include <otest2/testmarkmap.h>
@@ -47,6 +48,11 @@ struct TestMarkBuilder::Impl {
     struct Record {
         std::string key;
         std::unique_ptr<Container> container;
+        TestMarkHash hash;
+
+        explicit Record(
+            std::string key_,
+            std::unique_ptr<Container>&& container_);
     };
     typedef std::vector<Record> Stack;
     Stack stack;
@@ -75,6 +81,15 @@ TestMark* TestMarkBuilder::Impl::RootContainer::getMark() {
   return nullptr;
 }
 
+TestMarkBuilder::Impl::Record::Record(
+    std::string key_,
+    std::unique_ptr<Container>&& container_) :
+  key(std::move(key_)),
+  container(std::move(container_)),
+  hash() {
+
+}
+
 void TestMarkBuilder::Impl::appendItem(
     TestMarkPtr item_) {
   assert(item_ != nullptr);
@@ -82,6 +97,8 @@ void TestMarkBuilder::Impl::appendItem(
   Record& record_(stack.back());
   record_.container->append(record_.key, item_);
   record_.key = "";
+  record_.hash.addHashCode(item_->getHashCode());
+  record_.hash.addTerminator();
 }
 
 void TestMarkBuilder::Impl::appendItem(
@@ -94,8 +111,9 @@ void TestMarkBuilder::Impl::appendItem(
 
 TestMarkBuilder::TestMarkBuilder() :
   pimpl(new Impl) {
-  pimpl->stack.push_back(
-      {"", std::unique_ptr<Container>(new Impl::RootContainer(&pimpl->root))});
+  pimpl->stack.emplace_back(
+      "",
+      std::unique_ptr<Container>(new Impl::RootContainer(&pimpl->root)));
 }
 
 TestMarkBuilder::~TestMarkBuilder() {
@@ -139,7 +157,7 @@ void TestMarkBuilder::appendString(
 
 void TestMarkBuilder::openContainerImpl(
     std::unique_ptr<typename TestMarkBuilder::Container>&& container_) {
-  pimpl->stack.push_back({"", std::move(container_)});
+  pimpl->stack.emplace_back("", std::move(container_));
 }
 
 void TestMarkBuilder::openList() {
@@ -161,7 +179,9 @@ void TestMarkBuilder::openMap(
 }
 
 void TestMarkBuilder::closeContainer() {
-  std::unique_ptr<TestMark> container_(pimpl->stack.back().container->getMark());
+  auto& top_(pimpl->stack.back());
+  std::unique_ptr<TestMark> container_(top_.container->getMark());
+  container_->setHashCode(top_.hash.getHashCode());
   pimpl->stack.pop_back();
   pimpl->appendItem(container_.release());
 }

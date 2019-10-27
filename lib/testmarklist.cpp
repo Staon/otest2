@@ -50,20 +50,22 @@ bool TestMarkList::doIsEqualPrefixed(
   return true;
 }
 
-bool TestMarkList::doIsFirstOrLastChild(
-    const TestMark* other_) const {
-  if(list.empty())
-    return false;
-  return list.front().get() == other_ || list.back().get() == other_;
+void TestMarkList::doDiffArray(
+    int level_,
+    std::vector<LinearizedRecord>& array_) const
+{
+  for(const auto& item_ : list) {
+    array_.push_back({level_, item_.get(), ""});
+  }
 }
 
-void TestMarkList::doDiffArray(
-    const TestMark* parent_,
+void TestMarkList::doLinearizedMark(
+    int level_,
     const std::string& label_,
-    std::vector<DiffRecord>& array_) const {
-  pushDiffMe(parent_, label_, array_);
+    std::vector<LinearizedRecord>& array_) const {
+  array_.push_back({level_, this, label_});
   for(const auto& item_ : list) {
-    item_->doDiffArray(this, "", array_);
+    item_->doLinearizedMark(level_ + 1, "", array_);
   }
 }
 

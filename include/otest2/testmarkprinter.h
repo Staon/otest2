@@ -47,7 +47,7 @@ class TestMarkPrinter {
      *     change the value!
      */
     explicit TestMarkPrinter(
-        const std::vector<TestMark::DiffRecord>* array_,
+        const std::vector<TestMark::LinearizedRecord>* array_,
         int& index_);
 
     /**

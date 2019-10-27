@@ -64,8 +64,8 @@ bool testDifference(
     TestMarkPtr mark2_,
     const Expected& expected_) {
   /* -- compute the difference */
-  std::vector<TestMark::DiffRecord> array1_;
-  std::vector<TestMark::DiffRecord> array2_;
+  std::vector<TestMark::LinearizedRecord> array1_;
+  std::vector<TestMark::LinearizedRecord> array2_;
   DiffLogBlocks diff_log_;
   DiffLogBuilderBlock log_builder_(&diff_log_);
   mark1_->computeDiff(*mark2_, array1_, array2_, log_builder_);
@@ -749,17 +749,20 @@ TEST_SUITE(TestMarks) {
 
       testAssert(testDifference(mark10_, mark9_, Expected{
         "  ......... ",
-        "      drm: \"widevine\"",
         "      protocol: \"hls\"",
         "      type: \"live\"",
-        "+     uri: \"http://hls03/playlist.m3u8\"",
+        "      uri: \"http://hls01/playlist.m3u8\"",
         "+   Source {",
         "+     codec: \"h264\"",
         "+     drm: \"widevine\"",
         "+     protocol: \"hls\"",
         "+     type: \"live\"",
-        "      uri: \"http://hls02/playlist.m3u8\"",
+        "+     uri: \"http://hls03/playlist.m3u8\"",
         "+   }",
+        "    Source {",
+        "      codec: \"h264\"",
+        "      drm: \"widevine\"",
+        "  ......... ",
       }));
     }
   }

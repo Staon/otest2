@@ -19,9 +19,12 @@
 #ifndef OTest2__LIB_TESTMARK_H_
 #define OTest2__LIB_TESTMARK_H_
 
+#include <cstdint>
 #include <iosfwd>
 #include <string>
 #include <vector>
+
+#include <otest2/testmarkhashcode.h>
 
 namespace OTest2 {
 
@@ -34,22 +37,18 @@ constexpr long double DEFAULT_FLOAT_PRECISION(1.0e-9);
  */
 class TestMark {
   public:
-    struct DiffRecord {
-        const TestMark* parent;
+    /**
+     * @brief One item of linearized test mark
+     */
+    struct LinearizedRecord {
+        const int level;
         const TestMark* me;
         std::string label;
     };
 
-  protected:
-    /**
-     * @brief Push me into the diff array
-     */
-    void pushDiffMe(
-        const TestMark* parent_,
-        const std::string& label_,
-        std::vector<DiffRecord>& array_) const;
-
   private:
+    TestMarkHashCode hash;
+
     /**
      * @brief Check whether this mark is equal to the @a other_
      *
@@ -79,28 +78,27 @@ class TestMark {
         long double precision_) const = 0;
 
     /**
-     * @brief Check if the specified node is the first or last child
-     *     of current node.
+     * @brief Create diff array of children
      *
-     * @param other_ The other node
-     * @return True if the node is the first or the last child
+     * @param[in] level_ Nested level
+     * @param[out] array_ The array
      */
-    virtual bool doIsFirstOrLastChild(
-        const TestMark* other_) const = 0;
+    virtual void doDiffArray(
+        int level_,
+        std::vector<LinearizedRecord>& array_) const = 0;
 
   public:
     /**
-     * @brief Create the array which is used as the input sequence of the diff
-     *     algorithm
+     * @brief Create linearized test mark
      *
-     * @param[in] parent_ Parent of the node
-     * @param[in] label_ Label of the node
-     * @param[out] array_ The diff array
+     * @param[in] level_ Nested level
+     * @param[in] label_ Label of the mark
+     * @param[out] array_ The array
      */
-    virtual void doDiffArray(
-        const TestMark* parent_,
+    virtual void doLinearizedMark(
+        int level_,
         const std::string& label_,
-        std::vector<DiffRecord>& array_) const = 0;
+        std::vector<LinearizedRecord>& array_) const = 0;
 
   private:
     /**
@@ -117,11 +115,27 @@ class TestMark {
         std::ostream& os_,
         const std::string& prefix_) const = 0;
 
+    static void computeDiff(
+        int level_,
+        const std::vector<LinearizedRecord>& left_,
+        const std::vector<LinearizedRecord>& right_,
+        std::vector<LinearizedRecord>& left_result_,
+        std::vector<LinearizedRecord>& right_result_,
+        DiffLogBuilder& diff_);
+
   public:
     /**
      * @brief Ctor
      */
     TestMark();
+
+    /**
+     * @brief Ctor
+     *
+     * @param hash_ Initial hash code
+     */
+    explicit TestMark(
+        TestMarkHashCode hash_);
 
     /**
      * @brief Dtor
@@ -133,6 +147,18 @@ class TestMark {
         const TestMark&) = delete;
     TestMark& operator =(
         const TestMark&) = delete;
+
+    /**
+     * @brief Set testmark's hash
+     * @warning Use it only if you know what your doing
+     */
+    void setHashCode(
+        TestMarkHashCode code_);
+
+    /**
+     * @brief Get testmarks' hash code
+     */
+    TestMarkHashCode getHashCode() const noexcept;
 
     /**
      * @brief Compare two marks for equality
@@ -162,22 +188,28 @@ class TestMark {
         long double precision_ = DEFAULT_FLOAT_PRECISION) const;
 
     /**
-     * @brief Check if the specified node is the first or last child
-     *     of current node.
+     * @brief Compare values of 2 testmark nodes and their hash codes
+     *
+     * This method compares just value of current node and the value
+     * of the @a other_ node. Furthermore, it compares the hash codes
+     * of both nodes (it's a kind of weak comparison of the whole subtree).
      *
      * @param other_ The other node
-     * @return True if the node is the first or the last child
+     * @param precision_ Optional precision of comparison of floating point
+     *     numbers
+     * @return True if the values of the marks are equal
      */
-    bool isFirstOrLastChild(
-        const TestMark* other_) const;
+    bool isEqualValueHash(
+        const TestMark& other_,
+        long double precision_ = DEFAULT_FLOAT_PRECISION) const;
 
     /**
-     * @brief Create array for the diff algorithm
+     * @brief Create the linearized test mark
      *
      * @param[out] array_ The array
      */
-    void diffArray(
-        std::vector<DiffRecord>& array_) const;
+    void linearizedMark(
+        std::vector<LinearizedRecord>& array_) const;
 
     /**
      * @brief Print opening of the node into a stream
@@ -209,8 +241,8 @@ class TestMark {
      */
     void computeDiff(
         const TestMark& other_,
-        std::vector<DiffRecord>& left_,
-        std::vector<DiffRecord>& right_,
+        std::vector<LinearizedRecord>& left_,
+        std::vector<LinearizedRecord>& right_,
         DiffLogBuilder& diff_) const;
 
     /**

@@ -22,10 +22,13 @@
 #include <assert.h>
 #include <iostream>
 
+#include <otest2/testmarkhash.h>
+
 namespace OTest2 {
 
 TestMarkBool::TestMarkBool(
     bool value_) :
+  TestMark(TestMarkHash::hashBasicType("bool", value_)),
   value(value_) {
 
 }
@@ -46,17 +49,18 @@ bool TestMarkBool::doIsEqualValue(
   return doIsEqual(other_, precision_);
 }
 
-bool TestMarkBool::doIsFirstOrLastChild(
-    const TestMark* other_) const {
-  assert(false);
-  return false;
+void TestMarkBool::doDiffArray(
+    int level_,
+    std::vector<LinearizedRecord>& array_) const
+{
+  /* -- there are no children */
 }
 
-void TestMarkBool::doDiffArray(
-    const TestMark* parent_,
+void TestMarkBool::doLinearizedMark(
+    int level_,
     const std::string& label_,
-    std::vector<DiffRecord>& array_) const {
-  pushDiffMe(parent_, label_, array_);
+    std::vector<LinearizedRecord>& array_) const {
+  array_.push_back({level_, this, label_});
 }
 
 void TestMarkBool::doPrintOpen(

@@ -38,12 +38,13 @@ class TestMarkList : public TestMarkPrefix {
     virtual bool doIsEqualPrefixed(
         const TestMark& other_,
         long double precision_) const;
-    virtual bool doIsFirstOrLastChild(
-        const TestMark* other_) const;
     virtual void doDiffArray(
-        const TestMark* parent_,
+        int level_,
+        std::vector<LinearizedRecord>& array_) const;
+    virtual void doLinearizedMark(
+        int level_,
         const std::string& label_,
-        std::vector<DiffRecord>& array_) const;
+        std::vector<LinearizedRecord>& array_) const;
     virtual const char* getParenthesis() const;
 
   public:

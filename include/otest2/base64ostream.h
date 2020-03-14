@@ -22,8 +22,6 @@
 
 #include <ostream>
 
-#include <otest2/base64buffer.h>
-
 namespace OTest2 {
 
 /**
@@ -31,7 +29,8 @@ namespace OTest2 {
  */
 class Base64OStream : public std::ostream {
   private:
-    Base64Buffer buffer;
+    class Buffer;
+    Buffer* buffer;
 
   public:
     /**

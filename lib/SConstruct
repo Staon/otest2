@@ -8,7 +8,6 @@ env.OTest2Suite('Library', 'otest2', [
     'assertbean.cpp',
     'assertcontext.cpp',
     'assertions.cpp',
-    'base64buffer.cpp',
     'base64istream.cpp',
     'base64ostream.cpp',
     'case.cpp',

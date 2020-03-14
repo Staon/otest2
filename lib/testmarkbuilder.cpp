@@ -29,7 +29,7 @@
 #include <otest2/testmarkmap.h>
 #include <otest2/testmarknull.h>
 #include <otest2/testmarkstring.h>
-#include <utils.h>
+#include <otest2/utils.h>
 
 namespace OTest2 {
 

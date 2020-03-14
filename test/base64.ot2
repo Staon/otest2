@@ -1,0 +1,100 @@
+/*
+ * Copyright (C) 2020 Ondrej Starek
+ *
+ * This file is part of OTest2.
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include <sstream>
+#include <string>
+
+#include <otest2/base64ostream.h>
+
+namespace OTest2 {
+
+namespace Test {
+
+namespace {
+
+const char LEVIATHAN[] = "Man is distinguished, not only by his reason, but by"
+    " this singular passion from other animals, which is a lust of the mind, "
+    "that by a perseverance of delight in the continued and indefatigable "
+    "generation of knowledge, exceeds the short vehemence of any carnal "
+    "pleasure.";
+
+const char CODED_ONE_LINE[] =
+    "TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG5vdCBvbmx5IGJ5IGhpcyByZWFzb24sIGJ1dCBieSB0aGlz"
+    "IHNpbmd1bGFyIHBhc3Npb24gZnJvbSBvdGhlciBhbmltYWxzLCB3aGljaCBpcyBhIGx1c3Qgb2Yg"
+    "dGhlIG1pbmQsIHRoYXQgYnkgYSBwZXJzZXZlcmFuY2Ugb2YgZGVsaWdodCBpbiB0aGUgY29udGlu"
+    "dWVkIGFuZCBpbmRlZmF0aWdhYmxlIGdlbmVyYXRpb24gb2Yga25vd2xlZGdlLCBleGNlZWRzIHRo"
+    "ZSBzaG9ydCB2ZWhlbWVuY2Ugb2YgYW55IGNhcm5hbCBwbGVhc3VyZS4=";
+
+const char CODED_LINES[] =
+    "TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG5vdCBvbmx5IGJ5IGhpcyByZWFzb24sIGJ1dCBieSB0aGlz\n"
+    "IHNpbmd1bGFyIHBhc3Npb24gZnJvbSBvdGhlciBhbmltYWxzLCB3aGljaCBpcyBhIGx1c3Qgb2Yg\n"
+    "dGhlIG1pbmQsIHRoYXQgYnkgYSBwZXJzZXZlcmFuY2Ugb2YgZGVsaWdodCBpbiB0aGUgY29udGlu\n"
+    "dWVkIGFuZCBpbmRlZmF0aWdhYmxlIGdlbmVyYXRpb24gb2Yga25vd2xlZGdlLCBleGNlZWRzIHRo\n"
+    "ZSBzaG9ydCB2ZWhlbWVuY2Ugb2YgYW55IGNhcm5hbCBwbGVhc3VyZS4=";
+
+} /* -- namespace */
+
+TEST_SUITE(Base64) {
+  TEST_CASE(OutputStreamShort) {
+    TEST_SIMPLE() {
+      std::ostringstream oss_;
+      Base64OStream bos_(&oss_);
+
+      bos_ << "Hello world";
+      testAssert(bos_.finish());
+      testAssertEqual(oss_.str(), "SGVsbG8gd29ybGQ=");
+
+      /* -- The base64 stream is reused. The text is one character shorter
+       *    hence the padding should change. */
+      bos_ << "Hello worl";
+      testAssert(bos_.finish());
+      testAssertEqual(oss_.str(), "SGVsbG8gd29ybGQ=SGVsbG8gd29ybA==");
+
+      /* -- Length of the text is divisible by 3 -> no padding */
+      bos_ << "Hello wor";
+      testAssert(bos_.finish());
+      testAssertEqual(oss_.str(), "SGVsbG8gd29ybGQ=SGVsbG8gd29ybA==SGVsbG8gd29y");
+    }
+  }
+
+  TEST_CASE(OutputStreamLongOneLine) {
+    TEST_SIMPLE() {
+      std::ostringstream oss_;
+      Base64OStream bos_(&oss_);
+      bos_.write(LEVIATHAN, sizeof(LEVIATHAN) - 1);
+      testAssert(bos_.finish());
+      testAssertEqual(oss_.str(), CODED_ONE_LINE);
+    }
+  }
+
+  TEST_CASE(OutputStreamLongLines) {
+    TEST_SIMPLE() {
+      std::ostringstream oss_;
+      Base64OStream bos_(&oss_, 76);
+      bos_.write(LEVIATHAN, sizeof(LEVIATHAN) - 1);
+      testAssert(bos_.finish());
+      testAssertEqual(oss_.str(), CODED_LINES);
+    }
+  }
+}
+
+} /* -- namespace Test */
+
+} /* -- namespace OTest2 */

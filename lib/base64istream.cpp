@@ -29,7 +29,7 @@ namespace OTest2 {
 
 class Base64IStream::Buffer : public std::streambuf {
   private:
-    std::streambuf* decorated;
+    std::istream* decorated;
 
     static const int base64_index[256];
 
@@ -39,7 +39,7 @@ class Base64IStream::Buffer : public std::streambuf {
 
   public:
     explicit Buffer(
-        std::streambuf* decorated_);
+        std::istream* decorated_);
     virtual ~Buffer();
 
     /* -- avoid copying */
@@ -67,7 +67,7 @@ const int Base64IStream::Buffer::base64_index[256] = {
 };
 
 Base64IStream::Buffer::Buffer(
-    std::streambuf* decorated_) :
+    std::istream* decorated_) :
   decorated(decorated_),
   eof(false) {
   assert(decorated != nullptr);
@@ -82,7 +82,7 @@ bool Base64IStream::Buffer::readQuaternion(
     std::uint8_t quaternion_[]) {
   int i_(0);
   while(i_ < 4) {
-    int ci_(decorated->sbumpc());
+    int ci_(decorated->get());
 
     /* -- end of file -> no input data or missing padding */
     if(ci_ == traits_type::eof())
@@ -162,7 +162,7 @@ int Base64IStream::Buffer::underflow() {
 
 Base64IStream::Base64IStream(
     std::istream* decorated_) :
-  buffer(new Buffer(decorated_->rdbuf())) {
+  buffer(new Buffer(decorated_)) {
   rdbuf(buffer);
 }
 

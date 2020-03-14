@@ -31,7 +31,7 @@ namespace OTest2 {
  */
 class Base64OStream::Buffer : public std::streambuf {
   private:
-    std::streambuf* decorated;
+    std::ostream* decorated;
 
     int output_raw_width;
     int output_base64_width;
@@ -42,14 +42,14 @@ class Base64OStream::Buffer : public std::streambuf {
     /**
      * @brief Ctor
      *
-     * @param decorated_ The decorated streambuffer. The ownership is not taken,
+     * @param decorated_ The decorated stream. The ownership is not taken,
      *     the object must exist for the whole lifetime.
      * @param width_ If this value is non-zero and positive, the output is
      *     formatted into lines of this width. The value must divisible by 4.
      *     If the value is zero, the output will be one continuous line.
      */
     explicit Buffer(
-        std::streambuf* decorated_,
+        std::ostream* decorated_,
         int width_);
 
     /**
@@ -78,12 +78,12 @@ class Base64OStream::Buffer : public std::streambuf {
     virtual int overflow(
         int c) override;
 
-    bool finishData();
+    void finishData();
 };
 
 
 Base64OStream::Buffer::Buffer(
-    std::streambuf* decorated_,
+    std::ostream* decorated_,
     int width_) :
   decorated(decorated_) {
   assert(decorated != nullptr);
@@ -109,7 +109,7 @@ Base64OStream::Buffer::~Buffer() {
   delete[] output_buffer;
 }
 
-bool Base64OStream::Buffer::finishData() {
+void Base64OStream::Buffer::finishData() {
   /* -- compute length of data */
   int length_(pptr() - output_buffer);
   assert(length_ >= 0 && length_ <= output_raw_width);
@@ -148,18 +148,17 @@ bool Base64OStream::Buffer::finishData() {
 
   /* -- push the encoded data into the decorated stream buffer */
   int coded_length_(out_ - buffer_);
-  return decorated->sputn(buffer_, coded_length_) == coded_length_;
+  decorated->write(buffer_, coded_length_);
 }
 
 int Base64OStream::Buffer::overflow(
     int c) {
   /* -- flush current data */
-  if(!finishData())
-    return traits_type::eof();
+  finishData();
 
   /* -- start new line if it's requested */
   if(output_newline)
-    decorated->sputc('\n');
+    decorated->put('\n');
 
   /* -- write the character */
   if(c != traits_type::eof()) {
@@ -171,13 +170,14 @@ int Base64OStream::Buffer::overflow(
 }
 
 bool Base64OStream::Buffer::finish() noexcept {
-  return finishData();
+  finishData();
+  return true;
 }
 
 Base64OStream::Base64OStream(
     std::ostream* decorated_,
     int line_length_) :
-  buffer(new Buffer(decorated_->rdbuf(), line_length_)) {
+  buffer(new Buffer(decorated_, line_length_)) {
   rdbuf(buffer);
 }
 

@@ -24,6 +24,7 @@ env.OTest2Suite('Program', 'selftest', [
     'mainloop.ot2',
     'reportermock.cpp',
     'runtime.cpp',
+    'tee.ot2',
     'testmarks.ot2',
 ])
 

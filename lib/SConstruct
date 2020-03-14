@@ -62,6 +62,7 @@ env.OTest2Suite('Library', 'otest2', [
     'suitefactory.cpp',
     'suitegenerated.cpp',
     'suiteordinary.cpp',
+    'teeostream.cpp',
     'terminaldriver.cpp',
     'testmark.cpp',
     'testmarkbool.cpp',

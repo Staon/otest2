@@ -20,12 +20,37 @@
 #ifndef OTest2__LIB_BASE64ISTREAM_H_
 #define OTest2__LIB_BASE64ISTREAM_H_
 
+#include <istream>
+
 namespace OTest2 {
 
-class Base64IStream {
+/**
+ * @brief Input base64 stream
+ */
+class Base64IStream : public std::istream {
+  private:
+    class Buffer;
+    Buffer* buffer;
+
   public:
-    Base64IStream();
+    /**
+     * @brief Ctor
+     *
+     * @param decorated_ A decorated input stream. The ownership is not taken.
+     */
+    explicit Base64IStream(
+        std::istream* decorated_);
+
+    /**
+     * @brief Dtor
+     */
     virtual ~Base64IStream();
+
+    /* -- avoid copying */
+    Base64IStream(
+        const Base64IStream&) = delete;
+    Base64IStream& operator = (
+        const Base64IStream&) = delete;
 };
 
 } /* -- namespace OTest2 */

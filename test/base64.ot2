@@ -20,7 +20,9 @@
 
 #include <sstream>
 #include <string>
+#include <strstream>
 
+#include <otest2/base64istream.h>
 #include <otest2/base64ostream.h>
 
 namespace OTest2 {
@@ -91,6 +93,54 @@ TEST_SUITE(Base64) {
       bos_.write(LEVIATHAN, sizeof(LEVIATHAN) - 1);
       testAssert(bos_.finish());
       testAssertEqual(oss_.str(), CODED_LINES);
+    }
+  }
+
+  TEST_CASE(InputStreamShort) {
+    TEST_SIMPLE() {
+      {
+        std::istrstream iss_("SGVsbG8gd29ybGQ=");
+        Base64IStream bis_(&iss_);
+        std::ostringstream oss_;
+        bis_.get(*oss_.rdbuf());
+        testAssertEqual(oss_.str(), "Hello world");
+      }
+
+      {
+        std::istrstream iss_("SGVsbG8gd29ybA==");
+        Base64IStream bis_(&iss_);
+        std::ostringstream oss_;
+        bis_.get(*oss_.rdbuf());
+        testAssertEqual(oss_.str(), "Hello worl");
+      }
+
+      {
+        std::istrstream iss_("SGVsbG8gd29y");
+        Base64IStream bis_(&iss_);
+        std::ostringstream oss_;
+        bis_.get(*oss_.rdbuf());
+        testAssertEqual(oss_.str(), "Hello wor");
+      }
+    }
+  }
+
+  TEST_CASE(InputStreamLongOneLine) {
+    TEST_SIMPLE() {
+      std::istrstream iss_(CODED_ONE_LINE);
+      Base64IStream bis_(&iss_);
+      std::ostringstream oss_;
+      bis_.get(*oss_.rdbuf());
+      testAssertEqual(oss_.str(), LEVIATHAN);
+    }
+  }
+
+  TEST_CASE(InputStreamLongLines) {
+    TEST_SIMPLE() {
+      std::istrstream iss_(CODED_LINES);
+      Base64IStream bis_(&iss_);
+      std::ostringstream oss_;
+      bis_.get(*oss_.rdbuf());
+      testAssertEqual(oss_.str(), LEVIATHAN);
     }
   }
 }

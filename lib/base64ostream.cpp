@@ -76,7 +76,7 @@ class Base64OStream::Buffer : public std::streambuf {
   private:
     /* -- streambuf interface */
     virtual int overflow(
-        int c);
+        int c) override;
 
     bool finishData();
 };

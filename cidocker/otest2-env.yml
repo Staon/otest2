@@ -1,0 +1,54 @@
+version: '3.5'
+services:
+  # DNS proxy to allow simple access from the host machine
+  dns:
+    image: "defreitas/dns-proxy-server"
+
+    # At the address http://docker-dns:5380/ a management interface is accessible.
+    # The interface allows adding of manual DNS records.
+    hostname: "docker-dns"
+
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/etc/resolv.conf:/etc/resolv.conf"
+
+  # The main development container
+  tve:
+    image: "otest2-develop-env"
+
+    # -- A simple container name. Setting of the name is optional.
+    container_name: "otest2"
+
+    # -- Because the DNS proxy above, the running container will be accessible
+    #    by this hostname. Setting of the hostname is optional.
+    hostname: "otest2"
+
+    security_opt:
+      # -- allow GDB to disable address randomization
+      - seccomp:unconfined
+    
+    cap_add:
+      # -- needed for debugging
+      - SYS_PTRACE
+
+    # -- Allows to set starting directory to project workspace
+    working_dir: ${HOME}
+
+    volumes:
+      # -- Whole user's home directory. The home must contain the .ssh directory
+      #    to allow access to the gitlab and other sites. If you want to access
+      #    the container through ssh (ie. Eclipse runs remote debugger through
+      #    ssh), you have to add your public key into the authorized_keys:
+      #
+      #        cat ${HOME}/.ssh/id_rsa.pub >> ${HOME}/.ssh/authorized_keys
+      #
+      - "${HOME}:${HOME}"
+
+    # Keep the container running indefinitely
+    tty: true
+    stdin_open: true
+    command:
+      tail -f /dev/null
+
+    depends_on:
+      - dns

@@ -1,10 +1,9 @@
-FROM staon/otest2-ci:latest
+FROM debian:stretch
 
 # Set of build-time variables with user system credentials
 ARG UNAME=user
 ARG UID=1000
 ARG GID=1000
-ARG DOCKER_GID=999
 
 # Add package repositories
 RUN sed -i 's/stretch main/stretch main non-free/' /etc/apt/sources.list
@@ -13,31 +12,19 @@ RUN sed -i 's/stretch main/stretch main non-free/' /etc/apt/sources.list
 RUN apt-get update && apt-get -y install \
 	bash \
 	binutils \
-	strace \
-	ltrace \
-	ccache \
 	gdb \
-	gdbserver \
-	lldb \
-	yasm \
-	valgrind \
-	leaktracer \
-	google-perftools \
-	lcov \
-	cppcheck \
-	openssh-server \
 	inetutils-ping \
-	libpcap-dev \
 	bash-completion \
-	man \
-	manpages-posix \
 	linux-tools \
-	latrace \
-	linux-perf \
-	uftrace \
 	systemd-coredump \
 	sudo \
-	mc \
+	cmake \
+	wget \
+	tar \
+	xz-utils \
+	gzip \
+	g++ \
+	python \
 	&& rm -rf /var/lib/apt/lists/*
 
 # Clean all unused Debian packages
@@ -48,16 +35,12 @@ RUN apt-get update \
 	&& apt-get -y clean \
 	&& rm -rf /var/lib/apt/lists/*
 
-# A run directory needed by the OpenSSH daemon
-RUN mkdir -p /run/sshd
-
 # Set a known password of root to use for development
 RUN echo "root:root" | chpasswd
 
 # Create a duplication of current user on host and add it to sudo group
 RUN groupadd -g $GID $UNAME \
-	&& groupadd -g $DOCKER_GID docker \
-	&& useradd -u $UID -g $GID -G docker -m -s /bin/bash -l $UNAME \
+	&& useradd -u $UID -g $GID -m -s /bin/bash -l $UNAME \
 	&& usermod -aG sudo $UNAME
 
 # Set a known password of the user

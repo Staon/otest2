@@ -31,8 +31,8 @@ env.Append(CCFLAGS = '-g')
 # OTest2 preprocessor builder
 def otest2_preprocessor(source, target, env, for_signature):
     cmd = ['otest2/otest2', '-o', target[0]]
-    cmd.append('-I/usr/local/lib/clang/7.0.1/include')
-    cmd.append('-I/usr/lib/gcc/x86_64-linux-gnu/5/include')
+    cmd.append('-I/usr/local/lib/clang/7.1.0/include')
+    cmd.append('-I/usr/lib/gcc/x86_64-linux-gnu/6/include')
     # -- include paths
     for path in env.Dictionary()['CPPPATH']:
         cmd.append('-I' + str(env.Dir(path)))

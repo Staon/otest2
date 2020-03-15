@@ -1301,6 +1301,7 @@ void parse(
     opts_.push_back("--extra-arg-before=-I" + path_);
   }
   opts_.push_back(options_.infile);
+  opts_.push_back("--");
 
   std::vector<const char*> argv_;
   for(const auto& arg_ : opts_)

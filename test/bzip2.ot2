@@ -1,0 +1,118 @@
+/*
+ * Copyright (C) 2020 Ondrej Starek
+ *
+ * This file is part of OTest2.
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include <functional>
+#include <iostream>
+#include <random>
+#include <sstream>
+#include <string>
+
+#include <otest2/base64istream.h>
+#include <otest2/base64ostream.h>
+#include <otest2/bzip2istream.h>
+#include <otest2/bzip2ostream.h>
+
+namespace OTest2 {
+
+namespace Test {
+
+namespace {
+
+void writeRandomData(
+    std::ostream& os_,
+    int length_,
+    int seed_) {
+  std::mt19937 rnd_(seed_);
+  for(int i_(0); i_ < length_; ++i_)
+    os_.put(static_cast<char>(rnd_()));
+}
+
+bool checkRandomData(
+    const std::string& data_,
+    int length_,
+    int seed_) {
+  if(length_ != data_.length()) {
+    std::cout << "invalid data length: " << length_ << " != " << data_.length() << std::endl;
+    return false;
+  }
+
+  std::mt19937 rnd_(seed_);
+  for(int i_(0); i_ < length_; ++i_)
+    if(data_[i_] != static_cast<char>(rnd_()))
+      return false;
+
+  return true;
+}
+
+bool compressAndDecompress(
+    std::function<void(std::ostream&)> init_fce_,
+    std::function<bool(const std::string&)> check_decompressed_) {
+  /* -- compress input data */
+  std::ostringstream compressed_;
+  {
+    Base64OStream bos_(&compressed_);
+    Bzip2OStream bzos_(&bos_);
+    init_fce_(bzos_);
+  }
+
+  /* -- decompress again */
+  std::istringstream iss_(compressed_.str());
+  Base64IStream bis_(&iss_);
+  Bzip2IStream bzis_(&bis_);
+  std::ostringstream decompressed_;
+  decompressed_ << bzis_.rdbuf();
+
+  /* -- check decompressed data */
+  return check_decompressed_(decompressed_.str());
+}
+
+} /* -- namespace */
+
+TEST_SUITE(BZip2) {
+  TEST_CASE(CompressDecompress) {
+    TEST_SIMPLE() {
+      using namespace std::placeholders;
+
+      /* -- empty stream */
+      testAssert(compressAndDecompress(
+          [](std::ostream& os_) { },
+          [](const std::string& data_) { return data_ == ""; }));
+
+      /* -- simple short text */
+      testAssert(compressAndDecompress(
+          [](std::ostream& os_) { os_ << "Hello world!"; },
+          [](const std::string& data_) { return data_ == "Hello world!"; }));
+
+      /* -- little bit longer data (less than the internal bzip buffer) */
+      testAssert(compressAndDecompress(
+          std::bind(writeRandomData, _1, 1000, 666),
+          std::bind(checkRandomData, _1, 1000, 666)));
+
+      /* -- longer data (several internal buffers) */
+      testAssert(compressAndDecompress(
+          std::bind(writeRandomData, _1, 18567, 3090),
+          std::bind(checkRandomData, _1, 18567, 3090)));
+    }
+  }
+}
+
+} /* -- namespace Test */
+
+} /* -- namespace OTest2 */

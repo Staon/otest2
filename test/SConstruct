@@ -5,6 +5,7 @@ env.Append(LIBPATH = ['../lib'])
 env.Append(LIBS = [
     "otest2",
     'tinfo',
+    'bz2',
 ])
 
 # -- tested test suites
@@ -17,6 +18,7 @@ env.OTest2Suite('Program', 'selftest', [
     env.Glob('selftests/*.ot2.cpp'),
     'assertions.ot2',
     'base64.ot2',
+    'bzip2.ot2',
     'exceptions.ot2',
     'fixtures.ot2',
     'hirschberg.ot2',

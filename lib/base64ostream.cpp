@@ -20,6 +20,7 @@
 #include <otest2/base64ostream.h>
 
 #include <assert.h>
+#include <cstdint>
 #include <streambuf>
 
 #include <otest2/utils.h>
@@ -106,6 +107,7 @@ Base64OStream::Buffer::Buffer(
 }
 
 Base64OStream::Buffer::~Buffer() {
+  finishData();
   delete[] output_buffer;
 }
 
@@ -118,7 +120,7 @@ void Base64OStream::Buffer::finishData() {
   static const unsigned char base64_table[] =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
   char buffer_[output_base64_width];
-  const char* in_(output_buffer);
+  const std::uint8_t* in_(reinterpret_cast<std::uint8_t*>(output_buffer));
   char* out_(buffer_);
   while(length_ >= 3) {
     *out_++ = base64_table[in_[0] >> 2];
@@ -130,7 +132,7 @@ void Base64OStream::Buffer::finishData() {
   }
   if(length_ > 0) {
     /* -- Padding should happen only if the sequence is closed. Otherwise,
-     *    the buffer divisible by 3. */
+     *    the data length is divisible by 3. */
     *out_++ = base64_table[in_[0] >> 2];
     if(length_ == 1) {
         *out_++ = base64_table[(in_[0] & 0x03) << 4];

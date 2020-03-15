@@ -10,6 +10,8 @@ env.OTest2Suite('Library', 'otest2', [
     'assertions.cpp',
     'base64istream.cpp',
     'base64ostream.cpp',
+    'bzip2istream.cpp',
+    'bzip2ostream.cpp',
     'case.cpp',
     'casefactory.cpp',
     'casegenerated.cpp',

@@ -58,20 +58,21 @@ void TestMarkOutBin::writeTypeMark(
 
 void TestMarkOutBin::writeInt(
     std::int64_t value_) {
-  if(value_ <= std::numeric_limits<std::uint8_t>::max()) {
+  std::uint64_t rvalue_(static_cast<std::uint64_t>(value_));
+  if(rvalue_ <= std::numeric_limits<std::uint8_t>::max()) {
     writeTag(TestMarkOutBinTag::INT_SHORT);
-    std::int8_t be_value_(static_cast<std::uint8_t>(value_));
+    std::int8_t be_value_(static_cast<std::uint8_t>(rvalue_));
     writeBinaryData(sizeof(be_value_), reinterpret_cast<const std::uint8_t*>(&be_value_));
   }
-  else if(value_ <= std::numeric_limits<std::uint16_t>::max()) {
+  else if(rvalue_ <= std::numeric_limits<std::uint16_t>::max()) {
     writeTag(TestMarkOutBinTag::INT_NORMAL);
     std::int16_t be_value_(
-        boost::endian::native_to_big(static_cast<std::uint16_t>(value_)));
+        boost::endian::native_to_big(static_cast<std::uint16_t>(rvalue_)));
     writeBinaryData(sizeof(be_value_), reinterpret_cast<const std::uint8_t*>(&be_value_));
   }
   else {
     writeTag(TestMarkOutBinTag::INT_HUGE);
-    std::int64_t be_value_(boost::endian::native_to_big(value_));
+    std::int64_t be_value_(boost::endian::native_to_big(rvalue_));
     writeBinaryData(sizeof(be_value_), reinterpret_cast<const std::uint8_t*>(&be_value_));
   }
 }

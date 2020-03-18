@@ -44,6 +44,7 @@ struct TestMarkBuilder::Impl {
             const std::string& key_,
             TestMarkPtr mark_);
         virtual TestMark* getMark();
+        virtual TestMarkHashCode getHashCode() const;
     };
     struct Record {
         std::string key;
@@ -81,6 +82,10 @@ TestMark* TestMarkBuilder::Impl::RootContainer::getMark() {
   return nullptr;
 }
 
+TestMarkHashCode TestMarkBuilder::Impl::RootContainer::getHashCode() const {
+  return TestMarkHashCode();
+}
+
 TestMarkBuilder::Impl::Record::Record(
     std::string key_,
     std::unique_ptr<Container>&& container_) :
@@ -88,6 +93,9 @@ TestMarkBuilder::Impl::Record::Record(
   container(std::move(container_)),
   hash() {
 
+  /* -- Initial hash code. The basic containers compute it from
+   *    the prefix value. */
+  hash.addHashCode(container->getHashCode());
 }
 
 void TestMarkBuilder::Impl::appendItem(

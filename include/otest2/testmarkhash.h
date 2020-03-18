@@ -109,6 +109,7 @@ class TestMarkHash {
     }
 
     static TestMarkHashCode hashBasicType(
+        const char* type_name_,
         const std::string& value_);
 };
 

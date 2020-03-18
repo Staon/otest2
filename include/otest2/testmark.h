@@ -29,6 +29,7 @@
 namespace OTest2 {
 
 class DiffLogBuilder;
+class TestMarkOut;
 
 constexpr long double DEFAULT_FLOAT_PRECISION(1.0e-9);
 
@@ -114,6 +115,12 @@ class TestMark {
     virtual void doPrintClose(
         std::ostream& os_,
         const std::string& prefix_) const = 0;
+
+    /**
+     * @copydoc serializeMark()
+     */
+    virtual void doSerializeMark(
+        TestMarkOut& serializer_) const = 0;
 
     static void computeDiff(
         int level_,
@@ -230,6 +237,14 @@ class TestMark {
     void printClose(
         std::ostream& os_,
         const std::string& prefix_) const;
+
+    /**
+     * @brief Serialize the testmark into a serializer
+     *
+     * @param serializer_ The serializer
+     */
+    void serializeMark(
+        TestMarkOut& serializer_) const;
 
     /**
      * @brief Compute difference of two test marks

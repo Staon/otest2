@@ -70,9 +70,10 @@ TestMarkHashCode TestMarkHash::getHashCode() const noexcept {
 }
 
 TestMarkHashCode TestMarkHash::hashBasicType(
+    const char* type_name_,
     const std::string& value_) {
   TestMarkHash hash_;
-  hash_.addString("string");
+  hash_.addString(type_name_);
   hash_.addTerminator();
   hash_.addData(
       reinterpret_cast<const std::uint8_t*>(value_.c_str()),

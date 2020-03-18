@@ -25,12 +25,19 @@
 #include <limits>
 
 #include <otest2/testmarkhash.h>
+#include <otest2/testmarkout.h>
 
 namespace OTest2 {
 
+namespace {
+
+const char SERIALIZE_TYPE_MARK[] = "ot2:float";
+
+} /* -- namespace */
+
 TestMarkFloat::TestMarkFloat(
     long double value_) :
-  TestMark(TestMarkHash::hashBasicType("float", value_)),
+  TestMark(TestMarkHash::hashBasicType(SERIALIZE_TYPE_MARK, value_)),
   value(value_) {
 
 }
@@ -79,6 +86,12 @@ void TestMarkFloat::doPrintClose(
     std::ostream& os_,
     const std::string& prefix_) const {
   /* -- nothing to do */
+}
+
+void TestMarkFloat::doSerializeMark(
+    TestMarkOut& serializer_) const {
+  serializer_.writeTypeMark(SERIALIZE_TYPE_MARK);
+  serializer_.writeFloat(value);
 }
 
 } /* namespace OTest2 */

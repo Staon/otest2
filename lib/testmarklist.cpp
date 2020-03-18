@@ -20,17 +20,25 @@
 
 #include <assert.h>
 
+#include <otest2/testmarkout.h>
+
 namespace OTest2 {
 
+namespace {
+
+const char SERIALIZE_TYPE_MARK[] = "ot2:list";
+
+} /* -- namespace */
+
 TestMarkList::TestMarkList() :
-  TestMarkPrefix(""),
+  TestMarkPrefix(SERIALIZE_TYPE_MARK, ""),
   list() {
 
 }
 
 TestMarkList::TestMarkList(
     const std::string& prefix_) :
-  TestMarkPrefix(prefix_) {
+  TestMarkPrefix(SERIALIZE_TYPE_MARK, prefix_) {
 
 }
 
@@ -71,6 +79,14 @@ void TestMarkList::doLinearizedMark(
 
 const char* TestMarkList::getParenthesis() const {
   return "[]";
+}
+
+void TestMarkList::serializeItems(
+    TestMarkOut& serializer_) const {
+  serializer_.writeInt(list.size());
+  for(const auto& item_ : list) {
+    item_->serializeMark(serializer_);
+  }
 }
 
 void TestMarkList::append(

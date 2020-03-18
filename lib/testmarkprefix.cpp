@@ -20,10 +20,16 @@
 
 #include <iostream>
 
+#include <otest2/testmarkhash.h>
+#include <otest2/testmarkout.h>
+
 namespace OTest2 {
 
 TestMarkPrefix::TestMarkPrefix(
+    const char* serialize_type_mark_,
     const std::string& prefix_) :
+  TestMark(TestMarkHash::hashBasicType(serialize_type_mark_, prefix_)),
+  serialize_type_mark(serialize_type_mark_),
   prefix(prefix_) {
 
 }
@@ -61,6 +67,13 @@ void TestMarkPrefix::doPrintClose(
     const std::string& prefix_) const {
   const char* pars_(getParenthesis());
   os_ << prefix_ << pars_[1] << '\n';
+}
+
+void TestMarkPrefix::doSerializeMark(
+    TestMarkOut& serializer_) const {
+  serializer_.writeTypeMark(serialize_type_mark);
+  serializer_.writeString(prefix);
+  serializeItems(serializer_);
 }
 
 } /* namespace OTest2 */

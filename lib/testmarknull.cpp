@@ -23,11 +23,18 @@
 #include <iostream>
 
 #include <otest2/testmarkhash.h>
+#include <otest2/testmarkout.h>
 
 namespace OTest2 {
 
+namespace {
+
+const char SERIALIZE_TYPE_MARK[] = "ot2:null";
+
+} /* -- namespace */
+
 TestMarkNull::TestMarkNull() :
-  TestMark(TestMarkHash::hashBasicType("null", nullptr)) {
+  TestMark(TestMarkHash::hashBasicType(SERIALIZE_TYPE_MARK, nullptr)) {
 
 }
 
@@ -71,6 +78,11 @@ void TestMarkNull::doPrintClose(
     std::ostream& os_,
     const std::string& prefix_) const {
   /* -- nothing to do */
+}
+
+void TestMarkNull::doSerializeMark(
+    TestMarkOut& serializer_) const {
+  serializer_.writeTypeMark(SERIALIZE_TYPE_MARK);
 }
 
 } /* namespace OTest2 */

@@ -22,12 +22,19 @@
 #include <iostream>
 
 #include <otest2/testmarkhash.h>
+#include <otest2/testmarkout.h>
 
 namespace OTest2 {
 
+namespace {
+
+const char SERIALIZE_TYPE_MARK[] = "ot2:string";
+
+} /* -- namespace */
+
 TestMarkString::TestMarkString(
     const std::string& value_) :
-  TestMark(TestMarkHash::hashBasicType(value_)),
+  TestMark(TestMarkHash::hashBasicType(SERIALIZE_TYPE_MARK, value_)),
   value(value_) {
 
 }
@@ -72,6 +79,12 @@ void TestMarkString::doPrintClose(
     std::ostream& os_,
     const std::string& prefix_) const {
   /* -- nothing to do */
+}
+
+void TestMarkString::doSerializeMark(
+    TestMarkOut& serializer_) const {
+  serializer_.writeTypeMark(SERIALIZE_TYPE_MARK);
+  serializer_.writeString(value);
 }
 
 } /* namespace OTest2 */

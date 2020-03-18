@@ -25,6 +25,7 @@
 #include <memory>
 #include <string>
 
+#include <otest2/testmarkhashcode.h>
 #include <otest2/testmarkptr.h>
 #include <otest2/utils.h>
 
@@ -63,6 +64,7 @@ class TestMarkBuilder {
             const std::string& key_,
             TestMarkPtr mark_) = 0;
         virtual TestMark* getMark() = 0;
+        virtual TestMarkHashCode getHashCode() const = 0;
     };
 
     template<typename ContainerMark_>
@@ -85,6 +87,10 @@ class TestMarkBuilder {
         virtual TestMark* getMark() {
           return container.release();
         }
+        virtual TestMarkHashCode getHashCode() const {
+          return container->getHashCode();
+        }
+
     };
 
     template<typename ContainerMark_>
@@ -106,6 +112,9 @@ class TestMarkBuilder {
         }
         virtual TestMark* getMark() {
           return container.release();
+        }
+        virtual TestMarkHashCode getHashCode() const {
+          return container->getHashCode();
         }
     };
 

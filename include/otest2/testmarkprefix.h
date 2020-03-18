@@ -31,6 +31,7 @@ namespace OTest2 {
  */
 class TestMarkPrefix : public TestMark {
   private:
+    const char* serialize_type_mark;
     std::string prefix;
 
     virtual bool doIsEqual(
@@ -45,6 +46,8 @@ class TestMarkPrefix : public TestMark {
     virtual void doPrintClose(
         std::ostream& os_,
         const std::string& prefix_) const;
+    virtual void doSerializeMark(
+        TestMarkOut& serializer_) const;
 
     /**
      * @brief Check equality of the test mark while the prefix is equal
@@ -65,13 +68,24 @@ class TestMarkPrefix : public TestMark {
      */
     virtual const char* getParenthesis() const = 0;
 
+    /**
+     * @brief Serialize container's items
+     *
+     * @param serializer_ A serializer
+     */
+    virtual void serializeItems(
+        TestMarkOut& serializer_) const = 0;
+
   protected:
     /**
      * @brief Ctor
      *
+     * @param serialize_type_mark_ A type mark used for serialization.
+     *     The ownership is not taken!
      * @param prefix_ The prefix. It can be empty.
      */
     explicit TestMarkPrefix(
+        const char* serialize_type_mark_,
         const std::string& prefix_);
 
     /**

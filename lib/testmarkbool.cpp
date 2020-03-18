@@ -23,12 +23,19 @@
 #include <iostream>
 
 #include <otest2/testmarkhash.h>
+#include <otest2/testmarkout.h>
 
 namespace OTest2 {
 
+namespace {
+
+const char SERIALIZE_TYPE_MARK[] = "ot2:bool";
+
+} /* -- namespace */
+
 TestMarkBool::TestMarkBool(
     bool value_) :
-  TestMark(TestMarkHash::hashBasicType("bool", value_)),
+  TestMark(TestMarkHash::hashBasicType(SERIALIZE_TYPE_MARK, value_)),
   value(value_) {
 
 }
@@ -78,6 +85,12 @@ void TestMarkBool::doPrintClose(
     std::ostream& os_,
     const std::string& prefix_) const {
   /* -- nothing to do */
+}
+
+void TestMarkBool::doSerializeMark(
+    TestMarkOut& serializer_) const {
+  serializer_.writeTypeMark(SERIALIZE_TYPE_MARK);
+  serializer_.writeInt(value ? 1 : 0);
 }
 
 } /* namespace OTest2 */

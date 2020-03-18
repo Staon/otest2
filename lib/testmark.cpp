@@ -141,6 +141,11 @@ void TestMark::printClose(
   doPrintClose(os_, prefix_);
 }
 
+void TestMark::serializeMark(
+    TestMarkOut& serializer_) const {
+  doSerializeMark(serializer_);
+}
+
 void TestMark::computeDiff(
     int level_,
     const std::vector<LinearizedRecord>& left_,

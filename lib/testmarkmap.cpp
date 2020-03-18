@@ -20,17 +20,25 @@
 
 #include <assert.h>
 
+#include <otest2/testmarkout.h>
+
 namespace OTest2 {
 
+namespace {
+
+const char SERIALIZE_TYPE_MARK[] = "ot2:map";
+
+} /* -- namespace */
+
 TestMarkMap::TestMarkMap() :
-  TestMarkPrefix(""),
+  TestMarkPrefix(SERIALIZE_TYPE_MARK, ""),
   map() {
 
 }
 
 TestMarkMap::TestMarkMap(
     const std::string& prefix_) :
-  TestMarkPrefix(prefix_),
+  TestMarkPrefix(SERIALIZE_TYPE_MARK, prefix_),
   map() {
 
 }
@@ -80,6 +88,15 @@ void TestMarkMap::doLinearizedMark(
 
 const char* TestMarkMap::getParenthesis() const {
   return "{}";
+}
+
+void TestMarkMap::serializeItems(
+    TestMarkOut& serializer_) const {
+  serializer_.writeInt(map.size());
+  for(const auto& item_ : map) {
+    serializer_.writeString(item_.first);
+    item_.second->serializeMark(serializer_);
+  }
 }
 
 void TestMarkMap::append(

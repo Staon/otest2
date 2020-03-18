@@ -50,6 +50,8 @@ class TestMarkFloat : public TestMark {
     virtual void doPrintClose(
         std::ostream& os_,
         const std::string& prefix_) const;
+    virtual void doSerializeMark(
+        TestMarkOut& serializer_) const;
 
   public:
     /**

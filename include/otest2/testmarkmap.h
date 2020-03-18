@@ -47,6 +47,8 @@ class TestMarkMap : public TestMarkPrefix {
         const std::string& label_,
         std::vector<LinearizedRecord>& array_) const;
     virtual const char* getParenthesis() const;
+    virtual void serializeItems(
+        TestMarkOut& serializer_) const;
 
   public:
     /**

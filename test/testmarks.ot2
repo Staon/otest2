@@ -21,11 +21,13 @@
 #include <iostream>
 #include <sstream>
 
+#include <otest2/base64ostream.h>
 #include <otest2/difflogblock.h>
 #include <otest2/hirschberg.h>
 #include <otest2/testmark.h>
-#include <otest2/testmarkdiffprinter.h>
 #include <otest2/testmarkbuilder.h>
+#include <otest2/testmarkdiffprinter.h>
+#include <otest2/testmarkoutbinios.h>
 
 namespace OTest2 {
 
@@ -764,6 +766,37 @@ TEST_SUITE(TestMarks) {
         "      drm: \"widevine\"",
         "  ......... ",
       }));
+    }
+  }
+
+  TEST_CASE(Serialization) {
+    TEST_SIMPLE() {
+      TestMarkBuilder builder_;
+      builder_.openList("root");
+      builder_.openMap();
+      builder_.setKey("null");
+      builder_.appendNull();
+      builder_.setKey("string");
+      builder_.appendString("Value A");
+      builder_.setKey("int");
+      builder_.appendInt(-2983);
+      builder_.setKey("float");
+      builder_.appendFloat(3.141529);
+      builder_.setKey("list");
+      builder_.openList();
+      builder_.appendString("inner value");
+      builder_.appendBool(true);
+      builder_.appendBool(false);
+      builder_.closeContainer();
+      builder_.closeContainer();
+      builder_.closeContainer();
+
+      TestMarkPtr source_(builder_.stealMark());
+      std::ostringstream oss_;
+      Base64OStream bos_(&oss_);
+      TestMarkOutBinIOS tmobi_(&bos_);
+      source_->serializeMark(tmobi_);
+//      testAssertEqual(oss_.str(), "");
     }
   }
 }

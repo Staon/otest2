@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     scons \
     libncurses5-dev \
     libbz2-dev \
+    libboost-dev \
     g++ \
     git \
     openssh-client \

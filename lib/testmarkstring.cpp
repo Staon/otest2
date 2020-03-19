@@ -20,8 +20,10 @@
 
 #include <assert.h>
 #include <iostream>
+#include <utility>
 
 #include <otest2/testmarkhash.h>
+#include <otest2/testmarkin.h>
 #include <otest2/testmarkout.h>
 
 namespace OTest2 {
@@ -34,13 +36,26 @@ const char SERIALIZE_TYPE_MARK[] = "ot2:string";
 
 TestMarkString::TestMarkString(
     const std::string& value_) :
-  TestMark(TestMarkHash::hashBasicType(SERIALIZE_TYPE_MARK, value_)),
   value(value_) {
+
+}
+
+TestMarkString::TestMarkString(
+    CtorMark*) :
+  value() {
 
 }
 
 TestMarkString::~TestMarkString() {
 
+}
+
+const char* TestMarkString::typeMark() {
+  return SERIALIZE_TYPE_MARK;
+}
+
+TestMarkHashCode TestMarkString::doGetHashCode() const noexcept {
+  return TestMarkHash::hashBasicType(SERIALIZE_TYPE_MARK, value);
 }
 
 bool TestMarkString::doIsEqual(
@@ -85,6 +100,12 @@ void TestMarkString::doSerializeMark(
     TestMarkOut& serializer_) const {
   serializer_.writeTypeMark(SERIALIZE_TYPE_MARK);
   serializer_.writeString(value);
+}
+
+void TestMarkString::doDeserializeMark(
+    TestMarkFactory& factory_,
+    TestMarkIn& deserializer_) {
+  value = deserializer_.readString();
 }
 
 } /* namespace OTest2 */

@@ -72,14 +72,7 @@ class TestMarkScore {
 
 } /* -- namespace */
 
-TestMark::TestMark() :
-  hash(0) {
-
-}
-
-TestMark::TestMark(
-    TestMarkHashCode hash_) :
-  hash(hash_) {
+TestMark::TestMark() {
 
 }
 
@@ -87,13 +80,8 @@ TestMark::~TestMark() {
 
 }
 
-void TestMark::setHashCode(
-    TestMarkHashCode code_) {
-  hash = code_;
-}
-
 TestMarkHashCode TestMark::getHashCode() const noexcept {
-  return hash;
+  return doGetHashCode();
 }
 
 bool TestMark::isEqual(
@@ -119,7 +107,7 @@ bool TestMark::isEqualValueHash(
     long double precision_) const {
   if(typeid(*this) != typeid(other_))
     return false;
-  if (hash != other_.hash)
+  if(doGetHashCode() != other_.doGetHashCode())
     return false;
   return doIsEqualValue(other_, precision_);
 }
@@ -144,6 +132,12 @@ void TestMark::printClose(
 void TestMark::serializeMark(
     TestMarkOut& serializer_) const {
   doSerializeMark(serializer_);
+}
+
+void TestMark::deserializeMark(
+    TestMarkFactory& factory_,
+    TestMarkIn& deserializer_) {
+  doDeserializeMark(factory_, deserializer_);
 }
 
 void TestMark::computeDiff(

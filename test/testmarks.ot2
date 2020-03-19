@@ -21,12 +21,15 @@
 #include <iostream>
 #include <sstream>
 
+#include <otest2/base64istream.h>
 #include <otest2/base64ostream.h>
 #include <otest2/difflogblock.h>
 #include <otest2/hirschberg.h>
 #include <otest2/testmark.h>
 #include <otest2/testmarkbuilder.h>
 #include <otest2/testmarkdiffprinter.h>
+#include <otest2/testmarkfactory.h>
+#include <otest2/testmarkinbinios.h>
 #include <otest2/testmarkoutbinios.h>
 
 namespace OTest2 {
@@ -791,12 +794,23 @@ TEST_SUITE(TestMarks) {
       builder_.closeContainer();
       builder_.closeContainer();
 
+      /* -- serialize the mark */
       TestMarkPtr source_(builder_.stealMark());
       std::ostringstream oss_;
-      Base64OStream bos_(&oss_);
-      TestMarkOutBinIOS tmobi_(&bos_);
-      source_->serializeMark(tmobi_);
-//      testAssertEqual(oss_.str(), "");
+      {
+        Base64OStream bos_(&oss_);
+        TestMarkOutBinIOS tmobi_(&bos_);
+        source_->serializeMark(tmobi_);
+      }
+
+      /* -- deserialize the mark again */
+      std::istringstream iss_(oss_.str());
+      Base64IStream bis_(&iss_);
+      TestMarkInBinIOS tmibi_(&bis_);
+      TestMarkFactory factory_;
+      TestMarkPtr target_(TestMarkInBinIOS::deserialize(factory_, tmibi_));
+
+      testAssert(source_->isEqual(*target_));
     }
   }
 }

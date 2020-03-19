@@ -27,6 +27,8 @@
 
 namespace OTest2 {
 
+struct CtorMark;
+
 /**
  * @brief Unordered indexed multimap of test marks
  */
@@ -49,6 +51,9 @@ class TestMarkMap : public TestMarkPrefix {
     virtual const char* getParenthesis() const;
     virtual void serializeItems(
         TestMarkOut& serializer_) const;
+    virtual void deserializeItems(
+        TestMarkFactory& factory_,
+        TestMarkIn& deserializer_);
 
   public:
     /**
@@ -65,9 +70,26 @@ class TestMarkMap : public TestMarkPrefix {
         const std::string& prefix_);
 
     /**
+     * @brief Deserialization ctor
+     */
+    explicit TestMarkMap(
+        CtorMark*);
+
+    /**
      * @brief Dtor
      */
     virtual ~TestMarkMap();
+
+    /* -- avoid copying */
+    TestMarkMap(
+        const TestMarkMap&) = delete;
+    TestMarkMap& operator = (
+        const TestMarkMap&) = delete;
+
+    /**
+     * @brief Get serialization typemark
+     */
+    static const char* typeMark();
 
     /**
      * @brief Append a mark

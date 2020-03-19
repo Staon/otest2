@@ -24,6 +24,8 @@
 
 namespace OTest2 {
 
+struct CtorMark;
+
 /**
  * @brief Floating point test mark
  */
@@ -31,6 +33,8 @@ class TestMarkFloat : public TestMark {
   private:
     long double value;
 
+    /* -- testmark interface */
+    virtual TestMarkHashCode doGetHashCode() const noexcept;
     virtual bool doIsEqual(
         const TestMark& other_,
         long double precision_) const;
@@ -52,6 +56,9 @@ class TestMarkFloat : public TestMark {
         const std::string& prefix_) const;
     virtual void doSerializeMark(
         TestMarkOut& serializer_) const;
+    virtual void doDeserializeMark(
+        TestMarkFactory& factory_,
+        TestMarkIn& deserializer_);
 
   public:
     /**
@@ -63,9 +70,26 @@ class TestMarkFloat : public TestMark {
         long double value_);
 
     /**
+     * @brief Deserialization ctor
+     */
+    explicit TestMarkFloat(
+        CtorMark*);
+
+    /**
      * @brief Dtor
      */
     virtual ~TestMarkFloat();
+
+    /* -- avoid copying */
+    TestMarkFloat(
+        const TestMarkFloat&) = delete;
+    TestMarkFloat& operator = (
+        const TestMarkFloat&) = delete;
+
+    /**
+     * @brief Get serialization typemark
+     */
+    static const char* typeMark();
 };
 
 } /* namespace OTest2 */

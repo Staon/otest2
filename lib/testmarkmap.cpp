@@ -20,6 +20,8 @@
 
 #include <assert.h>
 
+#include <otest2/testmarkhash.h>
+#include <otest2/testmarkin.h>
 #include <otest2/testmarkout.h>
 
 namespace OTest2 {
@@ -43,8 +45,19 @@ TestMarkMap::TestMarkMap(
 
 }
 
+TestMarkMap::TestMarkMap(
+    CtorMark* ctor_mark_) :
+  TestMarkPrefix(ctor_mark_, SERIALIZE_TYPE_MARK),
+  map() {
+
+}
+
 TestMarkMap::~TestMarkMap() {
 
+}
+
+const char* TestMarkMap::typeMark() {
+  return SERIALIZE_TYPE_MARK;
 }
 
 bool TestMarkMap::doIsEqualPrefixed(
@@ -99,12 +112,25 @@ void TestMarkMap::serializeItems(
   }
 }
 
+void TestMarkMap::deserializeItems(
+    TestMarkFactory& factory_,
+    TestMarkIn& deserializer_) {
+  const std::int64_t size_(deserializer_.readInt());
+  for(std::int64_t i_(0); i_ < size_; ++i_) {
+    std::string key_(deserializer_.readString());
+    TestMarkPtr item_(TestMarkIn::deserialize(factory_, deserializer_));
+    append(key_, item_);
+  }
+}
+
 void TestMarkMap::append(
     const std::string& key_,
     TestMarkPtr mark_) {
   assert(!key_.empty() && mark_ != nullptr);
 
   map.insert(Map::value_type(key_, mark_));
+  hash.addHashCode(mark_->getHashCode());
+  hash.addTerminator();
 }
 
 } /* namespace OTest2 */

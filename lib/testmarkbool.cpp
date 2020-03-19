@@ -21,8 +21,11 @@
 
 #include <assert.h>
 #include <iostream>
+#include <string>
 
+#include <otest2/exctestmarkin.h>
 #include <otest2/testmarkhash.h>
+#include <otest2/testmarkin.h>
 #include <otest2/testmarkout.h>
 
 namespace OTest2 {
@@ -35,13 +38,26 @@ const char SERIALIZE_TYPE_MARK[] = "ot2:bool";
 
 TestMarkBool::TestMarkBool(
     bool value_) :
-  TestMark(TestMarkHash::hashBasicType(SERIALIZE_TYPE_MARK, value_)),
   value(value_) {
+
+}
+
+TestMarkBool::TestMarkBool(
+    CtorMark*) :
+  value(false) {
 
 }
 
 TestMarkBool::~TestMarkBool() {
 
+}
+
+const char* TestMarkBool::typeMark() {
+  return SERIALIZE_TYPE_MARK;
+}
+
+TestMarkHashCode TestMarkBool::doGetHashCode() const noexcept {
+  return TestMarkHash::hashBasicType(SERIALIZE_TYPE_MARK, value);
 }
 
 bool TestMarkBool::doIsEqual(
@@ -91,6 +107,22 @@ void TestMarkBool::doSerializeMark(
     TestMarkOut& serializer_) const {
   serializer_.writeTypeMark(SERIALIZE_TYPE_MARK);
   serializer_.writeInt(value ? 1 : 0);
+}
+
+void TestMarkBool::doDeserializeMark(
+    TestMarkFactory& factory_,
+    TestMarkIn& deserializer_) {
+  auto value_(deserializer_.readInt());
+  switch(value_) {
+    case 0:
+      value = false;
+      break;
+    case 1:
+      value = true;
+      break;
+    default:
+      throw ExcTestMarkIn("invalid bool value " + std::to_string(value_));
+  }
 }
 
 } /* namespace OTest2 */

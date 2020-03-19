@@ -21,6 +21,7 @@
 #include <iostream>
 
 #include <otest2/testmarkhash.h>
+#include <otest2/testmarkin.h>
 #include <otest2/testmarkout.h>
 
 namespace OTest2 {
@@ -28,14 +29,27 @@ namespace OTest2 {
 TestMarkPrefix::TestMarkPrefix(
     const char* serialize_type_mark_,
     const std::string& prefix_) :
-  TestMark(TestMarkHash::hashBasicType(serialize_type_mark_, prefix_)),
   serialize_type_mark(serialize_type_mark_),
-  prefix(prefix_) {
+  prefix(prefix_),
+  hash() {
+  hash.addBasicType(serialize_type_mark_, prefix);
+}
+
+TestMarkPrefix::TestMarkPrefix(
+    CtorMark*,
+    const char* serialize_type_mark_) :
+  serialize_type_mark(serialize_type_mark_),
+  prefix(),
+  hash() {
 
 }
 
 TestMarkPrefix::~TestMarkPrefix() {
 
+}
+
+TestMarkHashCode TestMarkPrefix::doGetHashCode() const noexcept {
+  return hash.getHashCode();
 }
 
 bool TestMarkPrefix::doIsEqual(
@@ -74,6 +88,14 @@ void TestMarkPrefix::doSerializeMark(
   serializer_.writeTypeMark(serialize_type_mark);
   serializer_.writeString(prefix);
   serializeItems(serializer_);
+}
+
+void TestMarkPrefix::doDeserializeMark(
+    TestMarkFactory& factory_,
+    TestMarkIn& deserializer_) {
+  prefix = deserializer_.readString();
+  hash.addBasicType(serialize_type_mark, prefix);
+  deserializeItems(factory_, deserializer_);
 }
 
 } /* namespace OTest2 */

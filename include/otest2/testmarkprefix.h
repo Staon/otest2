@@ -23,8 +23,11 @@
 #include <string>
 
 #include <otest2/testmark.h>
+#include <otest2/testmarkhash.h>
 
 namespace OTest2 {
+
+struct CtorMark;
 
 /**
  * @brief A generic test mark with string prefix
@@ -34,6 +37,12 @@ class TestMarkPrefix : public TestMark {
     const char* serialize_type_mark;
     std::string prefix;
 
+  protected:
+    TestMarkHash hash;
+
+  private:
+    /* -- test mark interface */
+    virtual TestMarkHashCode doGetHashCode() const noexcept;
     virtual bool doIsEqual(
         const TestMark& other_,
         long double precision_) const;
@@ -48,6 +57,9 @@ class TestMarkPrefix : public TestMark {
         const std::string& prefix_) const;
     virtual void doSerializeMark(
         TestMarkOut& serializer_) const;
+    virtual void doDeserializeMark(
+        TestMarkFactory& factory_,
+        TestMarkIn& deserializer_);
 
     /**
      * @brief Check equality of the test mark while the prefix is equal
@@ -76,6 +88,16 @@ class TestMarkPrefix : public TestMark {
     virtual void serializeItems(
         TestMarkOut& serializer_) const = 0;
 
+    /**
+     * @brief Deserialize container's items
+     *
+     * @param factory_ A test mark factory
+     * @param deserializer_ A deserializer
+     */
+    virtual void deserializeItems(
+        TestMarkFactory& factory_,
+        TestMarkIn& deserializer_) = 0;
+
   protected:
     /**
      * @brief Ctor
@@ -87,6 +109,13 @@ class TestMarkPrefix : public TestMark {
     explicit TestMarkPrefix(
         const char* serialize_type_mark_,
         const std::string& prefix_);
+
+    /**
+     * @brief Deserialization ctor
+     */
+    explicit TestMarkPrefix(
+        CtorMark*,
+        const char* serialize_type_mark_);
 
     /**
      * @brief Dtor

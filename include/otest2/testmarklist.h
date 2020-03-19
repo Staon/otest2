@@ -26,6 +26,8 @@
 
 namespace OTest2 {
 
+struct CtorMark;
+
 /**
  * @brief Ordered list of nested test marks
  */
@@ -48,6 +50,9 @@ class TestMarkList : public TestMarkPrefix {
     virtual const char* getParenthesis() const;
     virtual void serializeItems(
         TestMarkOut& serializer_) const;
+    virtual void deserializeItems(
+        TestMarkFactory& factory_,
+        TestMarkIn& deserializer_);
 
   public:
     /**
@@ -64,6 +69,12 @@ class TestMarkList : public TestMarkPrefix {
         const std::string& prefix_);
 
     /**
+     * @brief Deserialization ctor
+     */
+    explicit TestMarkList(
+        CtorMark*);
+
+    /**
      * @brief Dtor
      */
     virtual ~TestMarkList();
@@ -73,6 +84,11 @@ class TestMarkList : public TestMarkPrefix {
         const TestMarkList&) = delete;
     TestMarkList& operator =(
         const TestMarkList&) = delete;
+
+    /**
+     * @brief Get serialization typemark
+     */
+    static const char* typeMark();
 
     /**
      * @brief Append a test mark into the list

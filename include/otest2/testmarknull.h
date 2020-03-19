@@ -24,12 +24,15 @@
 
 namespace OTest2 {
 
+struct CtorMark;
+
 /**
  * @brief Test mark node representing a null pointer
  */
 class TestMarkNull : public TestMark {
   private:
     /* -- test mark interface */
+    virtual TestMarkHashCode doGetHashCode() const noexcept;
     virtual bool doIsEqual(
         const TestMark& other_,
         long double precision_) const;
@@ -51,12 +54,21 @@ class TestMarkNull : public TestMark {
         const std::string& prefix_) const;
     virtual void doSerializeMark(
         TestMarkOut& serializer_) const;
+    virtual void doDeserializeMark(
+        TestMarkFactory& factory_,
+        TestMarkIn& deserializer_);
 
   public:
     /**
      * @brief Ctor
      */
     TestMarkNull();
+
+    /**
+     * @brief Deserialization ctor
+     */
+    explicit TestMarkNull(
+        CtorMark*);
 
     /**
      * @brief Dtor
@@ -68,6 +80,11 @@ class TestMarkNull : public TestMark {
         const TestMarkNull&) = delete;
     TestMarkNull& operator =(
         const TestMarkNull&) = delete;
+
+    /**
+     * @brief Get serialization typemark
+     */
+    static const char* typeMark();
 };
 
 } /* namespace OTest2 */

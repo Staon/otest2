@@ -25,6 +25,7 @@
 #include <limits>
 
 #include <otest2/testmarkhash.h>
+#include <otest2/testmarkin.h>
 #include <otest2/testmarkout.h>
 
 namespace OTest2 {
@@ -37,13 +38,26 @@ const char SERIALIZE_TYPE_MARK[] = "ot2:float";
 
 TestMarkFloat::TestMarkFloat(
     long double value_) :
-  TestMark(TestMarkHash::hashBasicType(SERIALIZE_TYPE_MARK, value_)),
   value(value_) {
+
+}
+
+TestMarkFloat::TestMarkFloat(
+    CtorMark*) :
+  value(0.0L) {
 
 }
 
 TestMarkFloat::~TestMarkFloat() {
 
+}
+
+const char* TestMarkFloat::typeMark() {
+  return SERIALIZE_TYPE_MARK;
+}
+
+TestMarkHashCode TestMarkFloat::doGetHashCode() const noexcept {
+  return TestMarkHash::hashBasicType(SERIALIZE_TYPE_MARK, value);
 }
 
 bool TestMarkFloat::doIsEqual(
@@ -92,6 +106,12 @@ void TestMarkFloat::doSerializeMark(
     TestMarkOut& serializer_) const {
   serializer_.writeTypeMark(SERIALIZE_TYPE_MARK);
   serializer_.writeFloat(value);
+}
+
+void TestMarkFloat::doDeserializeMark(
+    TestMarkFactory& factory_,
+    TestMarkIn& deserializer_) {
+  value = deserializer_.readFloat();
 }
 
 } /* namespace OTest2 */

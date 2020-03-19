@@ -23,7 +23,6 @@
 
 #include <otest2/testmarkbool.h>
 #include <otest2/testmarkfloat.h>
-#include <otest2/testmarkhash.h>
 #include <otest2/testmarkint.h>
 #include <otest2/testmarklist.h>
 #include <otest2/testmarkmap.h>
@@ -49,7 +48,6 @@ struct TestMarkBuilder::Impl {
     struct Record {
         std::string key;
         std::unique_ptr<Container> container;
-        TestMarkHash hash;
 
         explicit Record(
             std::string key_,
@@ -90,12 +88,8 @@ TestMarkBuilder::Impl::Record::Record(
     std::string key_,
     std::unique_ptr<Container>&& container_) :
   key(std::move(key_)),
-  container(std::move(container_)),
-  hash() {
+  container(std::move(container_)) {
 
-  /* -- Initial hash code. The basic containers compute it from
-   *    the prefix value. */
-  hash.addHashCode(container->getHashCode());
 }
 
 void TestMarkBuilder::Impl::appendItem(
@@ -105,8 +99,6 @@ void TestMarkBuilder::Impl::appendItem(
   Record& record_(stack.back());
   record_.container->append(record_.key, item_);
   record_.key = "";
-  record_.hash.addHashCode(item_->getHashCode());
-  record_.hash.addTerminator();
 }
 
 void TestMarkBuilder::Impl::appendItem(
@@ -189,7 +181,6 @@ void TestMarkBuilder::openMap(
 void TestMarkBuilder::closeContainer() {
   auto& top_(pimpl->stack.back());
   std::unique_ptr<TestMark> container_(top_.container->getMark());
-  container_->setHashCode(top_.hash.getHashCode());
   pimpl->stack.pop_back();
   pimpl->appendItem(container_.release());
 }

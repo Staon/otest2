@@ -33,13 +33,25 @@ const char SERIALIZE_TYPE_MARK[] = "ot2:null";
 
 } /* -- namespace */
 
-TestMarkNull::TestMarkNull() :
-  TestMark(TestMarkHash::hashBasicType(SERIALIZE_TYPE_MARK, nullptr)) {
+TestMarkNull::TestMarkNull() {
+
+}
+
+TestMarkNull::TestMarkNull(
+    CtorMark*) {
 
 }
 
 TestMarkNull::~TestMarkNull() {
 
+}
+
+const char* TestMarkNull::typeMark() {
+  return SERIALIZE_TYPE_MARK;
+}
+
+TestMarkHashCode TestMarkNull::doGetHashCode() const noexcept {
+  return TestMarkHash::hashBasicType(SERIALIZE_TYPE_MARK, nullptr);
 }
 
 bool TestMarkNull::doIsEqual(
@@ -83,6 +95,12 @@ void TestMarkNull::doPrintClose(
 void TestMarkNull::doSerializeMark(
     TestMarkOut& serializer_) const {
   serializer_.writeTypeMark(SERIALIZE_TYPE_MARK);
+}
+
+void TestMarkNull::doDeserializeMark(
+    TestMarkFactory& factory_,
+    TestMarkIn& deserializer_) {
+  /* -- nothing to deserialize, the object keeps no data */
 }
 
 } /* namespace OTest2 */

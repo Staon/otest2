@@ -26,6 +26,8 @@
 
 namespace OTest2 {
 
+struct CtorMark;
+
 /**
  * @brief String test mark
  */
@@ -34,6 +36,7 @@ class TestMarkString : public TestMark {
     std::string value;
 
     /* -- test mark interface */
+    virtual TestMarkHashCode doGetHashCode() const noexcept;
     virtual bool doIsEqual(
         const TestMark& other_,
         long double precision_) const;
@@ -55,6 +58,9 @@ class TestMarkString : public TestMark {
         const std::string& prefix_) const;
     virtual void doSerializeMark(
         TestMarkOut& serializer_) const;
+    virtual void doDeserializeMark(
+        TestMarkFactory& factory_,
+        TestMarkIn& deserializer_);
 
   public:
     /**
@@ -66,6 +72,12 @@ class TestMarkString : public TestMark {
         const std::string& value_);
 
     /**
+     * @brief Deserialization ctor
+     */
+    explicit TestMarkString(
+        CtorMark*);
+
+    /**
      * @brief Dtor
      */
     virtual ~TestMarkString();
@@ -75,6 +87,11 @@ class TestMarkString : public TestMark {
         const TestMarkString&) = delete;
     TestMarkString& operator =(
         const TestMarkString&) = delete;
+
+    /**
+     * @brief Get deserialization typemark
+     */
+    static const char* typeMark();
 };
 
 } /* namespace OTest2 */

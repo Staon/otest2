@@ -96,15 +96,37 @@ class TestMarkHash {
      */
     TestMarkHashCode getHashCode() const noexcept;
 
+    /**
+     * @brief Add hash for a value of a basic type
+     *
+     * @param type_name_ Name of the type
+     * @param data_ Binary form of data
+     * @param size_ Size of data
+     */
+    void addBasicType(
+        const char* type_name_,
+        const std::uint8_t* data_,
+        std::uint64_t size_);
+
+    /**
+     * @brief Add hash for a string value of a basic type
+     *
+     * @param type_name_ Name of the type
+     * @param value_ The value
+     */
+    void addBasicType(
+        const char* type_name_,
+        const std::string& value_);
+
     template<typename Type_>
     static TestMarkHashCode hashBasicType(
         const char* type_name_,
         Type_ value_) {
       TestMarkHash hash_;
-      hash_.addString(type_name_);
-      hash_.addTerminator();
-      hash_.addData(
-          reinterpret_cast<const std::uint8_t*>(&value_), sizeof(value_));
+      hash_.addBasicType(
+          type_name_,
+          reinterpret_cast<const std::uint8_t*>(&value_),
+          sizeof(value_));
       return hash_.getHashCode();
     }
 

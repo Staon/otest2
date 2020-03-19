@@ -69,15 +69,30 @@ TestMarkHashCode TestMarkHash::getHashCode() const noexcept {
   return hash;
 }
 
+void TestMarkHash::addBasicType(
+    const char* type_name_,
+    const std::uint8_t* data_,
+    std::size_t size_) {
+  addString(type_name_);
+  addTerminator();
+  addData(data_, size_);
+}
+
+void TestMarkHash::addBasicType(
+    const char* type_name_,
+    const std::string& value_) {
+  addBasicType(
+      type_name_,
+      reinterpret_cast<const std::uint8_t*>(value_.c_str()),
+      value_.size());
+
+}
+
 TestMarkHashCode TestMarkHash::hashBasicType(
     const char* type_name_,
     const std::string& value_) {
   TestMarkHash hash_;
-  hash_.addString(type_name_);
-  hash_.addTerminator();
-  hash_.addData(
-      reinterpret_cast<const std::uint8_t*>(value_.c_str()),
-      value_.size());
+  hash_.addBasicType(type_name_, value_);
   return hash_.getHashCode();
 }
 

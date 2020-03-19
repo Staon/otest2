@@ -29,6 +29,8 @@
 namespace OTest2 {
 
 class DiffLogBuilder;
+class TestMarkFactory;
+class TestMarkIn;
 class TestMarkOut;
 
 constexpr long double DEFAULT_FLOAT_PRECISION(1.0e-9);
@@ -48,7 +50,10 @@ class TestMark {
     };
 
   private:
-    TestMarkHashCode hash;
+    /**
+     * @brief Get testmark's hash code
+     */
+    virtual TestMarkHashCode doGetHashCode() const noexcept = 0;
 
     /**
      * @brief Check whether this mark is equal to the @a other_
@@ -122,6 +127,13 @@ class TestMark {
     virtual void doSerializeMark(
         TestMarkOut& serializer_) const = 0;
 
+    /**
+     * @copydoc deserializeMark()
+     */
+    virtual void doDeserializeMark(
+        TestMarkFactory& factory_,
+        TestMarkIn& deserializer_) = 0;
+
     static void computeDiff(
         int level_,
         const std::vector<LinearizedRecord>& left_,
@@ -137,14 +149,6 @@ class TestMark {
     TestMark();
 
     /**
-     * @brief Ctor
-     *
-     * @param hash_ Initial hash code
-     */
-    explicit TestMark(
-        TestMarkHashCode hash_);
-
-    /**
      * @brief Dtor
      */
     virtual ~TestMark();
@@ -154,13 +158,6 @@ class TestMark {
         const TestMark&) = delete;
     TestMark& operator =(
         const TestMark&) = delete;
-
-    /**
-     * @brief Set testmark's hash
-     * @warning Use it only if you know what your doing
-     */
-    void setHashCode(
-        TestMarkHashCode code_);
 
     /**
      * @brief Get testmarks' hash code
@@ -245,6 +242,23 @@ class TestMark {
      */
     void serializeMark(
         TestMarkOut& serializer_) const;
+
+    /**
+     * @brief Deserialize the testmark
+     *
+     * This method reads content of the testmark from a deserializer. The object
+     * must have been created by special constructor with the CtorMark
+     * parameter.
+     *
+     * Behavior of this method is undefined if it's invoked on an object
+     * which has not been just created.
+     *
+     * @param factory_ A testmark factory
+     * @param deserializer_ A deserializer object
+     */
+    void deserializeMark(
+        TestMarkFactory& factory_,
+        TestMarkIn& deserializer_);
 
     /**
      * @brief Compute difference of two test marks

@@ -22,6 +22,7 @@
 #include <iostream>
 
 #include <otest2/testmarkhash.h>
+#include <otest2/testmarkin.h>
 #include <otest2/testmarkout.h>
 
 namespace OTest2 {
@@ -34,13 +35,26 @@ const char SERIALIZE_TYPE_MARK[] = "ot2:int";
 
 TestMarkInt::TestMarkInt(
     int64_t value_) :
-  TestMark(TestMarkHash::hashBasicType(SERIALIZE_TYPE_MARK, value_)),
   value(value_) {
+
+}
+
+TestMarkInt::TestMarkInt(
+    CtorMark*) :
+  value(0) {
 
 }
 
 TestMarkInt::~TestMarkInt() {
 
+}
+
+const char* TestMarkInt::typeMark() {
+  return SERIALIZE_TYPE_MARK;
+}
+
+TestMarkHashCode TestMarkInt::doGetHashCode() const noexcept {
+  return TestMarkHash::hashBasicType(SERIALIZE_TYPE_MARK, value);
 }
 
 bool TestMarkInt::doIsEqual(
@@ -85,6 +99,12 @@ void TestMarkInt::doSerializeMark(
     TestMarkOut& serializer_) const {
   serializer_.writeTypeMark(SERIALIZE_TYPE_MARK);
   serializer_.writeInt(value);
+}
+
+void TestMarkInt::doDeserializeMark(
+    TestMarkFactory& factory_,
+    TestMarkIn& deserializer_) {
+  value = deserializer_.readInt();
 }
 
 } /* namespace OTest2 */

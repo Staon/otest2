@@ -73,13 +73,13 @@ std::int64_t TestMarkInBin::readInt() {
   if(tag_ == TestMarkOutBinTag::INT_SHORT) {
     std::uint8_t buffer_;
     readBinaryData(sizeof(buffer_), &buffer_);
-    return static_cast<std::int64_t>(static_cast<std::uint64_t>(buffer_));
+    return static_cast<std::int64_t>(static_cast<std::int8_t>(buffer_));
   }
   else if(tag_ == TestMarkOutBinTag::INT_NORMAL) {
     std::uint16_t buffer_;
     readBinaryData(sizeof(buffer_), reinterpret_cast<std::uint8_t*>(&buffer_));
     boost::endian::big_to_native_inplace(buffer_);
-    return static_cast<std::int64_t>(static_cast<std::uint64_t>(buffer_));
+    return static_cast<std::int64_t>(static_cast<std::int16_t>(buffer_));
   }
   else {
     std::uint64_t buffer_;

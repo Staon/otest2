@@ -18,6 +18,7 @@
  */
 #include <otest2/otest2.h>
 
+#include <cstdio>
 #include <iostream>
 #include <sstream>
 
@@ -31,6 +32,7 @@
 #include <otest2/testmarkfactory.h>
 #include <otest2/testmarkinbinios.h>
 #include <otest2/testmarkoutbinios.h>
+#include <otest2/testmarkstorage.h>
 
 namespace OTest2 {
 
@@ -811,6 +813,61 @@ TEST_SUITE(TestMarks) {
       TestMarkPtr target_(TestMarkInBinIOS::deserialize(factory_, tmibi_));
 
       testAssert(source_->isEqual(*target_));
+    }
+  }
+
+  TEST_CASE(Storage) {
+    const std::string STORAGE_FILE("test_mark_storage.otest2");
+
+    TEST_TEAR_DOWN() {
+      /* -- remove the testing storage */
+      std::remove(STORAGE_FILE.c_str());
+    }
+
+    TEST_SIMPLE() {
+      TestMarkBuilder builder_;
+      builder_.openList("root");
+      builder_.openMap();
+      builder_.setKey("null");
+      builder_.appendNull();
+      builder_.setKey("string");
+      builder_.appendString("Value A");
+      builder_.setKey("int");
+      builder_.appendInt(-2983);
+      builder_.setKey("float");
+      builder_.appendFloat(3.141529);
+      builder_.setKey("list");
+      builder_.openList();
+      builder_.appendString("inner value");
+      builder_.appendBool(true);
+      builder_.appendBool(false);
+      builder_.closeContainer();
+      builder_.closeContainer();
+      builder_.closeContainer();
+      TestMarkPtr source_(builder_.stealMark());
+
+      /* -- set the mark into the storage */
+      const std::string KEY_("wicked testing key\t:\\");
+      TestMarkFactory factory_;
+      {
+        TestMarkStorage src_storage_(&factory_, STORAGE_FILE);
+        src_storage_.setTestMark(KEY_, source_);
+      }
+
+      /* -- read the test mark again */
+      {
+        TestMarkStorage storage_(&factory_, STORAGE_FILE);
+
+        /* -- existing mark */
+        TestMarkPtr wicked_(storage_.getTestMark(KEY_));
+        if(testAssert(wicked_ != nullptr)) {
+          testAssert(source_->isEqual(*wicked_));
+        }
+
+        /* -- invalid mark */
+        TestMarkPtr wrong_(storage_.getTestMark("wrong one"));
+        testAssert(wrong_ == nullptr);
+      }
     }
   }
 }

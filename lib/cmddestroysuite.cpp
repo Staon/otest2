@@ -22,6 +22,7 @@
 #include <assert.h>
 
 #include <context.h>
+#include <objectpath.h>
 #include <reporter.h>
 #include <semanticstack.h>
 #include <suiteordinary.h>
@@ -47,6 +48,7 @@ void CmdDestroySuite::run(
   /* -- report finishing of the suite */
   context_.reporter->leaveSuite(
       context_, suite->getName(), context_.semantic_stack->top());
+  context_.object_path->popName();
 
   /* -- return the value */
   context_.semantic_stack->popAnd();

@@ -20,6 +20,7 @@
 #include "runtime.h"
 
 #include <iostream>
+#include <unistd.h>
 
 #include <otest2/registry.h>
 
@@ -33,11 +34,35 @@ Runtime::Runtime(
   exc_catcher(),
   reporter(),
   runner_filter(suite_name_, case_name_),
+  test_mark_factory(),
+  test_mark_storage(),
   runner(
       &exc_catcher,
       &reporter,
       &Registry::instance("selftest"),
       &runner_filter,
+      &test_mark_factory,
+      test_mark_storage.get(),
+      "selftest") {
+
+}
+
+Runtime::Runtime(
+    const std::string& suite_name_,
+    const std::string& case_name_,
+    const std::string& regression_file_) :
+  exc_catcher(),
+  reporter(),
+  runner_filter(suite_name_, case_name_),
+  test_mark_factory(),
+  test_mark_storage(new TestMarkStorage(&test_mark_factory, regression_file_)),
+  runner(
+      &exc_catcher,
+      &reporter,
+      &Registry::instance("selftest"),
+      &runner_filter,
+      &test_mark_factory,
+      test_mark_storage.get(),
       "selftest") {
 
 }
@@ -54,6 +79,7 @@ bool Runtime::runTheTest() {
       break;
     reporter.reportDelay(result_.getDelayMS());
   };
+
   return result_.getResult();
 }
 

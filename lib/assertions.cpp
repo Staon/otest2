@@ -19,6 +19,8 @@
 
 #include <assertions.h>
 
+#include <string>
+
 #include <otest2/assertbean.h>
 #include <otest2/context.h>
 #include <otest2/exccatcher.h>
@@ -26,17 +28,17 @@
 namespace OTest2 {
 
 bool GenericAssertion::testAssert(
-    bool condition_) const {
-  return testAssertImpl(condition_, "", true);
+    bool condition_) {
+  return simpleAssertionImpl(condition_, "", true);
 }
 
 bool GenericAssertion::testAssert(
-    const AssertBean& bean_) const {
-  return testAssertImpl(bean_.getCondition(), bean_.getMessage(), true);
+    const AssertBean& bean_) {
+  return simpleAssertionImpl(bean_.getCondition(), bean_.getMessage(), true);
 }
 
 bool GenericAssertion::testException(
-    std::function<bool()> ftor_) const {
+    std::function<bool()> ftor_) {
   std::string message_;
   bool result_(false);
   if(otest2Context().exception_catcher->catchException(
@@ -45,9 +47,12 @@ bool GenericAssertion::testException(
         result_ = ftor_();
       },
       message_)) {
-    return testAssertImpl(false, message_, false);
+    return simpleAssertionImpl(false, message_, false);
   }
-  return testAssertImpl(result_, "an exception was expected but no one occurred", false);
+  return simpleAssertionImpl(
+      result_,
+      "an exception was expected but no one has occurred",
+      false);
 }
 
 }  /* -- namespace OTest2 */

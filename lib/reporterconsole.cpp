@@ -23,6 +23,8 @@
 #include <iostream>
 #include <sstream>
 
+#include <context.h>
+#include <objectpath.h>
 #include <reporterstatistics.h>
 #include <terminaldriver.h>
 #include <utils.h>
@@ -146,6 +148,10 @@ struct ReporterConsole::Impl {
     TerminalDriver term_driver;
     ReporterStatistics statistics;
 
+    /* -- assertion printing */
+    bool verbose;
+    bool last_condition;
+
   public:
     /* -- avoid copying */
     Impl(
@@ -155,16 +161,20 @@ struct ReporterConsole::Impl {
 
     explicit Impl(
         ReporterConsole* owner_,
-        std::ostream* os_);
+        std::ostream* os_,
+        bool verbose_);
     ~Impl();
 };
 
 ReporterConsole::Impl::Impl(
     ReporterConsole* owner_,
-    std::ostream* os_) :
+    std::ostream* os_,
+    bool verbose_) :
   owner(owner_),
   os(os_),
-  term_driver(os_) {
+  term_driver(os_),
+  verbose(verbose_),
+  last_condition(true) {
   assert(os != nullptr);
 
 }
@@ -174,8 +184,9 @@ ReporterConsole::Impl::~Impl() {
 }
 
 ReporterConsole::ReporterConsole(
-    std::ostream* os_) :
-  pimpl(new Impl(this, os_)) {
+    std::ostream* os_,
+    bool verbose_) :
+  pimpl(new Impl(this, os_, verbose_)) {
 
 }
 
@@ -207,24 +218,56 @@ void ReporterConsole::enterState(
 
 }
 
-void ReporterConsole::reportAssert(
+void ReporterConsole::enterAssert(
     const Context& context_,
     bool condition_,
     const std::string& message_,
     const std::string& file_,
     int lineno_) {
+  /* -- adjust the statistics */
   pimpl->statistics.reportAssertion(condition_);
 
-  if(!condition_) {
-    *pimpl->os << '[' << file_ << ':' << lineno_ << "] " << message_ << std::endl;
+  /* -- store the condition for printing of additional messages */
+  pimpl->last_condition = condition_;
+
+  /* -- print the assertion status */
+  if(pimpl->verbose || !condition_) {
+    *pimpl->os
+        << '[' << file_ << ':' << lineno_ << "] "
+        << context_.object_path->getCurrentPath()  << ": " << message_
+        << std::endl;
   }
 }
 
-void ReporterConsole::reportError(
+void ReporterConsole::enterError(
     const Context& context_,
     const std::string& message_) {
+  /* -- adjust the statistics */
   pimpl->statistics.reportAssertion(false);
-  *pimpl->os << "error:" << message_ << std::endl;
+
+  /* -- store the condition for printing of additional messages */
+  pimpl->last_condition = false;
+
+  /* -- print the error */
+  *pimpl->os
+      << "error " << context_.object_path->getCurrentPath() << ": " << message_
+      << std::endl;
+}
+
+void ReporterConsole::reportAssertionMessage(
+    const Context& context_,
+    const std::string& message_) {
+  if(pimpl->verbose || !pimpl->last_condition) {
+    std::istringstream iss_(message_);
+    std::string line_;
+    while(std::getline(iss_, line_))
+      *pimpl->os << "  " << line_ << std::endl;
+  }
+}
+
+void ReporterConsole::leaveAssert(
+    const Context& context_) {
+  /* -- nothing to do */
 }
 
 void ReporterConsole::leaveState(

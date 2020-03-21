@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Ondrej Starek
+ * Copyright (C) 2020 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -16,22 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <internalerror.h>
 
-#include <context.h>
-#include <reporter.h>
-#include <semanticstack.h>
+#ifndef OTest2__INCLUDE_OTEST2_ASSERTIONANNOTATION_H_
+#define OTest2__INCLUDE_OTEST2_ASSERTIONANNOTATION_H_
 
-namespace OTest2 {
+#ifndef OTEST2_PARSER_ACTIVE
 
-void internalError(
-    const Context& context_,
-    const std::string& message_) noexcept {
-  /* -- fail the test */
-  context_.semantic_stack->setTop(false);
-  /* -- report the failure */
-  context_.reporter->enterError(context_, message_);
-  context_.reporter->leaveAssert(context_);
-}
+#define TEST_ASSERTION_MARK(class_, method_)
+#define TEST_ASSERTION_MARK_TMPL(class_, method_)
 
-} /* -- namespace OTest2 */
+#else /* -- OTEST2_PARSER_ACTIVE */
+
+#define TEST_ASSERTION_MARK(class_, method_) __attribute__((annotate("otest2::assertion(" #class_ ";" #method_ ")")))
+#define TEST_ASSERTION_MARK_TMPL(class_, method_) __attribute__((annotate("otest2::assertion(" class_ ";" method_ ")")))
+
+#endif /* -- OTEST2_PARSER_ACTIVE */
+
+#endif /* -- OTest2__INCLUDE_OTEST2_ASSERTIONANNOTATION_H_ */

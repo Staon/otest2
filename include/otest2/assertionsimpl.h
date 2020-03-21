@@ -30,7 +30,7 @@ namespace OTest2 {
 template<typename Compare_, typename A_, typename B_>
 bool GenericAssertion::testAssertCompare(
     A_ a_,
-    B_ b_) const {
+    B_ b_) {
   Compare_ cmp_;
   std::ostringstream sos_;
   sos_ << "relation 'a ";
@@ -39,7 +39,7 @@ bool GenericAssertion::testAssertCompare(
   PrintTrait<A_>::print(sos_, a_);
   sos_ << ", b = ";
   PrintTrait<B_>::print(sos_, b_);
-  testAssertImpl(cmp_(a_, b_), sos_.str(), false);
+  return simpleAssertionImpl(cmp_(a_, b_), sos_.str(), false);
 }
 
 }  /* -- namespace OTest2 */

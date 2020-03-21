@@ -30,6 +30,8 @@ class ExcCatcher;
 class Registry;
 class Reporter;
 class RunnerFilter;
+class TestMarkFactory;
+class TestMarkStorage;
 
 /**
  * @brief Ordinary implementation of the Runner interface
@@ -57,6 +59,10 @@ class RunnerOrdinary : public Runner {
      * @param registry_ A registry of suites to be run. The ownership is not taken.
      * @param runner_filter_ A runner filter - an object which allows specification
      *     of tests which should be run.
+     * @param test_mark_factory_ A factory of test mark nodes. The ownership
+     *     is not taken.
+     * @param test_mark_storage_ Storage of test marks. The ownership is not
+     *     taken.
      * @param name_ Name of the test (shown in the test report)
      */
     explicit RunnerOrdinary(
@@ -64,6 +70,8 @@ class RunnerOrdinary : public Runner {
         Reporter* reporter_,
         Registry* registry_,
         RunnerFilter* runner_filter_,
+        TestMarkFactory* test_mark_factory_,
+        TestMarkStorage* test_mark_storage_,
         const std::string& name_);
 
     /**

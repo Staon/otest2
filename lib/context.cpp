@@ -24,14 +24,20 @@ namespace OTest2 {
 Context::Context(
     CommandStack* command_stack_,
     SemanticStack* semantic_stack_,
+    ObjectPath* object_path_,
     ExcCatcher* exception_catcher_,
     Reporter* reporter_,
-    RunnerFilter* runner_filter_) :
+    RunnerFilter* runner_filter_,
+    TestMarkFactory* test_mark_factory_,
+    TestMarkStorage* test_mark_storage_) :
   command_stack(command_stack_),
   semantic_stack(semantic_stack_),
+  object_path(object_path_),
   exception_catcher(exception_catcher_),
   reporter(reporter_),
-  runner_filter(runner_filter_) {
+  runner_filter(runner_filter_),
+  test_mark_factory(test_mark_factory_),
+  test_mark_storage(test_mark_storage_) {
 
 }
 

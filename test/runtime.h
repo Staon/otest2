@@ -20,9 +20,12 @@
 #ifndef OTest2__TEST_RUNTIME_H_
 #define OTest2__TEST_RUNTIME_H_
 
+#include <memory>
 #include <otest2/exccatcherordinary.h>
 #include <otest2/runnerfilterone.h>
 #include <otest2/runnerordinary.h>
+#include <otest2/testmarkfactory.h>
+#include <otest2/testmarkstorage.h>
 
 #include "reportermock.h"
 
@@ -38,6 +41,8 @@ class Runtime {
     ExcCatcherOrdinary exc_catcher;
     ReporterMock reporter;
     RunnerFilterOne runner_filter;
+    TestMarkFactory test_mark_factory;
+    std::unique_ptr<TestMarkStorage> test_mark_storage;
     RunnerOrdinary runner;
 
   public:
@@ -57,6 +62,19 @@ class Runtime {
     explicit Runtime(
         const std::string& suite_name_,
         const std::string& case_name_);
+
+    /**
+     * @brief Ctor
+     *
+     * @param suite_name_ Name of the suite to be run
+     * @param case_name_ Name of the case to be run. If it's empty the entire
+     *     suite is run.
+     * @param regression_file_ Name of the regression (test marks) file
+     */
+    explicit Runtime(
+        const std::string& suite_name_,
+        const std::string& case_name_,
+        const std::string& regression_file_);
 
     /**
      * @brief Dtor

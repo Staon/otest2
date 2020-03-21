@@ -69,9 +69,43 @@ class AssertContext {
     ~AssertContext();
 
     /**
-     * @brief Generic assertion function
+     * @brief Enter an assertion
      *
-     * This is a generic function used by assertion implementations
+     * @param condition_ The checked condition
+     * @param message_ The assertion message (it may be empty)
+     * @param use_expression_ If it's true, a textual representation of
+     *     the first assertion parameter is added into the assertion message.
+     */
+    void enterAssertion(
+        bool condition_,
+        const std::string& message_,
+        bool use_expression_);
+
+    /**
+     * @brief Add a message into opened assertion
+     *
+     * @param condition_ The checked condition
+     * @param message_ The message
+     */
+    void assertionMessage(
+        bool condition_,
+        const std::string& message_);
+
+    /**
+     * @brief Close opened assertion
+     *
+     * @param condition_ The checked condition
+     * @return The checked condition
+     */
+    bool leaveAssertion(
+        bool condition_);
+
+    /**
+     * @brief Implementation of a simple assertion
+     *
+     * This method implements a simple assertion which doesn't report additive
+     * messages. Generally, the method invokes opening and closing assertion
+     * methods.
      *
      * @param condition_ The checked condition
      * @param message_ The assertion message (it may be empty)
@@ -79,10 +113,10 @@ class AssertContext {
      *     the first assertion parameter is added into the assertion message.
      * @return the condition
      */
-    bool testAssertImpl(
+    bool simpleAssertionImpl(
         bool condition_,
         const std::string& message_,
-        bool use_expression_) const;
+        bool use_expression_);
 
     /**
      * @brief Get the OTest2 context

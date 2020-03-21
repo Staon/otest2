@@ -139,8 +139,8 @@ TestMarkStorage::Impl::Impl(
 
   /* -- read the test marks from the file */
   std::ifstream ifs_(storage_file.c_str());
-  std::ostringstream oss_;
   while(!!ifs_) {
+    std::ostringstream oss_;
     ifs_.get(*oss_.rdbuf());  /* -- get the whole line */
     ifs_.get();               /* -- skip the newline */
     std::string line_(oss_.str());

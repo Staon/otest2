@@ -28,6 +28,7 @@
 #include <commandptr.h>
 #include <commandstack.h>
 #include <context.h>
+#include <objectpath.h>
 #include <reporter.h>
 #include <semanticstack.h>
 #include <utils.h>
@@ -40,6 +41,7 @@ struct RunnerOrdinary::Impl {
 
     CommandStack command_stack;
     SemanticStack semantic_stack;
+    ObjectPath object_path;
     Registry* registry;
     std::string name;
     Context context;
@@ -56,6 +58,8 @@ struct RunnerOrdinary::Impl {
         Reporter* reporter_,
         Registry* registry_,
         RunnerFilter* runner_filter_,
+        TestMarkFactory* test_mark_factory_,
+        TestMarkStorage* test_mark_storage_,
         const std::string& name_);
     ~Impl();
 };
@@ -66,6 +70,8 @@ RunnerOrdinary::Impl::Impl(
     Reporter* reporter_,
     Registry* registry_,
     RunnerFilter* runner_filter_,
+    TestMarkFactory* test_mark_factory_,
+    TestMarkStorage* test_mark_storage_,
     const std::string& name_) :
   owner(owner_),
   command_stack(),
@@ -75,9 +81,12 @@ RunnerOrdinary::Impl::Impl(
   context(
       &command_stack,
       &semantic_stack,
+      &object_path,
       exc_catcher_,
       reporter_,
-      runner_filter_) {
+      runner_filter_,
+      test_mark_factory_,
+      test_mark_storage_) {
   assert(registry != nullptr);
   assert(context.reporter != nullptr);
   assert(context.runner_filter != nullptr);
@@ -97,8 +106,18 @@ RunnerOrdinary::RunnerOrdinary(
     Reporter* reporter_,
     Registry* registry_,
     RunnerFilter* runner_filter_,
+    TestMarkFactory* test_mark_factory_,
+    TestMarkStorage* test_mark_storage_,
     const std::string& name_) :
-  pimpl(new Impl(this, exc_catcher_, reporter_, registry_, runner_filter_, name_)) {
+  pimpl(new Impl(
+      this,
+      exc_catcher_,
+      reporter_,
+      registry_,
+      runner_filter_,
+      test_mark_factory_,
+      test_mark_storage_,
+      name_)) {
 
 }
 

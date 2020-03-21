@@ -23,6 +23,7 @@
 #include <otest2/assertions.h>
 #include <otest2/controls.h>
 #include <otest2/glue.h>
+#include <otest2/regressions.h>
 
 #ifndef OTEST2_PARSER_ACTIVE
 

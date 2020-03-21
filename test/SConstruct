@@ -24,6 +24,7 @@ env.OTest2Suite('Program', 'selftest', [
     'hirschberg.ot2',
     'main.cpp',
     'mainloop.ot2',
+    'regressions.ot2',
     'reportermock.cpp',
     'runtime.cpp',
     'tee.ot2',

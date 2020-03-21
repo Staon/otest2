@@ -1,0 +1,90 @@
+/*
+ * Copyright (C) 2020 Ondrej Starek
+ *
+ * This file is part of OTest2.
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include <otest2/otest2.h>
+
+#include <string>
+
+#include <otest2/testmarkbuilder.h>
+
+namespace OTest2 {
+
+namespace SelfTest {
+
+/**
+ * @brief Helper testing object
+ */
+class MyObject {
+  private:
+    std::string name;
+
+  public:
+    explicit MyObject(
+        const std::string& name_);
+
+    /* -- avoid copying */
+    MyObject(
+        const MyObject&) = delete;
+    MyObject& operator = (
+        const MyObject&) = delete;
+
+    void test_testMark(
+        TestMarkBuilder& builder_) const;
+};
+
+MyObject::MyObject(
+    const std::string& name_) :
+  name(name_) {
+
+}
+
+void MyObject::test_testMark(
+    TestMarkBuilder& builder_) const {
+  builder_.openMap("MyObject");
+  builder_.setKey("name");
+  builder_.appendString(name);
+  builder_.closeContainer();
+}
+
+TEST_SUITE(RegressionsSuite) {
+  TEST_CASE(AssertionPassed) {
+    TEST_SIMPLE() {
+      MyObject object_("Pussy");
+      testRegression("passed mark", object_);
+    }
+  }
+
+  TEST_CASE(AssertionDifferentMark) {
+    TEST_SIMPLE() {
+      MyObject object_("wrong name");
+      testRegression("different mark", object_);
+    }
+  }
+
+  TEST_CASE(AssertionMissingMark) {
+    TEST_SIMPLE() {
+      MyObject object_("missing");
+      testRegression("missing mark", object_);
+    }
+  }
+}
+
+} /* -- namespace SelfTest */
+
+} /* -- namespace OTest2 */

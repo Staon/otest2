@@ -24,9 +24,12 @@ namespace OTest2 {
 
 class CommandStack;
 class ExcCatcher;
+class ObjectPath;
 class Reporter;
 class RunnerFilter;
 class SemanticStack;
+class TestMarkFactory;
+class TestMarkStorage;
 
 /**
  * @brief OTest2 runtime context
@@ -35,9 +38,12 @@ class Context {
   public:
     CommandStack* const command_stack;
     SemanticStack* const semantic_stack;
+    ObjectPath* const object_path;
     ExcCatcher* const exception_catcher;
     Reporter* const reporter;
     RunnerFilter* const runner_filter;
+    TestMarkFactory* const test_mark_factory;
+    TestMarkStorage* const test_mark_storage;
 
     /* -- avoid copying */
     Context(
@@ -51,9 +57,12 @@ class Context {
     explicit Context(
         CommandStack* command_stack_,
         SemanticStack* semantic_stack_,
+        ObjectPath* object_path_,
         ExcCatcher* exception_catcher_,
         Reporter* reporter_,
-        RunnerFilter* runner_filter_);
+        RunnerFilter* runner_filter_,
+        TestMarkFactory* test_mark_factory_,
+        TestMarkStorage* test_mark_storage_);
 
     /**
      * @brief Dtor

@@ -26,6 +26,7 @@
 #include <cmdfirststate.h>
 #include <commandstack.h>
 #include <context.h>
+#include <objectpath.h>
 #include <reporter.h>
 #include <caseordinary.h>
 #include <semanticstack.h>
@@ -46,6 +47,7 @@ CmdStartCase::~CmdStartCase() {
 void CmdStartCase::run(
     const Context& context_) {
   /* -- report start of the suite */
+  context_.object_path->pushName(testcase->getName());
   context_.reporter->enterCase(context_, testcase->getName());
 
   /* -- prepare the return value */

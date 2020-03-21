@@ -43,10 +43,10 @@ AssertContext::~AssertContext() {
 
 }
 
-bool AssertContext::testAssertImpl(
+void AssertContext::enterAssertion(
     bool condition_,
     const std::string& message_,
-    bool use_expression_) const {
+    bool use_expression_) {
   /* -- change the result of current object */
   if(!condition_)
     context->semantic_stack->setTop(false);
@@ -60,10 +60,28 @@ bool AssertContext::testAssertImpl(
       sos_ << " ";
     sos_ << message_;
   }
-  context->reporter->reportAssert(
+  context->reporter->enterAssert(
       *context, condition_, sos_.str(), file, lineno);
+}
 
+void AssertContext::assertionMessage(
+    bool condition_,
+    const std::string& message_) {
+  context->reporter->reportAssertionMessage(*context, message_);
+}
+
+bool AssertContext::leaveAssertion(
+    bool condition_) {
+  context->reporter->leaveAssert(*context);
   return condition_;
+}
+
+bool AssertContext::simpleAssertionImpl(
+    bool condition_,
+    const std::string& message_,
+    bool use_expression_) {
+  enterAssertion(condition_, message_, use_expression_);
+  return leaveAssertion(condition_);
 }
 
 const Context& AssertContext::otest2Context() const {

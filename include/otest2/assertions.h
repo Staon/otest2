@@ -25,19 +25,8 @@
 
 #include <otest2/assertbean.h>
 #include <otest2/assertcontext.h>
+#include <otest2/assertionannotation.h>
 #include <otest2/comparisons.h>
-
-#ifndef OTEST2_PARSER_ACTIVE
-
-#define TEST_ASSERTION_MARK(class_, method_)
-#define TEST_ASSERTION_MARK_TMPL(class_, method_)
-
-#else /* -- OTEST2_PARSER_ACTIVE */
-
-#define TEST_ASSERTION_MARK(class_, method_) __attribute__((annotate("otest2::assertion(" #class_ ";" #method_ ")")))
-#define TEST_ASSERTION_MARK_TMPL(class_, method_) __attribute__((annotate("otest2::assertion(" class_ ";" method_ ")")))
-
-#endif /* -- OTEST2_PARSER_ACTIVE */
 
 namespace OTest2 {
 
@@ -77,18 +66,18 @@ class GenericAssertion : public AssertContext {
 
     /* -- the assertion implementation */
     bool testAssert(
-        bool condition_) const;
+        bool condition_);
     bool testAssert(
-        const AssertBean& bean_) const;
+        const AssertBean& bean_);
     template<typename Compare_, typename A_, typename B_>
     bool testAssertCompare(
         A_ a_,
-        B_ b_) const;
+        B_ b_);
 
     /* -- exception assertion - it's never used as an assertion as
      *    it's always generated. */
     bool testException(
-        std::function<bool()> ftor_) const;
+        std::function<bool()> ftor_);
 };
 
 namespace Assertions {

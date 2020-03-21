@@ -88,15 +88,22 @@ class Reporter {
         const std::string& name_) = 0;
 
     /**
-     * @brief Report a test assertion
+     * @brief Enter an assertion
      *
-     * @param context_ the context
-     * @param condition_ result of the assertion
-     * @param message_ text description of the assertion
+     * The assertion is opened and closed similarly to states, cases and
+     * suites. While the assertion is opened some messages may be reported
+     * (@sa reportAssertionMessage()). The assertion is closed by the method
+     * leaveAssert().
+     *
+     * @param context_ the OTest2 context
+     * @param condition_ result of the assertion (false means failed assertion)
+     * @param message_ Initial assertion message. Usually it's shown at
+     *     the same line as the rest of assertion data. More messages
+     *     may be added by the method reportAssertionMessage().
      * @param file_ name of the source file
-     * @param lineno_ the number of line
+     * @param lineno_ line number in the source file
      */
-    virtual void reportAssert(
+    virtual void enterAssert(
         const Context& context_,
         bool condition_,
         const std::string& message_,
@@ -104,19 +111,47 @@ class Reporter {
         int lineno_) = 0;
 
     /**
-     * @brief Report an error
+     * @brief Enter an error report
      *
      * This method is used to report errors happened in the testing framework.
      * Errors mean failure of the test. However, they cannot be located in
      * the user code (no filename, no line number). A good example is
      * a not handled exception caught by the framework outside the test case.
      *
+     * The method works as well as the enterAssert() method with failed condition
+     * and with no location info. The opened error state is closed by the
+     * method leaveAssert().
+     *
      * @param context_ the context
-     * @param message_ text description of the error
+     * @param message_ initial error message. The message is usually shown
+     *     at the same line as the rest of the assertion reporting. More
+     *     message may be added by the method reportAssertionMessage().
      */
-    virtual void reportError(
+    virtual void enterError(
         const Context& context_,
         const std::string& message_) = 0;
+
+    /**
+     * @brief Add a supplementary assertion message
+     *
+     * This method allows to add more descriptive messages connected to
+     * an opened assertion. For example, differences of test marks are
+     * reported this way.
+     *
+     * @param context_ The OTest2 context
+     * @param message_ The message
+     */
+    virtual void reportAssertionMessage(
+        const Context& context_,
+        const std::string& message_) = 0;
+
+    /**
+     * @brief Leave an opened assertion or error
+     *
+     * @param context_ The OTest2 context
+     */
+    virtual void leaveAssert(
+        const Context& context_) = 0;
 
     /**
      * @brief Leave a state

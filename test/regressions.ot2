@@ -1,0 +1,133 @@
+/*
+ * Copyright (C) 2020 Ondrej Starek
+ *
+ * This file is part of OTest2.
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include <otest2/otest2.h>
+
+#include <cstdlib>
+#include <iostream>
+#include <string>
+#include <vector>
+
+#include "runtime.h"
+
+namespace OTest2 {
+
+namespace Test {
+
+TEST_SUITE(RegressionsSuite) {
+  TEST_CASE(AssertionPassed) {
+    Runtime runtime("RegressionsSuite", "AssertionPassed", "selftests/test_regressions.otest");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<RegressionsSuite>",
+        "enterCase<AssertionPassed>",
+        "enterState<AnonymousState>",
+        "assert<regression check 'RegressionsSuite>>AssertionPassed>>passed mark' has passed>: passed",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<AssertionPassed>: passed",
+        "leaveSuite<RegressionsSuite>: passed",
+        "leaveTest<selftest>: passed",
+      };
+
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(AssertionDifferentMark) {
+    Runtime runtime("RegressionsSuite", "AssertionDifferentMark", "selftests/test_regressions.otest");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<RegressionsSuite>",
+        "enterCase<AssertionDifferentMark>",
+        "enterState<AnonymousState>",
+        "assert<regression check 'RegressionsSuite>>AssertionDifferentMark>>different mark' has failed>: failed",
+        "message<  ----- Current ----->: failed",
+        "message<MyObject {\n\
+  name: \"wrong name\"\n\
+}\n\
+>: failed",
+        "message<  ----- Original ----->: failed",
+        "message<MyObject {\n\
+  name: \"right name\"\n\
+}\n\
+>: failed",
+        "message<  ----- Difference ---->: failed",
+        "message<  MyObject {\n\
+-   name: \"right name\"\n\
++   name: \"wrong name\"\n\
+  }\n\
+>: failed",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<AssertionDifferentMark>: failed",
+        "leaveSuite<RegressionsSuite>: failed",
+        "leaveTest<selftest>: failed",
+      };
+
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(AssertionMissingMark) {
+    Runtime runtime("RegressionsSuite", "AssertionMissingMark", "selftests/test_regressions.otest");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<RegressionsSuite>",
+        "enterCase<AssertionMissingMark>",
+        "enterState<AnonymousState>",
+        "assert<regression check 'RegressionsSuite>>AssertionMissingMark>>missing mark' has failed>: failed",
+        "message<  ----- Current ----->: failed",
+        "message<MyObject {\n\
+  name: \"missing\"\n\
+}\n\
+>: failed",
+        "message<  ----- Original ----->: failed",
+        "message<  ----- Difference ---->: failed",
+        "message<+ MyObject {\n\
++   name: \"missing\"\n\
++ }\n\
+>: failed",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<AssertionMissingMark>: failed",
+        "leaveSuite<RegressionsSuite>: failed",
+        "leaveTest<selftest>: failed",
+      };
+
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+}
+
+} /* -- namespace Test */
+
+} /* -- namespace OTest2 */

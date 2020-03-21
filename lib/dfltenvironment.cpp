@@ -27,6 +27,8 @@
 #include <reporterconsole.h>
 #include <runnerfilterentire.h>
 #include <runnerordinary.h>
+#include <testmarkfactory.h>
+#include <testmarkstorage.h>
 #include <utils.h>
 
 namespace OTest2 {
@@ -35,6 +37,8 @@ struct DfltEnvironment::Impl {
     std::unique_ptr<ExcCatcher> exc_catcher;
     std::unique_ptr<Reporter> reporter;
     std::unique_ptr<RunnerFilter> filter;
+    std::unique_ptr<TestMarkFactory> test_mark_factory;
+    std::unique_ptr<TestMarkStorage> test_mark_storage;
     std::unique_ptr<Runner> runner;
 };
 
@@ -46,13 +50,18 @@ DfltEnvironment::DfltEnvironment(
   /* -- TODO: parse command line options */
 
   pimpl->exc_catcher.reset(new ExcCatcherOrdinary);
-  pimpl->reporter.reset(new ReporterConsole(&std::cout));
+  pimpl->reporter.reset(new ReporterConsole(&std::cout, false));
   pimpl->filter.reset(new RunnerFilterEntire);
+  pimpl->test_mark_factory.reset(new TestMarkFactory);
+  pimpl->test_mark_storage.reset(
+      new TestMarkStorage(pimpl->test_mark_factory.get(), "regression.otest"));
   pimpl->runner.reset(new RunnerOrdinary(
       pimpl->exc_catcher.get(),
       pimpl->reporter.get(),
       &Registry::instance("default"),
       pimpl->filter.get(),
+      pimpl->test_mark_factory.get(),
+      pimpl->test_mark_storage.get(),
       argv_[0]));
 }
 

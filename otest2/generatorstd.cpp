@@ -158,6 +158,8 @@ void GeneratorStd::beginFile() {
       << "#include <otest2/generutils.h>\n"
       << "#include <otest2/objectptr.h>\n"
       << "#include <otest2/registry.h>\n"
+      << "#include <otest2/regressions.h>\n"
+      << "#include <otest2/regressionsimpl.h>\n"
       << "#include <otest2/stategenerated.h>\n"
       << "#include <otest2/suitegenerated.h>\n"
       << '\n';

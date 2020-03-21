@@ -41,6 +41,7 @@ std::ostream& formatRecord(
     switch(c_) {
       case '"': os_ << "\\\""; break;
       case '\\': os_ << "\\\\"; break;
+      case '\n': os_ << "\\n\\\n"; break;
       default: os_ << c_; break;
     }
   }
@@ -166,7 +167,7 @@ void ReporterMock::enterState(
   pimpl->addRecord();
 }
 
-void ReporterMock::reportAssert(
+void ReporterMock::enterAssert(
     const Context& context_,
     bool condition_,
     const std::string& message_,
@@ -177,11 +178,25 @@ void ReporterMock::reportAssert(
   pimpl->addRecord();
 }
 
-void ReporterMock::reportError(
+void ReporterMock::enterError(
     const Context& context_,
     const std::string& message_) {
   pimpl->oss << "error<" << message_ << ">: ";
   pimpl->printResult(false);
+  pimpl->addRecord();
+}
+
+void ReporterMock::reportAssertionMessage(
+    const Context& context_,
+    const std::string& message_) {
+  pimpl->oss << "message<" << message_ << ">: ";
+  pimpl->printResult(false);
+  pimpl->addRecord();
+}
+
+void ReporterMock::leaveAssert(
+    const Context& context_) {
+  pimpl->oss << "leaveAssert<>";
   pimpl->addRecord();
 }
 

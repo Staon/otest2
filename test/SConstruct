@@ -32,5 +32,5 @@ env.OTest2Suite('Program', 'selftest', [
 ])
 
 # -- scons check
-test_run = env.Alias('check', ['selftest'], 'test/selftest')
+test_run = env.Alias('check', ['selftest'], 'cd test; ./selftest')
 env.AlwaysBuild(test_run)

@@ -52,6 +52,7 @@ env.OTest2Suite('Library', 'otest2', [
     'reporterdebug.cpp',
     'reporterjunit.cpp',
     'reporterstatistics.cpp',
+    'reportertee.cpp',
     'runcode.cpp',
     'runcode.h',
     'runner.cpp',

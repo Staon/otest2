@@ -21,11 +21,13 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include <exccatcherordinary.h>
 #include <registry.h>
 #include <reporterconsole.h>
 #include <reporterjunit.h>
+#include <reportertee.h>
 #include <runnerfilterentire.h>
 #include <runnerordinary.h>
 #include <testmarkfactory.h>
@@ -38,7 +40,8 @@ namespace OTest2 {
 struct DfltEnvironment::Impl {
     std::unique_ptr<TimeSource> time_source;
     std::unique_ptr<ExcCatcher> exc_catcher;
-    std::unique_ptr<Reporter> reporter;
+    std::unique_ptr<ReporterTee> reporter_root;
+    std::vector<std::unique_ptr<Reporter>> reporters;
     std::unique_ptr<RunnerFilter> filter;
     std::unique_ptr<TestMarkFactory> test_mark_factory;
     std::unique_ptr<TestMarkStorage> test_mark_storage;
@@ -55,7 +58,16 @@ DfltEnvironment::DfltEnvironment(
   pimpl->time_source.reset(new TimeSourceSys);
   pimpl->exc_catcher.reset(new ExcCatcherOrdinary);
 //  pimpl->reporter.reset(new ReporterConsole(&std::cout, false));
-  pimpl->reporter.reset(new ReporterJUnit("result.xml"));
+
+  /* -- reporters */
+  pimpl->reporter_root.reset(new ReporterTee);
+  pimpl->reporters.push_back(
+      std::unique_ptr<Reporter>(new ReporterConsole(&std::cout, false)));
+  pimpl->reporter_root->appendReporter(pimpl->reporters.back().get());
+  pimpl->reporters.push_back(
+      std::unique_ptr<Reporter>(new ReporterJUnit("result.xml")));
+  pimpl->reporter_root->appendReporter(pimpl->reporters.back().get());
+
   pimpl->filter.reset(new RunnerFilterEntire);
   pimpl->test_mark_factory.reset(new TestMarkFactory);
   pimpl->test_mark_storage.reset(new TestMarkStorage(
@@ -63,7 +75,7 @@ DfltEnvironment::DfltEnvironment(
   pimpl->runner.reset(new RunnerOrdinary(
       pimpl->time_source.get(),
       pimpl->exc_catcher.get(),
-      pimpl->reporter.get(),
+      pimpl->reporter_root.get(),
       &Registry::instance("default"),
       pimpl->filter.get(),
       pimpl->test_mark_factory.get(),

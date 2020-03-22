@@ -30,6 +30,8 @@
 #include <otest2/exctestmarkin.h>
 #include "testmarkoutbintags.h"
 
+#include <iostream>
+
 namespace OTest2 {
 
 TestMarkInBin::TestMarkInBin() {
@@ -94,8 +96,9 @@ long double TestMarkInBin::readFloat() {
 
   std::uint8_t length_;
   readBinaryData(sizeof(length_), &length_);
-  std::vector<std::uint8_t> buffer_(length_);
+  std::vector<std::uint8_t> buffer_(length_ + 1);
   readBinaryData(length_, buffer_.data());
+  buffer_[length_] = 0;  /* -- string terminator */
 
   char* end_(nullptr);
   long double value_(

@@ -9,3 +9,5 @@ jobs:
           name: Run Tests
           command: |
             scons check
+      - store_test_results:
+          path: test-results

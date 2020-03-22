@@ -59,13 +59,14 @@ DfltEnvironment::DfltEnvironment(
   pimpl->exc_catcher.reset(new ExcCatcherOrdinary);
 //  pimpl->reporter.reset(new ReporterConsole(&std::cout, false));
 
-  /* -- reporters */
+  /* -- reporters (TODO: configuration from the command line) */
   pimpl->reporter_root.reset(new ReporterTee);
   pimpl->reporters.push_back(
       std::unique_ptr<Reporter>(new ReporterConsole(&std::cout, false)));
   pimpl->reporter_root->appendReporter(pimpl->reporters.back().get());
   pimpl->reporters.push_back(
-      std::unique_ptr<Reporter>(new ReporterJUnit("result.xml")));
+      std::unique_ptr<Reporter>(
+          new ReporterJUnit("../test-results/selftests/results.xml")));
   pimpl->reporter_root->appendReporter(pimpl->reporters.back().get());
 
   pimpl->filter.reset(new RunnerFilterEntire);

@@ -6,6 +6,7 @@ env.Append(LIBS = [
     "otest2",
     'tinfo',
     'bz2',
+    'pugixml',
 ])
 
 # -- tested test suites
@@ -15,6 +16,11 @@ envST.OTest2(env.Glob('selftests/*.ot2'))
 
 # -- testing test suites
 env.OTest2Suite('Program', 'selftest', [
+    'main.cpp',
+    'reportermock.cpp',
+    'runtime.cpp',
+    'timesourcemock.cpp',
+
     env.Glob('selftests/*.ot2.cpp'),
     'assertions.ot2',
     'base64.ot2',
@@ -22,11 +28,8 @@ env.OTest2Suite('Program', 'selftest', [
     'exceptions.ot2',
     'fixtures.ot2',
     'hirschberg.ot2',
-    'main.cpp',
     'mainloop.ot2',
     'regressions.ot2',
-    'reportermock.cpp',
-    'runtime.cpp',
     'tee.ot2',
     'testmarks.ot2',
 ])

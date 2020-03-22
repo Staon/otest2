@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2020 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -17,34 +17,38 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <context.h>
+#ifndef OTest2__INCLUDE_OTEST2_TIMESOURCESYS_H_
+#define OTest2__INCLUDE_OTEST2_TIMESOURCESYS_H_
+
+#include <otest2/timesource.h>
 
 namespace OTest2 {
 
-Context::Context(
-    CommandStack* command_stack_,
-    SemanticStack* semantic_stack_,
-    ObjectPath* object_path_,
-    TimeSource* time_source_,
-    ExcCatcher* exception_catcher_,
-    Reporter* reporter_,
-    RunnerFilter* runner_filter_,
-    TestMarkFactory* test_mark_factory_,
-    TestMarkStorage* test_mark_storage_) :
-  command_stack(command_stack_),
-  semantic_stack(semantic_stack_),
-  object_path(object_path_),
-  time_source(time_source_),
-  exception_catcher(exception_catcher_),
-  reporter(reporter_),
-  runner_filter(runner_filter_),
-  test_mark_factory(test_mark_factory_),
-  test_mark_storage(test_mark_storage_) {
+/**
+ * @brief Source of current system time
+ */
+class TimeSourceSys : public TimeSource {
+  public:
+    /**
+     * brief Ctor
+     */
+    TimeSourceSys();
 
-}
+    /**
+     * @brief Dtor
+     */
+    virtual ~TimeSourceSys();
 
-Context::~Context() {
+    /* -- avoid copying */
+    TimeSourceSys(
+        const TimeSourceSys&) = delete;
+    TimeSourceSys& operator = (
+        const TimeSourceSys&) = delete;
 
-}
+    /* -- time source interface */
+    virtual time_point now() override;
+};
 
 } /* -- namespace OTest2 */
+
+#endif /* -- OTest2__INCLUDE_OTEST2_TIMESOURCESYS_H_ */

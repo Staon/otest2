@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     libncurses5-dev \
     libbz2-dev \
     libboost-dev \
+    libpugixml-dev \
     g++ \
     git \
     openssh-client \

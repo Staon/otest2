@@ -32,6 +32,7 @@ class Reporter;
 class RunnerFilter;
 class TestMarkFactory;
 class TestMarkStorage;
+class TimeSource;
 
 /**
  * @brief Ordinary implementation of the Runner interface
@@ -54,6 +55,7 @@ class RunnerOrdinary : public Runner {
     /**
      * @brief Ctor
      *
+     * @param time_source_ A source of current time. The ownership is not taken.
      * @param exc_catcher_ An exception catcher. The ownership is not taken.
      * @param reporter_ A reporter object. The ownership is not taken.
      * @param registry_ A registry of suites to be run. The ownership is not taken.
@@ -66,6 +68,7 @@ class RunnerOrdinary : public Runner {
      * @param name_ Name of the test (shown in the test report)
      */
     explicit RunnerOrdinary(
+        TimeSource* time_source_,
         ExcCatcher* exc_catcher_,
         Reporter* reporter_,
         Registry* registry_,

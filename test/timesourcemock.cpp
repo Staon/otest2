@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2020 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -17,34 +17,35 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <context.h>
+#include "timesourcemock.h"
 
 namespace OTest2 {
 
-Context::Context(
-    CommandStack* command_stack_,
-    SemanticStack* semantic_stack_,
-    ObjectPath* object_path_,
-    TimeSource* time_source_,
-    ExcCatcher* exception_catcher_,
-    Reporter* reporter_,
-    RunnerFilter* runner_filter_,
-    TestMarkFactory* test_mark_factory_,
-    TestMarkStorage* test_mark_storage_) :
-  command_stack(command_stack_),
-  semantic_stack(semantic_stack_),
-  object_path(object_path_),
-  time_source(time_source_),
-  exception_catcher(exception_catcher_),
-  reporter(reporter_),
-  runner_filter(runner_filter_),
-  test_mark_factory(test_mark_factory_),
-  test_mark_storage(test_mark_storage_) {
+namespace Test {
+
+TimeSourceMock::TimeSourceMock() :
+  just_now(std::chrono::minutes(60 * 27 + 31)) {
 
 }
 
-Context::~Context() {
+TimeSourceMock::~TimeSourceMock() {
 
 }
+
+void TimeSourceMock::setTime(
+    const TimeSourceMock::time_point& now_) {
+  just_now = now_;
+}
+
+void TimeSourceMock::addTime(
+    const TimeSourceMock::duration& shift_) {
+  just_now += shift_;
+}
+
+TimeSourceMock::time_point TimeSourceMock::now() {
+  return just_now;
+}
+
+} /* -- namespace Test */
 
 } /* -- namespace OTest2 */

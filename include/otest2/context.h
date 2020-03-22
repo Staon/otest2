@@ -30,6 +30,7 @@ class RunnerFilter;
 class SemanticStack;
 class TestMarkFactory;
 class TestMarkStorage;
+class TimeSource;
 
 /**
  * @brief OTest2 runtime context
@@ -39,6 +40,7 @@ class Context {
     CommandStack* const command_stack;
     SemanticStack* const semantic_stack;
     ObjectPath* const object_path;
+    TimeSource* const time_source;
     ExcCatcher* const exception_catcher;
     Reporter* const reporter;
     RunnerFilter* const runner_filter;
@@ -58,6 +60,7 @@ class Context {
         CommandStack* command_stack_,
         SemanticStack* semantic_stack_,
         ObjectPath* object_path_,
+        TimeSource* time_source_,
         ExcCatcher* exception_catcher_,
         Reporter* reporter_,
         RunnerFilter* runner_filter_,

@@ -25,15 +25,18 @@
 #include <exccatcherordinary.h>
 #include <registry.h>
 #include <reporterconsole.h>
+#include <reporterjunit.h>
 #include <runnerfilterentire.h>
 #include <runnerordinary.h>
 #include <testmarkfactory.h>
 #include <testmarkstorage.h>
+#include <timesourcesys.h>
 #include <utils.h>
 
 namespace OTest2 {
 
 struct DfltEnvironment::Impl {
+    std::unique_ptr<TimeSource> time_source;
     std::unique_ptr<ExcCatcher> exc_catcher;
     std::unique_ptr<Reporter> reporter;
     std::unique_ptr<RunnerFilter> filter;
@@ -49,13 +52,16 @@ DfltEnvironment::DfltEnvironment(
 
   /* -- TODO: parse command line options */
 
+  pimpl->time_source.reset(new TimeSourceSys);
   pimpl->exc_catcher.reset(new ExcCatcherOrdinary);
-  pimpl->reporter.reset(new ReporterConsole(&std::cout, false));
+//  pimpl->reporter.reset(new ReporterConsole(&std::cout, false));
+  pimpl->reporter.reset(new ReporterJUnit("result.xml"));
   pimpl->filter.reset(new RunnerFilterEntire);
   pimpl->test_mark_factory.reset(new TestMarkFactory);
-  pimpl->test_mark_storage.reset(
-      new TestMarkStorage(pimpl->test_mark_factory.get(), "regression.otest"));
+  pimpl->test_mark_storage.reset(new TestMarkStorage(
+      pimpl->test_mark_factory.get(), "regression.otest"));
   pimpl->runner.reset(new RunnerOrdinary(
+      pimpl->time_source.get(),
       pimpl->exc_catcher.get(),
       pimpl->reporter.get(),
       &Registry::instance("default"),

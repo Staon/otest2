@@ -28,6 +28,7 @@
 #include <otest2/testmarkstorage.h>
 
 #include "reportermock.h"
+#include "timesourcemock.h"
 
 namespace OTest2 {
 
@@ -38,6 +39,7 @@ namespace Test {
  */
 class Runtime {
   public:
+    TimeSourceMock time_source;
     ExcCatcherOrdinary exc_catcher;
     ReporterMock reporter;
     RunnerFilterOne runner_filter;

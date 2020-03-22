@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2020 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -17,34 +17,22 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <context.h>
+#include <timesourcesys.h>
+
+#include <chrono>
 
 namespace OTest2 {
 
-Context::Context(
-    CommandStack* command_stack_,
-    SemanticStack* semantic_stack_,
-    ObjectPath* object_path_,
-    TimeSource* time_source_,
-    ExcCatcher* exception_catcher_,
-    Reporter* reporter_,
-    RunnerFilter* runner_filter_,
-    TestMarkFactory* test_mark_factory_,
-    TestMarkStorage* test_mark_storage_) :
-  command_stack(command_stack_),
-  semantic_stack(semantic_stack_),
-  object_path(object_path_),
-  time_source(time_source_),
-  exception_catcher(exception_catcher_),
-  reporter(reporter_),
-  runner_filter(runner_filter_),
-  test_mark_factory(test_mark_factory_),
-  test_mark_storage(test_mark_storage_) {
+TimeSourceSys::TimeSourceSys() {
 
 }
 
-Context::~Context() {
+TimeSourceSys::~TimeSourceSys() {
 
+}
+
+TimeSourceSys::time_point TimeSourceSys::now() {
+  return std::chrono::system_clock::now();
 }
 
 } /* -- namespace OTest2 */

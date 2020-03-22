@@ -54,6 +54,7 @@ struct RunnerOrdinary::Impl {
 
     explicit Impl(
         RunnerOrdinary* owner_,
+        TimeSource* time_source_,
         ExcCatcher* exc_catcher_,
         Reporter* reporter_,
         Registry* registry_,
@@ -66,6 +67,7 @@ struct RunnerOrdinary::Impl {
 
 RunnerOrdinary::Impl::Impl(
     RunnerOrdinary* owner_,
+    TimeSource* time_source_,
     ExcCatcher* exc_catcher_,
     Reporter* reporter_,
     Registry* registry_,
@@ -82,6 +84,7 @@ RunnerOrdinary::Impl::Impl(
       &command_stack,
       &semantic_stack,
       &object_path,
+      time_source_,
       exc_catcher_,
       reporter_,
       runner_filter_,
@@ -102,6 +105,7 @@ RunnerOrdinary::Impl::~Impl() {
 }
 
 RunnerOrdinary::RunnerOrdinary(
+    TimeSource* time_source_,
     ExcCatcher* exc_catcher_,
     Reporter* reporter_,
     Registry* registry_,
@@ -111,6 +115,7 @@ RunnerOrdinary::RunnerOrdinary(
     const std::string& name_) :
   pimpl(new Impl(
       this,
+      time_source_,
       exc_catcher_,
       reporter_,
       registry_,

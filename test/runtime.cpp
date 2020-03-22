@@ -31,12 +31,14 @@ namespace Test {
 Runtime::Runtime(
     const std::string& suite_name_,
     const std::string& case_name_) :
+  time_source(),
   exc_catcher(),
   reporter(),
   runner_filter(suite_name_, case_name_),
   test_mark_factory(),
   test_mark_storage(),
   runner(
+      &time_source,
       &exc_catcher,
       &reporter,
       &Registry::instance("selftest"),
@@ -57,6 +59,7 @@ Runtime::Runtime(
   test_mark_factory(),
   test_mark_storage(new TestMarkStorage(&test_mark_factory, regression_file_)),
   runner(
+      &time_source,
       &exc_catcher,
       &reporter,
       &Registry::instance("selftest"),

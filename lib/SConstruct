@@ -50,6 +50,7 @@ env.OTest2Suite('Library', 'otest2', [
     'reporter.cpp',
     'reporterconsole.cpp',
     'reporterdebug.cpp',
+    'reporterjunit.cpp',
     'reporterstatistics.cpp',
     'runcode.cpp',
     'runcode.h',
@@ -90,4 +91,6 @@ env.OTest2Suite('Library', 'otest2', [
     'testmarkprinter.cpp',
     'testmarkstorage.cpp',
     'testmarkstring.cpp',
+    'timesource.cpp',
+    'timesourcesys.cpp',
 ])

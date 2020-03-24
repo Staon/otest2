@@ -67,9 +67,14 @@ std::string ObjectPath::getCurrentPath() const {
 
 std::string ObjectPath::getRegressionKey(
     const std::string& local_key_) const {
+  /* -- at least we must be inside a suite */
+  assert(pimpl->path_stack_.size() > 1);
+
   std::ostringstream oss_;
+  auto suite_part_(pimpl->path_stack_.begin());
+  ++suite_part_;
   std::copy(
-      pimpl->path_stack_.begin(),
+      suite_part_,
       pimpl->path_stack_.end(),
       std::ostream_iterator<std::string>(oss_, ">>"));
   oss_ << local_key_;

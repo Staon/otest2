@@ -20,6 +20,7 @@
 #include <cmdstoptest.h>
 
 #include <context.h>
+#include <objectpath.h>
 #include <reporter.h>
 #include <semanticstack.h>
 
@@ -40,6 +41,7 @@ void CmdStopTest::run(
   /* -- report the end of the test */
   context_.reporter->leaveTest(
       context_, name, context_.semantic_stack->top());
+  context_.object_path->popName();
 
   /* -- note: don't touch the semantic stack. There is the result of the entire
    *    test at the top. */

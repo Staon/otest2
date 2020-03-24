@@ -27,6 +27,7 @@
 #include <commandptr.h>
 #include <commandstack.h>
 #include <context.h>
+#include <objectpath.h>
 #include <reporter.h>
 
 namespace OTest2 {
@@ -47,6 +48,7 @@ CmdStartTest::~CmdStartTest() {
 void CmdStartTest::run(
     const Context& context_) {
   /* -- report the test */
+  context_.object_path->pushName(name);
   context_.reporter->enterTest(context_, name);
 
   /* -- schedule the commands */

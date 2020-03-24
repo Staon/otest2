@@ -32,14 +32,33 @@ bool GenericAssertion::testAssertCompare(
     A_ a_,
     B_ b_) {
   Compare_ cmp_;
+  const bool condition_(cmp_(a_, b_));
+
+  /* -- report the result and the used relation operator */
   std::ostringstream sos_;
-  sos_ << "relation 'a ";
-  PrintTrait<Compare_>::print(sos_, cmp_);
-  sos_ << " b' has failed: a = ";
+  if(condition_) {
+    sos_ << "check 'a ";
+    PrintTrait<Compare_>::print(sos_, cmp_);
+    sos_ << " b' has passed";
+  }
+  else {
+    sos_ << "check 'a ";
+    PrintTrait<Compare_>::print(sos_, cmp_);
+    sos_ << " b' has failed";
+  }
+  enterAssertion(condition_, sos_.str(), false);
+
+  /* -- report values of the operands */
+  sos_.str("");
+  sos_ << "a = ";
   PrintTrait<A_>::print(sos_, a_);
-  sos_ << ", b = ";
+  assertionMessage(condition_, sos_.str());
+  sos_.str("");
+  sos_ << "b = ";
   PrintTrait<B_>::print(sos_, b_);
-  return simpleAssertionImpl(cmp_(a_, b_), sos_.str(), false);
+  assertionMessage(condition_, sos_.str());
+
+  return leaveAssertion(condition_);
 }
 
 }  /* -- namespace OTest2 */

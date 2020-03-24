@@ -49,10 +49,18 @@ bool GenericAssertion::testException(
       message_)) {
     return simpleAssertionImpl(false, message_, false);
   }
-  return simpleAssertionImpl(
-      result_,
-      "an exception was expected but no one has occurred",
-      false);
+  if(result_) {
+    return simpleAssertionImpl(
+        true,
+        "the expected exception has been caught",
+        false);
+  }
+  else {
+    return simpleAssertionImpl(
+        false,
+        "an exception was expected but no one has occurred",
+        false);
+  }
 }
 
 }  /* -- namespace OTest2 */

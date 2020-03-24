@@ -189,8 +189,7 @@ void ReporterMock::enterError(
 void ReporterMock::reportAssertionMessage(
     const Context& context_,
     const std::string& message_) {
-  pimpl->oss << "message<" << message_ << ">: ";
-  pimpl->printResult(false);
+  pimpl->oss << "message<" << message_ << ">";
   pimpl->addRecord();
 }
 

@@ -20,6 +20,7 @@
 #ifndef OTest2__INCLUDE_OTEST2_RUNNERFILTERONE_H_
 #define OTest2__INCLUDE_OTEST2_RUNNERFILTERONE_H_
 
+#include <memory>
 #include <string>
 
 #include <otest2/runnerfilter.h>
@@ -64,6 +65,18 @@ class RunnerFilterOne : public RunnerFilter {
      * @brief Dtor
      */
     virtual ~RunnerFilterOne();
+
+    /**
+     * @brief Create the filter from an object path
+     *
+     * The object path is a string in format <suite>[::<case>]. It defines
+     * the whole suite or just one test case which will be run.
+     *
+     * @param object_path_ The object path
+     * @return The created filter
+     */
+    static std::unique_ptr<RunnerFilterOne> fromPath(
+        const std::string& object_path_);
 
     /* -- runner filter interface */
     virtual bool filterSuite(

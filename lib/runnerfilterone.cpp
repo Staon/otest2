@@ -74,6 +74,24 @@ RunnerFilterOne::~RunnerFilterOne() {
   odelete(pimpl);
 }
 
+std::unique_ptr<RunnerFilterOne> RunnerFilterOne::fromPath(
+    const std::string& object_path_) {
+  std::string suite_;
+  std::string testcase_;
+
+  auto index_(object_path_.find("::"));
+  if(index_ == std::string::npos) {
+    /* -- one whole suite */
+    return std::unique_ptr<RunnerFilterOne>(new RunnerFilterOne(object_path_));
+  }
+  else {
+    /* -- just one testcase */
+    std::string suite_(object_path_.substr(0, index_));
+    std::string testcase_(object_path_.substr(index_ + 2));
+    return std::unique_ptr<RunnerFilterOne>(new RunnerFilterOne(suite_, testcase_));
+  }
+}
+
 bool RunnerFilterOne::filterSuite(
     const std::string& suite_name_) const {
   return suite_name_ != pimpl->suite_name;

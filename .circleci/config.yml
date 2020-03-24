@@ -6,8 +6,13 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Build
+          command: scons
+      - run:
           name: Run Tests
           command: |
-            scons check
+            mkdir -p test-results/selftest
+            cd test
+            ./selftest --junit=../test-results/selftest/result.xml
       - store_test_results:
           path: test-results

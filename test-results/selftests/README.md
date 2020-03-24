@@ -1,1 +1,0 @@
-A placeholder directory prepared for results of running tests

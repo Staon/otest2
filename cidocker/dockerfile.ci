@@ -1,11 +1,14 @@
 FROM debian:stretch AS clang_tmp
-RUN apt-get update && apt-get install -y tar gzip
-COPY clang-install.tar.gz /otest2/clang-install.tar.gz
-RUN gunzip -c /otest2/clang-install.tar.gz | tar -x -v -f- -p -C/usr/local
+RUN apt-get update && apt-get install -y tar gzip binutils
+COPY clang-install.tar.gz shrink_clang.sh empty.o /otest2/
+RUN mkdir -p /otest2/local \
+    && gunzip -c /otest2/clang-install.tar.gz | tar -x -v -f- -p -C/otest2/local \
+    && cd /otest2 \
+    && /otest2/shrink_clang.sh /otest2/local /usr/local
 
 FROM debian:stretch AS otest2-ci
 RUN apt-get update && apt-get install -y \
-    scons \
+    cmake \
     libncurses5-dev \
     libbz2-dev \
     libboost-dev \
@@ -16,4 +19,12 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \
     gnupg
 COPY --from=clang_tmp /usr/local /usr/local
+
+# Clean all unused Debian packages
+RUN apt-get update \
+	&& apt-get -y autoremove \
+	&& apt-get -y autoclean \
+	&& apt-get -y clean \
+	&& rm -rf /var/lib/apt/lists/*
+
 CMD ["sleep", "infinity"]

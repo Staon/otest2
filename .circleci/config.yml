@@ -7,12 +7,16 @@ jobs:
       - checkout
       - run:
           name: Build
-          command: scons
+          command: |
+            mkdir -p build
+            cd build
+            cmake ..
+            make
       - run:
           name: Run Tests
           command: |
             mkdir -p test-results/selftest
             cd test
-            ./selftest --junit=../test-results/selftest/result.xml
+            ../build/test/selftest --junit=../test-results/selftest/result.xml
       - store_test_results:
           path: test-results

@@ -27,11 +27,12 @@ function(TARGET_OTEST2_SOURCES target)
 
   foreach(src IN LISTS OTEST2_UNPARSED_ARGUMENTS)
     set(gensrc "${CMAKE_CURRENT_SOURCE_DIR}/${src}.cpp")
+    set(includes "$<TARGET_PROPERTY:${target},INCLUDE_DIRECTORIES>")
     add_custom_command(
         OUTPUT ${gensrc}
         COMMAND otest2
-            -I${PROJECT_SOURCE_DIR}/include
-            -I/usr/local/lib/clang/7.1.0/include
+            $<$<BOOL:${includes}>:-I$<JOIN:${includes}," "-I>>
+            -I/usr/lib/gcc/x86_64-linux-gnu/6/include
             ${domain_arg}
             -o ${gensrc} ${CMAKE_CURRENT_SOURCE_DIR}/${src}
         DEPENDS ${src}

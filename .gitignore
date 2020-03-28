@@ -1,30 +1,19 @@
-*.a
-*.so
-*.lib
-*.lst
-*.err
-*.o
-*.lo
-*.hh
-*.l.cpp
-*.tab.cpp
-*.tab.hpp
-*.output
-*.ver.cpp
-*.usage
-*.lnk
-*.ot2.cpp
-.deps
-*.dblite
-
+# -- Eclipse project files
 /.project
 /.cproject
-/autom4te.cache/
-/config.h.in~
-/missing
-/Makefile
-/config.h
-/config.status
-/stamp-h1
-/config.log
-/.pydevproject
+
+# -- cmake generated file (in-place build)
+CMakeFiles
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+build
+
+# -- built and otest2 generated files
+*.ot2.cpp
+*.a
+*.o
+otest2/otest2
+test/selftest
+cidocker/clang-install.tar.gz
+

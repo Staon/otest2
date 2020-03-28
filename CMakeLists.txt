@@ -19,6 +19,9 @@ cmake_minimum_required(VERSION 3.7)
 
 project(OTest2 VERSION 1.0.0)
 
+# -- disable warning of the deprecated istrstream
+add_compile_options(-Wno-deprecated)
+
 add_subdirectory(lib)
 add_subdirectory(otest2)
 add_subdirectory(test)

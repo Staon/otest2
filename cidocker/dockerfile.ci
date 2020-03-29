@@ -27,4 +27,8 @@ RUN apt-get update \
 	&& apt-get -y clean \
 	&& rm -rf /var/lib/apt/lists/*
 
+# Discover system include paths
+COPY otest2_discovery.sh ./
+RUN ./otest2_discovery.sh > /etc/otest2_includes.conf
+
 CMD ["sleep", "infinity"]

@@ -15,5 +15,8 @@ build
 *.o
 otest2/otest2
 test/selftest
+
+# -- docker image
 cidocker/clang-install.tar.gz
+cidocker/otest2_discovery.sh
 

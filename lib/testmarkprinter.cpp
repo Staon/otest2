@@ -17,13 +17,13 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <otest2/testmarkprinter.h>
+#include <testmarkprinter.h>
 
 #include <assert.h>
 #include <iostream>
 #include <sstream>
 
-#include <otest2/utils.h>
+#include <utils.h>
 
 namespace OTest2 {
 

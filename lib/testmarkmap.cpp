@@ -20,9 +20,9 @@
 
 #include <assert.h>
 
-#include <otest2/testmarkhash.h>
-#include <otest2/testmarkin.h>
-#include <otest2/testmarkout.h>
+#include <testmarkhash.h>
+#include <testmarkin.h>
+#include <testmarkout.h>
 
 namespace OTest2 {
 

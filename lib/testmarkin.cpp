@@ -17,12 +17,12 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <otest2/testmarkin.h>
+#include <testmarkin.h>
 
 #include <string>
 
-#include <otest2/testmark.h>
-#include <otest2/testmarkfactory.h>
+#include <testmark.h>
+#include <testmarkfactory.h>
 
 namespace OTest2 {
 

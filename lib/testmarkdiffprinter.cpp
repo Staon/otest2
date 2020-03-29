@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <otest2/testmarkdiffprinter.h>
+#include <testmarkdiffprinter.h>
 
 #include <iostream>
 
-#include <otest2/testmarkprinter.h>
+#include <testmarkprinter.h>
 
 namespace OTest2 {
 

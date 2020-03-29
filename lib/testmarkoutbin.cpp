@@ -17,7 +17,7 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <otest2/testmarkoutbin.h>
+#include <testmarkoutbin.h>
 
 #include <assert.h>
 #include <boost/endian/conversion.hpp>

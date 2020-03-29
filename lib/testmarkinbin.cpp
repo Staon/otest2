@@ -17,7 +17,7 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <otest2/testmarkinbin.h>
+#include <testmarkinbin.h>
 
 #include <algorithm>
 #include <assert.h>
@@ -27,10 +27,8 @@
 #include <limits>
 #include <vector>
 
-#include <otest2/exctestmarkin.h>
+#include <exctestmarkin.h>
 #include "testmarkoutbintags.h"
-
-#include <iostream>
 
 namespace OTest2 {
 

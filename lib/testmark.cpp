@@ -22,9 +22,9 @@
 #include <string>
 #include <typeinfo>
 
-#include <otest2/difflogarray.h>
-#include <otest2/hirschberg.h>
-#include <otest2/testmarkprinter.h>
+#include <difflogarray.h>
+#include <hirschberg.h>
+#include <testmarkprinter.h>
 
 namespace OTest2 {
 

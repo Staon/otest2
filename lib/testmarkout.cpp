@@ -17,7 +17,7 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <otest2/testmarkout.h>
+#include <testmarkout.h>
 
 namespace OTest2 {
 

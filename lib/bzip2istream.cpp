@@ -17,14 +17,14 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <otest2/bzip2istream.h>
+#include <bzip2istream.h>
 
 #include <assert.h>
 #include <bzlib.h>
 #include <cstring>
 #include <streambuf>
 
-#include <otest2/utils.h>
+#include <utils.h>
 
 namespace OTest2 {
 

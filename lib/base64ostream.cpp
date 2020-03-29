@@ -17,13 +17,13 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <otest2/base64ostream.h>
+#include <base64ostream.h>
 
 #include <assert.h>
 #include <cstdint>
 #include <streambuf>
 
-#include <otest2/utils.h>
+#include <utils.h>
 
 namespace OTest2 {
 

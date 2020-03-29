@@ -17,13 +17,13 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <otest2/teeostream.h>
+#include <teeostream.h>
 
 #include <assert.h>
 #include <streambuf>
 #include <vector>
 
-#include <otest2/utils.h>
+#include <utils.h>
 
 namespace OTest2 {
 

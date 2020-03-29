@@ -17,7 +17,7 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <otest2/objectpath.h>
+#include <objectpath.h>
 
 #include <algorithm>
 #include <assert.h>

@@ -17,20 +17,20 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <otest2/testmarkfactory.h>
+#include <testmarkfactory.h>
 
 #include <assert.h>
 #include <unordered_map>
 
-#include <otest2/exctestmarkin.h>
-#include <otest2/testmarkbool.h>
-#include <otest2/testmarkfloat.h>
-#include <otest2/testmarkint.h>
-#include <otest2/testmarklist.h>
-#include <otest2/testmarkmap.h>
-#include <otest2/testmarknull.h>
-#include <otest2/testmarkstring.h>
-#include <otest2/utils.h>
+#include <exctestmarkin.h>
+#include <testmarkbool.h>
+#include <testmarkfloat.h>
+#include <testmarkint.h>
+#include <testmarklist.h>
+#include <testmarkmap.h>
+#include <testmarknull.h>
+#include <testmarkstring.h>
+#include <utils.h>
 
 namespace OTest2 {
 

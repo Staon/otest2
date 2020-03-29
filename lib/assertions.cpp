@@ -21,9 +21,9 @@
 
 #include <string>
 
-#include <otest2/assertbean.h>
-#include <otest2/context.h>
-#include <otest2/exccatcher.h>
+#include <assertbean.h>
+#include <context.h>
+#include <exccatcher.h>
 
 namespace OTest2 {
 

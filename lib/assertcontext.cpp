@@ -17,13 +17,13 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <otest2/assertcontext.h>
+#include <assertcontext.h>
 
 #include <sstream>
 
-#include <otest2/context.h>
-#include <otest2/reporter.h>
-#include <otest2/semanticstack.h>
+#include <context.h>
+#include <reporter.h>
+#include <semanticstack.h>
 
 namespace OTest2 {
 

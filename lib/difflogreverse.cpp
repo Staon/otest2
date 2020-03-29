@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <otest2/difflogreverse.h>
+#include <difflogreverse.h>
 
 #include <assert.h>
 

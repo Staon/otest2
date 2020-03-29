@@ -17,7 +17,7 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <otest2/registry.h>
+#include <registry.h>
 
 #include <assert.h>
 #include <map>

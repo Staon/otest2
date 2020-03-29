@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <otest2/base64istream.h>
+#include <base64istream.h>
 
 #include <assert.h>
 #include <cctype>
 #include <cstdint>
 #include <streambuf>
 
-#include <otest2/utils.h>
+#include <utils.h>
 
 namespace OTest2 {
 

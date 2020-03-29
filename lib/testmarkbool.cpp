@@ -17,16 +17,16 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <otest2/testmarkbool.h>
+#include <testmarkbool.h>
 
 #include <assert.h>
 #include <iostream>
 #include <string>
 
-#include <otest2/exctestmarkin.h>
-#include <otest2/testmarkhash.h>
-#include <otest2/testmarkin.h>
-#include <otest2/testmarkout.h>
+#include <exctestmarkin.h>
+#include <testmarkhash.h>
+#include <testmarkin.h>
+#include <testmarkout.h>
 
 namespace OTest2 {
 

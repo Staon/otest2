@@ -17,7 +17,7 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <otest2/testmarkstorage.h>
+#include <testmarkstorage.h>
 
 #include <assert.h>
 #include <cctype>
@@ -27,17 +27,17 @@
 #include <sstream>
 #include <strstream>
 
-#include <otest2/base64istream.h>
-#include <otest2/base64ostream.h>
-#include <otest2/bzip2istream.h>
-#include <otest2/bzip2ostream.h>
-#include <otest2/exctestmarkin.h>
-#include <otest2/testmark.h>
-#include <otest2/testmarkfactory.h>
-#include <otest2/testmarkinbinios.h>
-#include <otest2/testmarkoutbinios.h>
-#include <otest2/testmarkptr.h>
-#include <otest2/utils.h>
+#include <base64istream.h>
+#include <base64ostream.h>
+#include <bzip2istream.h>
+#include <bzip2ostream.h>
+#include <exctestmarkin.h>
+#include <testmark.h>
+#include <testmarkfactory.h>
+#include <testmarkinbinios.h>
+#include <testmarkoutbinios.h>
+#include <testmarkptr.h>
+#include <utils.h>
 
 namespace OTest2 {
 

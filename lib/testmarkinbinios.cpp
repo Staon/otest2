@@ -17,12 +17,12 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <otest2/testmarkinbinios.h>
+#include <testmarkinbinios.h>
 
 #include <assert.h>
 #include <istream>
 
-#include <otest2/exctestmarkin.h>
+#include <exctestmarkin.h>
 
 namespace OTest2 {
 

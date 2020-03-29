@@ -22,8 +22,8 @@
 #include <assert.h>
 #include <iostream>
 
-#include <otest2/testmarkhash.h>
-#include <otest2/testmarkout.h>
+#include <testmarkhash.h>
+#include <testmarkout.h>
 
 namespace OTest2 {
 

@@ -42,3 +42,4 @@ target_link_libraries(otest2 PRIVATE clangTooling)
 
 # -- install the otest2 preprocessor
 install(TARGETS otest2 DESTINATION bin)
+install(PROGRAMS otest2_discovery.sh DESTINATION bin)

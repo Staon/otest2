@@ -20,14 +20,21 @@
 #include "options.h"
 
 #include <cstdlib>
+#include <fstream>
 #include <getopt.h>
 #include <iostream>
+#include <string>
 
 #include "error.h"
 
 namespace OTest2 {
 
+extern char const GLOBAL_CONFIG_FILE_PACKAGE[];
+
 namespace {
+
+const char LOCAL_CONFIG_FILE_NAME[] = ".otest2_includes";
+const char GLOBAL_CONFIG_FILE[] = "/etc/otest2_includes.conf";
 
 void printHelp(
     std::ostream& os_) {
@@ -48,6 +55,38 @@ void printHelp(
   os_ << "                                 directories -Idir. Don't forget to precede" << std::endl;
   os_ << "                                 -- to the compiler options." << std::endl;
   os_ << std::endl;
+}
+
+std::string& ltrim(std::string& str, const std::string& chars = "\t\n\v\f\r ")
+{
+    str.erase(0, str.find_first_not_of(chars));
+    return str;
+}
+
+std::string& rtrim(std::string& str, const std::string& chars = "\t\n\v\f\r ")
+{
+    str.erase(str.find_last_not_of(chars) + 1);
+    return str;
+}
+
+void trimString(
+    std::string& str_)
+{
+  str_.erase(str_.find_last_not_of("\t\n\v\f\r ") + 1);
+  str_.erase(0, str_.find_first_not_of("\t\n\v\f\r "));
+}
+
+void fillConfiguredIncludeDirectories(
+    std::vector<std::string>& options_,
+    const std::string& cfg_file_) {
+  std::ifstream ifs_(cfg_file_);
+  while(!!ifs_) {
+    std::string line_;
+    std::getline(ifs_, line_);
+    trimString(line_);
+    if(!line_.empty())
+      options_.push_back("--extra-arg-before=-I" + line_);
+  }
 }
 
 } /* -- namespace */
@@ -134,6 +173,22 @@ void Options::fillClangToolOptions(
   /* -- push compiler options passed by user from the command line */
   for(const auto& opt_ : compiler_options)
     options_.push_back("--extra-arg-before=" + opt_);
+
+  /* -- Insert configured include directories. The configuration is read
+   *    from several configuration files:
+   *      1) .otest2_includes in current directory
+   *      2) ~/.otest2_includes in user's home directory
+   *      3) ${CMAKE_INSTALL_PREFIX}/lib/otest2_includes
+   */
+  fillConfiguredIncludeDirectories(options_, LOCAL_CONFIG_FILE_NAME);
+  const char* home_dir_(std::getenv("HOME"));
+  if(home_dir_ != nullptr) {
+    std::string home_cfg_(home_dir_);
+    home_cfg_ += "/";
+    home_cfg_ += LOCAL_CONFIG_FILE_NAME;
+    fillConfiguredIncludeDirectories(options_, home_cfg_);
+  }
+  fillConfiguredIncludeDirectories(options_, GLOBAL_CONFIG_FILE);
 
   /* -- add the input file */
   options_.push_back(infile);

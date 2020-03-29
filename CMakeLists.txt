@@ -36,6 +36,6 @@ set(CPACK_PACKAGE_VERSION_PATCH "${OTest2_VERSION_PATCH}")
 set(CPACK_PACKAGE_CONTACT "Ondrej Starek <stareko@email.cz>")
 
 set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libtinfo-dev, libbz2-dev, libpugixml-dev")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libtinfo-dev, libbz2-dev, libpugixml-dev, libboost-dev")
 
 include(CPack)

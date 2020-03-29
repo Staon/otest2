@@ -37,7 +37,6 @@ function(TARGET_OTEST2_SOURCES target)
             ${domain_arg}
             --
             $<$<BOOL:${includes}>:-I$<JOIN:${includes}," "-I>>
-            -I/usr/lib/gcc/x86_64-linux-gnu/6/include
             $<$<BOOL:${cdefs}>:-D$<JOIN:${cdefs}," "-D>>
             $<JOIN:$<TARGET_PROPERTY:${target},COMPILE_OPTIONS>," ">
         DEPENDS ${src}

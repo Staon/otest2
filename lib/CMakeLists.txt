@@ -111,3 +111,7 @@ set_target_properties(libotest2 PROPERTIES OUTPUT_NAME otest2)
 target_include_directories(libotest2 PUBLIC ${PROJECT_SOURCE_DIR}/include)
 target_include_directories(libotest2 PRIVATE ${PROJECT_SOURCE_DIR}/include/otest2)
 target_link_libraries(libotest2 INTERFACE tinfo bz2 pugixml)
+
+# -- library installation
+install(TARGETS libotest2 DESTINATION lib)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/otest2 DESTINATION include)

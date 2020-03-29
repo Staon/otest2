@@ -16,7 +16,7 @@ jobs:
           name: Run Tests
           command: |
             mkdir -p test-results/selftest
-            cd test
-            ../build/test/selftest --junit=../test-results/selftest/result.xml
+            cd build
+            make check-circleci
       - store_test_results:
           path: test-results

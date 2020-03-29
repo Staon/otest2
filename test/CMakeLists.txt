@@ -73,7 +73,14 @@ target_otest2_sources(selftest DOMAIN selftest
 )
 target_link_libraries(selftest PRIVATE libotest2)
 
+# -- make check 
 add_custom_target(check
     COMMAND selftest
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+# -- CircleCI tests - the JUnit reporting files
+add_custom_target(check-circleci
+    COMMAND selftest --junit=../test-results/selftest/result.xml
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )

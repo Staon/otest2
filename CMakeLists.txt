@@ -26,6 +26,33 @@ add_subdirectory(lib)
 add_subdirectory(otest2)
 add_subdirectory(test)
 
+# -- declare the cmake package
+include(CMakePackageConfigHelpers)
+
+# -- generate the package's configuration file
+configure_package_config_file(
+    ${PROJECT_SOURCE_DIR}/cmake/Config.cmake.in
+    ${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+    INSTALL_DESTINATION lib/cmake/otest2
+    NO_SET_AND_CHECK_MACRO
+    NO_CHECK_REQUIRED_COMPONENTS_MACRO
+)
+# -- generate the version file
+write_basic_package_version_file(
+    ${PROJECT_BINARY_DIR}/${PROJECT_NAME}Version.cmake
+    VERSION "${OTest2_VERSION_MAJOR}.${OTest2_VERSION_MINOR}.${OTest2_VERSION_PATCH}"
+    COMPATIBILITY SameMajorVersion
+)
+# -- install the generated files
+install(EXPORT otest2 FILE otest2.cmake DESTINATION lib/cmake/otest2)
+install(
+    FILES
+        ${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+        ${PROJECT_BINARY_DIR}/${PROJECT_NAME}Version.cmake
+        ${PROJECT_SOURCE_DIR}/cmake/target-sources.cmake
+    DESTINATION lib/cmake/otest2
+)
+
 # -- building of binary packages
 include(InstallRequiredSystemLibraries)
 

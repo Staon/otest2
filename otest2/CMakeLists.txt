@@ -41,5 +41,5 @@ target_compile_options(otest2 PRIVATE -fno-rtti -fexceptions)
 target_link_libraries(otest2 PRIVATE clangTooling)
 
 # -- install the otest2 preprocessor
-install(TARGETS otest2 DESTINATION bin)
+install(TARGETS otest2 DESTINATION bin EXPORT otest2)
 install(PROGRAMS otest2_discovery.sh DESTINATION bin)

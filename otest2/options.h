@@ -29,11 +29,28 @@ namespace OTest2 {
  * @brief Options of the otest2 parser
  */
 struct Options {
-  public:
+  private:
+    std::string config_file;
     std::string domain;
     std::string infile;
     std::string outfile;
-    std::vector<std::string> includes;
+    std::vector<std::string> compiler_options;
+
+  public:
+    /**
+     * @brief Ctor
+     *
+     * @param argc_ Number of command line arguments
+     * @param argv_ The command line arguments
+     */
+    explicit Options(
+        int argc_,
+        char* argv_[]);
+
+    /**
+     * @brief Dtor
+     */
+    ~Options();
 
     /* -- avoid copying */
     Options(
@@ -42,23 +59,27 @@ struct Options {
         const Options&) = delete;
 
     /**
-     * @brief Ctor
+     * @brief Get input file name
      */
-    Options();
+    const std::string& getInfile() const noexcept;
 
     /**
-     * @brief Dtor
+     * @brief Get output file name
      */
-    ~Options();
+    const std::string& getOutfile() const noexcept;
 
     /**
-     * @brief This method validates the options
-     *
-     * The method validates and computes default option values
-     *
-     * @return True if the values are OK
+     * @brief Get the OTest2 registration domain
      */
-    bool validateOptions();
+    const std::string& getDomain() const noexcept;
+
+    /**
+     * @brief Fill options for the Clang tool
+     *
+     * @param[out] options_ The options
+     */
+    void fillClangToolOptions(
+        std::vector<std::string>& options_) const;
 };
 
 } /* namespace OTest2 */

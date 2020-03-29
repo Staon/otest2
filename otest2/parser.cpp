@@ -1292,39 +1292,29 @@ void parse(
     const Options& options_) {
   /* -- prepare the options */
   std::vector<std::string> opts_;
-  opts_.push_back("otest2");
-  opts_.push_back("--extra-arg-before=-xc++");
-  opts_.push_back("--extra-arg-before=--driver-mode=g++");
-  opts_.push_back("--extra-arg-before=--std=c++11");
-  opts_.push_back("--extra-arg-before=-DOTEST2_PARSER_ACTIVE");
-  for(const auto& path_ : options_.includes) {
-    opts_.push_back("--extra-arg-before=-I" + path_);
-  }
-  opts_.push_back(options_.infile);
-  opts_.push_back("--");
-
+  options_.fillClangToolOptions(opts_);
   std::vector<const char*> argv_;
   for(const auto& arg_ : opts_)
     argv_.push_back(arg_.c_str());
 
   /* -- prepare the reader and the output generator */
-  std::ifstream ifs_(options_.infile);
+  std::ifstream ifs_(options_.getInfile());
   FileReader reader_(&ifs_);
   std::ostream *os_(nullptr);
   std::ofstream ofs_;
-  if(options_.outfile == "-") {
+  if(options_.getOutfile() == "-") {
     os_ = &std::cout;
   }
   else {
-    ofs_.open(options_.outfile);
+    ofs_.open(options_.getOutfile());
     os_ = &ofs_;
   }
   GeneratorStd generator_(
       os_,
       &reader_,
-      options_.domain,
-      options_.infile,
-      options_.outfile);
+      options_.getDomain(),
+      options_.getInfile(),
+      options_.getOutfile());
 //  GeneratorPrinter generator_;
 
   /* -- parse the file */
@@ -1340,7 +1330,7 @@ void parse(
       tool_.run(new FrontendFactory(&generator_, &failure_, &exception_)));
   if(retval_) {
     /* -- remove the half created file */
-    unlink(options_.outfile.c_str());
+    unlink(options_.getOutfile().c_str());
 
     throw ParserFailure();
   }

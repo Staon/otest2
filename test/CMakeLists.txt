@@ -28,13 +28,18 @@ function(TARGET_OTEST2_SOURCES target)
   foreach(src IN LISTS OTEST2_UNPARSED_ARGUMENTS)
     set(gensrc "${CMAKE_CURRENT_SOURCE_DIR}/${src}.cpp")
     set(includes "$<TARGET_PROPERTY:${target},INCLUDE_DIRECTORIES>")
+    set(cdefs "$<TARGET_PROPERTY:${target},COMPILE_DEFINITIONS>")
     add_custom_command(
         OUTPUT ${gensrc}
         COMMAND otest2
+            -s ${CMAKE_CURRENT_SOURCE_DIR}/${src}
+            -o ${gensrc} 
+            ${domain_arg}
+            --
             $<$<BOOL:${includes}>:-I$<JOIN:${includes}," "-I>>
             -I/usr/lib/gcc/x86_64-linux-gnu/6/include
-            ${domain_arg}
-            -o ${gensrc} ${CMAKE_CURRENT_SOURCE_DIR}/${src}
+            $<$<BOOL:${cdefs}>:-D$<JOIN:${cdefs}," "-D>>
+            $<JOIN:$<TARGET_PROPERTY:${target},COMPILE_OPTIONS>," ">
         DEPENDS ${src}
     )
     target_sources(${target} PRIVATE ${gensrc})
@@ -42,7 +47,7 @@ function(TARGET_OTEST2_SOURCES target)
   endforeach()
 endfunction()
 
-add_executable(selftest
+add_executable(selftest EXCLUDE_FROM_ALL
     main.cpp
     reportermock.cpp
     runtime.cpp

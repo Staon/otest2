@@ -35,6 +35,7 @@ class ReporterStatistics {
     int cases_failed;
     int assertions_ok;
     int assertions_failed;
+    int errors;
 
   public:
     /* -- avoid copying */
@@ -76,6 +77,11 @@ class ReporterStatistics {
      */
     void reportAssertion(
         bool result_);
+
+    /**
+     * @brief Report a framework error
+     */
+    void reportError();
 
     /**
      * @brief Get count of suites
@@ -121,6 +127,11 @@ class ReporterStatistics {
      * @brief Get count of failed assertions
      */
     int getAssertionsFailed() const;
+
+    /**
+     * @brief Get count of the errors
+     */
+    int getErrors() const;
 };
 
 } /* namespace OTest2 */

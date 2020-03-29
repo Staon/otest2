@@ -27,7 +27,8 @@ ReporterStatistics::ReporterStatistics() :
   cases_ok(0),
   cases_failed(0),
   assertions_ok(0),
-  assertions_failed(0) {
+  assertions_failed(0),
+  errors(0) {
 
 }
 
@@ -57,6 +58,10 @@ void ReporterStatistics::reportAssertion(
     ++assertions_ok;
   else
     ++assertions_failed;
+}
+
+void ReporterStatistics::reportError() {
+  ++errors;
 }
 
 int ReporterStatistics::getSuites() const {
@@ -93,6 +98,10 @@ int ReporterStatistics::getAssertionsOK() const {
 
 int ReporterStatistics::getAssertionsFailed() const {
   return assertions_failed;
+}
+
+int ReporterStatistics::getErrors() const {
+  return errors;
 }
 
 } /* namespace OTest2 */

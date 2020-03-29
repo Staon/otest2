@@ -139,6 +139,15 @@ void printTotalResult(
       os_, label_, ok_str_.str(), failed_str_.str(), total_str_.str());
 }
 
+void printTotalErrors(
+    std::ostream& os_,
+    const std::string& label_,
+    int errors_) {
+  std::ostringstream errors_str_;
+  errors_str_ << std::setw(8) << errors_;
+  printTotalResultLine(os_, label_, "        ", "        ", errors_str_.str());
+}
+
 } /* -- namespace */
 
 struct ReporterConsole::Impl {
@@ -243,7 +252,7 @@ void ReporterConsole::enterError(
     const Context& context_,
     const std::string& message_) {
   /* -- adjust the statistics */
-  pimpl->statistics.reportAssertion(false);
+  pimpl->statistics.reportError();
 
   /* -- store the condition for printing of additional messages */
   pimpl->last_condition = false;
@@ -325,6 +334,7 @@ void ReporterConsole::leaveTest(
       pimpl->statistics.getAssertionsOK(),
       pimpl->statistics.getAssertionsFailed(),
       pimpl->statistics.getAssertions());
+  printTotalErrors(*pimpl->os, "Errors", pimpl->statistics.getErrors());
   printResultLine(*pimpl->os, pimpl->term_driver, "Test total", result_);
   printHR(*pimpl->os, '=', "");
 }

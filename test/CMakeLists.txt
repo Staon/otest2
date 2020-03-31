@@ -42,6 +42,7 @@ target_otest2_sources(selftest DOMAIN selftest
     selftests/mainloop.ot2
     selftests/regressions.ot2
 )
+target_otest2_main(selftest)
 target_link_libraries(selftest PRIVATE libotest2)
 
 # -- make check 

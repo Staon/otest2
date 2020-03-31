@@ -50,6 +50,7 @@ install(
         ${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
         ${PROJECT_BINARY_DIR}/${PROJECT_NAME}Version.cmake
         ${PROJECT_SOURCE_DIR}/cmake/target-sources.cmake
+        ${PROJECT_SOURCE_DIR}/cmake/template-main.cpp
     DESTINATION lib/cmake/otest2
 )
 

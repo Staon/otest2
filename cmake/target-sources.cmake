@@ -43,7 +43,7 @@ function(TARGET_OTEST2_MAIN target)
   cmake_parse_arguments(OTEST2 "" "${one_value_args}" "" ${ARGN})
   
   if(OTEST2_FILE)
-    set(main_file "${CMAKE_CURRENT_SOURCE_DIR}/${OTEST2_FILE)")
+    set(main_file "${CMAKE_CURRENT_SOURCE_DIR}/${OTEST2_FILE}")
   else()
     set(main_file "${CMAKE_CURRENT_SOURCE_DIR}/main.cpp")
   endif()

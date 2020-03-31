@@ -18,7 +18,6 @@
 include(${PROJECT_SOURCE_DIR}/cmake/target-sources.cmake)
 
 add_executable(selftest EXCLUDE_FROM_ALL
-    main.cpp
     reportermock.cpp
     runtime.cpp
     timesourcemock.cpp

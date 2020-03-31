@@ -54,6 +54,20 @@ install(
     DESTINATION lib/cmake/otest2
 )
 
+# -- I want to use the package in the example projects. Copy requested files
+#    into the binary directory and register the package into the user's
+#    registry so that the package might not be installed.
+export(EXPORT otest2 FILE "${CMAKE_CURRENT_BINARY_DIR}/otest2.cmake")
+configure_file(
+    ${PROJECT_SOURCE_DIR}/cmake/target-sources.cmake
+    ${PROJECT_BINARY_DIR}
+    COPYONLY)
+configure_file(
+    ${PROJECT_SOURCE_DIR}/cmake/template-main.cpp
+    ${PROJECT_BINARY_DIR}
+    COPYONLY)
+export(PACKAGE OTest2)
+
 # -- building of binary packages
 include(InstallRequiredSystemLibraries)
 

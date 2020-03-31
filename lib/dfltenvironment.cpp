@@ -95,7 +95,7 @@ DfltEnvironment::DfltEnvironment(
   std::string test_name_(argv_[0]);
   int last_slash_(test_name_.find_last_of('/'));
   if(last_slash_ != std::string::npos)
-    test_name_.erase(last_slash_);
+    test_name_.erase(0, last_slash_ + 1);
 
   enum {
     DISABLE_CONSOLE_REPORTER = 1000,

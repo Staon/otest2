@@ -270,7 +270,7 @@ void ReporterConsole::reportAssertionMessage(
     std::istringstream iss_(message_);
     std::string line_;
     while(std::getline(iss_, line_))
-      *pimpl->os << "  " << line_ << std::endl;
+      *pimpl->os << "    " << line_ << std::endl;
   }
 }
 

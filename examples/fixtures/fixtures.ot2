@@ -1,0 +1,88 @@
+/*
+ * Copyright (C) 2020 Ondrej Starek
+ *
+ * This file is part of OTest2.
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include <iostream>
+#include <memory>
+
+#include "myfixture.h"
+
+namespace OTest2 {
+
+namespace Examples {
+
+namespace Test {
+
+TEST_SUITE(Fixtures) {
+  MyFixture fixture1("Number one");
+  std::unique_ptr<MyFixture> fixture2;
+
+  TEST_START_UP() {
+    fixture2.reset(new MyFixture("Number two"));
+  }
+
+  TEST_TEAR_DOWN() {
+    fixture2.reset(nullptr);
+  }
+
+  TEST_CASE(FirstCase) {
+    MyFixture fixture3("Number three");
+    std::unique_ptr<MyFixture> fixture4;
+
+    TEST_START_UP() {
+      fixture4.reset(new MyFixture("Number four"));
+    }
+
+    TEST_TEAR_DOWN() {
+      fixture4.reset(nullptr);
+    }
+
+    TEST_SIMPLE() {
+      std::cout << "enter case 1" << std::endl;
+
+      testAssert(fixture1.checkName("Number one"));
+      testAssert(fixture2->checkName("Number two"));
+      testAssert(fixture3.checkName("Number three"));
+      testAssert(fixture4->checkName("Number four"));
+
+      std::cout << "leave case 1" << std::endl;
+
+      throw "An exception - the fixtures are cleaned up anyway";
+    }
+  }
+
+  TEST_CASE(SecondCase) {
+    MyFixture fixture1("Number five");
+
+    TEST_SIMPLE() {
+      std::cout << "enter case 2" << std::endl;
+
+      testAssert(fixture1.checkName("Number five"));
+      testAssert(fixture2->checkName("Number two"));
+
+      std::cout << "leave case 2" << std::endl;
+    }
+  }
+}
+
+} /* -- namespace Test */
+
+} /* -- namespace Examples */
+
+} /* -- namespace OTest2 */

@@ -52,13 +52,13 @@ bool GenericAssertion::testException(
   if(result_) {
     return simpleAssertionImpl(
         true,
-        "the expected exception has been caught",
+        "the expected exception is caught",
         false);
   }
   else {
     return simpleAssertionImpl(
         false,
-        "an exception was expected but no one has occurred",
+        "an exception is expected but no one has occurred",
         false);
   }
 }

@@ -1,0 +1,64 @@
+/*
+ * Copyright (C) 2020 Ondrej Starek
+ *
+ * This file is part of OTest2.
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include <exception>
+
+namespace OTest2 {
+
+namespace Examples {
+
+namespace Test {
+
+TEST_SUITE(Exceptions) {
+  TEST_CASE(TryCatchPassed) {
+    TEST_SIMPLE() {
+      testTry {
+        throw std::bad_exception();
+      }
+      testCatch(std::exception&, exc_) {
+        testAssertEqual(exc_.what(), "std::bad_exception");
+      }
+    }
+  }
+
+  TEST_CASE(TryCatchFailed) {
+    TEST_SIMPLE() {
+      testTry {
+        /* -- no exception -> the test must fail */
+      }
+      testCatch(std::exception&, exc_) {
+        testAssertEqual(exc_.what(), "std::bad_exception");
+      }
+    }
+  }
+
+  TEST_CASE(UnhandledException) {
+    TEST_SIMPLE() {
+      /* -- any exception thrown out of the test case is considered an error */
+      throw std::bad_exception();
+    }
+  }
+}
+
+} /* -- namespace Test */
+
+} /* -- namespace Examples */
+
+} /* -- namespace OTest2 */

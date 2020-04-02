@@ -1,0 +1,15 @@
+version: '3.5'
+
+services:
+  jekyll:
+    # -- jekyll service deamon. Run the compose from a directory
+    #    where your document root is placed
+    image: "jekyll/jekyll"
+    hostname: "jekyll"
+    volumes:
+      - "jekyll-cache:/usr/local/bundle"
+      - "${PWD}:/srv/jekyll"
+    command: jekyll serve
+
+volumes:
+  jekyll-cache:

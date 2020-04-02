@@ -1,0 +1,17 @@
+# -- top navigation bar
+main:
+  - title: Examples
+    url: /examples/
+  - title: Install Guide
+    url: /install-guide/
+  - title: Reference
+    url: /reference/
+docs:
+  - title: Examples
+    children:
+      - title: Quick Start
+        url: /examples/quick-start/
+      - title: Fixtures
+        url: /examples/fixtures/
+      - title: Exception Handling
+        url: /examples/exceptions/

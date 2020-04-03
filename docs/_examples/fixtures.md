@@ -1,7 +1,8 @@
 ---
 title: Fixtures
-permalink: /examples/fixtures/
+lesson: 2
 ---
+An example showing usage of test fixtures in the _OTest2_ framework.
 
 [Full source code of the example]({{ site.repositoryurl }}/blob/master/examples/fixtures)
 

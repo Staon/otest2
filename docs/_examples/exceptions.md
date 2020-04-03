@@ -1,7 +1,9 @@
 ---
 title: Exception Handling
-permalink: /examples/exceptions/
+lesson: 3
 ---
+A construction checking whether an exception actually happens. Handling of
+unexpected exceptions fired from a test case.
 
 [Full source code of the example]({{ site.repositoryurl }}/blob/master/examples/exceptions)
 
@@ -56,6 +58,12 @@ TEST_SUITE(Exceptions) {
 } /* -- namespace OTest2 */
 {% endhighlight %}
 
+The **testTry/testCatch** block works as the same as the ordinary **try/catch**
+directive, including the possibility to write several catch blocks. The only
+difference is that the exception must happen. If not the test will fail.
+The first testcase in the example catches the exception correctly and passes.
+The second testcase fails because no exception happens although one is expected.
+
 Result of the test looks like:
 
 {% highlight plaintext %}
@@ -77,18 +85,14 @@ error exceptions::Exceptions::UnhandledException: unexpected exception: std::bad
  ==============================================================================
 {% endhighlight %}
 
-The **testTry/testCatch** block works as the same as the ordinary **try/catch**
-directive, including the possibility to write several catch blocks. The only
-difference is that the exception must happen. If not the test will fail.
-The first testcase in the example catches the exception correctly and passes.
-The second testcase fails because no exception happens although one is expected.
-
 The third testcase shows another feature of the framework. If some exception
 unwinds out of a testcase, it's caught and the case is affirmed being failed.
 As you can see, the framework shows message provided by the _std::exception::what()_
-method. The default exception catcher understands the _std::exception_ objects
-and shows their messages. If the thrown object is not a child
-of the _std::exception_, some generic message is shown. If your exceptions
-don't derive from the standard exception class you can implement a custom
-exception catcher and inject it into the framework - more info in the chapter 
+method.
+
+The default exception catcher understands a _std::exception_ object and shows
+its message. If the thrown object is not a child of the _std::exception_,
+some generic message will be printed. If your exceptions don't derive from
+the standard exception class you can implement a custom exception catcher
+and inject it into the framework - more info in the chapter 
 [Extending Framework]({{ "/extending/" | relative_url }}).

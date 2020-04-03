@@ -22,9 +22,13 @@ author:
   name: "Staon"
   avatar: "/images/face.jpg"
   location : "Prague, The Czech Republic"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/Staon"
 
 # Build settings
-remote_theme: "mmistakes/minimal-mistakes@4.19.1"
+#remote_theme: "mmistakes/minimal-mistakes@4.19.1"
 plugins:
   - jekyll-include-cache
   - jekyll-feed
@@ -49,10 +53,26 @@ plugins:
 #   - vendor/gems/
 #   - vendor/ruby/
 
+collections:
+  examples:
+    output: true
+    permalink: /:collection/:name/
+    sort_by: "lesson"
+
 defaults:
   - scope:
       path: ""
       type: pages
+    values:
+      layout: single
+      toc: false
+      classes: wide
+      sidebar:
+        nav: "docs"
+
+  - scope:
+      path: ""
+      type: examples
     values:
       layout: single
       toc: false

@@ -8,10 +8,6 @@ main:
     url: /reference/
 docs:
   - title: Examples
-    children:
-      - title: Quick Start
-        url: /examples/quick-start/
-      - title: Fixtures
-        url: /examples/fixtures/
-      - title: Exception Handling
-        url: /examples/exceptions/
+    url: /examples/
+    collection: "examples"
+    sort_by: "lesson"

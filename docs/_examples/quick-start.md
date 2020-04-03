@@ -1,7 +1,9 @@
 ---
 title: Quick Start
-permalink: /examples/quick-start/
+lesson: 1
 ---
+A "Hello World" style example including integration into a cmake project.
+
 [Full source code of the example]({{ site.repositoryurl }}/blob/master/examples/quick-start)
 
 Let's get a simple example. Create file _quick.ot2_:

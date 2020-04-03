@@ -1,0 +1,130 @@
+/*
+ * Copyright (C) 2020 Ondrej Starek
+ *
+ * This file is part of OTest2.
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include <iostream>
+#include <string>
+
+#include "roundrobin.h"
+
+namespace OTest2 {
+
+namespace Examples {
+
+namespace Test {
+
+class MockCommand : public Command {
+  private:
+    std::string name;
+    int left_rounds;
+
+  public:
+    explicit MockCommand(
+        const std::string& name_,
+        int rounds_);
+    virtual ~MockCommand();
+
+    virtual std::string getName() const noexcept override;
+    virtual bool execute() override;
+};
+
+MockCommand::MockCommand(
+    const std::string& name_,
+    int rounds_) :
+  name(name_),
+  left_rounds(rounds_) {
+
+}
+
+MockCommand::~MockCommand() {
+
+}
+
+std::string MockCommand::getName() const noexcept {
+  return name;
+}
+
+bool MockCommand::execute() {
+  std::cout << "command '" << name << "', left rounds: " << left_rounds << std::endl;
+  return --left_rounds <= 0;
+}
+
+TEST_SUITE(Regressions) {
+  TEST_CASE(RoundRobinScheduler) {
+    TEST_SIMPLE() {
+      RoundRobin round_robin_;
+
+      int rounds(3);
+      round_robin_.scheduleCommand(1, std::make_shared<MockCommand>("A", 2));
+      round_robin_.scheduleCommand(1, std::make_shared<MockCommand>("B", 1));
+      round_robin_.scheduleCommand(2, std::make_shared<MockCommand>("C", 3));
+      round_robin_.scheduleCommand(2, std::make_shared<MockCommand>("D", 2));
+      round_robin_.scheduleCommand(2, std::make_shared<MockCommand>("E", 1));
+
+      /* -- start: (1; A B), (2; C D E) */
+      testRegression("1AB2CDE", round_robin_);
+
+      /* -- result: (1; B A), (2; C D E) */
+      round_robin_.executeNextCommand();
+      testRegression("1BA2CDE", round_robin_);
+
+      /* -- result: (1; A), (2; C D E) */
+      round_robin_.executeNextCommand();
+      testRegression("1A2CDE", round_robin_);
+
+      /* -- result: (2; C D E) */
+      round_robin_.executeNextCommand();
+      testRegression("2CDE", round_robin_);
+
+      /* -- result: (2; D E C) */
+      round_robin_.executeNextCommand();
+      testRegression("2DEC", round_robin_);
+
+      /* -- result: (2; E C D) */
+      round_robin_.executeNextCommand();
+      testRegression("2ECD", round_robin_);
+
+      /* -- result: (2; C D) */
+      round_robin_.executeNextCommand();
+      testRegression("2CD", round_robin_);
+
+      /* -- result: (2; D C) */
+      round_robin_.executeNextCommand();
+      testRegression("2DC", round_robin_);
+
+      /* -- result: (2; C) */
+      round_robin_.executeNextCommand();
+      testRegression("2C", round_robin_);
+
+      /* -- result: empty */
+      round_robin_.executeNextCommand();
+      testRegression("empty", round_robin_);
+
+      /* -- result: empty */
+      round_robin_.executeNextCommand();
+      testRegression("empty", round_robin_);
+    }
+  }
+}
+
+} /* -- namespace Test */
+
+} /* -- namespace Examples */
+
+} /* -- namespace OTest2 */

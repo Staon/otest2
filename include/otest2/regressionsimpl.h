@@ -52,7 +52,19 @@ bool RegressionAssertion::testRegression(
   RegressionTrait<Object_>::generateTestMark(builder_, object_);
 
   /* -- compare the mark */
-  return compareObjectMark(key_, builder_.stealMark());
+  return compareObjectMark(key_, builder_.stealMark(), false);
+}
+
+template<typename Object_>
+bool RegressionAssertion::testRegressionP(
+    const std::string& key_,
+    const Object_& object_) {
+  /* -- create the mark */
+  TestMarkBuilder builder_;
+  RegressionTrait<Object_>::generateTestMark(builder_, object_);
+
+  /* -- compare the mark */
+  return compareObjectMark(key_, builder_.stealMark(), true);
 }
 
 template<typename Object_>

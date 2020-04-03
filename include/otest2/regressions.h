@@ -35,7 +35,8 @@ class RegressionAssertion : public AssertContext {
   private:
     bool compareObjectMark(
         const std::string& key_,
-        TestMarkPtr test_mark_);
+        TestMarkPtr test_mark_,
+        bool print_);
     bool storeObjectMark(
         const std::string& key_,
         TestMarkPtr test_mark_);
@@ -52,6 +53,10 @@ class RegressionAssertion : public AssertContext {
 
     template<typename Object_>
     bool testRegression(
+        const std::string& key_,
+        const Object_& object_);
+    template<typename Object_>
+    bool testRegressionP(
         const std::string& key_,
         const Object_& object_);
     template<typename Object_>
@@ -77,6 +82,22 @@ template<typename Object_>
 bool testRegression(
     const std::string& key_,
     const Object_& object_) TEST_ASSERTION_MARK_TMPL("::OTest2::RegressionAssertion", "testRegression< $1 >");
+
+/**
+ * @brief Compare regression test marks and print current mark
+ *
+ * The method compares regression test mark of passed object @a object_
+ * and the test mark stored with the same key @a key_. If the marks are
+ * the same, the assertion passes.
+ *
+ * @param key_ key of the regression test mark
+ * @param object_ the checked object
+ * @return True if the assertion passes
+ */
+template<typename Object_>
+bool testRegressionP(
+    const std::string& key_,
+    const Object_& object_) TEST_ASSERTION_MARK_TMPL("::OTest2::RegressionAssertion", "testRegressionP< $1 >");
 
 /**
  * @brief Store regression test mark

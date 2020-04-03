@@ -20,6 +20,7 @@
 #include <regressions.h>
 
 #include <assert.h>
+#include <iostream>
 #include <sstream>
 #include <string>
 
@@ -35,7 +36,8 @@ namespace OTest2 {
 
 bool RegressionAssertion::compareObjectMark(
     const std::string& key_,
-    TestMarkPtr test_mark_) {
+    TestMarkPtr test_mark_,
+    bool print_) {
   assert(test_mark_ != nullptr);
 
   const Context& context_(otest2Context());
@@ -93,6 +95,11 @@ bool RegressionAssertion::compareObjectMark(
       test_mark_->printMark(oss_, "+ ");
       assertionMessage(equal_, oss_.str());
     }
+  }
+  else if(print_) {
+    /* -- print current test mark */
+    std::cout << "test mark key: " << full_key_ << std::endl;
+    test_mark_->printMark(std::cout, "");
   }
 
   return leaveAssertion(equal_);

@@ -69,9 +69,11 @@ Result of the test looks like:
 {% highlight plaintext %}
  ================================= Exceptions =================================
   TryCatchPassed                                                      [Passed]
-[.../exceptions.ot2:43] exceptions::Exceptions::TryCatchFailed: an exception is expected but no one has occurred
+[.../exceptions.ot2:43] exceptions::Exceptions::TryCatchFailed: an exception is 
+expected but no one has occurred
   TryCatchFailed                                                      [Failed]
-error exceptions::Exceptions::UnhandledException: unexpected exception: std::bad_exception
+error exceptions::Exceptions::UnhandledException: unexpected exception: std::bad
+_exception
   UnhandledException                                                  [Failed]
  ------------------------------------------------------------------------------
   Suite total                                                         [Failed]

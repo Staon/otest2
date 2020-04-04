@@ -46,11 +46,11 @@ Libclang offers a full C++ parser opening doors to a world of almost unlimited
 possibilities. Hence, the OTest2 DSL is a valid C++ source marked by some
 clang annotations[^1]. The pre-processor parses a source and transforms it
 to another C++ source extended by all needed service code - like filling
-source locations into test test assertions, enveloping of testing code
-by classes, registration of factory functions of suites and cases or
-passing of fixture variables between testing objects.
+source locations into test assertions, enveloping of testing code by classes,
+registration of factory functions of suites and cases or passing of fixture
+variables between testing objects.
 
-### Extensible in Different Development Environments[^2]
+### Extensible for Different Environments[^2]
 
 The framework offers several crucial interfaces which can be implemented
 by user and injected into the framework. So it can be easily integrated

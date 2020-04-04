@@ -62,7 +62,7 @@ all registered suites. As the framework allows integration with custom main
 loop, user may write his very own main function suiting his needs. Then this
 step is skipped.
 
-Finally, the _libotest2_ must linked. After successful compilation
+Finally, the _libotest2_ must be linked. After successful compilation
 
 {% highlight console %}
 $ mkdir build
@@ -76,7 +76,8 @@ terminal output is colorized):
 {% highlight plaintext %}
  ================================= QuickStart =================================
   TestOK                                                              [Passed]
-[.../examples/quick-start/quick.ot2:31] quick-start::QuickStart::TestFailed: check 'a == b' has failed
+[.../examples/quick-start/quick.ot2:31] quick-start::QuickStart::TestFailed: che
+ck 'a == b' has failed
     a = 10
     b = 9
   TestFailed                                                          [Failed]

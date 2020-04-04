@@ -63,19 +63,19 @@ bool RegressionAssertion::compareObjectMark(
   if(!equal_) {
     /* -- print current test mark */
     oss_.str("");
-    test_mark_->printMark(oss_, "");
-    assertionMessage(equal_, "  ----- Current -----");
+    test_mark_->printMark(oss_, "  ");
+    assertionMessage(equal_, "---------  Current   ---------");
     assertionMessage(equal_, oss_.str());
 
-    assertionMessage(equal_, "  ----- Original -----");
+    assertionMessage(equal_, "---------  Original  ---------");
     if(stored_ != nullptr) {
       /* -- print the original mark */
       oss_.str("");
-      stored_->printMark(oss_, "");
+      stored_->printMark(oss_, "  ");
       assertionMessage(equal_, oss_.str());
     }
 
-    assertionMessage(equal_, "  ----- Difference ----");
+    assertionMessage(equal_, "--------- Difference ---------");
     if(stored_ != nullptr) {
       /* -- compute the difference */
       std::vector<TestMark::LinearizedRecord> array1_;

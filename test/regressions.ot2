@@ -64,17 +64,17 @@ TEST_SUITE(RegressionsSuite) {
         "enterCase<AssertionDifferentMark>",
         "enterState<AnonymousState>",
         "assert<regression check 'RegressionsSuite>>AssertionDifferentMark>>different mark' has failed>: failed",
-        "message<  ----- Current ----->",
-        "message<MyObject {\n\
-  name: \"wrong name\"\n\
-}\n\
+        "message<---------  Current   --------->",
+        "message<  MyObject {\n\
+    name: \"wrong name\"\n\
+  }\n\
 >",
-        "message<  ----- Original ----->",
-        "message<MyObject {\n\
-  name: \"right name\"\n\
-}\n\
+        "message<---------  Original  --------->",
+        "message<  MyObject {\n\
+    name: \"right name\"\n\
+  }\n\
 >",
-        "message<  ----- Difference ---->",
+        "message<--------- Difference --------->",
         "message<  MyObject {\n\
 -   name: \"right name\"\n\
 +   name: \"wrong name\"\n\
@@ -103,13 +103,13 @@ TEST_SUITE(RegressionsSuite) {
         "enterCase<AssertionMissingMark>",
         "enterState<AnonymousState>",
         "assert<regression check 'RegressionsSuite>>AssertionMissingMark>>missing mark' has failed>: failed",
-        "message<  ----- Current ----->",
-        "message<MyObject {\n\
-  name: \"missing\"\n\
-}\n\
+        "message<---------  Current   --------->",
+        "message<  MyObject {\n\
+    name: \"missing\"\n\
+  }\n\
 >",
-        "message<  ----- Original ----->",
-        "message<  ----- Difference ---->",
+        "message<---------  Original  --------->",
+        "message<--------- Difference --------->",
         "message<+ MyObject {\n\
 +   name: \"missing\"\n\
 + }\n\

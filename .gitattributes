@@ -1,0 +1,3 @@
+# -- The OTest2 files are valid C++
+*.ot2 linguist-language=C++
+

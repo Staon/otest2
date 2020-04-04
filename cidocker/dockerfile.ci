@@ -13,8 +13,10 @@ RUN apt-get update && apt-get install -y \
     libbz2-dev \
     libboost-dev \
     libpugixml-dev \
+    libevent-dev \
     g++ \
     git \
+    pkg-config \
     openssh-client \
     ca-certificates \
     gnupg

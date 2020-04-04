@@ -66,8 +66,8 @@ More about extending is in the section
 There are some testing frameworks defining their special DSL. This is a mighty
 approach allowing describing of everything needed. However, there is a dark side.
 The file is not valid C++ and all fancy features of IDEs like code highlighting
-and or code assistance stop working until someone develops a plugin, just for
-your IDE, supporting the DSL. 
+or code assistance stop working until someone develops a plugin supporting
+the DSL. 
 
 OTest2 framework keeps that on its mind. The DSL is designed to be valid C++
 code with cautious usage of macros[^3]. Hence, the OTest2 file should be fully

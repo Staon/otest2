@@ -2,7 +2,7 @@
 title: Regression Test Marks
 lesson: 4
 ---
-Storing and checking of marks representing complex status or output of a piece
+Storing and checking of marks representing complex state or output of a piece
 of software.
 
 [Full source code of the example]({{ site.repositoryurl }}/blob/master/examples/regressions)
@@ -258,7 +258,7 @@ TEST_SUITE(Regressions) {
 
 What happens if a developer makes a mistake during doing of some changes?
 For example, if he forgets to return unfinished command back to the queue?
-The stored test mark will be different and the will fail:
+The stored test mark will be different and so it will fail:
 
 {% highlight plaintext %}
  ================================ Regressions =================================
@@ -337,8 +337,8 @@ system.
 
 ### Some Advices
 
-* The test marks are a powerful tool. On the other hand, they are a dangerous
-  weapon. Be careful and don't overuse.
+* The test marks are a powerful tool. On the other hand, they might be
+  a dangerous self-exploding bomb. Be careful and don't overuse.
 * Never project implementation details into test marks. The model expected
   by the round-robin scheduler is a set of queues ordered by priorities and
   that's exactly what the implemented mark shows. There must be no change

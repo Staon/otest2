@@ -26,6 +26,9 @@ author:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/Staon"
+    - label: "e-mail"
+      icon: "fas fa-fw fa-at"
+      url: "mailto:stareko@email.cz"
 
 # Build settings
 #remote_theme: "mmistakes/minimal-mistakes@4.19.1"

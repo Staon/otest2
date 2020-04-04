@@ -1,12 +1,23 @@
 # -- top navigation bar
 main:
-  - title: Examples
+  - title: Learn by Examples
     url: /examples/
   - title: Install Guide
     url: /install-guide/
-  - title: Reference
+  - title: Extending the Framework
+    url: /extending/
+  - title: Reference Guide
     url: /reference/
 docs:
+  - title: About
+    url: /
+    children:
+      - title: Features
+        url: "/#features"
+      - title: Design Goals
+        url: "/#design-goals"
+      - title: How to Explore
+        url: "/#how-to-explore"
   - title: Examples
     url: /examples/
     collection: "examples"

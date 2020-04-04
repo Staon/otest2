@@ -70,7 +70,7 @@ TEST_SUITE(Regressions) {
     TEST_SIMPLE() {
       RoundRobin round_robin_;
 
-      int rounds(3);
+      /* -- schedule the whole "job" */
       round_robin_.scheduleCommand(1, std::make_shared<MockCommand>("A", 2));
       round_robin_.scheduleCommand(1, std::make_shared<MockCommand>("B", 1));
       round_robin_.scheduleCommand(2, std::make_shared<MockCommand>("C", 3));

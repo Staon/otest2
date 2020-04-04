@@ -2,8 +2,8 @@
 title: Exception Handling
 lesson: 3
 ---
-A construction checking whether an exception actually happens. Handling of
-unexpected exceptions fired from a test case.
+A special **try/catch** block checking whether an exception actually happens.
+Handling of unexpected exceptions fired from a test case.
 
 [Full source code of the example]({{ site.repositoryurl }}/blob/master/examples/exceptions)
 

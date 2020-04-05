@@ -1,5 +1,7 @@
 # OTest2
 
+**Project site:** [https://staon.github.io/otest2/](https://staon.github.io/otest2/)
+
 **OTest2** is a small C++ framework designated for writing of any kind of
 automated tests (unit tests, integration tests, etc.). Its design is derived
 from an older project of mine written while I was working for

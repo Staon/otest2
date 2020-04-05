@@ -2,8 +2,7 @@
 title: "About"
 permalink: /
 author_profile: true
-sidebar:
-  nav: docs
+circleci: true
 ---
 
 **OTest2** is a small C++ framework designated for writing of any kind of

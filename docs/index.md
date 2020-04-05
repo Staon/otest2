@@ -14,8 +14,8 @@ I know the original project is still in use.
 
 ## Features
 
-* a generator of boiler plate code
-* DSL is a valid C++ not breaking IDE functions like code assistance
+* no need to write boiler plate code - it's done by generator
+* DSL is a valid C++ which doesn't fancy IDE functions like code assistance
 * test cases are grouped into test suites
 * a rich set of assertion functions with a possibility to create own one
 * test fixtures at the level of either test case or test suite
@@ -28,7 +28,7 @@ I know the original project is still in use.
 
 ### Supported Platforms
 
-The framework is developed and tested on Debian Stretch distribution. Generally,
+The framework is developing and tested on Debian Stretch distribution. Generally,
 it should work on any UNIX-like system which the [libclang](https://clang.llvm.org/docs/Tooling.html)
 is supported for. There is no current intention to support the framework
 on Windows.
@@ -39,21 +39,21 @@ on Windows.
 
 It's sometimes unbelievable how much work must be done in some testing frameworks
 in order to write a two-lines test. The OTest2 framework allows you to
-focus just on coding of tests. All service job is done by a pre-processor based
-on the [libclang](https://clang.llvm.org/docs/Tooling.html).
+focus just on coding of tests. All the annoying work is done by a pre-processor
+based on the [libclang](https://clang.llvm.org/docs/Tooling.html).
 
 Libclang offers a full C++ parser opening doors to a world of almost unlimited
-possibilities. Hence, the OTest2 DSL is a valid C++ source marked by some
-clang annotations[^1]. The pre-processor parses a source and transforms it
-to another C++ source extended by all needed service code - like filling
-source locations into test assertions, enveloping of testing code by classes,
-registration of factory functions of suites and cases or passing of fixture
-variables between testing objects.
+possibilities. Hence, the OTest2 DSL has been implemented as a valid C++ source
+marked by some clang annotations[^1]. The pre-processor parses a source file
+and transforms it to another C++ source extended by all needed service code -
+like filling source locations into test assertions, enveloping of testing code
+by classes, registration of factory functions of suites and cases or passing
+of fixture variables between testing objects.
 
 ### Extensible for Different Environments[^2]
 
 The framework offers several crucial interfaces which can be implemented
-by user and injected into the framework. So it can be easily integrated
+by the user and injected into the framework. So it can be easily integrated
 with your custom main event loop or a custom collector of test results.
 The user is allowed to implement own test assertion, catcher of unhandled
 exceptions or his very own test reporter.
@@ -89,6 +89,6 @@ can study how to [extend the framework]({{ "/extending/" | relative_url }}).
       and technologies, like custom main loop or some strange collector
       of test results.
 
-[^3]: Some C++ testing frameworks wraps their functionality into really big
+[^3]: Some C++ testing frameworks wraps their functionality into really huge
       macros. Their definitions are so complex that the IDEs' code assistance
       parsers fail to process them.

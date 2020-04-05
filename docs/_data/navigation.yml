@@ -22,3 +22,12 @@ docs:
     url: /examples/
     collection: "examples"
     sort_by: "lesson"
+  - title: Install Guide
+    url: /install-guide/
+    children:
+      - title: From Sources
+        url: "/install-guide/#from-sources"
+      - title: Binary Packages
+        url: "/install-guide/#binary-packages"
+      - title: Configuration
+        url: "/install-guide/#configuration"

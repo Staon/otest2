@@ -71,6 +71,7 @@ export(PACKAGE OTest2)
 # -- building of binary packages
 include(InstallRequiredSystemLibraries)
 
+set(CPACK_GENERATOR "TGZ;DEB")
 set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/COPYING")
 set(CPACK_PACKAGE_VERSION_MAJOR "${OTest2_VERSION_MAJOR}")
 set(CPACK_PACKAGE_VERSION_MINOR "${OTest2_VERSION_MINOR}")
@@ -80,4 +81,13 @@ set(CPACK_PACKAGE_CONTACT "Ondrej Starek <stareko@email.cz>")
 set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "libtinfo-dev, libbz2-dev, libpugixml-dev, libboost-dev")
 
+set(CPACK_SOURCE_GENERATOR "TGZ")
+set(CPACK_SOURCE_IGNORE_FILES
+    /[.][^.]
+    /cidocker
+    /docs
+    /build$
+    /build/
+    /jekyll[.]yml
+)
 include(CPack)

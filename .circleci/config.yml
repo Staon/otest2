@@ -6,17 +6,36 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Build
+          name: Preparing Building Environment...
           command: |
+            mkdir -p test-results/selftest
+            mkdir -p artifacts
             mkdir -p build
             cd build
             cmake ..
+      - run:
+          name: Making the Source Package...
+          command: |
+            cd build
+            make package_source
+            mv *.tar.gz ../artifacts
+      - run:
+          name: Building the Framework...
+          command: |
+            cd build
             make
       - run:
-          name: Run Tests
+          name: Running Selftests...
           command: |
-            mkdir -p test-results/selftest
             cd build
             make check-circleci
+      - run:
+          name: Making Binary Packages...
+          command: |
+            cd build
+            make package
+            mv *.tar.gz *.deb ../artifacts
       - store_test_results:
           path: test-results
+      - store_artifacts:
+          path: artifacts

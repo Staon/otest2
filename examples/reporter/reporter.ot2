@@ -1,0 +1,78 @@
+/*
+ * Copyright (C) 2020 Ondrej Starek
+ *
+ * This file is part of OTest2.
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include <unistd.h>
+
+namespace OTest2 {
+
+namespace Examples {
+
+namespace Test {
+
+TEST_SUITE(CustomReporter) {
+  TEST_CASE(ReporterCase1) {
+    TEST_SIMPLE() {
+
+    }
+  }
+
+  TEST_CASE(ReporterCase2) {
+    TEST_SIMPLE() {
+
+    }
+  }
+
+  TEST_CASE(ReporterCase3) {
+    TEST_SIMPLE() {
+
+    }
+  }
+
+  TEST_CASE(ReporterCase4) {
+    TEST_SIMPLE() {
+
+    }
+  }
+
+  TEST_CASE(ReporterCase5) {
+    TEST_SIMPLE() {
+      sleep(5);
+      testAssert(false);
+    }
+  }
+
+  TEST_CASE(ReporterCase6) {
+    TEST_SIMPLE() {
+
+    }
+  }
+
+  TEST_CASE(ReporterCase7) {
+    TEST_SIMPLE() {
+
+    }
+  }
+}
+
+} /* -- namespace Test */
+
+} /* -- namespace Examples */
+
+} /* -- namespace OTest2 */

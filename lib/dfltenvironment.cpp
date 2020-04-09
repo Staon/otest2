@@ -18,6 +18,7 @@
  */
 #include <dfltenvironment.h>
 
+#include <assert.h>
 #include <cstdlib>
 #include <getopt.h>
 #include <iostream>
@@ -68,34 +69,67 @@ void printHelpMessage(
   std::cout << "                              value is the name of the test's binary." << std::endl;
 }
 
+std::string createDefaultTestName(
+    const char* binname_) {
+  /* -- Default test name is derived from the test binary as the last part
+   *    of the path. */
+  std::string test_name_(binname_);
+  int last_slash_(test_name_.find_last_of('/'));
+  if(last_slash_ != std::string::npos)
+    test_name_.erase(0, last_slash_ + 1);
+  return test_name_;
+}
+
 } /* -- namespace */
 
 struct DfltEnvironment::Impl {
+    /* -- the environment */
     TimeSourceSys time_source;
-    ExcCatcherOrdinary exc_catcher;
+    std::unique_ptr<ExcCatcher> exc_catcher;
     std::vector<std::unique_ptr<Reporter>> reporters;
     ReporterTee reporter_root;
     std::unique_ptr<RunnerFilter> filter;
     TestMarkFactory test_mark_factory;
     std::unique_ptr<TestMarkStorage> test_mark_storage;
     std::unique_ptr<Runner> runner;
+
+    /* -- builder state */
+    bool console_reporter;
+    bool console_verbose;
+    std::string regression_file;
+    std::string test_name;
+
+    explicit Impl(
+        const std::string& test_name_);
 };
+
+DfltEnvironment::Impl::Impl(
+    const std::string& test_name_) :
+  time_source(),
+  exc_catcher(),
+  reporters(),
+  reporter_root(),
+  filter(),
+  test_mark_factory(),
+  test_mark_storage(),
+  runner(),
+  console_reporter(true),
+  console_verbose(false),
+  regression_file("regression.ot2tm"),
+  test_name(test_name_) {
+
+}
+
+DfltEnvironment::DfltEnvironment(
+    const std::string& testname_) :
+  pimpl(new Impl(testname_)) {
+
+}
 
 DfltEnvironment::DfltEnvironment(
     int argc_,
     char* argv_[]) :
-  pimpl(new Impl) {
-
-  bool console_reporter_(true);
-  bool console_verbose_(false);
-  std::string regression_file_("regression.ot2tm");
-
-  /* -- Default test name is derived from the test binary as the last part
-   *    of the path. */
-  std::string test_name_(argv_[0]);
-  int last_slash_(test_name_.find_last_of('/'));
-  if(last_slash_ != std::string::npos)
-    test_name_.erase(0, last_slash_ + 1);
+  pimpl(new Impl(createDefaultTestName(argv_[0]))) {
 
   enum {
     DISABLE_CONSOLE_REPORTER = 1000,
@@ -120,11 +154,11 @@ DfltEnvironment::DfltEnvironment(
   while((opt_ = getopt_long(argc_, argv_, "vj:r:m:t:h", long_options_, nullptr)) >= 0) {
     switch(opt_) {
       case DISABLE_CONSOLE_REPORTER:
-        console_reporter_ = false;
+        pimpl->console_reporter = false;
         break;
       case 'v':
       case VERBOSE_CONSOLE:
-        console_verbose_ = true;
+        pimpl->console_verbose = true;
         break;
       case 'j':
       case JUNIT_REPORTER:
@@ -137,11 +171,11 @@ DfltEnvironment::DfltEnvironment(
         break;
       case 'm':
       case REGRESSION_FILE:
-        regression_file_ = optarg;
+        pimpl->regression_file = optarg;
         break;
       case 't':
       case TEST_NAME:
-        test_name_ = optarg;
+        pimpl->test_name = optarg;
         break;
       case 'h':
       case HELP:
@@ -155,37 +189,52 @@ DfltEnvironment::DfltEnvironment(
     }
   }
 
-  /* -- create the console reporter if it's not disabled */
-  if(console_reporter_) {
-    pimpl->reporters.emplace_back(new ReporterConsole(&std::cout, console_verbose_));
-    pimpl->reporter_root.appendReporter(pimpl->reporters.back().get());
-  }
-
-  /* -- create default runner filter - run all tests */
-  if(pimpl->filter == nullptr)
-    pimpl->filter.reset(new RunnerFilterEntire);
-
-  /* -- create the test mark storage */
-  pimpl->test_mark_storage.reset(
-      new TestMarkStorage(&pimpl->test_mark_factory, regression_file_));
-
-  /* -- finally, create the test runner */
-  pimpl->runner.reset(new RunnerOrdinary(
-      &pimpl->time_source,
-      &pimpl->exc_catcher,
-      &pimpl->reporter_root,
-      &Registry::instance("default"),
-      pimpl->filter.get(),
-      &pimpl->test_mark_factory,
-      pimpl->test_mark_storage.get(),
-      test_name_));
 }
 
 DfltEnvironment::~DfltEnvironment() {
   odelete(pimpl);
 }
 
+void DfltEnvironment::addReporter(
+    Reporter* reporter_) {
+  assert(reporter_ != nullptr);
+
+  pimpl->reporter_root.appendReporter(reporter_);
+  pimpl->console_reporter = false;
+}
+
 Runner& DfltEnvironment::getRunner() {
+  if(pimpl->runner == nullptr) {
+    /* -- create default exception catcher */
+    if(pimpl->exc_catcher == nullptr)
+      pimpl->exc_catcher.reset(new ExcCatcherOrdinary);
+
+    /* -- create the console reporter if it's not disabled */
+    if(pimpl->console_reporter) {
+      pimpl->reporters.emplace_back(new ReporterConsole(
+          &std::cout, pimpl->console_verbose));
+      pimpl->reporter_root.appendReporter(pimpl->reporters.back().get());
+    }
+
+    /* -- create default runner filter - run all tests */
+    if(pimpl->filter == nullptr)
+      pimpl->filter.reset(new RunnerFilterEntire);
+
+    /* -- create the test mark storage */
+    pimpl->test_mark_storage.reset(
+        new TestMarkStorage(&pimpl->test_mark_factory, pimpl->regression_file));
+
+    /* -- finally, create the test runner */
+    pimpl->runner.reset(new RunnerOrdinary(
+        &pimpl->time_source,
+        pimpl->exc_catcher.get(),
+        &pimpl->reporter_root,
+        &Registry::instance("default"),
+        pimpl->filter.get(),
+        &pimpl->test_mark_factory,
+        pimpl->test_mark_storage.get(),
+        pimpl->test_name));
+  }
   return *pimpl->runner;
 }
 

@@ -20,8 +20,11 @@
 #ifndef OTest2__INCLUDE_OTEST2_DFLTENVIRONMENT_H_
 #define OTest2__INCLUDE_OTEST2_DFLTENVIRONMENT_H_
 
+#include <string>
+
 namespace OTest2 {
 
+class Reporter;
 class Runner;
 
 /**
@@ -33,6 +36,14 @@ class DfltEnvironment {
     Impl* pimpl;
 
   public:
+    /**
+     * @brief Ctor - default running environment
+     *
+     * @param testname_ Name of the test as it's shown in the reports
+     */
+    explicit DfltEnvironment(
+        const std::string& testname_);
+
     /**
      * @brief Ctor
      *
@@ -47,6 +58,15 @@ class DfltEnvironment {
      * @brief Dtor
      */
     ~DfltEnvironment();
+
+    /**
+     * @brief Append a test reporter
+     *
+     * @param reporter_ The reporter. The ownership is not taken, the object
+     *     must exist for whole lifetime of this object.
+     */
+    void addReporter(
+        Reporter* reporter_);
 
     /**
      * @brief Get constructed runner

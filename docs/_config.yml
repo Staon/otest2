@@ -60,7 +60,9 @@ collections:
   examples:
     output: true
     permalink: /:collection/:name/
-    sort_by: "lesson"
+  extending:
+    output: true
+    permalink: /:collection/:name/
 
 defaults:
   - scope:
@@ -76,6 +78,16 @@ defaults:
   - scope:
       path: ""
       type: examples
+    values:
+      layout: single
+      toc: false
+      classes: wide
+      sidebar:
+        nav: "docs"
+
+  - scope:
+      path: ""
+      type: extending
     values:
       layout: single
       toc: false

@@ -30,9 +30,6 @@ namespace Examples {
  * @brief A simple reporter printing a dot per each test case
  */
 class ReporterDot : public Reporter {
-  private:
-    bool result;
-
   public:
     /**
      * @brief Ctor

@@ -25,8 +25,7 @@ namespace OTest2 {
 
 namespace Examples {
 
-ReporterDot::ReporterDot() :
-  result(true) {
+ReporterDot::ReporterDot() {
 
 }
 
@@ -64,16 +63,13 @@ void ReporterDot::enterAssert(
     const std::string& message_,
     const std::string& file_,
     int lineno_) {
-  if(!condition_) {
-    result = false;
+  if(!condition_)
     std::printf("\n[%s, %d]: %s\n", file_.c_str(), lineno_, message_.c_str());
-  }
 }
 
 void ReporterDot::enterError(
     const Context& context_,
     const std::string& message_) {
-  result = false;
   std::printf("\nerror: %s\n", message_.c_str());
 }
 

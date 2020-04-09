@@ -31,3 +31,7 @@ docs:
         url: "/install-guide/#binary-packages"
       - title: Configuration
         url: "/install-guide/#configuration"
+  - title: Extending
+    url: /extending/
+    collection: "extending"
+    sort_by: "lesson"

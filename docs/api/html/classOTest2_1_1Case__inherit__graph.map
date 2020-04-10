@@ -1,0 +1,6 @@
+<map id="OTest2::Case" name="OTest2::Case">
+<area shape="rect" id="node1" title="Interface of a test case." alt="" coords="39,80,145,107"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1CaseOrdinary.html" title="Ordinary suite." alt="" coords="13,155,171,181"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1Object.html" title="Generic testing object." alt="" coords="35,5,149,32"/>
+<area shape="rect" id="node4" href="$classOTest2_1_1CaseGenerated.html" title="Common implementation of a generated test case." alt="" coords="5,229,179,256"/>
+</map>

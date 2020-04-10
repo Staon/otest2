@@ -1,0 +1,19 @@
+<map id="OTest2::StateGenerated::Impl" name="OTest2::StateGenerated::Impl">
+<area shape="rect" id="node1" title=" " alt="" coords="957,64,1133,105"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1ObjectPtr.html" title=" " alt="" coords="697,5,839,47"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1StateGenerated.html" title="Common implementation of generated states." alt="" coords="680,71,856,98"/>
+<area shape="rect" id="node4" href="$classOTest2_1_1StateOrdinary.html" title="Ordinary state class." alt="" coords="335,21,498,47"/>
+<area shape="rect" id="node5" href="$classOTest2_1_1State.html" title="Generic test state interface." alt="" coords="169,21,277,47"/>
+<area shape="rect" id="node6" href="$classOTest2_1_1Object.html" title="Generic testing object." alt="" coords="5,21,120,47"/>
+<area shape="rect" id="node7" href="$classOTest2_1_1ContextObject.html" title="A generic interface of objects which offers OTest2 context." alt="" coords="335,71,499,98"/>
+<area shape="rect" id="node8" href="$classOTest2_1_1Context.html" title="OTest2 runtime context." alt="" coords="707,299,829,326"/>
+<area shape="rect" id="node9" href="$classOTest2_1_1Reporter.html" title="Generic test reporter." alt="" coords="353,122,480,149"/>
+<area shape="rect" id="node10" href="$classOTest2_1_1CommandStack.html" title="Stack of framework commands." alt="" coords="329,173,505,199"/>
+<area shape="rect" id="node11" href="$classOTest2_1_1RunnerFilter.html" title="Generic interface of a runner filter." alt="" coords="343,223,490,250"/>
+<area shape="rect" id="node12" href="$classOTest2_1_1TimeSource.html" title="Generic interface for getting of current time." alt="" coords="342,274,491,301"/>
+<area shape="rect" id="node13" href="$classOTest2_1_1ObjectPath.html" title="This is a simple object keeping path to current testing object." alt="" coords="345,325,488,351"/>
+<area shape="rect" id="node14" href="$classOTest2_1_1SemanticStack.html" title="Semantic stack." alt="" coords="331,375,502,402"/>
+<area shape="rect" id="node15" href="$classOTest2_1_1TestMarkStorage.html" title="Storage of test marks." alt="" coords="327,426,507,453"/>
+<area shape="rect" id="node16" href="$classOTest2_1_1TestMarkFactory.html" title="A factory of testmark objects used for deserialization." alt="" coords="329,477,504,503"/>
+<area shape="rect" id="node17" href="$classOTest2_1_1ExcCatcher.html" title="Generic exception catcher interface." alt="" coords="344,527,489,554"/>
+</map>

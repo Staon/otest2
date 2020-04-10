@@ -1,0 +1,5 @@
+<map id="OTest2::TestMarkPrefix" name="OTest2::TestMarkPrefix">
+<area shape="rect" id="node1" title="A generic test mark with string prefix." alt="" coords="73,95,237,121"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1TestMark.html" title="Generic interface of a test mark node." alt="" coords="5,5,135,32"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1TestMarkHash.html" title="A simple generator of a testmark hash." alt="" coords="159,5,322,32"/>
+</map>

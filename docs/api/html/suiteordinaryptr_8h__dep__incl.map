@@ -1,0 +1,11 @@
+<map id="include/otest2/suiteordinaryptr.h" name="include/otest2/suiteordinaryptr.h">
+<area shape="rect" id="node1" title=" " alt="" coords="378,5,606,32"/>
+<area shape="rect" id="node2" href="$cmddestroysuite_8h.html" title=" " alt="" coords="5,80,240,107"/>
+<area shape="rect" id="node5" href="$cmdnextcase_8h.html" title=" " alt="" coords="265,80,479,107"/>
+<area shape="rect" id="node7" href="$cmdstartsuite_8h.html" title=" " alt="" coords="503,80,721,107"/>
+<area shape="rect" id="node9" href="$cmdstopsuite_8h.html" title=" " alt="" coords="745,80,959,107"/>
+<area shape="rect" id="node3" href="$cmddestroysuite_8cpp.html" title=" " alt="" coords="9,155,183,181"/>
+<area shape="rect" id="node4" href="$cmdstartsuite_8cpp.html" title=" " alt="" coords="207,155,363,181"/>
+<area shape="rect" id="node6" href="$cmdnextcase_8cpp.html" title=" " alt="" coords="387,155,541,181"/>
+<area shape="rect" id="node8" href="$suiteordinary_8cpp.html" title=" " alt="" coords="565,155,713,181"/>
+</map>

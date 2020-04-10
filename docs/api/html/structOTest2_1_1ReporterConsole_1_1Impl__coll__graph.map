@@ -1,0 +1,7 @@
+<map id="OTest2::ReporterConsole::Impl" name="OTest2::ReporterConsole::Impl">
+<area shape="rect" id="node1" title=" " alt="" coords="194,171,373,212"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1TerminalDriver.html" title="Terminal driver." alt="" coords="5,81,169,108"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1ReporterConsole.html" title="A reporter writing into a console or file." alt="" coords="194,81,373,108"/>
+<area shape="rect" id="node4" href="$classOTest2_1_1Reporter.html" title="Generic test reporter." alt="" coords="220,5,347,32"/>
+<area shape="rect" id="node5" href="$classOTest2_1_1ReporterStatistics.html" title="A helper class keeping statistic counters." alt="" coords="397,81,583,108"/>
+</map>

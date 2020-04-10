@@ -1,0 +1,4 @@
+<map id="OTest2::ExcCatcher" name="OTest2::ExcCatcher">
+<area shape="rect" id="node1" title="Generic exception catcher interface." alt="" coords="32,5,177,32"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1ExcCatcherOrdinary.html" title="Ordinary exception catcher handling std::exception." alt="" coords="5,80,204,107"/>
+</map>

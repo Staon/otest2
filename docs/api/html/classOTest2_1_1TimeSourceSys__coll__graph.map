@@ -1,0 +1,4 @@
+<map id="OTest2::TimeSourceSys" name="OTest2::TimeSourceSys">
+<area shape="rect" id="node1" title="Source of current system time." alt="" coords="5,80,177,107"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1TimeSource.html" title="Generic interface for getting of current time." alt="" coords="17,5,166,32"/>
+</map>

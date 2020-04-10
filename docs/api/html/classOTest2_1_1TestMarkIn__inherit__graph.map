@@ -1,0 +1,5 @@
+<map id="OTest2::TestMarkIn" name="OTest2::TestMarkIn">
+<area shape="rect" id="node1" title="A generic interface of a testmark deserializer." alt="" coords="27,5,167,32"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1TestMarkInBin.html" title="Testmark deserializer based on a binary stream." alt="" coords="17,80,177,107"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1TestMarkInBinIOS.html" title="Binary testmark deserializer based on a C++ input stream." alt="" coords="5,155,188,181"/>
+</map>

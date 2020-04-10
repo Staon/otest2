@@ -1,0 +1,16 @@
+<map id="OTest2::RunnerOrdinary::Impl" name="OTest2::RunnerOrdinary::Impl">
+<area shape="rect" id="node1" title=" " alt="" coords="631,153,801,194"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1RunnerOrdinary.html" title="Ordinary implementation of the Runner interface." alt="" coords="359,5,529,32"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1Runner.html" title="Generic test runner." alt="" coords="37,5,154,32"/>
+<area shape="rect" id="node4" href="$classOTest2_1_1CommandStack.html" title="Stack of framework commands." alt="" coords="7,83,183,109"/>
+<area shape="rect" id="node7" href="$classOTest2_1_1Context.html" title="OTest2 runtime context." alt="" coords="383,305,505,332"/>
+<area shape="rect" id="node5" href="$classOTest2_1_1ObjectPath.html" title="This is a simple object keeping path to current testing object." alt="" coords="24,147,167,173"/>
+<area shape="rect" id="node6" href="$classOTest2_1_1SemanticStack.html" title="Semantic stack." alt="" coords="10,224,181,251"/>
+<area shape="rect" id="node8" href="$classOTest2_1_1Reporter.html" title="Generic test reporter." alt="" coords="32,297,159,324"/>
+<area shape="rect" id="node9" href="$classOTest2_1_1RunnerFilter.html" title="Generic interface of a runner filter." alt="" coords="22,348,169,375"/>
+<area shape="rect" id="node10" href="$classOTest2_1_1TimeSource.html" title="Generic interface for getting of current time." alt="" coords="21,399,170,425"/>
+<area shape="rect" id="node11" href="$classOTest2_1_1TestMarkStorage.html" title="Storage of test marks." alt="" coords="5,449,185,476"/>
+<area shape="rect" id="node12" href="$classOTest2_1_1TestMarkFactory.html" title="A factory of testmark objects used for deserialization." alt="" coords="8,500,183,527"/>
+<area shape="rect" id="node13" href="$classOTest2_1_1ExcCatcher.html" title="Generic exception catcher interface." alt="" coords="23,551,168,577"/>
+<area shape="rect" id="node14" href="$classOTest2_1_1Registry.html" title="Test registry." alt="" coords="383,356,505,383"/>
+</map>

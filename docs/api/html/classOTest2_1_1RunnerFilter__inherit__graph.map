@@ -1,0 +1,5 @@
+<map id="OTest2::RunnerFilter" name="OTest2::RunnerFilter">
+<area shape="rect" id="node1" title="Generic interface of a runner filter." alt="" coords="125,5,272,32"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1RunnerFilterEntire.html" title="Simple runner filter which allows all suites and test cases." alt="" coords="5,80,189,107"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1RunnerFilterOne.html" title="A filter which allows run of only one test case or only one suite." alt="" coords="213,80,387,107"/>
+</map>

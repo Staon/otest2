@@ -1,0 +1,5 @@
+<map id="OTest2::TestMarkOutBin" name="OTest2::TestMarkOutBin">
+<area shape="rect" id="node1" title="Generic implementation of the testmark serializer based on a binary stream." alt="" coords="17,80,189,107"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1TestMarkOutBinIOS.html" title="A binary testmark serializer based on the standard C++ streams." alt="" coords="5,155,200,181"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1TestMarkOut.html" title="A generic interface of a serializer of test marks." alt="" coords="27,5,179,32"/>
+</map>

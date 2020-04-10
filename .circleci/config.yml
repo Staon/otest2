@@ -39,3 +39,36 @@ jobs:
           path: test-results
       - store_artifacts:
           path: artifacts
+
+  doxygen:
+    docker:
+      - image: staon/doxygen:latest
+    steps:
+      - checkout
+      - run:
+          name: Generating API documentation...
+          command: |
+            doxygen
+      - add_ssh_keys:
+          fingerprints:
+            - "95:6b:1d:ab:a7:54:44:d1:3d:b6:44:11:a4:ed:f0:c2"
+      - run:
+          name: Pushing generated documentation up...
+          command: |
+            git config user.email "stareko@email.cz"
+            git config user.name "Staon"
+            git add -f --all docs/api
+            git commit -m "[skip ci] Generated Doxygen Documentation"
+            git push
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
+      - doxygen:
+          requires: 
+            - build
+          filters:
+            branches:
+              only: master

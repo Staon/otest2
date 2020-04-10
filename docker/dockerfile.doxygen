@@ -11,6 +11,10 @@ RUN tar xvf doxygen-1.8.17.linux.bin.tar.gz
 FROM debian:stretch
 RUN apt-get update && apt-get install --no-install-recommends -y \
     graphviz \
+    git \
+    openssh-client \
+    ca-certificates \
+    gnupg \
   && apt-get -y autoremove \
 	&& apt-get -y autoclean \
 	&& apt-get -y clean \

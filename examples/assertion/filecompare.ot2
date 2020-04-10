@@ -30,9 +30,9 @@ namespace Examples {
 TEST_SUITE(CustomAssertion) {
   TEST_CASE(FileCompare) {
     TEST_SIMPLE() {
-      std::istringstream iss1_("Hello world");
-      std::istringstream iss2_("Hello world!\nHave a nice day.");
-      testFileCompare(iss1_, iss2_);
+      std::istringstream current_("Hello world");
+      std::istringstream expected_("Hello world!\nHave a nice day.");
+      testFileCompare(current_, expected_);
     }
   }
 }

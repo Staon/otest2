@@ -54,7 +54,7 @@ void AssertContext::enterAssertion(
   /* -- report the assertion */
   std::ostringstream sos_;
   if(use_expression_ && !expression.empty())
-    sos_ << expression;
+    sos_ << '\'' << expression << '\'';
   if(!message_.empty()) {
     if(use_expression_ && !expression.empty())
       sos_ << " ";

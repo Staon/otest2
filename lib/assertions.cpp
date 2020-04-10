@@ -29,12 +29,18 @@ namespace OTest2 {
 
 bool GenericAssertion::testAssert(
     bool condition_) {
-  return simpleAssertionImpl(condition_, "", true);
+  if(condition_)
+    return simpleAssertionImpl(condition_, "", true);
+  else
+    return simpleAssertionImpl(condition_, "has failed", true);
 }
 
 bool GenericAssertion::testAssert(
     const AssertBean& bean_) {
-  return simpleAssertionImpl(bean_.getCondition(), bean_.getMessage(), true);
+  if(bean_.getCondition())
+    return simpleAssertionImpl(bean_.getCondition(), "", true);
+  else
+    return simpleAssertionImpl(bean_.getCondition(), bean_.getMessage(), true);
 }
 
 bool GenericAssertion::testException(

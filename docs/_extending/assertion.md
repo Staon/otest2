@@ -29,7 +29,7 @@ If the assertion fails similar output will be shown
 ```plaintext
  ============================== CustomAssertion ===============================
 [.../examples/assertion/filecompare.ot2:43] assertion::CustomAssertion::FileComp
-are: 'compareFiles(current_, expected_)' has failed
+are: 'compareFiles(generated_, expected_)' has failed
   FileCompare                                                         [Failed]
  ------------------------------------------------------------------------------
   Suite total                                                         [Failed]
@@ -43,16 +43,16 @@ are: 'compareFiles(current_, expected_)' has failed
  ==============================================================================
 ```
 
-The test correctly fails but no one knows what has realy happened. The OTest2
+The test correctly fails but no one knows what has actually happened. The OTest2
 framework offers two ways how to solve this problem:
 * the [AssertBean]({{ "api/html/classOTest2_1_1AssertBean.html" | relative_url }})
 * implementation of custom assertion function.
 
 The first option is a simple class containing a boolean flag and a message.
-The `testAssert()` function is overloaded and if the flag is false the message
-is reported.
+The helper function may return the bean. The `testAssert()` function is
+overloaded for and if the flag is false the message is reported.
 
-The second option is more complex but it offers more possibilites.
+The second option is more complex but it offers more flexibility.
 
 Implementation of custom assertion consists of two parts:
 * an implementation class,
@@ -128,7 +128,7 @@ the difference is reported.
 Remark the functions `enterAssertion`, `assertionMessage` and `leaveAssertion`.
 They are the interface of the `AssertContext` class for assertion implementation.
 Every assertion **must** invoke once `enterAssertion` and `leaveAssertion` methods
-in this order. And it can call zero or more times the `assertionMessage`
+in this order. And it can call the `assertionMessage` zero or more times 
 between them.
 
 Now it's time to declare the assertion function.
@@ -141,12 +141,12 @@ bool testFileCompare(
     std::istream& expected_) TEST_ASSERTION_MARK(::OTest2::Examples::FileCompare, testCompareFiles);
 ```
 
-The assertion function is declared as any function. The only difference is
+The assertion function is declared as any function. The only difference is the
 annotation `TEST_ASSERTION_MARK` which links the function to its implementation
 class. One implementation class may define several assertion functions.
 
 It's a good manner to return result flag from the assertion function (true
-if the assertion passes). The OTest2 framework doesn't break running test
+if the assertion passes). The OTest2 framework doesn't break running tests
 if an assertion fails. Hence, sometimes it's needed to take some checks
 conditionaly:
 

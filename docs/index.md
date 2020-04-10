@@ -13,11 +13,11 @@ I know the original project is still in use.
 
 ## Features
 
-* no need to write boiler plate code - it's done by generator
-* DSL is a valid C++ which doesn't fancy IDE functions like code assistance
+* no need to write boiler plate code - it's done by a generator
+* DSL is a valid C++ which doesn't break fancy IDE functions like code assistance
 * test cases are grouped into test suites
-* a rich set of assertion functions with a possibility to create own one
-* test fixtures at the level of either test case or test suite
+* a rich set of assertion functions with a possibility to write own one
+* test fixtures at levels of either test case or test suite
 * regression test marks
 * exception handling (checking actual occurrence of an exception and handling
   of unexpected exceptions fired from a test case)
@@ -29,8 +29,7 @@ I know the original project is still in use.
 
 The framework is developing and tested on Debian Stretch distribution. Generally,
 it should work on any UNIX-like system which the [libclang](https://clang.llvm.org/docs/Tooling.html)
-is supported for. There is no current intention to support the framework
-on Windows.
+is supported for. There is no current intention to support MS Windows.
 
 ## Design Goals
 
@@ -38,7 +37,7 @@ on Windows.
 
 It's sometimes unbelievable how much work must be done in some testing frameworks
 in order to write a two-lines test. The OTest2 framework allows you to
-focus just on coding of tests. All the annoying work is done by a pre-processor
+focus just on coding of your code. All the annoying work is done by a pre-processor
 based on the [libclang](https://clang.llvm.org/docs/Tooling.html).
 
 Libclang offers a full C++ parser opening doors to a world of almost unlimited

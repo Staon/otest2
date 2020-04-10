@@ -37,8 +37,8 @@ is supported for. There is no current intention to support MS Windows.
 
 It's sometimes unbelievable how much work must be done in some testing frameworks
 in order to write a two-lines test. The OTest2 framework allows you to
-focus just on coding of your code. All the annoying work is done by a pre-processor
-based on the [libclang](https://clang.llvm.org/docs/Tooling.html).
+focus just on coding what you need. All the annoying work is done by
+a pre-processor based on the [libclang](https://clang.llvm.org/docs/Tooling.html).
 
 Libclang offers a full C++ parser opening doors to a world of almost unlimited
 possibilities. Hence, the OTest2 DSL has been implemented as a valid C++ source

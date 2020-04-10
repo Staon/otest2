@@ -180,37 +180,37 @@ $(function() {
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;} <span class="comment">/* -- namespace */</span></div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
-<div class="line"><a name="l00111"></a><span class="lineno"><a class="line" href="structOTest2_1_1TestMarkStorage_1_1Impl.html">  111</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html">TestMarkStorage::Impl</a> {</div>
-<div class="line"><a name="l00112"></a><span class="lineno"><a class="line" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a579f9157823e02c24c94608a974be743">  112</a></span>&#160;    <a class="code" href="classOTest2_1_1TestMarkFactory.html">TestMarkFactory</a>* <a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a579f9157823e02c24c94608a974be743">factory</a>;</div>
-<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a8da74a3cd1809534a73f5be1506c7f82">  113</a></span>&#160;    std::string <a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a8da74a3cd1809534a73f5be1506c7f82">storage_file</a>;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="keyword">struct </span>TestMarkStorage::Impl {</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    TestMarkFactory* factory;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    std::string storage_file;</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a4e6e69d1abb17ce009a3a112aa4e4bff">  115</a></span>&#160;    <span class="keyword">typedef</span> std::map&lt;std::string, TestMarkPtr&gt; <a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a4e6e69d1abb17ce009a3a112aa4e4bff">Storage</a>;</div>
-<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a26a9ef3a06651f76e305cd24eaa5d038">  116</a></span>&#160;    <a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a4e6e69d1abb17ce009a3a112aa4e4bff">Storage</a> <a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a26a9ef3a06651f76e305cd24eaa5d038">storage</a>;</div>
-<div class="line"><a name="l00117"></a><span class="lineno"><a class="line" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a9aa62df5ec0f746f2beb21f81cafdc04">  117</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a9aa62df5ec0f746f2beb21f81cafdc04">changed</a>;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keyword">typedef</span> std::map&lt;std::string, TestMarkPtr&gt; Storage;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    Storage storage;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordtype">bool</span> changed;</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#aa68d89219aa25ee37d04cd622df62c75">Impl</a>(</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keyword">const</span> <a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html">Impl</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html">Impl</a>&amp; <a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a807d81f88a2398ac39a6bcb781520e3e">operator = </a>(</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="keyword">const</span> <a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html">Impl</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    Impl(</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keyword">const</span> Impl&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    Impl&amp; <a class="code" href="classOTest2_1_1TestMarkStorage.html#a8dfa43e5bdc750edf96ea83a6878e08d">operator = </a>(</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="keyword">const</span> Impl&amp;) = <span class="keyword">delete</span>;</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#aa68d89219aa25ee37d04cd622df62c75">Impl</a>(</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        <a class="code" href="classOTest2_1_1TestMarkFactory.html">TestMarkFactory</a>* factory_,</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keyword">explicit</span> Impl(</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        TestMarkFactory* factory_,</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="keyword">const</span> std::string&amp; storage_file_);</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#affa9623182b31e486161b50bc4de61c0">~Impl</a>();</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    ~Impl();</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;};</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00131"></a><span class="lineno"><a class="line" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a6b07d82792c4cbd360fc8d708e007cff">  131</a></span>&#160;<a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#aa68d89219aa25ee37d04cd622df62c75">TestMarkStorage::Impl::Impl</a>(</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <a class="code" href="classOTest2_1_1TestMarkFactory.html">TestMarkFactory</a>* factory_,</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;TestMarkStorage::Impl::Impl(</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    TestMarkFactory* factory_,</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keyword">const</span> std::string&amp; storage_file_) :</div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  factory(factory_),</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;  storage_file(storage_file_),</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  storage(),</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  changed(false) {</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  assert(<a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a579f9157823e02c24c94608a974be743">factory</a> != <span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  assert(factory != <span class="keyword">nullptr</span>);</div>
 <div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160; </div>
 <div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  <span class="comment">/* -- read the test marks from the file */</span></div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  std::ifstream ifs_(<a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a8da74a3cd1809534a73f5be1506c7f82">storage_file</a>.c_str());</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  std::ifstream ifs_(storage_file.c_str());</div>
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  <span class="keywordflow">while</span>(!!ifs_) {</div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    std::ostringstream oss_;</div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    ifs_.get(*oss_.rdbuf());  <span class="comment">/* -- get the whole line */</span></div>
@@ -224,23 +224,23 @@ $(function() {
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;    <span class="comment">/* -- parse the key */</span></div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keyword">auto</span> sep_index_(searchForSeparator(line_));</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keywordflow">if</span>(sep_index_ &lt;= 0 || sep_index_ == std::string::npos) <span class="comment">/* -- wrong line */</span></div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      <span class="keywordflow">throw</span> <a class="code" href="classOTest2_1_1ExcTestMarkIn.html">ExcTestMarkIn</a>(<span class="stringliteral">&quot;invalid format of the test mark storage file &quot;</span> + <a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a8da74a3cd1809534a73f5be1506c7f82">storage_file</a>);</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      <span class="keywordflow">throw</span> ExcTestMarkIn(<span class="stringliteral">&quot;invalid format of the test mark storage file &quot;</span> + storage_file);</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    std::string key_(line_.data(), line_.data() + sep_index_);</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160; </div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="comment">/* -- parse the test mark */</span></div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    std::istrstream iss_(</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        line_.data() + sep_index_ + 1, line_.size() - sep_index_ - 1);</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <a class="code" href="classOTest2_1_1Base64IStream.html">Base64IStream</a> base64i_(&amp;iss_);</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <a class="code" href="classOTest2_1_1Bzip2IStream.html">Bzip2IStream</a> bzip2i_(&amp;base64i_);</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <a class="code" href="classOTest2_1_1TestMarkInBinIOS.html">TestMarkInBinIOS</a> reader_(&amp;bzip2i_);</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <a class="code" href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">TestMarkPtr</a> testmark_(<a class="code" href="classOTest2_1_1TestMarkIn.html#a243cef3aab0c772cc153fa069a021309">TestMarkInBinIOS::deserialize</a>(*<a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a579f9157823e02c24c94608a974be743">factory</a>, reader_));</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    Base64IStream base64i_(&amp;iss_);</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    Bzip2IStream bzip2i_(&amp;base64i_);</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    TestMarkInBinIOS reader_(&amp;bzip2i_);</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <a class="code" href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">TestMarkPtr</a> testmark_(<a class="code" href="classOTest2_1_1TestMarkIn.html#a243cef3aab0c772cc153fa069a021309">TestMarkInBinIOS::deserialize</a>(*factory, reader_));</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="comment">/* -- insert into the map */</span></div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a26a9ef3a06651f76e305cd24eaa5d038">storage</a>.insert({unescapeKey(key_), testmark_});</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    storage.insert({unescapeKey(key_), testmark_});</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  }</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;}</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160; </div>
-<div class="line"><a name="l00171"></a><span class="lineno"><a class="line" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#affa9623182b31e486161b50bc4de61c0">  171</a></span>&#160;<a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#affa9623182b31e486161b50bc4de61c0">TestMarkStorage::Impl::~Impl</a>() {</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;TestMarkStorage::Impl::~Impl() {</div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;  <span class="comment">/* -- store the storage if it changed */</span></div>
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;  <span class="keywordflow">if</span>(changed) {</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    std::ofstream ofs_(storage_file.c_str());</div>
@@ -250,9 +250,9 @@ $(function() {
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;      <span class="comment">/* -- write the mark */</span></div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;      {</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        <a class="code" href="classOTest2_1_1Base64OStream.html">Base64OStream</a> base64o_(&amp;ofs_);</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;        <a class="code" href="classOTest2_1_1Bzip2OStream.html">Bzip2OStream</a> bzip2o_(&amp;base64o_);</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        <a class="code" href="classOTest2_1_1TestMarkOutBinIOS.html">TestMarkOutBinIOS</a> writer_(&amp;bzip2o_);</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        Base64OStream base64o_(&amp;ofs_);</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;        Bzip2OStream bzip2o_(&amp;base64o_);</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        TestMarkOutBinIOS writer_(&amp;bzip2o_);</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        mark_.second-&gt;serializeMark(writer_);</div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;      }</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160; </div>
@@ -265,7 +265,7 @@ $(function() {
 <div class="line"><a name="l00193"></a><span class="lineno"><a class="line" href="classOTest2_1_1TestMarkStorage.html#a753bdafb75bf5cfb4e4b126945ec5e48">  193</a></span>&#160;<a class="code" href="classOTest2_1_1TestMarkStorage.html#a753bdafb75bf5cfb4e4b126945ec5e48">TestMarkStorage::TestMarkStorage</a>(</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <a class="code" href="classOTest2_1_1TestMarkFactory.html">TestMarkFactory</a>* factory_,</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <span class="keyword">const</span> std::string&amp; storage_file_) :</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  pimpl(new <a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html">Impl</a>(factory_, storage_file_)) {</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  pimpl(new Impl(factory_, storage_file_)) {</div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;}</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
@@ -278,16 +278,16 @@ $(function() {
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    <a class="code" href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">TestMarkPtr</a> test_mark_) {</div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  assert(!key_.empty() &amp;&amp; test_mark_ != <span class="keyword">nullptr</span>);</div>
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160; </div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  pimpl-&gt;<a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a26a9ef3a06651f76e305cd24eaa5d038">storage</a>[key_] = test_mark_;</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  pimpl-&gt;<a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a9aa62df5ec0f746f2beb21f81cafdc04">changed</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;  pimpl-&gt;storage[key_] = test_mark_;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  pimpl-&gt;changed = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;}</div>
 <div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160; </div>
 <div class="line"><a name="l00213"></a><span class="lineno"><a class="line" href="classOTest2_1_1TestMarkStorage.html#a70ce0bc50e38b7665d46e599a7866328">  213</a></span>&#160;<a class="code" href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">TestMarkPtr</a> <a class="code" href="classOTest2_1_1TestMarkStorage.html#a70ce0bc50e38b7665d46e599a7866328">TestMarkStorage::getTestMark</a>(</div>
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    <span class="keyword">const</span> std::string&amp; key_)<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  assert(!key_.empty());</div>
 <div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160; </div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  <span class="keyword">auto</span> iter_(pimpl-&gt;<a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a26a9ef3a06651f76e305cd24eaa5d038">storage</a>.find(key_));</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  <span class="keywordflow">if</span>(iter_ != pimpl-&gt;<a class="code" href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a26a9ef3a06651f76e305cd24eaa5d038">storage</a>.end())</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;  <span class="keyword">auto</span> iter_(pimpl-&gt;storage.find(key_));</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  <span class="keywordflow">if</span>(iter_ != pimpl-&gt;storage.end())</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    <span class="keywordflow">return</span> (*iter_).second;</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  <span class="keywordflow">else</span></div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">TestMarkPtr</a>();</div>
@@ -296,41 +296,26 @@ $(function() {
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="atestmarkptr_8h_html"><div class="ttname"><a href="testmarkptr_8h.html">testmarkptr.h</a></div></div>
-<div class="ttc" id="astructOTest2_1_1TestMarkStorage_1_1Impl_html_affa9623182b31e486161b50bc4de61c0"><div class="ttname"><a href="structOTest2_1_1TestMarkStorage_1_1Impl.html#affa9623182b31e486161b50bc4de61c0">OTest2::TestMarkStorage::Impl::~Impl</a></div><div class="ttdeci">~Impl()</div><div class="ttdef"><b>Definition:</b> <a href="testmarkstorage_8cpp_source.html#l00171">testmarkstorage.cpp:171</a></div></div>
-<div class="ttc" id="astructOTest2_1_1TestMarkStorage_1_1Impl_html_a8da74a3cd1809534a73f5be1506c7f82"><div class="ttname"><a href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a8da74a3cd1809534a73f5be1506c7f82">OTest2::TestMarkStorage::Impl::storage_file</a></div><div class="ttdeci">std::string storage_file</div><div class="ttdef"><b>Definition:</b> <a href="testmarkstorage_8cpp_source.html#l00113">testmarkstorage.cpp:113</a></div></div>
-<div class="ttc" id="astructOTest2_1_1TestMarkStorage_1_1Impl_html_a26a9ef3a06651f76e305cd24eaa5d038"><div class="ttname"><a href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a26a9ef3a06651f76e305cd24eaa5d038">OTest2::TestMarkStorage::Impl::storage</a></div><div class="ttdeci">Storage storage</div><div class="ttdef"><b>Definition:</b> <a href="testmarkstorage_8cpp_source.html#l00116">testmarkstorage.cpp:116</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkStorage_html_a7694a37b7a998f9cf888ecf1b78b9565"><div class="ttname"><a href="classOTest2_1_1TestMarkStorage.html#a7694a37b7a998f9cf888ecf1b78b9565">OTest2::TestMarkStorage::setTestMark</a></div><div class="ttdeci">void setTestMark(const std::string &amp;key_, TestMarkPtr test_mark_)</div><div class="ttdoc">Set new or reset old test mark.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkstorage_8cpp_source.html#l00204">testmarkstorage.cpp:204</a></div></div>
-<div class="ttc" id="astructOTest2_1_1TestMarkStorage_1_1Impl_html_aa68d89219aa25ee37d04cd622df62c75"><div class="ttname"><a href="structOTest2_1_1TestMarkStorage_1_1Impl.html#aa68d89219aa25ee37d04cd622df62c75">OTest2::TestMarkStorage::Impl::Impl</a></div><div class="ttdeci">Impl(const Impl &amp;)=delete</div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkIn_html_a243cef3aab0c772cc153fa069a021309"><div class="ttname"><a href="classOTest2_1_1TestMarkIn.html#a243cef3aab0c772cc153fa069a021309">OTest2::TestMarkIn::deserialize</a></div><div class="ttdeci">static TestMarkPtr deserialize(TestMarkFactory &amp;factory_, TestMarkIn &amp;deserializer_)</div><div class="ttdoc">Deserialize a testmark.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkin_8cpp_source.html#l00037">testmarkin.cpp:37</a></div></div>
 <div class="ttc" id="abase64istream_8h_html"><div class="ttname"><a href="base64istream_8h.html">base64istream.h</a></div></div>
 <div class="ttc" id="atestmarkoutbinios_8h_html"><div class="ttname"><a href="testmarkoutbinios_8h.html">testmarkoutbinios.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ExcTestMarkIn_html"><div class="ttname"><a href="classOTest2_1_1ExcTestMarkIn.html">OTest2::ExcTestMarkIn</a></div><div class="ttdoc">An exception thrown from the testmark deserializer.</div><div class="ttdef"><b>Definition:</b> <a href="exctestmarkin_8h_source.html#l00031">exctestmarkin.h:31</a></div></div>
 <div class="ttc" id="atestmarkstorage_8h_html"><div class="ttname"><a href="testmarkstorage_8h.html">testmarkstorage.h</a></div></div>
 <div class="ttc" id="abase64ostream_8h_html"><div class="ttname"><a href="base64ostream_8h.html">base64ostream.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1Base64OStream_html"><div class="ttname"><a href="classOTest2_1_1Base64OStream.html">OTest2::Base64OStream</a></div><div class="ttdoc">Base64 output stream.</div><div class="ttdef"><b>Definition:</b> <a href="base64ostream_8h_source.html#l00030">base64ostream.h:30</a></div></div>
 <div class="ttc" id="aexctestmarkin_8h_html"><div class="ttname"><a href="exctestmarkin_8h.html">exctestmarkin.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkStorage_html_a431307980b83f97c641ded0a188ff00d"><div class="ttname"><a href="classOTest2_1_1TestMarkStorage.html#a431307980b83f97c641ded0a188ff00d">OTest2::TestMarkStorage::~TestMarkStorage</a></div><div class="ttdeci">virtual ~TestMarkStorage()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkstorage_8cpp_source.html#l00200">testmarkstorage.cpp:200</a></div></div>
 <div class="ttc" id="autils_8h_html"><div class="ttname"><a href="utils_8h.html">utils.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1TestMarkInBinIOS_html"><div class="ttname"><a href="classOTest2_1_1TestMarkInBinIOS.html">OTest2::TestMarkInBinIOS</a></div><div class="ttdoc">Binary testmark deserializer based on a C++ input stream.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkinbinios_8h_source.html#l00032">testmarkinbinios.h:32</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html_a64c42b3de3a782325e19a5e740edebbc"><div class="ttname"><a href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">OTest2::TestMarkPtr</a></div><div class="ttdeci">std::shared_ptr&lt; TestMark &gt; TestMarkPtr</div><div class="ttdef"><b>Definition:</b> <a href="testmarkptr_8h_source.html#l00026">testmarkptr.h:26</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkStorage_html_a753bdafb75bf5cfb4e4b126945ec5e48"><div class="ttname"><a href="classOTest2_1_1TestMarkStorage.html#a753bdafb75bf5cfb4e4b126945ec5e48">OTest2::TestMarkStorage::TestMarkStorage</a></div><div class="ttdeci">TestMarkStorage(TestMarkFactory *factory_, const std::string &amp;storage_file_)</div><div class="ttdoc">Ctor.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkstorage_8cpp_source.html#l00193">testmarkstorage.cpp:193</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1Bzip2OStream_html"><div class="ttname"><a href="classOTest2_1_1Bzip2OStream.html">OTest2::Bzip2OStream</a></div><div class="ttdoc">Bzip2 output stream.</div><div class="ttdef"><b>Definition:</b> <a href="bzip2ostream_8h_source.html#l00030">bzip2ostream.h:30</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
-<div class="ttc" id="astructOTest2_1_1TestMarkStorage_1_1Impl_html_a9aa62df5ec0f746f2beb21f81cafdc04"><div class="ttname"><a href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a9aa62df5ec0f746f2beb21f81cafdc04">OTest2::TestMarkStorage::Impl::changed</a></div><div class="ttdeci">bool changed</div><div class="ttdef"><b>Definition:</b> <a href="testmarkstorage_8cpp_source.html#l00117">testmarkstorage.cpp:117</a></div></div>
-<div class="ttc" id="astructOTest2_1_1TestMarkStorage_1_1Impl_html_a4e6e69d1abb17ce009a3a112aa4e4bff"><div class="ttname"><a href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a4e6e69d1abb17ce009a3a112aa4e4bff">OTest2::TestMarkStorage::Impl::Storage</a></div><div class="ttdeci">std::map&lt; std::string, TestMarkPtr &gt; Storage</div><div class="ttdef"><b>Definition:</b> <a href="testmarkstorage_8cpp_source.html#l00115">testmarkstorage.cpp:115</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1TestMarkOutBinIOS_html"><div class="ttname"><a href="classOTest2_1_1TestMarkOutBinIOS.html">OTest2::TestMarkOutBinIOS</a></div><div class="ttdoc">A binary testmark serializer based on the standard C++ streams.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkoutbinios_8h_source.html#l00032">testmarkoutbinios.h:32</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1Base64IStream_html"><div class="ttname"><a href="classOTest2_1_1Base64IStream.html">OTest2::Base64IStream</a></div><div class="ttdoc">Input base64 stream.</div><div class="ttdef"><b>Definition:</b> <a href="base64istream_8h_source.html#l00030">base64istream.h:30</a></div></div>
 <div class="ttc" id="atestmarkfactory_8h_html"><div class="ttname"><a href="testmarkfactory_8h.html">testmarkfactory.h</a></div></div>
 <div class="ttc" id="atestmark_8h_html"><div class="ttname"><a href="testmark_8h.html">testmark.h</a></div></div>
-<div class="ttc" id="astructOTest2_1_1TestMarkStorage_1_1Impl_html"><div class="ttname"><a href="structOTest2_1_1TestMarkStorage_1_1Impl.html">OTest2::TestMarkStorage::Impl</a></div><div class="ttdef"><b>Definition:</b> <a href="testmarkstorage_8cpp_source.html#l00111">testmarkstorage.cpp:111</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1TestMarkStorage_html_a8dfa43e5bdc750edf96ea83a6878e08d"><div class="ttname"><a href="classOTest2_1_1TestMarkStorage.html#a8dfa43e5bdc750edf96ea83a6878e08d">OTest2::TestMarkStorage::operator=</a></div><div class="ttdeci">TestMarkStorage &amp; operator=(const TestMarkStorage &amp;)=delete</div></div>
 <div class="ttc" id="abzip2istream_8h_html"><div class="ttname"><a href="bzip2istream_8h.html">bzip2istream.h</a></div></div>
 <div class="ttc" id="atestmarkinbinios_8h_html"><div class="ttname"><a href="testmarkinbinios_8h.html">testmarkinbinios.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkStorage_html_a70ce0bc50e38b7665d46e599a7866328"><div class="ttname"><a href="classOTest2_1_1TestMarkStorage.html#a70ce0bc50e38b7665d46e599a7866328">OTest2::TestMarkStorage::getTestMark</a></div><div class="ttdeci">TestMarkPtr getTestMark(const std::string &amp;key_) const</div><div class="ttdoc">Get test mark.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkstorage_8cpp_source.html#l00213">testmarkstorage.cpp:213</a></div></div>
-<div class="ttc" id="astructOTest2_1_1TestMarkStorage_1_1Impl_html_a807d81f88a2398ac39a6bcb781520e3e"><div class="ttname"><a href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a807d81f88a2398ac39a6bcb781520e3e">OTest2::TestMarkStorage::Impl::operator=</a></div><div class="ttdeci">Impl &amp; operator=(const Impl &amp;)=delete</div></div>
 <div class="ttc" id="abzip2ostream_8h_html"><div class="ttname"><a href="bzip2ostream_8h.html">bzip2ostream.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkFactory_html"><div class="ttname"><a href="classOTest2_1_1TestMarkFactory.html">OTest2::TestMarkFactory</a></div><div class="ttdoc">A factory of testmark objects used for deserialization.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkfactory_8h_source.html#l00045">testmarkfactory.h:45</a></div></div>
-<div class="ttc" id="astructOTest2_1_1TestMarkStorage_1_1Impl_html_a579f9157823e02c24c94608a974be743"><div class="ttname"><a href="structOTest2_1_1TestMarkStorage_1_1Impl.html#a579f9157823e02c24c94608a974be743">OTest2::TestMarkStorage::Impl::factory</a></div><div class="ttdeci">TestMarkFactory * factory</div><div class="ttdef"><b>Definition:</b> <a href="testmarkstorage_8cpp_source.html#l00112">testmarkstorage.cpp:112</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1Bzip2IStream_html"><div class="ttname"><a href="classOTest2_1_1Bzip2IStream.html">OTest2::Bzip2IStream</a></div><div class="ttdoc">Bzip2 input stream.</div><div class="ttdef"><b>Definition:</b> <a href="bzip2istream_8h_source.html#l00030">bzip2istream.h:30</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html_a9c0e5683fb529ec38164c2f418172b30"><div class="ttname"><a href="namespaceOTest2.html#a9c0e5683fb529ec38164c2f418172b30">OTest2::odelete</a></div><div class="ttdeci">void odelete(T_ *&amp;object_)</div><div class="ttdoc">Delete a pointer and set it invalid.</div><div class="ttdef"><b>Definition:</b> <a href="utils_8h_source.html#l00032">utils.h:32</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

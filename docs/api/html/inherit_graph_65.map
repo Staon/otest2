@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structOTest2_1_1RunnerOrdinary_1_1Impl.html" title=" " alt="" coords="5,5,176,47"/>
+<area shape="rect" id="node1" href="$classOTest2_1_1TestMarkIn.html" title="A generic interface of a testmark deserializer." alt="" coords="5,5,145,32"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1TestMarkInBin.html" title="Testmark deserializer based on a binary stream." alt="" coords="193,5,353,32"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1TestMarkInBinIOS.html" title="Binary testmark deserializer based on a C++ input stream." alt="" coords="401,5,584,32"/>
 </map>

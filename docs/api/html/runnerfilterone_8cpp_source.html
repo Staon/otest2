@@ -98,24 +98,24 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html">   29</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html">RunnerFilterOne::Impl</a> {</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">struct </span>RunnerFilterOne::Impl {</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#a1250b24765de3dda1235da47458c25c1">   31</a></span>&#160;    std::string <a class="code" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#a1250b24765de3dda1235da47458c25c1">suite_name</a>;</div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#a11881908dbb40807c95de50099255fce">   32</a></span>&#160;    std::string <a class="code" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#a11881908dbb40807c95de50099255fce">case_name</a>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    std::string suite_name;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    std::string case_name;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <a class="code" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#a8fc710df36d4cd890a585aaa51304a74">Impl</a>(</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">const</span> <a class="code" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html">Impl</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html">Impl</a>&amp; <a class="code" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#ac76857ad510a5dbbc26ebf4896c5c56d">operator =</a>(</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">const</span> <a class="code" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html">Impl</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    Impl(</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">const</span> Impl&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    Impl&amp; <a class="code" href="classOTest2_1_1RunnerFilterOne.html#a0c717e722e9ffebc852c18e62a275176">operator =</a>(</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">const</span> Impl&amp;) = <span class="keyword">delete</span>;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#a8fc710df36d4cd890a585aaa51304a74">Impl</a>(</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">explicit</span> Impl(</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">const</span> std::string&amp; suite_name_,</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">const</span> std::string&amp; case_name_);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#a58666a3e7af2059ae36fd3f8dc704ac2">~Impl</a>();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    ~Impl();</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;};</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#ae13c3a77a7e9bf3ca405505a5e734561">   46</a></span>&#160;<a class="code" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#a8fc710df36d4cd890a585aaa51304a74">RunnerFilterOne::Impl::Impl</a>(</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;RunnerFilterOne::Impl::Impl(</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">const</span> std::string&amp; suite_name_,</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">const</span> std::string&amp; case_name_) :</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  suite_name(suite_name_),</div>
@@ -123,22 +123,22 @@ $(function() {
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#a58666a3e7af2059ae36fd3f8dc704ac2">   54</a></span>&#160;<a class="code" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#a58666a3e7af2059ae36fd3f8dc704ac2">RunnerFilterOne::Impl::~Impl</a>() {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;RunnerFilterOne::Impl::~Impl() {</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
 <div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="classOTest2_1_1RunnerFilterOne.html#acd1132421bc0ff1dbf62281bf9412751">   58</a></span>&#160;<a class="code" href="classOTest2_1_1RunnerFilterOne.html#a879eb365a0752387e56095417159feef">RunnerFilterOne::RunnerFilterOne</a>(</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">const</span> std::string&amp; suite_) :</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  pimpl(new <a class="code" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html">Impl</a>(suite_, <span class="stringliteral">&quot;&quot;</span>)) {</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  assert(!pimpl-&gt;<a class="code" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#a1250b24765de3dda1235da47458c25c1">suite_name</a>.empty());</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  pimpl(new Impl(suite_, <span class="stringliteral">&quot;&quot;</span>)) {</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  assert(!pimpl-&gt;suite_name.empty());</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
 <div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classOTest2_1_1RunnerFilterOne.html#a103380a22a1a00884b7e5c8595f2d610">   65</a></span>&#160;<a class="code" href="classOTest2_1_1RunnerFilterOne.html#a879eb365a0752387e56095417159feef">RunnerFilterOne::RunnerFilterOne</a>(</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keyword">const</span> std::string&amp; suite_,</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">const</span> std::string&amp; testcase_) :</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  pimpl(new <a class="code" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html">Impl</a>(suite_, testcase_)) {</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  assert(!pimpl-&gt;<a class="code" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#a1250b24765de3dda1235da47458c25c1">suite_name</a>.empty());</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  pimpl(new Impl(suite_, testcase_)) {</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  assert(!pimpl-&gt;suite_name.empty());</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
@@ -166,35 +166,30 @@ $(function() {
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
 <div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="classOTest2_1_1RunnerFilterOne.html#a96985b9a56760e6a4115cdb256c627ee">   95</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1RunnerFilterOne.html#a96985b9a56760e6a4115cdb256c627ee">RunnerFilterOne::filterSuite</a>(</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keyword">const</span> std::string&amp; suite_name_)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordflow">return</span> suite_name_ != pimpl-&gt;<a class="code" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#a1250b24765de3dda1235da47458c25c1">suite_name</a>;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordflow">return</span> suite_name_ != pimpl-&gt;suite_name;</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;}</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
 <div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="classOTest2_1_1RunnerFilterOne.html#a42bae11ec2124369523aeda57fd21c38">  100</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1RunnerFilterOne.html#a42bae11ec2124369523aeda57fd21c38">RunnerFilterOne::filterCase</a>(</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keyword">const</span> std::string&amp; suite_name_,</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keyword">const</span> std::string&amp; case_name_)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <span class="keywordflow">if</span>(suite_name_ != pimpl-&gt;<a class="code" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#a1250b24765de3dda1235da47458c25c1">suite_name</a>)</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  <span class="keywordflow">if</span>(suite_name_ != pimpl-&gt;suite_name)</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;  <span class="comment">/* -- filter test cases of all other suites */</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="keywordflow">if</span>(pimpl-&gt;<a class="code" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#a11881908dbb40807c95de50099255fce">case_name</a>.empty())</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="keywordflow">if</span>(pimpl-&gt;case_name.empty())</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>; <span class="comment">/* -- the entire suite should be run */</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  <span class="keywordflow">return</span> case_name_ != pimpl-&gt;<a class="code" href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#a11881908dbb40807c95de50099255fce">case_name</a>;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  <span class="keywordflow">return</span> case_name_ != pimpl-&gt;case_name;</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;}</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="astructOTest2_1_1RunnerFilterOne_1_1Impl_html_a1250b24765de3dda1235da47458c25c1"><div class="ttname"><a href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#a1250b24765de3dda1235da47458c25c1">OTest2::RunnerFilterOne::Impl::suite_name</a></div><div class="ttdeci">std::string suite_name</div><div class="ttdef"><b>Definition:</b> <a href="runnerfilterone_8cpp_source.html#l00031">runnerfilterone.cpp:31</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1RunnerFilterOne_html_a494d87f80f1fec680716955a5db093c2"><div class="ttname"><a href="classOTest2_1_1RunnerFilterOne.html#a494d87f80f1fec680716955a5db093c2">OTest2::RunnerFilterOne::fromPath</a></div><div class="ttdeci">static std::unique_ptr&lt; RunnerFilterOne &gt; fromPath(const std::string &amp;object_path_)</div><div class="ttdoc">Create the filter from an object path.</div><div class="ttdef"><b>Definition:</b> <a href="runnerfilterone_8cpp_source.html#l00077">runnerfilterone.cpp:77</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1RunnerFilterOne_html_a879eb365a0752387e56095417159feef"><div class="ttname"><a href="classOTest2_1_1RunnerFilterOne.html#a879eb365a0752387e56095417159feef">OTest2::RunnerFilterOne::RunnerFilterOne</a></div><div class="ttdeci">RunnerFilterOne(const RunnerFilterOne &amp;)=delete</div></div>
 <div class="ttc" id="aclassOTest2_1_1RunnerFilterOne_html_a9a68e23e8094d78054dd903498e0b2e0"><div class="ttname"><a href="classOTest2_1_1RunnerFilterOne.html#a9a68e23e8094d78054dd903498e0b2e0">OTest2::RunnerFilterOne::~RunnerFilterOne</a></div><div class="ttdeci">virtual ~RunnerFilterOne()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="runnerfilterone_8cpp_source.html#l00073">runnerfilterone.cpp:73</a></div></div>
 <div class="ttc" id="autils_8h_html"><div class="ttname"><a href="utils_8h.html">utils.h</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1RunnerFilterOne_html_a0c717e722e9ffebc852c18e62a275176"><div class="ttname"><a href="classOTest2_1_1RunnerFilterOne.html#a0c717e722e9ffebc852c18e62a275176">OTest2::RunnerFilterOne::operator=</a></div><div class="ttdeci">RunnerFilterOne &amp; operator=(const RunnerFilterOne &amp;)=delete</div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
-<div class="ttc" id="astructOTest2_1_1RunnerFilterOne_1_1Impl_html"><div class="ttname"><a href="structOTest2_1_1RunnerFilterOne_1_1Impl.html">OTest2::RunnerFilterOne::Impl</a></div><div class="ttdef"><b>Definition:</b> <a href="runnerfilterone_8cpp_source.html#l00029">runnerfilterone.cpp:29</a></div></div>
-<div class="ttc" id="astructOTest2_1_1RunnerFilterOne_1_1Impl_html_a8fc710df36d4cd890a585aaa51304a74"><div class="ttname"><a href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#a8fc710df36d4cd890a585aaa51304a74">OTest2::RunnerFilterOne::Impl::Impl</a></div><div class="ttdeci">Impl(const Impl &amp;)=delete</div></div>
 <div class="ttc" id="aclassOTest2_1_1RunnerFilterOne_html_a96985b9a56760e6a4115cdb256c627ee"><div class="ttname"><a href="classOTest2_1_1RunnerFilterOne.html#a96985b9a56760e6a4115cdb256c627ee">OTest2::RunnerFilterOne::filterSuite</a></div><div class="ttdeci">virtual bool filterSuite(const std::string &amp;suite_name_) const</div><div class="ttdoc">Filter specified suite.</div><div class="ttdef"><b>Definition:</b> <a href="runnerfilterone_8cpp_source.html#l00095">runnerfilterone.cpp:95</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1RunnerFilterOne_html_a42bae11ec2124369523aeda57fd21c38"><div class="ttname"><a href="classOTest2_1_1RunnerFilterOne.html#a42bae11ec2124369523aeda57fd21c38">OTest2::RunnerFilterOne::filterCase</a></div><div class="ttdeci">virtual bool filterCase(const std::string &amp;suite_name_, const std::string &amp;case_name_) const</div><div class="ttdoc">Filter specified testcase of a suite.</div><div class="ttdef"><b>Definition:</b> <a href="runnerfilterone_8cpp_source.html#l00100">runnerfilterone.cpp:100</a></div></div>
-<div class="ttc" id="astructOTest2_1_1RunnerFilterOne_1_1Impl_html_a58666a3e7af2059ae36fd3f8dc704ac2"><div class="ttname"><a href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#a58666a3e7af2059ae36fd3f8dc704ac2">OTest2::RunnerFilterOne::Impl::~Impl</a></div><div class="ttdeci">~Impl()</div><div class="ttdef"><b>Definition:</b> <a href="runnerfilterone_8cpp_source.html#l00054">runnerfilterone.cpp:54</a></div></div>
 <div class="ttc" id="arunnerfilterone_8h_html"><div class="ttname"><a href="runnerfilterone_8h.html">runnerfilterone.h</a></div></div>
-<div class="ttc" id="astructOTest2_1_1RunnerFilterOne_1_1Impl_html_a11881908dbb40807c95de50099255fce"><div class="ttname"><a href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#a11881908dbb40807c95de50099255fce">OTest2::RunnerFilterOne::Impl::case_name</a></div><div class="ttdeci">std::string case_name</div><div class="ttdef"><b>Definition:</b> <a href="runnerfilterone_8cpp_source.html#l00032">runnerfilterone.cpp:32</a></div></div>
-<div class="ttc" id="astructOTest2_1_1RunnerFilterOne_1_1Impl_html_ac76857ad510a5dbbc26ebf4896c5c56d"><div class="ttname"><a href="structOTest2_1_1RunnerFilterOne_1_1Impl.html#ac76857ad510a5dbbc26ebf4896c5c56d">OTest2::RunnerFilterOne::Impl::operator=</a></div><div class="ttdeci">Impl &amp; operator=(const Impl &amp;)=delete</div></div>
 <div class="ttc" id="anamespaceOTest2_html_a9c0e5683fb529ec38164c2f418172b30"><div class="ttname"><a href="namespaceOTest2.html#a9c0e5683fb529ec38164c2f418172b30">OTest2::odelete</a></div><div class="ttdeci">void odelete(T_ *&amp;object_)</div><div class="ttdoc">Delete a pointer and set it invalid.</div><div class="ttdef"><b>Definition:</b> <a href="utils_8h_source.html#l00032">utils.h:32</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

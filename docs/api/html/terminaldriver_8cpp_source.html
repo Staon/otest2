@@ -251,33 +251,33 @@ $(function() {
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160; </div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;} <span class="comment">/* -- namespace */</span></div>
 <div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160; </div>
-<div class="line"><a name="l00182"></a><span class="lineno"><a class="line" href="structOTest2_1_1TerminalDriver_1_1Impl.html">  182</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html">TerminalDriver::Impl</a> {</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="keyword">struct </span>TerminalDriver::Impl {</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00184"></a><span class="lineno"><a class="line" href="structOTest2_1_1TerminalDriver_1_1Impl.html#a25459e6f11715dc2f80c5c8dcf878fd0">  184</a></span>&#160;    std::ostream* <a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html#a25459e6f11715dc2f80c5c8dcf878fd0">os</a>;</div>
-<div class="line"><a name="l00185"></a><span class="lineno"><a class="line" href="structOTest2_1_1TerminalDriver_1_1Impl.html#a77b4cf77e359d13b309066e80daf17a4">  185</a></span>&#160;    std::unique_ptr&lt;Driver&gt; <a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html#a77b4cf77e359d13b309066e80daf17a4">driver</a>;</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    std::ostream* os;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    std::unique_ptr&lt;Driver&gt; driver;</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160; </div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html#a67213245e0016df9ad7dc425dbccc505">Impl</a>(</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;        <span class="keyword">const</span> <a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html">Impl</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html">Impl</a>&amp; <a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html#a1978fe5d44f4fca3b9dadf7001ddb47b">operator =</a>(</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;        <span class="keyword">const</span> <a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html">Impl</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    Impl(</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;        <span class="keyword">const</span> Impl&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    Impl&amp; <a class="code" href="classOTest2_1_1TerminalDriver.html#ae23a24910d02bde3b418d5a78f358f77">operator =</a>(</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;        <span class="keyword">const</span> Impl&amp;) = <span class="keyword">delete</span>;</div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; </div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html#a67213245e0016df9ad7dc425dbccc505">Impl</a>(</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keyword">explicit</span> Impl(</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;        std::ostream* os_);</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html#aae1425f54db89143293706f44f9d5e0b">~Impl</a>();</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    ~Impl();</div>
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;};</div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
-<div class="line"><a name="l00198"></a><span class="lineno"><a class="line" href="structOTest2_1_1TerminalDriver_1_1Impl.html#ab51422bd4016f8c0bc61b9fd90f089e8">  198</a></span>&#160;<a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html#a67213245e0016df9ad7dc425dbccc505">TerminalDriver::Impl::Impl</a>(</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;TerminalDriver::Impl::Impl(</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    std::ostream* os_) :</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  os(os_) {</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  assert(<a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html#a25459e6f11715dc2f80c5c8dcf878fd0">os</a> != <span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  assert(os != <span class="keyword">nullptr</span>);</div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160; </div>
 <div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  <span class="comment">/* -- Decide the file handle. Now only standard output and standard</span></div>
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="comment">   *    error output are considered being terminals. */</span></div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  <span class="keywordtype">int</span> handle_(-1);</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  <span class="keywordflow">if</span>(<a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html#a25459e6f11715dc2f80c5c8dcf878fd0">os</a> == &amp;std::cout)</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  <span class="keywordflow">if</span>(os == &amp;std::cout)</div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    handle_ = 1;</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;  <span class="keywordflow">else</span> <span class="keywordflow">if</span>(<a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html#a25459e6f11715dc2f80c5c8dcf878fd0">os</a> == &amp;std::cerr)</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;  <span class="keywordflow">else</span> <span class="keywordflow">if</span>(os == &amp;std::cerr)</div>
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    handle_ = 2;</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160; </div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  <span class="comment">/* -- initialize the terminfo */</span></div>
@@ -292,7 +292,7 @@ $(function() {
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;          &amp;&amp; (setaf_ &gt; <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">char</span>*<span class="keyword">&gt;</span>(0)</div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;              || setf_ &gt; <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">char</span>*<span class="keyword">&gt;</span>(0))) {</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        <span class="comment">/* -- the capabilities are correctly read, create the driver */</span></div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        <a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html#a77b4cf77e359d13b309066e80daf17a4">driver</a>.reset(<span class="keyword">new</span> DriverTerminfo(</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        driver.reset(<span class="keyword">new</span> DriverTerminfo(</div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;            sgr0_,</div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;            (setaf_ &gt; <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">char</span>*<span class="keyword">&gt;</span>(0))?setaf_:<span class="stringliteral">&quot;&quot;</span>,</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;            (setf_ &gt; <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">char</span>*<span class="keyword">&gt;</span>(0))?setf_:<span class="stringliteral">&quot;&quot;</span>));</div>
@@ -302,16 +302,16 @@ $(function() {
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  }</div>
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160; </div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;  <span class="comment">/* -- In all other cases set the null driver up. */</span></div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;  <a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html#a77b4cf77e359d13b309066e80daf17a4">driver</a>.reset(<span class="keyword">new</span> DriverNull);</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;  driver.reset(<span class="keyword">new</span> DriverNull);</div>
 <div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;}</div>
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160; </div>
-<div class="line"><a name="l00236"></a><span class="lineno"><a class="line" href="structOTest2_1_1TerminalDriver_1_1Impl.html#aae1425f54db89143293706f44f9d5e0b">  236</a></span>&#160;<a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html#aae1425f54db89143293706f44f9d5e0b">TerminalDriver::Impl::~Impl</a>() {</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;TerminalDriver::Impl::~Impl() {</div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160; </div>
 <div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;}</div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160; </div>
 <div class="line"><a name="l00240"></a><span class="lineno"><a class="line" href="classOTest2_1_1TerminalDriver.html#ae4a3419b461b8fda59d2b7d65467876e">  240</a></span>&#160;<a class="code" href="classOTest2_1_1TerminalDriver.html#a093b9cffbc41d150974a0346f66505be">TerminalDriver::TerminalDriver</a>(</div>
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    std::ostream* os_) :</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;  pimpl(new <a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html">Impl</a>(os_)) {</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;  pimpl(new Impl(os_)) {</div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160; </div>
 <div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;}</div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160; </div>
@@ -321,28 +321,23 @@ $(function() {
 <div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160; </div>
 <div class="line"><a name="l00250"></a><span class="lineno"><a class="line" href="classOTest2_1_1TerminalDriver.html#a42e87d23401a3fabcc9209cfe83f0852">  250</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1TerminalDriver.html#a42e87d23401a3fabcc9209cfe83f0852">TerminalDriver::setFGColor</a>(</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    <a class="code" href="classOTest2_1_1TerminalDriver.html#a9c977ab9307fc266e9ae01a780274af4">TerminalDriver::Color</a> color_) {</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  pimpl-&gt;<a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html#a77b4cf77e359d13b309066e80daf17a4">driver</a>-&gt;setFGColor(pimpl-&gt;<a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html#a25459e6f11715dc2f80c5c8dcf878fd0">os</a>, color_);</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  pimpl-&gt;driver-&gt;setFGColor(pimpl-&gt;os, color_);</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;}</div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160; </div>
 <div class="line"><a name="l00255"></a><span class="lineno"><a class="line" href="classOTest2_1_1TerminalDriver.html#aff7089c12d231e5f1eba48bfc1cc6518">  255</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1TerminalDriver.html#aff7089c12d231e5f1eba48bfc1cc6518">TerminalDriver::cleanAttributes</a>() {</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;  pimpl-&gt;<a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html#a77b4cf77e359d13b309066e80daf17a4">driver</a>-&gt;cleanAttributes(pimpl-&gt;<a class="code" href="structOTest2_1_1TerminalDriver_1_1Impl.html#a25459e6f11715dc2f80c5c8dcf878fd0">os</a>);</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;  pimpl-&gt;driver-&gt;cleanAttributes(pimpl-&gt;os);</div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;}</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160; </div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassOTest2_1_1TerminalDriver_html_a42e87d23401a3fabcc9209cfe83f0852"><div class="ttname"><a href="classOTest2_1_1TerminalDriver.html#a42e87d23401a3fabcc9209cfe83f0852">OTest2::TerminalDriver::setFGColor</a></div><div class="ttdeci">void setFGColor(Color color_)</div><div class="ttdoc">Change color of the text (foreground)</div><div class="ttdef"><b>Definition:</b> <a href="terminaldriver_8cpp_source.html#l00250">terminaldriver.cpp:250</a></div></div>
-<div class="ttc" id="astructOTest2_1_1TerminalDriver_1_1Impl_html_a1978fe5d44f4fca3b9dadf7001ddb47b"><div class="ttname"><a href="structOTest2_1_1TerminalDriver_1_1Impl.html#a1978fe5d44f4fca3b9dadf7001ddb47b">OTest2::TerminalDriver::Impl::operator=</a></div><div class="ttdeci">Impl &amp; operator=(const Impl &amp;)=delete</div></div>
-<div class="ttc" id="astructOTest2_1_1TerminalDriver_1_1Impl_html_a25459e6f11715dc2f80c5c8dcf878fd0"><div class="ttname"><a href="structOTest2_1_1TerminalDriver_1_1Impl.html#a25459e6f11715dc2f80c5c8dcf878fd0">OTest2::TerminalDriver::Impl::os</a></div><div class="ttdeci">std::ostream * os</div><div class="ttdef"><b>Definition:</b> <a href="terminaldriver_8cpp_source.html#l00184">terminaldriver.cpp:184</a></div></div>
-<div class="ttc" id="astructOTest2_1_1TerminalDriver_1_1Impl_html_a67213245e0016df9ad7dc425dbccc505"><div class="ttname"><a href="structOTest2_1_1TerminalDriver_1_1Impl.html#a67213245e0016df9ad7dc425dbccc505">OTest2::TerminalDriver::Impl::Impl</a></div><div class="ttdeci">Impl(const Impl &amp;)=delete</div></div>
-<div class="ttc" id="astructOTest2_1_1TerminalDriver_1_1Impl_html_a77b4cf77e359d13b309066e80daf17a4"><div class="ttname"><a href="structOTest2_1_1TerminalDriver_1_1Impl.html#a77b4cf77e359d13b309066e80daf17a4">OTest2::TerminalDriver::Impl::driver</a></div><div class="ttdeci">std::unique_ptr&lt; Driver &gt; driver</div><div class="ttdef"><b>Definition:</b> <a href="terminaldriver_8cpp_source.html#l00185">terminaldriver.cpp:185</a></div></div>
 <div class="ttc" id="autils_8h_html"><div class="ttname"><a href="utils_8h.html">utils.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TerminalDriver_html_a9c977ab9307fc266e9ae01a780274af4"><div class="ttname"><a href="classOTest2_1_1TerminalDriver.html#a9c977ab9307fc266e9ae01a780274af4">OTest2::TerminalDriver::Color</a></div><div class="ttdeci">Color</div><div class="ttdoc">Color enumeration.</div><div class="ttdef"><b>Definition:</b> <a href="terminaldriver_8h_source.html#l00038">terminaldriver.h:38</a></div></div>
 <div class="ttc" id="aterminaldriver_8h_html"><div class="ttname"><a href="terminaldriver_8h.html">terminaldriver.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TerminalDriver_html_ac94cf259666b14e522d7a8e59ddb1d6a"><div class="ttname"><a href="classOTest2_1_1TerminalDriver.html#ac94cf259666b14e522d7a8e59ddb1d6a">OTest2::TerminalDriver::~TerminalDriver</a></div><div class="ttdeci">~TerminalDriver()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="terminaldriver_8cpp_source.html#l00246">terminaldriver.cpp:246</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TerminalDriver_html_a093b9cffbc41d150974a0346f66505be"><div class="ttname"><a href="classOTest2_1_1TerminalDriver.html#a093b9cffbc41d150974a0346f66505be">OTest2::TerminalDriver::TerminalDriver</a></div><div class="ttdeci">TerminalDriver(const TerminalDriver &amp;)=delete</div></div>
+<div class="ttc" id="aclassOTest2_1_1TerminalDriver_html_ae23a24910d02bde3b418d5a78f358f77"><div class="ttname"><a href="classOTest2_1_1TerminalDriver.html#ae23a24910d02bde3b418d5a78f358f77">OTest2::TerminalDriver::operator=</a></div><div class="ttdeci">TerminalDriver &amp; operator=(const TerminalDriver &amp;)=delete</div></div>
 <div class="ttc" id="aclassOTest2_1_1TerminalDriver_html_aff7089c12d231e5f1eba48bfc1cc6518"><div class="ttname"><a href="classOTest2_1_1TerminalDriver.html#aff7089c12d231e5f1eba48bfc1cc6518">OTest2::TerminalDriver::cleanAttributes</a></div><div class="ttdeci">void cleanAttributes()</div><div class="ttdoc">Clean all previously set terminal attributes.</div><div class="ttdef"><b>Definition:</b> <a href="terminaldriver_8cpp_source.html#l00255">terminaldriver.cpp:255</a></div></div>
-<div class="ttc" id="astructOTest2_1_1TerminalDriver_1_1Impl_html"><div class="ttname"><a href="structOTest2_1_1TerminalDriver_1_1Impl.html">OTest2::TerminalDriver::Impl</a></div><div class="ttdef"><b>Definition:</b> <a href="terminaldriver_8cpp_source.html#l00182">terminaldriver.cpp:182</a></div></div>
-<div class="ttc" id="astructOTest2_1_1TerminalDriver_1_1Impl_html_aae1425f54db89143293706f44f9d5e0b"><div class="ttname"><a href="structOTest2_1_1TerminalDriver_1_1Impl.html#aae1425f54db89143293706f44f9d5e0b">OTest2::TerminalDriver::Impl::~Impl</a></div><div class="ttdeci">~Impl()</div><div class="ttdef"><b>Definition:</b> <a href="terminaldriver_8cpp_source.html#l00236">terminaldriver.cpp:236</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TerminalDriver_html_a9c977ab9307fc266e9ae01a780274af4a8cd7d5b311bef3882beceb681ddc7aa0"><div class="ttname"><a href="classOTest2_1_1TerminalDriver.html#a9c977ab9307fc266e9ae01a780274af4a8cd7d5b311bef3882beceb681ddc7aa0">OTest2::TerminalDriver::RED</a></div><div class="ttdeci">@ RED</div><div class="ttdef"><b>Definition:</b> <a href="terminaldriver_8h_source.html#l00039">terminaldriver.h:39</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TerminalDriver_html_a9c977ab9307fc266e9ae01a780274af4a5f22c16f9b30c7fb77fa282561c8b2e9"><div class="ttname"><a href="classOTest2_1_1TerminalDriver.html#a9c977ab9307fc266e9ae01a780274af4a5f22c16f9b30c7fb77fa282561c8b2e9">OTest2::TerminalDriver::GREEN</a></div><div class="ttdeci">@ GREEN</div><div class="ttdef"><b>Definition:</b> <a href="terminaldriver_8h_source.html#l00040">terminaldriver.h:40</a></div></div>

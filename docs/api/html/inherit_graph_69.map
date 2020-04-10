@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structOTest2_1_1StateGenerated_1_1Impl.html" title=" " alt="" coords="5,5,181,47"/>
+<area shape="rect" id="node1" href="$classOTest2_1_1TimeSource.html" title="Generic interface for getting of current time." alt="" coords="5,5,155,32"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1TimeSourceSys.html" title="Source of current system time." alt="" coords="203,5,375,32"/>
 </map>

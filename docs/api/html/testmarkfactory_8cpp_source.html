@@ -106,36 +106,36 @@ $(function() {
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="structOTest2_1_1TestMarkFactory_1_1Impl.html">   37</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structOTest2_1_1TestMarkFactory_1_1Impl.html">TestMarkFactory::Impl</a> {</div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="structOTest2_1_1TestMarkFactory_1_1Impl.html#a5c9c81b8eee0321ab231ae88783de8fb">   38</a></span>&#160;    std::unordered_map&lt;std::string, std::function&lt;<a class="code" href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">TestMarkPtr</a>()&gt;&gt; <a class="code" href="structOTest2_1_1TestMarkFactory_1_1Impl.html#a5c9c81b8eee0321ab231ae88783de8fb">ctors</a>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">struct </span>TestMarkFactory::Impl {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    std::unordered_map&lt;std::string, std::function&lt;<a class="code" href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">TestMarkPtr</a>()&gt;&gt; ctors;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="structOTest2_1_1TestMarkFactory_1_1Impl.html#ac16c966aaf0e394d15ca3c171ccce37b">Impl</a>(</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">const</span> <a class="code" href="structOTest2_1_1TestMarkFactory_1_1Impl.html">Impl</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="structOTest2_1_1TestMarkFactory_1_1Impl.html">Impl</a>&amp; <a class="code" href="structOTest2_1_1TestMarkFactory_1_1Impl.html#a70e4493770a6d1edc289639148d1344c">operator = </a>(</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">const</span> <a class="code" href="structOTest2_1_1TestMarkFactory_1_1Impl.html">Impl</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    Impl(</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">const</span> Impl&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    Impl&amp; operator = (</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">const</span> Impl&amp;) = <span class="keyword">delete</span>;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <a class="code" href="structOTest2_1_1TestMarkFactory_1_1Impl.html#ac16c966aaf0e394d15ca3c171ccce37b">Impl</a>();</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="structOTest2_1_1TestMarkFactory_1_1Impl.html#a0dc5ec7d02867d0662ad6ad1a858d454">~Impl</a>();</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    Impl();</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    ~Impl();</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;};</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="structOTest2_1_1TestMarkFactory_1_1Impl.html#ac16c966aaf0e394d15ca3c171ccce37b">   50</a></span>&#160;<a class="code" href="structOTest2_1_1TestMarkFactory_1_1Impl.html#ac16c966aaf0e394d15ca3c171ccce37b">TestMarkFactory::Impl::Impl</a>() {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;TestMarkFactory::Impl::Impl() {</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="structOTest2_1_1TestMarkFactory_1_1Impl.html#a0dc5ec7d02867d0662ad6ad1a858d454">   54</a></span>&#160;<a class="code" href="structOTest2_1_1TestMarkFactory_1_1Impl.html#a0dc5ec7d02867d0662ad6ad1a858d454">TestMarkFactory::Impl::~Impl</a>() {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;TestMarkFactory::Impl::~Impl() {</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keywordtype">void</span> TestMarkFactory::doRegisterRecord(</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">const</span> std::string&amp; typemark_,</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    std::function&lt;<a class="code" href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">TestMarkPtr</a>()&gt; ctor_) {</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keyword">auto</span> result_(pimpl-&gt;<a class="code" href="structOTest2_1_1TestMarkFactory_1_1Impl.html#a5c9c81b8eee0321ab231ae88783de8fb">ctors</a>.insert({typemark_, ctor_}));</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keyword">auto</span> result_(pimpl-&gt;ctors.insert({typemark_, ctor_}));</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  assert(result_.second);</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
 <div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classOTest2_1_1TestMarkFactory.html#ae34d4966a811fc254f985cf0975673f0">   65</a></span>&#160;<a class="code" href="classOTest2_1_1TestMarkFactory.html#ae34d4966a811fc254f985cf0975673f0">TestMarkFactory::TestMarkFactory</a>() :</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  pimpl(new <a class="code" href="structOTest2_1_1TestMarkFactory_1_1Impl.html">Impl</a>()) {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  pimpl(new Impl()) {</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="comment">/* -- registration of standard testmark objects */</span></div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  registerMark&lt;TestMarkNull&gt;();</div>
@@ -153,8 +153,8 @@ $(function() {
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
 <div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="classOTest2_1_1TestMarkFactory.html#ac45b33e933736aa5109c329245174fa8">   82</a></span>&#160;<a class="code" href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">TestMarkPtr</a> <a class="code" href="classOTest2_1_1TestMarkFactory.html#ac45b33e933736aa5109c329245174fa8">TestMarkFactory::createMark</a>(</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">const</span> std::string&amp; typemark_) {</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keyword">auto</span> iter_(pimpl-&gt;<a class="code" href="structOTest2_1_1TestMarkFactory_1_1Impl.html#a5c9c81b8eee0321ab231ae88783de8fb">ctors</a>.find(typemark_));</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <span class="keywordflow">if</span>(iter_ == pimpl-&gt;<a class="code" href="structOTest2_1_1TestMarkFactory_1_1Impl.html#a5c9c81b8eee0321ab231ae88783de8fb">ctors</a>.end())</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keyword">auto</span> iter_(pimpl-&gt;ctors.find(typemark_));</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <span class="keywordflow">if</span>(iter_ == pimpl-&gt;ctors.end())</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordflow">throw</span> <a class="code" href="classOTest2_1_1ExcTestMarkIn.html">ExcTestMarkIn</a>(<span class="stringliteral">&quot;unknown type mark &#39;&quot;</span> + typemark_ + <span class="stringliteral">&quot;&#39;&quot;</span>);</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordflow">return</span> (*iter_).second();</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
@@ -169,18 +169,13 @@ $(function() {
 <div class="ttc" id="autils_8h_html"><div class="ttname"><a href="utils_8h.html">utils.h</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html_a64c42b3de3a782325e19a5e740edebbc"><div class="ttname"><a href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">OTest2::TestMarkPtr</a></div><div class="ttdeci">std::shared_ptr&lt; TestMark &gt; TestMarkPtr</div><div class="ttdef"><b>Definition:</b> <a href="testmarkptr_8h_source.html#l00026">testmarkptr.h:26</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
-<div class="ttc" id="astructOTest2_1_1TestMarkFactory_1_1Impl_html"><div class="ttname"><a href="structOTest2_1_1TestMarkFactory_1_1Impl.html">OTest2::TestMarkFactory::Impl</a></div><div class="ttdef"><b>Definition:</b> <a href="testmarkfactory_8cpp_source.html#l00037">testmarkfactory.cpp:37</a></div></div>
-<div class="ttc" id="astructOTest2_1_1TestMarkFactory_1_1Impl_html_a70e4493770a6d1edc289639148d1344c"><div class="ttname"><a href="structOTest2_1_1TestMarkFactory_1_1Impl.html#a70e4493770a6d1edc289639148d1344c">OTest2::TestMarkFactory::Impl::operator=</a></div><div class="ttdeci">Impl &amp; operator=(const Impl &amp;)=delete</div></div>
-<div class="ttc" id="astructOTest2_1_1TestMarkFactory_1_1Impl_html_a0dc5ec7d02867d0662ad6ad1a858d454"><div class="ttname"><a href="structOTest2_1_1TestMarkFactory_1_1Impl.html#a0dc5ec7d02867d0662ad6ad1a858d454">OTest2::TestMarkFactory::Impl::~Impl</a></div><div class="ttdeci">~Impl()</div><div class="ttdef"><b>Definition:</b> <a href="testmarkfactory_8cpp_source.html#l00054">testmarkfactory.cpp:54</a></div></div>
 <div class="ttc" id="atestmarklist_8h_html"><div class="ttname"><a href="testmarklist_8h.html">testmarklist.h</a></div></div>
 <div class="ttc" id="atestmarknull_8h_html"><div class="ttname"><a href="testmarknull_8h.html">testmarknull.h</a></div></div>
 <div class="ttc" id="atestmarkfactory_8h_html"><div class="ttname"><a href="testmarkfactory_8h.html">testmarkfactory.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkFactory_html_ac45b33e933736aa5109c329245174fa8"><div class="ttname"><a href="classOTest2_1_1TestMarkFactory.html#ac45b33e933736aa5109c329245174fa8">OTest2::TestMarkFactory::createMark</a></div><div class="ttdeci">TestMarkPtr createMark(const std::string &amp;typemark_)</div><div class="ttdoc">Create new empty testmark.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkfactory_8cpp_source.html#l00082">testmarkfactory.cpp:82</a></div></div>
-<div class="ttc" id="astructOTest2_1_1TestMarkFactory_1_1Impl_html_a5c9c81b8eee0321ab231ae88783de8fb"><div class="ttname"><a href="structOTest2_1_1TestMarkFactory_1_1Impl.html#a5c9c81b8eee0321ab231ae88783de8fb">OTest2::TestMarkFactory::Impl::ctors</a></div><div class="ttdeci">std::unordered_map&lt; std::string, std::function&lt; TestMarkPtr()&gt; &gt; ctors</div><div class="ttdef"><b>Definition:</b> <a href="testmarkfactory_8cpp_source.html#l00038">testmarkfactory.cpp:38</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkFactory_html_ae34d4966a811fc254f985cf0975673f0"><div class="ttname"><a href="classOTest2_1_1TestMarkFactory.html#ae34d4966a811fc254f985cf0975673f0">OTest2::TestMarkFactory::TestMarkFactory</a></div><div class="ttdeci">TestMarkFactory()</div><div class="ttdoc">Ctor.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkfactory_8cpp_source.html#l00065">testmarkfactory.cpp:65</a></div></div>
 <div class="ttc" id="atestmarkbool_8h_html"><div class="ttname"><a href="testmarkbool_8h.html">testmarkbool.h</a></div></div>
 <div class="ttc" id="atestmarkfloat_8h_html"><div class="ttname"><a href="testmarkfloat_8h.html">testmarkfloat.h</a></div></div>
-<div class="ttc" id="astructOTest2_1_1TestMarkFactory_1_1Impl_html_ac16c966aaf0e394d15ca3c171ccce37b"><div class="ttname"><a href="structOTest2_1_1TestMarkFactory_1_1Impl.html#ac16c966aaf0e394d15ca3c171ccce37b">OTest2::TestMarkFactory::Impl::Impl</a></div><div class="ttdeci">Impl()</div><div class="ttdef"><b>Definition:</b> <a href="testmarkfactory_8cpp_source.html#l00050">testmarkfactory.cpp:50</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html_a9c0e5683fb529ec38164c2f418172b30"><div class="ttname"><a href="namespaceOTest2.html#a9c0e5683fb529ec38164c2f418172b30">OTest2::odelete</a></div><div class="ttdeci">void odelete(T_ *&amp;object_)</div><div class="ttdoc">Delete a pointer and set it invalid.</div><div class="ttdef"><b>Definition:</b> <a href="utils_8h_source.html#l00032">utils.h:32</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkFactory_html_a6000d3310ef0d589980bb8bdbc631af7"><div class="ttname"><a href="classOTest2_1_1TestMarkFactory.html#a6000d3310ef0d589980bb8bdbc631af7">OTest2::TestMarkFactory::~TestMarkFactory</a></div><div class="ttdeci">~TestMarkFactory()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkfactory_8cpp_source.html#l00078">testmarkfactory.cpp:78</a></div></div>
 <!-- start footer part -->

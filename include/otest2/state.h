@@ -56,7 +56,7 @@ class State : public Object {
      * @param context_ The otest2 context
      * @param parent_ A smart pointer pointing the parent of the state
      * @param this_ptr_ A smart pointer which keeps lifetime of this state
-     * @param wait_ If it's true, the run of the command is delayd
+     * @param delay_cmd_ If it's true, the run of the command is delayed
      * @param delay_ Delay of the command in milliseconds. The value is meant
      *     only if the @a wait_ is true.
      */

@@ -42,7 +42,7 @@ class CmdFirstState : public Command {
     /**
      * @brief Ctor
      *
-     * @param suite_ A case whose state should be run
+     * @param case_ A case whose state should be run
      */
     explicit CmdFirstState(
         CaseOrdinaryPtr case_);

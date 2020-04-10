@@ -130,7 +130,6 @@ class Runner {
     /**
      * @brief Run next pack of work
      *
-     * @param reporter_ A test reporter object. The ownership is not taken.
      * @return A runner result. @sa the RunnerResult class for description
      *     how the test result is returned.
      */

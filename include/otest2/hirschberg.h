@@ -404,9 +404,7 @@ void hirschbergDiff(
  * @brief Compute the diff algorithm for specified sequences
  *
  * @param[in] left_ left sequence
- * @param[in] left_len_ Length of the left sequence
  * @param[in] right_ right sequence
- * @param[in] right_len_ Length of the right sequence
  * @param[out] log_builder_ A builder of the diff log
  * @param[in] score_fce_ A scoring function
  */

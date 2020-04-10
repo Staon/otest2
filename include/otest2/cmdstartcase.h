@@ -26,7 +26,7 @@
 namespace OTest2 {
 
 /**
- * @brief Start an ordinary suite
+ * @brief Start an ordinary test case
  */
 class CmdStartCase : public Command {
   private:

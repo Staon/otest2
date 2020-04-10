@@ -69,7 +69,7 @@ class RunnerFilterOne : public RunnerFilter {
     /**
      * @brief Create the filter from an object path
      *
-     * The object path is a string in format <suite>[::<case>]. It defines
+     * The object path is a string in format &lt;suite&gt;[::&lt;case&gt;]. It defines
      * the whole suite or just one test case which will be run.
      *
      * @param object_path_ The object path

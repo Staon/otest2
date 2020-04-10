@@ -77,7 +77,7 @@ class TestMarkFactory {
     /**
      * @brief Register a testmark type
      *
-     * @param Mark_ The type of the registered testmark
+     * @tparam Mark_ The type of the registered testmark
      */
     template<typename Mark_>
     void registerMark() {

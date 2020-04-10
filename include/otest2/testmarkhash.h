@@ -106,7 +106,7 @@ class TestMarkHash {
     void addBasicType(
         const char* type_name_,
         const std::uint8_t* data_,
-        std::uint64_t size_);
+        std::size_t size_);
 
     /**
      * @brief Add hash for a string value of a basic type

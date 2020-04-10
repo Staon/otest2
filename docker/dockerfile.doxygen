@@ -1,0 +1,19 @@
+FROM debian:stretch AS downloader
+RUN apt-get update && apt-get install --no-install-recommends -y \
+    wget \
+  && apt-get -y autoremove \
+	&& apt-get -y autoclean \
+	&& apt-get -y clean \
+	&& rm -rf /var/lib/apt/lists/*
+RUN wget http://doxygen.nl/files/doxygen-1.8.17.linux.bin.tar.gz
+RUN tar xvf doxygen-1.8.17.linux.bin.tar.gz
+
+FROM debian:stretch
+RUN apt-get update && apt-get install --no-install-recommends -y \
+    graphviz \
+  && apt-get -y autoremove \
+	&& apt-get -y autoclean \
+	&& apt-get -y clean \
+	&& rm -rf /var/lib/apt/lists/*
+COPY --from=downloader /doxygen-1.8.17/bin/* /usr/bin/
+CMD sleep infinity

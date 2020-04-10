@@ -35,3 +35,6 @@ docs:
     url: /extending/
     collection: "extending"
     sort_by: "lesson"
+  - title: Reference
+    url: /reference/
+

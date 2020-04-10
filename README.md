@@ -4,6 +4,8 @@
 
 **Current CI status:** [![Staon](https://circleci.com/gh/Staon/otest2.svg?style=svg)](https://circleci.com/gh/Staon/workflows/otest2/tree/master)
 
+**Downloads:** [https://staon.github.com/otest2/releases/](https://staon.github.com/otest2/releases/)
+
 **OTest2** is a small C++ framework designated for writing of any kind of
 automated tests (unit tests, integration tests, etc.). Its design is derived
 from an older project of mine written while I was working for

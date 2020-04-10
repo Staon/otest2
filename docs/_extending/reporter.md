@@ -12,7 +12,7 @@ output known from other frameworks. In this example we'll create such kind
 of reporter.
 
 Implementation of a custom reporter is easy - developer just implements
-one simple interface ``::OTest2::Reporter``.
+one simple interface [::OTest2::Reporter]({{ "api/html/classOTest2_1_1Reporter.html" | relative_url }}).
 
 ```c++
 #include <otest2/reporter.h>

@@ -92,8 +92,8 @@ class Reporter {
      *
      * The assertion is opened and closed similarly to states, cases and
      * suites. While the assertion is opened some messages may be reported
-     * (@sa reportAssertionMessage()). The assertion is closed by the method
-     * leaveAssert().
+     * by the reportAssertionMessage() method. The assertion is closed by
+     * the method leaveAssert().
      *
      * @param context_ the OTest2 context
      * @param condition_ result of the assertion (false means failed assertion)

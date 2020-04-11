@@ -24,6 +24,7 @@
 
 namespace OTest2 {
 
+class ExcCatcher;
 class Reporter;
 class Runner;
 
@@ -67,6 +68,15 @@ class DfltEnvironment {
      */
     void addReporter(
         Reporter* reporter_);
+
+    /**
+     * @brief Set exception catcher
+     *
+     * @param catcher_ The catcher. The ownership is not taken, the object
+     *     must exist for the whole lifetime of this object.
+     */
+    void setExceptionCatcher(
+        ExcCatcher* catcher_);
 
     /**
      * @brief Get constructed runner

@@ -85,7 +85,8 @@ std::string createDefaultTestName(
 struct DfltEnvironment::Impl {
     /* -- the environment */
     TimeSourceSys time_source;
-    std::unique_ptr<ExcCatcher> exc_catcher;
+    ExcCatcherOrdinary exc_catcher_ordinary;
+    ExcCatcher* exc_catcher;
     std::vector<std::unique_ptr<Reporter>> reporters;
     ReporterTee reporter_root;
     std::unique_ptr<RunnerFilter> filter;
@@ -106,7 +107,8 @@ struct DfltEnvironment::Impl {
 DfltEnvironment::Impl::Impl(
     const std::string& test_name_) :
   time_source(),
-  exc_catcher(),
+  exc_catcher_ordinary(),
+  exc_catcher(nullptr),
   reporters(),
   reporter_root(),
   filter(),
@@ -203,11 +205,18 @@ void DfltEnvironment::addReporter(
   pimpl->console_reporter = false;
 }
 
+void DfltEnvironment::setExceptionCatcher(
+    ExcCatcher* catcher_) {
+  assert(catcher_ != nullptr);
+
+  pimpl->exc_catcher = catcher_;
+}
+
 Runner& DfltEnvironment::getRunner() {
   if(pimpl->runner == nullptr) {
-    /* -- create default exception catcher */
+    /* -- set default exception catcher */
     if(pimpl->exc_catcher == nullptr)
-      pimpl->exc_catcher.reset(new ExcCatcherOrdinary);
+      pimpl->exc_catcher = &pimpl->exc_catcher_ordinary;
 
     /* -- create the console reporter if it's not disabled */
     if(pimpl->console_reporter) {
@@ -227,7 +236,7 @@ Runner& DfltEnvironment::getRunner() {
     /* -- finally, create the test runner */
     pimpl->runner.reset(new RunnerOrdinary(
         &pimpl->time_source,
-        pimpl->exc_catcher.get(),
+        pimpl->exc_catcher,
         &pimpl->reporter_root,
         &Registry::instance("default"),
         pimpl->filter.get(),

@@ -259,7 +259,7 @@ void ReporterConsole::enterError(
 
   /* -- print the error */
   *pimpl->os
-      << "error " << context_.object_path->getCurrentPath() << ": " << message_
+      << "error in " << context_.object_path->getCurrentPath() << ": " << message_
       << std::endl;
 }
 

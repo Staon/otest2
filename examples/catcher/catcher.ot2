@@ -1,0 +1,67 @@
+/*
+ * Copyright (C) 2020 Ondrej Starek
+ *
+ * This file is part of OTest2.
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include "myexception.h"
+
+namespace OTest2 {
+
+namespace Examples {
+
+namespace Test {
+
+TEST_SUITE(ExceptionCatcher) {
+  TEST_CASE(FromBody) {
+    TEST_SIMPLE() {
+      throw MyExceptionMsg("exception from body");
+    }
+  }
+
+  TEST_CASE(FromStartUp) {
+    TEST_START_UP() {
+      throw MyExceptionMsg("exception from start-up");
+    }
+
+    TEST_SIMPLE() {
+
+    }
+  }
+
+  TEST_CASE(FromTearDown) {
+    TEST_TEAR_DOWN() {
+      throw MyExceptionMsg("exception from tear-down");
+    }
+
+    TEST_SIMPLE() {
+
+    }
+  }
+
+  TEST_CASE(PlainText) {
+    TEST_SIMPLE() {
+      throw "plain text exception";
+    }
+  }
+}
+
+} /* -- namespace Test */
+
+} /* -- namespace Examples */
+
+} /* -- namespace OTest2 */

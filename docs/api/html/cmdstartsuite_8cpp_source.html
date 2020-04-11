@@ -23,7 +23,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">OTest2
    </div>
-   <div id="projectbrief">AC++testingframework</div>
+   <div id="projectbrief">A C++ testing framework</div>
   </td>
  </tr>
  </tbody>
@@ -130,22 +130,24 @@ $(function() {
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="keywordflow">if</span>(!context_.<a class="code" href="classOTest2_1_1Context.html#a51c2df39f5831566f09c6ba1ad03b077">semantic_stack</a>-&gt;<a class="code" href="classOTest2_1_1SemanticStack.html#a13b9b31aea017cd333e7c177d0c4ae07">top</a>()) {</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="comment">/* -- initialization failed */</span></div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    context_.<a class="code" href="classOTest2_1_1Context.html#a143b0da7accfa0ed1609435c8c3c2c6a">reporter</a>-&gt;<a class="code" href="classOTest2_1_1Reporter.html#ad8f15f5314ce0a6d0096074c5bf234a4">leaveSuite</a>(context_, suite-&gt;<a class="code" href="classOTest2_1_1Object.html#a841e43a6c24ea6f6478a1ab810f904cb">getName</a>(), <span class="keyword">false</span>);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    context_.<a class="code" href="classOTest2_1_1Context.html#a51c2df39f5831566f09c6ba1ad03b077">semantic_stack</a>-&gt;<a class="code" href="classOTest2_1_1SemanticStack.html#a24ebadda99e5fc94f1141f136545cb8a">popAnd</a>();</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  }</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="comment">/* -- initialization passed - push the clean-up command */</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    context_.<a class="code" href="classOTest2_1_1Context.html#a37b104877fc82d0107e7155ee94b3da4">command_stack</a>-&gt;<a class="code" href="classOTest2_1_1CommandStack.html#a269ce599606862d6889c94b797c0e785">pushCommand</a>(</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        std::make_shared&lt;CmdDestroySuite&gt;(suite));</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="comment">/* -- run the suite */</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    context_.<a class="code" href="classOTest2_1_1Context.html#a37b104877fc82d0107e7155ee94b3da4">command_stack</a>-&gt;<a class="code" href="classOTest2_1_1CommandStack.html#a269ce599606862d6889c94b797c0e785">pushCommand</a>(</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        std::make_shared&lt;CmdNextCase&gt;(suite, 0));</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  }</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    context_.<a class="code" href="classOTest2_1_1Context.html#a7e973ae8c8e7128d1d6db9178fbdbe57">object_path</a>-&gt;<a class="code" href="classOTest2_1_1ObjectPath.html#a328406a4783034d8ba8a17accb7da552">popName</a>();</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    context_.<a class="code" href="classOTest2_1_1Context.html#a51c2df39f5831566f09c6ba1ad03b077">semantic_stack</a>-&gt;<a class="code" href="classOTest2_1_1SemanticStack.html#a24ebadda99e5fc94f1141f136545cb8a">popAnd</a>();</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  }</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="comment">/* -- initialization passed - push the clean-up command */</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    context_.<a class="code" href="classOTest2_1_1Context.html#a37b104877fc82d0107e7155ee94b3da4">command_stack</a>-&gt;<a class="code" href="classOTest2_1_1CommandStack.html#a269ce599606862d6889c94b797c0e785">pushCommand</a>(</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        std::make_shared&lt;CmdDestroySuite&gt;(suite));</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="comment">/* -- run the suite */</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    context_.<a class="code" href="classOTest2_1_1Context.html#a37b104877fc82d0107e7155ee94b3da4">command_stack</a>-&gt;<a class="code" href="classOTest2_1_1CommandStack.html#a269ce599606862d6889c94b797c0e785">pushCommand</a>(</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        std::make_shared&lt;CmdNextCase&gt;(suite, 0));</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="acmdstartsuite_8h_html"><div class="ttname"><a href="cmdstartsuite_8h.html">cmdstartsuite.h</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ObjectPath_html_a328406a4783034d8ba8a17accb7da552"><div class="ttname"><a href="classOTest2_1_1ObjectPath.html#a328406a4783034d8ba8a17accb7da552">OTest2::ObjectPath::popName</a></div><div class="ttdeci">void popName()</div><div class="ttdoc">Pop name of currently leaving testing object.</div><div class="ttdef"><b>Definition:</b> <a href="objectpath_8cpp_source.html#l00054">objectpath.cpp:54</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1Reporter_html_a901e3c79093c3003d9d0cde39c9e6cb1"><div class="ttname"><a href="classOTest2_1_1Reporter.html#a901e3c79093c3003d9d0cde39c9e6cb1">OTest2::Reporter::enterSuite</a></div><div class="ttdeci">virtual void enterSuite(const Context &amp;context_, const std::string &amp;name_)=0</div><div class="ttdoc">Enter a suite.</div></div>
 <div class="ttc" id="aclassOTest2_1_1ObjectPath_html_a38ec55853b9f538fcae143d964faf411"><div class="ttname"><a href="classOTest2_1_1ObjectPath.html#a38ec55853b9f538fcae143d964faf411">OTest2::ObjectPath::pushName</a></div><div class="ttdeci">void pushName(const std::string &amp;name_)</div><div class="ttdoc">Push name of currently entering testing object.</div><div class="ttdef"><b>Definition:</b> <a href="objectpath_8cpp_source.html#l00048">objectpath.cpp:48</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1SemanticStack_html_a24ebadda99e5fc94f1141f136545cb8a"><div class="ttname"><a href="classOTest2_1_1SemanticStack.html#a24ebadda99e5fc94f1141f136545cb8a">OTest2::SemanticStack::popAnd</a></div><div class="ttdeci">void popAnd()</div><div class="ttdoc">AND last two values and replace them by the result.</div><div class="ttdef"><b>Definition:</b> <a href="semanticstack_8cpp_source.html#l00086">semanticstack.cpp:86</a></div></div>

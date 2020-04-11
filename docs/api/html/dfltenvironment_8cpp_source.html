@@ -23,7 +23,7 @@
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">OTest2
    </div>
-   <div id="projectbrief">AC++testingframework</div>
+   <div id="projectbrief">A C++ testing framework</div>
   </td>
  </tr>
  </tbody>
@@ -157,174 +157,183 @@ $(function() {
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keyword">struct </span>DfltEnvironment::Impl {</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="comment">/* -- the environment */</span></div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    TimeSourceSys time_source;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    std::unique_ptr&lt;ExcCatcher&gt; exc_catcher;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    std::vector&lt;std::unique_ptr&lt;Reporter&gt;&gt; reporters;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    ReporterTee reporter_root;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    std::unique_ptr&lt;RunnerFilter&gt; filter;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    TestMarkFactory test_mark_factory;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    std::unique_ptr&lt;TestMarkStorage&gt; test_mark_storage;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    std::unique_ptr&lt;Runner&gt; runner;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="comment">/* -- builder state */</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordtype">bool</span> console_reporter;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordtype">bool</span> console_verbose;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    std::string regression_file;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    std::string test_name;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keyword">explicit</span> Impl(</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keyword">const</span> std::string&amp; test_name_);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;};</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;DfltEnvironment::Impl::Impl(</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keyword">const</span> std::string&amp; test_name_) :</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  time_source(),</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  exc_catcher(),</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  reporters(),</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  reporter_root(),</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  filter(),</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  test_mark_factory(),</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  test_mark_storage(),</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  runner(),</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  console_reporter(true),</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  console_verbose(false),</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  regression_file(<span class="stringliteral">&quot;regression.ot2tm&quot;</span>),</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  test_name(test_name_) {</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;}</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    ExcCatcherOrdinary exc_catcher_ordinary;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    ExcCatcher* exc_catcher;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    std::vector&lt;std::unique_ptr&lt;Reporter&gt;&gt; reporters;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    ReporterTee reporter_root;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    std::unique_ptr&lt;RunnerFilter&gt; filter;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    TestMarkFactory test_mark_factory;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    std::unique_ptr&lt;TestMarkStorage&gt; test_mark_storage;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    std::unique_ptr&lt;Runner&gt; runner;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="comment">/* -- builder state */</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordtype">bool</span> console_reporter;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordtype">bool</span> console_verbose;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    std::string regression_file;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    std::string test_name;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keyword">explicit</span> Impl(</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="keyword">const</span> std::string&amp; test_name_);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;};</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;DfltEnvironment::Impl::Impl(</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keyword">const</span> std::string&amp; test_name_) :</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  time_source(),</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  exc_catcher_ordinary(),</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  exc_catcher(nullptr),</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  reporters(),</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  reporter_root(),</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  filter(),</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  test_mark_factory(),</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  test_mark_storage(),</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  runner(),</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  console_reporter(true),</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  console_verbose(false),</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  regression_file(<span class="stringliteral">&quot;regression.ot2tm&quot;</span>),</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  test_name(test_name_) {</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
-<div class="line"><a name="l00123"></a><span class="lineno"><a class="line" href="classOTest2_1_1DfltEnvironment.html#add562ca928ced5b7b7bcb50cf161605d">  123</a></span>&#160;<a class="code" href="classOTest2_1_1DfltEnvironment.html#add562ca928ced5b7b7bcb50cf161605d">DfltEnvironment::DfltEnvironment</a>(</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keyword">const</span> std::string&amp; testname_) :</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  pimpl(new Impl(testname_)) {</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;}</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
+<div class="line"><a name="l00125"></a><span class="lineno"><a class="line" href="classOTest2_1_1DfltEnvironment.html#add562ca928ced5b7b7bcb50cf161605d">  125</a></span>&#160;<a class="code" href="classOTest2_1_1DfltEnvironment.html#add562ca928ced5b7b7bcb50cf161605d">DfltEnvironment::DfltEnvironment</a>(</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <span class="keyword">const</span> std::string&amp; testname_) :</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  pimpl(new Impl(testname_)) {</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
-<div class="line"><a name="l00129"></a><span class="lineno"><a class="line" href="classOTest2_1_1DfltEnvironment.html#af2f59268a29fcacf8d53329fb16480aa">  129</a></span>&#160;<a class="code" href="classOTest2_1_1DfltEnvironment.html#add562ca928ced5b7b7bcb50cf161605d">DfltEnvironment::DfltEnvironment</a>(</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="keywordtype">int</span> argc_,</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keywordtype">char</span>* argv_[]) :</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  pimpl(new Impl(createDefaultTestName(argv_[0]))) {</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  <span class="keyword">enum</span> {</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    DISABLE_CONSOLE_REPORTER = 1000,</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    VERBOSE_CONSOLE,</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    JUNIT_REPORTER,</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    RESTRICTIVE_RUN,</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    REGRESSION_FILE,</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    TEST_NAME,</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    HELP,</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  };</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;  <span class="keyword">struct </span>option long_options_[] = {</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;      {<span class="stringliteral">&quot;disable-console&quot;</span>, 0, <span class="keyword">nullptr</span>, DISABLE_CONSOLE_REPORTER},</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;      {<span class="stringliteral">&quot;verbose&quot;</span>, 0, <span class="keyword">nullptr</span>, VERBOSE_CONSOLE},</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;      {<span class="stringliteral">&quot;junit&quot;</span>, 1, <span class="keyword">nullptr</span>, JUNIT_REPORTER},</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;      {<span class="stringliteral">&quot;restrictive&quot;</span>, 1, <span class="keyword">nullptr</span>, RESTRICTIVE_RUN},</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;      {<span class="stringliteral">&quot;regression&quot;</span>, 1, <span class="keyword">nullptr</span>, REGRESSION_FILE},</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;      {<span class="stringliteral">&quot;test&quot;</span>, 1, <span class="keyword">nullptr</span>, TEST_NAME},</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;      {<span class="stringliteral">&quot;help&quot;</span>, 0, <span class="keyword">nullptr</span>, HELP},</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;      {<span class="keyword">nullptr</span>, 0, <span class="keyword">nullptr</span>, 0},</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  };</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  <span class="keywordtype">int</span> opt_;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  <span class="keywordflow">while</span>((opt_ = getopt_long(argc_, argv_, <span class="stringliteral">&quot;vj:r:m:t:h&quot;</span>, long_options_, <span class="keyword">nullptr</span>)) &gt;= 0) {</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordflow">switch</span>(opt_) {</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;      <span class="keywordflow">case</span> DISABLE_CONSOLE_REPORTER:</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        pimpl-&gt;console_reporter = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;v&#39;</span>:</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;      <span class="keywordflow">case</span> VERBOSE_CONSOLE:</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        pimpl-&gt;console_verbose = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;j&#39;</span>:</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;      <span class="keywordflow">case</span> JUNIT_REPORTER:</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        pimpl-&gt;reporters.emplace_back(<span class="keyword">new</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html">ReporterJUnit</a>(optarg));</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        pimpl-&gt;reporter_root.appendReporter(pimpl-&gt;reporters.back().get());</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;r&#39;</span>:</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;      <span class="keywordflow">case</span> RESTRICTIVE_RUN:</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        pimpl-&gt;filter = <a class="code" href="classOTest2_1_1RunnerFilterOne.html#a494d87f80f1fec680716955a5db093c2">RunnerFilterOne::fromPath</a>(optarg);</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;m&#39;</span>:</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;      <span class="keywordflow">case</span> REGRESSION_FILE:</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        pimpl-&gt;regression_file = optarg;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;t&#39;</span>:</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;      <span class="keywordflow">case</span> TEST_NAME:</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        pimpl-&gt;test_name = optarg;</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;h&#39;</span>:</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;      <span class="keywordflow">case</span> HELP:</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;        printHelpMessage(argv_[0]);</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        std::exit(0);</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;?&#39;</span>:</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;        printHelpMessage(argv_[0]);</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;        std::exit(1);</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    }</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  }</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160; </div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;}</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;}</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
+<div class="line"><a name="l00131"></a><span class="lineno"><a class="line" href="classOTest2_1_1DfltEnvironment.html#af2f59268a29fcacf8d53329fb16480aa">  131</a></span>&#160;<a class="code" href="classOTest2_1_1DfltEnvironment.html#add562ca928ced5b7b7bcb50cf161605d">DfltEnvironment::DfltEnvironment</a>(</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keywordtype">int</span> argc_,</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keywordtype">char</span>* argv_[]) :</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  pimpl(new Impl(createDefaultTestName(argv_[0]))) {</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  <span class="keyword">enum</span> {</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    DISABLE_CONSOLE_REPORTER = 1000,</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    VERBOSE_CONSOLE,</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    JUNIT_REPORTER,</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    RESTRICTIVE_RUN,</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    REGRESSION_FILE,</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    TEST_NAME,</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    HELP,</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  };</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  <span class="keyword">struct </span>option long_options_[] = {</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;      {<span class="stringliteral">&quot;disable-console&quot;</span>, 0, <span class="keyword">nullptr</span>, DISABLE_CONSOLE_REPORTER},</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;      {<span class="stringliteral">&quot;verbose&quot;</span>, 0, <span class="keyword">nullptr</span>, VERBOSE_CONSOLE},</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;      {<span class="stringliteral">&quot;junit&quot;</span>, 1, <span class="keyword">nullptr</span>, JUNIT_REPORTER},</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;      {<span class="stringliteral">&quot;restrictive&quot;</span>, 1, <span class="keyword">nullptr</span>, RESTRICTIVE_RUN},</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;      {<span class="stringliteral">&quot;regression&quot;</span>, 1, <span class="keyword">nullptr</span>, REGRESSION_FILE},</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;      {<span class="stringliteral">&quot;test&quot;</span>, 1, <span class="keyword">nullptr</span>, TEST_NAME},</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;      {<span class="stringliteral">&quot;help&quot;</span>, 0, <span class="keyword">nullptr</span>, HELP},</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;      {<span class="keyword">nullptr</span>, 0, <span class="keyword">nullptr</span>, 0},</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  };</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;  <span class="keywordtype">int</span> opt_;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  <span class="keywordflow">while</span>((opt_ = getopt_long(argc_, argv_, <span class="stringliteral">&quot;vj:r:m:t:h&quot;</span>, long_options_, <span class="keyword">nullptr</span>)) &gt;= 0) {</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="keywordflow">switch</span>(opt_) {</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;      <span class="keywordflow">case</span> DISABLE_CONSOLE_REPORTER:</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        pimpl-&gt;console_reporter = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;v&#39;</span>:</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;      <span class="keywordflow">case</span> VERBOSE_CONSOLE:</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        pimpl-&gt;console_verbose = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;j&#39;</span>:</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;      <span class="keywordflow">case</span> JUNIT_REPORTER:</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        pimpl-&gt;reporters.emplace_back(<span class="keyword">new</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html">ReporterJUnit</a>(optarg));</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        pimpl-&gt;reporter_root.appendReporter(pimpl-&gt;reporters.back().get());</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;r&#39;</span>:</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;      <span class="keywordflow">case</span> RESTRICTIVE_RUN:</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        pimpl-&gt;filter = <a class="code" href="classOTest2_1_1RunnerFilterOne.html#a494d87f80f1fec680716955a5db093c2">RunnerFilterOne::fromPath</a>(optarg);</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;m&#39;</span>:</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;      <span class="keywordflow">case</span> REGRESSION_FILE:</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        pimpl-&gt;regression_file = optarg;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;t&#39;</span>:</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;      <span class="keywordflow">case</span> TEST_NAME:</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;        pimpl-&gt;test_name = optarg;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;h&#39;</span>:</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;      <span class="keywordflow">case</span> HELP:</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        printHelpMessage(argv_[0]);</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        std::exit(0);</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;?&#39;</span>:</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;        printHelpMessage(argv_[0]);</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;        std::exit(1);</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    }</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  }</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160; </div>
-<div class="line"><a name="l00194"></a><span class="lineno"><a class="line" href="classOTest2_1_1DfltEnvironment.html#aabffb948d64c45c242c3841c5c9bdf1c">  194</a></span>&#160;<a class="code" href="classOTest2_1_1DfltEnvironment.html#aabffb948d64c45c242c3841c5c9bdf1c">DfltEnvironment::~DfltEnvironment</a>() {</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  <a class="code" href="namespaceOTest2.html#a9c0e5683fb529ec38164c2f418172b30">odelete</a>(pimpl);</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;}</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
-<div class="line"><a name="l00198"></a><span class="lineno"><a class="line" href="classOTest2_1_1DfltEnvironment.html#ab0353cca05646a3cb8b0f9babf9dcd97">  198</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1DfltEnvironment.html#ab0353cca05646a3cb8b0f9babf9dcd97">DfltEnvironment::addReporter</a>(</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <a class="code" href="classOTest2_1_1Reporter.html">Reporter</a>* reporter_) {</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  assert(reporter_ != <span class="keyword">nullptr</span>);</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160; </div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  pimpl-&gt;reporter_root.appendReporter(reporter_);</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  pimpl-&gt;console_reporter = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;}</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160; </div>
-<div class="line"><a name="l00206"></a><span class="lineno"><a class="line" href="classOTest2_1_1DfltEnvironment.html#a00329a1e9158f7a6a161f35e0081f377">  206</a></span>&#160;<a class="code" href="classOTest2_1_1Runner.html">Runner</a>&amp; <a class="code" href="classOTest2_1_1DfltEnvironment.html#a00329a1e9158f7a6a161f35e0081f377">DfltEnvironment::getRunner</a>() {</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  <span class="keywordflow">if</span>(pimpl-&gt;runner == <span class="keyword">nullptr</span>) {</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    <span class="comment">/* -- create default exception catcher */</span></div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    <span class="keywordflow">if</span>(pimpl-&gt;exc_catcher == <span class="keyword">nullptr</span>)</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;      pimpl-&gt;exc_catcher.reset(<span class="keyword">new</span> <a class="code" href="classOTest2_1_1ExcCatcherOrdinary.html">ExcCatcherOrdinary</a>);</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;}</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160; </div>
+<div class="line"><a name="l00196"></a><span class="lineno"><a class="line" href="classOTest2_1_1DfltEnvironment.html#aabffb948d64c45c242c3841c5c9bdf1c">  196</a></span>&#160;<a class="code" href="classOTest2_1_1DfltEnvironment.html#aabffb948d64c45c242c3841c5c9bdf1c">DfltEnvironment::~DfltEnvironment</a>() {</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  <a class="code" href="namespaceOTest2.html#a9c0e5683fb529ec38164c2f418172b30">odelete</a>(pimpl);</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;}</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
+<div class="line"><a name="l00200"></a><span class="lineno"><a class="line" href="classOTest2_1_1DfltEnvironment.html#ab0353cca05646a3cb8b0f9babf9dcd97">  200</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1DfltEnvironment.html#ab0353cca05646a3cb8b0f9babf9dcd97">DfltEnvironment::addReporter</a>(</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <a class="code" href="classOTest2_1_1Reporter.html">Reporter</a>* reporter_) {</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  assert(reporter_ != <span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160; </div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  pimpl-&gt;reporter_root.appendReporter(reporter_);</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  pimpl-&gt;console_reporter = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;}</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160; </div>
+<div class="line"><a name="l00208"></a><span class="lineno"><a class="line" href="classOTest2_1_1DfltEnvironment.html#afecd277a3be4e64b5801cb14ff753c7b">  208</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1DfltEnvironment.html#afecd277a3be4e64b5801cb14ff753c7b">DfltEnvironment::setExceptionCatcher</a>(</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    <a class="code" href="classOTest2_1_1ExcCatcher.html">ExcCatcher</a>* catcher_) {</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  assert(catcher_ != <span class="keyword">nullptr</span>);</div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160; </div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    <span class="comment">/* -- create the console reporter if it&#39;s not disabled */</span></div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    <span class="keywordflow">if</span>(pimpl-&gt;console_reporter) {</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;      pimpl-&gt;reporters.emplace_back(<span class="keyword">new</span> <a class="code" href="classOTest2_1_1ReporterConsole.html">ReporterConsole</a>(</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;          &amp;std::cout, pimpl-&gt;console_verbose));</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;      pimpl-&gt;reporter_root.appendReporter(pimpl-&gt;reporters.back().get());</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    }</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160; </div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    <span class="comment">/* -- create default runner filter - run all tests */</span></div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    <span class="keywordflow">if</span>(pimpl-&gt;filter == <span class="keyword">nullptr</span>)</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;      pimpl-&gt;filter.reset(<span class="keyword">new</span> <a class="code" href="classOTest2_1_1RunnerFilterEntire.html">RunnerFilterEntire</a>);</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <span class="comment">/* -- create the test mark storage */</span></div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    pimpl-&gt;test_mark_storage.reset(</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        <span class="keyword">new</span> <a class="code" href="classOTest2_1_1TestMarkStorage.html">TestMarkStorage</a>(&amp;pimpl-&gt;test_mark_factory, pimpl-&gt;regression_file));</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160; </div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    <span class="comment">/* -- finally, create the test runner */</span></div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    pimpl-&gt;runner.reset(<span class="keyword">new</span> <a class="code" href="classOTest2_1_1RunnerOrdinary.html">RunnerOrdinary</a>(</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        &amp;pimpl-&gt;time_source,</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        pimpl-&gt;exc_catcher.get(),</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        &amp;pimpl-&gt;reporter_root,</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;        &amp;<a class="code" href="classOTest2_1_1Registry.html#a60390be04debf5fdaab231215b5bb0b8">Registry::instance</a>(<span class="stringliteral">&quot;default&quot;</span>),</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        pimpl-&gt;filter.get(),</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        &amp;pimpl-&gt;test_mark_factory,</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;        pimpl-&gt;test_mark_storage.get(),</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;        pimpl-&gt;test_name));</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;  }</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;  <span class="keywordflow">return</span> *pimpl-&gt;runner;</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;}</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160; </div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;  pimpl-&gt;exc_catcher = catcher_;</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;}</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
+<div class="line"><a name="l00215"></a><span class="lineno"><a class="line" href="classOTest2_1_1DfltEnvironment.html#a00329a1e9158f7a6a161f35e0081f377">  215</a></span>&#160;<a class="code" href="classOTest2_1_1Runner.html">Runner</a>&amp; <a class="code" href="classOTest2_1_1DfltEnvironment.html#a00329a1e9158f7a6a161f35e0081f377">DfltEnvironment::getRunner</a>() {</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;  <span class="keywordflow">if</span>(pimpl-&gt;runner == <span class="keyword">nullptr</span>) {</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;    <span class="comment">/* -- set default exception catcher */</span></div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    <span class="keywordflow">if</span>(pimpl-&gt;exc_catcher == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;      pimpl-&gt;exc_catcher = &amp;pimpl-&gt;exc_catcher_ordinary;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    <span class="comment">/* -- create the console reporter if it&#39;s not disabled */</span></div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    <span class="keywordflow">if</span>(pimpl-&gt;console_reporter) {</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;      pimpl-&gt;reporters.emplace_back(<span class="keyword">new</span> <a class="code" href="classOTest2_1_1ReporterConsole.html">ReporterConsole</a>(</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;          &amp;std::cout, pimpl-&gt;console_verbose));</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;      pimpl-&gt;reporter_root.appendReporter(pimpl-&gt;reporters.back().get());</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    }</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160; </div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <span class="comment">/* -- create default runner filter - run all tests */</span></div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="keywordflow">if</span>(pimpl-&gt;filter == <span class="keyword">nullptr</span>)</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;      pimpl-&gt;filter.reset(<span class="keyword">new</span> <a class="code" href="classOTest2_1_1RunnerFilterEntire.html">RunnerFilterEntire</a>);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160; </div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    <span class="comment">/* -- create the test mark storage */</span></div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    pimpl-&gt;test_mark_storage.reset(</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        <span class="keyword">new</span> <a class="code" href="classOTest2_1_1TestMarkStorage.html">TestMarkStorage</a>(&amp;pimpl-&gt;test_mark_factory, pimpl-&gt;regression_file));</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160; </div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    <span class="comment">/* -- finally, create the test runner */</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    pimpl-&gt;runner.reset(<span class="keyword">new</span> <a class="code" href="classOTest2_1_1RunnerOrdinary.html">RunnerOrdinary</a>(</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;        &amp;pimpl-&gt;time_source,</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;        pimpl-&gt;exc_catcher,</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;        &amp;pimpl-&gt;reporter_root,</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;        &amp;<a class="code" href="classOTest2_1_1Registry.html#a60390be04debf5fdaab231215b5bb0b8">Registry::instance</a>(<span class="stringliteral">&quot;default&quot;</span>),</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;        pimpl-&gt;filter.get(),</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        &amp;pimpl-&gt;test_mark_factory,</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        pimpl-&gt;test_mark_storage.get(),</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;        pimpl-&gt;test_name));</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;  }</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;  <span class="keywordflow">return</span> *pimpl-&gt;runner;</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;}</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160; </div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="areportertee_8h_html"><div class="ttname"><a href="reportertee_8h.html">reportertee.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html_ab0353cca05646a3cb8b0f9babf9dcd97"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html#ab0353cca05646a3cb8b0f9babf9dcd97">OTest2::DfltEnvironment::addReporter</a></div><div class="ttdeci">void addReporter(Reporter *reporter_)</div><div class="ttdoc">Append a test reporter.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8cpp_source.html#l00198">dfltenvironment.cpp:198</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html_a00329a1e9158f7a6a161f35e0081f377"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html#a00329a1e9158f7a6a161f35e0081f377">OTest2::DfltEnvironment::getRunner</a></div><div class="ttdeci">Runner &amp; getRunner()</div><div class="ttdoc">Get constructed runner.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8cpp_source.html#l00206">dfltenvironment.cpp:206</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html_ab0353cca05646a3cb8b0f9babf9dcd97"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html#ab0353cca05646a3cb8b0f9babf9dcd97">OTest2::DfltEnvironment::addReporter</a></div><div class="ttdeci">void addReporter(Reporter *reporter_)</div><div class="ttdoc">Append a test reporter.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8cpp_source.html#l00200">dfltenvironment.cpp:200</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html_a00329a1e9158f7a6a161f35e0081f377"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html#a00329a1e9158f7a6a161f35e0081f377">OTest2::DfltEnvironment::getRunner</a></div><div class="ttdeci">Runner &amp; getRunner()</div><div class="ttdoc">Get constructed runner.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8cpp_source.html#l00215">dfltenvironment.cpp:215</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1Reporter_html"><div class="ttname"><a href="classOTest2_1_1Reporter.html">OTest2::Reporter</a></div><div class="ttdoc">Generic test reporter.</div><div class="ttdef"><b>Definition:</b> <a href="reporter_8h_source.html#l00032">reporter.h:32</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1RunnerOrdinary_html"><div class="ttname"><a href="classOTest2_1_1RunnerOrdinary.html">OTest2::RunnerOrdinary</a></div><div class="ttdoc">Ordinary implementation of the Runner interface.</div><div class="ttdef"><b>Definition:</b> <a href="runnerordinary_8h_source.html#l00043">runnerordinary.h:43</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html_aabffb948d64c45c242c3841c5c9bdf1c"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html#aabffb948d64c45c242c3841c5c9bdf1c">OTest2::DfltEnvironment::~DfltEnvironment</a></div><div class="ttdeci">~DfltEnvironment()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8cpp_source.html#l00194">dfltenvironment.cpp:194</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html_aabffb948d64c45c242c3841c5c9bdf1c"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html#aabffb948d64c45c242c3841c5c9bdf1c">OTest2::DfltEnvironment::~DfltEnvironment</a></div><div class="ttdeci">~DfltEnvironment()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8cpp_source.html#l00196">dfltenvironment.cpp:196</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html_afecd277a3be4e64b5801cb14ff753c7b"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html#afecd277a3be4e64b5801cb14ff753c7b">OTest2::DfltEnvironment::setExceptionCatcher</a></div><div class="ttdeci">void setExceptionCatcher(ExcCatcher *catcher_)</div><div class="ttdoc">Set exception catcher.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8cpp_source.html#l00208">dfltenvironment.cpp:208</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1RunnerFilterOne_html_a494d87f80f1fec680716955a5db093c2"><div class="ttname"><a href="classOTest2_1_1RunnerFilterOne.html#a494d87f80f1fec680716955a5db093c2">OTest2::RunnerFilterOne::fromPath</a></div><div class="ttdeci">static std::unique_ptr&lt; RunnerFilterOne &gt; fromPath(const std::string &amp;object_path_)</div><div class="ttdoc">Create the filter from an object path.</div><div class="ttdef"><b>Definition:</b> <a href="runnerfilterone_8cpp_source.html#l00077">runnerfilterone.cpp:77</a></div></div>
 <div class="ttc" id="atestmarkstorage_8h_html"><div class="ttname"><a href="testmarkstorage_8h.html">testmarkstorage.h</a></div></div>
 <div class="ttc" id="atimesourcesys_8h_html"><div class="ttname"><a href="timesourcesys_8h.html">timesourcesys.h</a></div></div>
 <div class="ttc" id="autils_8h_html"><div class="ttname"><a href="utils_8h.html">utils.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1Runner_html"><div class="ttname"><a href="classOTest2_1_1Runner.html">OTest2::Runner</a></div><div class="ttdoc">Generic test runner.</div><div class="ttdef"><b>Definition:</b> <a href="runner_8h_source.html#l00112">runner.h:112</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ExcCatcherOrdinary_html"><div class="ttname"><a href="classOTest2_1_1ExcCatcherOrdinary.html">OTest2::ExcCatcherOrdinary</a></div><div class="ttdoc">Ordinary exception catcher handling std::exception.</div><div class="ttdef"><b>Definition:</b> <a href="exccatcherordinary_8h_source.html#l00030">exccatcherordinary.h:30</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html_add562ca928ced5b7b7bcb50cf161605d"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html#add562ca928ced5b7b7bcb50cf161605d">OTest2::DfltEnvironment::DfltEnvironment</a></div><div class="ttdeci">DfltEnvironment(const std::string &amp;testname_)</div><div class="ttdoc">Ctor - default running environment.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8cpp_source.html#l00123">dfltenvironment.cpp:123</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html_add562ca928ced5b7b7bcb50cf161605d"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html#add562ca928ced5b7b7bcb50cf161605d">OTest2::DfltEnvironment::DfltEnvironment</a></div><div class="ttdeci">DfltEnvironment(const std::string &amp;testname_)</div><div class="ttdoc">Ctor - default running environment.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8cpp_source.html#l00125">dfltenvironment.cpp:125</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
 <div class="ttc" id="arunnerordinary_8h_html"><div class="ttname"><a href="runnerordinary_8h.html">runnerordinary.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkStorage_html"><div class="ttname"><a href="classOTest2_1_1TestMarkStorage.html">OTest2::TestMarkStorage</a></div><div class="ttdoc">Storage of test marks.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkstorage_8h_source.html#l00034">testmarkstorage.h:34</a></div></div>
@@ -336,6 +345,7 @@ $(function() {
 <div class="ttc" id="aclassOTest2_1_1Registry_html_a60390be04debf5fdaab231215b5bb0b8"><div class="ttname"><a href="classOTest2_1_1Registry.html#a60390be04debf5fdaab231215b5bb0b8">OTest2::Registry::instance</a></div><div class="ttdeci">static Registry &amp; instance(const std::string &amp;domain_)</div><div class="ttdoc">Access of the global instances.</div><div class="ttdef"><b>Definition:</b> <a href="registry_8cpp_source.html#l00093">registry.cpp:93</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html">OTest2::ReporterJUnit</a></div><div class="ttdoc">A reporter creating JUnit XML reports.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8h_source.html#l00032">reporterjunit.h:32</a></div></div>
 <div class="ttc" id="arunnerfilterentire_8h_html"><div class="ttname"><a href="runnerfilterentire_8h.html">runnerfilterentire.h</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ExcCatcher_html"><div class="ttname"><a href="classOTest2_1_1ExcCatcher.html">OTest2::ExcCatcher</a></div><div class="ttdoc">Generic exception catcher interface.</div><div class="ttdef"><b>Definition:</b> <a href="exccatcher_8h_source.html#l00039">exccatcher.h:39</a></div></div>
 <div class="ttc" id="arunnerfilterone_8h_html"><div class="ttname"><a href="runnerfilterone_8h.html">runnerfilterone.h</a></div></div>
 <div class="ttc" id="areporterjunit_8h_html"><div class="ttname"><a href="reporterjunit_8h.html">reporterjunit.h</a></div></div>
 <div class="ttc" id="aexccatcherordinary_8h_html"><div class="ttname"><a href="exccatcherordinary_8h.html">exccatcherordinary.h</a></div></div>

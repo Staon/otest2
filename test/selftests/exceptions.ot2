@@ -63,6 +63,38 @@ TEST_SUITE(ExceptionsSuite) {
       throw std::bad_exception();
     }
   }
+
+  TEST_CASE(ExceptionFromCaseStartUp) {
+    TEST_START_UP() {
+      throw std::bad_exception();
+    }
+
+    TEST_SIMPLE() {
+
+    }
+  }
+
+  TEST_CASE(ExceptionFromCaseTearDown) {
+    TEST_TEAR_DOWN() {
+      throw std::bad_exception();
+    }
+
+    TEST_SIMPLE() {
+
+    }
+  }
+}
+
+TEST_SUITE(ExceptionFromSuiteStartUp) {
+  TEST_START_UP() {
+    throw std::bad_exception();
+  }
+}
+
+TEST_SUITE(ExceptionFromSuiteTearDown) {
+  TEST_TEAR_DOWN() {
+    throw std::bad_exception();
+  }
 }
 
 } /* -- namespace SelfTest */

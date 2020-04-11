@@ -25,6 +25,8 @@
 #include <vector>
 
 #include <otest2/assertbean.h>
+#include <otest2/context.h>
+#include <otest2/objectpath.h>
 #include <otest2/utils.h>
 
 namespace OTest2 {
@@ -57,6 +59,7 @@ struct ReporterMock::Impl {
     typedef std::vector<std::string> Records;
     Records records;
     std::ostringstream oss;
+    bool report_paths;
 
     /* -- avoid copying */
     Impl(
@@ -64,15 +67,20 @@ struct ReporterMock::Impl {
     Impl& operator =(
         const Impl&) = delete;
 
-    Impl();
+    explicit Impl(
+        bool report_paths_);
     ~Impl();
 
     void printResult(
         bool result_);
     void addRecord();
+    void reportObjectPath(
+        const Context& context_);
 };
 
-ReporterMock::Impl::Impl() {
+ReporterMock::Impl::Impl(
+    bool report_paths_) :
+  report_paths(report_paths_) {
 
 }
 
@@ -93,8 +101,17 @@ void ReporterMock::Impl::addRecord() {
   oss.str("");
 }
 
-ReporterMock::ReporterMock() :
-  pimpl(new Impl) {
+void ReporterMock::Impl::reportObjectPath(
+    const Context& context_) {
+  if(report_paths) {
+    oss << "path: " << context_.object_path->getCurrentPath();
+    addRecord();
+  }
+}
+
+ReporterMock::ReporterMock(
+    bool report_paths_) :
+  pimpl(new Impl(report_paths_)) {
 
 }
 
@@ -144,6 +161,7 @@ void ReporterMock::enterTest(
     const std::string& name_) {
   pimpl->oss << "enterTest<" << name_ << ">";
   pimpl->addRecord();
+  pimpl->reportObjectPath(context_);
 }
 
 void ReporterMock::enterSuite(
@@ -151,6 +169,7 @@ void ReporterMock::enterSuite(
     const std::string& name_) {
   pimpl->oss << "enterSuite<" << name_ << ">";
   pimpl->addRecord();
+  pimpl->reportObjectPath(context_);
 }
 
 void ReporterMock::enterCase(
@@ -158,6 +177,7 @@ void ReporterMock::enterCase(
     const std::string& name_) {
   pimpl->oss << "enterCase<" << name_ << ">";
   pimpl->addRecord();
+  pimpl->reportObjectPath(context_);
 }
 
 void ReporterMock::enterState(
@@ -165,6 +185,7 @@ void ReporterMock::enterState(
     const std::string& name_) {
   pimpl->oss << "enterState<" << name_ << ">";
   pimpl->addRecord();
+  pimpl->reportObjectPath(context_);
 }
 
 void ReporterMock::enterAssert(
@@ -176,6 +197,7 @@ void ReporterMock::enterAssert(
   pimpl->oss << "assert<" << message_ << ">: ";
   pimpl->printResult(condition_);
   pimpl->addRecord();
+  pimpl->reportObjectPath(context_);
 }
 
 void ReporterMock::enterError(
@@ -184,6 +206,7 @@ void ReporterMock::enterError(
   pimpl->oss << "error<" << message_ << ">: ";
   pimpl->printResult(false);
   pimpl->addRecord();
+  pimpl->reportObjectPath(context_);
 }
 
 void ReporterMock::reportAssertionMessage(
@@ -191,12 +214,14 @@ void ReporterMock::reportAssertionMessage(
     const std::string& message_) {
   pimpl->oss << "message<" << message_ << ">";
   pimpl->addRecord();
+  pimpl->reportObjectPath(context_);
 }
 
 void ReporterMock::leaveAssert(
     const Context& context_) {
   pimpl->oss << "leaveAssert<>";
   pimpl->addRecord();
+  pimpl->reportObjectPath(context_);
 }
 
 void ReporterMock::leaveState(
@@ -206,6 +231,7 @@ void ReporterMock::leaveState(
   pimpl->oss << "leaveState<" << name_ << ">: ";
   pimpl->printResult(result_);
   pimpl->addRecord();
+  pimpl->reportObjectPath(context_);
 }
 
 void ReporterMock::leaveCase(
@@ -215,6 +241,7 @@ void ReporterMock::leaveCase(
   pimpl->oss << "leaveCase<" << name_ << ">: ";
   pimpl->printResult(result_);
   pimpl->addRecord();
+  pimpl->reportObjectPath(context_);
 }
 
 void ReporterMock::leaveSuite(
@@ -224,6 +251,7 @@ void ReporterMock::leaveSuite(
   pimpl->oss << "leaveSuite<" << name_ << ">: ";
   pimpl->printResult(result_);
   pimpl->addRecord();
+  pimpl->reportObjectPath(context_);
 }
 
 void ReporterMock::leaveTest(
@@ -233,6 +261,7 @@ void ReporterMock::leaveTest(
   pimpl->oss << "leaveTest<" << name_ << ">: ";
   pimpl->printResult(result_);
   pimpl->addRecord();
+  pimpl->reportObjectPath(context_);
 }
 
 } /* namespace Test */

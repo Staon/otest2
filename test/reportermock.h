@@ -50,8 +50,11 @@ class ReporterMock : public Reporter {
 
     /**
      * @brief Ctor
+     *
+     * @param report_paths_ If it's true, current object path is reported too
      */
-    ReporterMock();
+    explicit ReporterMock(
+        bool report_paths_ = false);
 
     /**
      * @brief Dtor

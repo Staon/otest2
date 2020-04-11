@@ -28,12 +28,36 @@ namespace OTest2 {
 
 namespace Test {
 
+Runtime::ReportPaths Runtime::report_paths_mark;
+
 Runtime::Runtime(
     const std::string& suite_name_,
     const std::string& case_name_) :
   time_source(),
   exc_catcher(),
   reporter(),
+  runner_filter(suite_name_, case_name_),
+  test_mark_factory(),
+  test_mark_storage(),
+  runner(
+      &time_source,
+      &exc_catcher,
+      &reporter,
+      &Registry::instance("selftest"),
+      &runner_filter,
+      &test_mark_factory,
+      test_mark_storage.get(),
+      "selftest") {
+
+}
+
+Runtime::Runtime(
+    const std::string& suite_name_,
+    const std::string& case_name_,
+    const ReportPaths&) :
+  time_source(),
+  exc_catcher(),
+  reporter(true),
   runner_filter(suite_name_, case_name_),
   test_mark_factory(),
   test_mark_storage(),

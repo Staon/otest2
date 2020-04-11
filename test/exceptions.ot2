@@ -82,6 +82,118 @@ TEST_SUITE(ExceptionsSuite) {
 //      runtime.reporter.dumpRecords(std::cout);
     }
   }
+
+  TEST_CASE(ExceptionFromCaseStartUp) {
+    Runtime runtime("ExceptionsSuite", "ExceptionFromCaseStartUp", Runtime::report_paths_mark);
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "path: selftest",
+        "enterSuite<ExceptionsSuite>",
+        "path: selftest::ExceptionsSuite",
+        "enterCase<ExceptionFromCaseStartUp>",
+        "path: selftest::ExceptionsSuite::ExceptionFromCaseStartUp",
+        "error<unexpected exception: std::bad_exception>: failed",
+        "path: selftest::ExceptionsSuite::ExceptionFromCaseStartUp",
+        "leaveAssert<>",
+        "path: selftest::ExceptionsSuite::ExceptionFromCaseStartUp",
+        "leaveCase<ExceptionFromCaseStartUp>: failed",
+        "path: selftest::ExceptionsSuite::ExceptionFromCaseStartUp",
+        "leaveSuite<ExceptionsSuite>: failed",
+        "path: selftest::ExceptionsSuite",
+        "leaveTest<selftest>: failed",
+        "path: selftest",
+      };
+
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(ExceptionFromCaseTearDown) {
+    Runtime runtime("ExceptionsSuite", "ExceptionFromCaseTearDown", Runtime::report_paths_mark);
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "path: selftest",
+        "enterSuite<ExceptionsSuite>",
+        "path: selftest::ExceptionsSuite",
+        "enterCase<ExceptionFromCaseTearDown>",
+        "path: selftest::ExceptionsSuite::ExceptionFromCaseTearDown",
+        "enterState<AnonymousState>",
+        "path: selftest::ExceptionsSuite::ExceptionFromCaseTearDown",
+        "leaveState<AnonymousState>: passed",
+        "path: selftest::ExceptionsSuite::ExceptionFromCaseTearDown",
+        "error<unexpected exception: std::bad_exception>: failed",
+        "path: selftest::ExceptionsSuite::ExceptionFromCaseTearDown",
+        "leaveAssert<>",
+        "path: selftest::ExceptionsSuite::ExceptionFromCaseTearDown",
+        "leaveCase<ExceptionFromCaseTearDown>: failed",
+        "path: selftest::ExceptionsSuite::ExceptionFromCaseTearDown",
+        "leaveSuite<ExceptionsSuite>: failed",
+        "path: selftest::ExceptionsSuite",
+        "leaveTest<selftest>: failed",
+        "path: selftest",
+      };
+
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(ExceptionFromSuiteStartUp) {
+    Runtime runtime("ExceptionFromSuiteStartUp", "", Runtime::report_paths_mark);
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "path: selftest",
+        "enterSuite<ExceptionFromSuiteStartUp>",
+        "path: selftest::ExceptionFromSuiteStartUp",
+        "error<unexpected exception: std::bad_exception>: failed",
+        "path: selftest::ExceptionFromSuiteStartUp",
+        "leaveAssert<>",
+        "path: selftest::ExceptionFromSuiteStartUp",
+        "leaveSuite<ExceptionFromSuiteStartUp>: failed",
+        "path: selftest::ExceptionFromSuiteStartUp",
+        "leaveTest<selftest>: failed",
+        "path: selftest",
+      };
+
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(ExceptionFromSuiteTearDown) {
+    Runtime runtime("ExceptionFromSuiteTearDown", "", Runtime::report_paths_mark);
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "path: selftest",
+        "enterSuite<ExceptionFromSuiteTearDown>",
+        "path: selftest::ExceptionFromSuiteTearDown",
+        "error<unexpected exception: std::bad_exception>: failed",
+        "path: selftest::ExceptionFromSuiteTearDown",
+        "leaveAssert<>",
+        "path: selftest::ExceptionFromSuiteTearDown",
+        "leaveSuite<ExceptionFromSuiteTearDown>: failed",
+        "path: selftest::ExceptionFromSuiteTearDown",
+        "leaveTest<selftest>: failed",
+        "path: selftest",
+      };
+
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
 }
 
 } /* -- namespace Test */

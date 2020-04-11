@@ -58,6 +58,7 @@ void CmdStartCase::run(
   if(!context_.semantic_stack->top()) {
     /* -- the initialization failed */
     context_.reporter->leaveCase(context_, testcase->getName(), false);
+    context_.object_path->popName();
     context_.semantic_stack->popAnd();
   }
   else {

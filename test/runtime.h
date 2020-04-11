@@ -34,6 +34,7 @@ namespace OTest2 {
 
 namespace Test {
 
+
 /**
  * @brief Generic runtime of the OTest2 self tests
  */
@@ -46,6 +47,8 @@ class Runtime {
     TestMarkFactory test_mark_factory;
     std::unique_ptr<TestMarkStorage> test_mark_storage;
     RunnerOrdinary runner;
+
+    static struct ReportPaths{} report_paths_mark;
 
   public:
     /* -- avoid copying */
@@ -64,6 +67,19 @@ class Runtime {
     explicit Runtime(
         const std::string& suite_name_,
         const std::string& case_name_);
+
+    /**
+     * @brief Ctor
+     *
+     * @param suite_name_ Name of the suite to be run
+     * @param case_name_ Name of the case to be run. If it's empty the entire
+     *     suite is run.
+     * @param report_paths_ A mark that the object paths shall be reported.
+     */
+    explicit Runtime(
+        const std::string& suite_name_,
+        const std::string& case_name_,
+        const ReportPaths& report_paths_);
 
     /**
      * @brief Ctor

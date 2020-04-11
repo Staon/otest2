@@ -58,6 +58,7 @@ void CmdStartSuite::run(
   if(!context_.semantic_stack->top()) {
     /* -- initialization failed */
     context_.reporter->leaveSuite(context_, suite->getName(), false);
+    context_.object_path->popName();
     context_.semantic_stack->popAnd();
   }
   else {

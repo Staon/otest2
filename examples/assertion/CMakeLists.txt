@@ -24,11 +24,11 @@ find_package(OTest2)
 add_executable(assertion
     filecompare.cpp
     filecompare.h
-    main.cpp
 )
 target_otest2_sources(assertion
     filecompare.ot2
 )
+target_otest2_main(assertion)
 target_link_libraries(assertion libotest2)
 
 add_custom_target(

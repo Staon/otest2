@@ -13,10 +13,12 @@ I know the original project is still in use.
 
 ## Features
 
+* an [xUnit](https://en.wikipedia.org/wiki/XUnit) kind framework
 * no need to write boiler plate code - it's done by a generator
 * DSL is a valid C++ which doesn't break fancy IDE functions like code assistance
+* very cautious usage of C macros
 * test cases are grouped into test suites
-* a rich set of assertion functions with a possibility to write own one
+* a set of assertion functions with a possibility to write own one
 * test fixtures at levels of either test case or test suite
 * regression test marks
 * exception handling (checking actual occurrence of an exception and handling
@@ -27,7 +29,7 @@ I know the original project is still in use.
 
 ### Supported Platforms
 
-The framework is developing and tested on Debian Stretch distribution. Generally,
+The framework is developed and tested on Debian Stretch distribution. Generally,
 it should work on any UNIX-like system which the [libclang](https://clang.llvm.org/docs/Tooling.html)
 is supported for. There is no current intention to support MS Windows.
 
@@ -74,11 +76,12 @@ working in every sane IDE.
 ## How to Explore
 
 The best way to explore the framework is following
-[the examples]({{ "/examples/" | relative_url }}). More deep insight can be got
-in the [reference documentation]({{ "/reference/" | relative_url }}). A guide how
+[the examples how to use]({{ "/examples/" | relative_url }}) and
+[the examples how to extend]({{ "/extending/" | relative_url }}) the framework.
+Reference style documentation can be to in
+ the [reference documentation]({{ "/reference/" | relative_url }}). A guide how
 to compile and install the framework in your environment can be found in
-the [install guide]({{ "/install-guide/" | relative_url }}). An advanced user
-can study how to [extend the framework]({{ "/extending/" | relative_url }}).
+the [install guide]({{ "/install-guide/" | relative_url }}).
 
 [^1]: The annotations are hidden in macros as their usage is not so easy
       as in other programming languages.

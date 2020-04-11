@@ -37,4 +37,18 @@ docs:
     sort_by: "lesson"
   - title: Reference
     url: /reference/
-
+    children:
+      - title: OTest2 DSL
+        url: "/reference/dsl/"
+      - title: Assertions
+        url: "/reference/assertions/"
+      - title: Controls
+        url: "/reference/controls/"
+      - title: OTest2 Preprocessor
+        url: "/reference/preprocessor/"
+      - title: Default CLI
+        url: "/reference/cmdline/"
+      - title: CMake
+        url: "/reference/cmake/"
+      - title: API Reference
+        url: "/api/html/"

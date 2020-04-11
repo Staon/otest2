@@ -38,15 +38,17 @@ const char GLOBAL_CONFIG_FILE[] = "/etc/otest2_includes.conf";
 
 void printHelp(
     std::ostream& os_) {
-  os_ << "otest2 - Copyright (C) 2018 Ondrej Starek" << std::endl;
+  os_ << "otest2 - Copyright (C) 2018-2020 Ondrej Starek" << std::endl;
   os_ << std::endl;
   os_ << "  OTest2 preprocessor" << std::endl;
   os_ << std::endl;
   os_ << "Usage: otest2 -s srcfile [-o outfile] [-d domain] [-- compiler options...]" << std::endl;
   os_ << std::endl;
+  os_ << "  -h          --help             Print this help message." << std::endl;
   os_ << "  -s infile   --srcfile=infile   Name of the input file." << std::endl;
   os_ << "  -o outfile  --outfile=outfile  Name of the output file. By default, the name" << std::endl;
-  os_ << "                                 is derived from the input filename." << std::endl;
+  os_ << "                                 is derived from the input filename by adding" << std::endl;
+  os_ << "                                 .cpp suffix." << std::endl;
   os_ << "  -d domain   --domain=domain    Name of the test domain. The default value is" << std::endl;
   os_ << "                                 'default'." << std::endl;
   os_ << std::endl;

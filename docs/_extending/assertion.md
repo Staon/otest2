@@ -7,8 +7,8 @@ Implementation of a custom assertion function.
 [Full source code of the example]({{ site.repositoryurl }}/blob/master/examples/assertion)
 
 Imagine a situation when you want to compare two files. First one is generated
-by a tested code, the second one is contains an expected output. To reach this
-goal one can write helper function
+by a tested code, the second one contains an expected output. To reach this
+goal one can write a helper function
 
 ```c++
 bool compareFiles(
@@ -54,9 +54,10 @@ overloaded for and if the flag is false the message is reported.
 
 The second option is more complex but it offers more flexibility.
 
-Implementation of custom assertion consists of two parts:
+Implementation of a custom assertion consists of two parts:
 * an implementation class,
-* a declaration of the assertion.
+* a declaration.
+
 Firstly, we'll create the implementation class.
 
 ```c++
@@ -74,9 +75,11 @@ class FileCompare : public AssertContext {
 };
 ```
 
-The implementation class must derive from the `AssertContext` class and it **must**
-inherit its constructor method. The `testCompareFiles` implements the comparison
-logic which has been implemented in the `compareFiles` function.
+The implementation class must derive from the 
+[`AssertContext`]({{ "api/html/classOTest2_1_1AssertContext.html" | relative_url }})
+class and it **must** inherit its constructor method. The `testCompareFiles`
+implements the comparison logic which has been implemented in the `compareFiles`
+function.
 
 ```c++
 bool FileCompare::testCompareFiles(
@@ -128,7 +131,7 @@ the difference is reported.
 Remark the functions `enterAssertion`, `assertionMessage` and `leaveAssertion`.
 They are the interface of the `AssertContext` class for assertion implementation.
 Every assertion **must** invoke once `enterAssertion` and `leaveAssertion` methods
-in this order. And it can call the `assertionMessage` zero or more times 
+in this order. And it may call the `assertionMessage` zero or more times 
 between them.
 
 Now it's time to declare the assertion function.
@@ -142,8 +145,10 @@ bool testFileCompare(
 ```
 
 The assertion function is declared as any function. The only difference is the
-annotation `TEST_ASSERTION_MARK` which links the function to its implementation
-class. One implementation class may define several assertion functions.
+annotation [`TEST_ASSERTION_MARK`]({{ "api/html/assertionannotation_8h.html" | relative_url }})
+which links the function to its implementation class. As the member function
+of the implementation class must be specified, the implementation class may
+define several assertions.
 
 It's a good manner to return result flag from the assertion function (true
 if the assertion passes). The OTest2 framework doesn't break running tests
@@ -156,10 +161,11 @@ conditionaly:
   }
 ```
 
-If the assertion function is a function template a special annotation
-`TEST_ASSERTION_MARK_TEMPL` can be used. A part of the annotation may
-be string `$n` which expands to a deduced type of the n-th template
-argument. See how [the relational assertions]({{ "api/html/assertions_8h_source.html" | relative_url }})
+If the assertion function is a function template, a special annotation
+[`TEST_ASSERTION_MARK_TMPL`]({{ "api/html/assertionannotation_8h.html" | relative_url }})
+can be used. A part of the annotation may be string `$n` which expands to
+a deduced type of the n-th template argument. See how
+[the relational assertions]({{ "api/html/assertions_8h_source.html" | relative_url }})
 are implemented.
 
 Now if we change the test

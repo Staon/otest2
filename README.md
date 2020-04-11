@@ -4,7 +4,7 @@
 
 **Current CI status:** [![Staon](https://circleci.com/gh/Staon/otest2.svg?style=svg)](https://circleci.com/gh/Staon/workflows/otest2/tree/master)
 
-**Downloads:** [https://staon.github.com/otest2/releases/](https://staon.github.com/otest2/releases/)
+**Downloads:** [https://github.com/Staon/otest2/releases/](https://github.com/Staon/otest2/releases/)
 
 **OTest2** is a small C++ framework designated for writing of any kind of
 automated tests (unit tests, integration tests, etc.). Its design is derived
@@ -21,7 +21,7 @@ The project follows several design goals:
 The framework offers features:
 
 * a preprocessor generating service code 
-* DSL is a valid C++ which doesn't fancy IDE functions like code assistance
+* DSL is a valid C++ which doesn't break fancy IDE functions like code assistance
 * test cases are grouped into test suites
 * a rich set of assertion functions with a possibility to create own one
 * test fixtures at the level of either test case or test suite

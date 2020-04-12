@@ -13,6 +13,8 @@ I know the original project is still in use.
 
 Current release version is [1.0.0]({{ site.repositoryurl }}/releases/tag/v1.0.0).
 
+[Github Repository]({{ site.repositoryurl }})
+
 ## Features
 
 * an [xUnit](https://en.wikipedia.org/wiki/XUnit) kind framework

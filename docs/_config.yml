@@ -25,7 +25,10 @@ author:
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/Staon"
+      url: "https://github.com/Staon/otest2"
+    - label: "Facebook"
+      icon: "fab fa-fw fa-facebook-square"
+      url: "https://www.facebook.com/OTest2-100864154931102/"
     - label: "e-mail"
       icon: "fas fa-fw fa-at"
       url: "mailto:stareko@email.cz"

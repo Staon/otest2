@@ -11,6 +11,8 @@ from an older project of mine written while I was working for
 [Aveco](http://www.aveco.com/) - that's why there is 2 in the name. As far as
 I know the original project is still in use.
 
+Current release version is [1.0.0]({{ site.repositoryurl }}/releases/tag/v1.0.0).
+
 ## Features
 
 * an [xUnit](https://en.wikipedia.org/wiki/XUnit) kind framework

@@ -18,9 +18,11 @@
  */
 #include <otest2/otest2.h>
 
+#include <iostream>
+#include <otest2/userdata.h>
 #include <string>
 
-#include <otest2/userdata.h>
+#include "runtime.h"
 
 namespace OTest2 {
 
@@ -69,6 +71,106 @@ TEST_SUITE(UserDataSuite) {
       }
       testAssertEqual(userdata_.getDatum<const std::string>("str2"), "Hello world");
       testAssertEqual(userdata_.getDatum<const std::string&>("str2"), "Hello world");
+    }
+  }
+
+  TEST_CASE(UserDataCorrectlyPassed) {
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<UserDataSuite>",
+        "enterCase<UserDataCase>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 23>",
+        "message<b = 23>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 23>",
+        "message<b = 23>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'suite user data'>",
+        "message<b = 'suite user data'>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'suite user data'>",
+        "message<b = 'suite user data'>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'case user data'>",
+        "message<b = 'case user data'>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'case user data'>",
+        "message<b = 'case user data'>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<UserDataCase>: passed",
+        "leaveSuite<UserDataSuite>: passed",
+        "leaveTest<selftest>: passed",
+      };
+      int suite_int_(23);
+      std::string suite_str_("suite user data");
+      std::string case_str_("case user data");
+
+      Runtime runtime_("UserDataSuite", "UserDataCase");
+      runtime_.user_data.setDatum("suite_int", &suite_int_);
+      runtime_.user_data.setDatum("suite_str", &suite_str_);
+      runtime_.user_data.setDatum("case_str", &case_str_);
+
+      testAssert(runtime_.runTheTest());
+      testAssert(runtime_.reporter.checkRecords(data_));
+//      runtime_.reporter.dumpRecords(std::cout);
+
+      testAssertEqual(suite_int_, 2 * 23);
+      testAssertEqual(suite_str_, "changed suite data");
+    }
+  }
+
+  TEST_CASE(UserDataFailedCase) {
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "path: selftest",
+        "enterSuite<UserDataFailedCase>",
+        "path: selftest::UserDataFailedCase",
+        "error<unexpected exception: missing user datum 'case_str'>: failed",
+        "path: selftest::UserDataFailedCase::UserDataCase",
+        "leaveAssert<>",
+        "path: selftest::UserDataFailedCase::UserDataCase",
+        "leaveSuite<UserDataFailedCase>: failed",
+        "path: selftest::UserDataFailedCase",
+        "leaveTest<selftest>: failed",
+        "path: selftest",
+      };
+
+      Runtime runtime_("UserDataFailedCase", "UserDataCase", Runtime::report_paths_mark);
+
+      testAssert(!runtime_.runTheTest());
+      testAssert(runtime_.reporter.checkRecords(data_));
+//      runtime_.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(UserDataFailedSuite) {
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "path: selftest",
+        "error<unexpected exception: missing user datum 'suite_str'>: failed",
+        "path: selftest::UserDataFailedSuite",
+        "leaveAssert<>",
+        "path: selftest::UserDataFailedSuite",
+        "leaveTest<selftest>: failed",
+        "path: selftest",
+      };
+
+      Runtime runtime_("UserDataFailedSuite", "UserDataCase", Runtime::report_paths_mark);
+
+      testAssert(!runtime_.runTheTest());
+      testAssert(runtime_.reporter.checkRecords(data_));
+//      runtime_.reporter.dumpRecords(std::cout);
     }
   }
 }

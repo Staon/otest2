@@ -30,8 +30,6 @@ add_executable(otest2
     formatting.h
     generator.cpp
     generator.h
-    generatorprinter.cpp
-    generatorprinter.h
     generatorstd.cpp
     generatorstd.h
     generfmt.cpp

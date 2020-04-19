@@ -110,6 +110,10 @@ class GeneratorStd : public Generator {
         const std::string& type_,
         const Location& ibegin_,
         const Location& iend_);
+    virtual void appendUserData(
+        const std::string& name_,
+        const std::string& key_,
+        const std::string& type_);
     virtual void leaveState();
     virtual void leaveCase();
     virtual void leaveSuite();

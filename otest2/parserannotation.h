@@ -41,6 +41,7 @@ extern const std::string TEAR_DOWN_ANNOTATION;
 extern const std::string ASSERTION_ANNOTATION;
 extern const std::string SWITCH_STATE_ANNOTATION;
 extern const std::string CATCH_ANNOTATION;
+extern const std::string USER_DATA_VAR_ANNOTATION;
 
 template<typename Compare_>
 bool hasAnnotation(

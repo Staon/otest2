@@ -22,7 +22,6 @@
 #include <assert.h>
 
 #include <context.h>
-#include <objectpath.h>
 #include <reporter.h>
 #include <caseordinary.h>
 #include <semanticstack.h>
@@ -48,7 +47,6 @@ void CmdDestroyCase::run(
   /* -- report finishing of the suite */
   context_.reporter->leaveCase(
       context_, testcase->getName(), context_.semantic_stack->top());
-  context_.object_path->popName();
 
   /* -- return the case value */
   context_.semantic_stack->popAnd();

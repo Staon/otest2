@@ -155,6 +155,7 @@ void GeneratorStd::beginFile() {
       << "#include <otest2/assertions.h>\n"
       << "#include <otest2/assertionsimpl.h>\n"
       << "#include <otest2/casegenerated.h>\n"
+      << "#include <otest2/context.h>\n"
       << "#include <otest2/generutils.h>\n"
       << "#include <otest2/objectptr.h>\n"
       << "#include <otest2/registry.h>\n"
@@ -162,6 +163,7 @@ void GeneratorStd::beginFile() {
       << "#include <otest2/regressionsimpl.h>\n"
       << "#include <otest2/stategenerated.h>\n"
       << "#include <otest2/suitegenerated.h>\n"
+      << "#include <otest2/userdata.h>\n"
       << '\n';
 }
 
@@ -425,6 +427,13 @@ void GeneratorStd::appendVariableInit(
     const Location& iend_) {
   std::string initializer_(pimpl->reader->getPart(ibegin_, iend_));
   pimpl->variables->appendVariableWithInit(name_, type_, initializer_);
+}
+
+void GeneratorStd::appendUserData(
+    const std::string& name_,
+    const std::string& key_,
+    const std::string& type_) {
+  pimpl->variables->appendUserData(name_, key_, type_);
 }
 
 void GeneratorStd::leaveState() {

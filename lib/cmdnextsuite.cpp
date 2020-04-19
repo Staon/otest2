@@ -25,7 +25,9 @@
 
 #include <commandstack.h>
 #include <context.h>
+#include <objectpath.h>
 #include <registry.h>
+#include "runcode.h"
 #include <runnerfilter.h>
 #include <suitefactory.h>
 #include <suitefactoryptr.h>
@@ -49,6 +51,10 @@ CmdNextSuite::~CmdNextSuite() {
 
 void CmdNextSuite::run(
     const Context& context_) {
+  /* -- remove previous suite from the object path */
+  if(current > 0)
+    context_.object_path->popName();
+
   std::string suite_name_;
   SuiteFactoryPtr factory_(registry->getSuite(current, &suite_name_));
   if(factory_ != nullptr) {
@@ -56,11 +62,17 @@ void CmdNextSuite::run(
     context_.command_stack->pushCommand(
         std::make_shared<CmdNextSuite>(registry, current + 1));
 
+    /* -- push the suite into the object path -> an exception fired from
+     *    the suite constructor will be reported at correct path. */
+    context_.object_path->pushName(suite_name_);
+
     /* -- create and run the suite if it's not filtered */
-    if(!context_.runner_filter->filterSuite(suite_name_)) {
-      SuitePtr suite_(factory_->createSuite(context_));
-      suite_->scheduleRun(context_, suite_);
-    }
+    runUserCode(context_, [&](const Context& context_){
+      if(!context_.runner_filter->filterSuite(suite_name_)) {
+        SuitePtr suite_(factory_->createSuite(context_));
+        suite_->scheduleRun(context_, suite_);
+      }
+    });
   }
 }
 

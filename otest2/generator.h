@@ -210,6 +210,18 @@ class Generator {
         const Location& iend_) = 0;
 
     /**
+     * @brief Append user data variable
+     *
+     * @param name_ Name of the variable
+     * @param key_ Key of the user datum inside the UserData container
+     * @param type_ Type of the variable
+     */
+    virtual void appendUserData(
+        const std::string& name_,
+        const std::string& key_,
+        const std::string& type_) = 0;
+
+    /**
      * @brief End of current test state
      */
     virtual void leaveState() = 0;

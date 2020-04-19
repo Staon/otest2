@@ -39,6 +39,10 @@
 #define testTry try
 #define testCatch(exc_type_, name_) catch(typename ::OTest2::TypePack<exc_type_>::Type name_)
 
+/* -- user data variables */
+#define OTEST2_USER_DATA()
+#define OTEST2_USER_DATA_KEY(key_)
+
 #else /* -- OTEST2_PARSER_ACTIVE */
 
 #define TEST_START_UP() void startUp() __attribute__((annotate("otest2::startUp")))
@@ -49,7 +53,10 @@
 #define TEST_SIMPLE() TEST_STATE(AnonymousState)
 
 #define testTry try
-#define testCatch(exc_type_, name_) catch(typename ::OTest2::TypePack<exc_type_>::Type __attribute__((annotate("otest2::catch"))) name_)
+#define testCatch(exc_type_, name_) catch(typename ::OTest2::TypePack<exc_type_>::Type __attribute__((annotate("otest2::catch"))) name_ )
+
+#define OTEST2_USER_DATA() __attribute__((annotate("otest2::userData()")))
+#define OTEST2_USER_DATA_KEY(key_) __attribute__((annotate("otest2::userData(" key_ ")")))
 
 #endif /* -- OTEST2_PARSER_ACTIVE */
 

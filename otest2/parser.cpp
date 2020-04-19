@@ -37,7 +37,6 @@
 
 #include "excparser.h"
 #include "filereader.h"
-#include "generatorprinter.h"
 #include "generatorstd.h"
 #include "options.h"
 #include <otest2/exc.h>
@@ -262,7 +261,6 @@ void parse(
       options_.getDomain(),
       options_.getInfile(),
       options_.getOutfile());
-//  GeneratorPrinter generator_;
 
   /* -- parse the file */
   int argc_(argv_.size());

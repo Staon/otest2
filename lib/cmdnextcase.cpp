@@ -31,6 +31,8 @@
 #include <commandptr.h>
 #include <commandstack.h>
 #include <context.h>
+#include <objectpath.h>
+#include "runcode.h"
 #include <runnerfilter.h>
 #include <suiteordinary.h>
 
@@ -51,6 +53,11 @@ CmdNextCase::~CmdNextCase() {
 
 void CmdNextCase::run(
     const Context& context_) {
+  /* -- remove previous case name */
+  if(current > 0) {
+    context_.object_path->popName();
+  }
+
   /* -- get the case factory */
   std::string case_name_;
   CaseFactoryPtr factory_(suite->getCase(context_, current, &case_name_));
@@ -59,11 +66,17 @@ void CmdNextCase::run(
     context_.command_stack->pushCommand(
         std::make_shared<CmdNextCase>(suite, current + 1));
 
-    /* -- Schedule run of the test case */
-    if(!context_.runner_filter->filterCase(suite->getName(), case_name_)) {
-      CasePtr testcase_(factory_->createCase(context_));
-      testcase_->scheduleRun(context_, testcase_);
-    }
+    /* -- push the name into the object path - an exception from the
+     *    case constructor will be reported at correct object path.  */
+    context_.object_path->pushName(case_name_);
+
+    /* -- Schedule run of the test case. */
+    runUserCode(context_, [&](const Context& context_){
+      if(!context_.runner_filter->filterCase(suite->getName(), case_name_)) {
+        CasePtr testcase_(factory_->createCase(context_));
+        testcase_->scheduleRun(context_, testcase_);
+      }
+    });
   }
 }
 

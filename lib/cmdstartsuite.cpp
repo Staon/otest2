@@ -26,7 +26,6 @@
 #include <cmdnextcase.h>
 #include <commandstack.h>
 #include <context.h>
-#include <objectpath.h>
 #include <reporter.h>
 #include <semanticstack.h>
 #include <suiteordinary.h>
@@ -47,7 +46,6 @@ CmdStartSuite::~CmdStartSuite() {
 void CmdStartSuite::run(
     const Context& context_) {
   /* -- report start of the suite */
-  context_.object_path->pushName(suite->getName());
   context_.reporter->enterSuite(context_, suite->getName());
 
   /* -- prepare suite's result */
@@ -58,7 +56,6 @@ void CmdStartSuite::run(
   if(!context_.semantic_stack->top()) {
     /* -- initialization failed */
     context_.reporter->leaveSuite(context_, suite->getName(), false);
-    context_.object_path->popName();
     context_.semantic_stack->popAnd();
   }
   else {

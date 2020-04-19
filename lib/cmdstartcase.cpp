@@ -26,7 +26,6 @@
 #include <cmdfirststate.h>
 #include <commandstack.h>
 #include <context.h>
-#include <objectpath.h>
 #include <reporter.h>
 #include <caseordinary.h>
 #include <semanticstack.h>
@@ -47,7 +46,6 @@ CmdStartCase::~CmdStartCase() {
 void CmdStartCase::run(
     const Context& context_) {
   /* -- report start of the suite */
-  context_.object_path->pushName(testcase->getName());
   context_.reporter->enterCase(context_, testcase->getName());
 
   /* -- prepare the return value */
@@ -58,7 +56,6 @@ void CmdStartCase::run(
   if(!context_.semantic_stack->top()) {
     /* -- the initialization failed */
     context_.reporter->leaveCase(context_, testcase->getName(), false);
-    context_.object_path->popName();
     context_.semantic_stack->popAnd();
   }
   else {

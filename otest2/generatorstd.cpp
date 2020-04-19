@@ -222,7 +222,7 @@ void GeneratorStd::makeTryCatchBegin(
   pimpl->output << "              ::OTest2::GenericAssertion(otest2Context(), ";
   writeCString(pimpl->output, pimpl->infile);
   pimpl->output << ", " << begin_.getLine() << ", \"\").testException(\n"
-      << "                  [this]()->bool {\n"
+      << "                  [&]()->bool {\n"
       << "                    bool otest2_exception_happens_(false);\n"
       << "                    try {";
 }

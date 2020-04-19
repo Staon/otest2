@@ -19,22 +19,54 @@ find_package(Clang REQUIRED CONFIG)
 
 add_executable(otest2
     error.cpp
+    error.h
     exc.cpp
+    exc.h
     excparser.cpp
+    excparser.h
     excreader.cpp
+    excreader.h
     filereader.cpp
+    filereader.h
     formatting.cpp
+    formatting.h
     generator.cpp
+    generator.h
     generatorprinter.cpp
+    generatorprinter.h
     generatorstd.cpp
+    generatorstd.h
     generfmt.cpp
+    generfmt.h
     lcstream.cpp
+    lcstream.h
     location.cpp
+    location.h
     main.cpp
     options.cpp
+    options.h
     parser.cpp
+    parser.h
+    parserannotation.cpp
+    parserannotation.h
+    parserannotationimpl.h
+    parserassert.cpp
+    parserassert.h
+    parsercase.cpp
+    parsercase.h
+    parsercode.cpp
+    parsercode.h
+    parsercontext.cpp
+    parsercontext.h
+    parsercontextimpl.h
+    parserfixture.cpp
+    parserfixture.h
+    parsersuite.cpp
+    parsersuite.h
     typetemplate.cpp
+    typetemplate.h
     vartable.cpp
+    vartable.h
 )
 set_property(TARGET otest2 PROPERTY CXX_STANDARD 14)
 target_compile_options(otest2 PRIVATE -fno-rtti -fexceptions)

@@ -58,19 +58,27 @@ TEST_SUITE(UserDataSuite) {
 
       /* -- stored constant object */
       testTry {
-        testAssertEqual(userdata_.getDatum<std::string>("str2"), "Hello world");
+        userdata_.getDatum<std::string>("str2");
       }
       testCatch(UserDataWrongTypeException&, exc_) {
         /* -- I don't check the message because it's platform dependent */
       }
       testTry {
-        testAssertEqual(userdata_.getDatum<std::string&>("str2"), "Hello world");
+        userdata_.getDatum<std::string&>("str2");
       }
       testCatch(UserDataWrongTypeException&, exc_) {
         /* -- I don't check the message because it's platform dependent */
       }
       testAssertEqual(userdata_.getDatum<const std::string>("str2"), "Hello world");
       testAssertEqual(userdata_.getDatum<const std::string&>("str2"), "Hello world");
+
+      /* -- missing user data value */
+      testTry {
+        userdata_.getDatum<int>("wrong key");
+      }
+      testCatch(UserDataMissingException&, exc_) {
+
+      }
     }
   }
 

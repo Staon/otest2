@@ -33,6 +33,7 @@ target_otest2_sources(selftest
     regressions.ot2
     tee.ot2
     testmarks.ot2
+    userdata.ot2
 )
 target_otest2_sources(selftest DOMAIN selftest
     selftests/assertions.ot2

@@ -20,6 +20,7 @@
 #ifndef OTest2__INCLUDE_OTEST2_EXCEPTION_H_
 #define OTest2__INCLUDE_OTEST2_EXCEPTION_H_
 
+#include <exception>
 #include <string>
 
 namespace OTest2 {
@@ -27,7 +28,7 @@ namespace OTest2 {
 /**
  * @brief Generic OTest2 exception
  */
-class Exception {
+class Exception : public std::exception {
   protected:
     /**
      * @brief Ctor
@@ -51,6 +52,9 @@ class Exception {
         const Exception&) = delete;
     Exception& operator =(
         const Exception&) = delete;
+
+    /* -- std::exception */
+    virtual const char* what() const noexcept;
 
     /**
      * @brief Get exception reason

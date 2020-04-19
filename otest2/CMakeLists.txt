@@ -20,8 +20,6 @@ find_package(Clang REQUIRED CONFIG)
 add_executable(otest2
     error.cpp
     error.h
-    exc.cpp
-    exc.h
     excparser.cpp
     excparser.h
     excreader.cpp
@@ -70,7 +68,7 @@ add_executable(otest2
 )
 set_property(TARGET otest2 PROPERTY CXX_STANDARD 14)
 target_compile_options(otest2 PRIVATE -fno-rtti -fexceptions)
-target_link_libraries(otest2 PRIVATE clangTooling)
+target_link_libraries(otest2 PRIVATE clangTooling libotest2common)
 
 # -- install the otest2 preprocessor
 install(TARGETS otest2 DESTINATION bin EXPORT otest2)

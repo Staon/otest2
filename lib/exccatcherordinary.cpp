@@ -23,6 +23,8 @@
 #include <sstream>
 #include <typeinfo>
 
+#include <exc.h>
+
 namespace OTest2 {
 
 ExcCatcherOrdinary::ExcCatcherOrdinary() {
@@ -40,6 +42,12 @@ bool ExcCatcherOrdinary::catchException(
   /* -- run the functor */
   try {
     ftor_(context_);
+  }
+  catch(Exception& exc_) {
+    std::ostringstream sos_;
+    sos_ << "unexpected exception: " << exc_.reason();
+    message_ = sos_.str();
+    return true;
   }
   catch(std::exception& exc_) {
     std::ostringstream sos_;

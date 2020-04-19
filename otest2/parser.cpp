@@ -35,12 +35,12 @@
 #include <unistd.h>
 #include <vector>
 
-#include "exc.h"
 #include "excparser.h"
 #include "filereader.h"
 #include "generatorprinter.h"
 #include "generatorstd.h"
 #include "options.h"
+#include <otest2/exc.h>
 #include "parsercontext.h"
 #include "parsersuite.h"
 

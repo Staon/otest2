@@ -31,6 +31,7 @@ class SemanticStack;
 class TestMarkFactory;
 class TestMarkStorage;
 class TimeSource;
+class UserData;
 
 /**
  * @brief OTest2 runtime context
@@ -46,6 +47,7 @@ class Context {
     RunnerFilter* const runner_filter;
     TestMarkFactory* const test_mark_factory;
     TestMarkStorage* const test_mark_storage;
+    UserData* const user_data;
 
     /* -- avoid copying */
     Context(
@@ -65,7 +67,8 @@ class Context {
         Reporter* reporter_,
         RunnerFilter* runner_filter_,
         TestMarkFactory* test_mark_factory_,
-        TestMarkStorage* test_mark_storage_);
+        TestMarkStorage* test_mark_storage_,
+        UserData* user_data_);
 
     /**
      * @brief Dtor

@@ -37,6 +37,7 @@
 #include <testmarkfactory.h>
 #include <testmarkstorage.h>
 #include <timesourcesys.h>
+#include <userdata.h>
 #include <utils.h>
 
 namespace OTest2 {
@@ -92,6 +93,7 @@ struct DfltEnvironment::Impl {
     std::unique_ptr<RunnerFilter> filter;
     TestMarkFactory test_mark_factory;
     std::unique_ptr<TestMarkStorage> test_mark_storage;
+    UserData user_data;
     std::unique_ptr<Runner> runner;
 
     /* -- builder state */
@@ -114,6 +116,7 @@ DfltEnvironment::Impl::Impl(
   filter(),
   test_mark_factory(),
   test_mark_storage(),
+  user_data(),
   runner(),
   console_reporter(true),
   console_verbose(false),
@@ -242,6 +245,7 @@ Runner& DfltEnvironment::getRunner() {
         pimpl->filter.get(),
         &pimpl->test_mark_factory,
         pimpl->test_mark_storage.get(),
+        &pimpl->user_data,
         pimpl->test_name));
   }
   return *pimpl->runner;

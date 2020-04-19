@@ -22,10 +22,11 @@ function(TARGET_OTEST2_SOURCES target)
             -o ${gensrc} 
             ${domain_arg}
             --
-            $<$<BOOL:${includes}>:-I$<JOIN:${includes}," "-I>>
-            $<$<BOOL:${cdefs}>:-D$<JOIN:${cdefs}," "-D>>
-            $<JOIN:$<TARGET_PROPERTY:${target},COMPILE_OPTIONS>," ">
+            "$<$<BOOL:${includes}>:-I$<JOIN:${includes},;-I>>"
+            "$<$<BOOL:${cdefs}>:-D$<JOIN:${cdefs},;-D>>"
+            "$<JOIN:$<TARGET_PROPERTY:${target},COMPILE_OPTIONS>,;>"
         DEPENDS ${src} otest2
+        COMMAND_EXPAND_LISTS
     )
     target_sources(${target} PRIVATE ${gensrc})
     set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES ${gensrc})

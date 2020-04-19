@@ -21,10 +21,8 @@
 #define OTest2OTEST2_VARTABLE_H_
 
 #include <iosfwd>
-#include <map>
 #include <memory>
 #include <string>
-#include <vector>
 
 namespace OTest2 {
 
@@ -36,17 +34,8 @@ typedef std::shared_ptr<VarTable> VarTablePtr;
  */
 class VarTable {
   private:
-    std::string name;
-    VarTablePtr level;
-    struct Record {
-        bool mine;
-        std::string declaration;
-        std::string initializer;
-    };
-    typedef std::map<std::string, Record> Variables;
-    Variables variables;
-    typedef std::vector<std::string> Order;
-    Order order;
+    struct Impl;
+    Impl* pimpl;
 
   public:
     /**
@@ -104,6 +93,18 @@ class VarTable {
         const std::string& name_,
         const std::string& declaration_,
         const std::string& initializer_);
+
+    /**
+     * @brief Append new user datum
+     *
+     * @param name_ Name of the datum
+     * @param key_ Key of the datum (it usually equals the name)
+     * @param declaration_ Type of the datum
+     */
+    void appendUserData(
+        const std::string& name_,
+        const std::string& key_,
+        const std::string& declaration_);
 
     /**
      * @brief Print declarations

@@ -71,10 +71,12 @@ class SuiteGenerated : public SuiteOrdinary, public ContextObject {
         const Context& context_,
         int index_,
         std::string* name_) const;
-    virtual void startUpSuite(
-        const Context& context_);
+    virtual bool startUpSuite(
+        const Context& context_,
+        int index_);
     virtual void tearDownSuite(
-        const Context& context_);
+        const Context& context_,
+        int index_);
 
   protected:
     /**

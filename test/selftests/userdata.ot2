@@ -25,14 +25,14 @@ namespace OTest2 {
 namespace SelfTest {
 
 TEST_SUITE(UserDataSuite) {
-  extern int suite_int OTEST2_USER_DATA();
-  extern int& suite_int_ref OTEST2_USER_DATA_KEY("suite_int");
-  extern std::string suite_str OTEST2_USER_DATA();
-  extern std::string& suite_str_ref OTEST2_USER_DATA_KEY("suite_str");
+  extern int suite_int OT2_USER_DATA();
+  extern int& suite_int_ref OT2_USER_DATA_KEY("suite_int");
+  extern std::string suite_str OT2_USER_DATA();
+  extern std::string& suite_str_ref OT2_USER_DATA_KEY("suite_str");
 
   TEST_CASE(UserDataCase) {
-    extern const std::string case_str OTEST2_USER_DATA();
-    extern const std::string& case_str_ref OTEST2_USER_DATA_KEY("case_str");
+    extern const std::string case_str OT2_USER_DATA();
+    extern const std::string& case_str_ref OT2_USER_DATA_KEY("case_str");
 
     TEST_SIMPLE() {
       /* -- check data */
@@ -52,7 +52,7 @@ TEST_SUITE(UserDataSuite) {
 
 TEST_SUITE(UserDataFailedCase) {
   TEST_CASE(UserDataCase) {
-    extern const std::string case_str OTEST2_USER_DATA();
+    extern const std::string case_str OT2_USER_DATA();
 
     TEST_SIMPLE() {
       testAssertEqual(case_str, "definitely wrong");
@@ -61,11 +61,23 @@ TEST_SUITE(UserDataFailedCase) {
 }
 
 TEST_SUITE(UserDataFailedSuite) {
-  extern const std::string suite_str OTEST2_USER_DATA();
+  extern const std::string suite_str OT2_USER_DATA();
 
   TEST_CASE(UserDataCase) {
     TEST_SIMPLE() {
       testAssertEqual(suite_str, "definitely wrong");
+    }
+  }
+}
+
+OT2_SUITE(UserDataArguments) {
+  void startUp2() OT2_START_UP() {
+
+  }
+
+  OT2_CASE(UserDataCase) {
+    OT2_SIMPLE() {
+
     }
   }
 }

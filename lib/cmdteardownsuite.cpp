@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2020 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -17,35 +17,40 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <suiteordinary.h>
+#include <cmdteardownsuite.h>
 
 #include <assert.h>
-#include <memory>
+#include <memory.h>
 
-#include <cmdstartupsuite.h>
 #include <commandptr.h>
 #include <commandstack.h>
 #include <context.h>
+#include <suiteordinary.h>
 
 namespace OTest2 {
 
-SuiteOrdinary::SuiteOrdinary(
+CmdTearDownSuite::CmdTearDownSuite(
+    SuiteOrdinaryPtr suite_,
+    int index_) :
+  suite(suite_),
+  index(index_) {
+  assert(!suite.isNull() && index >= 0);
+
+}
+
+CmdTearDownSuite::~CmdTearDownSuite() {
+
+}
+
+void CmdTearDownSuite::run(
     const Context& context_) {
+  /* -- run the tear-down function */
+  suite->tearDownSuite(context_, index);
 
+  /* -- schedule next tear-down function or finish the suite */
+  if(index > 0)
+    context_.command_stack->pushCommand(
+        std::make_shared<CmdTearDownSuite>(suite, index - 1));
 }
 
-SuiteOrdinary::~SuiteOrdinary() {
-
-}
-
-void SuiteOrdinary::scheduleRun(
-    const Context& context_,
-    SuitePtr this_ptr_) {
-  auto so_(this_ptr_.staticCast<SuiteOrdinary>());
-  assert(so_.get() == this);
-
-  /* -- schedule the commands */
-  context_.command_stack->pushCommand(std::make_shared<CmdStartUpSuite>(so_, 0));
-}
-
-} /* namespace OTest2 */
+} /* -- namespace OTest2 */

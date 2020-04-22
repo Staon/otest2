@@ -57,6 +57,13 @@ class ObjectPath {
     void popName();
 
     /**
+     * @brief Get name at the top of the stack
+     *
+     * @return the name
+     */
+    std::string getCurrentName() const;
+
+    /**
      * @brief Get path of current object
      *
      * @return The path

@@ -17,38 +17,36 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cmddestroysuite.h>
+#include <cmdleavesuite.h>
 
 #include <assert.h>
+#include <string>
 
 #include <context.h>
+#include <objectpath.h>
 #include <reporter.h>
 #include <semanticstack.h>
-#include <suiteordinary.h>
 
 namespace OTest2 {
 
-CmdDestroySuite::CmdDestroySuite(
-    SuiteOrdinaryPtr suite_) :
-  suite(suite_) {
-  assert(!suite.isNull());
+CmdLeaveSuite::CmdLeaveSuite() {
 
 }
 
-CmdDestroySuite::~CmdDestroySuite() {
+CmdLeaveSuite::~CmdLeaveSuite() {
 
 }
 
-void CmdDestroySuite::run(
+void CmdLeaveSuite::run(
     const Context& context_) {
-  /* -- clean up the suite */
-  suite->tearDownSuite(context_);
-
   /* -- report finishing of the suite */
   context_.reporter->leaveSuite(
-      context_, suite->getName(), context_.semantic_stack->top());
+      context_,
+      context_.object_path->getCurrentName(),
+      context_.semantic_stack->top());
 
-  /* -- return the value */
+  /* -- finish suite's stack-frame */
+  context_.object_path->popName();
   context_.semantic_stack->popAnd();
 }
 

@@ -56,6 +56,12 @@ void ObjectPath::popName() {
   pimpl->path_stack_.pop_back();
 }
 
+std::string ObjectPath::getCurrentName() const {
+  assert(!pimpl->path_stack_.empty());
+
+  return pimpl->path_stack_.back();
+}
+
 std::string ObjectPath::getCurrentPath() const {
   std::ostringstream oss_;
   std::copy(

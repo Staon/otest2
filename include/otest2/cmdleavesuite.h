@@ -17,40 +17,33 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OTest2__INCLUDE_OTEST2_CMDSTARTSUITE_H_
-#define OTest2__INCLUDE_OTEST2_CMDSTARTSUITE_H_
+#ifndef OTest2__INCLUDE_OTEST2_CMDLEAVESUITE_H_
+#define OTest2__INCLUDE_OTEST2_CMDLEAVESUITE_H_
 
 #include <otest2/command.h>
-#include <otest2/suiteordinaryptr.h>
 
 namespace OTest2 {
 
 /**
- * @brief Start an ordinary suite
+ * @brief Finish suite's stack frame
  */
-class CmdStartSuite : public Command {
-  private:
-    SuiteOrdinaryPtr suite;
-
+class CmdLeaveSuite : public Command {
   public:
     /* -- avoid copying */
-    CmdStartSuite(
-        const CmdStartSuite&) = delete;
-    CmdStartSuite& operator =(
-        const CmdStartSuite&) = delete;
+    CmdLeaveSuite(
+        const CmdLeaveSuite&) = delete;
+    CmdLeaveSuite& operator =(
+        const CmdLeaveSuite&) = delete;
 
     /**
      * @brief Ctor
-     *
-     * @param suite_ A suite to be started
      */
-    explicit CmdStartSuite(
-        SuiteOrdinaryPtr suite_);
+    CmdLeaveSuite();
 
     /**
      * @brief Dtor
      */
-    virtual ~CmdStartSuite();
+    virtual ~CmdLeaveSuite();
 
     /* -- command interface */
     virtual void run(
@@ -59,4 +52,4 @@ class CmdStartSuite : public Command {
 
 } /* namespace OTest2 */
 
-#endif /* OTest2__INCLUDE_OTEST2_CMDSTARTSUITE_H_ */
+#endif /* OTest2__INCLUDE_OTEST2_CMDLEAVESUITE_H_ */

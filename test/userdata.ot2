@@ -166,9 +166,13 @@ TEST_SUITE(UserDataSuite) {
       std::vector<const char*> data_{
         "enterTest<selftest>",
         "path: selftest",
+        "enterSuite<UserDataFailedSuite>",
+        "path: selftest::UserDataFailedSuite",
         "error<unexpected exception: missing user datum 'suite_str'>: failed",
         "path: selftest::UserDataFailedSuite",
         "leaveAssert<>",
+        "path: selftest::UserDataFailedSuite",
+        "leaveSuite<UserDataFailedSuite>: failed",
         "path: selftest::UserDataFailedSuite",
         "leaveTest<selftest>: failed",
         "path: selftest",

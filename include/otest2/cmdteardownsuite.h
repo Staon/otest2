@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2020 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -17,43 +17,49 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OTest2__INCLUDE_OTEST2_CMDDESTROYSUITE_H_
-#define OTest2__INCLUDE_OTEST2_CMDDESTROYSUITE_H_
+#ifndef OTest2__INCLUDE_OTEST2_CMDTEARDOWNSUITE_H_
+#define OTest2__INCLUDE_OTEST2_CMDTEARDOWNSUITE_H_
 
 #include <otest2/command.h>
 #include <otest2/suiteordinaryptr.h>
 
 namespace OTest2 {
 
-class CmdDestroySuite : public Command {
+/**
+ * @brief Run a tear-down function
+ */
+class CmdTearDownSuite : public Command {
   private:
     SuiteOrdinaryPtr suite;
+    int index;
 
   public:
-    /* -- avoid copying */
-    CmdDestroySuite(
-        const CmdDestroySuite&) = delete;
-    CmdDestroySuite& operator =(
-        const CmdDestroySuite&) = delete;
-
     /**
      * @brief Ctor
      *
-     * @param suite_ The suite being destroyed
+     * @param suite_ The suite
+     * @param index_ A zero-based index of the tear-down function
      */
-    explicit CmdDestroySuite(
-        SuiteOrdinaryPtr suite_);
+    explicit CmdTearDownSuite(
+        SuiteOrdinaryPtr suite_,
+        int index_);
 
     /**
      * @brief Dtor
      */
-    virtual ~CmdDestroySuite();
+    virtual ~CmdTearDownSuite();
+
+    /* -- avoid copying */
+    CmdTearDownSuite(
+        const CmdTearDownSuite&) = delete;
+    CmdTearDownSuite& operator = (
+        const CmdTearDownSuite&) = delete;
 
     /* -- command interface */
     virtual void run(
-        const Context& context_);
+        const Context& context_) override;
 };
 
-} /* namespace OTest2 */
+} /* -- namespace OTest2 */
 
-#endif /* OTest2__INCLUDE_OTEST2_CMDDESTROYSUITE_H_ */
+#endif /* -- OTest2__INCLUDE_OTEST2_CMDTEARDOWNSUITE_H_ */

@@ -19,6 +19,7 @@
 
 #include <suitegenerated.h>
 
+#include <assert.h>
 #include <string>
 
 #include <caseregistry.h>
@@ -91,15 +92,23 @@ CaseFactoryPtr SuiteGenerated::getCase(
   return pimpl->case_registry.getCase(index_, name_);
 }
 
-void SuiteGenerated::startUpSuite(
-    const Context& context_) {
-  runUserCode(context_, [this](const Context& context_) {
-    startUp();
-  });
+bool SuiteGenerated::startUpSuite(
+    const Context& context_,
+    int index_) {
+  if(index_ == 0) {
+    runUserCode(context_, [this](const Context& context_) {
+      startUp();
+    });
+    return true;
+  }
+  else
+    return false;
 }
 
 void SuiteGenerated::tearDownSuite(
-    const Context& context_) {
+    const Context& context_,
+    int index_) {
+  assert(index_ == 0);
   runUserCode(context_, [this](const Context& context_){
     tearDown();
   });

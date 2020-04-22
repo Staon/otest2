@@ -17,35 +17,34 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <caseordinary.h>
+#include <cmdleavecase.h>
 
-#include <assert.h>
-#include <memory>
-
-#include <cmdstartupcase.h>
-#include <commandptr.h>
-#include <commandstack.h>
 #include <context.h>
+#include <objectpath.h>
+#include <reporter.h>
+#include <semanticstack.h>
 
 namespace OTest2 {
 
-CaseOrdinary::CaseOrdinary(
+CmdLeaveCase::CmdLeaveCase() {
+
+}
+
+CmdLeaveCase::~CmdLeaveCase() {
+
+}
+
+void CmdLeaveCase::run(
     const Context& context_) {
+  /* -- report finishing of the suite */
+  context_.reporter->leaveCase(
+      context_,
+      context_.object_path->getCurrentName(),
+      context_.semantic_stack->top());
 
-}
-
-CaseOrdinary::~CaseOrdinary() {
-
-}
-
-void CaseOrdinary::scheduleRun(
-    const Context& context_,
-    CasePtr this_ptr_) {
-  auto co_(this_ptr_.staticCast<CaseOrdinary>());
-  assert(co_.get() == this);
-
-  /* -- schedule the commands */
-  context_.command_stack->pushCommand(std::make_shared<CmdStartUpCase>(co_, 0));
+  /* -- finish case's stack frame  */
+  context_.object_path->popName();
+  context_.semantic_stack->popAnd();
 }
 
 } /* namespace OTest2 */

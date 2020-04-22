@@ -17,35 +17,39 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <caseordinary.h>
+#ifndef OTest2__INCLUDE_OTEST2_CMDLEAVECASE_H_
+#define OTest2__INCLUDE_OTEST2_CMDLEAVECASE_H_
 
-#include <assert.h>
-#include <memory>
-
-#include <cmdstartupcase.h>
-#include <commandptr.h>
-#include <commandstack.h>
-#include <context.h>
+#include <otest2/command.h>
 
 namespace OTest2 {
 
-CaseOrdinary::CaseOrdinary(
-    const Context& context_) {
+/**
+ * @brief Finish stack frame of a test case
+ */
+class CmdLeaveCase : public Command {
+  public:
+    /* -- avoid copying */
+    CmdLeaveCase(
+        const CmdLeaveCase&) = delete;
+    CmdLeaveCase& operator =(
+        const CmdLeaveCase&) = delete;
 
-}
+    /**
+     * @brief Ctor
+     */
+    CmdLeaveCase();
 
-CaseOrdinary::~CaseOrdinary() {
+    /**
+     * @brief Dtor
+     */
+    virtual ~CmdLeaveCase();
 
-}
-
-void CaseOrdinary::scheduleRun(
-    const Context& context_,
-    CasePtr this_ptr_) {
-  auto co_(this_ptr_.staticCast<CaseOrdinary>());
-  assert(co_.get() == this);
-
-  /* -- schedule the commands */
-  context_.command_stack->pushCommand(std::make_shared<CmdStartUpCase>(co_, 0));
-}
+    /* -- command interface */
+    virtual void run(
+        const Context& context_);
+};
 
 } /* namespace OTest2 */
+
+#endif /* OTest2__INCLUDE_OTEST2_CMDLEAVECASE_H_ */

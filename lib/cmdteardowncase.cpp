@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2020 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -17,39 +17,40 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cmddestroycase.h>
+#include <cmdteardowncase.h>
 
 #include <assert.h>
+#include <memory>
 
-#include <context.h>
-#include <reporter.h>
 #include <caseordinary.h>
-#include <semanticstack.h>
+#include <commandptr.h>
+#include <commandstack.h>
+#include <context.h>
 
 namespace OTest2 {
 
-CmdDestroyCase::CmdDestroyCase(
-    CaseOrdinaryPtr case_) :
-  testcase(case_) {
-  assert(!testcase.isNull());
+CmdTearDownCase::CmdTearDownCase(
+    CaseOrdinaryPtr testcase_,
+    int index_) :
+  testcase(testcase_),
+  index(index_) {
+  assert(!testcase.isNull() && index >= 0);
 
 }
 
-CmdDestroyCase::~CmdDestroyCase() {
+CmdTearDownCase::~CmdTearDownCase() {
 
 }
 
-void CmdDestroyCase::run(
+void CmdTearDownCase::run(
     const Context& context_) {
-  /* -- clean up the case */
-  testcase->tearDownCase(context_);
+  /* -- run the tear-down function */
+  testcase->tearDownCase(context_, index);
 
-  /* -- report finishing of the suite */
-  context_.reporter->leaveCase(
-      context_, testcase->getName(), context_.semantic_stack->top());
-
-  /* -- return the case value */
-  context_.semantic_stack->popAnd();
+  /* -- schedule run of next tear-down function */
+  if(index > 0)
+    context_.command_stack->pushCommand(
+        std::make_shared<CmdTearDownCase>(testcase, index - 1));
 }
 
-} /* namespace OTest2 */
+} /* -- namespace OTest2 */

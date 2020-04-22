@@ -40,18 +40,19 @@ add_library(libotest2
     casegenerated.cpp
     caseordinary.cpp
     caseregistry.cpp
-    cmddestroycase.cpp
     cmddummy.cpp
     cmdfirststate.cpp
+    cmdleavecase.cpp
     cmdleavesuite.cpp
     cmdnextcase.cpp
     cmdnextsuite.cpp
     cmdrunstate.cpp
-    cmdstartcase.cpp
     cmdstarttest.cpp
+    cmdstartupcase.cpp
     cmdstartupsuite.cpp
     cmdstate.cpp
     cmdstoptest.cpp
+    cmdteardowncase.cpp
     cmdteardownsuite.cpp
     command.cpp
     commandstack.cpp

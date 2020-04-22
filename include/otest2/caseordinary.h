@@ -73,20 +73,26 @@ class CaseOrdinary : public Case {
         const std::string& name_) const = 0;
 
     /**
-     * @brief Initialize the case
+     * @brief Run a start-up function
      *
      * @param context_ The otest2 context
+     * @param index_ A zero base index of the start-up function
+     * @return True if the start-up function has been invoked. False if there
+     *     is no function at the index.
      */
-    virtual void startUpCase(
-        const Context& context_) = 0;
+    virtual bool startUpCase(
+        const Context& context_,
+        int index_) = 0;
 
     /**
-     * @brief Clean up the case
+     * @brief Run a tear-down function
      *
      * @param context_ The otest2 context
+     * @param index_ Zero based index of the tear-down function
      */
     virtual void tearDownCase(
-        const Context& context_) = 0;
+        const Context& context_,
+        int index_) = 0;
 
     /* -- test case interface */
     virtual void scheduleRun(

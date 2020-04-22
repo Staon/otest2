@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2020 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -17,43 +17,49 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OTest2__INCLUDE_OTEST2_CMDDESTROYCASE_H_
-#define OTest2__INCLUDE_OTEST2_CMDDESTROYCASE_H_
+#ifndef OTest2__INCLUDE_OTEST2_CMDTEARDOWNCASE_H_
+#define OTest2__INCLUDE_OTEST2_CMDTEARDOWNCASE_H_
 
-#include <otest2/command.h>
 #include <otest2/caseordinaryptr.h>
+#include <otest2/command.h>
 
 namespace OTest2 {
 
-class CmdDestroyCase : public Command {
+/**
+ * @brief Run a tear-down function of a test-case
+ */
+class CmdTearDownCase : public Command {
   private:
     CaseOrdinaryPtr testcase;
+    int index;
 
   public:
-    /* -- avoid copying */
-    CmdDestroyCase(
-        const CmdDestroyCase&) = delete;
-    CmdDestroyCase& operator =(
-        const CmdDestroyCase&) = delete;
-
     /**
      * @brief Ctor
      *
-     * @param case_ The case being destroyed
+     * @param testcase_ The test case
+     * @param index_ A zero based index of the tear-down function
      */
-    explicit CmdDestroyCase(
-        CaseOrdinaryPtr case_);
+    explicit CmdTearDownCase(
+        CaseOrdinaryPtr testcase_,
+        int index_);
 
     /**
      * @brief Dtor
      */
-    virtual ~CmdDestroyCase();
+    virtual ~CmdTearDownCase();
+
+    /* -- avoid copying */
+    CmdTearDownCase(
+        const CmdTearDownCase&) = delete;
+    CmdTearDownCase& operator = (
+        const CmdTearDownCase&) = delete;
 
     /* -- command interface */
     virtual void run(
-        const Context& context_);
+        const Context& context_) override;
 };
 
-} /* namespace OTest2 */
+} /* -- namespace OTest2 */
 
-#endif /* OTest2__INCLUDE_OTEST2_CMDDESTROYCASE_H_ */
+#endif /* -- OTest2__INCLUDE_OTEST2_CMDTEARDOWNCASE_H_ */

@@ -22,13 +22,13 @@
 #include <assert.h>
 #include <memory>
 
-#include <cmddestroycase.h>
 #include <cmdfirststate.h>
 #include <commandstack.h>
 #include <context.h>
 #include <reporter.h>
 #include <caseordinary.h>
 #include <semanticstack.h>
+#include "../include/otest2/cmdleavecase.h"
 
 namespace OTest2 {
 
@@ -61,7 +61,7 @@ void CmdStartCase::run(
   else {
     /* -- clean-up of the case */
     context_.command_stack->pushCommand(
-        std::make_shared<CmdDestroyCase>(testcase));
+        std::make_shared<CmdLeaveCase>(testcase));
 
     /* -- run first test state */
     context_.command_stack->pushCommand(

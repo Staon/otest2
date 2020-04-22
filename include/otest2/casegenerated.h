@@ -67,10 +67,12 @@ class CaseGenerated : public CaseOrdinary, public ContextObject {
     virtual StatePtr getFirstState() const;
     virtual StatePtr getState(
         const std::string& name_) const;
-    virtual void startUpCase(
-        const Context& context_);
+    virtual bool startUpCase(
+        const Context& context_,
+        int index_);
     virtual void tearDownCase(
-        const Context& context_);
+        const Context& context_,
+        int index_);
 
     /* -- context object */
     virtual const Context& otest2Context() const;

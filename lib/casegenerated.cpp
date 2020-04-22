@@ -19,6 +19,7 @@
 
 #include <casegenerated.h>
 
+#include <assert.h>
 #include <string>
 
 #include <context.h>
@@ -90,15 +91,24 @@ StatePtr CaseGenerated::getState(
   return pimpl->state_registry.getState(name_);
 }
 
-void CaseGenerated::startUpCase(
-    const Context& context_) {
-  runUserCode(context_, [this](const Context& context_) {
-    startUp();
-  });
+bool CaseGenerated::startUpCase(
+    const Context& context_,
+    int index_) {
+  if(index_ == 0) {
+    runUserCode(context_, [this](const Context& context_) {
+      startUp();
+    });
+    return true;
+  }
+  else
+    return false;
 }
 
 void CaseGenerated::tearDownCase(
-    const Context& context_) {
+    const Context& context_,
+    int index_) {
+  assert(index_ == 0);
+
   runUserCode(context_, [this](const Context& context_) {
     tearDown();
   });

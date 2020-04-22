@@ -27,13 +27,16 @@
 #include <casefactory.h>
 #include <casefactoryptr.h>
 #include <caseptr.h>
+#include <cmdleavecase.h>
 #include <cmdstartcase.h>
 #include <commandptr.h>
 #include <commandstack.h>
 #include <context.h>
 #include <objectpath.h>
+#include <reporter.h>
 #include "runcode.h"
 #include <runnerfilter.h>
+#include <semanticstack.h>
 #include <suiteordinary.h>
 
 namespace OTest2 {
@@ -53,11 +56,6 @@ CmdNextCase::~CmdNextCase() {
 
 void CmdNextCase::run(
     const Context& context_) {
-  /* -- remove previous case name */
-  if(current > 0) {
-    context_.object_path->popName();
-  }
-
   /* -- get the case factory */
   std::string case_name_;
   CaseFactoryPtr factory_(suite->getCase(context_, current, &case_name_));
@@ -66,17 +64,26 @@ void CmdNextCase::run(
     context_.command_stack->pushCommand(
         std::make_shared<CmdNextCase>(suite, current + 1));
 
-    /* -- push the name into the object path - an exception from the
-     *    case constructor will be reported at correct object path.  */
-    context_.object_path->pushName(case_name_);
+    /* -- create and schedule the test-case if it's not filtered */
+    if(!context_.runner_filter->filterCase(suite->getName(), case_name_)) {
+      /* -- prepare the stack frame */
+      context_.semantic_stack->push(true);
+      context_.object_path->pushName(case_name_);
 
-    /* -- Schedule run of the test case. */
-    runUserCode(context_, [&](const Context& context_){
-      if(!context_.runner_filter->filterCase(suite->getName(), case_name_)) {
+      /* -- report entering of the test case */
+      context_.reporter->enterCase(context_, case_name_);
+
+      /* -- schedule finishing of the test case */
+      context_.command_stack->pushCommand(std::make_shared<CmdLeaveCase>());
+
+      /* -- Create and schedule the test case. As the constructor method
+       *    can throw an exception the code is run in the protected
+       *    environment. */
+      runUserCode(context_, [&](const Context& context_){
         CasePtr testcase_(factory_->createCase(context_));
         testcase_->scheduleRun(context_, testcase_);
-      }
-    });
+      });
+    }
   }
 }
 

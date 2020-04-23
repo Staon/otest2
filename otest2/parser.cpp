@@ -275,8 +275,8 @@ void parse(
       tool_.run(new Parser::FrontendFactory(&generator_, &failure_, &exception_)));
   if(retval_ != 0) {
     /* -- remove the half created file */
-    if(options_.getOutfile() != "-")
-      unlink(options_.getOutfile().c_str());
+//    if(options_.getOutfile() != "-")
+//      unlink(options_.getOutfile().c_str());
 
     throw Parser::ParserFailure();
   }

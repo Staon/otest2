@@ -222,6 +222,21 @@ bool parseCaseBody(
   return true;
 }
 
+bool parseCase(
+    ParserContext* context_,
+    clang::NamespaceDecl* ns_) {
+  context_->state = ParserContext::CASE_BEGIN;
+
+  context_->generator->enterCase(ns_->getNameAsString());
+  if(!parseCaseBody(context_, ns_))
+    return false;
+  context_->generator->leaveCase();
+
+  context_->state = ParserContext::SUITE_CASES;
+
+  return true;
+}
+
 } /* -- namespace Parser */
 
 } /* -- namespace OTest2 */

@@ -17,12 +17,12 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OTest2__OTEST2_PARSERCASE_H_
-#define OTest2__OTEST2_PARSERCASE_H_
+#ifndef OTest2__OTEST2_PARSERFUNCTION_H_
+#define OTest2__OTEST2_PARSERFUNCTION_H_
 
 namespace clang {
 
-class NamespaceDecl;
+class FunctionDecl;
 
 } /* -- namespace clang */
 
@@ -32,15 +32,19 @@ class ParserContext;
 
 namespace Parser {
 
-bool parseCaseBody(
+/**
+ * @brief Parse a function of a testing object (suite, case)
+ *
+ * @param context_ The parser context
+ * @param function_ The function's AST node
+ * @return True if the function is parsed with no error
+ */
+bool parseFunction(
     ParserContext* context_,
-    clang::NamespaceDecl* ns_);
-bool parseCase(
-    ParserContext* context_,
-    clang::NamespaceDecl* ns_);
+    clang::FunctionDecl* function_);
 
 } /* -- namespace Parser */
 
 } /* -- namespace OTest2 */
 
-#endif /* -- OTest2__OTEST2_PARSERCASE_H_ */
+#endif /* -- OTest2__OTEST2_PARSERFUNCTION_H_ */

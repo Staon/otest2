@@ -28,6 +28,10 @@ add_executable(otest2
     filereader.h
     formatting.cpp
     formatting.h
+    function.cpp
+    function.h
+    functions.cpp
+    functions.h
     generator.cpp
     generator.h
     generatorstd.cpp
@@ -57,6 +61,8 @@ add_executable(otest2
     parsercontextimpl.h
     parserfixture.cpp
     parserfixture.h
+    parserfunction.cpp
+    parserfunction.h
     parsersuite.cpp
     parsersuite.h
     typetemplate.cpp

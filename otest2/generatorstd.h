@@ -93,8 +93,8 @@ class GeneratorStd : public Generator {
         const Location& end_);
     virtual void enterSuite(
         const std::string& name_);
-    virtual void suiteStartUp();
-    virtual void suiteTearDown();
+    virtual void finishSuiteFixtures();
+    virtual void finishSuiteFunctions();
     virtual void enterCase(
         const std::string& name_);
     virtual void caseStartUp();
@@ -114,6 +114,18 @@ class GeneratorStd : public Generator {
         const std::string& name_,
         const std::string& key_,
         const std::string& type_);
+    virtual void appendStartUpFunction(
+        FunctionPtr function_,
+        const Location& fbegin_,
+        const Location& fend_);
+    virtual void appendTearDownFunction(
+        FunctionPtr function_,
+        const Location& fbegin_,
+        const Location& fend_);
+    virtual void appendGenericFunction(
+        const Location& fbegin_,
+        const Location& fend_,
+        bool body_);
     virtual void leaveState();
     virtual void leaveCase();
     virtual void leaveSuite();

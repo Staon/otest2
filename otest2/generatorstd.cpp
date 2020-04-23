@@ -26,6 +26,7 @@
 #include <vector>
 
 #include "filereader.h"
+#include "functions.h"
 #include "generfmt.h"
 #include "formatting.h"
 #include "lcstream.h"
@@ -51,6 +52,12 @@ struct GeneratorStd::Impl {
 
     /* -- table of variables */
     VarTablePtr variables;
+
+    /* -- testing functions */
+    FunctionsPtr start_up;
+    FunctionsPtr tear_down;
+
+    /* -- current indentation */
     int indent;
 
     /* -- current state */
@@ -257,6 +264,8 @@ void GeneratorStd::enterSuite(
 
   pimpl->suite = suite_;
   pimpl->variables = std::make_shared<VarTable>("suite_", nullptr);
+  pimpl->start_up = std::make_shared<Functions>(nullptr);
+  pimpl->tear_down = std::make_shared<Functions>(nullptr);
   pimpl->suites.push_back(suite_);
   pimpl->indent += 2;
 
@@ -265,7 +274,7 @@ void GeneratorStd::enterSuite(
       << "  private:\n";
 }
 
-void GeneratorStd::suiteStartUp() {
+void GeneratorStd::finishSuiteFixtures() {
   assert(!pimpl -> suite.empty() && pimpl -> testcase.empty() && pimpl -> state.empty());
 
   /* -- suite variables */
@@ -293,16 +302,11 @@ void GeneratorStd::suiteStartUp() {
       << "    virtual ~" << pimpl->suite << "() {\n"
       << "\n"
       << "    }\n"
-      << "\n"
-      << "    virtual void startUp() ";
+      << "\n";
 }
 
-void GeneratorStd::suiteTearDown() {
+void GeneratorStd::finishSuiteFunctions() {
   assert(!pimpl -> suite.empty() && pimpl -> testcase.empty() && pimpl -> state.empty());
-
-  pimpl->output
-      << "\n\n"
-      << "    virtual void tearDown() ";
 }
 
 void GeneratorStd::enterCase(
@@ -312,6 +316,8 @@ void GeneratorStd::enterCase(
 
   pimpl->testcase = case_;
   pimpl->variables = std::make_shared<VarTable>("case_", pimpl -> variables);
+  pimpl->start_up = std::make_shared<Functions>(pimpl->start_up);
+  pimpl->tear_down = std::make_shared<Functions>(pimpl->tear_down);
   pimpl->cases.push_back(case_);
   pimpl->indent += 2;
 
@@ -372,6 +378,8 @@ void GeneratorStd::enterState(
 
   pimpl->state = state_;
   pimpl->variables = std::make_shared<VarTable>("state_", pimpl -> variables);
+  pimpl->start_up = std::make_shared<Functions>(pimpl->start_up);
+  pimpl->tear_down = std::make_shared<Functions>(pimpl->tear_down);
   pimpl->states.push_back(state_);
   pimpl->indent += 2;
 
@@ -436,6 +444,41 @@ void GeneratorStd::appendUserData(
   pimpl->variables->appendUserData(name_, key_, type_);
 }
 
+void GeneratorStd::appendStartUpFunction(
+    FunctionPtr function_,
+    const Location& fbegin_,
+    const Location& fend_) {
+  /* -- store the function to generate its marshaler */
+  pimpl->start_up->appendFunction(function_);
+
+  /* -- generate the function declaration */
+  Formatting::printIndent(pimpl->output, pimpl->indent);
+  pimpl->reader->writePart(pimpl->output, fbegin_, &fend_);
+}
+
+void GeneratorStd::appendTearDownFunction(
+    FunctionPtr function_,
+    const Location& fbegin_,
+    const Location& fend_) {
+  /* -- store the function to generate its marshaler */
+  pimpl->tear_down->appendFunction(function_);
+
+  /* -- generate the function declaration */
+  Formatting::printIndent(pimpl->output, pimpl->indent);
+  pimpl->reader->writePart(pimpl->output, fbegin_, &fend_);
+}
+
+void GeneratorStd::appendGenericFunction(
+    const Location& fbegin_,
+    const Location& fend_,
+    bool body_) {
+  /* -- generate the function declaration */
+  Formatting::printIndent(pimpl->output, pimpl->indent);
+  pimpl->reader->writePart(pimpl->output, fbegin_, &fend_);
+  if(!body_)
+    pimpl->output << ";\n";
+}
+
 void GeneratorStd::leaveState() {
   assert(!pimpl->suite.empty() && !pimpl->testcase.empty() && !pimpl->state.empty());
 
@@ -458,6 +501,8 @@ void GeneratorStd::leaveState() {
 
   pimpl->state.clear();
   pimpl->variables = pimpl->variables->getPrevLevel();
+  pimpl->start_up = pimpl->start_up->getPrevLevel();
+  pimpl->tear_down = pimpl->tear_down->getPrevLevel();
 }
 
 void GeneratorStd::leaveCase() {
@@ -494,6 +539,8 @@ void GeneratorStd::leaveCase() {
 
   pimpl->testcase.clear();
   pimpl->variables = pimpl->variables->getPrevLevel();
+  pimpl->start_up = pimpl->start_up->getPrevLevel();
+  pimpl->tear_down = pimpl->tear_down->getPrevLevel();
   pimpl->states.clear();
 }
 
@@ -521,6 +568,8 @@ void GeneratorStd::leaveSuite() {
 
   pimpl->suite.clear();
   pimpl->variables = 0;
+  pimpl->start_up = 0;
+  pimpl->tear_down = 0;
   pimpl->cases.clear();
   pimpl->indent -= 2;
 }

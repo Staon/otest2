@@ -22,6 +22,8 @@
 
 #include <string>
 
+#include "function.h"
+
 namespace OTest2 {
 
 class Location;
@@ -145,14 +147,14 @@ class Generator {
         const std::string& name_) = 0;
 
     /**
-     * @brief Generate preamble of the suite's start up function
+     * @brief Finish block of suite's variables
      */
-    virtual void suiteStartUp() = 0;
+    virtual void finishSuiteFixtures() = 0;
 
     /**
-     * @brief Generate preamble of the suite's tear down function
+     * @brief Finish block of suite's functions
      */
-    virtual void suiteTearDown() = 0;
+    virtual void finishSuiteFunctions() = 0;
 
     /**
      * @brief Beginning of a test case
@@ -220,6 +222,42 @@ class Generator {
         const std::string& name_,
         const std::string& key_,
         const std::string& type_) = 0;
+
+    /**
+     * @brief Append a start-up function
+     *
+     * @param function_ The function
+     * @param fbegin_ Beginning of function declaration
+     * @param fend_ End of function declaration
+     */
+    virtual void appendStartUpFunction(
+        FunctionPtr function_,
+        const Location& fbegin_,
+        const Location& fend_) = 0;
+
+    /**
+     * @brief Append a tear-down function
+     *
+     * @param function_ The function
+     * @param fbegin_ Beginning of function declaration
+     * @param fend_ End of function declaration
+     */
+    virtual void appendTearDownFunction(
+        FunctionPtr function_,
+        const Location& fbegin_,
+        const Location& fend_) = 0;
+
+    /**
+     * @brief Append a user function
+     *
+     * @param fbegin_
+     * @param fend_
+     * @param body_
+     */
+    virtual void appendGenericFunction(
+        const Location& fbegin_,
+        const Location& fend_,
+        bool body_) = 0;
 
     /**
      * @brief End of current test state

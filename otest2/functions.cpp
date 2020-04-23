@@ -17,30 +17,30 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OTest2__OTEST2_PARSERCASE_H_
-#define OTest2__OTEST2_PARSERCASE_H_
+#include "functions.h"
 
-namespace clang {
-
-class NamespaceDecl;
-
-} /* -- namespace clang */
+#include <assert.h>
 
 namespace OTest2 {
 
-class ParserContext;
+Functions::Functions(
+    FunctionsPtr prev_level_) :
+  prev_level(prev_level_) {
 
-namespace Parser {
+}
 
-bool parseCaseBody(
-    ParserContext* context_,
-    clang::NamespaceDecl* ns_);
-bool parseCase(
-    ParserContext* context_,
-    clang::NamespaceDecl* ns_);
+Functions::~Functions() {
 
-} /* -- namespace Parser */
+}
+
+FunctionsPtr Functions::getPrevLevel() const {
+  return prev_level;
+}
+
+void Functions::appendFunction(
+    FunctionPtr function_) {
+  assert(function_ != nullptr);
+  functions.push_back(function_);
+}
 
 } /* -- namespace OTest2 */
-
-#endif /* -- OTest2__OTEST2_PARSERCASE_H_ */

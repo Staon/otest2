@@ -26,6 +26,8 @@ jobs:
             make
       - run:
           name: Running Selftests...
+          environment:
+            TERM: ansi
           command: |
             cd build
             make check-circleci

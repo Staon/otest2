@@ -91,7 +91,7 @@ void StateGenerated::executeState(
 
   pimpl->parent = parent_;
   runUserCode(context_, [this](const Context& context_) {
-    runState();
+    runState(context_);
   });
   pimpl->parent = CaseOrdinaryPtr();
 }

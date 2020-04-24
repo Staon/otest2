@@ -101,8 +101,10 @@ class GeneratorStd : public Generator {
     virtual void finishCaseFunctions();
     virtual void enterState(
         const std::string& name_,
-        FunctionPtr state_fce_);
-    virtual void emptyBody();
+        FunctionPtr state_fce_,
+        const Location& fbegin_,
+        const Location& fend_);
+    virtual void emptyState();
     virtual void appendVariable(
         const std::string& name_,
         const std::string& type_);

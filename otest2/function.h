@@ -27,8 +27,6 @@
 
 namespace OTest2 {
 
-class VarTable;
-
 /**
  * @brief Record of one testing function (start-up, tear-down or a test case)
  */
@@ -44,7 +42,8 @@ class Function {
 
     void generateFceParameters(
         std::ostream& os_,
-        int indent_) const;
+        int indent_,
+        bool names_) const;
     void generateFceArguments(
         std::ostream& os_,
         int indent_) const;
@@ -95,6 +94,30 @@ class Function {
         const std::string& classname_) const;
 
     /**
+     * @brief Generate invocation of the function with different name
+     *
+     * @param os_ An output stream
+     * @param indent_ Indentation level
+     * @param fce_name_ The new function name
+     */
+    void generateInvocation(
+        std::ostream& os_,
+        int indent_,
+        const std::string& fce_name_) const;
+
+    /**
+     * @brief Generate declaration of the function with different name
+     *
+     * @param os_ An output stream
+     * @param indent_ Indentation level
+     * @param fce_name_ The new function name
+     */
+    void generateDeclaration(
+        std::ostream& os_,
+        int indent_,
+        const std::string& fce_name_) const;
+
+    /**
      * @brief Generate registration of the function
      *
      * @param os_ An output stream
@@ -106,17 +129,6 @@ class Function {
         std::ostream& os_,
         int indent_,
         const std::string& classname_) const;
-
-    /**
-     * @brief Insert parameters of the function into a var table
-     *
-     * This method inserts function parameters into a table of object
-     * variables as user data members.
-     *
-     * @param[out] table_ The table of variables
-     */
-    void enrichVarTable(
-        VarTable& table_) const;
 };
 
 typedef std::shared_ptr<Function> FunctionPtr;

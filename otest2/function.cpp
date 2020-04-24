@@ -25,7 +25,6 @@
 
 #include "formatting.h"
 #include "generfmt.h"
-#include "vartable.h"
 
 namespace OTest2 {
 
@@ -49,17 +48,10 @@ Function::~Function() {
 
 }
 
-void Function::addUserDataParameter(
-    const std::string& name_,
-    const std::string& key_,
-    const std::string& type_) {
-  assert(!name_.empty() && !key_.empty() && !type_.empty());
-  parameters.push_back({name_, key_, type_});
-}
-
 void Function::generateFceParameters(
     std::ostream& os_,
-    int indent_) const {
+    int indent_,
+    bool names_) const {
   bool first_(true);
   for(const auto& param_ : parameters) {
     if(!first_)
@@ -68,7 +60,10 @@ void Function::generateFceParameters(
       first_ = false;
     os_ << "\n";
     Formatting::printIndent(os_, indent_);
-    os_ << param_.type;
+    if(!names_)
+      os_ << param_.type;
+    else
+      os_ << "::OTest2::TypeOfMine< " << param_.type << " >::Type " << param_.name;
   }
 }
 
@@ -89,6 +84,14 @@ void Function::generateFceArguments(
   }
 }
 
+void Function::addUserDataParameter(
+    const std::string& name_,
+    const std::string& key_,
+    const std::string& type_) {
+  assert(!name_.empty() && !key_.empty() && !type_.empty());
+  parameters.push_back({name_, key_, type_});
+}
+
 void Function::generateMarshaler(
     std::ostream& os_,
     int indent_,
@@ -104,7 +107,7 @@ void Function::generateMarshaler(
   os_ << classname_ << "* object;\n";
   Formatting::printIndent(os_, indent_ + 2);
   os_ << "void (" << classname_ << "::* fce)(";
-  generateFceParameters(os_, indent_ + 4);
+  generateFceParameters(os_, indent_ + 4, false);
   os_ << ");\n\n";
 
   Formatting::printIndent(os_, indent_ + 1);
@@ -117,7 +120,7 @@ void Function::generateMarshaler(
   os_ << classname_ << "* object_,\n";
   Formatting::printIndent(os_, indent_ + 4);
   os_ << "void (" << classname_ << "::* fce_)(";
-  generateFceParameters(os_, indent_ + 6);
+  generateFceParameters(os_, indent_ + 6, false);
   os_ << ")) :\n";
   Formatting::printIndent(os_, indent_ + 3);
   os_ << "object(object_),\n";
@@ -152,6 +155,26 @@ void Function::generateMarshaler(
   os_ << "};";
 }
 
+void Function::generateInvocation(
+    std::ostream& os_,
+    int indent_,
+    const std::string& fce_name_) const {
+  Formatting::printIndent(os_, indent_);
+  os_ << fce_name_ << "(";
+  generateFceArguments(os_, indent_ + 2);
+  os_ << ");";
+}
+
+void Function::generateDeclaration(
+    std::ostream& os_,
+    int indent_,
+    const std::string& fce_name_) const {
+  Formatting::printIndent(os_, indent_);
+  os_ << "void " << fce_name_ << "(";
+  generateFceParameters(os_, indent_ + 2, true);
+  os_ << ")";
+}
+
 void Function::generateRegistration(
     std::ostream& os_,
     int indent_,
@@ -159,12 +182,6 @@ void Function::generateRegistration(
   const std::string marshaler_name_(marshalerName(name));
   os_ << "std::make_shared<" << marshaler_name_ << ">(this, &"
       << classname_ << "::" << name << ")";
-}
-
-void Function::enrichVarTable(
-    VarTable& table_) const {
-  for(const auto& param_ : parameters)
-    table_.appendUserData(param_.name, param_.key, param_.type);
 }
 
 } /* -- namespace OTest2 */

@@ -179,15 +179,19 @@ class Generator {
      *
      * @param name_ Name of the state
      * @param state_fce_ Description of the state function
+     * @param fbegin_ Beginning of the declaration of the state function
+     * @param fend_ End of the declaration of the state function
      */
     virtual void enterState(
         const std::string& name_,
-        FunctionPtr state_fce_) = 0;
+        FunctionPtr state_fce_,
+        const Location& fbegin_,
+        const Location& fend_) = 0;
 
     /**
-     * @brief Generate empty function body
+     * @brief Generate empty state
      */
-    virtual void emptyBody() = 0;
+    virtual void emptyState() = 0;
 
     /**
      * @brief Append a variable without initializer

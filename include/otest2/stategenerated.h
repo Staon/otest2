@@ -72,9 +72,12 @@ class StateGenerated : public StateOrdinary, public ContextObject {
 
   private:
     /**
-     * @brief The user code
+     * @brief Run the state code
+     *
+     * @param context_ The OTest2 context
      */
-    virtual void runState() = 0;
+    virtual void runState(
+        const Context& context_) = 0;
 
   protected:
     /**

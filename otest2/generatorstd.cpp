@@ -58,6 +58,9 @@ struct GeneratorStd::Impl {
     std::vector<FunctionPtr> start_up_fce;
     std::vector<FunctionPtr> tear_down_fce;
 
+    /* -- state function */
+    FunctionPtr state_fce;
+
     /* -- current indentation */
     int indent;
 
@@ -98,6 +101,10 @@ struct GeneratorStd::Impl {
     void writeUserLineDirective(
         const Location& begin_);
     void writeGenerLineDirective();
+    void writeStateClass(
+        const std::string& state_);
+    void writeStateFactoryMethod(
+        const std::string& state_);
 };
 
 GeneratorStd::Impl::Impl(
@@ -135,6 +142,53 @@ void GeneratorStd::Impl::writeGenerLineDirective() {
   output << "#line " << (output.getLineNo() + 1) << " ";
   writeCString(output, outfile);
   output << "\n";
+}
+
+void GeneratorStd::Impl::writeStateClass(
+    const std::string& state_) {
+  output
+      << "\n\n"
+      << "        class " << state_ << " : public ::OTest2::StateGenerated {\n"
+      << "          private:\n";
+  variables -> printDeclarations(output, indent);
+  output
+      << "\n"
+      << "          public:\n"
+      << "            /* -- avoid copying */\n"
+      << "            " << state_ << "(\n"
+      << "                const " << state_ << "&) = delete;\n"
+      << "            " << state_ << "& operator =(\n"
+      << "                const " << state_ << "&) = delete;\n"
+      << "\n"
+      << "            explicit " << state_ << "(\n"
+      << "                const ::OTest2::Context& context_";
+  variables->printParameters(output, indent + 2);
+  output
+      << ") :\n"
+      << "              ::OTest2::StateGenerated(context_, \"" << state_ << "\")";
+  variables->printInitializers(output, indent + 1);
+  output
+      << " {\n"
+      << "\n"
+      << "            }\n"
+      << "\n"
+      << "            virtual ~" << state_ << "() {\n"
+      << "\n"
+      << "            }\n"
+      << "\n";
+}
+
+void GeneratorStd::Impl::writeStateFactoryMethod(
+    const std::string& state_) {
+  output
+      << "        ::OTest2::StatePtr createState_" << state_ << "(\n"
+      << "            const ::OTest2::Context& context_) {\n"
+      << "          return ::OTest2::makePointer<" << state_ << ">(\n"
+      << "              context_";
+  variables->printArguments(output, indent + 3);
+  output
+      << ");\n"
+      << "        }";
 }
 
 GeneratorStd::GeneratorStd(
@@ -375,56 +429,46 @@ void GeneratorStd::finishCaseFunctions() {
 
 void GeneratorStd::enterState(
     const std::string& state_,
-    FunctionPtr state_fce_) {
+    FunctionPtr state_fce_,
+    const Location& fbegin_,
+    const Location& fend_) {
   assert(!pimpl -> suite.empty() && !pimpl -> testcase.empty() && pimpl -> state.empty());
-  assert(!state_.empty());
+  assert(!state_.empty() && state_fce_ != nullptr);
 
   pimpl->state = state_;
   pimpl->variables = std::make_shared<VarTable>("state_", pimpl->variables);
   pimpl->states.push_back(state_);
   pimpl->indent += 2;
+  pimpl->state_fce = state_fce_;
 
-  /* -- add user data specified in the state function among other member
-   *    variables. */
-  state_fce_->enrichVarTable(*pimpl->variables);
+  pimpl->writeStateClass(state_);
 
-  pimpl->output
-      << "\n\n"
-      << "        class " << state_ << " : public ::OTest2::StateGenerated {\n"
-      << "          private:\n";
-  pimpl->variables -> printDeclarations(pimpl->output, pimpl->indent);
-  pimpl->output
-      << "\n"
-      << "          public:\n"
-      << "            /* -- avoid copying */\n"
-      << "            " << state_ << "(\n"
-      << "                const " << state_ << "&) = delete;\n"
-      << "            " << state_ << "& operator =(\n"
-      << "                const " << state_ << "&) = delete;\n"
-      << "\n"
-      << "            explicit " << state_ << "(\n"
-      << "                const ::OTest2::Context& context_";
-  pimpl->variables->printParameters(pimpl->output, pimpl->indent + 2);
-  pimpl -> output
-      << ") :\n"
-      << "              ::OTest2::StateGenerated(context_, \"" << state_ << "\")";
-  pimpl->variables->printInitializers(pimpl->output, pimpl->indent + 1);
-  pimpl->output
-      << " {\n"
-      << "\n"
-      << "            }\n"
-      << "\n"
-      << "            virtual ~" << state_ << "() {\n"
-      << "\n"
-      << "            }\n"
-      << "\n"
-      << "            virtual void runState() ";
+  /* -- generate the function declaration */
+  state_fce_->generateDeclaration(
+      pimpl->output, pimpl->indent, "stateFunction");
 }
 
-void GeneratorStd::emptyBody() {
-  pimpl->output << "{\n\n";
-  Formatting::printIndent(pimpl->output, pimpl->indent);
-  pimpl -> output << "}";
+void GeneratorStd::emptyState() {
+  const std::string state_name_("AnonymousState");
+
+  pimpl->variables = std::make_shared<VarTable>("state_", pimpl->variables);
+  pimpl->states.push_back(state_name_);
+  pimpl->indent += 2;
+
+  pimpl->writeStateClass(state_name_);
+  pimpl->output
+      << "            virtual void runState(\n"
+      << "                const Context& context_) {\n"
+      << "\n"
+      << "            }\n"
+      << "        };\n\n";
+
+  pimpl->indent -= 2;
+
+  /* -- generate the factory method of the state */
+  pimpl->writeStateFactoryMethod(state_name_);
+
+  pimpl->variables = pimpl->variables->getPrevLevel();
 }
 
 void GeneratorStd::appendVariable(
@@ -493,25 +537,27 @@ void GeneratorStd::appendGenericFunction(
 void GeneratorStd::leaveState() {
   assert(!pimpl->suite.empty() && !pimpl->testcase.empty() && !pimpl->state.empty());
 
+  /* -- generate marshaler of the state function */
   pimpl->output
       << "\n"
+      << "            virtual void runState(\n"
+      << "                const Context& context_) {\n";
+  pimpl->state_fce->generateInvocation(
+      pimpl->output, pimpl->indent + 1, "stateFunction");
+  pimpl->output
+      << "\n"
+      << "            }\n";
+  pimpl->output
       << "        };\n\n";
 
   pimpl->indent -= 2;
 
   /* -- generate the factory method of the state */
-  pimpl->output
-      << "        ::OTest2::StatePtr createState_" << pimpl->state << "(\n"
-      << "            const ::OTest2::Context& context_) {\n"
-      << "          return ::OTest2::makePointer<" << pimpl->state << ">(\n"
-      << "              context_";
-  pimpl->variables->printArguments(pimpl->output, pimpl->indent + 3);
-  pimpl->output
-      << ");\n"
-      << "        }";
+  pimpl->writeStateFactoryMethod(pimpl->state);
 
   pimpl->state.clear();
   pimpl->variables = pimpl->variables->getPrevLevel();
+  pimpl->state_fce = nullptr;
 }
 
 void GeneratorStd::leaveCase() {

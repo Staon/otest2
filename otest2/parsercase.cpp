@@ -115,11 +115,7 @@ bool parseCaseBody(
       context_->generator->finishCaseFunctions();
 
       /* -- generate empty state object */
-      const std::string name_("AnonymousState");
-      FunctionPtr function_(std::make_shared<Function>(name_));
-      context_->generator->enterState(name_, function_);
-      context_->generator->emptyBody();
-      context_->generator->leaveState();
+      context_->generator->emptyState();
 
       break;
     }

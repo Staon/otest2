@@ -97,8 +97,8 @@ class GeneratorStd : public Generator {
     virtual void finishSuiteFunctions();
     virtual void enterCase(
         const std::string& name_);
-    virtual void caseStartUp();
-    virtual void caseTearDown();
+    virtual void finishCaseFixtures();
+    virtual void finishCaseFunctions();
     virtual void enterState(
         const std::string& name_);
     virtual void emptyBody();

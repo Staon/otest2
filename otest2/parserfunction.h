@@ -20,6 +20,8 @@
 #ifndef OTest2__OTEST2_PARSERFUNCTION_H_
 #define OTest2__OTEST2_PARSERFUNCTION_H_
 
+#include <utility>
+
 namespace clang {
 
 class FunctionDecl;
@@ -32,9 +34,14 @@ class ParserContext;
 
 namespace Parser {
 
-struct ParsedFunctions {
+struct FunctionFlags {
     bool start_up;
     bool tear_down;
+    bool test_state;
+    bool first_state;
+
+    explicit FunctionFlags(
+        bool test_state_);
 };
 
 /**
@@ -42,13 +49,13 @@ struct ParsedFunctions {
  *
  * @param[in] context_ The parser context
  * @param[in] function_ The function's AST node
- * @param[in,out] already_parsed_ Flags of already parsed functions
- * @return True if the function is parsed with no error
+ * @param[in,out] fce_flags_ Flags of functions to be parsed
+ * @return A pair of flags: <!error, test state>
  */
-bool parseFunction(
+std::pair<bool, bool> parseFunction(
     ParserContext* context_,
     clang::FunctionDecl* function_,
-    ParsedFunctions& already_parsed_);
+    FunctionFlags& fce_flags_);
 
 } /* -- namespace Parser */
 

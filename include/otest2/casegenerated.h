@@ -24,6 +24,7 @@
 
 #include <otest2/caseordinary.h>
 #include <otest2/contextobject.h>
+#include <otest2/fcemarshalerptr.h>
 #include <otest2/stateptr.h>
 
 namespace OTest2 {
@@ -88,16 +89,12 @@ class CaseGenerated : public CaseOrdinary, public ContextObject {
         const std::string& name_,
         StatePtr state_);
 
-  private:
     /**
-     * @brief User start-up code
+     * @brief Register a pair of start-up and tear-down functions
      */
-    virtual void startUp() = 0;
-
-    /**
-     * @brief User clean-up code
-     */
-    virtual void tearDown() = 0;
+    void registerFixture(
+        FceMarshalerPtr start_up_,
+        FceMarshalerPtr tear_down_);
 };
 
 } /* -- namespace OTest2 */

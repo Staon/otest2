@@ -21,8 +21,10 @@
 
 #include <assert.h>
 #include <string>
+#include <vector>
 
 #include <context.h>
+#include <fcemarshaler.h>
 #include "runcode.h"
 #include <stateptr.h>
 #include <stateregistry.h>
@@ -37,6 +39,8 @@ struct CaseGenerated::Impl {
     const Context* context;
     std::string name;
     StateRegistry state_registry;
+    std::vector<FceMarshalerPtr> start_ups;
+    std::vector<FceMarshalerPtr> tear_downs;
 
     /* -- avoid copying */
     Impl(
@@ -94,9 +98,9 @@ StatePtr CaseGenerated::getState(
 bool CaseGenerated::startUpCase(
     const Context& context_,
     int index_) {
-  if(index_ == 0) {
-    runUserCode(context_, [this](const Context& context_) {
-      startUp();
+  if(index_ >= 0 && index_ < pimpl->start_ups.size()) {
+    runUserCode(context_, [&](const Context& context_) {
+      pimpl->start_ups[index_]->runFunction(context_);
     });
     return true;
   }
@@ -107,10 +111,10 @@ bool CaseGenerated::startUpCase(
 void CaseGenerated::tearDownCase(
     const Context& context_,
     int index_) {
-  assert(index_ == 0);
+  assert(index_ >= 0 && index_ < pimpl->tear_downs.size());
 
-  runUserCode(context_, [this](const Context& context_) {
-    tearDown();
+  runUserCode(context_, [&](const Context& context_) {
+    pimpl->tear_downs[index_]->runFunction(context_);
   });
 }
 
@@ -122,6 +126,15 @@ void CaseGenerated::registerState(
     const std::string& name_,
     StatePtr state_) {
   pimpl->state_registry.registerState(name_, state_);
+}
+
+void CaseGenerated::registerFixture(
+    FceMarshalerPtr start_up_,
+    FceMarshalerPtr tear_down_) {
+  assert(start_up_ != nullptr && tear_down_ != nullptr);
+
+  pimpl->start_ups.push_back(start_up_);
+  pimpl->tear_downs.push_back(tear_down_);
 }
 
 } /* -- namespace OTest2 */

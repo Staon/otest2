@@ -27,7 +27,7 @@
 #include "function.h"
 #include "generator.h"
 #include "location.h"
-#include "parserannotation.h"
+#include "parserannotationimpl.h"
 #include "parsercode.h"
 #include "parsercontextimpl.h"
 
@@ -36,6 +36,15 @@
 namespace OTest2 {
 
 namespace Parser {
+
+FunctionFlags::FunctionFlags(
+    bool test_state_) :
+  start_up(true),
+  tear_down(true),
+  test_state(test_state_),
+  first_state(true) {
+
+}
 
 namespace {
 
@@ -76,65 +85,101 @@ FunctionPtr createFunctionObject(
 
 } /* -- namespace */
 
-bool parseFunction(
+std::pair<bool, bool> parseFunction(
     ParserContext* context_,
     clang::FunctionDecl* fce_,
-    ParsedFunctions& already_parsed_) {
+    FunctionFlags& fce_flags_) {
+  /* -- only forward declarations of test states are allowed */
+  if(!fce_->doesThisDeclarationHaveABody()) {
+    if(!fce_flags_.test_state || !hasAnnotation(fce_, STATE_ANNOTATION)) {
+      context_->setError("function must have a body", fce_);
+      return {false, false};
+    }
+    return {true, true};
+  }
+
   /* -- get function body */
-  auto body_(getFunctionBody(context_, fce_));
-  if(body_ == nullptr)
-    return false;
+  auto body_(fce_->getBody());
 
   /* -- source range of the function declaration */
   clang::SourceRange fce_range_(context_->getNodeRange(fce_));
   Location decl_begin_(context_->createLocation(fce_range_.getBegin()));
-  Location decl_end_;
-  if(body_ != nullptr) {
-    clang::SourceRange body_range_(context_->getNodeRange(body_));
-    decl_end_ = context_->createLocation(body_range_.getBegin());
-  }
-  else {
-    decl_end_ = context_->createLocation(fce_range_.getEnd());
-  }
+  clang::SourceRange body_range_(context_->getNodeRange(body_));
+  Location decl_end_(context_->createLocation(body_range_.getBegin()));
 
   /* -- generate function declaration */
-  if(body_ != nullptr
-      && (hasAnnotation(fce_, START_UP_ANNOTATION) || (hasAnnotation(fce_, TEAR_DOWN_ANNOTATION)))) {
+  AnnotationAny any_annotation_;
+  if(hasAnnotation(fce_, any_annotation_)) {
     FunctionPtr function_(createFunctionObject(context_, fce_));
     if(function_ == nullptr)
-      return false;
+      return {false, false};
 
     if(hasAnnotation(fce_, START_UP_ANNOTATION)) {
-      if(already_parsed_.start_up) {
-        context_->setError("second start-up function", fce_);
-        return false;
+      if(!fce_flags_.start_up || !fce_flags_.first_state) {
+        context_->setError("unexpected start-up function", fce_);
+        return {false, false};
       }
-      already_parsed_.start_up = true;
+      fce_flags_.start_up = false; /* -- avoid second function */
+
       context_->generator->appendStartUpFunction(
           function_, decl_begin_, decl_end_);
+      if(!parseCodeBlock(context_, body_))
+        return {false, false};
+
+      return {true, false};
     }
-    else {
-      if(already_parsed_.tear_down) {
-        context_->setError("second tear-down function", fce_);
-        return false;
+    else if(hasAnnotation(fce_, TEAR_DOWN_ANNOTATION)) {
+      if(!fce_flags_.tear_down || !fce_flags_.first_state) {
+        context_->setError("unexpected tear-down function", fce_);
+        return {false, false};
       }
-      already_parsed_.tear_down = true;
+      fce_flags_.tear_down = false; /* -- avoid second function */
+
       context_->generator->appendTearDownFunction(
           function_, decl_begin_, decl_end_);
+      if(!parseCodeBlock(context_, body_))
+        return {false, false};
+
+      return {true, false};
+    }
+    else if(hasAnnotation(fce_, STATE_ANNOTATION)) {
+      if(!fce_flags_.test_state) {
+        context_->setError("unexpected test state function", fce_);
+        return {false, true};
+      }
+
+      /* -- finish block of case's functions (first state function) */
+      if(fce_flags_.first_state) {
+        context_->generator->finishCaseFunctions();
+        fce_flags_.first_state = false;
+      }
+
+      /* -- enter the test case */
+      context_->generator->enterState(fce_->getNameAsString());
+      if(!parseCodeBlock(context_, body_))
+        return {false, true};
+      context_->generator->leaveState();
+
+      return {true, true};
+    }
+    else {
+      context_->setError("invalid function annotation", fce_);
+      return {false, false};
     }
   }
   else {
+    if(fce_flags_.first_state) {
+      context_->setError("unexpected user function", fce_);
+      return {false, false};
+    }
+
     context_->generator->appendGenericFunction(
         decl_begin_, decl_end_, body_ != nullptr);
-  }
-
-  /* -- process function body */
-  if(body_ != nullptr) {
     if(!parseCodeBlock(context_, body_))
-      return false;
-  }
+      return {false, false};
 
-  return true;
+    return {true, false};
+  }
 }
 
 } /* -- namespace Parser */

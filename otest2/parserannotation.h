@@ -64,6 +64,11 @@ struct AnnotationRegex {
         const std::string& annotation_);
 };
 
+struct AnnotationAny {
+    bool operator()(
+        const std::string& annotation_);
+};
+
 bool hasAnnotation(
     clang::Decl* decl_,
     const std::string& annotation_);

@@ -50,8 +50,8 @@ struct ParserContext {
       SUITE_FIXTURES,
       SUITE_FUNCTIONS,
       SUITE_CASES,
-      CASE_BEGIN,
-      CASE_TEAR_DOWN,
+      CASE_FIXTURES,
+      CASE_FUNCTIONS,
       CASE_STATES,
     };
     State state;

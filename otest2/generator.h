@@ -165,14 +165,14 @@ class Generator {
         const std::string& name_) = 0;
 
     /**
-     * @brief Generate declaration of the case's start-up function
+     * @brief Finish block of case's variables
      */
-    virtual void caseStartUp() = 0;
+    virtual void finishCaseFixtures() = 0;
 
     /**
-     * @brief Generate declaration of the case's tear down function
+     * @brief Finish block of case's functions
      */
-    virtual void caseTearDown() = 0;
+    virtual void finishCaseFunctions() = 0;
 
     /**
      * @brief Beginning of a test state

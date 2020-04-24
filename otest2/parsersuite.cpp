@@ -43,7 +43,7 @@ SuiteVisitor::~SuiteVisitor() {
 bool parseSuiteBody(
     ParserContext* context_,
     clang::NamespaceDecl* ns_) {
-  ParsedFunctions already_parsed_{false, false};
+  FunctionFlags fce_flags_(false);
 
   for(
       auto iter_(ns_->decls_begin());
@@ -64,7 +64,7 @@ bool parseSuiteBody(
           context_->generator->finishSuiteFixtures();
           context_->state = ParserContext::SUITE_FUNCTIONS;
           auto fce_(clang::cast<clang::FunctionDecl>(*iter_));
-          if(!parseFunction(context_, fce_, already_parsed_))
+          if(!parseFunction(context_, fce_, fce_flags_).first)
             return false;
           continue;
         }
@@ -89,7 +89,7 @@ bool parseSuiteBody(
         /* -- tear down functions */
         if(clang::isa<clang::FunctionDecl>(*iter_)) {
           auto fce_(clang::cast<clang::FunctionDecl>(*iter_));
-          if(!parseFunction(context_, fce_, already_parsed_))
+          if(!parseFunction(context_, fce_, fce_flags_).first)
             return false;
           continue;
         }

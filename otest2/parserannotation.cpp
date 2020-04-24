@@ -48,6 +48,11 @@ bool AnnotationRegex::operator()(
   return std::regex_match(annotation_, matches, expr);
 }
 
+bool AnnotationAny::operator()(
+    const std::string& annotation_) {
+  return true;
+}
+
 bool hasAnnotation(
     clang::Decl* decl_,
     const std::string& annotation_) {

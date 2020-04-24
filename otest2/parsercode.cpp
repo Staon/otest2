@@ -80,7 +80,7 @@ clang::VarDecl* getVarDecl(
 clang::Stmt* getFunctionBody(
     ParserContext* context_,
     clang::FunctionDecl* fce_) {
-  if(!fce_->hasBody()) {
+  if(!fce_->doesThisDeclarationHaveABody()) {
     context_->setError("function doesn't have a body", fce_);
     return nullptr;
   }

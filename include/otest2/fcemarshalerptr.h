@@ -17,41 +17,16 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OTest2__OTEST2_PARSERFUNCTION_H_
-#define OTest2__OTEST2_PARSERFUNCTION_H_
+#ifndef OTest2__INCLUDE_OTEST2_FCEMARSHALERPTR_H_
+#define OTest2__INCLUDE_OTEST2_FCEMARSHALERPTR_H_
 
-namespace clang {
-
-class FunctionDecl;
-
-} /* -- namespace clang */
+#include <memory>
 
 namespace OTest2 {
 
-class ParserContext;
-
-namespace Parser {
-
-struct ParsedFunctions {
-    bool start_up;
-    bool tear_down;
-};
-
-/**
- * @brief Parse a function of a testing object (suite, case)
- *
- * @param[in] context_ The parser context
- * @param[in] function_ The function's AST node
- * @param[in,out] already_parsed_ Flags of already parsed functions
- * @return True if the function is parsed with no error
- */
-bool parseFunction(
-    ParserContext* context_,
-    clang::FunctionDecl* function_,
-    ParsedFunctions& already_parsed_);
-
-} /* -- namespace Parser */
+class FceMarshaler;
+typedef std::shared_ptr<FceMarshaler> FceMarshalerPtr;
 
 } /* -- namespace OTest2 */
 
-#endif /* -- OTest2__OTEST2_PARSERFUNCTION_H_ */
+#endif /* -- OTest2__INCLUDE_OTEST2_FCEMARSHALERPTR_H_ */

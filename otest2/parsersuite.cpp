@@ -43,106 +43,107 @@ SuiteVisitor::~SuiteVisitor() {
 bool parseSuiteBody(
     ParserContext* context_,
     clang::NamespaceDecl* ns_) {
+  ParsedFunctions already_parsed_{false, false};
 
-    for(
-        auto iter_(ns_->decls_begin());
-        iter_ != ns_->decls_end();
-        ++iter_) {
-      switch(context_->state) {
-        case ParserContext::SUITE_FIXTURES: {
-          /* -- suite variable */
-          if(clang::isa<clang::VarDecl>(*iter_)) {
-            auto vardecl_(clang::cast<clang::VarDecl>(*iter_));
-            if(!parseVariable(context_, vardecl_))
-              return false;
-            continue;
-          }
-
-          /* -- suite functions - start-up, tear-down and user functions */
-          if(clang::isa<clang::FunctionDecl>(*iter_)) {
-            context_->generator->finishSuiteFixtures();
-            context_->state = ParserContext::SUITE_FUNCTIONS;
-            auto fce_(clang::cast<clang::FunctionDecl>(*iter_));
-            if(!parseFunction(context_, fce_))
-              return false;
-            continue;
-          }
-
-          /* -- test case */
-          if(clang::isa<clang::NamespaceDecl>(*iter_)) {
-            auto casens_(clang::cast<clang::NamespaceDecl>(*iter_));
-            if(hasAnnotation(casens_, CASE_ANNOTATION)) {
-              context_->generator->finishSuiteFixtures();
-              context_->generator->finishSuiteFunctions();
-              if(!parseCase(context_, casens_))
-                return false;
-              continue;
-            }
-          }
-
-          context_->setError("Invalid suite item", *iter_);
-          return false;
-        }
-
-        case ParserContext::SUITE_FUNCTIONS: {
-          /* -- tear down functions */
-          if(clang::isa<clang::FunctionDecl>(*iter_)) {
-            auto fce_(clang::cast<clang::FunctionDecl>(*iter_));
-            if(!parseFunction(context_, fce_))
-              return false;
-            continue;
-          }
-
-          /* -- test case */
-          if(clang::isa<clang::NamespaceDecl>(*iter_)) {
-            auto casens_(clang::cast<clang::NamespaceDecl>(*iter_));
-            if(hasAnnotation(casens_, CASE_ANNOTATION)) {
-              context_->generator->finishSuiteFunctions();
-              if(!parseCase(context_, casens_))
-                return false;
-              continue;
-            }
-          }
-
-          context_->setError("Invalid suite item", *iter_);
-          return false;
-        }
-
-        case ParserContext::SUITE_CASES: {
-          /* -- test case */
-          if(clang::isa<clang::NamespaceDecl>(*iter_)) {
-            auto casens_(clang::cast<clang::NamespaceDecl>(*iter_));
-            if(hasAnnotation(casens_, CASE_ANNOTATION)) {
-              if(!parseCase(context_, casens_))
-                return false;
-              continue;
-            }
-          }
-
-          context_->setError("Invalid suite item", *iter_);
-          return false;
-        }
-
-        default:
-          context_->setError("Invalid suite item", *iter_);
-          return false;
-      }
-    }
-
-    /* -- handle empty suite */
+  for(
+      auto iter_(ns_->decls_begin());
+      iter_ != ns_->decls_end();
+      ++iter_) {
     switch(context_->state) {
-      case ParserContext::SUITE_FIXTURES:
-        context_->generator->finishSuiteFixtures();
-        /* -- missing break is expected */
-      case ParserContext::SUITE_FUNCTIONS:
-        context_->generator->finishSuiteFunctions();
-        break;
-      case ParserContext::SUITE_CASES:
-        break;
+      case ParserContext::SUITE_FIXTURES: {
+        /* -- suite variable */
+        if(clang::isa<clang::VarDecl>(*iter_)) {
+          auto vardecl_(clang::cast<clang::VarDecl>(*iter_));
+          if(!parseVariable(context_, vardecl_))
+            return false;
+          continue;
+        }
+
+        /* -- suite functions - start-up, tear-down and user functions */
+        if(clang::isa<clang::FunctionDecl>(*iter_)) {
+          context_->generator->finishSuiteFixtures();
+          context_->state = ParserContext::SUITE_FUNCTIONS;
+          auto fce_(clang::cast<clang::FunctionDecl>(*iter_));
+          if(!parseFunction(context_, fce_, already_parsed_))
+            return false;
+          continue;
+        }
+
+        /* -- test case */
+        if(clang::isa<clang::NamespaceDecl>(*iter_)) {
+          auto casens_(clang::cast<clang::NamespaceDecl>(*iter_));
+          if(hasAnnotation(casens_, CASE_ANNOTATION)) {
+            context_->generator->finishSuiteFixtures();
+            context_->generator->finishSuiteFunctions();
+            if(!parseCase(context_, casens_))
+              return false;
+            continue;
+          }
+        }
+
+        context_->setError("Invalid suite item", *iter_);
+        return false;
+      }
+
+      case ParserContext::SUITE_FUNCTIONS: {
+        /* -- tear down functions */
+        if(clang::isa<clang::FunctionDecl>(*iter_)) {
+          auto fce_(clang::cast<clang::FunctionDecl>(*iter_));
+          if(!parseFunction(context_, fce_, already_parsed_))
+            return false;
+          continue;
+        }
+
+        /* -- test case */
+        if(clang::isa<clang::NamespaceDecl>(*iter_)) {
+          auto casens_(clang::cast<clang::NamespaceDecl>(*iter_));
+          if(hasAnnotation(casens_, CASE_ANNOTATION)) {
+            context_->generator->finishSuiteFunctions();
+            if(!parseCase(context_, casens_))
+              return false;
+            continue;
+          }
+        }
+
+        context_->setError("Invalid suite item", *iter_);
+        return false;
+      }
+
+      case ParserContext::SUITE_CASES: {
+        /* -- test case */
+        if(clang::isa<clang::NamespaceDecl>(*iter_)) {
+          auto casens_(clang::cast<clang::NamespaceDecl>(*iter_));
+          if(hasAnnotation(casens_, CASE_ANNOTATION)) {
+            if(!parseCase(context_, casens_))
+              return false;
+            continue;
+          }
+        }
+
+        context_->setError("Invalid suite item", *iter_);
+        return false;
+      }
+
       default:
-        context_->setError("invalid format of the suite", ns_);
+        context_->setError("Invalid suite item", *iter_);
         return false;
     }
+  }
+
+  /* -- handle empty suite */
+  switch(context_->state) {
+    case ParserContext::SUITE_FIXTURES:
+      context_->generator->finishSuiteFixtures();
+      /* -- missing break is expected */
+    case ParserContext::SUITE_FUNCTIONS:
+      context_->generator->finishSuiteFunctions();
+      break;
+    case ParserContext::SUITE_CASES:
+      break;
+    default:
+      context_->setError("invalid format of the suite", ns_);
+      return false;
+  }
 
   return true;
 }

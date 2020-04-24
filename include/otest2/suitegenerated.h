@@ -24,6 +24,7 @@
 
 #include <otest2/casefactoryptr.h>
 #include <otest2/contextobject.h>
+#include <otest2/fcemarshalerptr.h>
 #include <otest2/suiteordinary.h>
 
 namespace OTest2 {
@@ -89,16 +90,15 @@ class SuiteGenerated : public SuiteOrdinary, public ContextObject {
         const std::string& name_,
         CaseFactoryPtr case_factory_);
 
-  private:
     /**
-     * @brief User start-up code
+     * @brief Register a fixture (a pair of a start-up and a tear-down functions)
+     *
+     * @param start_up_ A start-up fuction of the fixture
+     * @param tear_down_ A tear-down function of the fixture
      */
-    virtual void startUp() = 0;
-
-    /**
-     * @brief User clean-up code
-     */
-    virtual void tearDown() = 0;
+    void registerFixture(
+        FceMarshalerPtr start_up_,
+        FceMarshalerPtr tear_down_);
 };
 
 } /* -- namespace OTest2 */

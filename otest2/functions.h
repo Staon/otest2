@@ -22,7 +22,9 @@
 
 #include "function.h"
 
+#include <iosfwd>
 #include <memory>
+#include <string>
 #include <vector>
 
 namespace OTest2 {
@@ -31,12 +33,14 @@ class Functions;
 typedef std::shared_ptr<Functions> FunctionsPtr;
 
 /**
- * @brief A container keeping testing function specifications
+ * @brief A container keeping fixture functions (pairs of start-up and
+ *     tear-down functions)
  */
 class Functions {
   private:
     FunctionsPtr prev_level;
-    std::vector<FunctionPtr> functions;
+    std::vector<FunctionPtr> start_ups;
+    std::vector<FunctionPtr> tear_downs;
 
   public:
     /**
@@ -65,12 +69,41 @@ class Functions {
     FunctionsPtr getPrevLevel() const;
 
     /**
-     * @brief Append a function
+     * @brief Append a fixture functions
      *
-     * @param function_ The function
+     * @param start_up_ A start-up function of the fixture
+     * @param tear_down_ A tear-down function of the fixture
      */
-    void appendFunction(
-        FunctionPtr function_);
+    void appendFixture(
+        FunctionPtr start_up_,
+        FunctionPtr tear_down_);
+
+    /**
+     * @brief Generate function marshalers
+     *
+     * @param os_ An output stream
+     * @param indent_ Indentation level
+     * @param classname_ Name of the testing class which the marshaler is
+     *     generated in.
+     */
+    void generateMarshalers(
+        std::ostream& os_,
+        int indent_,
+        const std::string& classname_) const;
+
+    /**
+     * @brief Generate registration of the functions
+     *
+     * @param os_ An output stream
+     * @param indent_ Indentation level
+     * @param regfce_ Registration function
+     * @param classname_ Name of the class which the marshalers are generated
+     *     in.
+     */
+    void generateRegistration(
+        std::ostream& os_,
+        int indent_,
+        const std::string& classname_) const;
 };
 
 } /* -- namespace OTest2 */

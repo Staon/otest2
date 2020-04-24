@@ -20,6 +20,7 @@
 #ifndef OTest2__OTEST2_FUNCTION_H_
 #define OTest2__OTEST2_FUNCTION_H_
 
+#include <iosfwd>
 #include <memory>
 #include <string>
 #include <vector>
@@ -38,6 +39,13 @@ class Function {
         std::string type;
     };
     std::vector<Record> parameters;
+
+    void generateFceParameters(
+        std::ostream& os_,
+        int indent_) const;
+    void generateFceArguments(
+        std::ostream& os_,
+        int indent_) const;
 
   public:
     /**
@@ -70,6 +78,32 @@ class Function {
         const std::string& name_,
         const std::string& key_,
         const std::string& type_);
+
+    /**
+     * @brief Generate marshaler of the function
+     *
+     * @param os_ An output stream
+     * @param indent_ Indentation level
+     * @param classname_ Name of the class which the marshaler is generated
+     *     in.
+     */
+    void generateMarshaler(
+        std::ostream& os_,
+        int indent_,
+        const std::string& classname_) const;
+
+    /**
+     * @brief Generate registration of the function
+     *
+     * @param os_ An output stream
+     * @param indent_ Indentation level
+     * @param classname_ Name of the class which the marshaler is generated
+     *     in.
+     */
+    void generateRegistration(
+        std::ostream& os_,
+        int indent_,
+        const std::string& classname_) const;
 };
 
 typedef std::shared_ptr<Function> FunctionPtr;

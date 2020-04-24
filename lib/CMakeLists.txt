@@ -67,6 +67,7 @@ add_library(libotest2
     exccatcher.cpp
     exccatcherordinary.cpp
     exctestmarkin.cpp
+    fcemarshaler.cpp
     internalerror.cpp
     object.cpp
     objectpath.cpp

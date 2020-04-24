@@ -53,9 +53,10 @@ struct GeneratorStd::Impl {
     /* -- table of variables */
     VarTablePtr variables;
 
-    /* -- testing functions */
-    FunctionsPtr start_up;
-    FunctionsPtr tear_down;
+    /* -- fixture functions */
+    FunctionsPtr fixtures;
+    std::vector<FunctionPtr> start_up_fce;
+    std::vector<FunctionPtr> tear_down_fce;
 
     /* -- current indentation */
     int indent;
@@ -163,6 +164,7 @@ void GeneratorStd::beginFile() {
       << "#include <otest2/assertionsimpl.h>\n"
       << "#include <otest2/casegenerated.h>\n"
       << "#include <otest2/context.h>\n"
+      << "#include <otest2/fcemarshaler.h>\n"
       << "#include <otest2/generutils.h>\n"
       << "#include <otest2/objectptr.h>\n"
       << "#include <otest2/registry.h>\n"
@@ -264,8 +266,9 @@ void GeneratorStd::enterSuite(
 
   pimpl->suite = suite_;
   pimpl->variables = std::make_shared<VarTable>("suite_", nullptr);
-  pimpl->start_up = std::make_shared<Functions>(nullptr);
-  pimpl->tear_down = std::make_shared<Functions>(nullptr);
+  pimpl->fixtures = std::make_shared<Functions>(nullptr);
+  pimpl->start_up_fce.emplace_back(nullptr);
+  pimpl->tear_down_fce.emplace_back(nullptr);
   pimpl->suites.push_back(suite_);
   pimpl->indent += 2;
 
@@ -297,6 +300,7 @@ void GeneratorStd::finishSuiteFixtures() {
   pimpl->output
       << " {\n"
       << "      registerAllCases();\n"
+      << "      registerFixtures();\n"
       << "    }\n"
       << "\n"
       << "    virtual ~" << pimpl->suite << "() {\n"
@@ -316,8 +320,7 @@ void GeneratorStd::enterCase(
 
   pimpl->testcase = case_;
   pimpl->variables = std::make_shared<VarTable>("case_", pimpl -> variables);
-  pimpl->start_up = std::make_shared<Functions>(pimpl->start_up);
-  pimpl->tear_down = std::make_shared<Functions>(pimpl->tear_down);
+  pimpl->fixtures = std::make_shared<Functions>(pimpl->fixtures);
   pimpl->cases.push_back(case_);
   pimpl->indent += 2;
 
@@ -378,8 +381,7 @@ void GeneratorStd::enterState(
 
   pimpl->state = state_;
   pimpl->variables = std::make_shared<VarTable>("state_", pimpl -> variables);
-  pimpl->start_up = std::make_shared<Functions>(pimpl->start_up);
-  pimpl->tear_down = std::make_shared<Functions>(pimpl->tear_down);
+  pimpl->fixtures = std::make_shared<Functions>(pimpl->fixtures);
   pimpl->states.push_back(state_);
   pimpl->indent += 2;
 
@@ -448,8 +450,11 @@ void GeneratorStd::appendStartUpFunction(
     FunctionPtr function_,
     const Location& fbegin_,
     const Location& fend_) {
+  assert(function_ != nullptr);
+
   /* -- store the function to generate its marshaler */
-  pimpl->start_up->appendFunction(function_);
+  assert(pimpl->start_up_fce.back() == nullptr);
+  pimpl->start_up_fce.back() = function_;
 
   /* -- generate the function declaration */
   Formatting::printIndent(pimpl->output, pimpl->indent);
@@ -460,8 +465,11 @@ void GeneratorStd::appendTearDownFunction(
     FunctionPtr function_,
     const Location& fbegin_,
     const Location& fend_) {
+  assert(function_ != nullptr);
+
   /* -- store the function to generate its marshaler */
-  pimpl->tear_down->appendFunction(function_);
+  assert(pimpl->tear_down_fce.back() == nullptr);
+  pimpl->tear_down_fce.back() = function_;
 
   /* -- generate the function declaration */
   Formatting::printIndent(pimpl->output, pimpl->indent);
@@ -501,8 +509,7 @@ void GeneratorStd::leaveState() {
 
   pimpl->state.clear();
   pimpl->variables = pimpl->variables->getPrevLevel();
-  pimpl->start_up = pimpl->start_up->getPrevLevel();
-  pimpl->tear_down = pimpl->tear_down->getPrevLevel();
+  pimpl->fixtures = pimpl->fixtures->getPrevLevel();
 }
 
 void GeneratorStd::leaveCase() {
@@ -539,8 +546,7 @@ void GeneratorStd::leaveCase() {
 
   pimpl->testcase.clear();
   pimpl->variables = pimpl->variables->getPrevLevel();
-  pimpl->start_up = pimpl->start_up->getPrevLevel();
-  pimpl->tear_down = pimpl->tear_down->getPrevLevel();
+  pimpl->fixtures = pimpl->fixtures->getPrevLevel();
   pimpl->states.clear();
 }
 
@@ -561,15 +567,30 @@ void GeneratorStd::leaveSuite() {
       << "              &" << pimpl->suite << "::createCase_" << case_ << "));\n";
   }
   pimpl->output
-      << "    }\n";
+      << "    }\n\n";
+
+  /* -- add the suite's start-up and tear-down functions */
+  pimpl->fixtures->appendFixture(
+      pimpl->start_up_fce.back(), pimpl->tear_down_fce.back());
+
+  /* -- generate fixture marshalers */
+  pimpl->fixtures->generateMarshalers(
+      pimpl->output, pimpl->indent, pimpl->suite);
+  pimpl->output
+      << "    void registerFixtures() {\n";
+  pimpl->fixtures->generateRegistration(
+      pimpl->output, pimpl->indent + 1, pimpl->suite);
+  pimpl->output
+      << "    }\n\n";
 
   pimpl->output
       << "};\n";
 
   pimpl->suite.clear();
-  pimpl->variables = 0;
-  pimpl->start_up = 0;
-  pimpl->tear_down = 0;
+  pimpl->variables = nullptr;
+  pimpl->fixtures = nullptr;
+  pimpl->start_up_fce.pop_back();
+  pimpl->tear_down_fce.pop_back();
   pimpl->cases.clear();
   pimpl->indent -= 2;
 }

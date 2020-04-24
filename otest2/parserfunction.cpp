@@ -78,11 +78,12 @@ FunctionPtr createFunctionObject(
 
 bool parseFunction(
     ParserContext* context_,
-    clang::FunctionDecl* fce_) {
+    clang::FunctionDecl* fce_,
+    ParsedFunctions& already_parsed_) {
   /* -- get function body */
-  clang::Stmt* body_(nullptr);
-  if(fce_->doesThisDeclarationHaveABody())
-    body_ = fce_->getBody();
+  auto body_(getFunctionBody(context_, fce_));
+  if(body_ == nullptr)
+    return false;
 
   /* -- source range of the function declaration */
   clang::SourceRange fce_range_(context_->getNodeRange(fce_));
@@ -104,10 +105,20 @@ bool parseFunction(
       return false;
 
     if(hasAnnotation(fce_, START_UP_ANNOTATION)) {
+      if(already_parsed_.start_up) {
+        context_->setError("second start-up function", fce_);
+        return false;
+      }
+      already_parsed_.start_up = true;
       context_->generator->appendStartUpFunction(
           function_, decl_begin_, decl_end_);
     }
     else {
+      if(already_parsed_.tear_down) {
+        context_->setError("second tear-down function", fce_);
+        return false;
+      }
+      already_parsed_.tear_down = true;
       context_->generator->appendTearDownFunction(
           function_, decl_begin_, decl_end_);
     }

@@ -20,6 +20,9 @@
 #include "functions.h"
 
 #include <assert.h>
+#include <iostream>
+
+#include "formatting.h"
 
 namespace OTest2 {
 
@@ -37,10 +40,55 @@ FunctionsPtr Functions::getPrevLevel() const {
   return prev_level;
 }
 
-void Functions::appendFunction(
-    FunctionPtr function_) {
-  assert(function_ != nullptr);
-  functions.push_back(function_);
+void Functions::appendFixture(
+    FunctionPtr start_up_,
+    FunctionPtr tear_down_) {
+  start_ups.push_back(start_up_);
+  tear_downs.push_back(tear_down_);
+}
+
+void Functions::generateMarshalers(
+    std::ostream& os_,
+    int indent_,
+    const std::string& classname_) const {
+  for(const auto& function_ : start_ups) {
+    if(function_ != nullptr) {
+      Formatting::printIndent(os_, indent_);
+      function_->generateMarshaler(os_, indent_, classname_);
+      os_ << "\n\n";
+    }
+  }
+  for(const auto& function_ : tear_downs) {
+    if(function_ != nullptr) {
+      Formatting::printIndent(os_, indent_);
+      function_->generateMarshaler(os_, indent_, classname_);
+      os_ << "\n\n";
+    }
+  }
+}
+
+void Functions::generateRegistration(
+    std::ostream& os_,
+    int indent_,
+    const std::string& classname_) const {
+  assert(start_ups.size() == tear_downs.size());
+
+  for(int i_(0); i_ < start_ups.size(); ++i_) {
+    Formatting::printIndent(os_, indent_);
+    os_ << "registerFixture(\n";
+    Formatting::printIndent(os_, indent_ + 2);
+    if(start_ups[i_] != nullptr)
+      start_ups[i_]->generateRegistration(os_, indent_ + 2, classname_);
+    else
+      os_ << "std::make_shared< ::OTest2::EmptyMarshaler >()";
+    os_ << ",\n";
+    Formatting::printIndent(os_, indent_ + 2);
+    if(tear_downs[i_] != nullptr)
+      tear_downs[i_]->generateRegistration(os_, indent_ + 2, classname_);
+    else
+      os_ << "std::make_shared< ::OTest2::EmptyMarshaler >()";
+    os_ << ");\n";
+  }
 }
 
 } /* -- namespace OTest2 */

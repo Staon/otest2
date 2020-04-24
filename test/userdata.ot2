@@ -189,6 +189,217 @@ TEST_SUITE(UserDataSuite) {
 //      runtime_.reporter.dumpRecords(std::cout);
     }
   }
+
+  TEST_CASE(UserDataAsParameters) {
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<UserDataAsParameters>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'suite user data'>",
+        "message<b = 'suite user data'>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'suite user data'>",
+        "message<b = 'suite user data'>",
+        "leaveAssert<>",
+        "enterCase<UserDataCase>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'case user data'>",
+        "message<b = 'case user data'>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'case user data'>",
+        "message<b = 'case user data'>",
+        "leaveAssert<>",
+        "enterState<firstTestState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'case user data'>",
+        "message<b = 'case user data'>",
+        "leaveAssert<>",
+        "leaveState<firstTestState>: passed",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 23>",
+        "message<b = 23>",
+        "leaveAssert<>",
+        "leaveCase<UserDataCase>: passed",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 23>",
+        "message<b = 23>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'suite user data'>",
+        "message<b = 'suite user data'>",
+        "leaveAssert<>",
+        "leaveSuite<UserDataAsParameters>: passed",
+        "leaveTest<selftest>: passed",
+      };
+      int suite_int_(23);
+      std::string suite_str_("suite user data");
+      std::string case_str_("case user data");
+
+      Runtime runtime_("UserDataAsParameters", "UserDataCase");
+      runtime_.user_data.setDatum("suite_int", &suite_int_);
+      runtime_.user_data.setDatum("suite_str", &suite_str_);
+      runtime_.user_data.setDatum("case_str", &case_str_);
+
+      testAssert(runtime_.runTheTest());
+      testAssert(runtime_.reporter.checkRecords(data_));
+//      runtime_.reporter.dumpRecords(std::cout);
+
+      testAssertEqual(suite_int_, 2 * 23);
+      testAssertEqual(suite_str_, "changed suite data");
+    }
+  }
+
+  TEST_CASE(UserDataParamsSuiteStartUp) {
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "path: selftest",
+        "enterSuite<UserDataParamsSuiteStartUp>",
+        "path: selftest::UserDataParamsSuiteStartUp",
+        "error<unexpected exception: missing user datum 'wrong_'>: failed",
+        "path: selftest::UserDataParamsSuiteStartUp",
+        "leaveAssert<>",
+        "path: selftest::UserDataParamsSuiteStartUp",
+        "leaveSuite<UserDataParamsSuiteStartUp>: failed",
+        "path: selftest::UserDataParamsSuiteStartUp",
+        "leaveTest<selftest>: failed",
+        "path: selftest",
+      };
+
+      Runtime runtime_("UserDataParamsSuiteStartUp", "", Runtime::report_paths_mark);
+
+      testAssert(!runtime_.runTheTest());
+      testAssert(runtime_.reporter.checkRecords(data_));
+//      runtime_.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(UserDataParamsSuiteTearDown) {
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "path: selftest",
+        "enterSuite<UserDataParamsSuiteTearDown>",
+        "path: selftest::UserDataParamsSuiteTearDown",
+        "enterCase<Something>",
+        "path: selftest::UserDataParamsSuiteTearDown::Something",
+        "enterState<AnonymousState>",
+        "path: selftest::UserDataParamsSuiteTearDown::Something",
+        "leaveState<AnonymousState>: passed",
+        "path: selftest::UserDataParamsSuiteTearDown::Something",
+        "leaveCase<Something>: passed",
+        "path: selftest::UserDataParamsSuiteTearDown::Something",
+        "error<unexpected exception: missing user datum 'wrong_'>: failed",
+        "path: selftest::UserDataParamsSuiteTearDown",
+        "leaveAssert<>",
+        "path: selftest::UserDataParamsSuiteTearDown",
+        "leaveSuite<UserDataParamsSuiteTearDown>: failed",
+        "path: selftest::UserDataParamsSuiteTearDown",
+        "leaveTest<selftest>: failed",
+        "path: selftest",
+      };
+
+      Runtime runtime_("UserDataParamsSuiteTearDown", "", Runtime::report_paths_mark);
+
+      testAssert(!runtime_.runTheTest());
+      testAssert(runtime_.reporter.checkRecords(data_));
+//      runtime_.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(UserDataParamsCaseStartUp) {
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "path: selftest",
+        "enterSuite<UserDataParamsCaseStartUp>",
+        "path: selftest::UserDataParamsCaseStartUp",
+        "enterCase<UserDataCase>",
+        "path: selftest::UserDataParamsCaseStartUp::UserDataCase",
+        "error<unexpected exception: missing user datum 'wrong_'>: failed",
+        "path: selftest::UserDataParamsCaseStartUp::UserDataCase",
+        "leaveAssert<>",
+        "path: selftest::UserDataParamsCaseStartUp::UserDataCase",
+        "leaveCase<UserDataCase>: failed",
+        "path: selftest::UserDataParamsCaseStartUp::UserDataCase",
+        "leaveSuite<UserDataParamsCaseStartUp>: failed",
+        "path: selftest::UserDataParamsCaseStartUp",
+        "leaveTest<selftest>: failed",
+        "path: selftest",
+      };
+
+      Runtime runtime_("UserDataParamsCaseStartUp", "", Runtime::report_paths_mark);
+
+      testAssert(!runtime_.runTheTest());
+      testAssert(runtime_.reporter.checkRecords(data_));
+//      runtime_.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(UserDataParamsCaseTearDown) {
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "path: selftest",
+        "enterSuite<UserDataParamsCaseTearDown>",
+        "path: selftest::UserDataParamsCaseTearDown",
+        "enterCase<UserDataCase>",
+        "path: selftest::UserDataParamsCaseTearDown::UserDataCase",
+        "enterState<AnonymousState>",
+        "path: selftest::UserDataParamsCaseTearDown::UserDataCase",
+        "leaveState<AnonymousState>: passed",
+        "path: selftest::UserDataParamsCaseTearDown::UserDataCase",
+        "error<unexpected exception: missing user datum 'wrong_'>: failed",
+        "path: selftest::UserDataParamsCaseTearDown::UserDataCase",
+        "leaveAssert<>",
+        "path: selftest::UserDataParamsCaseTearDown::UserDataCase",
+        "leaveCase<UserDataCase>: failed",
+        "path: selftest::UserDataParamsCaseTearDown::UserDataCase",
+        "leaveSuite<UserDataParamsCaseTearDown>: failed",
+        "path: selftest::UserDataParamsCaseTearDown",
+        "leaveTest<selftest>: failed",
+        "path: selftest",
+      };
+
+      Runtime runtime_("UserDataParamsCaseTearDown", "", Runtime::report_paths_mark);
+
+      testAssert(!runtime_.runTheTest());
+      testAssert(runtime_.reporter.checkRecords(data_));
+//      runtime_.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(UserDataParamsState) {
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "path: selftest",
+        "enterSuite<UserDataParamsState>",
+        "path: selftest::UserDataParamsState",
+        "enterCase<UserDataCase>",
+        "path: selftest::UserDataParamsState::UserDataCase",
+        "error<unexpected exception: missing user datum 'wrong_'>: failed",
+        "path: selftest::UserDataParamsState::UserDataCase",
+        "leaveAssert<>",
+        "path: selftest::UserDataParamsState::UserDataCase",
+        "leaveCase<UserDataCase>: failed",
+        "path: selftest::UserDataParamsState::UserDataCase",
+        "leaveSuite<UserDataParamsState>: failed",
+        "path: selftest::UserDataParamsState",
+        "leaveTest<selftest>: failed",
+        "path: selftest",
+      };
+
+      Runtime runtime_("UserDataParamsState", "", Runtime::report_paths_mark);
+
+      testAssert(!runtime_.runTheTest());
+      testAssert(runtime_.reporter.checkRecords(data_));
+//      runtime_.reporter.dumpRecords(std::cout);
+    }
+  }
 }
 
 } /* -- namespace Test */

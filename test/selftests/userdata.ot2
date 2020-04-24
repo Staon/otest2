@@ -70,13 +70,84 @@ TEST_SUITE(UserDataFailedSuite) {
   }
 }
 
-OT2_SUITE(UserDataArguments) {
-  void startUp2() OT2_START_UP() {
+OT2_SUITE(UserDataAsParameters) {
+  void myStartUpFunction(
+      const std::string& suite_str,
+      std::string& renamed_ OT2_USER_DATA_KEY("suite_str")) OT2_START_UP() {
+    testAssertEqual(suite_str, "suite user data");
+    testAssertEqual(suite_str, renamed_);
+  }
+
+  void myTearDownFunction(
+      int& suite_int,
+      std::string& suite_str) OT2_TEAR_DOWN() {
+    testAssertEqual(suite_int, 23);
+    testAssertEqual(suite_str, "suite user data");
+
+    suite_int *= 2;
+    suite_str = "changed suite data";
+  }
+
+  TEST_CASE(UserDataCase) {
+    void myStartUpFunction(
+        const std::string& case_str,
+        std::string& renamed_ OT2_USER_DATA_KEY("case_str")) OT2_START_UP() {
+      testAssertEqual(case_str, "case user data");
+      testAssertEqual(case_str, renamed_);
+    }
+
+    void myTearDownFunction(
+        int suite_int) OT2_TEAR_DOWN() {
+      testAssertEqual(suite_int, 23);
+    }
+
+    void firstTestState(
+        const std::string& state_var_ OT2_USER_DATA_KEY("case_str")) OT2_STATE() {
+      testAssertEqual(state_var_, "case user data");
+    }
+  }
+}
+
+OT2_SUITE(UserDataParamsSuiteStartUp) {
+  void startUp(
+      const std::string& wrong_) OT2_START_UP() {
+
+  }
+}
+
+OT2_SUITE(UserDataParamsSuiteTearDown) {
+  void tearDown(
+      const std::string& wrong_) OT2_TEAR_DOWN() {
 
   }
 
+  OT2_CASE(Something) {
+
+  }
+}
+
+OT2_SUITE(UserDataParamsCaseStartUp) {
   OT2_CASE(UserDataCase) {
-    OT2_SIMPLE() {
+    void startUp(
+        const std::string& wrong_) OT2_START_UP() {
+
+    }
+  }
+}
+
+OT2_SUITE(UserDataParamsCaseTearDown) {
+  OT2_CASE(UserDataCase) {
+    void tearDown(
+        const std::string& wrong_) OT2_TEAR_DOWN() {
+
+    }
+  }
+}
+
+OT2_SUITE(UserDataParamsState) {
+  OT2_CASE(UserDataCase) {
+    void firstState(
+        const std::string& wrong_) OT2_STATE() {
 
     }
   }

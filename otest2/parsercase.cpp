@@ -19,7 +19,9 @@
 #include "parsercase.h"
 
 #include <clang/AST/Decl.h>
+#include <memory>
 
+#include "function.h"
 #include "generator.h"
 #include "parserannotation.h"
 #include "parsercode.h"
@@ -109,9 +111,18 @@ bool parseCaseBody(
     case ParserContext::CASE_FIXTURES:
       context_->generator->finishCaseFixtures();
       /* -- missing break is expected */
-    case ParserContext::CASE_FUNCTIONS:
+    case ParserContext::CASE_FUNCTIONS: {
       context_->generator->finishCaseFunctions();
+
+      /* -- generate empty state object */
+      const std::string name_("AnonymousState");
+      FunctionPtr function_(std::make_shared<Function>(name_));
+      context_->generator->enterState(name_, function_);
+      context_->generator->emptyBody();
+      context_->generator->leaveState();
+
       break;
+    }
     case ParserContext::CASE_STATES:
       break;
     default:

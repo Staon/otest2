@@ -27,6 +27,8 @@
 
 namespace OTest2 {
 
+class VarTable;
+
 /**
  * @brief Record of one testing function (start-up, tear-down or a test case)
  */
@@ -104,6 +106,17 @@ class Function {
         std::ostream& os_,
         int indent_,
         const std::string& classname_) const;
+
+    /**
+     * @brief Insert parameters of the function into a var table
+     *
+     * This method inserts function parameters into a table of object
+     * variables as user data members.
+     *
+     * @param[out] table_ The table of variables
+     */
+    void enrichVarTable(
+        VarTable& table_) const;
 };
 
 typedef std::shared_ptr<Function> FunctionPtr;

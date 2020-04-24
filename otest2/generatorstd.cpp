@@ -374,7 +374,8 @@ void GeneratorStd::finishCaseFunctions() {
 }
 
 void GeneratorStd::enterState(
-    const std::string& state_) {
+    const std::string& state_,
+    FunctionPtr state_fce_) {
   assert(!pimpl -> suite.empty() && !pimpl -> testcase.empty() && pimpl -> state.empty());
   assert(!state_.empty());
 
@@ -382,6 +383,10 @@ void GeneratorStd::enterState(
   pimpl->variables = std::make_shared<VarTable>("state_", pimpl->variables);
   pimpl->states.push_back(state_);
   pimpl->indent += 2;
+
+  /* -- add user data specified in the state function among other member
+   *    variables. */
+  state_fce_->enrichVarTable(*pimpl->variables);
 
   pimpl->output
       << "\n\n"

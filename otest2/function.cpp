@@ -25,6 +25,7 @@
 
 #include "formatting.h"
 #include "generfmt.h"
+#include "vartable.h"
 
 namespace OTest2 {
 
@@ -158,6 +159,12 @@ void Function::generateRegistration(
   const std::string marshaler_name_(marshalerName(name));
   os_ << "std::make_shared<" << marshaler_name_ << ">(this, &"
       << classname_ << "::" << name << ")";
+}
+
+void Function::enrichVarTable(
+    VarTable& table_) const {
+  for(const auto& param_ : parameters)
+    table_.appendUserData(param_.name, param_.key, param_.type);
 }
 
 } /* -- namespace OTest2 */

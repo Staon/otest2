@@ -155,7 +155,7 @@ std::pair<bool, bool> parseFunction(
       }
 
       /* -- enter the test case */
-      context_->generator->enterState(fce_->getNameAsString());
+      context_->generator->enterState(fce_->getNameAsString(), function_);
       if(!parseCodeBlock(context_, body_))
         return {false, true};
       context_->generator->leaveState();

@@ -178,9 +178,11 @@ class Generator {
      * @brief Beginning of a test state
      *
      * @param name_ Name of the state
+     * @param state_fce_ Description of the state function
      */
     virtual void enterState(
-        const std::string& name_) = 0;
+        const std::string& name_,
+        FunctionPtr state_fce_) = 0;
 
     /**
      * @brief Generate empty function body

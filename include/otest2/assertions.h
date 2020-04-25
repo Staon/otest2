@@ -100,20 +100,6 @@ bool testAssert(
     const AssertBean& bean_) TEST_ASSERTION_MARK(::OTest2::GenericAssertion, testAssert);
 
 /**
- * @brief Comparing of two values
- *
- * The assertion passes if the values are the same.
- *
- * @param a_ Left operand
- * @param b_ Right operand
- * @return Result of the comparison
- */
-template<typename Compare_, typename A_, typename B_>
-bool testAssertCompare(
-    A_ a_,
-    B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< $1<$2, $3> >");
-
-/**
  * @brief Compare whether @a a_ is equal to @a b_
  *
  * @param a_ Left operand

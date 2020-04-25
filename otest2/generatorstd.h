@@ -126,9 +126,9 @@ class GeneratorStd : public Generator {
         const Location& fbegin_,
         const Location& fend_);
     virtual void appendGenericFunction(
+        FunctionPtr function_,
         const Location& fbegin_,
-        const Location& fend_,
-        bool body_);
+        const Location& fend_);
     virtual void leaveState();
     virtual void leaveCase();
     virtual void leaveSuite();

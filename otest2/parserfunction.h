@@ -45,6 +45,19 @@ struct FunctionFlags {
 };
 
 /**
+ * @brief Check whether the function declaration can be a part of the fixtures
+ *     block
+ *
+ * @param context_ The parser context
+ * @param fce_ The function
+ * @return True if the function is just declaration which can be part of
+ *     the fixtures block
+ */
+bool isAllowedFunctionDeclaration(
+    ParserContext* context_,
+    clang::FunctionDecl* fce_);
+
+/**
  * @brief Parse a function of a testing object (suite, case)
  *
  * @param[in] context_ The parser context

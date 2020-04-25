@@ -61,12 +61,20 @@ bool parseSuiteBody(
 
         /* -- suite functions - start-up, tear-down and user functions */
         if(clang::isa<clang::FunctionDecl>(*iter_)) {
-          context_->generator->finishSuiteFixtures();
-          context_->state = ParserContext::SUITE_FUNCTIONS;
           auto fce_(clang::cast<clang::FunctionDecl>(*iter_));
-          if(!parseFunction(context_, fce_, fce_flags_).first)
-            return false;
-          continue;
+          if(isAllowedFunctionDeclaration(context_, fce_)) {
+            /* -- The function doesn't stop the fixtures block. The forward
+             *    declarations of functions are ignored as they are not
+             *    needed in the generated code anymore. */
+            continue;
+          }
+          else {
+            context_->generator->finishSuiteFixtures();
+            context_->state = ParserContext::SUITE_FUNCTIONS;
+            if(!parseFunction(context_, fce_, fce_flags_).first)
+              return false;
+            continue;
+          }
         }
 
         /* -- test case */

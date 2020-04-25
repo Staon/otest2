@@ -226,6 +226,7 @@ void GeneratorStd::beginFile() {
       << "#include <otest2/regressionsimpl.h>\n"
       << "#include <otest2/stategenerated.h>\n"
       << "#include <otest2/suitegenerated.h>\n"
+      << "#include <otest2/typetraits.h>\n"
       << "#include <otest2/userdata.h>\n"
       << '\n';
 }
@@ -336,6 +337,13 @@ void GeneratorStd::finishSuiteFixtures() {
 
   /* -- suite variables */
   pimpl->variables->printDeclarations(pimpl->output, pimpl->indent);
+}
+
+void GeneratorStd::finishSuiteFunctions() {
+  assert(!pimpl -> suite.empty() && pimpl -> testcase.empty() && pimpl -> state.empty());
+
+  /* -- invokers of user functions */
+  pimpl->variables->printInvokers(pimpl->output, pimpl->indent, pimpl->suite);
 
   /* -- ctor and dtor */
   pimpl->output
@@ -363,10 +371,6 @@ void GeneratorStd::finishSuiteFixtures() {
       << "\n";
 }
 
-void GeneratorStd::finishSuiteFunctions() {
-  assert(!pimpl -> suite.empty() && pimpl -> testcase.empty() && pimpl -> state.empty());
-}
-
 void GeneratorStd::enterCase(
     const std::string& case_) {
   assert(!pimpl -> suite.empty() && pimpl -> testcase.empty() && pimpl -> state.empty());
@@ -392,6 +396,13 @@ void GeneratorStd::finishCaseFixtures() {
 
   /* -- suite variables */
   pimpl->variables->printDeclarations(pimpl->output, pimpl->indent);
+}
+
+void GeneratorStd::finishCaseFunctions() {
+  assert(!pimpl -> suite.empty() && !pimpl -> testcase.empty() && pimpl -> state.empty());
+
+  /* -- invokers of user functions */
+  pimpl->variables->printInvokers(pimpl->output, pimpl->indent, pimpl->testcase);
 
   /* -- ctor and dtor */
   pimpl->output
@@ -420,11 +431,6 @@ void GeneratorStd::finishCaseFixtures() {
       << "\n"
       << "        }\n"
       << "\n";
-}
-
-void GeneratorStd::finishCaseFunctions() {
-  assert(!pimpl -> suite.empty() && !pimpl -> testcase.empty() && pimpl -> state.empty());
-
 }
 
 void GeneratorStd::enterState(
@@ -504,6 +510,7 @@ void GeneratorStd::appendStartUpFunction(
   pimpl->start_up_fce.back() = function_;
 
   /* -- generate the function declaration */
+  pimpl->output << "\n";
   Formatting::printIndent(pimpl->output, pimpl->indent);
   pimpl->reader->writePart(pimpl->output, fbegin_, &fend_);
 }
@@ -519,19 +526,25 @@ void GeneratorStd::appendTearDownFunction(
   pimpl->tear_down_fce.back() = function_;
 
   /* -- generate the function declaration */
+  pimpl->output << "\n";
   Formatting::printIndent(pimpl->output, pimpl->indent);
   pimpl->reader->writePart(pimpl->output, fbegin_, &fend_);
 }
 
 void GeneratorStd::appendGenericFunction(
+    FunctionPtr function_,
     const Location& fbegin_,
-    const Location& fend_,
-    bool body_) {
+    const Location& fend_) {
+  assert(!pimpl->suite.empty());
+
+  /* -- insert the function into the table of variables to be passed into
+   *    nested objects */
+  pimpl->variables->appendUserFunction(function_);
+
   /* -- generate the function declaration */
+  pimpl->output << "\n";
   Formatting::printIndent(pimpl->output, pimpl->indent);
   pimpl->reader->writePart(pimpl->output, fbegin_, &fend_);
-  if(!body_)
-    pimpl->output << ";\n";
 }
 
 void GeneratorStd::leaveState() {

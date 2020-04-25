@@ -33,6 +33,7 @@ namespace OTest2 {
 class Function {
   private:
     std::string name;
+    std::string rettype;
     struct Record {
         std::string name;
         std::string key;
@@ -47,15 +48,20 @@ class Function {
     void generateFceArguments(
         std::ostream& os_,
         int indent_) const;
+    void generateInvokerArguments(
+        std::ostream& os_,
+        int indent_) const;
 
   public:
     /**
      * @brief Ctor
      *
      * @param name_ Name of the function
+     * @param rettype_ Return type of the function
      */
     explicit Function(
-        const std::string& name_);
+        const std::string& name_,
+        const std::string& rettype_);
 
     /**
      * @brief Dtor
@@ -67,6 +73,21 @@ class Function {
         const Function&) = delete;
     Function& operator = (
         const Function&) = delete;
+
+    /**
+     * @brief Get name of the function
+     */
+    std::string getName() const noexcept;
+
+    /**
+     * @brief Get name of the function's invoker
+     */
+    std::string getInvokerName() const noexcept;
+
+    /**
+     * @brief Get typename of the invoker class
+     */
+    std::string getInvokerClass() const noexcept;
 
     /**
      * @brief Add a parameter filled by specified user data
@@ -126,6 +147,19 @@ class Function {
      *     in.
      */
     void generateRegistration(
+        std::ostream& os_,
+        int indent_,
+        const std::string& classname_) const;
+
+    /**
+     * @brief Generate an invoker object which can be passed into nested
+     *     objects
+     *
+     * @param os_ An output stream
+     * @param indent_ Indentation level
+     * @param classname_ Name of the class which the invoker is generated in
+     */
+    void generateInvoker(
         std::ostream& os_,
         int indent_,
         const std::string& classname_) const;

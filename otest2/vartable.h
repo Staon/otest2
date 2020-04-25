@@ -24,6 +24,8 @@
 #include <memory>
 #include <string>
 
+#include "function.h"
+
 namespace OTest2 {
 
 class VarTable;
@@ -107,6 +109,17 @@ class VarTable {
         const std::string& declaration_);
 
     /**
+     * @brief Append a user function
+     *
+     * User functions must be passed into nested scopes so that the nested
+     * testing object can invoke them.
+     *
+     * @param function_ The function description
+     */
+    void appendUserFunction(
+        FunctionPtr function_);
+
+    /**
      * @brief Print declarations
      *
      * @param os_ An output stream
@@ -115,6 +128,18 @@ class VarTable {
     void printDeclarations(
         std::ostream& os_,
         int indent_) const;
+
+    /**
+     * @brief Print invokers of the user functions
+     *
+     * @param os_ An output stream
+     * @param indent_ Indentation level
+     * @param classname_ Name of the class which the invoker is generated in.
+     */
+    void printInvokers(
+        std::ostream& os_,
+        int indent_,
+        const std::string& classname_) const;
 
     /**
      * @brief Print the initializers

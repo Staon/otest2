@@ -34,6 +34,91 @@ TEST_SUITE(EmptyCaseSuite) {
   }
 }
 
+OT2_SUITE(ExtendedDslSuite) {
+  /* -- forward declarations of user functions are allowed among the fixtures */
+  std::string generateTestString();
+  const std::string test_constant(generateTestString());
+
+  void suiteFunction2(
+      const std::string& str_);
+
+  /* -- This function has a body so it stops the fixture block. */
+  std::string generateTestString() {
+    return "Hello suite!";
+  }
+
+  void suiteFunction1(
+      const std::string& str_) {
+    testAssertEqual(str_, test_constant);
+  }
+
+  void tearSuiteDown(
+      const std::string& ud1_) OT2_TEAR_DOWN() {
+    testAssertEqual(ud1_, "user data 1");
+    suiteFunction1("Hello suite!");
+    suiteFunction2("Hello suite 2!");
+  }
+
+  void suiteFunction2(
+      const std::string& str_) {
+    testAssertEqual(str_, "Hello suite 2!");
+  }
+
+  void startSuiteUp(
+      const std::string& ud1_) OT2_START_UP() {
+    testAssertEqual(ud1_, "user data 1");
+    suiteFunction2("Hello suite 2!");
+  }
+
+  OT2_CASE(ExtendedDslCase) {
+    /* -- forward declarations of user functions are allowed among the fixtures */
+    std::string generateCaseText();
+    const std::string case_constant(generateCaseText());
+
+    void caseFunction2(
+        const std::string& str_);
+
+    void caseFunction1(
+        const std::string& str_) {
+      testAssertEqual(str_, case_constant);
+    }
+
+    std::string generateCaseText() {
+      return "Hello case!";
+    }
+
+    void tearCaseDown(
+        const std::string& ud1_) OT2_TEAR_DOWN() {
+      testAssertEqual(ud1_, "user data 1");
+      suiteFunction1(generateTestString());
+      suiteFunction2("Hello suite 2!");
+      caseFunction1(generateCaseText());
+      caseFunction2("Hello case 2!");
+    }
+
+    void startCaseUp(
+        const std::string& ud1_) OT2_START_UP() {
+      testAssertEqual(ud1_, "user data 1");
+      suiteFunction1("Hello suite!");
+      suiteFunction2("Hello suite 2!");
+      caseFunction1("Hello case!");
+      caseFunction2("Hello case 2!");
+    }
+
+    void caseFunction2(
+        const std::string& str_) {
+      testAssertEqual(str_, "Hello case 2!");
+    }
+
+    OT2_SIMPLE() {
+      suiteFunction1("Hello suite!");
+      suiteFunction2("Hello suite 2!");
+      caseFunction1("Hello case!");
+      caseFunction2("Hello case 2!");
+    }
+  }
+}
+
 } /* -- namespace SelfTest */
 
 } /* -- namespace OTest2 */

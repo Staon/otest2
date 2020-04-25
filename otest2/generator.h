@@ -256,14 +256,14 @@ class Generator {
     /**
      * @brief Append a user function
      *
-     * @param fbegin_
-     * @param fend_
-     * @param body_
+     * @param function_ Description of the function
+     * @param fbegin_ Beginning of function declaration
+     * @param fend_ End of function declaration
      */
     virtual void appendGenericFunction(
+        FunctionPtr function_,
         const Location& fbegin_,
-        const Location& fend_,
-        bool body_) = 0;
+        const Location& fend_) = 0;
 
     /**
      * @brief End of current test state

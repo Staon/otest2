@@ -52,11 +52,21 @@ bool parseCaseBody(
           continue;
         }
 
-        /* -- start up or tear down functions */
+        /* -- functions of the case */
         if(clang::isa<clang::FunctionDecl>(*iter_)) {
+          auto fce_(clang::cast<clang::FunctionDecl>(*iter_));
+          if(isAllowedFunctionDeclaration(context_, fce_)) {
+            /* -- The function doesn't stop the fixtures block. The forward
+             *    declarations of functions are ignored as they are not
+             *    needed in the generated code anymore. */
+            continue;
+          }
+
           context_->generator->finishCaseFixtures();
 
-          auto fce_(clang::cast<clang::FunctionDecl>(*iter_));
+          /* -- Function can be a case function or a test case. It can
+           *    be distinguished by the second flag of the returned
+           *    pair. */
           auto result_(parseFunction(context_, fce_, fce_flags_));
           if(!result_.first)
             return false;

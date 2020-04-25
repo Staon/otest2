@@ -53,7 +53,8 @@ FunctionPtr createFunctionObject(
     clang::FunctionDecl* fce_) {
   /* -- create the object */
   std::string fce_name_(fce_->getNameAsString());
-  auto function_(std::make_shared<Function>(fce_name_));
+  std::string ret_type_(fce_->getReturnType().getAsString());
+  auto function_(std::make_shared<Function>(fce_name_, ret_type_));
 
   /* -- parse function parameters */
   const int parnum_(fce_->getNumParams());
@@ -85,17 +86,41 @@ FunctionPtr createFunctionObject(
 
 } /* -- namespace */
 
+bool isAllowedFunctionDeclaration(
+    ParserContext* context_,
+    clang::FunctionDecl* fce_) {
+  AnnotationAny any_annotation_;
+  if(!fce_->doesThisDeclarationHaveABody()) {
+    /* -- user functions may be declared forwardly */
+    if(!hasAnnotation(fce_, any_annotation_))
+      return true;
+  }
+  return false;
+}
+
 std::pair<bool, bool> parseFunction(
     ParserContext* context_,
     clang::FunctionDecl* fce_,
     FunctionFlags& fce_flags_) {
-  /* -- only forward declarations of test states are allowed */
+  AnnotationAny any_annotation_;
   if(!fce_->doesThisDeclarationHaveABody()) {
-    if(!fce_flags_.test_state || !hasAnnotation(fce_, STATE_ANNOTATION)) {
-      context_->setError("function must have a body", fce_);
-      return {false, false};
+    /* -- user functions may be declared forwardly */
+    if(!hasAnnotation(fce_, any_annotation_)) {
+      return {true, false};
     }
-    return {true, true};
+
+    /* -- the test states may be declared forwardly too */
+    if(hasAnnotation(fce_, STATE_ANNOTATION)) {
+      if(!fce_flags_.test_state) {
+        context_->setError("the state function is not allowed here", fce_);
+        return {false, true};
+      }
+      return {true, true};
+    }
+
+    /* -- otherwise function without body is an error */
+    context_->setError("function must have a body", fce_);
+    return {false, false};
   }
 
   /* -- get function body */
@@ -107,12 +132,13 @@ std::pair<bool, bool> parseFunction(
   clang::SourceRange body_range_(context_->getNodeRange(body_));
   Location decl_end_(context_->createLocation(body_range_.getBegin()));
 
+  /* -- create description of the function */
+  FunctionPtr function_(createFunctionObject(context_, fce_));
+  if(function_ == nullptr)
+    return {false, false};
+
   /* -- generate function declaration */
-  AnnotationAny any_annotation_;
   if(hasAnnotation(fce_, any_annotation_)) {
-    FunctionPtr function_(createFunctionObject(context_, fce_));
-    if(function_ == nullptr)
-      return {false, false};
 
     if(hasAnnotation(fce_, START_UP_ANNOTATION)) {
       if(!fce_flags_.start_up || !fce_flags_.first_state) {
@@ -169,13 +195,13 @@ std::pair<bool, bool> parseFunction(
     }
   }
   else {
-    if(fce_flags_.first_state) {
+    if(!fce_flags_.first_state) {
       context_->setError("unexpected user function", fce_);
       return {false, false};
     }
 
     context_->generator->appendGenericFunction(
-        decl_begin_, decl_end_, body_ != nullptr);
+        function_, decl_begin_, decl_end_);
     if(!parseCodeBlock(context_, body_))
       return {false, false};
 

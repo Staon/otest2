@@ -40,9 +40,18 @@ class Variable {
 
     virtual void printType(
         std::ostream& os_) const = 0;
+    virtual void printParentName(
+        std::ostream& os_,
+        const std::string& name_) const;
     virtual void printDeclaration(
         std::ostream& os_,
+        int indent_,
         const std::string& name_) const = 0;
+    virtual void printInvoker(
+        std::ostream& os_,
+        int indent_,
+        const std::string& name_,
+        const std::string& classname_) const = 0;
     virtual void printInitializer(
         std::ostream& os_,
         const std::string& name_) const = 0;
@@ -71,7 +80,13 @@ class VariableMine : public Variable {
         std::ostream& os_) const override;
     virtual void printDeclaration(
         std::ostream& os_,
+        int indent_,
         const std::string& name_) const override;
+    virtual void printInvoker(
+        std::ostream& os_,
+        int indent_,
+        const std::string& name_,
+        const std::string& classname_) const override;
     virtual void printInitializer(
         std::ostream& os_,
         const std::string& name_) const override;
@@ -96,7 +111,13 @@ class VariableInherited : public Variable {
         std::ostream& os_) const override;
     virtual void printDeclaration(
         std::ostream& os_,
+        int indent_,
         const std::string& name_) const override;
+    virtual void printInvoker(
+        std::ostream& os_,
+        int indent_,
+        const std::string& name_,
+        const std::string& classname_) const override;
     virtual void printInitializer(
         std::ostream& os_,
         const std::string& name_) const override;
@@ -123,7 +144,13 @@ class VariableUserData : public Variable {
         std::ostream& os_) const override;
     virtual void printDeclaration(
         std::ostream& os_,
+        int indent_,
         const std::string& name_) const override;
+    virtual void printInvoker(
+        std::ostream& os_,
+        int indent_,
+        const std::string& name_,
+        const std::string& classname_) const override;
     virtual void printInitializer(
         std::ostream& os_,
         const std::string& name_) const override;
@@ -136,6 +163,46 @@ class VariableUserData : public Variable {
         int indent_,
         const std::string& name_) const override;
 };
+
+class VariableFunction : public Variable {
+  private:
+    FunctionPtr function;
+
+  public:
+    explicit VariableFunction(
+        FunctionPtr function_);
+    virtual void printType(
+        std::ostream& os_) const override;
+    virtual void printParentName(
+        std::ostream& os_,
+        const std::string& name_) const override;
+    virtual void printDeclaration(
+        std::ostream& os_,
+        int indent_,
+        const std::string& name_) const override;
+    virtual void printInvoker(
+        std::ostream& os_,
+        int indent_,
+        const std::string& name_,
+        const std::string& classname_) const override;
+    virtual void printInitializer(
+        std::ostream& os_,
+        const std::string& name_) const override;
+    virtual void printParameter(
+        std::ostream& os_,
+        int indent_,
+        const std::string& name_) const override;
+    virtual void printArgument(
+        std::ostream& os_,
+        int indent_,
+        const std::string& name_) const override;
+};
+
+void Variable::printParentName(
+    std::ostream& os_,
+    const std::string& name_) const {
+  os_ << name_;
+}
 
 VariableMine::VariableMine(
     const std::string& declaration_,
@@ -153,16 +220,26 @@ void VariableMine::printType(
 
 void VariableMine::printDeclaration(
     std::ostream& os_,
+    int indent_,
     const std::string& name_) const {
+  Formatting::printIndent(os_, indent_);
   os_ << "typename ::OTest2::TypeOfMine<";
   printType(os_);
-  os_ << ">::Type " << name_;
+  os_ << ">::Type " << name_ << ";\n";
+}
+
+void VariableMine::printInvoker(
+    std::ostream& os_,
+    int indent_,
+    const std::string& name_,
+    const std::string& classname_) const {
+  /* -- nothing to do - variable doesn't have an invoker */
 }
 
 void VariableMine::printInitializer(
     std::ostream& os_,
     const std::string& name_) const {
-  os_ << initializer;
+  os_ << name_ << '(' << initializer << ')';
 }
 
 void VariableMine::printParameter(
@@ -193,16 +270,26 @@ void VariableInherited::printType(
 
 void VariableInherited::printDeclaration(
     std::ostream& os_,
+    int indent_,
     const std::string& name_) const {
+  Formatting::printIndent(os_, indent_);
   os_ << "typename ::OTest2::TypeOfParent<";
   printType(os_);
-  os_ << ">::Type " << name_;
+  os_ << ">::Type " << name_ << ";\n";
+}
+
+void VariableInherited::printInvoker(
+    std::ostream& os_,
+    int indent_,
+    const std::string& name_,
+    const std::string& classname_) const {
+  /* -- nothing to do - variable doesn't have an invoker */
 }
 
 void VariableInherited::printInitializer(
     std::ostream& os_,
     const std::string& name_) const {
-  os_ << name_ << "_";
+  os_ << name_ << '(' << name_ << "_)";
 }
 
 void VariableInherited::printParameter(
@@ -222,7 +309,7 @@ void VariableInherited::printArgument(
     const std::string& name_) const {
   os_ << ",\n";
   Formatting::printIndent(os_, indent_);
-  os_ << name_;
+  parent->printParentName(os_, name_);
 }
 
 VariableUserData::VariableUserData(
@@ -242,18 +329,28 @@ void VariableUserData::printType(
 
 void VariableUserData::printDeclaration(
     std::ostream& os_,
+    int indent_,
     const std::string& name_) const {
+  Formatting::printIndent(os_, indent_);
   os_ << "typename ::OTest2::TypeOfParent<";
   printType(os_);
-  os_ << ">::Type " << name_;
+  os_ << ">::Type " << name_ << ";\n";
+}
+
+void VariableUserData::printInvoker(
+    std::ostream& os_,
+    int indent_,
+    const std::string& name_,
+    const std::string& classname_) const {
+  /* -- nothing to do - variable doesn't have an invoker */
 }
 
 void VariableUserData::printInitializer(
     std::ostream& os_,
     const std::string& name_) const {
-  os_ << "context_.user_data->getDatum<" << declaration << ">(";
+  os_ << name_ << "(" << "context_.user_data->getDatum<" << declaration << ">(";
   writeCString(os_, key);
-  os_ << ")";
+  os_ << "))";
 }
 
 void VariableUserData::printParameter(
@@ -268,6 +365,60 @@ void VariableUserData::printArgument(
     int indent_,
     const std::string& name_) const {
   /* -- nothing to do - the user datum is not passed from the parent */
+}
+
+VariableFunction::VariableFunction(
+    FunctionPtr function_) :
+  function(function_) {
+
+}
+
+void VariableFunction::printType(
+    std::ostream& os_) const {
+  os_ << "const " << function->getInvokerClass() << "&";
+}
+
+void VariableFunction::printParentName(
+    std::ostream& os_,
+    const std::string& name_) const {
+  os_ << function->getInvokerName();
+}
+
+void VariableFunction::printDeclaration(
+    std::ostream& os_,
+    int indent_,
+    const std::string& name_) const {
+  /* -- nothing to do - function has an invoker */
+}
+
+void VariableFunction::printInvoker(
+    std::ostream& os_,
+    int indent_,
+    const std::string& name_,
+    const std::string& classname_) const {
+  os_ << "\n";
+  function->generateInvoker(os_, indent_, classname_);
+  os_ << "\n";
+}
+
+void VariableFunction::printInitializer(
+    std::ostream& os_,
+    const std::string& name_) const {
+  os_ << function->getInvokerName() << "(this)";
+}
+
+void VariableFunction::printParameter(
+    std::ostream& os_,
+    int indent_,
+    const std::string& name_) const {
+  /* -- nothing to do - function is not passed from the parent */
+}
+
+void VariableFunction::printArgument(
+    std::ostream& os_,
+    int indent_,
+    const std::string& name_) const {
+  /* -- nothing to do - function is not passed from the parent */
 }
 
 } /* -- namespace */
@@ -379,15 +530,31 @@ void VarTable::appendUserData(
       std::make_shared<VariableUserData>(key_, declaration_));
 }
 
+void VarTable::appendUserFunction(
+    FunctionPtr function_) {
+  assert(function_ != nullptr);
+
+  pimpl->appendVariable(
+      function_->getName(),
+      std::make_shared<VariableFunction>(function_));
+}
+
 void VarTable::printDeclarations(
     std::ostream& os_,
     int indent_) const {
   for(const std::string& name_ : pimpl->order) {
     Impl::Variables::const_iterator var_(pimpl->variables.find(name_));
+    (*var_).second->printDeclaration(os_, indent_, name_);
+  }
+}
 
-    Formatting::printIndent(os_, indent_);
-    (*var_).second->printDeclaration(os_, name_);
-    os_ << ";\n";
+void VarTable::printInvokers(
+    std::ostream& os_,
+    int indent_,
+    const std::string& classname_) const {
+  for(const std::string& name_ : pimpl->order) {
+    Impl::Variables::const_iterator var_(pimpl->variables.find(name_));
+    (*var_).second->printInvoker(os_, indent_, name_, classname_);
   }
 }
 
@@ -396,12 +563,9 @@ void VarTable::printInitializers(
     int indent_) const {
   for(const std::string& name_ : pimpl->order) {
     Impl::Variables::const_iterator var_(pimpl->variables.find(name_));
-
     os_ << ",\n";
     Formatting::printIndent(os_, indent_);
-    os_ << name_ << '(';
     (*var_).second->printInitializer(os_, name_);
-    os_ << ')';
   }
 }
 

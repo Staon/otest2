@@ -27,6 +27,7 @@ namespace OTest2 {
 class ExcCatcher;
 class Reporter;
 class Runner;
+class UserData;
 
 /**
  * @brief Default test environment
@@ -77,6 +78,11 @@ class DfltEnvironment {
      */
     void setExceptionCatcher(
         ExcCatcher* catcher_);
+
+    /**
+     * @brief Access the container of user data
+     */
+    UserData& getUserData() noexcept;
 
     /**
      * @brief Get constructed runner

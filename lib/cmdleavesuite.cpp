@@ -17,48 +17,37 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OTest2__INCLUDE_OTEST2_EXCEPTION_H_
-#define OTest2__INCLUDE_OTEST2_EXCEPTION_H_
+#include <cmdleavesuite.h>
 
+#include <assert.h>
 #include <string>
+
+#include <context.h>
+#include <objectpath.h>
+#include <reporter.h>
+#include <semanticstack.h>
 
 namespace OTest2 {
 
-/**
- * @brief Generic OTest2 exception
- */
-class Exception {
-  protected:
-    /**
-     * @brief Ctor
-     */
-    Exception();
+CmdLeaveSuite::CmdLeaveSuite() {
 
-    /**
-     * @brief Move ctor
-     */
-    Exception(
-        Exception&& exc_);
+}
 
-    /**
-     * @brief Dtor
-     */
-    virtual ~Exception();
+CmdLeaveSuite::~CmdLeaveSuite() {
 
-  public:
-    /* -- avoid copying */
-    Exception(
-        const Exception&) = delete;
-    Exception& operator =(
-        const Exception&) = delete;
+}
 
-    /**
-     * @brief Get exception reason
-     * @return
-     */
-    virtual std::string reason() const = 0;
-};
+void CmdLeaveSuite::run(
+    const Context& context_) {
+  /* -- report finishing of the suite */
+  context_.reporter->leaveSuite(
+      context_,
+      context_.object_path->getCurrentName(),
+      context_.semantic_stack->top());
+
+  /* -- finish suite's stack-frame */
+  context_.object_path->popName();
+  context_.semantic_stack->popAnd();
+}
 
 } /* namespace OTest2 */
-
-#endif /* OTest2__INCLUDE_OTEST2_EXCEPTION_H_ */

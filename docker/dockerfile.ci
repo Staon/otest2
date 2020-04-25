@@ -1,14 +1,15 @@
 FROM debian:stretch AS clang_tmp
-RUN apt-get update && apt-get install -y tar gzip binutils
+RUN apt-get update && apt-get install -y tar gzip binutils wget
 COPY clang-install.tar.gz shrink_clang.sh empty.o /otest2/
 RUN mkdir -p /otest2/local \
     && gunzip -c /otest2/clang-install.tar.gz | tar -x -v -f- -p -C/otest2/local \
     && cd /otest2 \
     && /otest2/shrink_clang.sh /otest2/local /usr/local
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.17.1/cmake-3.17.1-Linux-x86_64.tar.gz
+RUN gunzip -c cmake-3.17.1-Linux-x86_64.tar.gz | tar xvf -
 
 FROM debian:stretch AS otest2-ci
 RUN apt-get update && apt-get install --no-install-recommends -y \
-    cmake \
     libncurses5-dev \
     libbz2-dev \
     libboost-dev \
@@ -16,6 +17,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     libevent-dev \
     g++ \
     git \
+    make \
     pkg-config \
     openssh-client \
     ca-certificates \
@@ -25,6 +27,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 	&& apt-get -y clean \
 	&& rm -rf /var/lib/apt/lists/*
 COPY --from=clang_tmp /usr/local /usr/local
+COPY --from=clang_tmp /cmake-3.17.1-Linux-x86_64 /usr/local
 
 # Discover system include paths
 COPY otest2_discovery.sh ./

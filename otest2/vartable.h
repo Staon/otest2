@@ -21,10 +21,10 @@
 #define OTest2OTEST2_VARTABLE_H_
 
 #include <iosfwd>
-#include <map>
 #include <memory>
 #include <string>
-#include <vector>
+
+#include "function.h"
 
 namespace OTest2 {
 
@@ -36,17 +36,8 @@ typedef std::shared_ptr<VarTable> VarTablePtr;
  */
 class VarTable {
   private:
-    std::string name;
-    VarTablePtr level;
-    struct Record {
-        bool mine;
-        std::string declaration;
-        std::string initializer;
-    };
-    typedef std::map<std::string, Record> Variables;
-    Variables variables;
-    typedef std::vector<std::string> Order;
-    Order order;
+    struct Impl;
+    Impl* pimpl;
 
   public:
     /**
@@ -106,6 +97,29 @@ class VarTable {
         const std::string& initializer_);
 
     /**
+     * @brief Append new user datum
+     *
+     * @param name_ Name of the datum
+     * @param key_ Key of the datum (it usually equals the name)
+     * @param declaration_ Type of the datum
+     */
+    void appendUserData(
+        const std::string& name_,
+        const std::string& key_,
+        const std::string& declaration_);
+
+    /**
+     * @brief Append a user function
+     *
+     * User functions must be passed into nested scopes so that the nested
+     * testing object can invoke them.
+     *
+     * @param function_ The function description
+     */
+    void appendUserFunction(
+        FunctionPtr function_);
+
+    /**
      * @brief Print declarations
      *
      * @param os_ An output stream
@@ -114,6 +128,18 @@ class VarTable {
     void printDeclarations(
         std::ostream& os_,
         int indent_) const;
+
+    /**
+     * @brief Print invokers of the user functions
+     *
+     * @param os_ An output stream
+     * @param indent_ Indentation level
+     * @param classname_ Name of the class which the invoker is generated in.
+     */
+    void printInvokers(
+        std::ostream& os_,
+        int indent_,
+        const std::string& classname_) const;
 
     /**
      * @brief Print the initializers

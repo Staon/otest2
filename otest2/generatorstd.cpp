@@ -26,6 +26,7 @@
 #include <vector>
 
 #include "filereader.h"
+#include "functions.h"
 #include "generfmt.h"
 #include "formatting.h"
 #include "lcstream.h"
@@ -51,6 +52,16 @@ struct GeneratorStd::Impl {
 
     /* -- table of variables */
     VarTablePtr variables;
+
+    /* -- fixture functions */
+    FunctionsPtr fixtures;
+    std::vector<FunctionPtr> start_up_fce;
+    std::vector<FunctionPtr> tear_down_fce;
+
+    /* -- state function */
+    FunctionPtr state_fce;
+
+    /* -- current indentation */
     int indent;
 
     /* -- current state */
@@ -90,6 +101,10 @@ struct GeneratorStd::Impl {
     void writeUserLineDirective(
         const Location& begin_);
     void writeGenerLineDirective();
+    void writeStateClass(
+        const std::string& state_);
+    void writeStateFactoryMethod(
+        const std::string& state_);
 };
 
 GeneratorStd::Impl::Impl(
@@ -129,6 +144,53 @@ void GeneratorStd::Impl::writeGenerLineDirective() {
   output << "\n";
 }
 
+void GeneratorStd::Impl::writeStateClass(
+    const std::string& state_) {
+  output
+      << "\n\n"
+      << "        class " << state_ << " : public ::OTest2::StateGenerated {\n"
+      << "          private:\n";
+  variables -> printDeclarations(output, indent);
+  output
+      << "\n"
+      << "          public:\n"
+      << "            /* -- avoid copying */\n"
+      << "            " << state_ << "(\n"
+      << "                const " << state_ << "&) = delete;\n"
+      << "            " << state_ << "& operator =(\n"
+      << "                const " << state_ << "&) = delete;\n"
+      << "\n"
+      << "            explicit " << state_ << "(\n"
+      << "                const ::OTest2::Context& context_";
+  variables->printParameters(output, indent + 2);
+  output
+      << ") :\n"
+      << "              ::OTest2::StateGenerated(context_, \"" << state_ << "\")";
+  variables->printInitializers(output, indent + 1);
+  output
+      << " {\n"
+      << "\n"
+      << "            }\n"
+      << "\n"
+      << "            virtual ~" << state_ << "() {\n"
+      << "\n"
+      << "            }\n"
+      << "\n";
+}
+
+void GeneratorStd::Impl::writeStateFactoryMethod(
+    const std::string& state_) {
+  output
+      << "        ::OTest2::StatePtr createState_" << state_ << "(\n"
+      << "            const ::OTest2::Context& context_) {\n"
+      << "          return ::OTest2::makePointer<" << state_ << ">(\n"
+      << "              context_";
+  variables->printArguments(output, indent + 3);
+  output
+      << ");\n"
+      << "        }";
+}
+
 GeneratorStd::GeneratorStd(
     std::ostream* output_,
     FileReader* reader_,
@@ -155,6 +217,8 @@ void GeneratorStd::beginFile() {
       << "#include <otest2/assertions.h>\n"
       << "#include <otest2/assertionsimpl.h>\n"
       << "#include <otest2/casegenerated.h>\n"
+      << "#include <otest2/context.h>\n"
+      << "#include <otest2/fcemarshaler.h>\n"
       << "#include <otest2/generutils.h>\n"
       << "#include <otest2/objectptr.h>\n"
       << "#include <otest2/registry.h>\n"
@@ -162,6 +226,8 @@ void GeneratorStd::beginFile() {
       << "#include <otest2/regressionsimpl.h>\n"
       << "#include <otest2/stategenerated.h>\n"
       << "#include <otest2/suitegenerated.h>\n"
+      << "#include <otest2/typetraits.h>\n"
+      << "#include <otest2/userdata.h>\n"
       << '\n';
 }
 
@@ -222,7 +288,7 @@ void GeneratorStd::makeTryCatchBegin(
   pimpl->output << "              ::OTest2::GenericAssertion(otest2Context(), ";
   writeCString(pimpl->output, pimpl->infile);
   pimpl->output << ", " << begin_.getLine() << ", \"\").testException(\n"
-      << "                  [this]()->bool {\n"
+      << "                  [&]()->bool {\n"
       << "                    bool otest2_exception_happens_(false);\n"
       << "                    try {";
 }
@@ -255,6 +321,9 @@ void GeneratorStd::enterSuite(
 
   pimpl->suite = suite_;
   pimpl->variables = std::make_shared<VarTable>("suite_", nullptr);
+  pimpl->fixtures = std::make_shared<Functions>(nullptr);
+  pimpl->start_up_fce.emplace_back(nullptr);
+  pimpl->tear_down_fce.emplace_back(nullptr);
   pimpl->suites.push_back(suite_);
   pimpl->indent += 2;
 
@@ -263,11 +332,18 @@ void GeneratorStd::enterSuite(
       << "  private:\n";
 }
 
-void GeneratorStd::suiteStartUp() {
+void GeneratorStd::finishSuiteFixtures() {
   assert(!pimpl -> suite.empty() && pimpl -> testcase.empty() && pimpl -> state.empty());
 
   /* -- suite variables */
   pimpl->variables->printDeclarations(pimpl->output, pimpl->indent);
+}
+
+void GeneratorStd::finishSuiteFunctions() {
+  assert(!pimpl -> suite.empty() && pimpl -> testcase.empty() && pimpl -> state.empty());
+
+  /* -- invokers of user functions */
+  pimpl->variables->printInvokers(pimpl->output, pimpl->indent, pimpl->suite);
 
   /* -- ctor and dtor */
   pimpl->output
@@ -286,21 +362,13 @@ void GeneratorStd::suiteStartUp() {
   pimpl->output
       << " {\n"
       << "      registerAllCases();\n"
+      << "      registerFixtures();\n"
       << "    }\n"
       << "\n"
       << "    virtual ~" << pimpl->suite << "() {\n"
       << "\n"
       << "    }\n"
-      << "\n"
-      << "    virtual void startUp() ";
-}
-
-void GeneratorStd::suiteTearDown() {
-  assert(!pimpl -> suite.empty() && pimpl -> testcase.empty() && pimpl -> state.empty());
-
-  pimpl->output
-      << "\n\n"
-      << "    virtual void tearDown() ";
+      << "\n";
 }
 
 void GeneratorStd::enterCase(
@@ -310,6 +378,9 @@ void GeneratorStd::enterCase(
 
   pimpl->testcase = case_;
   pimpl->variables = std::make_shared<VarTable>("case_", pimpl -> variables);
+  pimpl->fixtures = std::make_shared<Functions>(pimpl->fixtures);
+  pimpl->start_up_fce.emplace_back(nullptr);
+  pimpl->tear_down_fce.emplace_back(nullptr);
   pimpl->cases.push_back(case_);
   pimpl->indent += 2;
 
@@ -320,11 +391,18 @@ void GeneratorStd::enterCase(
       << "      private:\n";
 }
 
-void GeneratorStd::caseStartUp() {
+void GeneratorStd::finishCaseFixtures() {
   assert(!pimpl -> suite.empty() && !pimpl -> testcase.empty() && pimpl -> state.empty());
 
   /* -- suite variables */
   pimpl->variables->printDeclarations(pimpl->output, pimpl->indent);
+}
+
+void GeneratorStd::finishCaseFunctions() {
+  assert(!pimpl -> suite.empty() && !pimpl -> testcase.empty() && pimpl -> state.empty());
+
+  /* -- invokers of user functions */
+  pimpl->variables->printInvokers(pimpl->output, pimpl->indent, pimpl->testcase);
 
   /* -- ctor and dtor */
   pimpl->output
@@ -346,70 +424,57 @@ void GeneratorStd::caseStartUp() {
   pimpl->output
       << " {\n"
       << "          registerAllStates(context_);\n"
+      << "          registerFixtures();\n"
       << "        }\n"
       << "\n"
       << "        virtual ~" << pimpl->testcase << "() {\n"
       << "\n"
       << "        }\n"
-      << "\n"
-      << "        virtual void startUp() ";
-}
-
-void GeneratorStd::caseTearDown() {
-  assert(!pimpl -> suite.empty() && !pimpl -> testcase.empty() && pimpl -> state.empty());
-
-  pimpl->output
-      << "\n\n"
-      << "        virtual void tearDown() ";
+      << "\n";
 }
 
 void GeneratorStd::enterState(
-    const std::string& state_) {
+    const std::string& state_,
+    FunctionPtr state_fce_,
+    const Location& fbegin_,
+    const Location& fend_) {
   assert(!pimpl -> suite.empty() && !pimpl -> testcase.empty() && pimpl -> state.empty());
-  assert(!state_.empty());
+  assert(!state_.empty() && state_fce_ != nullptr);
 
   pimpl->state = state_;
-  pimpl->variables = std::make_shared<VarTable>("state_", pimpl -> variables);
+  pimpl->variables = std::make_shared<VarTable>("state_", pimpl->variables);
   pimpl->states.push_back(state_);
   pimpl->indent += 2;
+  pimpl->state_fce = state_fce_;
 
-  pimpl->output
-      << "\n\n"
-      << "        class " << state_ << " : public ::OTest2::StateGenerated {\n"
-      << "          private:\n";
-  pimpl->variables -> printDeclarations(pimpl->output, pimpl->indent);
-  pimpl->output
-      << "\n"
-      << "          public:\n"
-      << "            /* -- avoid copying */\n"
-      << "            " << state_ << "(\n"
-      << "                const " << state_ << "&) = delete;\n"
-      << "            " << state_ << "& operator =(\n"
-      << "                const " << state_ << "&) = delete;\n"
-      << "\n"
-      << "            explicit " << state_ << "(\n"
-      << "                const ::OTest2::Context& context_";
-  pimpl->variables->printParameters(pimpl->output, pimpl->indent + 2);
-  pimpl -> output
-      << ") :\n"
-      << "              ::OTest2::StateGenerated(context_, \"" << state_ << "\")";
-  pimpl->variables->printInitializers(pimpl->output, pimpl->indent + 1);
-  pimpl->output
-      << " {\n"
-      << "\n"
-      << "            }\n"
-      << "\n"
-      << "            virtual ~" << state_ << "() {\n"
-      << "\n"
-      << "            }\n"
-      << "\n"
-      << "            virtual void runState() ";
+  pimpl->writeStateClass(state_);
+
+  /* -- generate the function declaration */
+  state_fce_->generateDeclaration(
+      pimpl->output, pimpl->indent, "stateFunction");
 }
 
-void GeneratorStd::emptyBody() {
-  pimpl->output << "{\n\n";
-  Formatting::printIndent(pimpl->output, pimpl->indent);
-  pimpl -> output << "}";
+void GeneratorStd::emptyState() {
+  const std::string state_name_("AnonymousState");
+
+  pimpl->variables = std::make_shared<VarTable>("state_", pimpl->variables);
+  pimpl->states.push_back(state_name_);
+  pimpl->indent += 2;
+
+  pimpl->writeStateClass(state_name_);
+  pimpl->output
+      << "            virtual void runState(\n"
+      << "                const Context& context_) {\n"
+      << "\n"
+      << "            }\n"
+      << "        };\n\n";
+
+  pimpl->indent -= 2;
+
+  /* -- generate the factory method of the state */
+  pimpl->writeStateFactoryMethod(state_name_);
+
+  pimpl->variables = pimpl->variables->getPrevLevel();
 }
 
 void GeneratorStd::appendVariable(
@@ -427,28 +492,85 @@ void GeneratorStd::appendVariableInit(
   pimpl->variables->appendVariableWithInit(name_, type_, initializer_);
 }
 
+void GeneratorStd::appendUserData(
+    const std::string& name_,
+    const std::string& key_,
+    const std::string& type_) {
+  pimpl->variables->appendUserData(name_, key_, type_);
+}
+
+void GeneratorStd::appendStartUpFunction(
+    FunctionPtr function_,
+    const Location& fbegin_,
+    const Location& fend_) {
+  assert(function_ != nullptr);
+
+  /* -- store the function to generate its marshaler */
+  assert(pimpl->start_up_fce.back() == nullptr);
+  pimpl->start_up_fce.back() = function_;
+
+  /* -- generate the function declaration */
+  pimpl->output << "\n";
+  Formatting::printIndent(pimpl->output, pimpl->indent);
+  pimpl->reader->writePart(pimpl->output, fbegin_, &fend_);
+}
+
+void GeneratorStd::appendTearDownFunction(
+    FunctionPtr function_,
+    const Location& fbegin_,
+    const Location& fend_) {
+  assert(function_ != nullptr);
+
+  /* -- store the function to generate its marshaler */
+  assert(pimpl->tear_down_fce.back() == nullptr);
+  pimpl->tear_down_fce.back() = function_;
+
+  /* -- generate the function declaration */
+  pimpl->output << "\n";
+  Formatting::printIndent(pimpl->output, pimpl->indent);
+  pimpl->reader->writePart(pimpl->output, fbegin_, &fend_);
+}
+
+void GeneratorStd::appendGenericFunction(
+    FunctionPtr function_,
+    const Location& fbegin_,
+    const Location& fend_) {
+  assert(!pimpl->suite.empty());
+
+  /* -- insert the function into the table of variables to be passed into
+   *    nested objects */
+  pimpl->variables->appendUserFunction(function_);
+
+  /* -- generate the function declaration */
+  pimpl->output << "\n";
+  Formatting::printIndent(pimpl->output, pimpl->indent);
+  pimpl->reader->writePart(pimpl->output, fbegin_, &fend_);
+}
+
 void GeneratorStd::leaveState() {
   assert(!pimpl->suite.empty() && !pimpl->testcase.empty() && !pimpl->state.empty());
 
+  /* -- generate marshaler of the state function */
   pimpl->output
       << "\n"
+      << "            virtual void runState(\n"
+      << "                const Context& context_) {\n";
+  pimpl->state_fce->generateInvocation(
+      pimpl->output, pimpl->indent + 1, "stateFunction");
+  pimpl->output
+      << "\n"
+      << "            }\n";
+  pimpl->output
       << "        };\n\n";
 
   pimpl->indent -= 2;
 
   /* -- generate the factory method of the state */
-  pimpl->output
-      << "        ::OTest2::StatePtr createState_" << pimpl->state << "(\n"
-      << "            const ::OTest2::Context& context_) {\n"
-      << "          return ::OTest2::makePointer<" << pimpl->state << ">(\n"
-      << "              context_";
-  pimpl->variables->printArguments(pimpl->output, pimpl->indent + 3);
-  pimpl->output
-      << ");\n"
-      << "        }";
+  pimpl->writeStateFactoryMethod(pimpl->state);
 
   pimpl->state.clear();
   pimpl->variables = pimpl->variables->getPrevLevel();
+  pimpl->state_fce = nullptr;
 }
 
 void GeneratorStd::leaveCase() {
@@ -467,7 +589,23 @@ void GeneratorStd::leaveCase() {
   }
   pimpl->output
       << "        }\n"
-      << "\n"
+      << "\n";
+
+  /* -- add the case's start-up and tear-down functions */
+  pimpl->fixtures->appendFixture(
+      pimpl->start_up_fce.back(), pimpl->tear_down_fce.back());
+
+  /* -- generate fixture marshalers */
+  pimpl->fixtures->generateMarshalers(
+      pimpl->output, pimpl->indent, pimpl->testcase);
+  pimpl->output
+      << "        void registerFixtures() {\n";
+  pimpl->fixtures->generateRegistration(
+      pimpl->output, pimpl->indent + 1, pimpl->testcase);
+  pimpl->output
+      << "        }\n";
+
+  pimpl->output
       << "    };\n\n";
 
   pimpl->indent -= 2;
@@ -485,6 +623,9 @@ void GeneratorStd::leaveCase() {
 
   pimpl->testcase.clear();
   pimpl->variables = pimpl->variables->getPrevLevel();
+  pimpl->fixtures = pimpl->fixtures->getPrevLevel();
+  pimpl->start_up_fce.pop_back();
+  pimpl->tear_down_fce.pop_back();
   pimpl->states.clear();
 }
 
@@ -505,13 +646,30 @@ void GeneratorStd::leaveSuite() {
       << "              &" << pimpl->suite << "::createCase_" << case_ << "));\n";
   }
   pimpl->output
+      << "    }\n\n";
+
+  /* -- add the suite's start-up and tear-down functions */
+  pimpl->fixtures->appendFixture(
+      pimpl->start_up_fce.back(), pimpl->tear_down_fce.back());
+
+  /* -- generate fixture marshalers */
+  pimpl->fixtures->generateMarshalers(
+      pimpl->output, pimpl->indent, pimpl->suite);
+  pimpl->output
+      << "    void registerFixtures() {\n";
+  pimpl->fixtures->generateRegistration(
+      pimpl->output, pimpl->indent + 1, pimpl->suite);
+  pimpl->output
       << "    }\n";
 
   pimpl->output
       << "};\n";
 
   pimpl->suite.clear();
-  pimpl->variables = 0;
+  pimpl->variables = nullptr;
+  pimpl->fixtures = nullptr;
+  pimpl->start_up_fce.pop_back();
+  pimpl->tear_down_fce.pop_back();
   pimpl->cases.clear();
   pimpl->indent -= 2;
 }

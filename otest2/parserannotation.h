@@ -41,6 +41,7 @@ extern const std::string TEAR_DOWN_ANNOTATION;
 extern const std::string ASSERTION_ANNOTATION;
 extern const std::string SWITCH_STATE_ANNOTATION;
 extern const std::string CATCH_ANNOTATION;
+extern const std::string USER_DATA_VAR_ANNOTATION;
 
 template<typename Compare_>
 bool hasAnnotation(
@@ -59,6 +60,11 @@ struct AnnotationRegex {
 
     AnnotationRegex(
         const std::string& expr_);
+    bool operator()(
+        const std::string& annotation_);
+};
+
+struct AnnotationAny {
     bool operator()(
         const std::string& annotation_);
 };

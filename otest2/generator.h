@@ -22,6 +22,8 @@
 
 #include <string>
 
+#include "function.h"
+
 namespace OTest2 {
 
 class Location;
@@ -145,14 +147,14 @@ class Generator {
         const std::string& name_) = 0;
 
     /**
-     * @brief Generate preamble of the suite's start up function
+     * @brief Finish block of suite's variables
      */
-    virtual void suiteStartUp() = 0;
+    virtual void finishSuiteFixtures() = 0;
 
     /**
-     * @brief Generate preamble of the suite's tear down function
+     * @brief Finish block of suite's functions
      */
-    virtual void suiteTearDown() = 0;
+    virtual void finishSuiteFunctions() = 0;
 
     /**
      * @brief Beginning of a test case
@@ -163,27 +165,33 @@ class Generator {
         const std::string& name_) = 0;
 
     /**
-     * @brief Generate declaration of the case's start-up function
+     * @brief Finish block of case's variables
      */
-    virtual void caseStartUp() = 0;
+    virtual void finishCaseFixtures() = 0;
 
     /**
-     * @brief Generate declaration of the case's tear down function
+     * @brief Finish block of case's functions
      */
-    virtual void caseTearDown() = 0;
+    virtual void finishCaseFunctions() = 0;
 
     /**
      * @brief Beginning of a test state
      *
      * @param name_ Name of the state
+     * @param state_fce_ Description of the state function
+     * @param fbegin_ Beginning of the declaration of the state function
+     * @param fend_ End of the declaration of the state function
      */
     virtual void enterState(
-        const std::string& name_) = 0;
+        const std::string& name_,
+        FunctionPtr state_fce_,
+        const Location& fbegin_,
+        const Location& fend_) = 0;
 
     /**
-     * @brief Generate empty function body
+     * @brief Generate empty state
      */
-    virtual void emptyBody() = 0;
+    virtual void emptyState() = 0;
 
     /**
      * @brief Append a variable without initializer
@@ -208,6 +216,54 @@ class Generator {
         const std::string& type_,
         const Location& ibegin_,
         const Location& iend_) = 0;
+
+    /**
+     * @brief Append user data variable
+     *
+     * @param name_ Name of the variable
+     * @param key_ Key of the user datum inside the UserData container
+     * @param type_ Type of the variable
+     */
+    virtual void appendUserData(
+        const std::string& name_,
+        const std::string& key_,
+        const std::string& type_) = 0;
+
+    /**
+     * @brief Append a start-up function
+     *
+     * @param function_ The function
+     * @param fbegin_ Beginning of function declaration
+     * @param fend_ End of function declaration
+     */
+    virtual void appendStartUpFunction(
+        FunctionPtr function_,
+        const Location& fbegin_,
+        const Location& fend_) = 0;
+
+    /**
+     * @brief Append a tear-down function
+     *
+     * @param function_ The function
+     * @param fbegin_ Beginning of function declaration
+     * @param fend_ End of function declaration
+     */
+    virtual void appendTearDownFunction(
+        FunctionPtr function_,
+        const Location& fbegin_,
+        const Location& fend_) = 0;
+
+    /**
+     * @brief Append a user function
+     *
+     * @param function_ Description of the function
+     * @param fbegin_ Beginning of function declaration
+     * @param fend_ End of function declaration
+     */
+    virtual void appendGenericFunction(
+        FunctionPtr function_,
+        const Location& fbegin_,
+        const Location& fend_) = 0;
 
     /**
      * @brief End of current test state

@@ -17,41 +17,39 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cmddestroycase.h>
+#ifndef OTest2__INCLUDE_OTEST2_CMDLEAVECASE_H_
+#define OTest2__INCLUDE_OTEST2_CMDLEAVECASE_H_
 
-#include <assert.h>
-
-#include <context.h>
-#include <objectpath.h>
-#include <reporter.h>
-#include <caseordinary.h>
-#include <semanticstack.h>
+#include <otest2/command.h>
 
 namespace OTest2 {
 
-CmdDestroyCase::CmdDestroyCase(
-    CaseOrdinaryPtr case_) :
-  testcase(case_) {
-  assert(!testcase.isNull());
+/**
+ * @brief Finish stack frame of a test case
+ */
+class CmdLeaveCase : public Command {
+  public:
+    /* -- avoid copying */
+    CmdLeaveCase(
+        const CmdLeaveCase&) = delete;
+    CmdLeaveCase& operator =(
+        const CmdLeaveCase&) = delete;
 
-}
+    /**
+     * @brief Ctor
+     */
+    CmdLeaveCase();
 
-CmdDestroyCase::~CmdDestroyCase() {
+    /**
+     * @brief Dtor
+     */
+    virtual ~CmdLeaveCase();
 
-}
-
-void CmdDestroyCase::run(
-    const Context& context_) {
-  /* -- clean up the case */
-  testcase->tearDownCase(context_);
-
-  /* -- report finishing of the suite */
-  context_.reporter->leaveCase(
-      context_, testcase->getName(), context_.semantic_stack->top());
-  context_.object_path->popName();
-
-  /* -- return the case value */
-  context_.semantic_stack->popAnd();
-}
+    /* -- command interface */
+    virtual void run(
+        const Context& context_);
+};
 
 } /* namespace OTest2 */
+
+#endif /* OTest2__INCLUDE_OTEST2_CMDLEAVECASE_H_ */

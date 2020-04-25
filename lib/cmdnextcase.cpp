@@ -27,11 +27,16 @@
 #include <casefactory.h>
 #include <casefactoryptr.h>
 #include <caseptr.h>
+#include <cmdleavecase.h>
 #include <cmdstartcase.h>
 #include <commandptr.h>
 #include <commandstack.h>
 #include <context.h>
+#include <objectpath.h>
+#include <reporter.h>
+#include "runcode.h"
 #include <runnerfilter.h>
+#include <semanticstack.h>
 #include <suiteordinary.h>
 
 namespace OTest2 {
@@ -59,10 +64,25 @@ void CmdNextCase::run(
     context_.command_stack->pushCommand(
         std::make_shared<CmdNextCase>(suite, current + 1));
 
-    /* -- Schedule run of the test case */
+    /* -- create and schedule the test-case if it's not filtered */
     if(!context_.runner_filter->filterCase(suite->getName(), case_name_)) {
-      CasePtr testcase_(factory_->createCase(context_));
-      testcase_->scheduleRun(context_, testcase_);
+      /* -- prepare the stack frame */
+      context_.semantic_stack->push(true);
+      context_.object_path->pushName(case_name_);
+
+      /* -- report entering of the test case */
+      context_.reporter->enterCase(context_, case_name_);
+
+      /* -- schedule finishing of the test case */
+      context_.command_stack->pushCommand(std::make_shared<CmdLeaveCase>());
+
+      /* -- Create and schedule the test case. As the constructor method
+       *    can throw an exception the code is run in the protected
+       *    environment. */
+      runUserCode(context_, [&](const Context& context_){
+        CasePtr testcase_(factory_->createCase(context_));
+        testcase_->scheduleRun(context_, testcase_);
+      });
     }
   }
 }

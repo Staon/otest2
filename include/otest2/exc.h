@@ -17,43 +17,52 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OTest2__INCLUDE_OTEST2_CMDDESTROYSUITE_H_
-#define OTest2__INCLUDE_OTEST2_CMDDESTROYSUITE_H_
+#ifndef OTest2__INCLUDE_OTEST2_EXCEPTION_H_
+#define OTest2__INCLUDE_OTEST2_EXCEPTION_H_
 
-#include <otest2/command.h>
-#include <otest2/suiteordinaryptr.h>
+#include <exception>
+#include <string>
 
 namespace OTest2 {
 
-class CmdDestroySuite : public Command {
-  private:
-    SuiteOrdinaryPtr suite;
-
-  public:
-    /* -- avoid copying */
-    CmdDestroySuite(
-        const CmdDestroySuite&) = delete;
-    CmdDestroySuite& operator =(
-        const CmdDestroySuite&) = delete;
-
+/**
+ * @brief Generic OTest2 exception
+ */
+class Exception : public std::exception {
+  protected:
     /**
      * @brief Ctor
-     *
-     * @param suite_ The suite being destroyed
      */
-    explicit CmdDestroySuite(
-        SuiteOrdinaryPtr suite_);
+    Exception();
+
+    /**
+     * @brief Move ctor
+     */
+    Exception(
+        Exception&& exc_);
 
     /**
      * @brief Dtor
      */
-    virtual ~CmdDestroySuite();
+    virtual ~Exception();
 
-    /* -- command interface */
-    virtual void run(
-        const Context& context_);
+  public:
+    /* -- avoid copying */
+    Exception(
+        const Exception&) = delete;
+    Exception& operator =(
+        const Exception&) = delete;
+
+    /* -- std::exception */
+    virtual const char* what() const noexcept;
+
+    /**
+     * @brief Get exception reason
+     * @return
+     */
+    virtual std::string reason() const = 0;
 };
 
 } /* namespace OTest2 */
 
-#endif /* OTest2__INCLUDE_OTEST2_CMDDESTROYSUITE_H_ */
+#endif /* OTest2__INCLUDE_OTEST2_EXCEPTION_H_ */

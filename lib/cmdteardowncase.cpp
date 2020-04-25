@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2020 Ondrej Starek
  *
  * This file is part of OTest2.
  *
@@ -17,41 +17,40 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cmddestroysuite.h>
+#include <cmdteardowncase.h>
 
 #include <assert.h>
+#include <memory>
 
+#include <caseordinary.h>
+#include <commandptr.h>
+#include <commandstack.h>
 #include <context.h>
-#include <objectpath.h>
-#include <reporter.h>
-#include <semanticstack.h>
-#include <suiteordinary.h>
 
 namespace OTest2 {
 
-CmdDestroySuite::CmdDestroySuite(
-    SuiteOrdinaryPtr suite_) :
-  suite(suite_) {
-  assert(!suite.isNull());
+CmdTearDownCase::CmdTearDownCase(
+    CaseOrdinaryPtr testcase_,
+    int index_) :
+  testcase(testcase_),
+  index(index_) {
+  assert(!testcase.isNull() && index >= 0);
 
 }
 
-CmdDestroySuite::~CmdDestroySuite() {
+CmdTearDownCase::~CmdTearDownCase() {
 
 }
 
-void CmdDestroySuite::run(
+void CmdTearDownCase::run(
     const Context& context_) {
-  /* -- clean up the suite */
-  suite->tearDownSuite(context_);
+  /* -- run the tear-down function */
+  testcase->tearDownCase(context_, index);
 
-  /* -- report finishing of the suite */
-  context_.reporter->leaveSuite(
-      context_, suite->getName(), context_.semantic_stack->top());
-  context_.object_path->popName();
-
-  /* -- return the value */
-  context_.semantic_stack->popAnd();
+  /* -- schedule run of next tear-down function */
+  if(index > 0)
+    context_.command_stack->pushCommand(
+        std::make_shared<CmdTearDownCase>(testcase, index - 1));
 }
 
-} /* namespace OTest2 */
+} /* -- namespace OTest2 */

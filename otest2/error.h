@@ -22,7 +22,7 @@
 
 #include <string>
 
-#include "exc.h"
+#include <otest2/exc.h>
 
 namespace OTest2 {
 

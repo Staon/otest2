@@ -30,7 +30,8 @@ Context::Context(
     Reporter* reporter_,
     RunnerFilter* runner_filter_,
     TestMarkFactory* test_mark_factory_,
-    TestMarkStorage* test_mark_storage_) :
+    TestMarkStorage* test_mark_storage_,
+    UserData* user_data_) :
   command_stack(command_stack_),
   semantic_stack(semantic_stack_),
   object_path(object_path_),
@@ -39,7 +40,8 @@ Context::Context(
   reporter(reporter_),
   runner_filter(runner_filter_),
   test_mark_factory(test_mark_factory_),
-  test_mark_storage(test_mark_storage_) {
+  test_mark_storage(test_mark_storage_),
+  user_data(user_data_) {
 
 }
 

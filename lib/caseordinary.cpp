@@ -22,7 +22,7 @@
 #include <assert.h>
 #include <memory>
 
-#include <cmdstartcase.h>
+#include <cmdstartupcase.h>
 #include <commandptr.h>
 #include <commandstack.h>
 #include <context.h>
@@ -45,7 +45,7 @@ void CaseOrdinary::scheduleRun(
   assert(co_.get() == this);
 
   /* -- schedule the commands */
-  context_.command_stack->pushCommand(std::make_shared<CmdStartCase>(co_));
+  context_.command_stack->pushCommand(std::make_shared<CmdStartUpCase>(co_, 0));
 }
 
 } /* namespace OTest2 */

@@ -24,6 +24,7 @@
 #include "parsercode.h"
 #include "parsercontextimpl.h"
 #include "parserfixture.h"
+#include "parserfunction.h"
 
 namespace OTest2 {
 
@@ -42,187 +43,115 @@ SuiteVisitor::~SuiteVisitor() {
 bool parseSuiteBody(
     ParserContext* context_,
     clang::NamespaceDecl* ns_) {
+  FunctionFlags fce_flags_(false);
 
-    for(
-        auto iter_(ns_->decls_begin());
-        iter_ != ns_->decls_end();
-        ++iter_) {
-      switch(context_->state) {
-        case ParserContext::SUITE_BEGIN: {
-          /* -- suite variable */
-          if(clang::isa<clang::VarDecl>(*iter_)) {
-            auto vardecl_(clang::cast<clang::VarDecl>(*iter_));
-            if(!parseVariable(context_, vardecl_))
+  for(
+      auto iter_(ns_->decls_begin());
+      iter_ != ns_->decls_end();
+      ++iter_) {
+    switch(context_->state) {
+      case ParserContext::SUITE_FIXTURES: {
+        /* -- suite variable */
+        if(clang::isa<clang::VarDecl>(*iter_)) {
+          auto vardecl_(clang::cast<clang::VarDecl>(*iter_));
+          if(!parseVariable(context_, vardecl_))
+            return false;
+          continue;
+        }
+
+        /* -- suite functions - start-up, tear-down and user functions */
+        if(clang::isa<clang::FunctionDecl>(*iter_)) {
+          auto fce_(clang::cast<clang::FunctionDecl>(*iter_));
+          if(isAllowedFunctionDeclaration(context_, fce_)) {
+            /* -- The function doesn't stop the fixtures block. The forward
+             *    declarations of functions are ignored as they are not
+             *    needed in the generated code anymore. */
+            continue;
+          }
+          else {
+            context_->generator->finishSuiteFixtures();
+            context_->state = ParserContext::SUITE_FUNCTIONS;
+            if(!parseFunction(context_, fce_, fce_flags_).first)
               return false;
             continue;
           }
-
-          /* -- start up or tear down functions */
-          if(clang::isa<clang::FunctionDecl>(*iter_)) {
-            auto fce_(clang::cast<clang::FunctionDecl>(*iter_));
-            auto body_(getFunctionBody(context_, fce_));
-            if(body_ == nullptr)
-              return false;
-
-            /* -- suite start up */
-            if(hasAnnotation(fce_, START_UP_ANNOTATION)) {
-              context_->state = ParserContext::SUITE_TEAR_DOWN;
-              context_->generator->suiteStartUp();
-              if(!parseCodeBlock(context_, body_))
-                return false;
-              continue;
-            }
-
-            /* -- suite tear down */
-            if(hasAnnotation(fce_, TEAR_DOWN_ANNOTATION)) {
-              context_->state = ParserContext::SUITE_CASES;
-              context_->generator->suiteStartUp();
-              context_->generator->emptyBody();
-              context_->generator->suiteTearDown();
-              if(!parseCodeBlock(context_, body_))
-                return false;
-              continue;
-            }
-
-            context_->setError("suite functions are not supported yet!", fce_);
-            return false;
-          }
-
-          /* -- test case */
-          if(clang::isa<clang::NamespaceDecl>(*iter_)) {
-            auto casens_(clang::cast<clang::NamespaceDecl>(*iter_));
-            if(hasAnnotation(casens_, CASE_ANNOTATION)) {
-              context_->state = ParserContext::CASE_BEGIN;
-              context_->generator->suiteStartUp();
-              context_->generator->emptyBody();
-              context_->generator->suiteTearDown();
-              context_->generator->emptyBody();
-              context_->generator->enterCase(casens_->getNameAsString());
-              if(!parseCaseBody(context_, casens_))
-                return false;
-              context_->generator->leaveCase();
-              context_->state = ParserContext::SUITE_CASES;
-              continue;
-            }
-          }
-
-          context_->setError("Invalid suite item", *iter_);
-          return false;
         }
 
-        case ParserContext::SUITE_TEAR_DOWN: {
-          /* -- tear down functions */
-          if(clang::isa<clang::FunctionDecl>(*iter_)) {
-            auto fce_(clang::cast<clang::FunctionDecl>(*iter_));
-            auto body_(getFunctionBody(context_, fce_));
-            if(body_ == nullptr)
+        /* -- test case */
+        if(clang::isa<clang::NamespaceDecl>(*iter_)) {
+          auto casens_(clang::cast<clang::NamespaceDecl>(*iter_));
+          if(hasAnnotation(casens_, CASE_ANNOTATION)) {
+            context_->generator->finishSuiteFixtures();
+            context_->generator->finishSuiteFunctions();
+            if(!parseCase(context_, casens_))
               return false;
-
-            /* -- suite start up */
-            if(hasAnnotation(fce_, START_UP_ANNOTATION)) {
-              context_->setError("the start-up function is already defined", fce_);
-              return false;
-            }
-
-            /* -- suite tear up */
-            if(hasAnnotation(fce_, TEAR_DOWN_ANNOTATION)) {
-              context_->state = ParserContext::SUITE_CASES;
-              context_->generator->suiteTearDown();
-              if(!parseCodeBlock(context_, body_))
-                return false;
-              continue;
-            }
-
-            context_->setError("suite functions are not supported yet!", fce_);
-            return false;
+            continue;
           }
-
-          /* -- test case */
-          if(clang::isa<clang::NamespaceDecl>(*iter_)) {
-            auto casens_(clang::cast<clang::NamespaceDecl>(*iter_));
-            if(hasAnnotation(casens_, CASE_ANNOTATION)) {
-              context_->state = ParserContext::CASE_BEGIN;
-              context_->generator->suiteTearDown();
-              context_->generator->emptyBody();
-              context_->generator->enterCase(casens_->getNameAsString());
-              if(!parseCaseBody(context_, casens_))
-                return false;
-              context_->generator->leaveCase();
-              context_->state = ParserContext::SUITE_CASES;
-              continue;
-            }
-            /* -- test case */
-          }
-
-          context_->setError("Invalid suite item", *iter_);
-          return false;
         }
 
-        case ParserContext::SUITE_CASES: {
-          /* -- tear down functions */
-          if(clang::isa<clang::FunctionDecl>(*iter_)) {
-            auto fce_(clang::cast<clang::FunctionDecl>(*iter_));
-            auto body_(getFunctionBody(context_, fce_));
-            if(body_ == nullptr)
-              return false;
-
-            /* -- suite start up */
-            if(hasAnnotation(fce_, START_UP_ANNOTATION)) {
-              context_->setError("the start-up function is already defined", fce_);
-              return false;
-            }
-
-            /* -- suite tear up */
-            if(hasAnnotation(fce_, TEAR_DOWN_ANNOTATION)) {
-              context_->setError("the tear-down function is already defined", fce_);
-              return false;
-            }
-
-            context_->setError("suite functions are not supported yet!", fce_);
-            return false;
-          }
-
-          /* -- test case */
-          if(clang::isa<clang::NamespaceDecl>(*iter_)) {
-            auto casens_(clang::cast<clang::NamespaceDecl>(*iter_));
-            if(hasAnnotation(casens_, CASE_ANNOTATION)) {
-              context_->state = ParserContext::CASE_BEGIN;
-              context_->generator->enterCase(casens_->getNameAsString());
-              if(!parseCaseBody(context_, casens_))
-                return false;
-              context_->generator->leaveCase();
-              context_->state = ParserContext::SUITE_CASES;
-              continue;
-            }
-            /* -- test case */
-          }
-
-          context_->setError("Invalid suite item", *iter_);
-          return false;
-        }
-
-        default:
-          context_->setError("Invalid suite item", *iter_);
-          return false;
+        context_->setError("Invalid suite item", *iter_);
+        return false;
       }
-    }
 
-    /* -- handle empty suite */
-    switch(context_->state) {
-      case ParserContext::SUITE_BEGIN:
-        context_->generator->suiteStartUp();
-        context_->generator->emptyBody();
-        /* -- missing break is expected */
-      case ParserContext::SUITE_TEAR_DOWN:
-        context_->generator->suiteTearDown();
-        context_->generator->emptyBody();
-        break;
-      case ParserContext::SUITE_CASES:
-        break;
+      case ParserContext::SUITE_FUNCTIONS: {
+        /* -- tear down functions */
+        if(clang::isa<clang::FunctionDecl>(*iter_)) {
+          auto fce_(clang::cast<clang::FunctionDecl>(*iter_));
+          if(!parseFunction(context_, fce_, fce_flags_).first)
+            return false;
+          continue;
+        }
+
+        /* -- test case */
+        if(clang::isa<clang::NamespaceDecl>(*iter_)) {
+          auto casens_(clang::cast<clang::NamespaceDecl>(*iter_));
+          if(hasAnnotation(casens_, CASE_ANNOTATION)) {
+            context_->generator->finishSuiteFunctions();
+            if(!parseCase(context_, casens_))
+              return false;
+            continue;
+          }
+        }
+
+        context_->setError("Invalid suite item", *iter_);
+        return false;
+      }
+
+      case ParserContext::SUITE_CASES: {
+        /* -- test case */
+        if(clang::isa<clang::NamespaceDecl>(*iter_)) {
+          auto casens_(clang::cast<clang::NamespaceDecl>(*iter_));
+          if(hasAnnotation(casens_, CASE_ANNOTATION)) {
+            if(!parseCase(context_, casens_))
+              return false;
+            continue;
+          }
+        }
+
+        context_->setError("Invalid suite item", *iter_);
+        return false;
+      }
+
       default:
-        context_->setError("invalid format of the suite", ns_);
+        context_->setError("Invalid suite item", *iter_);
         return false;
     }
+  }
+
+  /* -- handle empty suite */
+  switch(context_->state) {
+    case ParserContext::SUITE_FIXTURES:
+      context_->generator->finishSuiteFixtures();
+      /* -- missing break is expected */
+    case ParserContext::SUITE_FUNCTIONS:
+      context_->generator->finishSuiteFunctions();
+      break;
+    case ParserContext::SUITE_CASES:
+      break;
+    default:
+      context_->setError("invalid format of the suite", ns_);
+      return false;
+  }
 
   return true;
 }
@@ -238,7 +167,7 @@ bool parseSuite(
   context_->generator->enterSuite(suitename_);
 
   /* -- parse body of the suite */
-  context_->state = ParserContext::SUITE_BEGIN;
+  context_->state = ParserContext::SUITE_FIXTURES;
   if(!parseSuiteBody(context_, ns_))
     return false;
   context_->state = ParserContext::ROOT;

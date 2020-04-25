@@ -47,11 +47,11 @@ struct ParserContext {
     /* -- parser state */
     enum State {
       ROOT = 0,
-      SUITE_BEGIN,
-      SUITE_TEAR_DOWN,
+      SUITE_FIXTURES,
+      SUITE_FUNCTIONS,
       SUITE_CASES,
-      CASE_BEGIN,
-      CASE_TEAR_DOWN,
+      CASE_FIXTURES,
+      CASE_FUNCTIONS,
       CASE_STATES,
     };
     State state;

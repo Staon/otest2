@@ -16,7 +16,7 @@ The OTest2 supports your custom event loop. The framework doesn't control
 the process flow but it offers an interface, which is designed to be invoked
 again and again until the test is finished. And which can be called from almost
 any event loop one can imagine. There is only one need - a timer with
-millisecond precision.
+millisecond granularity.
 
 In the following example we'll show integration with 
 the [libevent2](https://libevent.org/) library. Firstly, we define a helper

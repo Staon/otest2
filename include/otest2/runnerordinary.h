@@ -33,6 +33,7 @@ class RunnerFilter;
 class TestMarkFactory;
 class TestMarkStorage;
 class TimeSource;
+class UserData;
 
 /**
  * @brief Ordinary implementation of the Runner interface
@@ -65,6 +66,8 @@ class RunnerOrdinary : public Runner {
      *     is not taken.
      * @param test_mark_storage_ Storage of test marks. The ownership is not
      *     taken.
+     * @param user_data_ A container keeping user's data passed into the test.
+     *     The ownership is not taken.
      * @param name_ Name of the test (shown in the test report)
      */
     explicit RunnerOrdinary(
@@ -75,6 +78,7 @@ class RunnerOrdinary : public Runner {
         RunnerFilter* runner_filter_,
         TestMarkFactory* test_mark_factory_,
         TestMarkStorage* test_mark_storage_,
+        UserData* user_data_,
         const std::string& name_);
 
     /**

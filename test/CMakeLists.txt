@@ -26,6 +26,7 @@ target_otest2_sources(selftest
     assertions.ot2
     base64.ot2
     bzip2.ot2
+    dsl.ot2
     exceptions.ot2
     fixtures.ot2
     hirschberg.ot2
@@ -33,13 +34,16 @@ target_otest2_sources(selftest
     regressions.ot2
     tee.ot2
     testmarks.ot2
+    userdata.ot2
 )
 target_otest2_sources(selftest DOMAIN selftest
     selftests/assertions.ot2
+    selftests/dsl.ot2
     selftests/exceptions.ot2
     selftests/fixtures.ot2
     selftests/mainloop.ot2
     selftests/regressions.ot2
+    selftests/userdata.ot2
 )
 target_otest2_main(selftest)
 target_link_libraries(selftest PRIVATE libotest2)

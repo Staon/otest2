@@ -71,20 +71,42 @@ class SuiteOrdinary : public Suite {
         std::string* name_) const = 0;
 
     /**
-     * @brief Initialize the suite
+     * @brief Run a start-up function
      *
-     * @param context_ The otest2 context
+     * The data model expects a list of start-up functions. The functions
+     * are invoked one by one. Start-up functions may represents a real
+     * start-up function or an initialization function of a fixture object
+     * or whatever else.
+     *
+     * The start-up functions are identified by a zero-based index with
+     * no gaps.
+     *
+     * @param context_ The OTest2 context
+     * @param index_ Zero based index of the start-up function
+     * @return True if the start-up function is invoked. False if there is no
+     *     start-up function at the index.
      */
-    virtual void startUpSuite(
-        const Context& context_) = 0;
+    virtual bool startUpSuite(
+        const Context& context_,
+        int index_) = 0;
 
     /**
-     * @brief Clean up the suite
+     * @brief Run a tear-down function
+     *
+     * The model expects a list of tear-down functions. The functions are
+     * invoked one by one in decreasing order. A tear-down function may
+     * represent e.g. a real tear-down function or a cleaning method of
+     * a fixture object.
+     *
+     * The tear-down functions are identified by a zero-based index with
+     * no gaps.
      *
      * @param context_ The otest2 context
+     * @param index_ Index of the tear-down function
      */
     virtual void tearDownSuite(
-        const Context& context_) = 0;
+        const Context& context_,
+        int index_) = 0;
 
     /* -- suite */
     virtual void scheduleRun(

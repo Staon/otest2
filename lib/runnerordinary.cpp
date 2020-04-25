@@ -61,6 +61,7 @@ struct RunnerOrdinary::Impl {
         RunnerFilter* runner_filter_,
         TestMarkFactory* test_mark_factory_,
         TestMarkStorage* test_mark_storage_,
+        UserData* user_data_,
         const std::string& name_);
     ~Impl();
 };
@@ -74,6 +75,7 @@ RunnerOrdinary::Impl::Impl(
     RunnerFilter* runner_filter_,
     TestMarkFactory* test_mark_factory_,
     TestMarkStorage* test_mark_storage_,
+    UserData* user_data_,
     const std::string& name_) :
   owner(owner_),
   command_stack(),
@@ -89,7 +91,8 @@ RunnerOrdinary::Impl::Impl(
       reporter_,
       runner_filter_,
       test_mark_factory_,
-      test_mark_storage_) {
+      test_mark_storage_,
+      user_data_) {
   assert(registry != nullptr);
   assert(context.reporter != nullptr);
   assert(context.runner_filter != nullptr);
@@ -112,6 +115,7 @@ RunnerOrdinary::RunnerOrdinary(
     RunnerFilter* runner_filter_,
     TestMarkFactory* test_mark_factory_,
     TestMarkStorage* test_mark_storage_,
+    UserData* user_data_,
     const std::string& name_) :
   pimpl(new Impl(
       this,
@@ -122,6 +126,7 @@ RunnerOrdinary::RunnerOrdinary(
       runner_filter_,
       test_mark_factory_,
       test_mark_storage_,
+      user_data_,
       name_)) {
 
 }

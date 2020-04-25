@@ -20,8 +20,6 @@ find_package(Clang REQUIRED CONFIG)
 add_executable(otest2
     error.cpp
     error.h
-    exc.cpp
-    exc.h
     excparser.cpp
     excparser.h
     excreader.cpp
@@ -30,10 +28,12 @@ add_executable(otest2
     filereader.h
     formatting.cpp
     formatting.h
+    function.cpp
+    function.h
+    functions.cpp
+    functions.h
     generator.cpp
     generator.h
-    generatorprinter.cpp
-    generatorprinter.h
     generatorstd.cpp
     generatorstd.h
     generfmt.cpp
@@ -61,6 +61,8 @@ add_executable(otest2
     parsercontextimpl.h
     parserfixture.cpp
     parserfixture.h
+    parserfunction.cpp
+    parserfunction.h
     parsersuite.cpp
     parsersuite.h
     typetemplate.cpp
@@ -70,7 +72,7 @@ add_executable(otest2
 )
 set_property(TARGET otest2 PROPERTY CXX_STANDARD 14)
 target_compile_options(otest2 PRIVATE -fno-rtti -fexceptions)
-target_link_libraries(otest2 PRIVATE clangTooling)
+target_link_libraries(otest2 PRIVATE clangTooling libotest2common)
 
 # -- install the otest2 preprocessor
 install(TARGETS otest2 DESTINATION bin EXPORT otest2)

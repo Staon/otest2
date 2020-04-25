@@ -35,6 +35,9 @@ namespace Parser {
 bool parseCaseBody(
     ParserContext* context_,
     clang::NamespaceDecl* ns_);
+bool parseCase(
+    ParserContext* context_,
+    clang::NamespaceDecl* ns_);
 
 } /* -- namespace Parser */
 

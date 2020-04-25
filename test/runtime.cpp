@@ -47,6 +47,7 @@ Runtime::Runtime(
       &runner_filter,
       &test_mark_factory,
       test_mark_storage.get(),
+      &user_data,
       "selftest") {
 
 }
@@ -69,6 +70,7 @@ Runtime::Runtime(
       &runner_filter,
       &test_mark_factory,
       test_mark_storage.get(),
+      &user_data,
       "selftest") {
 
 }
@@ -90,6 +92,7 @@ Runtime::Runtime(
       &runner_filter,
       &test_mark_factory,
       test_mark_storage.get(),
+      &user_data,
       "selftest") {
 
 }

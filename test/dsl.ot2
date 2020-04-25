@@ -1,0 +1,184 @@
+/*
+ * Copyright (C) 2020 Ondrej Starek
+ *
+ * This file is part of OTest2.
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+#include "runtime.h"
+
+namespace OTest2 {
+
+namespace Test {
+
+TEST_SUITE(DslSuite) {
+  TEST_CASE(EmptySuite) {
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "path: selftest",
+        "enterSuite<EmptySuite>",
+        "path: selftest::EmptySuite",
+        "leaveSuite<EmptySuite>: passed",
+        "path: selftest::EmptySuite",
+        "leaveTest<selftest>: passed",
+        "path: selftest",
+      };
+
+      Runtime runtime_("EmptySuite", "", Runtime::report_paths_mark);
+
+      testAssert(runtime_.runTheTest());
+      testAssert(runtime_.reporter.checkRecords(data_));
+//      runtime_.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(EmptyCaseSuite) {
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "path: selftest",
+        "enterSuite<EmptyCaseSuite>",
+        "path: selftest::EmptyCaseSuite",
+        "enterCase<EmptyCase>",
+        "path: selftest::EmptyCaseSuite::EmptyCase",
+        "enterState<AnonymousState>",
+        "path: selftest::EmptyCaseSuite::EmptyCase",
+        "leaveState<AnonymousState>: passed",
+        "path: selftest::EmptyCaseSuite::EmptyCase",
+        "leaveCase<EmptyCase>: passed",
+        "path: selftest::EmptyCaseSuite::EmptyCase",
+        "leaveSuite<EmptyCaseSuite>: passed",
+        "path: selftest::EmptyCaseSuite",
+        "leaveTest<selftest>: passed",
+        "path: selftest",
+      };
+
+      Runtime runtime_("EmptyCaseSuite", "", Runtime::report_paths_mark);
+
+      testAssert(runtime_.runTheTest());
+      testAssert(runtime_.reporter.checkRecords(data_));
+//      runtime_.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(ExtendedDslSuite) {
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<ExtendedDslSuite>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'user data 1'>",
+        "message<b = 'user data 1'>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'Hello suite 2!'>",
+        "message<b = 'Hello suite 2!'>",
+        "leaveAssert<>",
+        "enterCase<ExtendedDslCase>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'user data 1'>",
+        "message<b = 'user data 1'>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'Hello suite!'>",
+        "message<b = 'Hello suite!'>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'Hello suite 2!'>",
+        "message<b = 'Hello suite 2!'>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'Hello case!'>",
+        "message<b = 'Hello case!'>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'Hello case 2!'>",
+        "message<b = 'Hello case 2!'>",
+        "leaveAssert<>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'Hello suite!'>",
+        "message<b = 'Hello suite!'>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'Hello suite 2!'>",
+        "message<b = 'Hello suite 2!'>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'Hello case!'>",
+        "message<b = 'Hello case!'>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'Hello case 2!'>",
+        "message<b = 'Hello case 2!'>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'user data 1'>",
+        "message<b = 'user data 1'>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'Hello suite!'>",
+        "message<b = 'Hello suite!'>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'Hello suite 2!'>",
+        "message<b = 'Hello suite 2!'>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'Hello case!'>",
+        "message<b = 'Hello case!'>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'Hello case 2!'>",
+        "message<b = 'Hello case 2!'>",
+        "leaveAssert<>",
+        "leaveCase<ExtendedDslCase>: passed",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'user data 1'>",
+        "message<b = 'user data 1'>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'Hello suite!'>",
+        "message<b = 'Hello suite!'>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'Hello suite 2!'>",
+        "message<b = 'Hello suite 2!'>",
+        "leaveAssert<>",
+        "leaveSuite<ExtendedDslSuite>: passed",
+        "leaveTest<selftest>: passed",
+      };
+
+      std::string ud1_("user data 1");
+      Runtime runtime_("ExtendedDslSuite", "");
+      runtime_.user_data.setDatum("ud1_", &ud1_);
+
+      testAssert(runtime_.runTheTest());
+      testAssert(runtime_.reporter.checkRecords(data_));
+//      runtime_.reporter.dumpRecords(std::cout);
+    }
+  }
+}
+
+} /* -- namespace Test */
+
+} /* -- namespace OTest2 */

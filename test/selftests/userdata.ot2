@@ -1,0 +1,158 @@
+/*
+ * Copyright (C) 2020 Ondrej Starek
+ *
+ * This file is part of OTest2.
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include <string>
+
+namespace OTest2 {
+
+namespace SelfTest {
+
+TEST_SUITE(UserDataSuite) {
+  extern int suite_int OT2_USER_DATA();
+  extern int& suite_int_ref OT2_USER_DATA_KEY("suite_int");
+  extern std::string suite_str OT2_USER_DATA();
+  extern std::string& suite_str_ref OT2_USER_DATA_KEY("suite_str");
+
+  TEST_CASE(UserDataCase) {
+    extern const std::string case_str OT2_USER_DATA();
+    extern const std::string& case_str_ref OT2_USER_DATA_KEY("case_str");
+
+    TEST_SIMPLE() {
+      /* -- check data */
+      testAssertEqual(suite_int, 23);
+      testAssertEqual(suite_int_ref, 23);
+      testAssertEqual(suite_str, "suite user data");
+      testAssertEqual(suite_str_ref, "suite user data");
+      testAssertEqual(case_str, "case user data");
+      testAssertEqual(case_str_ref, "case user data");
+
+      /* -- change data */
+      suite_int = 2 * 23;
+      suite_str_ref = "changed suite data";
+    }
+  }
+}
+
+TEST_SUITE(UserDataFailedCase) {
+  TEST_CASE(UserDataCase) {
+    extern const std::string case_str OT2_USER_DATA();
+
+    TEST_SIMPLE() {
+      testAssertEqual(case_str, "definitely wrong");
+    }
+  }
+}
+
+TEST_SUITE(UserDataFailedSuite) {
+  extern const std::string suite_str OT2_USER_DATA();
+
+  TEST_CASE(UserDataCase) {
+    TEST_SIMPLE() {
+      testAssertEqual(suite_str, "definitely wrong");
+    }
+  }
+}
+
+OT2_SUITE(UserDataAsParameters) {
+  void myStartUpFunction(
+      const std::string& suite_str,
+      std::string& renamed_ OT2_USER_DATA_KEY("suite_str")) OT2_START_UP() {
+    testAssertEqual(suite_str, "suite user data");
+    testAssertEqual(suite_str, renamed_);
+  }
+
+  void myTearDownFunction(
+      int& suite_int,
+      std::string& suite_str) OT2_TEAR_DOWN() {
+    testAssertEqual(suite_int, 23);
+    testAssertEqual(suite_str, "suite user data");
+
+    suite_int *= 2;
+    suite_str = "changed suite data";
+  }
+
+  TEST_CASE(UserDataCase) {
+    void myStartUpFunction(
+        const std::string& case_str,
+        std::string& renamed_ OT2_USER_DATA_KEY("case_str")) OT2_START_UP() {
+      testAssertEqual(case_str, "case user data");
+      testAssertEqual(case_str, renamed_);
+    }
+
+    void myTearDownFunction(
+        int suite_int) OT2_TEAR_DOWN() {
+      testAssertEqual(suite_int, 23);
+    }
+
+    void firstTestState(
+        const std::string& state_var_ OT2_USER_DATA_KEY("case_str")) OT2_STATE() {
+      testAssertEqual(state_var_, "case user data");
+    }
+  }
+}
+
+OT2_SUITE(UserDataParamsSuiteStartUp) {
+  void startUp(
+      const std::string& wrong_) OT2_START_UP() {
+
+  }
+}
+
+OT2_SUITE(UserDataParamsSuiteTearDown) {
+  void tearDown(
+      const std::string& wrong_) OT2_TEAR_DOWN() {
+
+  }
+
+  OT2_CASE(Something) {
+
+  }
+}
+
+OT2_SUITE(UserDataParamsCaseStartUp) {
+  OT2_CASE(UserDataCase) {
+    void startUp(
+        const std::string& wrong_) OT2_START_UP() {
+
+    }
+  }
+}
+
+OT2_SUITE(UserDataParamsCaseTearDown) {
+  OT2_CASE(UserDataCase) {
+    void tearDown(
+        const std::string& wrong_) OT2_TEAR_DOWN() {
+
+    }
+  }
+}
+
+OT2_SUITE(UserDataParamsState) {
+  OT2_CASE(UserDataCase) {
+    void firstState(
+        const std::string& wrong_) OT2_STATE() {
+
+    }
+  }
+}
+
+} /* -- namespace SelfTest */
+
+} /* -- namespace OTest2 */

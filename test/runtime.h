@@ -26,6 +26,7 @@
 #include <otest2/runnerordinary.h>
 #include <otest2/testmarkfactory.h>
 #include <otest2/testmarkstorage.h>
+#include <otest2/userdata.h>
 
 #include "reportermock.h"
 #include "timesourcemock.h"
@@ -46,6 +47,7 @@ class Runtime {
     RunnerFilterOne runner_filter;
     TestMarkFactory test_mark_factory;
     std::unique_ptr<TestMarkStorage> test_mark_storage;
+    UserData user_data;
     RunnerOrdinary runner;
 
     static struct ReportPaths{} report_paths_mark;

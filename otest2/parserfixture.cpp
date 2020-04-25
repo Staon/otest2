@@ -25,7 +25,10 @@
 #include <string>
 
 #include "generator.h"
+#include "parserannotationimpl.h"
 #include "parsercontextimpl.h"
+
+#include <iostream>
 
 namespace OTest2 {
 
@@ -37,25 +40,25 @@ bool parseVariable(
   std::string varname_(vardecl_->getNameAsString());
   std::string type_(vardecl_->getType().getAsString());
 
+  /* -- check the user data annotation */
+  AnnotationRegex annotation_(USER_DATA_VAR_ANNOTATION);
+  bool user_data_(hasAnnotation(vardecl_, annotation_));
+
+  /* -- Get the initializer. Default-initialized class is handled as
+   *    CxxConstructExpr without parameters. */
   clang::Expr* init_(vardecl_->getInit());
-  if(init_ == nullptr) {
-    /* -- no initializer */
-    context_->generator->appendVariable(varname_, type_);
-  }
-  else {
-    /* -- variable with initializer */
+  clang::SourceRange init_range_;
+  if(init_ != nullptr) {
+    /* -- just the C++ call initializer is supported */
     if(vardecl_->getInitStyle() != clang::VarDecl::CallInit) {
-      context_->setError("only the callinit is supported", vardecl_);
+      context_->setError("only the callinit (C++98) initializer is supported", vardecl_);
       return false;
     }
 
-    /* -- expression with cleanups is a wrapper, I nest into it. */
+    /* -- an expression with cleanups is a wrapper, I nest into it. */
     if(clang::isa<clang::ExprWithCleanups>(init_)) {
       init_ = clang::cast<clang::ExprWithCleanups>(init_)->getSubExpr();
     }
-
-    /* -- get range of the expression */
-    clang::SourceRange range_(context_->getNodeRange(init_));
 
 //    std::cout << init_->getStmtClassName() << std::endl;
 
@@ -76,24 +79,51 @@ bool parseVariable(
         }
       }
 
-      /* -- get source range of the arguments */
       if(last_index_ < 0) {
-        range_ = clang::SourceRange(range_.getEnd(), range_.getEnd());
+        /* -- there are no arguments or all of the arguments are defaulted */
+        init_ = nullptr;
       }
       else {
+        /* -- get source range of the arguments */
         clang::SourceRange first_(context_->getNodeRange(ctrexpr_->getArg(0)));
         clang::SourceRange last_(
             context_->getNodeRange(ctrexpr_->getArg(last_index_)));
-        range_ = clang::SourceRange(first_.getBegin(), last_.getEnd());
+        init_range_ = clang::SourceRange(first_.getBegin(), last_.getEnd());
       }
+    }
+    else {
+      /* -- something different than constructor call */
+      init_range_ = context_->getNodeRange(init_);
+    }
+  }
+
+  if(init_ == nullptr) {
+    /* -- no initializer */
+    if(user_data_) {
+      std::string key_(annotation_.matches[1].str());
+      if(key_.empty())
+        key_ = varname_;
+      context_->generator->appendUserData(varname_, key_, type_);
+    }
+    else
+      context_->generator->appendVariable(varname_, type_);
+  }
+  else {
+    /* -- a variable with initializer */
+
+    /* -- User data are initialized from the OTest2 context. There must not be
+     *    a custom initializer. */
+    if(user_data_) {
+      context_->setError("the user data variable must not be initialized", vardecl_);
+      return false;
     }
 
     /* -- notify the generator */
     context_->generator->appendVariableInit(
         varname_,
         type_,
-        context_->createLocation(range_.getBegin()),
-        context_->createLocation(range_.getEnd()));
+        context_->createLocation(init_range_.getBegin()),
+        context_->createLocation(init_range_.getEnd()));
   }
 
   return true;

@@ -19,10 +19,13 @@
 
 #include <suitegenerated.h>
 
+#include <assert.h>
 #include <string>
+#include <vector>
 
 #include <caseregistry.h>
 #include <context.h>
+#include <fcemarshaler.h>
 #include "runcode.h"
 #include <utils.h>
 
@@ -35,6 +38,8 @@ struct SuiteGenerated::Impl {
     const Context* context;
     std::string name;
     CaseRegistry case_registry;
+    std::vector<FceMarshalerPtr> start_ups;
+    std::vector<FceMarshalerPtr> tear_downs;
 
     /* -- avoid copying */
     Impl(
@@ -91,17 +96,25 @@ CaseFactoryPtr SuiteGenerated::getCase(
   return pimpl->case_registry.getCase(index_, name_);
 }
 
-void SuiteGenerated::startUpSuite(
-    const Context& context_) {
-  runUserCode(context_, [this](const Context& context_) {
-    startUp();
-  });
+bool SuiteGenerated::startUpSuite(
+    const Context& context_,
+    int index_) {
+  if(index_ >= 0 && index_ < pimpl->start_ups.size()) {
+    runUserCode(context_, [&](const Context& context_) {
+      pimpl->start_ups[index_]->runFunction(context_);
+    });
+    return true;
+  }
+  else
+    return false;
 }
 
 void SuiteGenerated::tearDownSuite(
-    const Context& context_) {
-  runUserCode(context_, [this](const Context& context_){
-    tearDown();
+    const Context& context_,
+    int index_) {
+  assert(index_ >= 0 && index_ < pimpl->tear_downs.size());
+  runUserCode(context_, [&](const Context& context_) {
+    pimpl->tear_downs[index_]->runFunction(context_);
   });
 }
 
@@ -109,6 +122,14 @@ void SuiteGenerated::registerCase(
     const std::string& name_,
     CaseFactoryPtr case_factory_) {
   pimpl->case_registry.registerCase(name_, case_factory_);
+}
+
+void SuiteGenerated::registerFixture(
+    FceMarshalerPtr start_up_,
+    FceMarshalerPtr tear_down_) {
+  assert(start_up_ != nullptr && tear_down_ != nullptr);
+  pimpl->start_ups.push_back(start_up_);
+  pimpl->tear_downs.push_back(tear_down_);
 }
 
 } /* -- namespace OTest2 */

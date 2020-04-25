@@ -17,14 +17,14 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <cstddef>
 #include <exception>
 #include <getopt.h>
 #include <iostream>
-#include <cstddef>
 #include <string>
 
-#include "exc.h"
 #include "options.h"
+#include <otest2/exc.h>
 #include "parser.h"
 
 int main(

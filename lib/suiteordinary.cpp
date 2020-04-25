@@ -22,7 +22,7 @@
 #include <assert.h>
 #include <memory>
 
-#include <cmdstartsuite.h>
+#include <cmdstartupsuite.h>
 #include <commandptr.h>
 #include <commandstack.h>
 #include <context.h>
@@ -45,7 +45,7 @@ void SuiteOrdinary::scheduleRun(
   assert(so_.get() == this);
 
   /* -- schedule the commands */
-  context_.command_stack->pushCommand(std::make_shared<CmdStartSuite>(so_));
+  context_.command_stack->pushCommand(std::make_shared<CmdStartUpSuite>(so_, 0));
 }
 
 } /* namespace OTest2 */

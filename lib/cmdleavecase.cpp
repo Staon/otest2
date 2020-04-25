@@ -17,21 +17,34 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "exc.h"
+#include <cmdleavecase.h>
+
+#include <context.h>
+#include <objectpath.h>
+#include <reporter.h>
+#include <semanticstack.h>
 
 namespace OTest2 {
 
-Exception::Exception() {
+CmdLeaveCase::CmdLeaveCase() {
 
 }
 
-Exception::Exception(
-    Exception&& exc_) {
+CmdLeaveCase::~CmdLeaveCase() {
 
 }
 
-Exception::~Exception() {
+void CmdLeaveCase::run(
+    const Context& context_) {
+  /* -- report finishing of the suite */
+  context_.reporter->leaveCase(
+      context_,
+      context_.object_path->getCurrentName(),
+      context_.semantic_stack->top());
 
+  /* -- finish case's stack frame  */
+  context_.object_path->popName();
+  context_.semantic_stack->popAnd();
 }
 
 } /* namespace OTest2 */

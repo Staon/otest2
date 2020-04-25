@@ -215,6 +215,10 @@ void DfltEnvironment::setExceptionCatcher(
   pimpl->exc_catcher = catcher_;
 }
 
+UserData& DfltEnvironment::getUserData() noexcept {
+  return pimpl->user_data;
+}
+
 Runner& DfltEnvironment::getRunner() {
   if(pimpl->runner == nullptr) {
     /* -- set default exception catcher */

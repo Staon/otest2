@@ -120,26 +120,26 @@ TEST_SUITE(Fixtures) {
 
 If you compile and run this test you'll got similar output (without added line numbers):
 {% highlight plaintext linenos %}
+ ================================== Fixtures ==================================
 started 'Number one'
-================================== Fixtures ==================================
 started 'Number two'
 started 'Number three'
 started 'Number four'
 enter case 1
 leave case 1
-error fixtures::Fixtures::FirstCase: unexpected unknown exception
+error in fixtures::Fixtures::FirstCase: unexpected unknown exception
 stopped 'Number four'
-  FirstCase                                                           [Failed]
 stopped 'Number three'
+  FirstCase                                                           [Failed]
 started 'Number five'
 enter case 2
 leave case 2
-  SecondCase                                                          [Passed]
 stopped 'Number five'
+  SecondCase                                                          [Passed]
 stopped 'Number two'
+stopped 'Number one'
  ------------------------------------------------------------------------------
   Suite total                                                         [Failed]
-stopped 'Number one'
  ================================ Test results ================================
                       Passed              Failed               Total
   Suites                   0                   1                   1
@@ -150,19 +150,18 @@ stopped 'Number one'
  ==============================================================================
 {% endhighlight %}
 
-* line 01: the test suite object is created and _fixture1_ is initialized in its constructor.
-* line 02: the suite object is entered and it reports that fact self.
+* line 02: the test suite object is created and _fixture1_ is initialized in its constructor.
 * line 03: the start-up method of the suite object is invoked and _fixture2_ is initialized in.
 * line 04: the test case object is created and _fixture3_ is initialized in its constructor.
 * line 05: the start-up method of the test case object is invoked and _fixture4_ is created in.
 * line 06: the test case body is run.
 * line 08: the test case ends up by an exception. The framework catches it and reports failure.
 * line 09: the tear-down method of the test case object is invoked. _fixture4_ is destroyed in.
-* line 10: the test case object reports its result.
-* line 11: the test case object is destroyed. During its destruction _fixture3_ is destroyed too.
+* line 10: the test case object is destroyed. During its destruction _fixture3_ is destroyed too.
+* line 11: the result of the destroyed test case object is reported.
 * line 12: the second test case is created and the shadowing _fixture1_ too.
-* line 15: the second test case ends up successfully and it reports that fact.
-* line 16: the tear-down method of the second test case is invoked and the shadowing _fixture1_ is destroyed.
+* line 15: the tear-down method of the second test case is invoked and the shadowing _fixture1_ is destroyed.
+* line 16: the result of the second test case is reported.
 * line 17: the tear-down method of the suite is invoked and the _fixture2_ is destroyed in.
-* line 18: the suite object ends up without success and it reports that.
-* line 20: the suite object is destroyed. During its destruction _fixture1_ is destroyed too.
+* line 18: the suite object is destroyed. During its destruction _fixture1_ is destroyed too.
+* line 19: the result of the suite object is reported.

@@ -1,12 +1,13 @@
 <map id="include/otest2/suitegenerated.h" name="include/otest2/suitegenerated.h">
-<area shape="rect" id="node1" title=" " alt="" coords="99,5,324,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="78,304,137,331"/>
-<area shape="rect" id="node3" href="$casefactoryptr_8h.html" title=" " alt="" coords="344,155,514,181"/>
-<area shape="rect" id="node5" href="$contextobject_8h.html" title=" " alt="" coords="35,80,202,107"/>
-<area shape="rect" id="node6" href="$suiteordinary_8h.html" title=" " alt="" coords="226,80,386,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="388,379,464,405"/>
-<area shape="rect" id="node7" href="$suite_8h.html" title=" " alt="" coords="208,155,319,181"/>
-<area shape="rect" id="node8" href="$object_8h.html" title=" " alt="" coords="171,229,290,256"/>
-<area shape="rect" id="node9" href="$suiteptr_8h.html" title=" " alt="" coords="314,229,440,256"/>
-<area shape="rect" id="node10" href="$objectptr_8h.html" title=" " alt="" coords="307,304,442,331"/>
+<area shape="rect" id="node1" title=" " alt="" coords="213,5,438,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="152,304,211,331"/>
+<area shape="rect" id="node3" href="$casefactoryptr_8h.html" title=" " alt="" coords="406,155,576,181"/>
+<area shape="rect" id="node5" href="$contextobject_8h.html" title=" " alt="" coords="28,155,194,181"/>
+<area shape="rect" id="node6" href="$fcemarshalerptr_8h.html" title=" " alt="" coords="513,80,693,107"/>
+<area shape="rect" id="node7" href="$suiteordinary_8h.html" title=" " alt="" coords="246,80,406,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="530,379,606,405"/>
+<area shape="rect" id="node8" href="$suite_8h.html" title=" " alt="" coords="270,155,381,181"/>
+<area shape="rect" id="node9" href="$object_8h.html" title=" " alt="" coords="261,229,380,256"/>
+<area shape="rect" id="node10" href="$suiteptr_8h.html" title=" " alt="" coords="404,229,530,256"/>
+<area shape="rect" id="node11" href="$objectptr_8h.html" title=" " alt="" coords="396,304,530,331"/>
 </map>

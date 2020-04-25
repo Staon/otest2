@@ -115,12 +115,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abf9500aa2dff977adbc436f9c3ed5620"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceOTest2.html#af38b49d93196fe1f46ff735abef6c979">CaseFactoryPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1SuiteOrdinary.html#abf9500aa2dff977adbc436f9c3ed5620">getCase</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, int index_, std::string *name_) const =0</td></tr>
 <tr class="memdesc:abf9500aa2dff977adbc436f9c3ed5620"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a test case at specified index.  <a href="classOTest2_1_1SuiteOrdinary.html#abf9500aa2dff977adbc436f9c3ed5620">More...</a><br /></td></tr>
 <tr class="separator:abf9500aa2dff977adbc436f9c3ed5620"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a745f9140293ee9ec6e5d835eba282c2a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1SuiteOrdinary.html#a745f9140293ee9ec6e5d835eba282c2a">startUpSuite</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_)=0</td></tr>
-<tr class="memdesc:a745f9140293ee9ec6e5d835eba282c2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the suite.  <a href="classOTest2_1_1SuiteOrdinary.html#a745f9140293ee9ec6e5d835eba282c2a">More...</a><br /></td></tr>
-<tr class="separator:a745f9140293ee9ec6e5d835eba282c2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9b1a5d1e9702637d65430c152f0ec70"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1SuiteOrdinary.html#af9b1a5d1e9702637d65430c152f0ec70">tearDownSuite</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_)=0</td></tr>
-<tr class="memdesc:af9b1a5d1e9702637d65430c152f0ec70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean up the suite.  <a href="classOTest2_1_1SuiteOrdinary.html#af9b1a5d1e9702637d65430c152f0ec70">More...</a><br /></td></tr>
-<tr class="separator:af9b1a5d1e9702637d65430c152f0ec70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a2285e27f070744c81966aecdb84fb0"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1SuiteOrdinary.html#a0a2285e27f070744c81966aecdb84fb0">startUpSuite</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, int index_)=0</td></tr>
+<tr class="memdesc:a0a2285e27f070744c81966aecdb84fb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a start-up function.  <a href="classOTest2_1_1SuiteOrdinary.html#a0a2285e27f070744c81966aecdb84fb0">More...</a><br /></td></tr>
+<tr class="separator:a0a2285e27f070744c81966aecdb84fb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac479a67dbb5f30f5cd425892be7fdbb0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1SuiteOrdinary.html#ac479a67dbb5f30f5cd425892be7fdbb0">tearDownSuite</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, int index_)=0</td></tr>
+<tr class="memdesc:ac479a67dbb5f30f5cd425892be7fdbb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a tear-down function.  <a href="classOTest2_1_1SuiteOrdinary.html#ac479a67dbb5f30f5cd425892be7fdbb0">More...</a><br /></td></tr>
+<tr class="separator:ac479a67dbb5f30f5cd425892be7fdbb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a689178574751606eecec8366878b4302"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1SuiteOrdinary.html#a689178574751606eecec8366878b4302">scheduleRun</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, <a class="el" href="namespaceOTest2.html#a00b8d59e20b37156f82b9b5eb5dc2831">SuitePtr</a> this_ptr_)</td></tr>
 <tr class="memdesc:a689178574751606eecec8366878b4302"><td class="mdescLeft">&#160;</td><td class="mdescRight">Schedule run of the suite.  <a href="classOTest2_1_1SuiteOrdinary.html#a689178574751606eecec8366878b4302">More...</a><br /></td></tr>
 <tr class="separator:a689178574751606eecec8366878b4302"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -374,8 +374,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a745f9140293ee9ec6e5d835eba282c2a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a745f9140293ee9ec6e5d835eba282c2a">&#9670;&nbsp;</a></span>startUpSuite()</h2>
+<a id="a0a2285e27f070744c81966aecdb84fb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a2285e27f070744c81966aecdb84fb0">&#9670;&nbsp;</a></span>startUpSuite()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -384,11 +384,21 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void OTest2::SuiteOrdinary::startUpSuite </td>
+          <td class="memname">virtual bool OTest2::SuiteOrdinary::startUpSuite </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;&#160;</td>
-          <td class="paramname"><em>context_</em></td><td>)</td>
+          <td class="paramname"><em>context_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -398,20 +408,24 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Initialize the suite. </p>
+<p>Run a start-up function. </p>
+<p>The data model expects a list of start-up functions. The functions are invoked one by one. Start-up functions may represents a real start-up function or an initialization function of a fixture object or whatever else.</p>
+<p>The start-up functions are identified by a zero-based index with no gaps.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">context_</td><td>The otest2 context </td></tr>
+    <tr><td class="paramname">context_</td><td>The <a class="el" href="namespaceOTest2.html">OTest2</a> context </td></tr>
+    <tr><td class="paramname">index_</td><td>Zero based index of the start-up function </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the start-up function is invoked. False if there is no start-up function at the index. </dd></dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1SuiteGenerated.html#a9829b44f81a8035fe0ffc75824a19ca7">OTest2::SuiteGenerated</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1SuiteGenerated.html#aa530182b5b66f5fd652e4650bae9f2fd">OTest2::SuiteGenerated</a>.</p>
 
 </div>
 </div>
-<a id="af9b1a5d1e9702637d65430c152f0ec70"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af9b1a5d1e9702637d65430c152f0ec70">&#9670;&nbsp;</a></span>tearDownSuite()</h2>
+<a id="ac479a67dbb5f30f5cd425892be7fdbb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac479a67dbb5f30f5cd425892be7fdbb0">&#9670;&nbsp;</a></span>tearDownSuite()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -423,8 +437,18 @@ Public Member Functions</h2></td></tr>
           <td class="memname">virtual void OTest2::SuiteOrdinary::tearDownSuite </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;&#160;</td>
-          <td class="paramname"><em>context_</em></td><td>)</td>
+          <td class="paramname"><em>context_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -434,15 +458,18 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Clean up the suite. </p>
+<p>Run a tear-down function. </p>
+<p>The model expects a list of tear-down functions. The functions are invoked one by one in decreasing order. A tear-down function may represent e.g. a real tear-down function or a cleaning method of a fixture object.</p>
+<p>The tear-down functions are identified by a zero-based index with no gaps.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context_</td><td>The otest2 context </td></tr>
+    <tr><td class="paramname">index_</td><td>Index of the tear-down function </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1SuiteGenerated.html#adb36d9f9955438e14970b0560434275d">OTest2::SuiteGenerated</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1SuiteGenerated.html#a8c033f8168e055f9646675e3947d1fdc">OTest2::SuiteGenerated</a>.</p>
 
 </div>
 </div>

@@ -1,32 +1,4 @@
 var searchData=
 [
-  ['registry_2ecpp_899',['registry.cpp',['../registry_8cpp.html',1,'']]],
-  ['registry_2eh_900',['registry.h',['../registry_8h.html',1,'']]],
-  ['regressions_2ecpp_901',['regressions.cpp',['../regressions_8cpp.html',1,'']]],
-  ['regressions_2eh_902',['regressions.h',['../regressions_8h.html',1,'']]],
-  ['regressionsimpl_2eh_903',['regressionsimpl.h',['../regressionsimpl_8h.html',1,'']]],
-  ['reporter_2ecpp_904',['reporter.cpp',['../reporter_8cpp.html',1,'']]],
-  ['reporter_2eh_905',['reporter.h',['../reporter_8h.html',1,'']]],
-  ['reporterconsole_2ecpp_906',['reporterconsole.cpp',['../reporterconsole_8cpp.html',1,'']]],
-  ['reporterconsole_2eh_907',['reporterconsole.h',['../reporterconsole_8h.html',1,'']]],
-  ['reporterdebug_2ecpp_908',['reporterdebug.cpp',['../reporterdebug_8cpp.html',1,'']]],
-  ['reporterdebug_2eh_909',['reporterdebug.h',['../reporterdebug_8h.html',1,'']]],
-  ['reporterjunit_2ecpp_910',['reporterjunit.cpp',['../reporterjunit_8cpp.html',1,'']]],
-  ['reporterjunit_2eh_911',['reporterjunit.h',['../reporterjunit_8h.html',1,'']]],
-  ['reporterstatistics_2ecpp_912',['reporterstatistics.cpp',['../reporterstatistics_8cpp.html',1,'']]],
-  ['reporterstatistics_2eh_913',['reporterstatistics.h',['../reporterstatistics_8h.html',1,'']]],
-  ['reportertee_2ecpp_914',['reportertee.cpp',['../reportertee_8cpp.html',1,'']]],
-  ['reportertee_2eh_915',['reportertee.h',['../reportertee_8h.html',1,'']]],
-  ['runcode_2ecpp_916',['runcode.cpp',['../runcode_8cpp.html',1,'']]],
-  ['runcode_2eh_917',['runcode.h',['../runcode_8h.html',1,'']]],
-  ['runner_2ecpp_918',['runner.cpp',['../runner_8cpp.html',1,'']]],
-  ['runner_2eh_919',['runner.h',['../runner_8h.html',1,'']]],
-  ['runnerfilter_2ecpp_920',['runnerfilter.cpp',['../runnerfilter_8cpp.html',1,'']]],
-  ['runnerfilter_2eh_921',['runnerfilter.h',['../runnerfilter_8h.html',1,'']]],
-  ['runnerfilterentire_2ecpp_922',['runnerfilterentire.cpp',['../runnerfilterentire_8cpp.html',1,'']]],
-  ['runnerfilterentire_2eh_923',['runnerfilterentire.h',['../runnerfilterentire_8h.html',1,'']]],
-  ['runnerfilterone_2ecpp_924',['runnerfilterone.cpp',['../runnerfilterone_8cpp.html',1,'']]],
-  ['runnerfilterone_2eh_925',['runnerfilterone.h',['../runnerfilterone_8h.html',1,'']]],
-  ['runnerordinary_2ecpp_926',['runnerordinary.cpp',['../runnerordinary_8cpp.html',1,'']]],
-  ['runnerordinary_2eh_927',['runnerordinary.h',['../runnerordinary_8h.html',1,'']]]
+  ['printtraits_2eh_966',['printtraits.h',['../printtraits_8h.html',1,'']]]
 ];

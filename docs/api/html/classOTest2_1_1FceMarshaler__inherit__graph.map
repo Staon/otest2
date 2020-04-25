@@ -1,0 +1,4 @@
+<map id="OTest2::FceMarshaler" name="OTest2::FceMarshaler">
+<area shape="rect" id="node1" title="Generic interface of a function marshaler." alt="" coords="15,5,173,32"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1EmptyMarshaler.html" title="Empty marshaler &#45; no function is invoked." alt="" coords="5,80,183,107"/>
+</map>

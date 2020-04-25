@@ -1,0 +1,4 @@
+<map id="OTest2::CmdStartUpSuite" name="OTest2::CmdStartUpSuite">
+<area shape="rect" id="node1" title="A command which runs start&#45;up functions of a suite." alt="" coords="5,80,192,107"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1Command.html" title="generic command interface" alt="" coords="29,5,169,32"/>
+</map>

@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structOTest2_1_1Greater.html" title=" " alt="" coords="5,5,152,47"/>
+<area shape="rect" id="node1" href="$classOTest2_1_1FceMarshaler.html" title="Generic interface of a function marshaler." alt="" coords="5,5,164,32"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1EmptyMarshaler.html" title="Empty marshaler &#45; no function is invoked." alt="" coords="212,5,389,32"/>
 </map>

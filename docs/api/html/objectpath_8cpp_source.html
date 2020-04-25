@@ -128,44 +128,51 @@ $(function() {
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  pimpl-&gt;path_stack_.pop_back();</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="classOTest2_1_1ObjectPath.html#addbcd152a824fb8a2850b9da7a327d6a">   59</a></span>&#160;std::string <a class="code" href="classOTest2_1_1ObjectPath.html#addbcd152a824fb8a2850b9da7a327d6a">ObjectPath::getCurrentPath</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  std::ostringstream oss_;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  std::copy(</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      pimpl-&gt;path_stack_.begin(),</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      pimpl-&gt;path_stack_.end(),</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;      <a class="code" href="classOTest2_1_1InfixIterator.html">InfixIterator&lt;std::string&gt;</a>(&amp;oss_, <span class="stringliteral">&quot;::&quot;</span>));</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <span class="keywordflow">return</span> oss_.str();</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classOTest2_1_1ObjectPath.html#a65c4bca5beaed81b3adbe3ab167e6316">   68</a></span>&#160;std::string <a class="code" href="classOTest2_1_1ObjectPath.html#a65c4bca5beaed81b3adbe3ab167e6316">ObjectPath::getRegressionKey</a>(</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">const</span> std::string&amp; local_key_)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="comment">/* -- at least we must be inside a suite */</span></div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  assert(pimpl-&gt;path_stack_.size() &gt; 1);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  std::ostringstream oss_;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keyword">auto</span> suite_part_(pimpl-&gt;path_stack_.begin());</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  ++suite_part_;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  std::copy(</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      suite_part_,</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;      pimpl-&gt;path_stack_.end(),</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;      std::ostream_iterator&lt;std::string&gt;(oss_, <span class="stringliteral">&quot;&gt;&gt;&quot;</span>));</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  oss_ &lt;&lt; local_key_;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="keywordflow">return</span> oss_.str();</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="classOTest2_1_1ObjectPath.html#a0e85dcd0725227a34fe42a3d3d3a34c6">   59</a></span>&#160;std::string <a class="code" href="classOTest2_1_1ObjectPath.html#a0e85dcd0725227a34fe42a3d3d3a34c6">ObjectPath::getCurrentName</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  assert(!pimpl-&gt;path_stack_.empty());</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordflow">return</span> pimpl-&gt;path_stack_.back();</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classOTest2_1_1ObjectPath.html#addbcd152a824fb8a2850b9da7a327d6a">   65</a></span>&#160;std::string <a class="code" href="classOTest2_1_1ObjectPath.html#addbcd152a824fb8a2850b9da7a327d6a">ObjectPath::getCurrentPath</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  std::ostringstream oss_;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  std::copy(</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;      pimpl-&gt;path_stack_.begin(),</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      pimpl-&gt;path_stack_.end(),</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      <a class="code" href="classOTest2_1_1InfixIterator.html">InfixIterator&lt;std::string&gt;</a>(&amp;oss_, <span class="stringliteral">&quot;::&quot;</span>));</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="keywordflow">return</span> oss_.str();</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classOTest2_1_1ObjectPath.html#a65c4bca5beaed81b3adbe3ab167e6316">   74</a></span>&#160;std::string <a class="code" href="classOTest2_1_1ObjectPath.html#a65c4bca5beaed81b3adbe3ab167e6316">ObjectPath::getRegressionKey</a>(</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">const</span> std::string&amp; local_key_)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="comment">/* -- at least we must be inside a suite */</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  assert(pimpl-&gt;path_stack_.size() &gt; 1);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  std::ostringstream oss_;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  <span class="keyword">auto</span> suite_part_(pimpl-&gt;path_stack_.begin());</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  ++suite_part_;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  std::copy(</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;      suite_part_,</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      pimpl-&gt;path_stack_.end(),</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      std::ostream_iterator&lt;std::string&gt;(oss_, <span class="stringliteral">&quot;&gt;&gt;&quot;</span>));</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  oss_ &lt;&lt; local_key_;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordflow">return</span> oss_.str();</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassOTest2_1_1ObjectPath_html_a328406a4783034d8ba8a17accb7da552"><div class="ttname"><a href="classOTest2_1_1ObjectPath.html#a328406a4783034d8ba8a17accb7da552">OTest2::ObjectPath::popName</a></div><div class="ttdeci">void popName()</div><div class="ttdoc">Pop name of currently leaving testing object.</div><div class="ttdef"><b>Definition:</b> <a href="objectpath_8cpp_source.html#l00054">objectpath.cpp:54</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ObjectPath_html_a65c4bca5beaed81b3adbe3ab167e6316"><div class="ttname"><a href="classOTest2_1_1ObjectPath.html#a65c4bca5beaed81b3adbe3ab167e6316">OTest2::ObjectPath::getRegressionKey</a></div><div class="ttdeci">std::string getRegressionKey(const std::string &amp;local_key_) const</div><div class="ttdoc">Create key of a regression test mark according to current object path.</div><div class="ttdef"><b>Definition:</b> <a href="objectpath_8cpp_source.html#l00068">objectpath.cpp:68</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ObjectPath_html_a65c4bca5beaed81b3adbe3ab167e6316"><div class="ttname"><a href="classOTest2_1_1ObjectPath.html#a65c4bca5beaed81b3adbe3ab167e6316">OTest2::ObjectPath::getRegressionKey</a></div><div class="ttdeci">std::string getRegressionKey(const std::string &amp;local_key_) const</div><div class="ttdoc">Create key of a regression test mark according to current object path.</div><div class="ttdef"><b>Definition:</b> <a href="objectpath_8cpp_source.html#l00074">objectpath.cpp:74</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1InfixIterator_html"><div class="ttname"><a href="classOTest2_1_1InfixIterator.html">OTest2::InfixIterator</a></div><div class="ttdoc">ostream iterator with infix delimiter</div><div class="ttdef"><b>Definition:</b> <a href="infixiterator_8h_source.html#l00033">infixiterator.h:33</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1ObjectPath_html_a38ec55853b9f538fcae143d964faf411"><div class="ttname"><a href="classOTest2_1_1ObjectPath.html#a38ec55853b9f538fcae143d964faf411">OTest2::ObjectPath::pushName</a></div><div class="ttdeci">void pushName(const std::string &amp;name_)</div><div class="ttdoc">Push name of currently entering testing object.</div><div class="ttdef"><b>Definition:</b> <a href="objectpath_8cpp_source.html#l00048">objectpath.cpp:48</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1ObjectPath_html_a876fc4dcbef10e14c1974ff474c6a4e8"><div class="ttname"><a href="classOTest2_1_1ObjectPath.html#a876fc4dcbef10e14c1974ff474c6a4e8">OTest2::ObjectPath::~ObjectPath</a></div><div class="ttdeci">~ObjectPath()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="objectpath_8cpp_source.html#l00044">objectpath.cpp:44</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ObjectPath_html_a0e85dcd0725227a34fe42a3d3d3a34c6"><div class="ttname"><a href="classOTest2_1_1ObjectPath.html#a0e85dcd0725227a34fe42a3d3d3a34c6">OTest2::ObjectPath::getCurrentName</a></div><div class="ttdeci">std::string getCurrentName() const</div><div class="ttdoc">Get name at the top of the stack.</div><div class="ttdef"><b>Definition:</b> <a href="objectpath_8cpp_source.html#l00059">objectpath.cpp:59</a></div></div>
 <div class="ttc" id="autils_8h_html"><div class="ttname"><a href="utils_8h.html">utils.h</a></div></div>
 <div class="ttc" id="aobjectpath_8h_html"><div class="ttname"><a href="objectpath_8h.html">objectpath.h</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1ObjectPath_html_aaf668f557ba2cb5f9f1fe7d20514219e"><div class="ttname"><a href="classOTest2_1_1ObjectPath.html#aaf668f557ba2cb5f9f1fe7d20514219e">OTest2::ObjectPath::ObjectPath</a></div><div class="ttdeci">ObjectPath()</div><div class="ttdoc">Ctor.</div><div class="ttdef"><b>Definition:</b> <a href="objectpath_8cpp_source.html#l00039">objectpath.cpp:39</a></div></div>
 <div class="ttc" id="ainfixiterator_8h_html"><div class="ttname"><a href="infixiterator_8h.html">infixiterator.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ObjectPath_html_addbcd152a824fb8a2850b9da7a327d6a"><div class="ttname"><a href="classOTest2_1_1ObjectPath.html#addbcd152a824fb8a2850b9da7a327d6a">OTest2::ObjectPath::getCurrentPath</a></div><div class="ttdeci">std::string getCurrentPath() const</div><div class="ttdoc">Get path of current object.</div><div class="ttdef"><b>Definition:</b> <a href="objectpath_8cpp_source.html#l00059">objectpath.cpp:59</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ObjectPath_html_addbcd152a824fb8a2850b9da7a327d6a"><div class="ttname"><a href="classOTest2_1_1ObjectPath.html#addbcd152a824fb8a2850b9da7a327d6a">OTest2::ObjectPath::getCurrentPath</a></div><div class="ttdeci">std::string getCurrentPath() const</div><div class="ttdoc">Get path of current object.</div><div class="ttdef"><b>Definition:</b> <a href="objectpath_8cpp_source.html#l00065">objectpath.cpp:65</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html_a9c0e5683fb529ec38164c2f418172b30"><div class="ttname"><a href="namespaceOTest2.html#a9c0e5683fb529ec38164c2f418172b30">OTest2::odelete</a></div><div class="ttdeci">void odelete(T_ *&amp;object_)</div><div class="ttdoc">Delete a pointer and set it invalid.</div><div class="ttdef"><b>Definition:</b> <a href="utils_8h_source.html#l00032">utils.h:32</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -81,9 +81,18 @@ $(function() {
 : <a class="el" href="classOTest2_1_1TestMarkIn.html#a6336cbebf962d04dfcb07fe4919cc266">OTest2::TestMarkIn</a>
 , <a class="el" href="classOTest2_1_1TestMarkInBin.html#ad133047183fd92ff37a99e4de495b059">OTest2::TestMarkInBin</a>
 </li>
+<li>reason()
+: <a class="el" href="classOTest2_1_1Exception.html#a194067bb950d8a6f964eff1a109aff32">OTest2::Exception</a>
+, <a class="el" href="classOTest2_1_1UserDataMissingException.html#a775a74b7958c85ff8df8936a38199036">OTest2::UserDataMissingException</a>
+, <a class="el" href="classOTest2_1_1UserDataWrongTypeException.html#a4655d0d8f43c78adddf0b79a20e2c74a">OTest2::UserDataWrongTypeException</a>
+</li>
 <li>registerCase()
 : <a class="el" href="classOTest2_1_1CaseRegistry.html#a87dc7d694d2733b84ffca2d6cfd7d83f">OTest2::CaseRegistry</a>
 , <a class="el" href="classOTest2_1_1SuiteGenerated.html#a8001de840a8182c555e8c9a9042be05d">OTest2::SuiteGenerated</a>
+</li>
+<li>registerFixture()
+: <a class="el" href="classOTest2_1_1CaseGenerated.html#a230d76de3e6f0c0581fcbcabcd9f4535">OTest2::CaseGenerated</a>
+, <a class="el" href="classOTest2_1_1SuiteGenerated.html#a7a9b2aad5bc2527541c491eeb1272336">OTest2::SuiteGenerated</a>
 </li>
 <li>registerMark()
 : <a class="el" href="classOTest2_1_1TestMarkFactory.html#a9cf32c144c2669e23b3694ae736216f0">OTest2::TestMarkFactory</a>
@@ -96,7 +105,7 @@ $(function() {
 : <a class="el" href="classOTest2_1_1Registry.html#a5cbecf546fe1eabd28c35950ec7f7377">OTest2::Registry</a>
 </li>
 <li>Registry()
-: <a class="el" href="classOTest2_1_1Registry.html#a9a79fd4d24298641790f93b9f9f29356">OTest2::Registry</a>
+: <a class="el" href="classOTest2_1_1Registry.html#a85e72225dc166770f1ccc659b92e806c">OTest2::Registry</a>
 </li>
 <li>RegressionAssertion()
 : <a class="el" href="classOTest2_1_1RegressionAssertion.html#aad199a66ceb4b2bfc9040ea90df65979">OTest2::RegressionAssertion</a>
@@ -120,7 +129,7 @@ $(function() {
 : <a class="el" href="classOTest2_1_1ReporterStatistics.html#a88fb1009aa29031d9dda7229bf23b2e7">OTest2::ReporterStatistics</a>
 </li>
 <li>Reporter()
-: <a class="el" href="classOTest2_1_1Reporter.html#a9ab262a584cbdeadc8c455b20172bd2e">OTest2::Reporter</a>
+: <a class="el" href="classOTest2_1_1Reporter.html#a6869033d3ef13956e5cfc9e31c258cd9">OTest2::Reporter</a>
 </li>
 <li>ReporterConsole()
 : <a class="el" href="classOTest2_1_1ReporterConsole.html#a1c4129c297aa27e6dae90ebafa49892a">OTest2::ReporterConsole</a>
@@ -139,27 +148,34 @@ $(function() {
 : <a class="el" href="classOTest2_1_1ReporterStatistics.html#aa024fdb89a63ce43de6ab0679ab799a2">OTest2::ReporterStatistics</a>
 </li>
 <li>ReporterTee()
-: <a class="el" href="classOTest2_1_1ReporterTee.html#a063122d3bf06c63d374035a541d23c60">OTest2::ReporterTee</a>
+: <a class="el" href="classOTest2_1_1ReporterTee.html#a6b66afa875a5384427c5f073aafdfe1f">OTest2::ReporterTee</a>
 </li>
 <li>reportSuite()
 : <a class="el" href="classOTest2_1_1ReporterStatistics.html#a374118575ffb2d25bc1235a2ebe546d2">OTest2::ReporterStatistics</a>
 </li>
 <li>run()
-: <a class="el" href="classOTest2_1_1CmdDestroyCase.html#a8ce6ba8c5d463ff4c5c730c59af4bde9">OTest2::CmdDestroyCase</a>
-, <a class="el" href="classOTest2_1_1CmdDestroySuite.html#aa1fe6919a10c344287de983f5cb07081">OTest2::CmdDestroySuite</a>
-, <a class="el" href="classOTest2_1_1CmdDummy.html#a0d6445984e420f241bda24f5bfe4522f">OTest2::CmdDummy</a>
+: <a class="el" href="classOTest2_1_1CmdDummy.html#a0d6445984e420f241bda24f5bfe4522f">OTest2::CmdDummy</a>
 , <a class="el" href="classOTest2_1_1CmdFirstState.html#a7d2db3fdbbdfd7fc7aa8db9710d86435">OTest2::CmdFirstState</a>
+, <a class="el" href="classOTest2_1_1CmdLeaveCase.html#afec80a8a814a2f5409bcc544c42575d1">OTest2::CmdLeaveCase</a>
+, <a class="el" href="classOTest2_1_1CmdLeaveSuite.html#ab7a66cb1d95af17d97b48c867fb891c0">OTest2::CmdLeaveSuite</a>
 , <a class="el" href="classOTest2_1_1CmdNextCase.html#aa71acf1c8c7519d85318ea2a3395251c">OTest2::CmdNextCase</a>
 , <a class="el" href="classOTest2_1_1CmdNextSuite.html#a224a5518fd44400c41f6a9be51370324">OTest2::CmdNextSuite</a>
 , <a class="el" href="classOTest2_1_1CmdRunState.html#a686ab6e60033ae2e5417e3da14ff3336">OTest2::CmdRunState</a>
 , <a class="el" href="classOTest2_1_1CmdStartCase.html#a4a21f2d96879c85c89da984f7f8aae86">OTest2::CmdStartCase</a>
-, <a class="el" href="classOTest2_1_1CmdStartSuite.html#a883396f446a3f24d3d71ca27aa6fdf0a">OTest2::CmdStartSuite</a>
 , <a class="el" href="classOTest2_1_1CmdStartTest.html#a1a0e9b3f84e24f4e42265a4db542b317">OTest2::CmdStartTest</a>
+, <a class="el" href="classOTest2_1_1CmdStartUpCase.html#a86a3620f0657b01afd91cbc6ae604a45">OTest2::CmdStartUpCase</a>
+, <a class="el" href="classOTest2_1_1CmdStartUpSuite.html#a4bf320f2e14a91f7370b6dca8c458a4b">OTest2::CmdStartUpSuite</a>
 , <a class="el" href="classOTest2_1_1CmdState.html#a9695340b4799f826579b533579f12936">OTest2::CmdState</a>
 , <a class="el" href="classOTest2_1_1CmdStopCase.html#a40e91ae32652208d228fb8e298b34407">OTest2::CmdStopCase</a>
 , <a class="el" href="classOTest2_1_1CmdStopSuite.html#a4f5931274b032e0ccc6dbaabe496b369">OTest2::CmdStopSuite</a>
 , <a class="el" href="classOTest2_1_1CmdStopTest.html#ad6ece6794fd1ba10073f6fb2d526904d">OTest2::CmdStopTest</a>
+, <a class="el" href="classOTest2_1_1CmdTearDownCase.html#a14477c160696c4d743c5296fa0b7b827">OTest2::CmdTearDownCase</a>
+, <a class="el" href="classOTest2_1_1CmdTearDownSuite.html#a8ec0589991df482b5bd15d833943ed75">OTest2::CmdTearDownSuite</a>
 , <a class="el" href="classOTest2_1_1Command.html#a4ad99b3b6e03a24e92beacff9e805a56">OTest2::Command</a>
+</li>
+<li>runFunction()
+: <a class="el" href="classOTest2_1_1EmptyMarshaler.html#aa496deba365bd382ce69b993806963fd">OTest2::EmptyMarshaler</a>
+, <a class="el" href="classOTest2_1_1FceMarshaler.html#abd44e9efe8419c1a40913a878e1cce3c">OTest2::FceMarshaler</a>
 </li>
 <li>Runner()
 : <a class="el" href="classOTest2_1_1Runner.html#aae1d6c5c7305de679db6b575cf3da960">OTest2::Runner</a>

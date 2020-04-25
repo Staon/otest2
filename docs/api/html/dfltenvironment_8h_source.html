@@ -99,45 +99,50 @@ $(function() {
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">class </span>ExcCatcher;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">class </span>Reporter;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">class </span>Runner;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classOTest2_1_1DfltEnvironment.html">   34</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOTest2_1_1DfltEnvironment.html">DfltEnvironment</a> {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">struct </span>Impl;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    Impl* pimpl;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classOTest2_1_1DfltEnvironment.html#add562ca928ced5b7b7bcb50cf161605d">DfltEnvironment</a>(</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keyword">const</span> std::string&amp; testname_);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="classOTest2_1_1DfltEnvironment.html#add562ca928ced5b7b7bcb50cf161605d">DfltEnvironment</a>(</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keywordtype">int</span> argc_,</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keywordtype">char</span>* argv_[]);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <a class="code" href="classOTest2_1_1DfltEnvironment.html#aabffb948d64c45c242c3841c5c9bdf1c">~DfltEnvironment</a>();</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1DfltEnvironment.html#ab0353cca05646a3cb8b0f9babf9dcd97">addReporter</a>(</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <a class="code" href="classOTest2_1_1Reporter.html">Reporter</a>* reporter_);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1DfltEnvironment.html#afecd277a3be4e64b5801cb14ff753c7b">setExceptionCatcher</a>(</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <a class="code" href="classOTest2_1_1ExcCatcher.html">ExcCatcher</a>* catcher_);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <a class="code" href="classOTest2_1_1Runner.html">Runner</a>&amp; <a class="code" href="classOTest2_1_1DfltEnvironment.html#a00329a1e9158f7a6a161f35e0081f377">getRunner</a>();</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;};</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">class </span>UserData;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classOTest2_1_1DfltEnvironment.html">   35</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOTest2_1_1DfltEnvironment.html">DfltEnvironment</a> {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">struct </span>Impl;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    Impl* pimpl;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classOTest2_1_1DfltEnvironment.html#add562ca928ced5b7b7bcb50cf161605d">DfltEnvironment</a>(</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keyword">const</span> std::string&amp; testname_);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <a class="code" href="classOTest2_1_1DfltEnvironment.html#add562ca928ced5b7b7bcb50cf161605d">DfltEnvironment</a>(</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keywordtype">int</span> argc_,</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordtype">char</span>* argv_[]);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <a class="code" href="classOTest2_1_1DfltEnvironment.html#aabffb948d64c45c242c3841c5c9bdf1c">~DfltEnvironment</a>();</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1DfltEnvironment.html#ab0353cca05646a3cb8b0f9babf9dcd97">addReporter</a>(</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <a class="code" href="classOTest2_1_1Reporter.html">Reporter</a>* reporter_);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1DfltEnvironment.html#afecd277a3be4e64b5801cb14ff753c7b">setExceptionCatcher</a>(</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <a class="code" href="classOTest2_1_1ExcCatcher.html">ExcCatcher</a>* catcher_);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <a class="code" href="classOTest2_1_1UserData.html">UserData</a>&amp; <a class="code" href="classOTest2_1_1DfltEnvironment.html#a1adc29e86fb219f34eff72d2ccee5ce1">getUserData</a>() noexcept;</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* OTest2__INCLUDE_OTEST2_DFLTENVIRONMENT_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <a class="code" href="classOTest2_1_1Runner.html">Runner</a>&amp; <a class="code" href="classOTest2_1_1DfltEnvironment.html#a00329a1e9158f7a6a161f35e0081f377">getRunner</a>();</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;};</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* OTest2__INCLUDE_OTEST2_DFLTENVIRONMENT_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html_ab0353cca05646a3cb8b0f9babf9dcd97"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html#ab0353cca05646a3cb8b0f9babf9dcd97">OTest2::DfltEnvironment::addReporter</a></div><div class="ttdeci">void addReporter(Reporter *reporter_)</div><div class="ttdoc">Append a test reporter.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8cpp_source.html#l00200">dfltenvironment.cpp:200</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html_a00329a1e9158f7a6a161f35e0081f377"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html#a00329a1e9158f7a6a161f35e0081f377">OTest2::DfltEnvironment::getRunner</a></div><div class="ttdeci">Runner &amp; getRunner()</div><div class="ttdoc">Get constructed runner.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8cpp_source.html#l00215">dfltenvironment.cpp:215</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html_ab0353cca05646a3cb8b0f9babf9dcd97"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html#ab0353cca05646a3cb8b0f9babf9dcd97">OTest2::DfltEnvironment::addReporter</a></div><div class="ttdeci">void addReporter(Reporter *reporter_)</div><div class="ttdoc">Append a test reporter.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8cpp_source.html#l00203">dfltenvironment.cpp:203</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html_a00329a1e9158f7a6a161f35e0081f377"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html#a00329a1e9158f7a6a161f35e0081f377">OTest2::DfltEnvironment::getRunner</a></div><div class="ttdeci">Runner &amp; getRunner()</div><div class="ttdoc">Get constructed runner.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8cpp_source.html#l00222">dfltenvironment.cpp:222</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1Reporter_html"><div class="ttname"><a href="classOTest2_1_1Reporter.html">OTest2::Reporter</a></div><div class="ttdoc">Generic test reporter.</div><div class="ttdef"><b>Definition:</b> <a href="reporter_8h_source.html#l00032">reporter.h:32</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html_aabffb948d64c45c242c3841c5c9bdf1c"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html#aabffb948d64c45c242c3841c5c9bdf1c">OTest2::DfltEnvironment::~DfltEnvironment</a></div><div class="ttdeci">~DfltEnvironment()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8cpp_source.html#l00196">dfltenvironment.cpp:196</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html_afecd277a3be4e64b5801cb14ff753c7b"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html#afecd277a3be4e64b5801cb14ff753c7b">OTest2::DfltEnvironment::setExceptionCatcher</a></div><div class="ttdeci">void setExceptionCatcher(ExcCatcher *catcher_)</div><div class="ttdoc">Set exception catcher.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8cpp_source.html#l00208">dfltenvironment.cpp:208</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html_aabffb948d64c45c242c3841c5c9bdf1c"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html#aabffb948d64c45c242c3841c5c9bdf1c">OTest2::DfltEnvironment::~DfltEnvironment</a></div><div class="ttdeci">~DfltEnvironment()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8cpp_source.html#l00199">dfltenvironment.cpp:199</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html_afecd277a3be4e64b5801cb14ff753c7b"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html#afecd277a3be4e64b5801cb14ff753c7b">OTest2::DfltEnvironment::setExceptionCatcher</a></div><div class="ttdeci">void setExceptionCatcher(ExcCatcher *catcher_)</div><div class="ttdoc">Set exception catcher.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8cpp_source.html#l00211">dfltenvironment.cpp:211</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1UserData_html"><div class="ttname"><a href="classOTest2_1_1UserData.html">OTest2::UserData</a></div><div class="ttdoc">An object keeping user data passed from user's custom main function.</div><div class="ttdef"><b>Definition:</b> <a href="userdata_8h_source.html#l00119">userdata.h:119</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html_a1adc29e86fb219f34eff72d2ccee5ce1"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html#a1adc29e86fb219f34eff72d2ccee5ce1">OTest2::DfltEnvironment::getUserData</a></div><div class="ttdeci">UserData &amp; getUserData() noexcept</div><div class="ttdoc">Access the container of user data.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8cpp_source.html#l00218">dfltenvironment.cpp:218</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1Runner_html"><div class="ttname"><a href="classOTest2_1_1Runner.html">OTest2::Runner</a></div><div class="ttdoc">Generic test runner.</div><div class="ttdef"><b>Definition:</b> <a href="runner_8h_source.html#l00112">runner.h:112</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html_add562ca928ced5b7b7bcb50cf161605d"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html#add562ca928ced5b7b7bcb50cf161605d">OTest2::DfltEnvironment::DfltEnvironment</a></div><div class="ttdeci">DfltEnvironment(const std::string &amp;testname_)</div><div class="ttdoc">Ctor - default running environment.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8cpp_source.html#l00125">dfltenvironment.cpp:125</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html_add562ca928ced5b7b7bcb50cf161605d"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html#add562ca928ced5b7b7bcb50cf161605d">OTest2::DfltEnvironment::DfltEnvironment</a></div><div class="ttdeci">DfltEnvironment(const std::string &amp;testname_)</div><div class="ttdoc">Ctor - default running environment.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8cpp_source.html#l00128">dfltenvironment.cpp:128</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1ExcCatcher_html"><div class="ttname"><a href="classOTest2_1_1ExcCatcher.html">OTest2::ExcCatcher</a></div><div class="ttdoc">Generic exception catcher interface.</div><div class="ttdef"><b>Definition:</b> <a href="exccatcher_8h_source.html#l00039">exccatcher.h:39</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html">OTest2::DfltEnvironment</a></div><div class="ttdoc">Default test environment.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8h_source.html#l00034">dfltenvironment.h:34</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1DfltEnvironment_html"><div class="ttname"><a href="classOTest2_1_1DfltEnvironment.html">OTest2::DfltEnvironment</a></div><div class="ttdoc">Default test environment.</div><div class="ttdef"><b>Definition:</b> <a href="dfltenvironment_8h_source.html#l00035">dfltenvironment.h:35</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

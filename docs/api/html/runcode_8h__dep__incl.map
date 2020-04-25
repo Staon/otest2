@@ -1,7 +1,9 @@
 <map id="lib/runcode.h" name="lib/runcode.h">
-<area shape="rect" id="node1" title=" " alt="" coords="283,5,387,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="476,5,580,32"/>
 <area shape="rect" id="node2" href="$casegenerated_8cpp.html" title=" " alt="" coords="5,80,168,107"/>
-<area shape="rect" id="node3" href="$runcode_8cpp.html" title=" " alt="" coords="193,80,311,107"/>
-<area shape="rect" id="node4" href="$stategenerated_8cpp.html" title=" " alt="" coords="335,80,502,107"/>
-<area shape="rect" id="node5" href="$suitegenerated_8cpp.html" title=" " alt="" coords="526,80,690,107"/>
+<area shape="rect" id="node3" href="$cmdnextcase_8cpp.html" title=" " alt="" coords="193,80,346,107"/>
+<area shape="rect" id="node4" href="$cmdnextsuite_8cpp.html" title=" " alt="" coords="371,80,525,107"/>
+<area shape="rect" id="node5" href="$runcode_8cpp.html" title=" " alt="" coords="550,80,669,107"/>
+<area shape="rect" id="node6" href="$stategenerated_8cpp.html" title=" " alt="" coords="693,80,859,107"/>
+<area shape="rect" id="node7" href="$suitegenerated_8cpp.html" title=" " alt="" coords="883,80,1047,107"/>
 </map>

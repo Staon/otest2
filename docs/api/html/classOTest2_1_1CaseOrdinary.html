@@ -118,12 +118,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7a94edb496fd2ab6d0c1fe3f8c314f57"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceOTest2.html#a2bb2b9684c25ed690e8d2f49b0470d52">StatePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1CaseOrdinary.html#a7a94edb496fd2ab6d0c1fe3f8c314f57">getState</a> (const std::string &amp;name_) const =0</td></tr>
 <tr class="memdesc:a7a94edb496fd2ab6d0c1fe3f8c314f57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get state with specified <em>name_</em>.  <a href="classOTest2_1_1CaseOrdinary.html#a7a94edb496fd2ab6d0c1fe3f8c314f57">More...</a><br /></td></tr>
 <tr class="separator:a7a94edb496fd2ab6d0c1fe3f8c314f57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a0d6a088f67e5a9a98b26be5377c0f8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1CaseOrdinary.html#a0a0d6a088f67e5a9a98b26be5377c0f8">startUpCase</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_)=0</td></tr>
-<tr class="memdesc:a0a0d6a088f67e5a9a98b26be5377c0f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the case.  <a href="classOTest2_1_1CaseOrdinary.html#a0a0d6a088f67e5a9a98b26be5377c0f8">More...</a><br /></td></tr>
-<tr class="separator:a0a0d6a088f67e5a9a98b26be5377c0f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0573c24e4011163d6f0c047d97846da"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1CaseOrdinary.html#ac0573c24e4011163d6f0c047d97846da">tearDownCase</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_)=0</td></tr>
-<tr class="memdesc:ac0573c24e4011163d6f0c047d97846da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean up the case.  <a href="classOTest2_1_1CaseOrdinary.html#ac0573c24e4011163d6f0c047d97846da">More...</a><br /></td></tr>
-<tr class="separator:ac0573c24e4011163d6f0c047d97846da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4207e7977d390434d130a6ee820538c"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1CaseOrdinary.html#aa4207e7977d390434d130a6ee820538c">startUpCase</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, int index_)=0</td></tr>
+<tr class="memdesc:aa4207e7977d390434d130a6ee820538c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a start-up function.  <a href="classOTest2_1_1CaseOrdinary.html#aa4207e7977d390434d130a6ee820538c">More...</a><br /></td></tr>
+<tr class="separator:aa4207e7977d390434d130a6ee820538c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9fe954c1f441aab822949d9cc5a7d2a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1CaseOrdinary.html#ae9fe954c1f441aab822949d9cc5a7d2a">tearDownCase</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, int index_)=0</td></tr>
+<tr class="memdesc:ae9fe954c1f441aab822949d9cc5a7d2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a tear-down function.  <a href="classOTest2_1_1CaseOrdinary.html#ae9fe954c1f441aab822949d9cc5a7d2a">More...</a><br /></td></tr>
+<tr class="separator:ae9fe954c1f441aab822949d9cc5a7d2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0250dc112ba318ae816526b011334f88"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1CaseOrdinary.html#a0250dc112ba318ae816526b011334f88">scheduleRun</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, <a class="el" href="namespaceOTest2.html#a93f6d5bd4ad39632831d4f95b8e51042">CasePtr</a> this_ptr_)</td></tr>
 <tr class="memdesc:a0250dc112ba318ae816526b011334f88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Schedule run of the case.  <a href="classOTest2_1_1CaseOrdinary.html#a0250dc112ba318ae816526b011334f88">More...</a><br /></td></tr>
 <tr class="separator:a0250dc112ba318ae816526b011334f88"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -389,8 +389,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a0a0d6a088f67e5a9a98b26be5377c0f8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a0d6a088f67e5a9a98b26be5377c0f8">&#9670;&nbsp;</a></span>startUpCase()</h2>
+<a id="aa4207e7977d390434d130a6ee820538c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4207e7977d390434d130a6ee820538c">&#9670;&nbsp;</a></span>startUpCase()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -399,11 +399,21 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void OTest2::CaseOrdinary::startUpCase </td>
+          <td class="memname">virtual bool OTest2::CaseOrdinary::startUpCase </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;&#160;</td>
-          <td class="paramname"><em>context_</em></td><td>)</td>
+          <td class="paramname"><em>context_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -413,20 +423,22 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Initialize the case. </p>
+<p>Run a start-up function. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context_</td><td>The otest2 context </td></tr>
+    <tr><td class="paramname">index_</td><td>A zero base index of the start-up function </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the start-up function has been invoked. False if there is no function at the index. </dd></dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1CaseGenerated.html#a549c4efb91b9dcf50d817e4de59ba054">OTest2::CaseGenerated</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1CaseGenerated.html#ae183c74a4b1cdbfe91462ad4f3b0146c">OTest2::CaseGenerated</a>.</p>
 
 </div>
 </div>
-<a id="ac0573c24e4011163d6f0c047d97846da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac0573c24e4011163d6f0c047d97846da">&#9670;&nbsp;</a></span>tearDownCase()</h2>
+<a id="ae9fe954c1f441aab822949d9cc5a7d2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9fe954c1f441aab822949d9cc5a7d2a">&#9670;&nbsp;</a></span>tearDownCase()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -438,8 +450,18 @@ Public Member Functions</h2></td></tr>
           <td class="memname">virtual void OTest2::CaseOrdinary::tearDownCase </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;&#160;</td>
-          <td class="paramname"><em>context_</em></td><td>)</td>
+          <td class="paramname"><em>context_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -449,15 +471,16 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Clean up the case. </p>
+<p>Run a tear-down function. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context_</td><td>The otest2 context </td></tr>
+    <tr><td class="paramname">index_</td><td>Zero based index of the tear-down function </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1CaseGenerated.html#a5a3591393206d8dd17471babc4b3ab4e">OTest2::CaseGenerated</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1CaseGenerated.html#aca110dc32743f920d6bb10fac9f11c0a">OTest2::CaseGenerated</a>.</p>
 
 </div>
 </div>

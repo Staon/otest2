@@ -97,6 +97,10 @@ is needed as the [compact syntax]({{ "/reference/dsl#compact-syntax" | relative_
 doesn't allow definition of function parameters. If the name of the parameter
 differs the name of the user datum the annotation `OT2_USER_DATA_KEY` can help.
 
+If the parameter is type `const ::OTest2::Context&`
+[the OTest2 Context]({{ "api/html/classOTest2_1_1Context.html" | relative_url }})
+is passed into the function instead of a user datum. 
+
 [^1]: Remark the usage of the [full syntax]({{ "/reference/dsl#full-syntax" | relative_url}}).
       All previous examples has been written using
       the [compact syntax]({{ "/reference/dsl#compact-syntax" | relative_url }}).

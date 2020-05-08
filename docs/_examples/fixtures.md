@@ -12,24 +12,23 @@ of mock dependencies), filling data into a database, generating of files used
 as inputs of the tests etc. And, of course, cleaning them at the end of the test.
 
 The OTest2 framework supports fixtures at the both levels of suites and testcases.
-Furthermore, the fixtures can be set up and torn down by two ways:
-1. by the constructor and destructor of the test object (suite or case),
-2. in the start-up and tear-down methods.
+There are two phases of fixture initialization:
+1. the fixture variables are created by their constructor methods
+2. the start-up method of the testing object is invoked.
 
-The first way is more natural for C++ programmers - it's just a member
-initializer. It's possible because the OTest2 framework keeps precise lifetime
-of the testing objects. Suite or testcase is created just before entering
-the object and it's destroyed instantly at its end.
+Complementarily, destruction of fixture variables is done in two symmetric phases:
+1. the tear-down method of the testing object is invoked
+2. the fixture variables are destroyed by their destructor methods. 
 
-The methods are just member functions invoked at the beginning and at the end
-of the testing object. The framework promises that the tear-down method is
-called every time even if the test object fails or ends up with an unhandled
-exception.
+The first phase is the natural C++ way - the fixture variables are just
+member variable. As the framework creates any testing object just before
+its entering and destructs the object instantly at its end, the fixture variables
+exist just for run of the testing object[^1]. 
 
-Both ways can be combined together. Generally, any suite or testcase variable
-is initialized in the constructor (at least by the default constructor) and
-can be changed in the start-up method. Similarly, any variable is destructed
-in the objects destructor but it can be changed in the tear-down method.
+The start-up and tear-down methods are just member functions of a testing
+object invoked at the beginning and at the end. The framework promises that
+the tear-down method is called every time even if the test object fails
+or ends up with an unhandled exception.
 
 OK, let's get an example:
 
@@ -165,3 +164,6 @@ stopped 'Number one'
 * line 17: the tear-down method of the suite is invoked and the _fixture2_ is destroyed in.
 * line 18: the suite object is destroyed. During its destruction _fixture1_ is destroyed too.
 * line 19: the result of the suite object is reported.
+
+[^1]: The framework keeps precise lifetime of testing objects. This is one
+      of the advantages using the libclang. 

@@ -23,32 +23,33 @@
 #include <unistd.h>
 
 #include <otest2/registry.h>
+#include <otest2/utils.h>
 
 namespace OTest2 {
 
 namespace Test {
 
+namespace {
+
+std::unique_ptr<TestMarkStorage> createTestMarkStorage(
+    TestMarkFactory* factory_,
+    const std::string& regression_file_) {
+  if(!regression_file_.empty())
+    return ::OTest2::make_unique<TestMarkStorage>(factory_, regression_file_);
+  else
+    return std::unique_ptr<TestMarkStorage>();
+}
+
+} /* -- namespace */
+
+
 Runtime::ReportPaths Runtime::report_paths_mark;
+Runtime::InternalCtor Runtime::internal_ctor;
 
 Runtime::Runtime(
     const std::string& suite_name_,
     const std::string& case_name_) :
-  time_source(),
-  exc_catcher(),
-  reporter(),
-  runner_filter(suite_name_, case_name_),
-  test_mark_factory(),
-  test_mark_storage(),
-  runner(
-      &time_source,
-      &exc_catcher,
-      &reporter,
-      &Registry::instance("selftest"),
-      &runner_filter,
-      &test_mark_factory,
-      test_mark_storage.get(),
-      &user_data,
-      "selftest") {
+  Runtime(internal_ctor, suite_name_, case_name_, false, "") {
 
 }
 
@@ -56,22 +57,7 @@ Runtime::Runtime(
     const std::string& suite_name_,
     const std::string& case_name_,
     const ReportPaths&) :
-  time_source(),
-  exc_catcher(),
-  reporter(true),
-  runner_filter(suite_name_, case_name_),
-  test_mark_factory(),
-  test_mark_storage(),
-  runner(
-      &time_source,
-      &exc_catcher,
-      &reporter,
-      &Registry::instance("selftest"),
-      &runner_filter,
-      &test_mark_factory,
-      test_mark_storage.get(),
-      &user_data,
-      "selftest") {
+  Runtime(internal_ctor, suite_name_, case_name_, true, "") {
 
 }
 
@@ -79,11 +65,27 @@ Runtime::Runtime(
     const std::string& suite_name_,
     const std::string& case_name_,
     const std::string& regression_file_) :
+  Runtime(
+      internal_ctor,
+      suite_name_,
+      case_name_,
+      false,
+      regression_file_) {
+
+}
+
+Runtime::Runtime(
+    const Runtime::InternalCtor&,
+    const std::string& suite_name_,
+    const std::string& case_name_,
+    bool report_paths_,
+    const std::string& regression_file_) :
   exc_catcher(),
-  reporter(),
+  reporter(report_paths_),
   runner_filter(suite_name_, case_name_),
   test_mark_factory(),
-  test_mark_storage(new TestMarkStorage(&test_mark_factory, regression_file_)),
+  test_mark_storage(createTestMarkStorage(&test_mark_factory, regression_file_)),
+  user_data(),
   runner(
       &time_source,
       &exc_catcher,
@@ -94,7 +96,8 @@ Runtime::Runtime(
       test_mark_storage.get(),
       &user_data,
       "selftest") {
-
+  /* -- prepare user data */
+  user_data.setDatum("reporter_", &reporter);
 }
 
 Runtime::~Runtime() {

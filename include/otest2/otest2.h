@@ -22,50 +22,8 @@
 
 #include <otest2/assertions.h>
 #include <otest2/controls.h>
+#include <otest2/dsl.h>
 #include <otest2/glue.h>
 #include <otest2/regressions.h>
-
-#ifndef OTEST2_PARSER_ACTIVE
-
-/* -- test structure description */
-#define OT2_START_UP()
-#define OT2_TEAR_DOWN()
-#define OT2_SUITE(name_) namespace name_ { using namespace ::OTest2::Assertions; using namespace ::OTest2::Controls; } namespace name_
-#define OT2_CASE(name_) namespace name_
-#define OT2_STATE()
-#define OT2_SIMPLE() void AnonymousState() OT2_STATE()
-
-/* -- asserted try/catch block */
-#define testTry try
-#define testCatch(exc_type_, name_) catch(typename ::OTest2::TypePack<exc_type_>::Type name_)
-
-/* -- user data variables */
-#define OT2_USER_DATA()
-#define OT2_USER_DATA_KEY(key_)
-
-#else /* -- OTEST2_PARSER_ACTIVE */
-
-#define OT2_START_UP() __attribute__((annotate("otest2::startUp")))
-#define OT2_TEAR_DOWN() __attribute__((annotate("otest2::tearDown")))
-#define OT2_SUITE(name_) namespace name_ { using namespace ::OTest2::Assertions; using namespace ::OTest2::Controls; } namespace name_ __attribute__((annotate("otest2::suite")))
-#define OT2_CASE(name_) namespace name_ __attribute__((annotate("otest2::case")))
-#define OT2_STATE() __attribute__((annotate("otest2::state")))
-#define OT2_SIMPLE() void AnonymousState() OT2_STATE()
-
-#define testTry try
-#define testCatch(exc_type_, name_) catch(typename ::OTest2::TypePack<exc_type_>::Type __attribute__((annotate("otest2::catch"))) name_ )
-
-#define OT2_USER_DATA() __attribute__((annotate("otest2::userData()")))
-#define OT2_USER_DATA_KEY(key_) __attribute__((annotate("otest2::userData(" key_ ")")))
-
-#endif /* -- OTEST2_PARSER_ACTIVE */
-
-/* -- legacy interface inherited from the old OTest(1) project */
-#define TEST_START_UP() void startUp() OT2_START_UP()
-#define TEST_TEAR_DOWN() void tearDown() OT2_TEAR_DOWN()
-#define TEST_SUITE(name_) OT2_SUITE(name_)
-#define TEST_CASE(name_) OT2_CASE(name_)
-#define TEST_STATE(name_) void name_() OT2_STATE()
-#define TEST_SIMPLE() OT2_SIMPLE()
 
 #endif /* -- OTest2__INCLUDE_OTEST2_OTEST2_H_ */

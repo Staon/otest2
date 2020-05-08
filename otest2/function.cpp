@@ -21,6 +21,7 @@
 
 #include <assert.h>
 #include <iostream>
+#include <sstream>
 #include <string>
 
 #include "formatting.h"
@@ -31,8 +32,18 @@ namespace OTest2 {
 namespace {
 
 std::string marshalerName(
+    FunctionAccess access_,
+    const std::string& instance_,
+    const std::string& clash_,
     const std::string& fce_name_) {
-  return "Marshaler_" + fce_name_;
+  std::ostringstream oss_;
+  oss_ << "Marshaler_";
+  if(access_ != FunctionAccess::NONE)
+    oss_ << instance_ << "_";
+  if(!clash_.empty())
+    oss_ << clash_ << "_";
+  oss_ << fce_name_;
+  return oss_.str();
 }
 
 std::string invokerClass(
@@ -48,10 +59,17 @@ std::string invokerName(
 } /* -- namespace */
 
 Function::Function(
+    FunctionAccess access_,
+    const std::string& instance_,
+    const std::string& clash_,
     const std::string& name_,
     const std::string& rettype_) :
+  access(access_),
+  instance(instance_),
+  clash(clash_),
   name(name_),
   rettype(rettype_) {
+  assert(access == FunctionAccess::NONE || !instance.empty());
   assert(!name.empty() && !rettype.empty());
 
 }
@@ -135,7 +153,7 @@ void Function::generateMarshaler(
     std::ostream& os_,
     int indent_,
     const std::string& classname_) const {
-  const std::string marshaler_name_(marshalerName(name));
+  const std::string marshaler_name_(marshalerName(access, instance, clash, name));
 
   os_ << "class " << marshaler_name_ << " : public ::OTest2::FceMarshaler {\n";
 
@@ -143,11 +161,7 @@ void Function::generateMarshaler(
   Formatting::printIndent(os_, indent_ + 1);
   os_ << "private:\n";
   Formatting::printIndent(os_, indent_ + 2);
-  os_ << classname_ << "* object;\n";
-  Formatting::printIndent(os_, indent_ + 2);
-  os_ << "void (" << classname_ << "::* fce)(";
-  generateFceParameters(os_, indent_ + 4, false);
-  os_ << ");\n\n";
+  os_ << classname_ << "* object;\n\n";
 
   Formatting::printIndent(os_, indent_ + 1);
   os_ << "public:\n";
@@ -156,15 +170,9 @@ void Function::generateMarshaler(
   Formatting::printIndent(os_, indent_ + 2);
   os_ << "explicit " << marshaler_name_ << "(\n";
   Formatting::printIndent(os_, indent_ + 4);
-  os_ << classname_ << "* object_,\n";
-  Formatting::printIndent(os_, indent_ + 4);
-  os_ << "void (" << classname_ << "::* fce_)(";
-  generateFceParameters(os_, indent_ + 6, false);
-  os_ << ")) :\n";
+  os_ << classname_ << "* object_) :\n";
   Formatting::printIndent(os_, indent_ + 3);
-  os_ << "object(object_),\n";
-  Formatting::printIndent(os_, indent_ + 3);
-  os_ << "fce(fce_) {\n";
+  os_ << "object(object_) {\n";
   Formatting::printIndent(os_, indent_ + 3);
   os_ << "\n";
   Formatting::printIndent(os_, indent_ + 2);
@@ -184,7 +192,22 @@ void Function::generateMarshaler(
   Formatting::printIndent(os_, indent_ + 4);
   os_ << "const ::OTest2::Context& context_) {\n";
   Formatting::printIndent(os_, indent_ + 3);
-  os_ << "(object->*fce)(";
+  os_ << "object->";
+  if(access != FunctionAccess::NONE) {
+    os_ << instance;
+    switch(access) {
+      case FunctionAccess::DOT:
+        os_ << ".";
+        break;
+      case FunctionAccess::ARROW:
+        os_ << "->";
+        break;
+      default:
+        assert("invalid function access specification" == nullptr);
+        break;
+    }
+  }
+  os_ << name << "(";
   generateFceArguments(os_, indent_ + 5);
   os_ << ");\n";
   Formatting::printIndent(os_, indent_ + 2);
@@ -218,9 +241,8 @@ void Function::generateRegistration(
     std::ostream& os_,
     int indent_,
     const std::string& classname_) const {
-  const std::string marshaler_name_(marshalerName(name));
-  os_ << "std::make_shared<" << marshaler_name_ << ">(this, &"
-      << classname_ << "::" << name << ")";
+  const std::string marshaler_name_(marshalerName(access, instance, clash, name));
+  os_ << "std::make_shared<" << marshaler_name_ << ">(this)";
 }
 
 void Function::generateInvoker(

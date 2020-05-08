@@ -125,6 +125,10 @@ class GeneratorStd : public Generator {
         FunctionPtr function_,
         const Location& fbegin_,
         const Location& fend_);
+    virtual void appendFixtureObject(
+        const std::string& name_,
+        FunctionPtr start_up_,
+        FunctionPtr tear_down_);
     virtual void appendGenericFunction(
         FunctionPtr function_,
         const Location& fbegin_,

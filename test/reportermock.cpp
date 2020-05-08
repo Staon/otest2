@@ -125,6 +125,12 @@ void ReporterMock::reportDelay(
   pimpl->addRecord();
 }
 
+void ReporterMock::reportDebugMessage(
+    const std::string& message_) {
+  pimpl->oss << "debug<" << message_ << ">";
+  pimpl->addRecord();
+}
+
 std::ostream& ReporterMock::dumpRecords(
     std::ostream& os_) const {
   os_ << "std::vector<const char*> data_{" << std::endl;

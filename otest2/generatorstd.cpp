@@ -531,6 +531,13 @@ void GeneratorStd::appendTearDownFunction(
   pimpl->reader->writePart(pimpl->output, fbegin_, &fend_);
 }
 
+void GeneratorStd::appendFixtureObject(
+    const std::string& name_,
+    FunctionPtr start_up_,
+    FunctionPtr tear_down_) {
+  pimpl->fixtures->appendFixture(start_up_, tear_down_);
+}
+
 void GeneratorStd::appendGenericFunction(
     FunctionPtr function_,
     const Location& fbegin_,
@@ -592,7 +599,7 @@ void GeneratorStd::leaveCase() {
       << "\n";
 
   /* -- add the case's start-up and tear-down functions */
-  pimpl->fixtures->appendFixture(
+  pimpl->fixtures->prependFixture(
       pimpl->start_up_fce.back(), pimpl->tear_down_fce.back());
 
   /* -- generate fixture marshalers */
@@ -649,7 +656,7 @@ void GeneratorStd::leaveSuite() {
       << "    }\n\n";
 
   /* -- add the suite's start-up and tear-down functions */
-  pimpl->fixtures->appendFixture(
+  pimpl->fixtures->prependFixture(
       pimpl->start_up_fce.back(), pimpl->tear_down_fce.back());
 
   /* -- generate fixture marshalers */

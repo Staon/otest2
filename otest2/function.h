@@ -27,11 +27,20 @@
 
 namespace OTest2 {
 
+enum class FunctionAccess {
+    NONE = 0,
+    DOT,
+    ARROW,
+};
+
 /**
  * @brief Record of one testing function (start-up, tear-down or a test case)
  */
 class Function {
   private:
+    FunctionAccess access;
+    std::string instance;
+    std::string clash;
     std::string name;
     std::string rettype;
     struct Record {
@@ -56,10 +65,22 @@ class Function {
     /**
      * @brief Ctor
      *
+     * @param access_ How to access the function: directly or as an instance
+     *     member.
+     * @param instance_ Name of the instance. May be empty for function
+     *     access NONE.
+     * @param clash_ A string used to resolve collisions of generated marshalers.
+     *     The string is added into the marshaler name. If the string is empty,
+     *     nothing is added.
+     * @param classname_ Name of the class which the function is defined in.
+     *     It may be empty if the access is NONE.
      * @param name_ Name of the function
      * @param rettype_ Return type of the function
      */
     explicit Function(
+        FunctionAccess access_,
+        const std::string& instance_,
+        const std::string& clash_,
         const std::string& name_,
         const std::string& rettype_);
 

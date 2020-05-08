@@ -19,7 +19,9 @@
 #ifndef OTest2__INCLUDE_OTEST2_UTILS_H_
 #define OTest2__INCLUDE_OTEST2_UTILS_H_
 
+#include <memory>
 #include <type_traits>
+#include <utility>
 
 namespace OTest2 {
 
@@ -33,6 +35,15 @@ void odelete(
     T_*& object_) {
   delete object_;
   object_ = nullptr;
+}
+
+/**
+ * @brief Replacement of the unique_ptr function missing in C++11
+ */
+template<typename Type_, typename... Args_>
+std::unique_ptr<Type_> make_unique(
+    Args_&&... args_) {
+  return std::unique_ptr<Type_>(new Type_(std::forward<Args_>(args_)...));
 }
 
 } /* -- namespace OTest2 */

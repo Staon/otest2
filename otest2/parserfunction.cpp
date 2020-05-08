@@ -30,6 +30,7 @@
 #include "parserannotationimpl.h"
 #include "parsercode.h"
 #include "parsercontextimpl.h"
+#include "parsertype.h"
 
 #include <iostream>
 
@@ -46,15 +47,17 @@ FunctionFlags::FunctionFlags(
 
 }
 
-namespace {
-
 FunctionPtr createFunctionObject(
     ParserContext* context_,
+    FunctionAccess access_,
+    const std::string& instance_,
+    const std::string& classname_,
     clang::FunctionDecl* fce_) {
   /* -- create the object */
   std::string fce_name_(fce_->getNameAsString());
   std::string ret_type_(fce_->getReturnType().getAsString());
-  auto function_(std::make_shared<Function>(fce_name_, ret_type_));
+  auto function_(std::make_shared<Function>(
+      access_, instance_, classname_, fce_name_, ret_type_));
 
   /* -- parse function parameters */
   const int parnum_(fce_->getNumParams());
@@ -63,7 +66,7 @@ FunctionPtr createFunctionObject(
 
     auto param_name_(paramdecl_->getNameAsString());
     auto param_key_(param_name_);
-    auto param_type_(paramdecl_->getType().getAsString());
+    auto param_type_(parseType(context_, paramdecl_->getType()));
 
     /* -- check the user data annotation */
     AnnotationRegex annotation_(USER_DATA_VAR_ANNOTATION);
@@ -83,8 +86,6 @@ FunctionPtr createFunctionObject(
 
   return function_;
 }
-
-} /* -- namespace */
 
 bool isAllowedFunctionDeclaration(
     ParserContext* context_,
@@ -133,7 +134,8 @@ std::pair<bool, bool> parseFunction(
   Location decl_end_(context_->createLocation(body_range_.getBegin()));
 
   /* -- create description of the function */
-  FunctionPtr function_(createFunctionObject(context_, fce_));
+  FunctionPtr function_(
+      createFunctionObject(context_, FunctionAccess::NONE, "", "", fce_));
   if(function_ == nullptr)
     return {false, false};
 

@@ -22,6 +22,8 @@
 
 #include <utility>
 
+#include "function.h"
+
 namespace clang {
 
 class FunctionDecl;
@@ -43,6 +45,25 @@ struct FunctionFlags {
     explicit FunctionFlags(
         bool test_state_);
 };
+
+/**
+ * @brief Create a function object
+ *
+ * @param context_ Parser context
+ * @param access_ DOT or ARROW if the function is a member function
+ * @param instance_ Name of the instance for a member function. Possible
+ *     empty if the @a access_ is NONE.
+ * @param classname_ Name of the class the function is defined in. It may
+ *     be empty if the @a access_ is NONE.
+ * @param fce_ A function object
+ * @return The function object or null pointer if an error happens
+ */
+FunctionPtr createFunctionObject(
+    ParserContext* context_,
+    FunctionAccess access_,
+    const std::string& instance_,
+    const std::string& classname_,
+    clang::FunctionDecl* fce_);
 
 /**
  * @brief Check whether the function declaration can be a part of the fixtures

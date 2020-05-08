@@ -29,6 +29,7 @@ target_otest2_sources(selftest
     dsl.ot2
     exceptions.ot2
     fixtures.ot2
+    fixtureobject.ot2
     hirschberg.ot2
     mainloop.ot2
     regressions.ot2
@@ -41,6 +42,7 @@ target_otest2_sources(selftest DOMAIN selftest
     selftests/dsl.ot2
     selftests/exceptions.ot2
     selftests/fixtures.ot2
+    selftests/fixtureobject.ot2
     selftests/mainloop.ot2
     selftests/regressions.ot2
     selftests/userdata.ot2

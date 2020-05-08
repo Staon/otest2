@@ -254,6 +254,18 @@ class Generator {
         const Location& fend_) = 0;
 
     /**
+     * @brief Append registration of a fixture object
+     *
+     * @param name_ Name of the fixture
+     * @param start_up_ Fixture's start-up method. May be null.
+     * @param tear_down_ Fixture's tear-down method. May be null.
+     */
+    virtual void appendFixtureObject(
+        const std::string& name_,
+        FunctionPtr start_up_,
+        FunctionPtr tear_down_) = 0;
+
+    /**
      * @brief Append a user function
      *
      * @param function_ Description of the function

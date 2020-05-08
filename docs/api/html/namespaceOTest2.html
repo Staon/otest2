@@ -541,6 +541,10 @@ Functions</h2></td></tr>
 <tr class="memitem:a9c0e5683fb529ec38164c2f418172b30"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceOTest2.html#a9c0e5683fb529ec38164c2f418172b30">odelete</a> (T_ *&amp;object_)</td></tr>
 <tr class="memdesc:a9c0e5683fb529ec38164c2f418172b30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a pointer and set it invalid.  <a href="namespaceOTest2.html#a9c0e5683fb529ec38164c2f418172b30">More...</a><br /></td></tr>
 <tr class="separator:a9c0e5683fb529ec38164c2f418172b30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7983b565255ac8563b9635aeb7b6f57b"><td class="memTemplParams" colspan="2">template&lt;typename Type_ , typename... Args_&gt; </td></tr>
+<tr class="memitem:a7983b565255ac8563b9635aeb7b6f57b"><td class="memTemplItemLeft" align="right" valign="top">std::unique_ptr&lt; Type_ &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceOTest2.html#a7983b565255ac8563b9635aeb7b6f57b">make_unique</a> (Args_ &amp;&amp;... args_)</td></tr>
+<tr class="memdesc:a7983b565255ac8563b9635aeb7b6f57b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replacement of the unique_ptr function missing in C++11.  <a href="namespaceOTest2.html#a7983b565255ac8563b9635aeb7b6f57b">More...</a><br /></td></tr>
+<tr class="separator:a7983b565255ac8563b9635aeb7b6f57b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a433f1fb71a2f018642e10d076d75665e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOTest2.html#a433f1fb71a2f018642e10d076d75665e">runUserCode</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, std::function&lt; void(const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;)&gt; ftor_) noexcept</td></tr>
 <tr class="separator:a433f1fb71a2f018642e10d076d75665e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -1138,6 +1142,30 @@ template&lt;typename Type_ , typename ScoreFce_  = DiffScoreLCS&lt;Type_&gt;&gt;
 
 </div>
 </div>
+<a id="a7983b565255ac8563b9635aeb7b6f57b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7983b565255ac8563b9635aeb7b6f57b">&#9670;&nbsp;</a></span>make_unique()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Type_ , typename... Args_&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt;Type_&gt; OTest2::make_unique </td>
+          <td>(</td>
+          <td class="paramtype">Args_ &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>args_</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Replacement of the unique_ptr function missing in C++11. </p>
+
+<p class="definition">Definition at line <a class="el" href="utils_8h_source.html#l00044">44</a> of file <a class="el" href="utils_8h_source.html">utils.h</a>.</p>
+
+</div>
+</div>
 <a id="a860152fd0e57a067685ba1cce29d685c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a860152fd0e57a067685ba1cce29d685c">&#9670;&nbsp;</a></span>makePointer()</h2>
 
@@ -1196,7 +1224,7 @@ template&lt;typename T_ &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="utils_8h_source.html#l00032">32</a> of file <a class="el" href="utils_8h_source.html">utils.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="utils_8h_source.html#l00034">34</a> of file <a class="el" href="utils_8h_source.html">utils.h</a>.</p>
 
 </div>
 </div>

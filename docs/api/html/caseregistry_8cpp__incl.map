@@ -1,12 +1,13 @@
 <map id="lib/caseregistry.cpp" name="lib/caseregistry.cpp">
-<area shape="rect" id="node1" title=" " alt="" coords="237,5,379,32"/>
-<area shape="rect" id="node2" href="$caseregistry_8h.html" title=" " alt="" coords="49,80,159,107"/>
-<area shape="rect" id="node6" title=" " alt="" coords="184,80,259,107"/>
-<area shape="rect" id="node7" title=" " alt="" coords="283,80,333,107"/>
-<area shape="rect" id="node8" title=" " alt="" coords="358,80,421,107"/>
-<area shape="rect" id="node9" href="$utils_8h.html" title=" " alt="" coords="445,80,505,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,155,64,181"/>
-<area shape="rect" id="node4" href="$casefactoryptr_8h.html" title=" " alt="" coords="88,155,259,181"/>
-<area shape="rect" id="node5" title=" " alt="" coords="135,229,211,256"/>
-<area shape="rect" id="node10" title=" " alt="" coords="429,155,520,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="193,5,336,32"/>
+<area shape="rect" id="node2" href="$caseregistry_8h.html" title=" " alt="" coords="5,80,116,107"/>
+<area shape="rect" id="node6" title=" " alt="" coords="141,80,215,107"/>
+<area shape="rect" id="node7" title=" " alt="" coords="239,80,290,107"/>
+<area shape="rect" id="node8" title=" " alt="" coords="315,80,377,107"/>
+<area shape="rect" id="node9" href="$utils_8h.html" title=" " alt="" coords="401,80,461,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="31,155,90,181"/>
+<area shape="rect" id="node4" href="$casefactoryptr_8h.html" title=" " alt="" coords="127,155,298,181"/>
+<area shape="rect" id="node5" title=" " alt="" coords="239,229,315,256"/>
+<area shape="rect" id="node10" title=" " alt="" coords="382,155,473,181"/>
+<area shape="rect" id="node11" title=" " alt="" coords="497,155,553,181"/>
 </map>

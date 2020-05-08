@@ -70,6 +70,14 @@ class ReporterMock : public Reporter {
         int delay_ms_);
 
     /**
+     * @brief Report a generic message
+     *
+     * @param message_ The message
+     */
+    void reportDebugMessage(
+        const std::string& message_);
+
+    /**
      * @brief Print the records into an output stream
      *
      * @param os_ The output stream

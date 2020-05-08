@@ -21,6 +21,7 @@
 
 #include <assert.h>
 #include <iostream>
+#include <sstream>
 #include <string>
 
 #include "formatting.h"
@@ -31,8 +32,18 @@ namespace OTest2 {
 namespace {
 
 std::string marshalerName(
+    FunctionAccess access_,
+    const std::string& instance_,
+    const std::string& clash_,
     const std::string& fce_name_) {
-  return "Marshaler_" + fce_name_;
+  std::ostringstream oss_;
+  oss_ << "Marshaler_";
+  if(access_ != FunctionAccess::NONE)
+    oss_ << instance_ << "_";
+  if(!clash_.empty())
+    oss_ << clash_ << "_";
+  oss_ << fce_name_;
+  return oss_.str();
 }
 
 std::string invokerClass(
@@ -48,10 +59,17 @@ std::string invokerName(
 } /* -- namespace */
 
 Function::Function(
+    FunctionAccess access_,
+    const std::string& instance_,
+    const std::string& clash_,
     const std::string& name_,
     const std::string& rettype_) :
+  access(access_),
+  instance(instance_),
+  clash(clash_),
   name(name_),
   rettype(rettype_) {
+  assert(access == FunctionAccess::NONE || !instance.empty());
   assert(!name.empty() && !rettype.empty());
 
 }
@@ -62,8 +80,7 @@ Function::~Function() {
 
 void Function::generateFceParameters(
     std::ostream& os_,
-    int indent_,
-    bool names_) const {
+    int indent_) const {
   bool first_(true);
   for(const auto& param_ : parameters) {
     if(!first_)
@@ -72,10 +89,19 @@ void Function::generateFceParameters(
       first_ = false;
     os_ << "\n";
     Formatting::printIndent(os_, indent_);
-    if(!names_)
-      os_ << param_.type;
-    else
-      os_ << "typename ::OTest2::TypeTrait< " << param_.type << " >::BestArg " << param_.name;
+    switch(param_.param_type) {
+      case USER_DATUM:
+        os_ << "typename ::OTest2::TypeTrait< " << param_.type << " >::BestArg " << param_.name;
+        break;
+
+      case CONTEXT:
+        os_ << "const ::OTest2::Context& " << param_.name;
+        break;
+
+      default:
+        assert("invalid parameter type" == nullptr);
+        break;
+    }
   }
 }
 
@@ -90,9 +116,21 @@ void Function::generateFceArguments(
       first_ = false;
     os_ << "\n";
     Formatting::printIndent(os_, indent_);
-    os_ << "context_.user_data->getDatum<" << param_.type << ">(";
-    writeCString(os_, param_.key);
-    os_ << ")";
+    switch(param_.param_type) {
+      case USER_DATUM:
+        os_ << "context_.user_data->getDatum<" << param_.type << ">(";
+        writeCString(os_, param_.key);
+        os_ << ")";
+        break;
+
+      case CONTEXT:
+        os_ << "context_";
+        break;
+
+      default:
+        assert("invalid parameter type" == nullptr);
+        break;
+    }
   }
 }
 
@@ -128,14 +166,20 @@ void Function::addUserDataParameter(
     const std::string& key_,
     const std::string& type_) {
   assert(!name_.empty() && !key_.empty() && !type_.empty());
-  parameters.push_back({name_, key_, type_});
+  parameters.push_back({USER_DATUM, name_, key_, type_});
+}
+
+void Function::addContextParameter(
+    const std::string& name_) {
+  assert(!name_.empty());
+  parameters.push_back({CONTEXT, name_, "", ""});
 }
 
 void Function::generateMarshaler(
     std::ostream& os_,
     int indent_,
     const std::string& classname_) const {
-  const std::string marshaler_name_(marshalerName(name));
+  const std::string marshaler_name_(marshalerName(access, instance, clash, name));
 
   os_ << "class " << marshaler_name_ << " : public ::OTest2::FceMarshaler {\n";
 
@@ -143,11 +187,7 @@ void Function::generateMarshaler(
   Formatting::printIndent(os_, indent_ + 1);
   os_ << "private:\n";
   Formatting::printIndent(os_, indent_ + 2);
-  os_ << classname_ << "* object;\n";
-  Formatting::printIndent(os_, indent_ + 2);
-  os_ << "void (" << classname_ << "::* fce)(";
-  generateFceParameters(os_, indent_ + 4, false);
-  os_ << ");\n\n";
+  os_ << classname_ << "* object;\n\n";
 
   Formatting::printIndent(os_, indent_ + 1);
   os_ << "public:\n";
@@ -156,15 +196,9 @@ void Function::generateMarshaler(
   Formatting::printIndent(os_, indent_ + 2);
   os_ << "explicit " << marshaler_name_ << "(\n";
   Formatting::printIndent(os_, indent_ + 4);
-  os_ << classname_ << "* object_,\n";
-  Formatting::printIndent(os_, indent_ + 4);
-  os_ << "void (" << classname_ << "::* fce_)(";
-  generateFceParameters(os_, indent_ + 6, false);
-  os_ << ")) :\n";
+  os_ << classname_ << "* object_) :\n";
   Formatting::printIndent(os_, indent_ + 3);
-  os_ << "object(object_),\n";
-  Formatting::printIndent(os_, indent_ + 3);
-  os_ << "fce(fce_) {\n";
+  os_ << "object(object_) {\n";
   Formatting::printIndent(os_, indent_ + 3);
   os_ << "\n";
   Formatting::printIndent(os_, indent_ + 2);
@@ -184,7 +218,22 @@ void Function::generateMarshaler(
   Formatting::printIndent(os_, indent_ + 4);
   os_ << "const ::OTest2::Context& context_) {\n";
   Formatting::printIndent(os_, indent_ + 3);
-  os_ << "(object->*fce)(";
+  os_ << "object->";
+  if(access != FunctionAccess::NONE) {
+    os_ << instance;
+    switch(access) {
+      case FunctionAccess::DOT:
+        os_ << ".";
+        break;
+      case FunctionAccess::ARROW:
+        os_ << "->";
+        break;
+      default:
+        assert("invalid function access specification" == nullptr);
+        break;
+    }
+  }
+  os_ << name << "(";
   generateFceArguments(os_, indent_ + 5);
   os_ << ");\n";
   Formatting::printIndent(os_, indent_ + 2);
@@ -210,7 +259,7 @@ void Function::generateDeclaration(
     const std::string& fce_name_) const {
   Formatting::printIndent(os_, indent_);
   os_ << "void " << fce_name_ << "(";
-  generateFceParameters(os_, indent_ + 2, true);
+  generateFceParameters(os_, indent_ + 2);
   os_ << ")";
 }
 
@@ -218,9 +267,8 @@ void Function::generateRegistration(
     std::ostream& os_,
     int indent_,
     const std::string& classname_) const {
-  const std::string marshaler_name_(marshalerName(name));
-  os_ << "std::make_shared<" << marshaler_name_ << ">(this, &"
-      << classname_ << "::" << name << ")";
+  const std::string marshaler_name_(marshalerName(access, instance, clash, name));
+  os_ << "std::make_shared<" << marshaler_name_ << ">(this)";
 }
 
 void Function::generateInvoker(
@@ -257,7 +305,7 @@ void Function::generateInvoker(
   /* -- invocation operator */
   Formatting::printIndent(os_, indent_ + 2);
   os_ << "typename ::OTest2::TypeOfMine<" << rettype << ">::Type operator()(";
-  generateFceParameters(os_, indent_ + 4, true);
+  generateFceParameters(os_, indent_ + 4);
   os_ << ") const {\n";
   Formatting::printIndent(os_, indent_ + 3);
   os_ << "return object->" << name << "(";

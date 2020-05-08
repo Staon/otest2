@@ -223,6 +223,10 @@ TEST_SUITE(UserDataSuite) {
         "message<b = 23>",
         "leaveAssert<>",
         "leaveCase<UserDataCase>: passed",
+        "enterCase<ContextPassing>",
+        "enterState<firstTestState>",
+        "leaveState<firstTestState>: passed",
+        "leaveCase<ContextPassing>: passed",
         "assert<check 'a == b' has passed>: passed",
         "message<a = 23>",
         "message<b = 23>",
@@ -238,7 +242,7 @@ TEST_SUITE(UserDataSuite) {
       std::string suite_str_("suite user data");
       std::string case_str_("case user data");
 
-      Runtime runtime_("UserDataAsParameters", "UserDataCase");
+      Runtime runtime_("UserDataAsParameters", "");
       runtime_.user_data.setDatum("suite_int", &suite_int_);
       runtime_.user_data.setDatum("suite_str", &suite_str_);
       runtime_.user_data.setDatum("case_str", &case_str_);

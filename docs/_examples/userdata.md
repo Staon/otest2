@@ -62,7 +62,7 @@ variable more simple macro `OT2_USER_DATA` may be used.
 The `extern` linkage is mandatory. Otherwise, the clang parser will report
 an error searching for non-parametric constructor.
 
-The second way to access user data are function parameters. If a start-up,
+The second way how to access user data is function parameters. If a start-up,
 tear-down or test state method has some parameters, they are expected to be
 user data and the pre-processor generates code which passes user data into
 the function.
@@ -96,6 +96,10 @@ As you can see the [full syntax]({{ "/reference/dsl#full-syntax" | relative_url}
 is needed as the [compact syntax]({{ "/reference/dsl#compact-syntax" | relative_url }})
 doesn't allow definition of function parameters. If the name of the parameter
 differs the name of the user datum the annotation `OT2_USER_DATA_KEY` can help.
+
+If the parameter is type `const ::OTest2::Context&`
+[the OTest2 Context]({{ "api/html/classOTest2_1_1Context.html" | relative_url }})
+is passed into the function instead of a user datum. 
 
 [^1]: Remark the usage of the [full syntax]({{ "/reference/dsl#full-syntax" | relative_url}}).
       All previous examples has been written using

@@ -25,6 +25,7 @@
 #include "parserannotationimpl.h"
 #include "parsercode.h"
 #include "parsercontextimpl.h"
+#include "parsertype.h"
 #include "typetemplate.h"
 
 namespace OTest2 {
@@ -239,7 +240,8 @@ bool AssertVisitor::VisitCXXTryStmt(
     /* -- generate catch declaration */
     auto vardecl_(handler_->getExceptionDecl());
     context->generator->makeCatchHandler(
-        vardecl_->getType().getAsString(), vardecl_->getNameAsString());
+        parseType(context, vardecl_->getType()),
+        vardecl_->getNameAsString());
 
     /* -- process content of the handler block */
     auto handler_block_(handler_->getHandlerBlock());

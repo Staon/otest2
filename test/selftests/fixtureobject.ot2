@@ -1,0 +1,268 @@
+/*
+ * Copyright (C) 2020 Ondrej Starek
+ *
+ * This file is part of OTest2.
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include <memory>
+#include <otest2/utils.h>
+
+#include "../reportermock.h"
+
+namespace OTest2 {
+
+namespace SelfTest {
+
+namespace {
+
+/* -- no inheritance, all fixture methods, no initialization */
+class SimpleFixtureObject {
+  public:
+    void startUp(
+        Test::ReporterMock& reporter_) OT2_START_UP();
+    void tearDown(
+        Test::ReporterMock& reporter_) OT2_TEAR_DOWN();
+};
+
+void SimpleFixtureObject::startUp(
+    Test::ReporterMock& reporter_) {
+  reporter_.reportDebugMessage("SimpleFixtureObject::startUp");
+}
+
+void SimpleFixtureObject::tearDown(
+    Test::ReporterMock& reporter_) {
+  reporter_.reportDebugMessage("SimpleFixtureObject::tearDown");
+}
+
+/* -- no inheritance, all fixture methods, initializer */
+class SimpleFixtureObjectData {
+  private:
+    std::string name;
+
+  public:
+    explicit SimpleFixtureObjectData(
+        const std::string& name_);
+    void startUp(
+        Test::ReporterMock& reporter_) OT2_START_UP();
+    void tearDown(
+        Test::ReporterMock& reporter_) OT2_TEAR_DOWN();
+};
+
+SimpleFixtureObjectData::SimpleFixtureObjectData(
+    const std::string& name_) :
+  name(name_) {
+
+}
+
+void SimpleFixtureObjectData::startUp(
+    Test::ReporterMock& reporter_) {
+  reporter_.reportDebugMessage("SimpleFixtureObjectData::startUp[" + name + "]");
+}
+
+void SimpleFixtureObjectData::tearDown(
+    Test::ReporterMock& reporter_) {
+  reporter_.reportDebugMessage("SimpleFixtureObjectData::tearDown[" + name + "]");
+}
+
+/* -- no inheritance, just start-up, no initializer */
+class SimpleStartUpObject {
+  public:
+    void startUp(
+        Test::ReporterMock& reporter_) OT2_START_UP();
+};
+
+void SimpleStartUpObject::startUp(
+    Test::ReporterMock& reporter_) {
+  reporter_.reportDebugMessage("SimpleStartUpObject::startUp");
+}
+
+/* -- no inheritance, just tear-down, initializer */
+class SimpleTearDownObject {
+  private:
+    std::string name;
+
+  public:
+    explicit SimpleTearDownObject(
+        const std::string& name_);
+    void tearDown(
+        Test::ReporterMock& reporter_) OT2_TEAR_DOWN();
+};
+
+SimpleTearDownObject::SimpleTearDownObject(
+    const std::string& name_) :
+  name(name_) {
+
+}
+
+void SimpleTearDownObject::tearDown(
+    Test::ReporterMock& reporter_) {
+  reporter_.reportDebugMessage("SimpleTearDownObject::tearDown[" + name + "]");
+}
+
+SimpleFixtureObjectData global("global");
+
+class ComplexBase1 {
+  public:
+    void startUp1(
+        Test::ReporterMock& reporter_) OT2_START_UP();
+    void tearDown1(
+        Test::ReporterMock& reporter_) OT2_TEAR_DOWN();
+};
+
+void ComplexBase1::startUp1(
+    Test::ReporterMock& reporter_) {
+  reporter_.reportDebugMessage("ComplexBase1::startUp1");
+}
+
+void ComplexBase1::tearDown1(
+    Test::ReporterMock& reporter_) {
+  reporter_.reportDebugMessage("ComplexBase1::tearDown1");
+}
+
+class ComplexBase2 : public ComplexBase1 {
+  public:
+    void startUp2(
+        Test::ReporterMock& reporter_) OT2_START_UP();
+};
+
+void ComplexBase2::startUp2(
+    Test::ReporterMock& reporter_) {
+  reporter_.reportDebugMessage("ComplexBase2::startUp2");
+}
+
+class ComplexBase3 : public ComplexBase2 {
+  public:
+    void tearDown3(
+        Test::ReporterMock& reporter_) OT2_TEAR_DOWN();
+};
+
+void ComplexBase3::tearDown3(
+    Test::ReporterMock& reporter_) {
+  reporter_.reportDebugMessage("ComplexBase3::tearDown3");
+}
+
+class ComplexBase4 {
+  public:
+    virtual ~ComplexBase4() = default;
+
+    virtual void startUp4(
+        Test::ReporterMock& reporter_) OT2_START_UP() = 0;
+    virtual void tearDown4(
+        Test::ReporterMock& reporter_) OT2_TEAR_DOWN() = 0;
+};
+
+/* -- inheritance and several inherited fixture methods */
+class ComplexFixtureObject : public ComplexBase3, public ComplexBase4 {
+  public:
+    void startUpComplex(
+        Test::ReporterMock& reporter_) OT2_START_UP();
+    void tearDownComplex(
+        Test::ReporterMock& reporter_) OT2_TEAR_DOWN();
+    virtual void startUp4(
+        Test::ReporterMock& reporter_) override;
+    virtual void tearDown4(
+        Test::ReporterMock& reporter_) override;
+};
+
+void ComplexFixtureObject::startUpComplex(
+    Test::ReporterMock& reporter_) {
+  reporter_.reportDebugMessage("ComplexFixtureObject::startUpComplex");
+}
+
+void ComplexFixtureObject::tearDownComplex(
+    Test::ReporterMock& reporter_) {
+  reporter_.reportDebugMessage("ComplexFixtureObject::tearDownComplex");
+}
+
+void ComplexFixtureObject::startUp4(
+    Test::ReporterMock& reporter_) {
+  reporter_.reportDebugMessage("ComplexFixtureObject::startUp4");
+}
+
+void ComplexFixtureObject::tearDown4(
+    Test::ReporterMock& reporter_) {
+  reporter_.reportDebugMessage("ComplexFixtureObject::tearDown4");
+}
+
+} /* -- namespace */
+
+TEST_SUITE(FixtureObjects) {
+  /* -- no inheritance, both fixture methods */
+  SimpleFixtureObject simple;
+  SimpleFixtureObjectData simple2("suite");
+
+  /* -- no inheritance, just one fixture method */
+  SimpleStartUpObject start_up;
+  SimpleTearDownObject tear_down("suite");
+
+  /* -- access through a reference */
+  SimpleFixtureObjectData& g(global);
+
+  /* -- smart pointer */
+  std::unique_ptr<SimpleFixtureObjectData> ptr;
+
+  /* -- complex fixture object */
+  ComplexFixtureObject complex;
+
+  void startUp(
+      Test::ReporterMock& reporter_) OT2_START_UP() {
+    reporter_.reportDebugMessage("FixtureObjects::startUp");
+
+    ptr = OTest2::make_unique<SimpleFixtureObjectData>("pointer");
+  }
+
+  void tearDown(
+      Test::ReporterMock& reporter_) OT2_TEAR_DOWN() {
+    ptr.reset(nullptr);  /* -- destroy the pointer */
+
+    reporter_.reportDebugMessage("FixtureObjects::tearDown");
+  }
+
+  TEST_CASE(FixtureObjectsCase) {
+    /* -- no inheritance, all fixture methods */
+    SimpleFixtureObject simple;
+    SimpleFixtureObjectData simple2("case");
+
+    /* -- no inheritance, just one fixture method */
+    SimpleStartUpObject start_up;
+    SimpleTearDownObject tear_down("case");
+
+    /* -- access through pointer */
+    SimpleFixtureObjectData* g2(&global);
+
+    /* -- smart pointer */
+    std::shared_ptr<SimpleFixtureObjectData> ptr;
+
+    void startUp(
+        Test::ReporterMock& reporter_) OT2_START_UP() {
+      reporter_.reportDebugMessage("FixtureObjectsCase::startUp");
+
+      ptr = std::make_shared<SimpleFixtureObjectData>("ptr_case");
+    }
+
+    void tearDown(
+        Test::ReporterMock& reporter_) OT2_TEAR_DOWN() {
+      ptr = nullptr;
+
+      reporter_.reportDebugMessage("FixtureObjectsCase::tearDown");
+    }
+  }
+}
+
+} /* -- namespace Selftest */
+
+} /* -- namespace OTest2 */

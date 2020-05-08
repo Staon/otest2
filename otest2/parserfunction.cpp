@@ -30,6 +30,7 @@
 #include "parserannotationimpl.h"
 #include "parsercode.h"
 #include "parsercontextimpl.h"
+#include "parsertype.h"
 
 #include <iostream>
 
@@ -46,15 +47,17 @@ FunctionFlags::FunctionFlags(
 
 }
 
-namespace {
-
 FunctionPtr createFunctionObject(
     ParserContext* context_,
+    FunctionAccess access_,
+    const std::string& instance_,
+    const std::string& classname_,
     clang::FunctionDecl* fce_) {
   /* -- create the object */
   std::string fce_name_(fce_->getNameAsString());
   std::string ret_type_(fce_->getReturnType().getAsString());
-  auto function_(std::make_shared<Function>(fce_name_, ret_type_));
+  auto function_(std::make_shared<Function>(
+      access_, instance_, classname_, fce_name_, ret_type_));
 
   /* -- parse function parameters */
   const int parnum_(fce_->getNumParams());
@@ -62,29 +65,35 @@ FunctionPtr createFunctionObject(
     auto paramdecl_(fce_->getParamDecl(i_));
 
     auto param_name_(paramdecl_->getNameAsString());
-    auto param_key_(param_name_);
-    auto param_type_(paramdecl_->getType().getAsString());
+    auto param_type_(parseType(context_, paramdecl_->getType()));
 
-    /* -- check the user data annotation */
-    AnnotationRegex annotation_(USER_DATA_VAR_ANNOTATION);
-    bool user_data_(hasAnnotation(paramdecl_, annotation_));
-    if(user_data_ && !annotation_.matches[1].str().empty())
-      param_key_ = annotation_.matches[1].str();
-
-    /* -- unknown key for user data */
-    if(param_key_.empty()) {
-      context_->setError("neither name nor key is specified for user data", paramdecl_);
-      return nullptr;
+    if(param_type_ == "const OTest2::Context &") {
+      /* -- passed OTest2 context */
+      function_->addContextParameter(param_name_);
     }
+    else {
+      /* -- user data passed as function parameters */
 
-    /* -- register the parameter */
-    function_->addUserDataParameter(param_name_, param_key_, param_type_);
+      /* -- check the user data annotation */
+      auto param_key_(param_name_);
+      AnnotationRegex annotation_(USER_DATA_VAR_ANNOTATION);
+      bool user_data_(hasAnnotation(paramdecl_, annotation_));
+      if(user_data_ && !annotation_.matches[1].str().empty())
+        param_key_ = annotation_.matches[1].str();
+
+      /* -- unknown key for user data */
+      if(param_key_.empty()) {
+        context_->setError("neither name nor key is specified for user data", paramdecl_);
+        return nullptr;
+      }
+
+      /* -- register the parameter */
+      function_->addUserDataParameter(param_name_, param_key_, param_type_);
+    }
   }
 
   return function_;
 }
-
-} /* -- namespace */
 
 bool isAllowedFunctionDeclaration(
     ParserContext* context_,
@@ -133,7 +142,8 @@ std::pair<bool, bool> parseFunction(
   Location decl_end_(context_->createLocation(body_range_.getBegin()));
 
   /* -- create description of the function */
-  FunctionPtr function_(createFunctionObject(context_, fce_));
+  FunctionPtr function_(
+      createFunctionObject(context_, FunctionAccess::NONE, "", "", fce_));
   if(function_ == nullptr)
     return {false, false};
 

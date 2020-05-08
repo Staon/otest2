@@ -96,6 +96,16 @@ class Runtime {
         const std::string& case_name_,
         const std::string& regression_file_);
 
+  private:
+    static struct InternalCtor{} internal_ctor;
+    explicit Runtime(
+        const InternalCtor&,
+        const std::string& suite_name_,
+        const std::string& case_name_,
+        bool report_paths_,
+        const std::string& regression_file_);
+
+  public:
     /**
      * @brief Dtor
      */

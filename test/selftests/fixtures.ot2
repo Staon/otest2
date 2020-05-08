@@ -18,6 +18,7 @@
  */
 #include <otest2/otest2.h>
 
+#include <memory>
 #include <string>
 
 namespace OTest2 {

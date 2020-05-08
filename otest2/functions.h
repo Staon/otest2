@@ -69,12 +69,22 @@ class Functions {
     FunctionsPtr getPrevLevel() const;
 
     /**
-     * @brief Append a fixture functions
+     * @brief Append fixture functions
      *
-     * @param start_up_ A start-up function of the fixture
-     * @param tear_down_ A tear-down function of the fixture
+     * @param start_up_ A start-up function of the fixture. It may be null.
+     * @param tear_down_ A tear-down function of the fixture It may be null.
      */
     void appendFixture(
+        FunctionPtr start_up_,
+        FunctionPtr tear_down_);
+
+    /**
+     * @brief Prepend fixture functions
+     *
+     * @param start_up_ A start-up function of the fixture. It may be null.
+     * @param tear_down_ A tear-down function of the fixture. It may be null.
+     */
+    void prependFixture(
         FunctionPtr start_up_,
         FunctionPtr tear_down_);
 

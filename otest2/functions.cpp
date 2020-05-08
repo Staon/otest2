@@ -47,6 +47,13 @@ void Functions::appendFixture(
   tear_downs.push_back(tear_down_);
 }
 
+void Functions::prependFixture(
+    FunctionPtr start_up_,
+    FunctionPtr tear_down_) {
+  start_ups.insert(start_ups.begin(), start_up_);
+  tear_downs.insert(tear_downs.begin(), tear_down_);
+}
+
 void Functions::generateMarshalers(
     std::ostream& os_,
     int indent_,

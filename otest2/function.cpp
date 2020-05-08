@@ -80,8 +80,7 @@ Function::~Function() {
 
 void Function::generateFceParameters(
     std::ostream& os_,
-    int indent_,
-    bool names_) const {
+    int indent_) const {
   bool first_(true);
   for(const auto& param_ : parameters) {
     if(!first_)
@@ -90,10 +89,19 @@ void Function::generateFceParameters(
       first_ = false;
     os_ << "\n";
     Formatting::printIndent(os_, indent_);
-    if(!names_)
-      os_ << param_.type;
-    else
-      os_ << "typename ::OTest2::TypeTrait< " << param_.type << " >::BestArg " << param_.name;
+    switch(param_.param_type) {
+      case USER_DATUM:
+        os_ << "typename ::OTest2::TypeTrait< " << param_.type << " >::BestArg " << param_.name;
+        break;
+
+      case CONTEXT:
+        os_ << "const ::OTest2::Context& " << param_.name;
+        break;
+
+      default:
+        assert("invalid parameter type" == nullptr);
+        break;
+    }
   }
 }
 
@@ -108,9 +116,21 @@ void Function::generateFceArguments(
       first_ = false;
     os_ << "\n";
     Formatting::printIndent(os_, indent_);
-    os_ << "context_.user_data->getDatum<" << param_.type << ">(";
-    writeCString(os_, param_.key);
-    os_ << ")";
+    switch(param_.param_type) {
+      case USER_DATUM:
+        os_ << "context_.user_data->getDatum<" << param_.type << ">(";
+        writeCString(os_, param_.key);
+        os_ << ")";
+        break;
+
+      case CONTEXT:
+        os_ << "context_";
+        break;
+
+      default:
+        assert("invalid parameter type" == nullptr);
+        break;
+    }
   }
 }
 
@@ -146,7 +166,13 @@ void Function::addUserDataParameter(
     const std::string& key_,
     const std::string& type_) {
   assert(!name_.empty() && !key_.empty() && !type_.empty());
-  parameters.push_back({name_, key_, type_});
+  parameters.push_back({USER_DATUM, name_, key_, type_});
+}
+
+void Function::addContextParameter(
+    const std::string& name_) {
+  assert(!name_.empty());
+  parameters.push_back({CONTEXT, name_, "", ""});
 }
 
 void Function::generateMarshaler(
@@ -233,7 +259,7 @@ void Function::generateDeclaration(
     const std::string& fce_name_) const {
   Formatting::printIndent(os_, indent_);
   os_ << "void " << fce_name_ << "(";
-  generateFceParameters(os_, indent_ + 2, true);
+  generateFceParameters(os_, indent_ + 2);
   os_ << ")";
 }
 
@@ -279,7 +305,7 @@ void Function::generateInvoker(
   /* -- invocation operator */
   Formatting::printIndent(os_, indent_ + 2);
   os_ << "typename ::OTest2::TypeOfMine<" << rettype << ">::Type operator()(";
-  generateFceParameters(os_, indent_ + 4, true);
+  generateFceParameters(os_, indent_ + 4);
   os_ << ") const {\n";
   Formatting::printIndent(os_, indent_ + 3);
   os_ << "return object->" << name << "(";

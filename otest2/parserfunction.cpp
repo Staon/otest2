@@ -65,23 +65,31 @@ FunctionPtr createFunctionObject(
     auto paramdecl_(fce_->getParamDecl(i_));
 
     auto param_name_(paramdecl_->getNameAsString());
-    auto param_key_(param_name_);
     auto param_type_(parseType(context_, paramdecl_->getType()));
 
-    /* -- check the user data annotation */
-    AnnotationRegex annotation_(USER_DATA_VAR_ANNOTATION);
-    bool user_data_(hasAnnotation(paramdecl_, annotation_));
-    if(user_data_ && !annotation_.matches[1].str().empty())
-      param_key_ = annotation_.matches[1].str();
-
-    /* -- unknown key for user data */
-    if(param_key_.empty()) {
-      context_->setError("neither name nor key is specified for user data", paramdecl_);
-      return nullptr;
+    if(param_type_ == "const OTest2::Context &") {
+      /* -- passed OTest2 context */
+      function_->addContextParameter(param_name_);
     }
+    else {
+      /* -- user data passed as function parameters */
 
-    /* -- register the parameter */
-    function_->addUserDataParameter(param_name_, param_key_, param_type_);
+      /* -- check the user data annotation */
+      auto param_key_(param_name_);
+      AnnotationRegex annotation_(USER_DATA_VAR_ANNOTATION);
+      bool user_data_(hasAnnotation(paramdecl_, annotation_));
+      if(user_data_ && !annotation_.matches[1].str().empty())
+        param_key_ = annotation_.matches[1].str();
+
+      /* -- unknown key for user data */
+      if(param_key_.empty()) {
+        context_->setError("neither name nor key is specified for user data", paramdecl_);
+        return nullptr;
+      }
+
+      /* -- register the parameter */
+      function_->addUserDataParameter(param_name_, param_key_, param_type_);
+    }
   }
 
   return function_;

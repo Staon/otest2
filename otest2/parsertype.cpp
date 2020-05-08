@@ -49,6 +49,7 @@ std::string parseType(
   clang::PrintingPolicy policy_(*context_->langopts);
   policy_.adjustForCPlusPlus();
   policy_.SuppressUnwrittenScope = true;
+  policy_.FullyQualifiedName = true;
   return type_.getAsString(policy_);
 }
 

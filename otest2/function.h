@@ -43,7 +43,12 @@ class Function {
     std::string clash;
     std::string name;
     std::string rettype;
+    enum ParamType {
+      USER_DATUM,
+      CONTEXT,
+    };
     struct Record {
+        ParamType param_type;
         std::string name;
         std::string key;
         std::string type;
@@ -52,8 +57,7 @@ class Function {
 
     void generateFceParameters(
         std::ostream& os_,
-        int indent_,
-        bool names_) const;
+        int indent_) const;
     void generateFceArguments(
         std::ostream& os_,
         int indent_) const;
@@ -121,6 +125,14 @@ class Function {
         const std::string& name_,
         const std::string& key_,
         const std::string& type_);
+
+    /**
+     * @brief Add a parameter passing the OTest2 context
+     *
+     * @param name_ Name of the parameter
+     */
+    void addContextParameter(
+        const std::string& name_);
 
     /**
      * @brief Generate marshaler of the function

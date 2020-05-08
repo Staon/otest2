@@ -62,7 +62,7 @@ variable more simple macro `OT2_USER_DATA` may be used.
 The `extern` linkage is mandatory. Otherwise, the clang parser will report
 an error searching for non-parametric constructor.
 
-The second way to access user data are function parameters. If a start-up,
+The second way how to access user data is function parameters. If a start-up,
 tear-down or test state method has some parameters, they are expected to be
 user data and the pre-processor generates code which passes user data into
 the function.

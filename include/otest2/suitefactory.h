@@ -20,7 +20,7 @@
 #ifndef OTest2__INCLUDE_OTEST2_SUITEFACTORY_H_
 #define OTest2__INCLUDE_OTEST2_SUITEFACTORY_H_
 
-#include <otest2/suiteptr.h>
+#include <otest2/suiterepeaterptr.h>
 
 namespace OTest2 {
 
@@ -28,6 +28,11 @@ class Context;
 
 /**
  * @brief Simple interface for creation of a suite object
+ *
+ * This class is responsible for creation of suite repeater. The repeater
+ * is a kind of suite factory which is able to create instances of the suite
+ * object more than once. Hence, this object is something like a "factory
+ * of a factory".
  */
 class SuiteFactory {
   public:
@@ -51,9 +56,9 @@ class SuiteFactory {
      * @brief Create the suite
      *
      * @param context_ OTest2 context
-     * @return The suite
+     * @return The suite repeater
      */
-    virtual SuitePtr createSuite(
+    virtual SuiteRepeaterPtr createSuite(
         const Context& context_) = 0;
 };
 

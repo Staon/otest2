@@ -21,12 +21,14 @@
 #ifndef OTest2__INCLUDE_OTEST2_GENERUTILS_H_
 #define OTest2__INCLUDE_OTEST2_GENERUTILS_H_
 
+#include <assert.h>
 #include <memory>
 
 #include <otest2/casefactory.h>
 #include <otest2/caseptr.h>
 #include <otest2/suitefactory.h>
 #include <otest2/suiteptr.h>
+#include <otest2/suiterepeater.h>
 
 namespace OTest2 {
 
@@ -46,6 +48,48 @@ struct TypeOfParent<T_&> {
 };
 
 template<typename Suite_>
+class SuiteRepeaterOnce : public SuiteRepeater {
+  private:
+    bool created;
+
+  public:
+    /* -- avoid copying */
+    SuiteRepeaterOnce(
+        const SuiteRepeaterOnce&) = delete;
+    SuiteRepeaterOnce& operator = (
+        const SuiteRepeaterOnce&) = delete;
+
+    SuiteRepeaterOnce() :
+      created(false) {
+
+    }
+
+    virtual ~SuiteRepeaterOnce() {
+
+    }
+
+    virtual bool isNextRun(
+        const Context& context_) const {
+      return !created;
+    }
+
+    virtual std::string transformName(
+        const Context& context_,
+        const std::string& suitename_) const {
+      assert(!created);
+      return suitename_;
+    }
+
+    virtual SuitePtr createSuite(
+        const Context& context_,
+        const std::string& suitename_) {
+      assert(!created);
+      created = true;
+      return makePointer<Suite_>(context_);
+    }
+};
+
+template<typename Suite_>
 class SuiteGeneratedFactory : public SuiteFactory {
   public:
     /* -- avoid copying */
@@ -62,9 +106,9 @@ class SuiteGeneratedFactory : public SuiteFactory {
 
     }
 
-    virtual SuitePtr createSuite(
+    virtual SuiteRepeaterPtr createSuite(
         const Context& context_) {
-      return makePointer<Suite_>(context_);
+      return std::make_shared<SuiteRepeaterOnce<Suite_>>();
     }
 };
 

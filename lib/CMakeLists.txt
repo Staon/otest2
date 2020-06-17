@@ -46,6 +46,7 @@ add_library(libotest2
     cmdleavesuite.cpp
     cmdnextcase.cpp
     cmdnextsuite.cpp
+    cmdrepeatsuite.cpp
     cmdrunstate.cpp
     cmdstarttest.cpp
     cmdstartupcase.cpp
@@ -95,6 +96,7 @@ add_library(libotest2
     suitefactory.cpp
     suitegenerated.cpp
     suiteordinary.cpp
+    suiterepeater.cpp
     teeostream.cpp
     terminaldriver.cpp
     testmark.cpp

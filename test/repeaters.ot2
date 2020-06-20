@@ -1,0 +1,164 @@
+/*
+ * Copyright (C) 2020 Ondrej Starek
+ *
+ * This file is part of OTest2
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include <iostream>
+#include <vector>
+
+#include "runtime.h"
+
+namespace OTest2 {
+
+namespace Test {
+
+
+TEST_SUITE(RepeatersSuite) {
+  TEST_CASE(RepeatersCase) {
+    Runtime runtime("RepeaterSuite", "");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<RepeaterSuite (1)>",
+        "enterCase<RepeaterCase (1)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 2>",
+        "message<b = 2>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has failed>: failed",
+        "message<a = 1>",
+        "message<b = 3>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<RepeaterCase (1)>: failed",
+        "enterCase<RepeaterCase (2)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 2>",
+        "message<b = 2>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has failed>: failed",
+        "message<a = 1>",
+        "message<b = 2>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<RepeaterCase (2)>: failed",
+        "enterCase<RepeaterCase (3)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 2>",
+        "message<b = 2>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 1>",
+        "message<b = 1>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<RepeaterCase (3)>: passed",
+        "leaveSuite<RepeaterSuite (1)>: failed",
+        "enterSuite<RepeaterSuite (2)>",
+        "enterCase<RepeaterCase (1)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has failed>: failed",
+        "message<a = 2>",
+        "message<b = 1>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has failed>: failed",
+        "message<a = 1>",
+        "message<b = 3>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<RepeaterCase (1)>: failed",
+        "enterCase<RepeaterCase (2)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has failed>: failed",
+        "message<a = 2>",
+        "message<b = 1>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has failed>: failed",
+        "message<a = 1>",
+        "message<b = 2>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<RepeaterCase (2)>: failed",
+        "enterCase<RepeaterCase (3)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has failed>: failed",
+        "message<a = 2>",
+        "message<b = 1>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 1>",
+        "message<b = 1>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<RepeaterCase (3)>: failed",
+        "leaveSuite<RepeaterSuite (2)>: failed",
+        "enterSuite<RepeaterSuite (3)>",
+        "enterCase<RepeaterCase (1)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has failed>: failed",
+        "message<a = 2>",
+        "message<b = 0>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has failed>: failed",
+        "message<a = 1>",
+        "message<b = 3>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<RepeaterCase (1)>: failed",
+        "enterCase<RepeaterCase (2)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has failed>: failed",
+        "message<a = 2>",
+        "message<b = 0>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has failed>: failed",
+        "message<a = 1>",
+        "message<b = 2>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<RepeaterCase (2)>: failed",
+        "enterCase<RepeaterCase (3)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has failed>: failed",
+        "message<a = 2>",
+        "message<b = 0>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 1>",
+        "message<b = 1>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<RepeaterCase (3)>: failed",
+        "leaveSuite<RepeaterSuite (3)>: failed",
+        "leaveTest<selftest>: failed",
+      };
+
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+}
+
+} /* -- namespace Test */
+
+} /* -- namespace OTest2 */

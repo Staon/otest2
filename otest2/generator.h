@@ -278,6 +278,34 @@ class Generator {
         const Location& fend_) = 0;
 
     /**
+     * @brief Append a repeater with no initializer
+     *
+     * @param name_ Name of the repeater variable
+     * @param type_ Name of the type
+     * @return False if the repeater cannot be added (some repeater has
+     *     already been declared)
+     */
+    virtual bool appendRepeater(
+        const std::string& name_,
+        const std::string& type_) = 0;
+
+    /**
+     * @brief Append a repeater with an initializer
+     *
+     * @param name_ Name of the repeater variable
+     * @param type_ Name of the type
+     * @param ibegin_ Beginning of the initializer in the source file
+     * @param iend_ End of the initializer in the source file
+     * @return False if the repeater cannot be added (some repeater has
+     *     already been declared)
+     */
+    virtual bool appendRepeaterInit(
+        const std::string& name_,
+        const std::string& type_,
+        const Location& ibegin_,
+        const Location& iend_) = 0;
+
+    /**
      * @brief End of current test state
      */
     virtual void leaveState() = 0;

@@ -76,6 +76,7 @@ add_library(libotest2
     objectpath.cpp
     registry.cpp
     regressions.cpp
+    repeater.cpp
     reporter.cpp
     reporterconsole.cpp
     reporterdebug.cpp

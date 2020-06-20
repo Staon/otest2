@@ -55,30 +55,27 @@ void CmdRepeatSuite::run(
     /* -- decorate suite name for next run */
     std::string decorated_name_(repeater->transformName(context_, suite_name));
 
-    /* -- the decorated name may be filtered */
-    if(!context_.runner_filter->filterSuite(decorated_name_)) {
-      /* -- prepare myself for next suite run */
-      context_.command_stack->pushCommand(
-          std::make_shared<CmdRepeatSuite>(repeater, suite_name));
+    /* -- prepare myself for next suite run */
+    context_.command_stack->pushCommand(
+        std::make_shared<CmdRepeatSuite>(repeater, suite_name));
 
-      /* -- prepare stack-frame of the suite - suite's result and suite's
-       *    path. */
-      context_.object_path->pushName(decorated_name_);
-      context_.semantic_stack->push(true);
+    /* -- prepare stack-frame of the suite - suite's result and suite's
+     *    path. */
+    context_.object_path->pushName(decorated_name_);
+    context_.semantic_stack->push(true);
 
-      /* -- report entering of the suite */
-      context_.reporter->enterSuite(context_, decorated_name_);
+    /* -- report entering of the suite */
+    context_.reporter->enterSuite(context_, decorated_name_);
 
-      /* -- schedule finishing of the suite */
-      context_.command_stack->pushCommand(std::make_shared<CmdLeaveSuite>());
+    /* -- schedule finishing of the suite */
+    context_.command_stack->pushCommand(std::make_shared<CmdLeaveSuite>());
 
-      /* -- The constructor method of the suite may throw and exception.
-       *    So I do the creation in a protected environment. */
-      runUserCode(context_, [&](const Context& context_) {
-        SuitePtr suite_(repeater->createSuite(context_, decorated_name_));
-        suite_->scheduleRun(context_, suite_);
-      });
-    }
+    /* -- The constructor method of the suite may throw and exception.
+     *    So I do the creation in a protected environment. */
+    runUserCode(context_, [&](const Context& context_) {
+      SuitePtr suite_(repeater->createSuite(context_, decorated_name_));
+      suite_->scheduleRun(context_, suite_);
+    });
   }
 }
 

@@ -120,6 +120,28 @@ class VarTable {
         FunctionPtr function_);
 
     /**
+     * @brief Append repeater variable with no initializer
+     *
+     * @param name_ Name of the variable
+     * @param declaration_ Type of the variable
+     */
+    void appendRepeater(
+        const std::string& name_,
+        const std::string& declaration_);
+
+    /**
+     * @brief Append repeater variable with an initializer
+     *
+     * @param name_ Name of the variable
+     * @param declaration_ Type of the variable
+     * @param initializer_ The variable initializer
+     */
+    void appendRepeaterWithInit(
+        const std::string& name_,
+        const std::string& declaration_,
+        const std::string& initializer_);
+
+    /**
      * @brief Print declarations
      *
      * @param os_ An output stream
@@ -158,6 +180,17 @@ class VarTable {
      * @param indent_ Indentation level
      */
     void printParameters(
+        std::ostream& os_,
+        int indent_) const;
+
+    /**
+     * @brief Print parameters of factory method (a parent method which
+     *     creates current object)
+     *
+     * @param os_ An output stream
+     * @param indent_ Indentation level
+     */
+    void printFactoryParameters(
         std::ostream& os_,
         int indent_) const;
 

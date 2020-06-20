@@ -25,10 +25,10 @@
 
 #include <otest2/casefactory.h>
 #include <otest2/caseptr.h>
-#include <otest2/caserepeater.h>
+#include <otest2/repeatermulti.h>
+#include <otest2/repeateronce.h>
 #include <otest2/suitefactory.h>
 #include <otest2/suiteptr.h>
-#include <otest2/suiterepeater.h>
 
 namespace OTest2 {
 
@@ -47,47 +47,7 @@ struct TypeOfParent<T_&> {
     typedef T_& Type;
 };
 
-template<typename Suite_>
-class SuiteRepeaterOnce : public SuiteRepeater {
-  private:
-    bool created;
-
-  public:
-    /* -- avoid copying */
-    SuiteRepeaterOnce(
-        const SuiteRepeaterOnce&) = delete;
-    SuiteRepeaterOnce& operator = (
-        const SuiteRepeaterOnce&) = delete;
-
-    SuiteRepeaterOnce() :
-      created(false) {
-
-    }
-
-    virtual ~SuiteRepeaterOnce() = default;
-
-    virtual bool isNextRun(
-        const Context& context_) const {
-      return !created;
-    }
-
-    virtual std::string transformName(
-        const Context& context_,
-        const std::string& suitename_) const {
-      assert(!created);
-      return suitename_;
-    }
-
-    virtual SuitePtr createSuite(
-        const Context& context_,
-        const std::string& suitename_) {
-      assert(!created);
-      created = true;
-      return makePointer<Suite_>(context_);
-    }
-};
-
-template<typename Suite_>
+template<typename Repeater_>
 class SuiteGeneratedFactory : public SuiteFactory {
   public:
     /* -- avoid copying */
@@ -104,59 +64,15 @@ class SuiteGeneratedFactory : public SuiteFactory {
 
     virtual SuiteRepeaterPtr createSuite(
         const Context& context_) {
-      return std::make_shared<SuiteRepeaterOnce<Suite_>>();
+      return std::make_shared<Repeater_>();
     }
 };
 
-template<typename Suite_, typename Case_>
-class CaseRepeaterOnce : public CaseRepeater {
-  private:
-    Suite_* suite;
-    CasePtr (Suite_::* factory_method)(const Context&);
-    bool created;
-
-  public:
-    /* -- avoid copying */
-    CaseRepeaterOnce(
-        const CaseRepeaterOnce&) = delete;
-    CaseRepeaterOnce& operator = (
-        const CaseRepeaterOnce&) = delete;
-
-    explicit CaseRepeaterOnce(
-        Suite_* suite_,
-        CasePtr (Suite_::* factory_method_)(const Context&)) :
-      suite(suite_),
-      factory_method(factory_method_),
-      created(false) {
-      assert(suite != nullptr && factory_method != nullptr);
-
-    }
-
-    virtual ~CaseRepeaterOnce() = default;
-
-    virtual bool isNextRun(
-        const Context& context_) const {
-      return !created;
-    }
-
-    virtual std::string transformName(
-        const Context& context_,
-        const std::string& case_name_) const {
-      return case_name_;
-    }
-
-    virtual CasePtr createCase(
-        const Context& context_,
-        const std::string& case_name_) {
-      return (suite->*factory_method)(context_);
-    }
-};
-
-template<typename Suite_, typename Case_>
+template<typename Suite_, typename Case_, typename Repeater_>
 class CaseGeneratedFactory : public CaseFactory {
   private:
     Suite_* suite;
-    CasePtr (Suite_::* factory_method)(const Context&);
+    typename Repeater_::FactoryMethod factory_method;
 
   public:
     /* -- avoid copying */
@@ -167,20 +83,17 @@ class CaseGeneratedFactory : public CaseFactory {
 
     explicit CaseGeneratedFactory(
         Suite_* suite_,
-        CasePtr (Suite_::* factory_method_)(const Context&)) :
-          suite(suite_),
-          factory_method(factory_method_) {
+        typename Repeater_::FactoryMethod factory_method_) :
+      suite(suite_),
+      factory_method(factory_method_) {
 
     }
 
-    virtual ~CaseGeneratedFactory() {
-
-    }
+    virtual ~CaseGeneratedFactory() = default;
 
     virtual CaseRepeaterPtr createCase(
         const Context& context_) {
-      return std::make_shared<CaseRepeaterOnce<Suite_, Case_>>(
-          suite, factory_method);
+      return std::make_shared<Repeater_>(suite, factory_method);
     }
 };
 

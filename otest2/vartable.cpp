@@ -59,6 +59,10 @@ class Variable {
         std::ostream& os_,
         int indent_,
         const std::string& name_) const = 0;
+    virtual void printFactoryParameter(
+        std::ostream& os_,
+        int indent_,
+        const std::string& name_) const = 0;
     virtual void printArgument(
         std::ostream& os_,
         int indent_,
@@ -94,6 +98,10 @@ class VariableMine : public Variable {
         std::ostream& os_,
         int indent_,
         const std::string& name_) const override;
+    virtual void printFactoryParameter(
+        std::ostream& os_,
+        int indent_,
+        const std::string& name_) const override;
     virtual void printArgument(
         std::ostream& os_,
         int indent_,
@@ -122,6 +130,10 @@ class VariableInherited : public Variable {
         std::ostream& os_,
         const std::string& name_) const override;
     virtual void printParameter(
+        std::ostream& os_,
+        int indent_,
+        const std::string& name_) const override;
+    virtual void printFactoryParameter(
         std::ostream& os_,
         int indent_,
         const std::string& name_) const override;
@@ -158,6 +170,10 @@ class VariableUserData : public Variable {
         std::ostream& os_,
         int indent_,
         const std::string& name_) const override;
+    virtual void printFactoryParameter(
+        std::ostream& os_,
+        int indent_,
+        const std::string& name_) const override;
     virtual void printArgument(
         std::ostream& os_,
         int indent_,
@@ -189,6 +205,47 @@ class VariableFunction : public Variable {
         std::ostream& os_,
         const std::string& name_) const override;
     virtual void printParameter(
+        std::ostream& os_,
+        int indent_,
+        const std::string& name_) const override;
+    virtual void printFactoryParameter(
+        std::ostream& os_,
+        int indent_,
+        const std::string& name_) const override;
+    virtual void printArgument(
+        std::ostream& os_,
+        int indent_,
+        const std::string& name_) const override;
+};
+
+class VariableRepeater : public Variable {
+  private:
+    std::string type;
+    std::string initializer;
+
+  public:
+    explicit VariableRepeater(
+        const std::string& type_,
+        const std::string& initializer_);
+    virtual void printType(
+        std::ostream& os_) const override;
+    virtual void printDeclaration(
+        std::ostream& os_,
+        int indent_,
+        const std::string& name_) const override;
+    virtual void printInvoker(
+        std::ostream& os_,
+        int indent_,
+        const std::string& name_,
+        const std::string& classname_) const override;
+    virtual void printInitializer(
+        std::ostream& os_,
+        const std::string& name_) const override;
+    virtual void printParameter(
+        std::ostream& os_,
+        int indent_,
+        const std::string& name_) const override;
+    virtual void printFactoryParameter(
         std::ostream& os_,
         int indent_,
         const std::string& name_) const override;
@@ -249,6 +306,13 @@ void VariableMine::printParameter(
   /* -- nothing to do - my variable is not passed from the parent */
 }
 
+void VariableMine::printFactoryParameter(
+    std::ostream& os_,
+    int indent_,
+    const std::string& name_) const {
+  /* -- nothing to do - my variable is not passed from the parent */
+}
+
 void VariableMine::printArgument(
     std::ostream& os_,
     int indent_,
@@ -301,6 +365,13 @@ void VariableInherited::printParameter(
   os_ << "typename ::OTest2::TypeOfParent<";
   printType(os_);
   os_ << ">::Type " << name_ << "_";
+}
+
+void VariableInherited::printFactoryParameter(
+    std::ostream& os_,
+    int indent_,
+    const std::string& name_) const {
+  /* -- nothing to do - the factory method access the members directly */
 }
 
 void VariableInherited::printArgument(
@@ -360,6 +431,13 @@ void VariableUserData::printParameter(
   /* -- nothing to do - the user datum is not passed from the parent */
 }
 
+void VariableUserData::printFactoryParameter(
+    std::ostream& os_,
+    int indent_,
+    const std::string& name_) const {
+  /* -- nothing to do - my variable is not passed from the parent */
+}
+
 void VariableUserData::printArgument(
     std::ostream& os_,
     int indent_,
@@ -414,11 +492,116 @@ void VariableFunction::printParameter(
   /* -- nothing to do - function is not passed from the parent */
 }
 
+void VariableFunction::printFactoryParameter(
+    std::ostream& os_,
+    int indent_,
+    const std::string& name_) const {
+  /* -- nothing to do - the factory method access the invoker directly */
+}
+
 void VariableFunction::printArgument(
     std::ostream& os_,
     int indent_,
     const std::string& name_) const {
   /* -- nothing to do - function is not passed from the parent */
+}
+
+VariableRepeater::VariableRepeater(
+    const std::string& type_,
+    const std::string& initializer_) :
+  type(type_),
+  initializer(initializer_) {
+
+}
+
+void VariableRepeater::printType(
+    std::ostream& os_) const {
+  os_ << type;
+}
+
+void VariableRepeater::printDeclaration(
+    std::ostream& os_,
+    int indent_,
+    const std::string& name_) const {
+  Formatting::printIndent(os_, indent_);
+  os_ << "typename ::OTest2::TypeOfParent<";
+  printType(os_);
+  os_ << ">::Type " << name_ << ";\n";
+}
+
+void VariableRepeater::printInvoker(
+    std::ostream& os_,
+    int indent_,
+    const std::string& name_,
+    const std::string& classname_) const {
+  os_ << "\n";
+
+  /* -- declaration of the initialization function */
+  Formatting::printIndent(os_, indent_);
+  os_ << "typename ::OTest2::TypeOfParent<";
+  printType(os_);
+  os_ << ">::Type " << "repeaterInit_" << name_ << "(\n";
+  Formatting::printIndent(os_, indent_ + 2);
+  os_ << "const ::OTest2::Context& context_,\n";
+  Formatting::printIndent(os_, indent_ + 2);
+  os_ << "std::shared_ptr<";
+  printType(os_);
+  os_ << ">& current_) {\n";
+
+  /* -- invoke the factory method */
+  Formatting::printIndent(os_, indent_ + 1);
+  os_ << "current_ = ";
+  printType(os_);
+  os_ << "::createNext(context_, current_";
+  if(!initializer.empty()) {
+    os_ << ", " << initializer;
+  }
+  os_ << ");\n";
+
+  /* -- return the reference to the created object */
+  Formatting::printIndent(os_, indent_ + 1);
+  os_ << "return *current_;\n";
+
+  Formatting::printIndent(os_, indent_);
+  os_ << "}\n";
+}
+
+void VariableRepeater::printInitializer(
+    std::ostream& os_,
+    const std::string& name_) const {
+  os_ << name_ << "(repeaterInit_" << name_ << "(context_, " << name_ << "_))";
+}
+
+void VariableRepeater::printParameter(
+    std::ostream& os_,
+    int indent_,
+    const std::string& name_) const {
+  os_ << ",\n";
+  Formatting::printIndent(os_, indent_);
+  os_ << "std::shared_ptr<";
+  printType(os_);
+  os_ << ">& " << name_ << "_";
+}
+
+void VariableRepeater::printFactoryParameter(
+    std::ostream& os_,
+    int indent_,
+    const std::string& name_) const {
+  /* -- the repeater must be passed from the object factory */
+  os_ << ",\n";
+  Formatting::printIndent(os_, indent_);
+  os_ << "std::shared_ptr<";
+  printType(os_);
+  os_ << ">& " << name_ << "_";
+}
+
+void VariableRepeater::printArgument(
+    std::ostream& os_,
+    int indent_,
+    const std::string& name_) const {
+  os_ << ",\n";
+  Formatting::printIndent(os_, indent_);
+  os_ << name_ << "_";
 }
 
 } /* -- namespace */
@@ -539,6 +722,23 @@ void VarTable::appendUserFunction(
       std::make_shared<VariableFunction>(function_));
 }
 
+void VarTable::appendRepeater(
+    const std::string& name_,
+    const std::string& declaration_) {
+  pimpl->appendVariable(
+      name_,
+      std::make_shared<VariableRepeater>(declaration_, ""));
+}
+
+void VarTable::appendRepeaterWithInit(
+    const std::string& name_,
+    const std::string& declaration_,
+    const std::string& initializer_) {
+  pimpl->appendVariable(
+      name_,
+      std::make_shared<VariableRepeater>(declaration_, initializer_));
+}
+
 void VarTable::printDeclarations(
     std::ostream& os_,
     int indent_) const {
@@ -575,6 +775,15 @@ void VarTable::printParameters(
   for(const std::string& name_ : pimpl->order) {
     Impl::Variables::const_iterator var_(pimpl->variables.find(name_));
     (*var_).second->printParameter(os_, indent_, name_);
+  }
+}
+
+void VarTable::printFactoryParameters(
+    std::ostream& os_,
+    int indent_) const {
+  for(const std::string& name_ : pimpl->order) {
+    Impl::Variables::const_iterator var_(pimpl->variables.find(name_));
+    (*var_).second->printFactoryParameter(os_, indent_, name_);
   }
 }
 

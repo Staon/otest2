@@ -57,26 +57,27 @@ void CmdRepeatCase::run(
     /* -- next run is expected, decorate the case name */
     std::string decorated_name_(repeater->transformName(context_, case_name));
 
-    /* -- schedule the case if it's not filtered */
-    if(!context_.runner_filter->filterCase(suite_name, decorated_name_)) {
-      /* -- prepare the stack frame */
-      context_.semantic_stack->push(true);
-      context_.object_path->pushName(decorated_name_);
+    /* -- prepare myself for next run */
+    context_.command_stack->pushCommand(
+        std::make_shared<CmdRepeatCase>(repeater, suite_name, case_name));
 
-      /* -- report entering of the test case */
-      context_.reporter->enterCase(context_, decorated_name_);
+    /* -- prepare the stack frame */
+    context_.semantic_stack->push(true);
+    context_.object_path->pushName(decorated_name_);
 
-      /* -- schedule finishing of the test case */
-      context_.command_stack->pushCommand(std::make_shared<CmdLeaveCase>());
+    /* -- report entering of the test case */
+    context_.reporter->enterCase(context_, decorated_name_);
 
-      /* -- Create and schedule the test case. As the constructor method
-       *    can throw an exception the code is run in the protected
-       *    environment. */
-      runUserCode(context_, [&](const Context& context_){
-        CasePtr testcase_(repeater->createCase(context_, decorated_name_));
-        testcase_->scheduleRun(context_, testcase_);
-      });
-    }
+    /* -- schedule finishing of the test case */
+    context_.command_stack->pushCommand(std::make_shared<CmdLeaveCase>());
+
+    /* -- Create and schedule the test case. As the constructor method
+     *    can throw an exception the code is run in the protected
+     *    environment. */
+    runUserCode(context_, [&](const Context& context_){
+      CasePtr testcase_(repeater->createCase(context_, decorated_name_));
+      testcase_->scheduleRun(context_, testcase_);
+    });
   }
 }
 

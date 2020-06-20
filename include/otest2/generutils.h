@@ -17,7 +17,6 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #ifndef OTest2__INCLUDE_OTEST2_GENERUTILS_H_
 #define OTest2__INCLUDE_OTEST2_GENERUTILS_H_
 
@@ -26,6 +25,7 @@
 
 #include <otest2/casefactory.h>
 #include <otest2/caseptr.h>
+#include <otest2/caserepeater.h>
 #include <otest2/suitefactory.h>
 #include <otest2/suiteptr.h>
 #include <otest2/suiterepeater.h>
@@ -64,9 +64,7 @@ class SuiteRepeaterOnce : public SuiteRepeater {
 
     }
 
-    virtual ~SuiteRepeaterOnce() {
-
-    }
+    virtual ~SuiteRepeaterOnce() = default;
 
     virtual bool isNextRun(
         const Context& context_) const {
@@ -102,13 +100,55 @@ class SuiteGeneratedFactory : public SuiteFactory {
 
     }
 
-    virtual ~SuiteGeneratedFactory() {
-
-    }
+    virtual ~SuiteGeneratedFactory() = default;
 
     virtual SuiteRepeaterPtr createSuite(
         const Context& context_) {
       return std::make_shared<SuiteRepeaterOnce<Suite_>>();
+    }
+};
+
+template<typename Suite_, typename Case_>
+class CaseRepeaterOnce : public CaseRepeater {
+  private:
+    Suite_* suite;
+    CasePtr (Suite_::* factory_method)(const Context&);
+    bool created;
+
+  public:
+    /* -- avoid copying */
+    CaseRepeaterOnce(
+        const CaseRepeaterOnce&) = delete;
+    CaseRepeaterOnce& operator = (
+        const CaseRepeaterOnce&) = delete;
+
+    explicit CaseRepeaterOnce(
+        Suite_* suite_,
+        CasePtr (Suite_::* factory_method_)(const Context&)) :
+      suite(suite_),
+      factory_method(factory_method_),
+      created(false) {
+      assert(suite != nullptr && factory_method != nullptr);
+
+    }
+
+    virtual ~CaseRepeaterOnce() = default;
+
+    virtual bool isNextRun(
+        const Context& context_) const {
+      return !created;
+    }
+
+    virtual std::string transformName(
+        const Context& context_,
+        const std::string& case_name_) const {
+      return case_name_;
+    }
+
+    virtual CasePtr createCase(
+        const Context& context_,
+        const std::string& case_name_) {
+      return (suite->*factory_method)(context_);
     }
 };
 
@@ -137,9 +177,10 @@ class CaseGeneratedFactory : public CaseFactory {
 
     }
 
-    virtual CasePtr createCase(
+    virtual CaseRepeaterPtr createCase(
         const Context& context_) {
-      return (suite->*factory_method)(context_);
+      return std::make_shared<CaseRepeaterOnce<Suite_, Case_>>(
+          suite, factory_method);
     }
 };
 

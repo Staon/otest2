@@ -20,7 +20,7 @@
 #ifndef OTest2__INCLUDE_OTEST2_CASEFACTORY_H_
 #define OTest2__INCLUDE_OTEST2_CASEFACTORY_H_
 
-#include <otest2/caseptr.h>
+#include <otest2/caserepeaterptr.h>
 
 namespace OTest2 {
 
@@ -48,12 +48,19 @@ class CaseFactory {
     virtual ~CaseFactory();
 
     /**
-     * @brief Create the test case
+     * @brief Create the test case repeater
+     *
+     * This method creates an instance of the test case repeater. The repeater
+     * is responsible for repeated creation of the test case. Hence, it works
+     * as a kind of factory.
+     *
+     * For historic reasons, this class is called case factory although it's
+     * a factory of the repeaters.
      *
      * @param context_ The otest2 context
-     * @return The test case
+     * @return The test case repeater
      */
-    virtual CasePtr createCase(
+    virtual CaseRepeaterPtr createCase(
         const Context& context_) = 0;
 };
 

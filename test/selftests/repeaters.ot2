@@ -24,7 +24,7 @@
 #include <vector>
 
 #include <otest2/repeater.h>
-//#include <otest2/repeatervaluesimpl.h>
+#include <otest2/repeatervaluesimpl.h>
 
 namespace OTest2 {
 
@@ -124,33 +124,35 @@ TEST_SUITE(RepeaterSuite) {
       testAssertEqual(1, case_repeater.getValue());
     }
   }
+}
 
-//  TEST_CASE(ValuesCaseInitList) {
-//    RepeaterValue<int> repeater{243, 1, -9, 197};
-//    int check_values[]{242, 0, -10, 196};
-//
-//    TEST_SIMPLE() {
-//      testAssertEqual(repeater.getValue(), check_values[repeater.getIndex()] + 1);
-//    }
-//  }
-//
-//  TEST_CASE(ValuesCaseVector) {
-//    std::vector<int> values{2, 4, 8, 16, 32, 64};
-//    RepeaterValue<int> repeater(values);
-//
-//    TEST_SIMPLE() {
-//      testAssertEqual(repeater.getValue(), values[repeater.getIndex()]);
-//    }
-//  }
-//
-//  TEST_CASE(ValuesCaseIter) {
-//    int values[]{2, 3, 5, 7, 11, 13, 17};
-//    RepeaterValue<int> repeater(values, values + (sizeof(values) / sizeof(int)));
-//
-//    TEST_SIMPLE() {
-//      testAssertEqual(repeater.getValue(), values[repeater.getIndex()]);
-//    }
-//  }
+TEST_SUITE(ValuesRepeaterSuite) {
+  TEST_CASE(ValuesCaseInitList) {
+    RepeaterValue<int> repeater{243, 1, -9, 197};
+    int check_values[]{242, 0, -10, 196};
+
+    TEST_SIMPLE() {
+      testAssertEqual(repeater.getValue(), check_values[repeater.getIndex()] + 1);
+    }
+  }
+
+  TEST_CASE(ValuesCaseVector) {
+    std::vector<int> values{2, 4, 8, 16, 32, 64};
+    RepeaterValue<int> repeater(values);
+
+    TEST_SIMPLE() {
+      testAssertEqual(repeater.getValue(), values[repeater.getIndex()]);
+    }
+  }
+
+  TEST_CASE(ValuesCaseIter) {
+    int values[]{2, 3, 5, 7, 11, 13, 17};
+    RepeaterValue<int> repeater(values, values + (sizeof(values) / sizeof(int)));
+
+    TEST_SIMPLE() {
+      testAssertEqual(repeater.getValue(), values[repeater.getIndex()]);
+    }
+  }
 }
 
 }  /* -- namespace SelfTest */

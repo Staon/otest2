@@ -93,8 +93,6 @@ bool parseVariableInitializer(
   if(init_ == nullptr)
     return true; /* -- no error */
 
-  init_->dump();
-
   /* -- resolve the type of the initializer */
   InitializerType init_type_(InitializerType::CALL_INIT);
   switch(vardecl_->getInitStyle()) {

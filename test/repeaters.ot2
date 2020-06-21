@@ -30,7 +30,7 @@ namespace Test {
 
 TEST_SUITE(RepeatersSuite) {
   TEST_CASE(RepeatersCase) {
-    Runtime runtime("RepeaterSuite", "");
+    Runtime runtime("RepeaterSuite", "RepeaterCase");
 
     TEST_SIMPLE() {
       std::vector<const char*> data_{
@@ -154,7 +154,194 @@ TEST_SUITE(RepeatersSuite) {
 
       testAssert(!runtime.runTheTest());
       testAssert(runtime.reporter.checkRecords(data_));
-      runtime.reporter.dumpRecords(std::cout);
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(ValuesCaseInitList) {
+    Runtime runtime("ValuesRepeaterSuite", "ValuesCaseInitList");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<ValuesRepeaterSuite>",
+        "enterCase<ValuesCaseInitList (1)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 243>",
+        "message<b = 243>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<ValuesCaseInitList (1)>: passed",
+        "enterCase<ValuesCaseInitList (2)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 1>",
+        "message<b = 1>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<ValuesCaseInitList (2)>: passed",
+        "enterCase<ValuesCaseInitList (3)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = -9>",
+        "message<b = -9>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<ValuesCaseInitList (3)>: passed",
+        "enterCase<ValuesCaseInitList (4)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 197>",
+        "message<b = 197>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<ValuesCaseInitList (4)>: passed",
+        "leaveSuite<ValuesRepeaterSuite>: passed",
+        "leaveTest<selftest>: passed",
+      };
+
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(ValuesCaseVector) {
+    Runtime runtime("ValuesRepeaterSuite", "ValuesCaseVector");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<ValuesRepeaterSuite>",
+        "enterCase<ValuesCaseVector (1)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 2>",
+        "message<b = 2>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<ValuesCaseVector (1)>: passed",
+        "enterCase<ValuesCaseVector (2)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 4>",
+        "message<b = 4>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<ValuesCaseVector (2)>: passed",
+        "enterCase<ValuesCaseVector (3)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 8>",
+        "message<b = 8>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<ValuesCaseVector (3)>: passed",
+        "enterCase<ValuesCaseVector (4)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 16>",
+        "message<b = 16>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<ValuesCaseVector (4)>: passed",
+        "enterCase<ValuesCaseVector (5)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 32>",
+        "message<b = 32>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<ValuesCaseVector (5)>: passed",
+        "enterCase<ValuesCaseVector (6)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 64>",
+        "message<b = 64>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<ValuesCaseVector (6)>: passed",
+        "leaveSuite<ValuesRepeaterSuite>: passed",
+        "leaveTest<selftest>: passed",
+      };
+
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(ValuesCaseIter) {
+    Runtime runtime("ValuesRepeaterSuite", "ValuesCaseIter");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<ValuesRepeaterSuite>",
+        "enterCase<ValuesCaseIter (1)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 2>",
+        "message<b = 2>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<ValuesCaseIter (1)>: passed",
+        "enterCase<ValuesCaseIter (2)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 3>",
+        "message<b = 3>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<ValuesCaseIter (2)>: passed",
+        "enterCase<ValuesCaseIter (3)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 5>",
+        "message<b = 5>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<ValuesCaseIter (3)>: passed",
+        "enterCase<ValuesCaseIter (4)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 7>",
+        "message<b = 7>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<ValuesCaseIter (4)>: passed",
+        "enterCase<ValuesCaseIter (5)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 11>",
+        "message<b = 11>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<ValuesCaseIter (5)>: passed",
+        "enterCase<ValuesCaseIter (6)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 13>",
+        "message<b = 13>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<ValuesCaseIter (6)>: passed",
+        "enterCase<ValuesCaseIter (7)>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 17>",
+        "message<b = 17>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<ValuesCaseIter (7)>: passed",
+        "leaveSuite<ValuesRepeaterSuite>: passed",
+        "leaveTest<selftest>: passed",
+      };
+
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
     }
   }
 }

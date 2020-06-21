@@ -74,12 +74,12 @@ typedef std::shared_ptr<Variable> VariablePtr;
 class VariableMine : public Variable {
   private:
     std::string declaration;
-    std::string initializer;
+    InitializerPtr initializer;
 
   public:
     explicit VariableMine(
         const std::string& declaration_,
-        const std::string& initializer_);
+        InitializerPtr initializer_);
     virtual void printType(
         std::ostream& os_) const override;
     virtual void printDeclaration(
@@ -221,12 +221,12 @@ class VariableFunction : public Variable {
 class VariableRepeater : public Variable {
   private:
     std::string type;
-    std::string initializer;
+    InitializerPtr initializer;
 
   public:
     explicit VariableRepeater(
         const std::string& type_,
-        const std::string& initializer_);
+        InitializerPtr initializer_);
     virtual void printType(
         std::ostream& os_) const override;
     virtual void printDeclaration(
@@ -263,7 +263,7 @@ void Variable::printParentName(
 
 VariableMine::VariableMine(
     const std::string& declaration_,
-    const std::string& initializer_) :
+    InitializerPtr initializer_) :
   declaration(declaration_),
   initializer(initializer_) {
   assert(!declaration.empty());
@@ -296,7 +296,10 @@ void VariableMine::printInvoker(
 void VariableMine::printInitializer(
     std::ostream& os_,
     const std::string& name_) const {
-  os_ << name_ << '(' << initializer << ')';
+  if(initializer != nullptr)
+    initializer->printVarInitialization(os_, name_);
+  else
+    os_ << name_ << "()";
 }
 
 void VariableMine::printParameter(
@@ -508,7 +511,7 @@ void VariableFunction::printArgument(
 
 VariableRepeater::VariableRepeater(
     const std::string& type_,
-    const std::string& initializer_) :
+    InitializerPtr initializer_) :
   type(type_),
   initializer(initializer_) {
 
@@ -553,8 +556,9 @@ void VariableRepeater::printInvoker(
   os_ << "current_ = ";
   printType(os_);
   os_ << "::createNext(context_, current_";
-  if(!initializer.empty()) {
-    os_ << ", " << initializer;
+  if(initializer != nullptr) {
+    os_ << ", ";
+    initializer->printArgInitialization(os_, name_);
   }
   os_ << ");\n";
 
@@ -691,14 +695,8 @@ VarTablePtr VarTable::getPrevLevel() const {
 
 void VarTable::appendVariable(
     const std::string& name_,
-    const std::string& declaration_) {
-  appendVariableWithInit(name_, declaration_, "");
-}
-
-void VarTable::appendVariableWithInit(
-    const std::string& name_,
     const std::string& declaration_,
-    const std::string& initializer_) {
+    InitializerPtr initializer_) {
   pimpl->appendVariable(
       name_,
       std::make_shared<VariableMine>(declaration_, initializer_));
@@ -724,16 +722,8 @@ void VarTable::appendUserFunction(
 
 void VarTable::appendRepeater(
     const std::string& name_,
-    const std::string& declaration_) {
-  pimpl->appendVariable(
-      name_,
-      std::make_shared<VariableRepeater>(declaration_, ""));
-}
-
-void VarTable::appendRepeaterWithInit(
-    const std::string& name_,
     const std::string& declaration_,
-    const std::string& initializer_) {
+    InitializerPtr initializer_) {
   pimpl->appendVariable(
       name_,
       std::make_shared<VariableRepeater>(declaration_, initializer_));

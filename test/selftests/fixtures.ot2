@@ -94,6 +94,30 @@ TEST_SUITE(FixturesSuite) {
   }
 }
 
+TEST_SUITE(FixturesInitLists) {
+  int suite_num{10};
+  int suite_array[]{30, 40};
+  std::string suite_text{"initialized by list"};
+
+  TEST_CASE(InitLists) {
+    int case_num{-5};
+    int case_array[]{-10, -15};
+    std::string case_text{"case value"};
+
+    TEST_SIMPLE() {
+      testAssertEqual(suite_num, 10);
+      testAssertEqual(suite_array[0], 30);
+      testAssertEqual(suite_array[1], 40);
+      testAssertEqual(suite_text, "initialized by list");
+
+      testAssertEqual(case_num, -5);
+      testAssertEqual(case_array[0], -10);
+      testAssertEqual(case_array[1], -15);
+      testAssertEqual(case_text, "case value");
+    }
+  }
+}
+
 } /* -- namespace SelfTest */
 
 } /* -- namespace OTest2 */

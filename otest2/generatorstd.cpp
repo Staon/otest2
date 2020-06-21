@@ -493,17 +493,11 @@ void GeneratorStd::emptyState() {
 
 void GeneratorStd::appendVariable(
     const std::string& name_,
-    const std::string& type_) {
-  pimpl->variables->appendVariable(name_, type_);
-}
-
-void GeneratorStd::appendVariableInit(
-    const std::string& name_,
     const std::string& type_,
-    const Location& ibegin_,
-    const Location& iend_) {
-  std::string initializer_(pimpl->reader->getPart(ibegin_, iend_));
-  pimpl->variables->appendVariableWithInit(name_, type_, initializer_);
+    InitializerPtr initializer_) {
+  if(initializer_ != nullptr)
+    initializer_->materializeInitializer(*pimpl->reader);
+  pimpl->variables->appendVariable(name_, type_, initializer_);
 }
 
 void GeneratorStd::appendUserData(
@@ -570,24 +564,8 @@ void GeneratorStd::appendGenericFunction(
 
 bool GeneratorStd::appendRepeater(
     const std::string& name_,
-    const std::string& type_) {
-  assert(!pimpl->repeater.empty() && !name_.empty() && !type_.empty());
-
-  /* -- just one repeater in the testing object */
-  if(!pimpl->repeater.back().empty())
-    return false;
-
-  pimpl->repeater.back() = type_;
-  pimpl->variables->appendRepeater(name_, type_);
-
-  return true;
-}
-
-bool GeneratorStd::appendRepeaterInit(
-    const std::string& name_,
     const std::string& type_,
-    const Location& ibegin_,
-    const Location& iend_) {
+    InitializerPtr initializer_) {
   assert(!pimpl->repeater.empty() && !name_.empty() && !type_.empty());
 
   /* -- just one repeater in the testing object */
@@ -595,8 +573,9 @@ bool GeneratorStd::appendRepeaterInit(
     return false;
 
   pimpl->repeater.back() = type_;
-  std::string initializer_(pimpl->reader->getPart(ibegin_, iend_));
-  pimpl->variables->appendRepeaterWithInit(name_, type_, initializer_);
+  if(initializer_ != nullptr)
+    initializer_->materializeInitializer(*pimpl->reader);
+  pimpl->variables->appendRepeater(name_, type_, initializer_);
 
   return true;
 }

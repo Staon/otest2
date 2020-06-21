@@ -91,7 +91,7 @@ class Function {
     /**
      * @brief Dtor
      */
-    virtual ~Function();
+    ~Function();
 
     /* -- avoid copying */
     Function(

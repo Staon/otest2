@@ -154,7 +154,7 @@ TEST_SUITE(RepeatersSuite) {
 
       testAssert(!runtime.runTheTest());
       testAssert(runtime.reporter.checkRecords(data_));
-//      runtime.reporter.dumpRecords(std::cout);
+      runtime.reporter.dumpRecords(std::cout);
     }
   }
 }

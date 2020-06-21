@@ -107,12 +107,8 @@ class GeneratorStd : public Generator {
     virtual void emptyState() override;
     virtual void appendVariable(
         const std::string& name_,
-        const std::string& type_) override;
-    virtual void appendVariableInit(
-        const std::string& name_,
         const std::string& type_,
-        const Location& ibegin_,
-        const Location& iend_) override;
+        InitializerPtr initializer_) override;
     virtual void appendUserData(
         const std::string& name_,
         const std::string& key_,
@@ -135,12 +131,8 @@ class GeneratorStd : public Generator {
         const Location& fend_) override;
     virtual bool appendRepeater(
         const std::string& name_,
-        const std::string& type_) override;
-    virtual bool appendRepeaterInit(
-        const std::string& name_,
         const std::string& type_,
-        const Location& ibegin_,
-        const Location& iend_) override;
+        InitializerPtr initializer_) override;
     virtual void leaveState() override;
     virtual void leaveCase() override;
     virtual void leaveSuite() override;

@@ -30,6 +30,7 @@
 #include <vector>
 
 #include "generator.h"
+#include "initializer.h"
 #include "parserannotationimpl.h"
 #include "parsercontextimpl.h"
 #include "parserfunction.h"
@@ -48,8 +49,7 @@ struct FixtureClassification {
     std::string type;
 
     /* -- variable initializer */
-    bool initializer;
-    clang::SourceRange init_range;
+    InitializerPtr initializer;
 
     /* -- variable is a user datum fixture */
     bool user_data;
@@ -74,8 +74,7 @@ struct FixtureClassification {
 FixtureClassification::FixtureClassification() :
   varname(),
   type(),
-  initializer(false),
-  init_range(),
+  initializer(),
   user_data(false),
   user_data_key(),
   repeater(false),
@@ -94,21 +93,26 @@ bool parseVariableInitializer(
   if(init_ == nullptr)
     return true; /* -- no error */
 
-  /* -- just the C++ call initializer is supported */
-  if(vardecl_->getInitStyle() != clang::VarDecl::CallInit) {
-    context_->setError("only the callinit (C++98) initializer is supported", vardecl_);
-    return false;
-  }
+  init_->dump();
 
-  /* -- the variable is initialized */
-  classification_.initializer = true;
+  /* -- resolve the type of the initializer */
+  InitializerType init_type_(InitializerType::CALL_INIT);
+  switch(vardecl_->getInitStyle()) {
+    case clang::VarDecl::CallInit:
+      init_type_ = InitializerType::CALL_INIT;
+      break;
+    case clang::VarDecl::ListInit:
+      init_type_ = InitializerType::LIST_INIT;
+      break;
+    default:
+      context_->setError("only the callinit (C++98) and listinit (C++11) initializers are supported", vardecl_);
+      return false;
+  }
 
   /* -- an expression with cleanups is a wrapper, I nest into it. */
   if(clang::isa<clang::ExprWithCleanups>(init_)) {
     init_ = clang::cast<clang::ExprWithCleanups>(init_)->getSubExpr();
   }
-
-//  std::cout << init_->getStmtClassName() << std::endl;
 
   /* -- adjust the range for constructor call */
   if(clang::isa<clang::CXXConstructExpr>(init_)) {
@@ -127,24 +131,51 @@ bool parseVariableInitializer(
       }
     }
 
+    /* -- There are no parameters or all of them are defaulted. Handle that
+     *    as there is no initializer. */
     if(last_index_ < 0) {
-      /* -- There are no parameters or all of them are defaulted. Handle that
-       *    as there is no initializer. */
-      classification_.initializer = false;
       return true;
     }
-    else {
-      /* -- get source range of the arguments */
-      clang::SourceRange first_(context_->getNodeRange(ctrexpr_->getArg(0)));
-      clang::SourceRange last_(
-          context_->getNodeRange(ctrexpr_->getArg(last_index_)));
-      classification_.init_range = clang::SourceRange(first_.getBegin(), last_.getEnd());
-      return true;
+
+    /* -- The list initializer matches to a std::initializer_list argument */
+    if(init_type_ == InitializerType::LIST_INIT
+        && last_index_ == 0
+        && clang::isa<clang::CXXStdInitializerListExpr>(ctrexpr_->getArg(0))) {
+      init_type_ = InitializerType::LIST_INIT_ARG;
     }
+
+    /* -- get source range of the arguments */
+    clang::SourceRange first_(context_->getNodeRange(ctrexpr_->getArg(0)));
+    clang::SourceRange last_(
+        context_->getNodeRange(ctrexpr_->getArg(last_index_)));
+    classification_.initializer = std::make_shared<Initializer>(
+        init_type_,
+        context_->createLocation(first_.getBegin()),
+        context_->createLocation(last_.getEnd()));
+    return true;
   }
 
-  /* -- something different than a constructor call */
-  classification_.init_range = context_->getNodeRange(init_);
+  /* -- direct initializer list (C++11) */
+  if(clang::isa<clang::InitListExpr>(init_)) {
+    assert(init_type_ == InitializerType::LIST_INIT);
+    clang::InitListExpr* list_(clang::cast<clang::InitListExpr>(init_));
+    auto num_init_(list_->getNumInits());
+    clang::SourceRange first_(context_->getNodeRange(list_->getInit(0)));
+    clang::SourceRange last_(context_->getNodeRange(list_->getInit(num_init_ - 1)));
+    classification_.initializer = std::make_shared<Initializer>(
+        init_type_,
+        context_->createLocation(first_.getBegin()),
+        context_->createLocation(last_.getEnd()));
+    return true;
+  }
+
+  /* -- standard call initializer (C++98) */
+  assert(init_type_ == InitializerType::CALL_INIT);
+  clang::SourceRange range_(context_->getNodeRange(init_));
+  classification_.initializer = std::make_shared<Initializer>(
+      init_type_,
+      context_->createLocation(range_.getBegin()),
+      context_->createLocation(range_.getEnd()));
   return true;
 }
 
@@ -372,41 +403,23 @@ bool parseVariable(
     }
 
     /* -- generate the repeater */
-    bool added_repeater_(false);
-    if(classification_.initializer) {
-      added_repeater_ = context_->generator->appendRepeaterInit(
-          classification_.varname,
-          classification_.type,
-          context_->createLocation(classification_.init_range.getBegin()),
-          context_->createLocation(classification_.init_range.getEnd()));
-    }
-    else {
-      added_repeater_ = context_->generator->appendRepeater(
-          classification_.varname,
-          classification_.type);
-    }
-    if(!added_repeater_) {
+    if(!context_->generator->appendRepeater(
+        classification_.varname,
+        classification_.type,
+        classification_.initializer)) {
       context_->setError(
           "just one repeater object may be declared in one testing object",
           vardecl_);
       return false;
     }
-
     return true;
   }
 
   /* -- ordinary fixture variable */
-  if(classification_.initializer) {
-    context_->generator->appendVariableInit(
-        classification_.varname,
-        classification_.type,
-        context_->createLocation(classification_.init_range.getBegin()),
-        context_->createLocation(classification_.init_range.getEnd()));
-  }
-  else {
-    context_->generator->appendVariable(
-        classification_.varname, classification_.type);
-  }
+  context_->generator->appendVariable(
+      classification_.varname,
+      classification_.type,
+      classification_.initializer);
   return true;
 }
 

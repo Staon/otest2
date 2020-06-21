@@ -25,6 +25,7 @@
 #include <string>
 
 #include "function.h"
+#include "initializer.h"
 
 namespace OTest2 {
 
@@ -79,22 +80,12 @@ class VarTable {
      *
      * @param name_ Name of the variable
      * @param declaration_ Variable's declaration
+     * @param initializer_ Initializer of the variable or null pointer
      */
     void appendVariable(
         const std::string& name_,
-        const std::string& declaration_);
-
-    /**
-     * @brief Append new variable
-     *
-     * @param name_ Name of the variable
-     * @param declaration_ Variable's declaration
-     * @param initializer_ Variable's initializer
-     */
-    void appendVariableWithInit(
-        const std::string& name_,
         const std::string& declaration_,
-        const std::string& initializer_);
+        InitializerPtr initializer_);
 
     /**
      * @brief Append new user datum
@@ -124,22 +115,12 @@ class VarTable {
      *
      * @param name_ Name of the variable
      * @param declaration_ Type of the variable
+     * @param initializer_ Initializer of the repeater or null pointer
      */
     void appendRepeater(
         const std::string& name_,
-        const std::string& declaration_);
-
-    /**
-     * @brief Append repeater variable with an initializer
-     *
-     * @param name_ Name of the variable
-     * @param declaration_ Type of the variable
-     * @param initializer_ The variable initializer
-     */
-    void appendRepeaterWithInit(
-        const std::string& name_,
         const std::string& declaration_,
-        const std::string& initializer_);
+        InitializerPtr initializer_);
 
     /**
      * @brief Print declarations

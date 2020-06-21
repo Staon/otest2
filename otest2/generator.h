@@ -23,6 +23,7 @@
 #include <string>
 
 #include "function.h"
+#include "initializer.h"
 
 namespace OTest2 {
 
@@ -194,28 +195,17 @@ class Generator {
     virtual void emptyState() = 0;
 
     /**
-     * @brief Append a variable without initializer
+     * @brief Append a variable
      *
      * @param name_ Name of the variable
      * @param type_ Name of the type
+     * @param initializer_ The initializer or null ptr if the initializer
+     *     is not defined
      */
     virtual void appendVariable(
         const std::string& name_,
-        const std::string& type_) = 0;
-
-    /**
-     * @brief Append a variable with an initializer
-     *
-     * @param name_ Name of the variable
-     * @param type_ Name of the type
-     * @param ibegin_ Beginning of the initializer in the source file
-     * @param iend_ End of the initializer in the source file
-     */
-    virtual void appendVariableInit(
-        const std::string& name_,
         const std::string& type_,
-        const Location& ibegin_,
-        const Location& iend_) = 0;
+        InitializerPtr initializer_) = 0;
 
     /**
      * @brief Append user data variable
@@ -278,32 +268,17 @@ class Generator {
         const Location& fend_) = 0;
 
     /**
-     * @brief Append a repeater with no initializer
+     * @brief Append a repeater
      *
      * @param name_ Name of the repeater variable
      * @param type_ Name of the type
-     * @return False if the repeater cannot be added (some repeater has
-     *     already been declared)
+     * @param initializer_ The initializer or null pointer if the initializer
+     *     is not defined
      */
     virtual bool appendRepeater(
         const std::string& name_,
-        const std::string& type_) = 0;
-
-    /**
-     * @brief Append a repeater with an initializer
-     *
-     * @param name_ Name of the repeater variable
-     * @param type_ Name of the type
-     * @param ibegin_ Beginning of the initializer in the source file
-     * @param iend_ End of the initializer in the source file
-     * @return False if the repeater cannot be added (some repeater has
-     *     already been declared)
-     */
-    virtual bool appendRepeaterInit(
-        const std::string& name_,
         const std::string& type_,
-        const Location& ibegin_,
-        const Location& iend_) = 0;
+        InitializerPtr initializer_) = 0;
 
     /**
      * @brief End of current test state

@@ -7,7 +7,7 @@ services:
     image: "jekyll/jekyll"
     hostname: "jekyll"
     volumes:
-      - "jekyll-cache:/usr/local/bundle"
+      - "jekyll-cache:/usr/gem"
       - "${PWD}:/srv/jekyll"
     command: jekyll serve
 

@@ -92,40 +92,40 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#ifndef OTest2__INCLUDE_OTEST2_SUITEFACTORY_H_</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#define OTest2__INCLUDE_OTEST2_SUITEFACTORY_H_</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="suiteptr_8h.html">otest2/suiteptr.h</a>&gt;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="suiterepeaterptr_8h.html">otest2/suiterepeaterptr.h</a>&gt;</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">class </span>Context;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classOTest2_1_1SuiteFactory.html">   32</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOTest2_1_1SuiteFactory.html">SuiteFactory</a> {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <a class="code" href="classOTest2_1_1SuiteFactory.html#a04f8cf5bd7e31b7c8e5326dd8e45e3da">SuiteFactory</a>(</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1SuiteFactory.html">SuiteFactory</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="classOTest2_1_1SuiteFactory.html">SuiteFactory</a>&amp; <a class="code" href="classOTest2_1_1SuiteFactory.html#a856bfe7853a84ee0a64d0aac10f074be">operator =</a>(</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1SuiteFactory.html">SuiteFactory</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="classOTest2_1_1SuiteFactory.html#a04f8cf5bd7e31b7c8e5326dd8e45e3da">SuiteFactory</a>();</div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classOTest2_1_1SuiteFactory.html">   37</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOTest2_1_1SuiteFactory.html">SuiteFactory</a> {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="classOTest2_1_1SuiteFactory.html#a04f8cf5bd7e31b7c8e5326dd8e45e3da">SuiteFactory</a>(</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1SuiteFactory.html">SuiteFactory</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <a class="code" href="classOTest2_1_1SuiteFactory.html">SuiteFactory</a>&amp; <a class="code" href="classOTest2_1_1SuiteFactory.html#a856bfe7853a84ee0a64d0aac10f074be">operator =</a>(</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1SuiteFactory.html">SuiteFactory</a>&amp;) = <span class="keyword">delete</span>;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classOTest2_1_1SuiteFactory.html#a23b0c7972516eb20d64c6d648f1304c3">~SuiteFactory</a>();</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <a class="code" href="classOTest2_1_1SuiteFactory.html#a04f8cf5bd7e31b7c8e5326dd8e45e3da">SuiteFactory</a>();</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classOTest2_1_1ObjectPtr.html">SuitePtr</a> <a class="code" href="classOTest2_1_1SuiteFactory.html#a603be7ae274995aaecfb3657448eb679">createSuite</a>(</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_) = 0;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;};</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* OTest2__INCLUDE_OTEST2_SUITEFACTORY_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classOTest2_1_1SuiteFactory.html#a23b0c7972516eb20d64c6d648f1304c3">~SuiteFactory</a>();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="namespaceOTest2.html#a97c3e0c38b2e0366dddd26205b1ae3d2">SuiteRepeaterPtr</a> <a class="code" href="classOTest2_1_1SuiteFactory.html#a8231152e541b923c5b201a42125bbd7d">createSuite</a>(</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_) = 0;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;};</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* OTest2__INCLUDE_OTEST2_SUITEFACTORY_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassOTest2_1_1SuiteFactory_html_a23b0c7972516eb20d64c6d648f1304c3"><div class="ttname"><a href="classOTest2_1_1SuiteFactory.html#a23b0c7972516eb20d64c6d648f1304c3">OTest2::SuiteFactory::~SuiteFactory</a></div><div class="ttdeci">virtual ~SuiteFactory()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="suitefactory_8cpp_source.html#l00028">suitefactory.cpp:28</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1SuiteFactory_html_a856bfe7853a84ee0a64d0aac10f074be"><div class="ttname"><a href="classOTest2_1_1SuiteFactory.html#a856bfe7853a84ee0a64d0aac10f074be">OTest2::SuiteFactory::operator=</a></div><div class="ttdeci">SuiteFactory &amp; operator=(const SuiteFactory &amp;)=delete</div></div>
-<div class="ttc" id="aclassOTest2_1_1SuiteFactory_html_a603be7ae274995aaecfb3657448eb679"><div class="ttname"><a href="classOTest2_1_1SuiteFactory.html#a603be7ae274995aaecfb3657448eb679">OTest2::SuiteFactory::createSuite</a></div><div class="ttdeci">virtual SuitePtr createSuite(const Context &amp;context_)=0</div><div class="ttdoc">Create the suite.</div></div>
-<div class="ttc" id="aclassOTest2_1_1SuiteFactory_html"><div class="ttname"><a href="classOTest2_1_1SuiteFactory.html">OTest2::SuiteFactory</a></div><div class="ttdoc">Simple interface for creation of a suite object.</div><div class="ttdef"><b>Definition:</b> <a href="suitefactory_8h_source.html#l00032">suitefactory.h:32</a></div></div>
+<div class="ttc" id="anamespaceOTest2_html_a97c3e0c38b2e0366dddd26205b1ae3d2"><div class="ttname"><a href="namespaceOTest2.html#a97c3e0c38b2e0366dddd26205b1ae3d2">OTest2::SuiteRepeaterPtr</a></div><div class="ttdeci">std::shared_ptr&lt; SuiteRepeater &gt; SuiteRepeaterPtr</div><div class="ttdef"><b>Definition:</b> <a href="suiterepeaterptr_8h_source.html#l00027">suiterepeaterptr.h:27</a></div></div>
+<div class="ttc" id="asuiterepeaterptr_8h_html"><div class="ttname"><a href="suiterepeaterptr_8h.html">suiterepeaterptr.h</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1SuiteFactory_html"><div class="ttname"><a href="classOTest2_1_1SuiteFactory.html">OTest2::SuiteFactory</a></div><div class="ttdoc">Simple interface for creation of a suite object.</div><div class="ttdef"><b>Definition:</b> <a href="suitefactory_8h_source.html#l00037">suitefactory.h:37</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ObjectPtr_html"><div class="ttname"><a href="classOTest2_1_1ObjectPtr.html">OTest2::ObjectPtr</a></div><div class="ttdoc">Pointer to a testing object.</div><div class="ttdef"><b>Definition:</b> <a href="objectptr_8h_source.html#l00033">objectptr.h:33</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1SuiteFactory_html_a8231152e541b923c5b201a42125bbd7d"><div class="ttname"><a href="classOTest2_1_1SuiteFactory.html#a8231152e541b923c5b201a42125bbd7d">OTest2::SuiteFactory::createSuite</a></div><div class="ttdeci">virtual SuiteRepeaterPtr createSuite(const Context &amp;context_)=0</div><div class="ttdoc">Create the suite.</div></div>
 <div class="ttc" id="aclassOTest2_1_1Context_html"><div class="ttname"><a href="classOTest2_1_1Context.html">OTest2::Context</a></div><div class="ttdoc">OTest2 runtime context.</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00039">context.h:39</a></div></div>
-<div class="ttc" id="asuiteptr_8h_html"><div class="ttname"><a href="suiteptr_8h.html">suiteptr.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1SuiteFactory_html_a04f8cf5bd7e31b7c8e5326dd8e45e3da"><div class="ttname"><a href="classOTest2_1_1SuiteFactory.html#a04f8cf5bd7e31b7c8e5326dd8e45e3da">OTest2::SuiteFactory::SuiteFactory</a></div><div class="ttdeci">SuiteFactory()</div><div class="ttdoc">Ctor.</div><div class="ttdef"><b>Definition:</b> <a href="suitefactory_8cpp_source.html#l00024">suitefactory.cpp:24</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

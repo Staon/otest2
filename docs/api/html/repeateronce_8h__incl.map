@@ -1,0 +1,13 @@
+<map id="include/otest2/repeateronce.h" name="include/otest2/repeateronce.h">
+<area shape="rect" id="node1" title=" " alt="" coords="87,5,302,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,80,80,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="298,304,374,331"/>
+<area shape="rect" id="node4" href="$caserepeater_8h.html" title=" " alt="" coords="173,80,336,107"/>
+<area shape="rect" id="node9" href="$suiterepeater_8h.html" title=" " alt="" coords="402,80,566,107"/>
+<area shape="rect" id="node5" href="$caseptr_8h.html" title=" " alt="" coords="209,155,335,181"/>
+<area shape="rect" id="node7" href="$caserepeaterptr_8h.html" title=" " alt="" coords="155,229,336,256"/>
+<area shape="rect" id="node8" title=" " alt="" coords="360,155,419,181"/>
+<area shape="rect" id="node6" href="$objectptr_8h.html" title=" " alt="" coords="361,229,495,256"/>
+<area shape="rect" id="node10" href="$suiteptr_8h.html" title=" " alt="" coords="443,155,570,181"/>
+<area shape="rect" id="node11" href="$suiterepeaterptr_8h.html" title=" " alt="" coords="519,229,702,256"/>
+</map>

@@ -100,14 +100,16 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a23b0c7972516eb20d64c6d648f1304c3"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1SuiteFactory.html#a23b0c7972516eb20d64c6d648f1304c3">~SuiteFactory</a> ()</td></tr>
 <tr class="memdesc:a23b0c7972516eb20d64c6d648f1304c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="classOTest2_1_1SuiteFactory.html#a23b0c7972516eb20d64c6d648f1304c3">More...</a><br /></td></tr>
 <tr class="separator:a23b0c7972516eb20d64c6d648f1304c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a603be7ae274995aaecfb3657448eb679"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceOTest2.html#a00b8d59e20b37156f82b9b5eb5dc2831">SuitePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1SuiteFactory.html#a603be7ae274995aaecfb3657448eb679">createSuite</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_)=0</td></tr>
-<tr class="memdesc:a603be7ae274995aaecfb3657448eb679"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the suite.  <a href="classOTest2_1_1SuiteFactory.html#a603be7ae274995aaecfb3657448eb679">More...</a><br /></td></tr>
-<tr class="separator:a603be7ae274995aaecfb3657448eb679"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8231152e541b923c5b201a42125bbd7d"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceOTest2.html#a97c3e0c38b2e0366dddd26205b1ae3d2">SuiteRepeaterPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1SuiteFactory.html#a8231152e541b923c5b201a42125bbd7d">createSuite</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_)=0</td></tr>
+<tr class="memdesc:a8231152e541b923c5b201a42125bbd7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the suite.  <a href="classOTest2_1_1SuiteFactory.html#a8231152e541b923c5b201a42125bbd7d">More...</a><br /></td></tr>
+<tr class="separator:a8231152e541b923c5b201a42125bbd7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Simple interface for creation of a suite object. </p>
+<p>This class is responsible for creation of suite repeater. The repeater is a kind of suite factory which is able to create instances of the suite object more than once. Hence, this object is something like a "factory
+of a factory". </p>
 
-<p class="definition">Definition at line <a class="el" href="suitefactory_8h_source.html#l00032">32</a> of file <a class="el" href="suitefactory_8h_source.html">suitefactory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="suitefactory_8h_source.html#l00037">37</a> of file <a class="el" href="suitefactory_8h_source.html">suitefactory.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a0db65435e394694bccb9db0120ca7cae"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0db65435e394694bccb9db0120ca7cae">&#9670;&nbsp;</a></span>SuiteFactory() <span class="overload">[1/2]</span></h2>
@@ -186,8 +188,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a603be7ae274995aaecfb3657448eb679"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a603be7ae274995aaecfb3657448eb679">&#9670;&nbsp;</a></span>createSuite()</h2>
+<a id="a8231152e541b923c5b201a42125bbd7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8231152e541b923c5b201a42125bbd7d">&#9670;&nbsp;</a></span>createSuite()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -196,7 +198,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="namespaceOTest2.html#a00b8d59e20b37156f82b9b5eb5dc2831">SuitePtr</a> OTest2::SuiteFactory::createSuite </td>
+          <td class="memname">virtual <a class="el" href="namespaceOTest2.html#a97c3e0c38b2e0366dddd26205b1ae3d2">SuiteRepeaterPtr</a> OTest2::SuiteFactory::createSuite </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;&#160;</td>
           <td class="paramname"><em>context_</em></td><td>)</td>
@@ -217,9 +219,9 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The suite </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The suite repeater </dd></dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1SuiteGeneratedFactory.html#a7fde56042fa42586eda8eacec74abb43">OTest2::SuiteGeneratedFactory&lt; Suite_ &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1SuiteGeneratedFactory.html#a39943809d29655e5219214b68179a089">OTest2::SuiteGeneratedFactory&lt; Repeater_ &gt;</a>.</p>
 
 </div>
 </div>

@@ -119,15 +119,20 @@ $(function() {
 , <a class="el" href="classOTest2_1_1Bzip2OStream.html#ab0847cbb53147bf92f3fb2c7a7d0ab10">OTest2::Bzip2OStream</a>
 , <a class="el" href="classOTest2_1_1CaseFactory.html#ad9c9e8c922a56b0a2b35dfef969cf57f">OTest2::CaseFactory</a>
 , <a class="el" href="classOTest2_1_1CaseGenerated.html#a8e4655683eb578d734c3f8c44d50ac00">OTest2::CaseGenerated</a>
-, <a class="el" href="classOTest2_1_1CaseGeneratedFactory.html#a664f50a20217bbeeacfb9aa57a63615a">OTest2::CaseGeneratedFactory&lt; Suite_, Case_ &gt;</a>
+, <a class="el" href="classOTest2_1_1CaseGeneratedFactory.html#ae67c9d35feb02dc3bdf6ac9b0376b8ee">OTest2::CaseGeneratedFactory&lt; Suite_, Case_, Repeater_ &gt;</a>
 , <a class="el" href="classOTest2_1_1CaseOrdinary.html#a4fd38b206e0e26d75105d38ed903eba1">OTest2::CaseOrdinary</a>
 , <a class="el" href="classOTest2_1_1CaseRegistry.html#ac43d42e1c94e0f26aac94f0161aad712">OTest2::CaseRegistry</a>
+, <a class="el" href="classOTest2_1_1CaseRepeater.html#a7f029a9cfb9a6f3fde6dbde46c27c41a">OTest2::CaseRepeater</a>
+, <a class="el" href="classOTest2_1_1CaseRepeaterMulti.html#a269f5c702c800051767676005b356d28">OTest2::CaseRepeaterMulti&lt; Suite_, Case_, Repeater_ &gt;</a>
+, <a class="el" href="classOTest2_1_1CaseRepeaterOnce.html#a396bd3445a38e8d0875e037a156f2666">OTest2::CaseRepeaterOnce&lt; Suite_, Case_ &gt;</a>
 , <a class="el" href="classOTest2_1_1CmdDummy.html#a96bd4110f0599856f73ffff7679aa51d">OTest2::CmdDummy</a>
 , <a class="el" href="classOTest2_1_1CmdFirstState.html#a8e8b5273fe093febaec1b9fc813b6e6e">OTest2::CmdFirstState</a>
 , <a class="el" href="classOTest2_1_1CmdLeaveCase.html#aaf9fafde77b8ad1b814baf68b76ce25f">OTest2::CmdLeaveCase</a>
 , <a class="el" href="classOTest2_1_1CmdLeaveSuite.html#ad4dbcc3931426a44e6ffaa1c8b85db0f">OTest2::CmdLeaveSuite</a>
 , <a class="el" href="classOTest2_1_1CmdNextCase.html#aa888d35d6145f04859756df4564b6515">OTest2::CmdNextCase</a>
 , <a class="el" href="classOTest2_1_1CmdNextSuite.html#a506e2667850068ba3a884ee02efd457d">OTest2::CmdNextSuite</a>
+, <a class="el" href="classOTest2_1_1CmdRepeatCase.html#aa5d618557dae33102c23e97ce058dd9a">OTest2::CmdRepeatCase</a>
+, <a class="el" href="classOTest2_1_1CmdRepeatSuite.html#a172358418fbf7b82097851e468ef64bd">OTest2::CmdRepeatSuite</a>
 , <a class="el" href="classOTest2_1_1CmdRunState.html#a72f6d3d895be85b18872e281d3bb3d44">OTest2::CmdRunState</a>
 , <a class="el" href="classOTest2_1_1CmdStartCase.html#ace24fe71157a2dc5ed413f4268f9b6b9">OTest2::CmdStartCase</a>
 , <a class="el" href="classOTest2_1_1CmdStartTest.html#aafcb0b46f4b2ece3942e8058df5465dd">OTest2::CmdStartTest</a>
@@ -159,6 +164,8 @@ $(function() {
 , <a class="el" href="classOTest2_1_1ObjectPtr.html#a1790af90cac0c400601143e32dd484c5">OTest2::ObjectPtr&lt; Object_ &gt;</a>
 , <a class="el" href="classOTest2_1_1Registry.html#a0f675e030a6e570383275d3d673582d8">OTest2::Registry</a>
 , <a class="el" href="classOTest2_1_1RegressionAssertion.html#a0996ae094ce306f7c3952ded4a5abd1a">OTest2::RegressionAssertion</a>
+, <a class="el" href="classOTest2_1_1Repeater.html#a58fb0716f209265a1f7feeeb7058c8f5">OTest2::Repeater</a>
+, <a class="el" href="classOTest2_1_1RepeaterValue.html#ac136772631de71b548085bb25a88d6a3">OTest2::RepeaterValue&lt; Value_ &gt;</a>
 , <a class="el" href="classOTest2_1_1Reporter.html#a4112c7aefdca7b06a4755dcd78cb9e61">OTest2::Reporter</a>
 , <a class="el" href="classOTest2_1_1ReporterConsole.html#a8001b07b997b1907390fbb994d481cb4">OTest2::ReporterConsole</a>
 , <a class="el" href="classOTest2_1_1ReporterDebug.html#a7388b68732a514de905c0575eaa10a79">OTest2::ReporterDebug</a>
@@ -177,8 +184,11 @@ $(function() {
 , <a class="el" href="classOTest2_1_1StateRegistry.html#a9dfeffc7e43b0e908e045ed6926aaf35">OTest2::StateRegistry</a>
 , <a class="el" href="classOTest2_1_1SuiteFactory.html#a856bfe7853a84ee0a64d0aac10f074be">OTest2::SuiteFactory</a>
 , <a class="el" href="classOTest2_1_1SuiteGenerated.html#a398914df5652414c41d8917485b8029d">OTest2::SuiteGenerated</a>
-, <a class="el" href="classOTest2_1_1SuiteGeneratedFactory.html#a0f599d1f033b91269878ae59a0fa05cd">OTest2::SuiteGeneratedFactory&lt; Suite_ &gt;</a>
+, <a class="el" href="classOTest2_1_1SuiteGeneratedFactory.html#a3b262e72ed6190f7762a0aac1c94b2fb">OTest2::SuiteGeneratedFactory&lt; Repeater_ &gt;</a>
 , <a class="el" href="classOTest2_1_1SuiteOrdinary.html#a51f714fcd24d708f733e514f417916e4">OTest2::SuiteOrdinary</a>
+, <a class="el" href="classOTest2_1_1SuiteRepeater.html#a1cf9e1f33fc29ec82a0a3d70364e0a67">OTest2::SuiteRepeater</a>
+, <a class="el" href="classOTest2_1_1SuiteRepeaterMulti.html#a9746efb088c13b2209ed1fc5f28827d1">OTest2::SuiteRepeaterMulti&lt; Suite_, Repeater_ &gt;</a>
+, <a class="el" href="classOTest2_1_1SuiteRepeaterOnce.html#a260fcc43eccd62082d089ca47a03a827">OTest2::SuiteRepeaterOnce&lt; Suite_ &gt;</a>
 , <a class="el" href="classOTest2_1_1TeeOStream_1_1Buffer.html#a8b9ee6a908d71fdb13f0532355469b3d">OTest2::TeeOStream::Buffer</a>
 , <a class="el" href="classOTest2_1_1TeeOStream.html#a46c2abb8dde72cff8366b4c378ed234b">OTest2::TeeOStream</a>
 , <a class="el" href="classOTest2_1_1TerminalDriver.html#ae23a24910d02bde3b418d5a78f358f77">OTest2::TerminalDriver</a>

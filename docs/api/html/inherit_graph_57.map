@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classOTest2_1_1SemanticStack.html" title="Semantic stack." alt="" coords="5,5,176,32"/>
+<area shape="rect" id="node1" href="$classOTest2_1_1RunnerFilter.html" title="Generic interface of a runner filter." alt="" coords="5,31,152,57"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1RunnerFilterEntire.html" title="Simple runner filter which allows all suites and test cases." alt="" coords="200,5,384,32"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1RunnerFilterOne.html" title="A filter which allows run of only one test case or only one suite." alt="" coords="205,56,379,83"/>
 </map>

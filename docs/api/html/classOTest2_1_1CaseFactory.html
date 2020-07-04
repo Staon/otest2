@@ -100,9 +100,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8af31dcf65b865efccbf2585f2100de2"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1CaseFactory.html#a8af31dcf65b865efccbf2585f2100de2">~CaseFactory</a> ()</td></tr>
 <tr class="memdesc:a8af31dcf65b865efccbf2585f2100de2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="classOTest2_1_1CaseFactory.html#a8af31dcf65b865efccbf2585f2100de2">More...</a><br /></td></tr>
 <tr class="separator:a8af31dcf65b865efccbf2585f2100de2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab363ab37734dcff6dca686ad9dfd2f08"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceOTest2.html#a93f6d5bd4ad39632831d4f95b8e51042">CasePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1CaseFactory.html#ab363ab37734dcff6dca686ad9dfd2f08">createCase</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_)=0</td></tr>
-<tr class="memdesc:ab363ab37734dcff6dca686ad9dfd2f08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the test case.  <a href="classOTest2_1_1CaseFactory.html#ab363ab37734dcff6dca686ad9dfd2f08">More...</a><br /></td></tr>
-<tr class="separator:ab363ab37734dcff6dca686ad9dfd2f08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11df82601e270760bf9a13e9a4997cf2"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceOTest2.html#a456ba04b78ef028c003ef6530cc79c01">CaseRepeaterPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1CaseFactory.html#a11df82601e270760bf9a13e9a4997cf2">createCase</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_)=0</td></tr>
+<tr class="memdesc:a11df82601e270760bf9a13e9a4997cf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the test case repeater.  <a href="classOTest2_1_1CaseFactory.html#a11df82601e270760bf9a13e9a4997cf2">More...</a><br /></td></tr>
+<tr class="separator:a11df82601e270760bf9a13e9a4997cf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Simple factory of one test case. </p>
@@ -186,8 +186,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ab363ab37734dcff6dca686ad9dfd2f08"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab363ab37734dcff6dca686ad9dfd2f08">&#9670;&nbsp;</a></span>createCase()</h2>
+<a id="a11df82601e270760bf9a13e9a4997cf2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11df82601e270760bf9a13e9a4997cf2">&#9670;&nbsp;</a></span>createCase()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -196,7 +196,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="namespaceOTest2.html#a93f6d5bd4ad39632831d4f95b8e51042">CasePtr</a> OTest2::CaseFactory::createCase </td>
+          <td class="memname">virtual <a class="el" href="namespaceOTest2.html#a456ba04b78ef028c003ef6530cc79c01">CaseRepeaterPtr</a> OTest2::CaseFactory::createCase </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;&#160;</td>
           <td class="paramname"><em>context_</em></td><td>)</td>
@@ -210,16 +210,18 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Create the test case. </p>
+<p>Create the test case repeater. </p>
+<p>This method creates an instance of the test case repeater. The repeater is responsible for repeated creation of the test case. Hence, it works as a kind of factory.</p>
+<p>For historic reasons, this class is called case factory although it's a factory of the repeaters.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context_</td><td>The otest2 context </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The test case </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The test case repeater </dd></dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1CaseGeneratedFactory.html#ae86417e3f9a088729f956e439d43fae9">OTest2::CaseGeneratedFactory&lt; Suite_, Case_ &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1CaseGeneratedFactory.html#a8b9be88d2d047487f09cd3e962d03cd6">OTest2::CaseGeneratedFactory&lt; Suite_, Case_, Repeater_ &gt;</a>.</p>
 
 </div>
 </div>

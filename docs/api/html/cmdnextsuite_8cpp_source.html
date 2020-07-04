@@ -95,105 +95,71 @@ $(function() {
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="cmdleavesuite_8h.html">cmdleavesuite.h</a>&gt;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="commandptr_8h.html">commandptr.h</a>&gt;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="commandstack_8h.html">commandstack.h</a>&gt;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="context_8h.html">context.h</a>&gt;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="objectpath_8h.html">objectpath.h</a>&gt;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="registry_8h.html">registry.h</a>&gt;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="reporter_8h.html">reporter.h</a>&gt;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="runcode_8h.html">runcode.h</a>&quot;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="runnerfilter_8h.html">runnerfilter.h</a>&gt;</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="semanticstack_8h.html">semanticstack.h</a>&gt;</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="suite_8h.html">suite.h</a>&gt;</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="suitefactory_8h.html">suitefactory.h</a>&gt;</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="suitefactoryptr_8h.html">suitefactoryptr.h</a>&gt;</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="suiteptr_8h.html">suiteptr.h</a>&gt;</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="cmdrepeatsuite_8h.html">cmdrepeatsuite.h</a>&gt;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="commandstack_8h.html">commandstack.h</a>&gt;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="context_8h.html">context.h</a>&gt;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="registry_8h.html">registry.h</a>&gt;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="runnerfilter_8h.html">runnerfilter.h</a>&gt;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="suitefactory_8h.html">suitefactory.h</a>&gt;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="suiterepeater_8h.html">suiterepeater.h</a>&gt;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classOTest2_1_1CmdNextSuite.html#a074431b1dbfa84156603e5b064dce7ec">   36</a></span>&#160;<a class="code" href="classOTest2_1_1CmdNextSuite.html#a0a1c6d4bd01fa94a786c75d70b133674">CmdNextSuite::CmdNextSuite</a>(</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="classOTest2_1_1Registry.html">Registry</a>* registry_,</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">int</span> current_) :</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  registry(registry_),</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  current(current_) {</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  assert(registry != <span class="keyword">nullptr</span> &amp;&amp; current &gt;= 0);</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classOTest2_1_1CmdNextSuite.html#a074431b1dbfa84156603e5b064dce7ec">   43</a></span>&#160;<a class="code" href="classOTest2_1_1CmdNextSuite.html#a0a1c6d4bd01fa94a786c75d70b133674">CmdNextSuite::CmdNextSuite</a>(</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <a class="code" href="classOTest2_1_1Registry.html">Registry</a>* registry_,</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">int</span> current_) :</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  registry(registry_),</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  current(current_) {</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  assert(registry != <span class="keyword">nullptr</span> &amp;&amp; current &gt;= 0);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;}</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classOTest2_1_1CmdNextSuite.html#a7edc5a33f1e339d761127597bafcdce2">   52</a></span>&#160;<a class="code" href="classOTest2_1_1CmdNextSuite.html#a7edc5a33f1e339d761127597bafcdce2">CmdNextSuite::~CmdNextSuite</a>() {</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;}</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classOTest2_1_1CmdNextSuite.html#a224a5518fd44400c41f6a9be51370324">   56</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1CmdNextSuite.html#a224a5518fd44400c41f6a9be51370324">CmdNextSuite::run</a>(</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_) {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="comment">/* -- create the suite */</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  std::string suite_name_;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <a class="code" href="namespaceOTest2.html#a5f6550e3b03d0ca6e8bdf2472fc5f22b">SuiteFactoryPtr</a> factory_(registry-&gt;<a class="code" href="classOTest2_1_1Registry.html#aac9e25dd4db75a0502c2d2d367d619ee">getSuite</a>(current, &amp;suite_name_));</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keywordflow">if</span>(factory_ != <span class="keyword">nullptr</span>) {</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="comment">/* -- schedule run of next suite */</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    context_.<a class="code" href="classOTest2_1_1Context.html#a37b104877fc82d0107e7155ee94b3da4">command_stack</a>-&gt;<a class="code" href="classOTest2_1_1CommandStack.html#a269ce599606862d6889c94b797c0e785">pushCommand</a>(</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        std::make_shared&lt;CmdNextSuite&gt;(registry, current + 1));</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="comment">/* -- create and schedule the suite if it&#39;s not filtered */</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keywordflow">if</span>(!context_.<a class="code" href="classOTest2_1_1Context.html#a427cf9b8e83dc87c83de471c63dae043">runner_filter</a>-&gt;<a class="code" href="classOTest2_1_1RunnerFilter.html#af8ecd74099cf70260226a7cf3c7b6144">filterSuite</a>(suite_name_)) {</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;      <span class="comment">/* -- prepare stack-frame of the suite - suite&#39;s result and suite&#39;s</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">       *    path. */</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      context_.<a class="code" href="classOTest2_1_1Context.html#a7e973ae8c8e7128d1d6db9178fbdbe57">object_path</a>-&gt;<a class="code" href="classOTest2_1_1ObjectPath.html#a38ec55853b9f538fcae143d964faf411">pushName</a>(suite_name_);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;      context_.<a class="code" href="classOTest2_1_1Context.html#a51c2df39f5831566f09c6ba1ad03b077">semantic_stack</a>-&gt;<a class="code" href="classOTest2_1_1SemanticStack.html#ab490d89781d3dd8055fd694ad97d4daa">push</a>(<span class="keyword">true</span>);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;      <span class="comment">/* -- report entering of the suite */</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      context_.<a class="code" href="classOTest2_1_1Context.html#a143b0da7accfa0ed1609435c8c3c2c6a">reporter</a>-&gt;<a class="code" href="classOTest2_1_1Reporter.html#a901e3c79093c3003d9d0cde39c9e6cb1">enterSuite</a>(context_, suite_name_);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;      <span class="comment">/* -- schedule finishing of the suite */</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      context_.<a class="code" href="classOTest2_1_1Context.html#a37b104877fc82d0107e7155ee94b3da4">command_stack</a>-&gt;<a class="code" href="classOTest2_1_1CommandStack.html#a269ce599606862d6889c94b797c0e785">pushCommand</a>(std::make_shared&lt;CmdLeaveSuite&gt;());</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;      <span class="comment">/* -- The constructor method of the suite may throw and exception.</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="comment">       *    So I do the creation in a protected environment. */</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;      <a class="code" href="namespaceOTest2.html#a433f1fb71a2f018642e10d076d75665e">runUserCode</a>(context_, [&amp;](<span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_) {</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <a class="code" href="classOTest2_1_1ObjectPtr.html">SuitePtr</a> suite_(factory_-&gt;createSuite(context_));</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        suite_-&gt;scheduleRun(context_, suite_);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      });</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    }</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  }</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classOTest2_1_1CmdNextSuite.html#a7edc5a33f1e339d761127597bafcdce2">   45</a></span>&#160;<a class="code" href="classOTest2_1_1CmdNextSuite.html#a7edc5a33f1e339d761127597bafcdce2">CmdNextSuite::~CmdNextSuite</a>() {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classOTest2_1_1CmdNextSuite.html#a224a5518fd44400c41f6a9be51370324">   49</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1CmdNextSuite.html#a224a5518fd44400c41f6a9be51370324">CmdNextSuite::run</a>(</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_) {</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="comment">/* -- create the suite */</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  std::string suite_name_;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <a class="code" href="namespaceOTest2.html#a5f6550e3b03d0ca6e8bdf2472fc5f22b">SuiteFactoryPtr</a> factory_(registry-&gt;<a class="code" href="classOTest2_1_1Registry.html#aac9e25dd4db75a0502c2d2d367d619ee">getSuite</a>(current, &amp;suite_name_));</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordflow">if</span>(factory_ != <span class="keyword">nullptr</span>) {</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="comment">/* -- schedule run of next suite */</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    context_.<a class="code" href="classOTest2_1_1Context.html#a37b104877fc82d0107e7155ee94b3da4">command_stack</a>-&gt;<a class="code" href="classOTest2_1_1CommandStack.html#a269ce599606862d6889c94b797c0e785">pushCommand</a>(</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        std::make_shared&lt;CmdNextSuite&gt;(registry, current + 1));</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="comment">/* -- create and schedule the suite if it&#39;s not filtered */</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordflow">if</span>(!context_.<a class="code" href="classOTest2_1_1Context.html#a427cf9b8e83dc87c83de471c63dae043">runner_filter</a>-&gt;<a class="code" href="classOTest2_1_1RunnerFilter.html#af8ecd74099cf70260226a7cf3c7b6144">filterSuite</a>(suite_name_)) {</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;      <span class="comment">/* -- schedule the repeater command */</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;      <a class="code" href="namespaceOTest2.html#a97c3e0c38b2e0366dddd26205b1ae3d2">SuiteRepeaterPtr</a> repeater_(factory_-&gt;createSuite(context_));</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;      context_.<a class="code" href="classOTest2_1_1Context.html#a37b104877fc82d0107e7155ee94b3da4">command_stack</a>-&gt;<a class="code" href="classOTest2_1_1CommandStack.html#a269ce599606862d6889c94b797c0e785">pushCommand</a>(</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;          std::make_shared&lt;CmdRepeatSuite&gt;(repeater_, suite_name_));</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    }</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  }</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;}</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassOTest2_1_1Reporter_html_a901e3c79093c3003d9d0cde39c9e6cb1"><div class="ttname"><a href="classOTest2_1_1Reporter.html#a901e3c79093c3003d9d0cde39c9e6cb1">OTest2::Reporter::enterSuite</a></div><div class="ttdeci">virtual void enterSuite(const Context &amp;context_, const std::string &amp;name_)=0</div><div class="ttdoc">Enter a suite.</div></div>
-<div class="ttc" id="asuitefactoryptr_8h_html"><div class="ttname"><a href="suitefactoryptr_8h.html">suitefactoryptr.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1CmdNextSuite_html_a224a5518fd44400c41f6a9be51370324"><div class="ttname"><a href="classOTest2_1_1CmdNextSuite.html#a224a5518fd44400c41f6a9be51370324">OTest2::CmdNextSuite::run</a></div><div class="ttdeci">virtual void run(const Context &amp;context_)</div><div class="ttdoc">Run the command.</div><div class="ttdef"><b>Definition:</b> <a href="cmdnextsuite_8cpp_source.html#l00056">cmdnextsuite.cpp:56</a></div></div>
-<div class="ttc" id="acmdleavesuite_8h_html"><div class="ttname"><a href="cmdleavesuite_8h.html">cmdleavesuite.h</a></div></div>
+<div class="ttc" id="anamespaceOTest2_html_a97c3e0c38b2e0366dddd26205b1ae3d2"><div class="ttname"><a href="namespaceOTest2.html#a97c3e0c38b2e0366dddd26205b1ae3d2">OTest2::SuiteRepeaterPtr</a></div><div class="ttdeci">std::shared_ptr&lt; SuiteRepeater &gt; SuiteRepeaterPtr</div><div class="ttdef"><b>Definition:</b> <a href="suiterepeaterptr_8h_source.html#l00027">suiterepeaterptr.h:27</a></div></div>
+<div class="ttc" id="acmdrepeatsuite_8h_html"><div class="ttname"><a href="cmdrepeatsuite_8h.html">cmdrepeatsuite.h</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1CmdNextSuite_html_a224a5518fd44400c41f6a9be51370324"><div class="ttname"><a href="classOTest2_1_1CmdNextSuite.html#a224a5518fd44400c41f6a9be51370324">OTest2::CmdNextSuite::run</a></div><div class="ttdeci">virtual void run(const Context &amp;context_)</div><div class="ttdoc">Run the command.</div><div class="ttdef"><b>Definition:</b> <a href="cmdnextsuite_8cpp_source.html#l00049">cmdnextsuite.cpp:49</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1CmdNextSuite_html_a0a1c6d4bd01fa94a786c75d70b133674"><div class="ttname"><a href="classOTest2_1_1CmdNextSuite.html#a0a1c6d4bd01fa94a786c75d70b133674">OTest2::CmdNextSuite::CmdNextSuite</a></div><div class="ttdeci">CmdNextSuite(const CmdNextSuite &amp;)=delete</div></div>
-<div class="ttc" id="aclassOTest2_1_1ObjectPath_html_a38ec55853b9f538fcae143d964faf411"><div class="ttname"><a href="classOTest2_1_1ObjectPath.html#a38ec55853b9f538fcae143d964faf411">OTest2::ObjectPath::pushName</a></div><div class="ttdeci">void pushName(const std::string &amp;name_)</div><div class="ttdoc">Push name of currently entering testing object.</div><div class="ttdef"><b>Definition:</b> <a href="objectpath_8cpp_source.html#l00048">objectpath.cpp:48</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1Context_html_a143b0da7accfa0ed1609435c8c3c2c6a"><div class="ttname"><a href="classOTest2_1_1Context.html#a143b0da7accfa0ed1609435c8c3c2c6a">OTest2::Context::reporter</a></div><div class="ttdeci">Reporter *const reporter</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00046">context.h:46</a></div></div>
-<div class="ttc" id="areporter_8h_html"><div class="ttname"><a href="reporter_8h.html">reporter.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1Registry_html_aac9e25dd4db75a0502c2d2d367d619ee"><div class="ttname"><a href="classOTest2_1_1Registry.html#aac9e25dd4db75a0502c2d2d367d619ee">OTest2::Registry::getSuite</a></div><div class="ttdeci">SuiteFactoryPtr getSuite(int index_, std::string *name_=nullptr) const</div><div class="ttdoc">Get a suite factory at specified index.</div><div class="ttdef"><b>Definition:</b> <a href="registry_8cpp_source.html#l00079">registry.cpp:79</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1CommandStack_html_a269ce599606862d6889c94b797c0e785"><div class="ttname"><a href="classOTest2_1_1CommandStack.html#a269ce599606862d6889c94b797c0e785">OTest2::CommandStack::pushCommand</a></div><div class="ttdeci">void pushCommand(CommandPtr command_)</div><div class="ttdoc">Push a command into the stack.</div><div class="ttdef"><b>Definition:</b> <a href="commandstack_8cpp_source.html#l00067">commandstack.cpp:67</a></div></div>
 <div class="ttc" id="asuitefactory_8h_html"><div class="ttname"><a href="suitefactory_8h.html">suitefactory.h</a></div></div>
 <div class="ttc" id="acommandstack_8h_html"><div class="ttname"><a href="commandstack_8h.html">commandstack.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1SemanticStack_html_ab490d89781d3dd8055fd694ad97d4daa"><div class="ttname"><a href="classOTest2_1_1SemanticStack.html#ab490d89781d3dd8055fd694ad97d4daa">OTest2::SemanticStack::push</a></div><div class="ttdeci">void push(bool value_)</div><div class="ttdoc">Push a value.</div><div class="ttdef"><b>Definition:</b> <a href="semanticstack_8cpp_source.html#l00065">semanticstack.cpp:65</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1CmdNextSuite_html_a7edc5a33f1e339d761127597bafcdce2"><div class="ttname"><a href="classOTest2_1_1CmdNextSuite.html#a7edc5a33f1e339d761127597bafcdce2">OTest2::CmdNextSuite::~CmdNextSuite</a></div><div class="ttdeci">virtual ~CmdNextSuite()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="cmdnextsuite_8cpp_source.html#l00052">cmdnextsuite.cpp:52</a></div></div>
-<div class="ttc" id="aobjectpath_8h_html"><div class="ttname"><a href="objectpath_8h.html">objectpath.h</a></div></div>
-<div class="ttc" id="asemanticstack_8h_html"><div class="ttname"><a href="semanticstack_8h.html">semanticstack.h</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1CmdNextSuite_html_a7edc5a33f1e339d761127597bafcdce2"><div class="ttname"><a href="classOTest2_1_1CmdNextSuite.html#a7edc5a33f1e339d761127597bafcdce2">OTest2::CmdNextSuite::~CmdNextSuite</a></div><div class="ttdeci">virtual ~CmdNextSuite()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="cmdnextsuite_8cpp_source.html#l00045">cmdnextsuite.cpp:45</a></div></div>
+<div class="ttc" id="asuiterepeater_8h_html"><div class="ttname"><a href="suiterepeater_8h.html">suiterepeater.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1Context_html_a37b104877fc82d0107e7155ee94b3da4"><div class="ttname"><a href="classOTest2_1_1Context.html#a37b104877fc82d0107e7155ee94b3da4">OTest2::Context::command_stack</a></div><div class="ttdeci">CommandStack *const command_stack</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00041">context.h:41</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
-<div class="ttc" id="anamespaceOTest2_html_a433f1fb71a2f018642e10d076d75665e"><div class="ttname"><a href="namespaceOTest2.html#a433f1fb71a2f018642e10d076d75665e">OTest2::runUserCode</a></div><div class="ttdeci">bool runUserCode(const Context &amp;context_, std::function&lt; void(const Context &amp;)&gt; ftor_) noexcept</div><div class="ttdef"><b>Definition:</b> <a href="runcode_8cpp_source.html#l00033">runcode.cpp:33</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1Context_html_a427cf9b8e83dc87c83de471c63dae043"><div class="ttname"><a href="classOTest2_1_1Context.html#a427cf9b8e83dc87c83de471c63dae043">OTest2::Context::runner_filter</a></div><div class="ttdeci">RunnerFilter *const runner_filter</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00047">context.h:47</a></div></div>
 <div class="ttc" id="aregistry_8h_html"><div class="ttname"><a href="registry_8h.html">registry.h</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html_a5f6550e3b03d0ca6e8bdf2472fc5f22b"><div class="ttname"><a href="namespaceOTest2.html#a5f6550e3b03d0ca6e8bdf2472fc5f22b">OTest2::SuiteFactoryPtr</a></div><div class="ttdeci">std::shared_ptr&lt; SuiteFactory &gt; SuiteFactoryPtr</div><div class="ttdef"><b>Definition:</b> <a href="suitefactoryptr_8h_source.html#l00028">suitefactoryptr.h:28</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ObjectPtr_html"><div class="ttname"><a href="classOTest2_1_1ObjectPtr.html">OTest2::ObjectPtr</a></div><div class="ttdoc">Pointer to a testing object.</div><div class="ttdef"><b>Definition:</b> <a href="objectptr_8h_source.html#l00033">objectptr.h:33</a></div></div>
 <div class="ttc" id="arunnerfilter_8h_html"><div class="ttname"><a href="runnerfilter_8h.html">runnerfilter.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1Context_html_a7e973ae8c8e7128d1d6db9178fbdbe57"><div class="ttname"><a href="classOTest2_1_1Context.html#a7e973ae8c8e7128d1d6db9178fbdbe57">OTest2::Context::object_path</a></div><div class="ttdeci">ObjectPath *const object_path</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00043">context.h:43</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1Context_html_a51c2df39f5831566f09c6ba1ad03b077"><div class="ttname"><a href="classOTest2_1_1Context.html#a51c2df39f5831566f09c6ba1ad03b077">OTest2::Context::semantic_stack</a></div><div class="ttdeci">SemanticStack *const semantic_stack</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00042">context.h:42</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1Registry_html"><div class="ttname"><a href="classOTest2_1_1Registry.html">OTest2::Registry</a></div><div class="ttdoc">Test registry.</div><div class="ttdef"><b>Definition:</b> <a href="registry_8h_source.html#l00034">registry.h:34</a></div></div>
-<div class="ttc" id="asuite_8h_html"><div class="ttname"><a href="suite_8h.html">suite.h</a></div></div>
-<div class="ttc" id="aruncode_8h_html"><div class="ttname"><a href="runcode_8h.html">runcode.h</a></div></div>
 <div class="ttc" id="acontext_8h_html"><div class="ttname"><a href="context_8h.html">context.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1Context_html"><div class="ttname"><a href="classOTest2_1_1Context.html">OTest2::Context</a></div><div class="ttdoc">OTest2 runtime context.</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00039">context.h:39</a></div></div>
-<div class="ttc" id="asuiteptr_8h_html"><div class="ttname"><a href="suiteptr_8h.html">suiteptr.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1RunnerFilter_html_af8ecd74099cf70260226a7cf3c7b6144"><div class="ttname"><a href="classOTest2_1_1RunnerFilter.html#af8ecd74099cf70260226a7cf3c7b6144">OTest2::RunnerFilter::filterSuite</a></div><div class="ttdeci">virtual bool filterSuite(const std::string &amp;suite_name_) const =0</div><div class="ttdoc">Filter specified suite.</div></div>
-<div class="ttc" id="acommandptr_8h_html"><div class="ttname"><a href="commandptr_8h.html">commandptr.h</a></div></div>
 <div class="ttc" id="acmdnextsuite_8h_html"><div class="ttname"><a href="cmdnextsuite_8h.html">cmdnextsuite.h</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

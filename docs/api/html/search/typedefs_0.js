@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['bestarg_1479',['BestArg',['../structOTest2_1_1TypeTrait.html#aa5e077f74d5f9077a6f101711b6807ca',1,'OTest2::TypeTrait']]]
+  ['bestarg_1576',['BestArg',['../structOTest2_1_1TypeTrait.html#aa5e077f74d5f9077a6f101711b6807ca',1,'OTest2::TypeTrait']]]
 ];

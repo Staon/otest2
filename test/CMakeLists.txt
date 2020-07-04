@@ -33,6 +33,7 @@ target_otest2_sources(selftest
     hirschberg.ot2
     mainloop.ot2
     regressions.ot2
+    repeaters.ot2
     tee.ot2
     testmarks.ot2
     userdata.ot2
@@ -45,6 +46,7 @@ target_otest2_sources(selftest DOMAIN selftest
     selftests/fixtureobject.ot2
     selftests/mainloop.ot2
     selftests/regressions.ot2
+    selftests/repeaters.ot2
     selftests/userdata.ot2
 )
 target_otest2_main(selftest)

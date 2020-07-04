@@ -25,6 +25,7 @@
 #include <string>
 
 #include "function.h"
+#include "initializer.h"
 
 namespace OTest2 {
 
@@ -79,22 +80,12 @@ class VarTable {
      *
      * @param name_ Name of the variable
      * @param declaration_ Variable's declaration
+     * @param initializer_ Initializer of the variable or null pointer
      */
     void appendVariable(
         const std::string& name_,
-        const std::string& declaration_);
-
-    /**
-     * @brief Append new variable
-     *
-     * @param name_ Name of the variable
-     * @param declaration_ Variable's declaration
-     * @param initializer_ Variable's initializer
-     */
-    void appendVariableWithInit(
-        const std::string& name_,
         const std::string& declaration_,
-        const std::string& initializer_);
+        InitializerPtr initializer_);
 
     /**
      * @brief Append new user datum
@@ -118,6 +109,18 @@ class VarTable {
      */
     void appendUserFunction(
         FunctionPtr function_);
+
+    /**
+     * @brief Append repeater variable with no initializer
+     *
+     * @param name_ Name of the variable
+     * @param declaration_ Type of the variable
+     * @param initializer_ Initializer of the repeater or null pointer
+     */
+    void appendRepeater(
+        const std::string& name_,
+        const std::string& declaration_,
+        InitializerPtr initializer_);
 
     /**
      * @brief Print declarations
@@ -158,6 +161,17 @@ class VarTable {
      * @param indent_ Indentation level
      */
     void printParameters(
+        std::ostream& os_,
+        int indent_) const;
+
+    /**
+     * @brief Print parameters of factory method (a parent method which
+     *     creates current object)
+     *
+     * @param os_ An output stream
+     * @param indent_ Indentation level
+     */
+    void printFactoryParameters(
         std::ostream& os_,
         int indent_) const;
 

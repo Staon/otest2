@@ -17,14 +17,16 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #ifndef OTest2__INCLUDE_OTEST2_GENERUTILS_H_
 #define OTest2__INCLUDE_OTEST2_GENERUTILS_H_
 
+#include <assert.h>
 #include <memory>
 
 #include <otest2/casefactory.h>
 #include <otest2/caseptr.h>
+#include <otest2/repeatermulti.h>
+#include <otest2/repeateronce.h>
 #include <otest2/suitefactory.h>
 #include <otest2/suiteptr.h>
 
@@ -45,7 +47,7 @@ struct TypeOfParent<T_&> {
     typedef T_& Type;
 };
 
-template<typename Suite_>
+template<typename Repeater_>
 class SuiteGeneratedFactory : public SuiteFactory {
   public:
     /* -- avoid copying */
@@ -58,21 +60,19 @@ class SuiteGeneratedFactory : public SuiteFactory {
 
     }
 
-    virtual ~SuiteGeneratedFactory() {
+    virtual ~SuiteGeneratedFactory() = default;
 
-    }
-
-    virtual SuitePtr createSuite(
+    virtual SuiteRepeaterPtr createSuite(
         const Context& context_) {
-      return makePointer<Suite_>(context_);
+      return std::make_shared<Repeater_>();
     }
 };
 
-template<typename Suite_, typename Case_>
+template<typename Suite_, typename Case_, typename Repeater_>
 class CaseGeneratedFactory : public CaseFactory {
   private:
     Suite_* suite;
-    CasePtr (Suite_::* factory_method)(const Context&);
+    typename Repeater_::FactoryMethod factory_method;
 
   public:
     /* -- avoid copying */
@@ -83,19 +83,17 @@ class CaseGeneratedFactory : public CaseFactory {
 
     explicit CaseGeneratedFactory(
         Suite_* suite_,
-        CasePtr (Suite_::* factory_method_)(const Context&)) :
-          suite(suite_),
-          factory_method(factory_method_) {
+        typename Repeater_::FactoryMethod factory_method_) :
+      suite(suite_),
+      factory_method(factory_method_) {
 
     }
 
-    virtual ~CaseGeneratedFactory() {
+    virtual ~CaseGeneratedFactory() = default;
 
-    }
-
-    virtual CasePtr createCase(
+    virtual CaseRepeaterPtr createCase(
         const Context& context_) {
-      return (suite->*factory_method)(context_);
+      return std::make_shared<Repeater_>(suite, factory_method);
     }
 };
 

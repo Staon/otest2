@@ -40,12 +40,15 @@ add_library(libotest2
     casegenerated.cpp
     caseordinary.cpp
     caseregistry.cpp
+    caserepeater.cpp
     cmddummy.cpp
     cmdfirststate.cpp
     cmdleavecase.cpp
     cmdleavesuite.cpp
     cmdnextcase.cpp
     cmdnextsuite.cpp
+    cmdrepeatcase.cpp
+    cmdrepeatsuite.cpp
     cmdrunstate.cpp
     cmdstarttest.cpp
     cmdstartupcase.cpp
@@ -73,6 +76,7 @@ add_library(libotest2
     objectpath.cpp
     registry.cpp
     regressions.cpp
+    repeater.cpp
     reporter.cpp
     reporterconsole.cpp
     reporterdebug.cpp
@@ -95,6 +99,7 @@ add_library(libotest2
     suitefactory.cpp
     suitegenerated.cpp
     suiteordinary.cpp
+    suiterepeater.cpp
     teeostream.cpp
     terminaldriver.cpp
     testmark.cpp

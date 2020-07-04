@@ -1,0 +1,160 @@
+/*
+ * Copyright (C) 2020 Ondrej Starek
+ *
+ * This file is part of OTest2
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include <iostream>
+#include <list>
+#include <memory>
+#include <vector>
+
+#include <otest2/repeater.h>
+#include <otest2/repeatervaluesimpl.h>
+
+namespace OTest2 {
+
+namespace SelfTest {
+
+class SuiteRepeater : public Repeater {
+  private:
+    int loops;
+
+  public:
+    /* -- avoid copying */
+    SuiteRepeater(
+        const SuiteRepeater&) = delete;
+    SuiteRepeater& operator = (
+        const SuiteRepeater&) = delete;
+
+    explicit SuiteRepeater() :
+        loops(2) {
+
+    }
+
+    virtual ~SuiteRepeater() = default;
+
+    void tearDown() OT2_TEAR_DOWN() {
+      --loops;
+    }
+
+    virtual bool hasNextRun(
+        const Context& context_) const noexcept override {
+      return loops >= 0;
+    }
+
+    static std::shared_ptr<SuiteRepeater> createNext(
+        const Context& context_,
+        std::shared_ptr<SuiteRepeater> current_) {
+      if(current_ == nullptr)
+        return std::make_shared<SuiteRepeater>();
+      else
+        return current_;
+    }
+
+    int getValue() const {
+      return loops;
+    }
+};
+
+class CaseRepeater : public Repeater {
+  private:
+    int loops;
+
+  public:
+    /* -- avoid copying */
+    CaseRepeater(
+        const CaseRepeater&) = delete;
+    CaseRepeater& operator = (
+        const CaseRepeater&) = delete;
+
+    explicit CaseRepeater(
+        int loops_) :
+      loops(loops_) {
+
+    }
+    virtual ~CaseRepeater() = default;
+
+    virtual bool hasNextRun(
+        const Context& context_) const noexcept override {
+      return loops > 1;
+    }
+
+    static std::shared_ptr<CaseRepeater> createNext(
+        const Context& context_,
+        std::shared_ptr<CaseRepeater> current_,
+        int loops_) {
+      if(current_ == nullptr)
+        return std::make_shared<CaseRepeater>(loops_);
+      else {
+        if(current_->loops > 1)
+          return std::make_shared<CaseRepeater>(current_->loops - 1);
+        else
+          return nullptr;
+      }
+    }
+
+    int getValue() const {
+      return loops;
+    }
+};
+
+TEST_SUITE(RepeaterSuite) {
+  SuiteRepeater suite_repeater;
+
+  TEST_CASE(RepeaterCase) {
+    CaseRepeater case_repeater(3);
+
+    TEST_SIMPLE() {
+      testAssertEqual(2, suite_repeater.getValue());
+      testAssertEqual(1, case_repeater.getValue());
+    }
+  }
+}
+
+TEST_SUITE(ValuesRepeaterSuite) {
+  TEST_CASE(ValuesCaseInitList) {
+    RepeaterValue<int> repeater{243, 1, -9, 197};
+    int check_values[]{242, 0, -10, 196};
+
+    TEST_SIMPLE() {
+      testAssertEqual(repeater.getValue(), check_values[repeater.getIndex()] + 1);
+    }
+  }
+
+  TEST_CASE(ValuesCaseVector) {
+    std::vector<int> values{2, 4, 8, 16, 32, 64};
+    RepeaterValue<int> repeater(values);
+
+    TEST_SIMPLE() {
+      testAssertEqual(repeater.getValue(), values[repeater.getIndex()]);
+    }
+  }
+
+  TEST_CASE(ValuesCaseIter) {
+    int values[]{2, 3, 5, 7, 11, 13, 17};
+    RepeaterValue<int> repeater(values, values + (sizeof(values) / sizeof(int)));
+
+    TEST_SIMPLE() {
+      testAssertEqual(repeater.getValue(), values[repeater.getIndex()]);
+    }
+  }
+}
+
+}  /* -- namespace SelfTest */
+
+}  /* -- namespace OTest2 */

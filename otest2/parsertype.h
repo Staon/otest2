@@ -51,6 +51,7 @@ std::string parseType(
 /**
  * @brief Traverse methods of a class
  *
+ * @param context_ Parser context
  * @param object_ The class declaration
  * @param post_order_ If it's true the @a object_ is traversed after
  *     the base classes.
@@ -59,6 +60,7 @@ std::string parseType(
  * @return True if the method is found (the @a fce_ has returned true)
  */
 bool traverseMethods(
+    ParserContext* context_,
     const clang::CXXRecordDecl* object_,
     bool post_order_,
     std::function<bool(const clang::CXXMethodDecl*)> fce_);
@@ -66,6 +68,7 @@ bool traverseMethods(
 /**
  * @brief Traverse a class and all parent classes
  *
+ * @param context_ Parser context
  * @param object_ The class declaration
  * @param post_order_ If it's true the @a object_ is traversed after
  *     the base classes.
@@ -74,6 +77,7 @@ bool traverseMethods(
  * @return True if the class is found (the @a fce_ has returned true)
  */
 bool traverseClasses(
+    ParserContext* context_,
     const clang::CXXRecordDecl* object_,
     bool post_order_,
     std::function<bool(const clang::CXXRecordDecl*)> fce_);

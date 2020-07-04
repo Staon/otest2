@@ -38,6 +38,8 @@ add_executable(otest2
     generatorstd.h
     generfmt.cpp
     generfmt.h
+    initializer.cpp
+    initializer.h
     lcstream.cpp
     lcstream.h
     location.cpp

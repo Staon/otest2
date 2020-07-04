@@ -54,6 +54,7 @@ std::string parseType(
 }
 
 bool traverseMethods(
+    ParserContext* context_,
     const clang::CXXRecordDecl* object_,
     bool post_order_,
     std::function<bool(const clang::CXXMethodDecl*)> fce_) {
@@ -68,7 +69,7 @@ bool traverseMethods(
   /* -- try base classes */
   for(const auto& base_ : object_->bases()) {
     clang::CXXRecordDecl* base_class_(base_.getType().getTypePtr()->getAsCXXRecordDecl());
-    if(traverseMethods(base_class_, post_order_, fce_))
+    if(traverseMethods(context_, base_class_, post_order_, fce_))
       return true;
   }
 
@@ -82,6 +83,7 @@ bool traverseMethods(
 }
 
 bool traverseClasses(
+    ParserContext* context_,
     const clang::CXXRecordDecl* object_,
     bool post_order_,
     std::function<bool(const clang::CXXRecordDecl*)> fce_) {
@@ -96,7 +98,7 @@ bool traverseClasses(
   /* -- try base classes */
   for(const auto& base_ : object_->bases()) {
     clang::CXXRecordDecl* base_class_(base_.getType().getTypePtr()->getAsCXXRecordDecl());
-    if(traverseClasses(base_class_, post_order_, fce_))
+    if(traverseClasses(context_, base_class_, post_order_, fce_))
       return true;
   }
 

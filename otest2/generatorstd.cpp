@@ -58,6 +58,9 @@ struct GeneratorStd::Impl {
     std::vector<FunctionPtr> start_up_fce;
     std::vector<FunctionPtr> tear_down_fce;
 
+    /* -- repeaters */
+    std::vector<std::string> repeater;
+
     /* -- state function */
     FunctionPtr state_fce;
 
@@ -69,12 +72,17 @@ struct GeneratorStd::Impl {
     std::string testcase;
     std::string state;
 
+    struct ObjectRecord {
+        std::string name;
+        std::string repeater_type;
+    };
+
     /* -- list of suites */
-    typedef std::vector<std::string> Suites;
+    typedef std::vector<ObjectRecord> Suites;
     Suites suites;
 
     /* -- list of cases */
-    typedef std::vector<std::string> Cases;
+    typedef std::vector<ObjectRecord> Cases;
     Cases cases;
 
     /* -- list of states */
@@ -121,6 +129,7 @@ GeneratorStd::Impl::Impl(
   infile(infile_),
   outfile(outfile_),
   variables(),
+  repeater(),
   indent(0) {
 
 }
@@ -324,7 +333,8 @@ void GeneratorStd::enterSuite(
   pimpl->fixtures = std::make_shared<Functions>(nullptr);
   pimpl->start_up_fce.emplace_back(nullptr);
   pimpl->tear_down_fce.emplace_back(nullptr);
-  pimpl->suites.push_back(suite_);
+  pimpl->repeater.push_back("");
+  pimpl->suites.push_back({suite_, ""});
   pimpl->indent += 2;
 
   pimpl->output
@@ -356,7 +366,10 @@ void GeneratorStd::finishSuiteFunctions() {
       << "        const " << pimpl->suite << "&) = delete;\n"
       << "\n"
       << "    explicit " << pimpl->suite << "(\n"
-      << "        const ::OTest2::Context& context_) :\n"
+      << "        const ::OTest2::Context& context_";
+  pimpl->variables->printParameters(pimpl->output, pimpl->indent + 2);
+  pimpl->output
+      << ") :\n"
       << "      ::OTest2::SuiteGenerated(context_, \"" << pimpl->suite << "\")";
   pimpl->variables->printInitializers(pimpl->output, pimpl->indent + 1);
   pimpl->output
@@ -381,7 +394,8 @@ void GeneratorStd::enterCase(
   pimpl->fixtures = std::make_shared<Functions>(pimpl->fixtures);
   pimpl->start_up_fce.emplace_back(nullptr);
   pimpl->tear_down_fce.emplace_back(nullptr);
-  pimpl->cases.push_back(case_);
+  pimpl->repeater.push_back("");
+  pimpl->cases.push_back({case_, ""});
   pimpl->indent += 2;
 
   pimpl->output
@@ -479,17 +493,11 @@ void GeneratorStd::emptyState() {
 
 void GeneratorStd::appendVariable(
     const std::string& name_,
-    const std::string& type_) {
-  pimpl->variables->appendVariable(name_, type_);
-}
-
-void GeneratorStd::appendVariableInit(
-    const std::string& name_,
     const std::string& type_,
-    const Location& ibegin_,
-    const Location& iend_) {
-  std::string initializer_(pimpl->reader->getPart(ibegin_, iend_));
-  pimpl->variables->appendVariableWithInit(name_, type_, initializer_);
+    InitializerPtr initializer_) {
+  if(initializer_ != nullptr)
+    initializer_->materializeInitializer(*pimpl->reader);
+  pimpl->variables->appendVariable(name_, type_, initializer_);
 }
 
 void GeneratorStd::appendUserData(
@@ -552,6 +560,24 @@ void GeneratorStd::appendGenericFunction(
   pimpl->output << "\n";
   Formatting::printIndent(pimpl->output, pimpl->indent);
   pimpl->reader->writePart(pimpl->output, fbegin_, &fend_);
+}
+
+bool GeneratorStd::appendRepeater(
+    const std::string& name_,
+    const std::string& type_,
+    InitializerPtr initializer_) {
+  assert(!pimpl->repeater.empty() && !name_.empty() && !type_.empty());
+
+  /* -- just one repeater in the testing object */
+  if(!pimpl->repeater.back().empty())
+    return false;
+
+  pimpl->repeater.back() = type_;
+  if(initializer_ != nullptr)
+    initializer_->materializeInitializer(*pimpl->reader);
+  pimpl->variables->appendRepeater(name_, type_, initializer_);
+
+  return true;
 }
 
 void GeneratorStd::leaveState() {
@@ -620,7 +646,10 @@ void GeneratorStd::leaveCase() {
   /* -- generate the factory method of the case */
   pimpl->output
       << "    ::OTest2::CasePtr createCase_" << pimpl->testcase << "(\n"
-      << "        const ::OTest2::Context& context_) {\n"
+      << "        const ::OTest2::Context& context_";
+  pimpl->variables->printFactoryParameters(pimpl->output, pimpl->indent + 2);
+  pimpl->output
+      << ") {\n"
       << "      return ::OTest2::makePointer<" << pimpl->testcase << ">(\n"
       << "          context_";
   pimpl->variables->printArguments(pimpl->output, pimpl->indent + 3);
@@ -628,11 +657,15 @@ void GeneratorStd::leaveCase() {
       << ");\n"
       << "    }";
 
+  /* -- store type of the repeater */
+  pimpl->cases.back().repeater_type = pimpl->repeater.back();
+
   pimpl->testcase.clear();
   pimpl->variables = pimpl->variables->getPrevLevel();
   pimpl->fixtures = pimpl->fixtures->getPrevLevel();
   pimpl->start_up_fce.pop_back();
   pimpl->tear_down_fce.pop_back();
+  pimpl->repeater.pop_back();
   pimpl->states.clear();
 }
 
@@ -647,10 +680,16 @@ void GeneratorStd::leaveSuite() {
   for(const auto& case_ : pimpl->cases) {
     pimpl->output
       << "      registerCase(\n"
-      << "          \"" << case_ << "\",\n"
-      << "          std::make_shared< ::OTest2::CaseGeneratedFactory<" << pimpl->suite << ", " << case_ << "> >(\n"
+      << "          \"" << case_.name << "\",\n"
+      << "          std::make_shared< ::OTest2::CaseGeneratedFactory<" << pimpl->suite << ", " << case_.name << ", ";
+    if(case_.repeater_type.empty())
+      pimpl->output << "::OTest2::CaseRepeaterOnce< " << pimpl->suite << ", " << case_.name;
+    else
+      pimpl->output << "::OTest2::CaseRepeaterMulti< " << pimpl->suite << ", " << case_.name << ", " << case_.repeater_type;
+    pimpl->output
+      << " > > >(\n"
       << "              this,\n"
-      << "              &" << pimpl->suite << "::createCase_" << case_ << "));\n";
+      << "              &" << pimpl->suite << "::createCase_" << case_.name << "));\n";
   }
   pimpl->output
       << "    }\n\n";
@@ -672,11 +711,15 @@ void GeneratorStd::leaveSuite() {
   pimpl->output
       << "};\n";
 
+  /* -- store type of the repeater */
+  pimpl->suites.back().repeater_type = pimpl->repeater.back();
+
   pimpl->suite.clear();
   pimpl->variables = nullptr;
   pimpl->fixtures = nullptr;
   pimpl->start_up_fce.pop_back();
   pimpl->tear_down_fce.pop_back();
+  pimpl->repeater.pop_back();
   pimpl->cases.clear();
   pimpl->indent -= 2;
 }
@@ -692,14 +735,19 @@ void GeneratorStd::endFile(
         << "class SuiteRegistrator {\n"
         << "  public:\n"
         << "    SuiteRegistrator() {\n";
-    for(const std::string& suite_ : pimpl->suites) {
+    for(const auto& suite_ : pimpl->suites) {
       pimpl->output
           << "      ::OTest2::Registry::instance(";
       writeCString(pimpl->output, pimpl->domain);
       pimpl->output
           << ").registerSuite(\n"
-          << "          \"" << suite_ << "\",\n"
-          << "          std::make_shared< ::OTest2::SuiteGeneratedFactory<" << suite_ << "> >());\n";
+          << "          \"" << suite_.name << "\",\n"
+          << "          std::make_shared< ::OTest2::SuiteGeneratedFactory< ";
+      if(suite_.repeater_type.empty())
+        pimpl->output << "::OTest2::SuiteRepeaterOnce< " << suite_.name;
+      else
+        pimpl->output << "::OTest2::SuiteRepeaterMulti< " << suite_.name << ", " << suite_.repeater_type;
+      pimpl->output << " > > >());\n";
     }
     pimpl->output
         << "    }\n"

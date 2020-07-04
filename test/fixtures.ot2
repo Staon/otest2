@@ -116,6 +116,58 @@ TEST_SUITE(FixturesSuite) {
 //      runtime.reporter.dumpRecords(std::cout);
     }
   }
+
+  TEST_CASE(FixturesInitLists) {
+    Runtime runtime("FixturesInitLists", "");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<FixturesInitLists>",
+        "enterCase<InitLists>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 10>",
+        "message<b = 10>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 30>",
+        "message<b = 30>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 40>",
+        "message<b = 40>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'initialized by list'>",
+        "message<b = 'initialized by list'>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = -5>",
+        "message<b = -5>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = -10>",
+        "message<b = -10>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = -15>",
+        "message<b = -15>",
+        "leaveAssert<>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 'case value'>",
+        "message<b = 'case value'>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<InitLists>: passed",
+        "leaveSuite<FixturesInitLists>: passed",
+        "leaveTest<selftest>: passed",
+      };
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
 }
 
 } /* -- namespace Test */

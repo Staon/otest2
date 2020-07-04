@@ -23,20 +23,13 @@
 #include <memory>
 #include <string>
 
-#include <cmdleavesuite.h>
-#include <commandptr.h>
+#include <cmdrepeatsuite.h>
 #include <commandstack.h>
 #include <context.h>
-#include <objectpath.h>
 #include <registry.h>
-#include <reporter.h>
-#include "runcode.h"
 #include <runnerfilter.h>
-#include <semanticstack.h>
-#include <suite.h>
 #include <suitefactory.h>
-#include <suitefactoryptr.h>
-#include <suiteptr.h>
+#include <suiterepeater.h>
 
 namespace OTest2 {
 
@@ -65,23 +58,10 @@ void CmdNextSuite::run(
 
     /* -- create and schedule the suite if it's not filtered */
     if(!context_.runner_filter->filterSuite(suite_name_)) {
-      /* -- prepare stack-frame of the suite - suite's result and suite's
-       *    path. */
-      context_.object_path->pushName(suite_name_);
-      context_.semantic_stack->push(true);
-
-      /* -- report entering of the suite */
-      context_.reporter->enterSuite(context_, suite_name_);
-
-      /* -- schedule finishing of the suite */
-      context_.command_stack->pushCommand(std::make_shared<CmdLeaveSuite>());
-
-      /* -- The constructor method of the suite may throw and exception.
-       *    So I do the creation in a protected environment. */
-      runUserCode(context_, [&](const Context& context_) {
-        SuitePtr suite_(factory_->createSuite(context_));
-        suite_->scheduleRun(context_, suite_);
-      });
+      /* -- schedule the repeater command */
+      SuiteRepeaterPtr repeater_(factory_->createSuite(context_));
+      context_.command_stack->pushCommand(
+          std::make_shared<CmdRepeatSuite>(repeater_, suite_name_));
     }
   }
 }

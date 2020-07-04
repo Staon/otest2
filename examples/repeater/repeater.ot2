@@ -1,0 +1,144 @@
+/*
+ * Copyright (C) 2020 Ondrej Starek
+ *
+ * This file is part of OTest2
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include <assert.h>
+#include <iostream>
+#include <memory>
+#include <vector>
+
+#include <otest2/repeater.h>
+#include <otest2/repeatervaluesimpl.h>
+
+namespace OTest2 {
+
+namespace Examples {
+
+namespace Test {
+
+class Node {
+  private:
+    int id;
+
+  public:
+    explicit Node(
+        int id_) :
+      id(id_) {
+
+    }
+
+    int getID() const {
+      return id;
+    }
+
+    void sendFrom(
+        const Node* sender_) {
+      std::cout << id << ": a node " << sender_->getID() << " contacted me" << std::endl;
+    }
+};
+
+class Runtime {
+  public:
+    std::vector<std::unique_ptr<Node>> nodes;
+
+    Runtime() {
+      for(int i_(0); i_ < 3; ++i_) {
+        nodes.push_back(std::unique_ptr<Node>(new Node(i_)));
+      }
+    }
+};
+
+class RepeaterNodes : public Repeater {
+  private:
+    int size;
+    int left;
+    int right;
+
+  public:
+    /* -- just for the sake of the otest2 preprocessor */
+    explicit RepeaterNodes(
+        Runtime&);
+
+    explicit RepeaterNodes(
+        int size_) :
+      size(size_),
+      left(0),
+      right(0) {
+      /* -- empty size is not valid because there must be at least one run */
+      assert(size > 0);
+
+    }
+
+    std::pair<int, int> getPair() const noexcept {
+      return std::pair<int, int>(left, right);
+    }
+
+    virtual bool hasNextRun(
+        const Context& context_) const noexcept {
+      return left < size - 1 || right < size - 1;
+    }
+
+    static std::shared_ptr<RepeaterNodes> createNext(
+        const Context& context_,
+        std::shared_ptr<RepeaterNodes> current_,
+        Runtime& runtime_) {
+      if(current_ == nullptr) {
+        return std::make_shared<RepeaterNodes>(runtime_.nodes.size());
+      }
+      else {
+        if(current_->right < current_->size - 1)
+          ++current_->right;
+        else {
+          current_->right = 0;
+          ++current_->left;
+        }
+        return current_;
+      }
+    }
+};
+
+TEST_SUITE(RepeaterSuite) {
+  TEST_CASE(ValueRepeater) {
+    RepeaterValue<int> repeater{1, 2, 3, 5, 8, 13, 21};
+
+    TEST_SIMPLE() {
+      std::cout << "repeated case " << repeater.getIndex() << ": " << repeater.getValue() << std::endl;
+    }
+  }
+
+  TEST_CASE(RepeaterNodesCase) {
+    Runtime runtime;
+    RepeaterNodes repeater(runtime);
+
+    TEST_SIMPLE() {
+      auto node_pair_(repeater.getPair());
+      runtime.nodes[node_pair_.first]->sendFrom(
+          runtime.nodes[node_pair_.second].get());
+    }
+  }
+}
+
+} /* -- namespace Test */
+
+} /* -- namespace Examples */
+
+} /* -- namespace OTest2 */
+
+
+

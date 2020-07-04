@@ -66,78 +66,78 @@ class GeneratorStd : public Generator {
     virtual ~GeneratorStd();
 
     /* -- generator interface */
-    virtual void beginFile();
+    virtual void beginFile() override;
     virtual void startUserArea(
-        const Location& begin_);
+        const Location& begin_) override;
     virtual void copySource(
         const Location& begin_,
-        const Location& end_);
+        const Location& end_) override;
     virtual void makeAssertion(
         const std::string& assertion_class_,
         const std::string& assertion_method_,
         const Location& begin_,
         const Location& end_,
-        const Location& expr_end_);
+        const Location& expr_end_) override;
     virtual void makeStateSwitch(
         const Location& state_begin_,
         const Location& state_end_,
         const Location& delay_begin_,
-        const Location& delay_end_);
+        const Location& delay_end_) override;
     virtual void makeTryCatchBegin(
-        const Location& begin_);
+        const Location& begin_) override;
     virtual void makeCatchHandler(
         const std::string& type_,
-        const std::string& varname_);
-    virtual void makeTryCatchEnd();
+        const std::string& varname_) override;
+    virtual void makeTryCatchEnd() override;
     virtual void endUserArea(
-        const Location& end_);
+        const Location& end_) override;
     virtual void enterSuite(
-        const std::string& name_);
-    virtual void finishSuiteFixtures();
-    virtual void finishSuiteFunctions();
+        const std::string& name_) override;
+    virtual void finishSuiteFixtures() override;
+    virtual void finishSuiteFunctions() override;
     virtual void enterCase(
-        const std::string& name_);
-    virtual void finishCaseFixtures();
-    virtual void finishCaseFunctions();
+        const std::string& name_) override;
+    virtual void finishCaseFixtures() override;
+    virtual void finishCaseFunctions() override;
     virtual void enterState(
         const std::string& name_,
         FunctionPtr state_fce_,
         const Location& fbegin_,
-        const Location& fend_);
-    virtual void emptyState();
+        const Location& fend_) override;
+    virtual void emptyState() override;
     virtual void appendVariable(
         const std::string& name_,
-        const std::string& type_);
-    virtual void appendVariableInit(
-        const std::string& name_,
         const std::string& type_,
-        const Location& ibegin_,
-        const Location& iend_);
+        InitializerPtr initializer_) override;
     virtual void appendUserData(
         const std::string& name_,
         const std::string& key_,
-        const std::string& type_);
+        const std::string& type_) override;
     virtual void appendStartUpFunction(
         FunctionPtr function_,
         const Location& fbegin_,
-        const Location& fend_);
+        const Location& fend_) override;
     virtual void appendTearDownFunction(
         FunctionPtr function_,
         const Location& fbegin_,
-        const Location& fend_);
+        const Location& fend_) override;
     virtual void appendFixtureObject(
         const std::string& name_,
         FunctionPtr start_up_,
-        FunctionPtr tear_down_);
+        FunctionPtr tear_down_) override;
     virtual void appendGenericFunction(
         FunctionPtr function_,
         const Location& fbegin_,
-        const Location& fend_);
-    virtual void leaveState();
-    virtual void leaveCase();
-    virtual void leaveSuite();
+        const Location& fend_) override;
+    virtual bool appendRepeater(
+        const std::string& name_,
+        const std::string& type_,
+        InitializerPtr initializer_) override;
+    virtual void leaveState() override;
+    virtual void leaveCase() override;
+    virtual void leaveSuite() override;
     virtual void endFile(
-        const Location& last_);
+        const Location& last_) override;
 };
 
 } /* -- namespace OTest2 */

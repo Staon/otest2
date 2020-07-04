@@ -37,7 +37,7 @@ class Context;
  *
  * The actual implementation must implement a static method:
  *
- *     static std::shared_ptr<ActuralRepeaterClass> prepareNextRun(
+ *     static std::shared_ptr<ActuralRepeaterClass> createNext(
  *         const Context& context_,
  *         std::shared_ptr<ActuralRepeaterClass> current_,
  *         ... other parameters ...);

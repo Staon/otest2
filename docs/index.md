@@ -11,25 +11,32 @@ from an older project of mine written while I was working for
 [Aveco](http://www.aveco.com/) - that's why there is 2 in the name. As far as
 I know the original project is still in use.
 
-Current release version is [1.0.0]({{ site.repositoryurl }}/releases/tag/v1.0.0).
+Current release version is [1.1.0]({{ site.repositoryurl }}/releases/tag/v1.1.0).
 
 [Github Repository]({{ site.repositoryurl }})
 
 ## Features
 
-* an [xUnit](https://en.wikipedia.org/wiki/XUnit) kind framework
-* no need to write boiler plate code - it's done by a generator
-* DSL is a valid C++ which doesn't break fancy IDE functions like code assistance
-* very cautious usage of C macros
-* test cases are grouped into test suites
-* a set of assertion functions with a possibility to write own one
-* test fixtures at levels of either test case or test suite
-* regression test marks
-* exception handling (checking actual occurrence of an exception and handling
-  of unexpected exceptions fired from a test case)
-* nice colorized console output
-* reporting in the JUnit XML file format
-* possibile integration with custom main event loop
+* An [xUnit](https://en.wikipedia.org/wiki/XUnit) kind framework.
+* No need to write boiler plate code - it's done by a generator.
+* DSL is a valid C++ which doesn't break fancy IDE functions like code
+  assistance.
+* Very cautious usage of C macros.
+* Grouping of test cases into test suites.
+* A set of assertion functions. The user is allowed to implement custom
+  assertions.
+* Test fixtures at the level of either test case or test suite.
+* Test fixture objects - objects automatically initialized and destroyed
+  during the start-up and tear-down phase.
+* Regression test marks - a text representation of inner state of some
+  structure which can be stored and checked.
+* Exception handling - the framework is able to check occurence of an
+  exception and it checks unexpected exceptions fired from the test cases.
+* Possible integration with custom main event loop.
+* User data passed from the main function into the testing functions.
+* Repeated runs of test cases or entire test suites.
+* Nice color console output.
+* Reporting in the JUnit XML file format.
 
 ### Supported Platforms
 

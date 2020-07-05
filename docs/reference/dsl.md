@@ -149,7 +149,7 @@ interpreted as [user data]({{ "/examples/userdata/" | relative_url }}).
 Every function with no annotation is handled as a **user function**. The function
 is just copied into the generated source but it's wrapped by some mechanism
 exporting it into nested test objects. So that's it, the test state
-can call functions of the case and the state, the case can call functions
+can call functions of the case and the suite, the case can call functions
 of the suite. 
 
 Body of a function is just ordinary C++ code. Except that the code can

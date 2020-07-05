@@ -22,17 +22,24 @@ The project follows several design goals:
 
 The framework offers features:
 
-* a preprocessor generating service code 
-* DSL is a valid C++ which doesn't break fancy IDE functions like code assistance
-* test cases are grouped into test suites
-* a rich set of assertion functions with a possibility to create own one
-* test fixtures at the level of either test case or test suite
-* regression test marks
-* exception handling (checking actual occurrence of an exception and handling
-  of unexpected exceptions fired from a test case)
-* nice colorized console output
-* reporting in the JUnit XML file format
-* possibile integration with custom main event loop
+* a preprocessor generating service code.
+* DSL is a valid C++ which doesn't break fancy IDE functions like code
+  assistance.
+* Grouping of test cases into test suites.
+* A set of assertion functions. The user is allowed to implement custom
+  assertions.
+* Test fixtures at the level of either test case or test suite.
+* Test fixture objects - objects automatically initialized and destroyed
+  during the start-up and tear-down phase.
+* Regression test marks - a text representation of inner state of some
+  structure which can be stored and checked.
+* Exception handling - the framework is able to check occurence of an
+  exception and it checks unexpected exceptions fired from the test cases.
+* Possible integration with custom main event loop.
+* User data passed from the main function into the testing functions.
+* Repeated runs of test cases or entire test suites.
+* Nice color console output.
+* Reporting in the JUnit XML file format.
 
 See the project site [https://staon.github.io/otest2/](https://staon.github.io/otest2/)
 for detailed documentation, examples and the install guide.

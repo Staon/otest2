@@ -4,7 +4,7 @@
 
 **Current CI status:** [![Staon](https://circleci.com/gh/Staon/otest2.svg?style=svg)](https://circleci.com/gh/Staon/workflows/otest2/tree/master)
 
-**Current version:** [1.0.0](https://github.com/Staon/otest2/releases/tag/v1.0.0)
+**Current version:** [1.1.0](https://github.com/Staon/otest2/releases/tag/v1.1.0)
 
 **Downloads:** [https://github.com/Staon/otest2/releases/](https://github.com/Staon/otest2/releases/)
 

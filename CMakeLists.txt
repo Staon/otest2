@@ -17,7 +17,7 @@
 
 cmake_minimum_required(VERSION 3.17)
 
-project(OTest2 VERSION 1.0.0)
+project(OTest2 VERSION 1.1.0)
 
 # -- disable warning of the deprecated istrstream
 add_compile_options(-Wno-deprecated)

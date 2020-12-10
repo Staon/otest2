@@ -27,6 +27,7 @@ namespace clang {
 
 class CXXMethodDecl;
 class CXXRecordDecl;
+class NamedDecl;
 class QualType;
 
 } /* -- namespace clang */
@@ -47,6 +48,17 @@ namespace Parser {
 std::string parseType(
     ParserContext* context_,
     const clang::QualType& type_);
+
+/**
+ * @brief Get string representation of a type
+ *
+ * @param context_ Parser context
+ * @param decl_ Declaration of the type
+ * @return The string representation
+ */
+std::string parseType(
+    ParserContext* context_,
+    const clang::NamedDecl& decl_);
 
 /**
  * @brief Traverse methods of a class

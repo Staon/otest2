@@ -19,9 +19,11 @@
 #include "parsertype.h"
 
 #include <assert.h>
+#include <clang/AST/Decl.h>
 #include <clang/AST/DeclCXX.h>
 #include <clang/AST/PrettyPrinter.h>
 #include <clang/AST/Type.h>
+#include <llvm/Support/raw_ostream.h>
 
 #include "parsercontext.h"
 
@@ -51,6 +53,23 @@ std::string parseType(
   policy_.SuppressUnwrittenScope = true;
   policy_.FullyQualifiedName = true;
   return type_.getAsString(policy_);
+}
+
+std::string parseType(
+    ParserContext* context_,
+    const clang::NamedDecl& decl_) {
+  /* -- prepare policy */
+  clang::PrintingPolicy policy_(*context_->langopts);
+  policy_.adjustForCPlusPlus();
+  policy_.SuppressUnwrittenScope = true;
+  policy_.FullyQualifiedName = true;
+
+  /* -- prepare the stream */
+  std::string name_;
+  llvm::raw_string_ostream os_(name_);
+  decl_.printQualifiedName(os_, policy_);
+
+  return os_.str();
 }
 
 bool traverseMethods(

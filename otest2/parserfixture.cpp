@@ -198,8 +198,7 @@ bool parseClass(
     clang::VarDecl* vardecl_) {
   int counter_(0);
   return !traverseClasses(context_, object_, true, [&](const clang::CXXRecordDecl* klass_) {
-    clang::QualType klass_type_(context_->comp_context->getRecordType(klass_));
-    std::string klass_name_(parseType(context_, klass_type_));
+    std::string klass_name_(parseType(context_, *klass_));
 //    std::cout << "class type: " << klass_name_ << std::endl;
     if(klass_name_ == REPEATER_CLASS) {
       classification_.repeater = true;

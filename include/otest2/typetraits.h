@@ -19,6 +19,7 @@
 #ifndef OTest2__INCLUDE_OTEST2_TYPETRAITS_H_
 #define OTest2__INCLUDE_OTEST2_TYPETRAITS_H_
 
+#include <cstddef>
 #include <type_traits>
 
 namespace OTest2 {
@@ -46,6 +47,31 @@ struct TypeTrait {
     typedef typename Private::SelectArgType<
         Type_,
         std::is_scalar<Type_>::value >::Value BestArg;
+};
+
+/**
+ * @brief A trait which is used to normalize types of string literals
+ *     and C-strings.
+ */
+template<typename Type_>
+struct NormalizeStringType {
+    typedef Type_ Type;
+};
+template<std::size_t len_>
+struct NormalizeStringType<char[len_]> {
+    typedef const char* Type;
+};
+template<std::size_t len_>
+struct NormalizeStringType<const char[len_]> {
+    typedef const char* Type;
+};
+template<>
+struct NormalizeStringType<char*> {
+    typedef const char* Type;
+};
+template<>
+struct NormalizeStringType<const char*> {
+    typedef const char* Type;
 };
 
 }  /* -- namespace OTest2 */

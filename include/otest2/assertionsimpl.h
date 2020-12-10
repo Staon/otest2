@@ -22,6 +22,10 @@
 #include <otest2/assertions.h>
 
 #include <sstream>
+#include <type_traits>
+
+#include <typeinfo>
+#include <cxxabi.h>
 
 #include <otest2/printtraits.h>
 
@@ -29,8 +33,11 @@ namespace OTest2 {
 
 template<typename Compare_, typename A_, typename B_>
 bool GenericAssertion::testAssertCompare(
-    A_ a_,
-    B_ b_) {
+    A_&& a_,
+    B_&& b_) {
+  typedef typename std::remove_const<typename std::remove_reference<A_>::type>::type AType_;
+  typedef typename std::remove_const<typename std::remove_reference<B_>::type>::type BType_;
+
   Compare_ cmp_;
   const bool condition_(cmp_(a_, b_));
 
@@ -51,11 +58,17 @@ bool GenericAssertion::testAssertCompare(
   /* -- report values of the operands */
   sos_.str("");
   sos_ << "a = ";
-  PrintTrait<A_>::print(sos_, a_);
+
+//  int status_;
+//  char* realname_(abi::__cxa_demangle(typeid(AType_).name(), 0, 0, &status_));
+//  sos_ << realname_ << " ";
+//  ::free(realname_);
+
+  PrintTrait<typename NormalizeStringType<AType_>::Type>::print(sos_, a_);
   assertionMessage(condition_, sos_.str());
   sos_.str("");
   sos_ << "b = ";
-  PrintTrait<B_>::print(sos_, b_);
+  PrintTrait<typename NormalizeStringType<BType_>::Type>::print(sos_, b_);
   assertionMessage(condition_, sos_.str());
 
   return leaveAssertion(condition_);

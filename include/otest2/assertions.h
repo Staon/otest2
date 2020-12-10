@@ -71,8 +71,8 @@ class GenericAssertion : public AssertContext {
         const AssertBean& bean_);
     template<typename Compare_, typename A_, typename B_>
     bool testAssertCompare(
-        A_ a_,
-        B_ b_);
+        A_&& a_,
+        B_&& b_);
 
     /* -- exception assertion - it's never used as an assertion as
      *    it's always generated. */

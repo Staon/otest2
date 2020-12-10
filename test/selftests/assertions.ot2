@@ -139,6 +139,15 @@ TEST_SUITE(AssertionsSuite) {
       testAssertGreaterOrEqual(7, 8);
     }
   }
+
+  TEST_CASE(GenericComparisonAssertion) {
+    TEST_SIMPLE() {
+      testAssertCmp<Equal>(10, 10);
+      testAssertCmp<NotEqual>(10, 10);
+      testAssertCmp<Less>(9, 10);
+      testAssertCmp<LessOrEqual>(10, 10);
+    }
+  }
 }
 
 } /* -- namespace SelfTest */

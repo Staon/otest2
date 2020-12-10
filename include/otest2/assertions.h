@@ -69,7 +69,7 @@ class GenericAssertion : public AssertContext {
         bool condition_);
     bool testAssert(
         const AssertBean& bean_);
-    template<typename Compare_, typename A_, typename B_>
+    template<template<typename, typename> class Compare_, typename A_, typename B_>
     bool testAssertCompare(
         A_&& a_,
         B_&& b_);
@@ -100,6 +100,19 @@ bool testAssert(
     const AssertBean& bean_) TEST_ASSERTION_MARK(::OTest2::GenericAssertion, testAssert);
 
 /**
+ * @brief Generic comparison assertion
+ *
+ * @tparam Compare_ The comparison template
+ * @param a_ Left operand
+ * @param b_ Right operand
+ * @return Result of the comparison
+ */
+template<template<typename, typename> class Compare_, typename A_, typename B_>
+bool testAssertCmp(
+    A_ a_,
+    B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::$1 >");
+
+/**
  * @brief Compare whether @a a_ is equal to @a b_
  *
  * @param a_ Left operand
@@ -109,7 +122,7 @@ bool testAssert(
 template<typename A_, typename B_>
 bool testAssertEqual(
     A_ a_,
-    B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::OTest2::Equal<$1, $2> >");
+    B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::OTest2::Equal >");
 
 /**
  * @brief Compare whether @a a_ is not equal to @a b_
@@ -121,7 +134,7 @@ bool testAssertEqual(
 template<typename A_, typename B_>
 bool testAssertNotEqual(
     A_ a_,
-    B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::OTest2::NotEqual<$1, $2> >");
+    B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::OTest2::NotEqual >");
 
 /**
  * @brief Compare whether @a a_ is less than @a b_
@@ -133,7 +146,7 @@ bool testAssertNotEqual(
 template<typename A_, typename B_>
 bool testAssertLess(
     A_ a_,
-    B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::OTest2::Less<$1, $2> >");
+    B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::OTest2::Less >");
 
 /**
  * @brief Compare whether @a a_ is less than or equal to @a b_
@@ -145,7 +158,7 @@ bool testAssertLess(
 template<typename A_, typename B_>
 bool testAssertLessOrEqual(
     A_ a_,
-    B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::OTest2::LessOrEqual<$1, $2> >");
+    B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::OTest2::LessOrEqual >");
 
 /**
  * @brief Compare whether @a a_ is greater than @a b_
@@ -157,7 +170,7 @@ bool testAssertLessOrEqual(
 template<typename A_, typename B_>
 bool testAssertGreater(
     A_ a_,
-    B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::OTest2::Greater<$1, $2> >");
+    B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::OTest2::Greater >");
 
 /**
  * @brief Compare whether @a a_ is greater than or equal to @a b_
@@ -169,7 +182,7 @@ bool testAssertGreater(
 template<typename A_, typename B_>
 bool testAssertGreaterOrEqual(
     A_ a_,
-    B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::OTest2::GreaterOrEqual<$1, $2> >");
+    B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::OTest2::GreaterOrEqual >");
 
 } /* -- namespace Assertions */
 

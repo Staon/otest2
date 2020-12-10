@@ -489,6 +489,42 @@ TEST_SUITE(AssertionsSuite) {
 //      runtime.reporter.dumpRecords(std::cout);
     }
   }
+
+  TEST_CASE(GenericComparisonAssertion) {
+    Runtime runtime("AssertionsSuite", "GenericComparisonAssertion");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<GenericComparisonAssertion>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 10>",
+        "message<b = 10>",
+        "leaveAssert<>",
+        "assert<check 'a != b' has failed>: failed",
+        "message<a = 10>",
+        "message<b = 10>",
+        "leaveAssert<>",
+        "assert<check 'a < b' has passed>: passed",
+        "message<a = 9>",
+        "message<b = 10>",
+        "leaveAssert<>",
+        "assert<check 'a <= b' has passed>: passed",
+        "message<a = 10>",
+        "message<b = 10>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<GenericComparisonAssertion>: failed",
+        "leaveSuite<AssertionsSuite>: failed",
+        "leaveTest<selftest>: failed",
+      };
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
 }
 
 } /* -- namespace Test */

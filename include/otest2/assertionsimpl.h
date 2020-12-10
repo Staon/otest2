@@ -31,26 +31,32 @@
 
 namespace OTest2 {
 
-template<typename Compare_, typename A_, typename B_>
+template<template<typename, typename> class Compare_, typename A_, typename B_>
 bool GenericAssertion::testAssertCompare(
     A_&& a_,
     B_&& b_) {
-  typedef typename std::remove_const<typename std::remove_reference<A_>::type>::type AType_;
-  typedef typename std::remove_const<typename std::remove_reference<B_>::type>::type BType_;
+  typedef typename NormalizeStringType<
+      typename std::remove_const<
+          typename std::remove_reference<A_>::type>::type>::Type AType_;
+  typedef typename NormalizeStringType<
+      typename std::remove_const<
+          typename std::remove_reference<B_>::type>::type>::Type BType_;
+  typedef Compare_<AType_, BType_> CmpType_;
 
-  Compare_ cmp_;
+  /* -- compare the values */
+  CmpType_ cmp_;
   const bool condition_(cmp_(a_, b_));
 
   /* -- report the result and the used relation operator */
   std::ostringstream sos_;
   if(condition_) {
     sos_ << "check 'a ";
-    PrintTrait<Compare_>::print(sos_, cmp_);
+    PrintTrait<CmpType_>::print(sos_, cmp_);
     sos_ << " b' has passed";
   }
   else {
     sos_ << "check 'a ";
-    PrintTrait<Compare_>::print(sos_, cmp_);
+    PrintTrait<CmpType_>::print(sos_, cmp_);
     sos_ << " b' has failed";
   }
   enterAssertion(condition_, sos_.str(), false);
@@ -64,11 +70,11 @@ bool GenericAssertion::testAssertCompare(
 //  sos_ << realname_ << " ";
 //  ::free(realname_);
 
-  PrintTrait<typename NormalizeStringType<AType_>::Type>::print(sos_, a_);
+  PrintTrait<AType_>::print(sos_, a_);
   assertionMessage(condition_, sos_.str());
   sos_.str("");
   sos_ << "b = ";
-  PrintTrait<typename NormalizeStringType<BType_>::Type>::print(sos_, b_);
+  PrintTrait<BType_>::print(sos_, b_);
   assertionMessage(condition_, sos_.str());
 
   return leaveAssertion(condition_);

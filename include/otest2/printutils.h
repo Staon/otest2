@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2018 Ondrej Starek
+ * Copyright (C) 2020 Ondrej Starek
  *
- * This file is part of OTest2.
+ * This file is part of OTest2
  *
  * OTest2 is free software: you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by
@@ -17,15 +17,23 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OTest2__INCLUDE_OTEST2_OTEST2_H_
-#define OTest2__INCLUDE_OTEST2_OTEST2_H_
+#ifndef OTest2_INCLUDE_OTEST2_PRINTUTILS_H_
+#define OTest2_INCLUDE_OTEST2_PRINTUTILS_H_
 
-#include <otest2/assertions.h>
-#include <otest2/assertionsitemwise.h>
-#include <otest2/comparisons.h>
-#include <otest2/controls.h>
-#include <otest2/dsl.h>
-#include <otest2/glue.h>
-#include <otest2/regressions.h>
+#include <iosfwd>
 
-#endif /* -- OTest2__INCLUDE_OTEST2_OTEST2_H_ */
+namespace OTest2 {
+
+/**
+ * @brief Format the ordinal number with appropriate suffix
+ *
+ * @param[out] os_ An output stream
+ * @param[in] number_ The number
+ */
+void printOrdinalNumber(
+    std::ostream& os_,
+    int number_);
+
+} /* -- namespace OTest2 */
+
+#endif /* -- OTest2_INCLUDE_OTEST2_PRINTUTILS_H_ */

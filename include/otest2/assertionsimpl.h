@@ -35,12 +35,8 @@ template<template<typename, typename> class Compare_, typename A_, typename B_>
 bool GenericAssertion::testAssertCompare(
     A_&& a_,
     B_&& b_) {
-  typedef typename NormalizeStringType<
-      typename std::remove_const<
-          typename std::remove_reference<A_>::type>::type>::Type AType_;
-  typedef typename NormalizeStringType<
-      typename std::remove_const<
-          typename std::remove_reference<B_>::type>::type>::Type BType_;
+  typedef typename AssertionParameter<A_>::Type AType_;
+  typedef typename AssertionParameter<B_>::Type BType_;
   typedef Compare_<AType_, BType_> CmpType_;
 
   /* -- compare the values */
@@ -64,12 +60,6 @@ bool GenericAssertion::testAssertCompare(
   /* -- report values of the operands */
   sos_.str("");
   sos_ << "a = ";
-
-//  int status_;
-//  char* realname_(abi::__cxa_demangle(typeid(AType_).name(), 0, 0, &status_));
-//  sos_ << realname_ << " ";
-//  ::free(realname_);
-
   PrintTrait<AType_>::print(sos_, a_);
   assertionMessage(condition_, sos_.str());
   sos_.str("");

@@ -74,6 +74,16 @@ struct NormalizeStringType<const char*> {
     typedef const char* Type;
 };
 
+/**
+ * @brief A helper trait - get normalized type of a captured assertion parameter
+ */
+template<typename Type_>
+struct AssertionParameter {
+    typedef typename NormalizeStringType<
+        typename std::remove_const<
+            typename std::remove_reference<Type_>::type>::type>::Type Type;
+};
+
 }  /* -- namespace OTest2 */
 
 #endif /* OTest2__INCLUDE_OTEST2_TYPETRAITS_H_ */

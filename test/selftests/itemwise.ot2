@@ -1,0 +1,182 @@
+/*
+ * Copyright (C) 2020 Ondrej Starek
+ *
+ * This file is part of OTest2
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include <deque>
+#include <list>
+#include <set>
+#include <vector>
+
+namespace OTest2 {
+
+namespace SelfTest {
+
+TEST_SUITE(ItemWiseComparisons) {
+  TEST_CASE(VectorComparison) {
+    TEST_SIMPLE() {
+      std::vector<int> a_{1, 2, 3};
+      std::vector<unsigned int> b_{1, 2, 3};
+      std::vector<int> c_{1, 2};
+      std::vector<int> d_{1, 2, 3, 4};
+      std::vector<int> e_{0, 1, 3};
+
+      /* -- the same container */
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), a_.begin(), a_.end());
+      testAssertItemWise<Equal>(a_, a_.begin(), a_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), a_);
+      testAssertItemWise<Equal>(a_, a_);
+      testAssertItemWise<NotEqual>(a_.begin(), a_.end(), a_.begin(), a_.end());
+      testAssertItemWise<NotEqual>(a_, a_.begin(), a_.end());
+      testAssertItemWise<NotEqual>(a_.begin(), a_.end(), a_);
+      testAssertItemWise<NotEqual>(a_, a_);
+
+      /* -- two containers with the same content */
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), b_.begin(), b_.end());
+      testAssertItemWise<Equal>(a_, b_.begin(), b_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), b_);
+      testAssertItemWise<Equal>(a_, b_);
+      testAssertItemWise<NotEqual>(a_.begin(), a_.end(), b_.begin(), b_.end());
+      testAssertItemWise<NotEqual>(a_, b_.begin(), b_.end());
+      testAssertItemWise<NotEqual>(a_.begin(), a_.end(), b_);
+      testAssertItemWise<NotEqual>(a_, b_);
+
+      /* -- left container is bigger then the right one */
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), c_.begin(), c_.end());
+      testAssertItemWise<Equal>(a_, c_.begin(), c_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), c_);
+      testAssertItemWise<Equal>(a_, c_);
+
+      /* -- left container is smaller then the right one */
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), d_.begin(), d_.end());
+      testAssertItemWise<Equal>(a_, d_.begin(), d_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), d_);
+      testAssertItemWise<Equal>(a_, d_);
+
+      /* -- failure at the last item */
+      testAssertItemWise<Less>(a_.begin(), a_.end(), e_.begin(), e_.end());
+      testAssertItemWise<Less>(a_, e_.begin(), e_.end());
+      testAssertItemWise<Less>(a_.begin(), a_.end(), e_);
+      testAssertItemWise<Less>(a_, e_);
+    }
+  }
+
+  TEST_CASE(ListComparison) {
+    TEST_SIMPLE() {
+      std::list<int> a_{1, 2, 3};
+      std::list<unsigned int> b_{1, 2, 3};
+      std::list<int> c_{1, 2};
+      std::list<int> d_{1, 2, 3, 4};
+      std::list<int> e_{0, 1, 3};
+
+      testAssertItemWise<Equal>(a_, a_.begin(), a_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), a_);
+      testAssertItemWise<Equal>(a_, a_);
+      testAssertItemWise<Equal>(a_, b_.begin(), b_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), b_);
+      testAssertItemWise<Equal>(a_, c_.begin(), c_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), c_);
+      testAssertItemWise<Equal>(a_, c_);
+      testAssertItemWise<Equal>(a_, d_.begin(), d_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), d_);
+      testAssertItemWise<Equal>(a_, d_);
+      testAssertItemWise<Equal>(a_, e_.begin(), e_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), e_);
+      testAssertItemWise<Equal>(a_, e_);
+    }
+  }
+
+  TEST_CASE(SetComparison) {
+    TEST_SIMPLE() {
+      std::set<int> a_{1, 2, 3};
+      std::set<unsigned int> b_{1, 2, 3};
+      std::set<int> c_{1, 2};
+      std::set<int> d_{1, 2, 3, 4};
+      std::set<int> e_{0, 1, 3};
+
+      testAssertItemWise<Equal>(a_, a_.begin(), a_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), a_);
+      testAssertItemWise<Equal>(a_, a_);
+      testAssertItemWise<Equal>(a_, b_.begin(), b_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), b_);
+      testAssertItemWise<Equal>(a_, c_.begin(), c_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), c_);
+      testAssertItemWise<Equal>(a_, c_);
+      testAssertItemWise<Equal>(a_, d_.begin(), d_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), d_);
+      testAssertItemWise<Equal>(a_, d_);
+      testAssertItemWise<Equal>(a_, e_.begin(), e_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), e_);
+      testAssertItemWise<Equal>(a_, e_);
+    }
+  }
+
+  TEST_CASE(DequeComparison) {
+    TEST_SIMPLE() {
+      std::deque<int> a_{1, 2, 3};
+      std::deque<unsigned int> b_{1, 2, 3};
+      std::deque<int> c_{1, 2};
+      std::deque<int> d_{1, 2, 3, 4};
+      std::deque<int> e_{0, 1, 3};
+
+      testAssertItemWise<Equal>(a_, a_.begin(), a_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), a_);
+      testAssertItemWise<Equal>(a_, a_);
+      testAssertItemWise<Equal>(a_, b_.begin(), b_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), b_);
+      testAssertItemWise<Equal>(a_, c_.begin(), c_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), c_);
+      testAssertItemWise<Equal>(a_, c_);
+      testAssertItemWise<Equal>(a_, d_.begin(), d_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), d_);
+      testAssertItemWise<Equal>(a_, d_);
+      testAssertItemWise<Equal>(a_, e_.begin(), e_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), e_);
+      testAssertItemWise<Equal>(a_, e_);
+    }
+  }
+
+  TEST_CASE(MixedComparison) {
+    TEST_SIMPLE() {
+      std::vector<int> a_{1, 2, 3};
+      std::deque<unsigned int> b_{1, 2, 3};
+      std::list<int> c_{1, 2};
+      std::set<int> d_{1, 2, 3, 4};
+
+      testAssertItemWise<Equal>(a_, b_);
+      testAssertItemWise<Equal>(a_, c_);
+      testAssertItemWise<Equal>(a_, d_);
+
+      testAssertItemWise<Equal>(b_, a_);
+      testAssertItemWise<Equal>(b_, c_);
+      testAssertItemWise<Equal>(b_, d_);
+
+      testAssertItemWise<Equal>(c_, a_);
+      testAssertItemWise<Equal>(c_, b_);
+      testAssertItemWise<Equal>(c_, d_);
+
+      testAssertItemWise<Equal>(d_, a_);
+      testAssertItemWise<Equal>(d_, b_);
+      testAssertItemWise<Equal>(d_, c_);
+    }
+  }
+}
+
+} /* -- namespace SelfTest */
+
+} /* -- namespace OTest2 */

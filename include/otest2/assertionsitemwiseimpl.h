@@ -32,6 +32,7 @@
 #include <vector>
 
 #include <otest2/comparisons.h>
+#include <otest2/containertrait.h>
 #include <otest2/printtraits.h>
 #include <otest2/printutils.h>
 #include <otest2/typetraits.h>
@@ -141,7 +142,11 @@ bool ItemWiseAssertion::testAssertItemWise(
     const ContainerA_& a_,
     IterB_ begin_b_,
     IterB_ end_b_) {
-  return testAssertItemWiseList<Compare_>(a_.begin(), a_.end(), begin_b_, end_b_);
+  return testAssertItemWiseList<Compare_>(
+      ListContainerTrait<ContainerA_>::begin(a_),
+      ListContainerTrait<ContainerA_>::end(a_),
+      begin_b_,
+      end_b_);
 }
 
 template<template<typename, typename> class Compare_, typename IterA_, typename ContainerB_>
@@ -149,14 +154,22 @@ bool ItemWiseAssertion::testAssertItemWise(
     IterA_ begin_a_,
     IterA_ end_a_,
     const ContainerB_& b_) {
-  return testAssertItemWiseList<Compare_>(begin_a_, end_a_, b_.begin(), b_.end());
+  return testAssertItemWiseList<Compare_>(
+      begin_a_,
+      end_a_,
+      ListContainerTrait<ContainerB_>::begin(b_),
+      ListContainerTrait<ContainerB_>::end(b_));
 }
 
 template<template<typename, typename> class Compare_, typename ContainerA_, typename ContainerB_>
 bool ItemWiseAssertion::testAssertItemWise(
     const ContainerA_& a_,
     const ContainerB_& b_) {
-  return testAssertItemWiseList<Compare_>(a_.begin(), a_.end(), b_.begin(), b_.end());
+  return testAssertItemWiseList<Compare_>(
+      ListContainerTrait<ContainerA_>::begin(a_),
+      ListContainerTrait<ContainerA_>::end(a_),
+      ListContainerTrait<ContainerB_>::begin(b_),
+      ListContainerTrait<ContainerB_>::end(b_));
 }
 
 } /* -- namespace OTest2 */

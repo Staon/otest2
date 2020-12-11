@@ -27,6 +27,15 @@ namespace OTest2 {
 
 /**
  * @brief Implementation of item-wise container assertions
+ *
+ * This assertions apply specified operator on all items in the specified
+ * two containers. The assertion passes if all pairs of items passes the
+ * operator. Hence, at least both of the containers must be of the same size.
+ *
+ * A container passed into the assertions must offer the begin and the end
+ * forward iterators. The default behavior is to access the begin() and end()
+ * methods. One can write specialization of the ListContainerTrait template
+ * to plug non-STL containers in.
  */
 class ItemWiseAssertion : public AssertContext {
   private:

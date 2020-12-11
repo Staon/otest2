@@ -23,6 +23,7 @@
 #include <string>
 
 #include <otest2/comparisons.h>
+#include <otest2/typetraits.h>
 
 namespace OTest2 {
 
@@ -36,7 +37,7 @@ template<typename Type_>
 struct PrintTrait {
     static std::ostream& print(
         std::ostream& os_,
-        Type_ value_) {
+        typename TypeTrait<Type_>::BestArg value_) {
       return os_ << value_;
     }
 };

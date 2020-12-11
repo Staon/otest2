@@ -70,7 +70,7 @@ TEST_SUITE(SuiteName) {
 The full syntax is little bit more complex and it allows usage of advanced
 features of the framework. Actually, the main difference is the possibility
 to declare [user data]({{ "/examples/userdata/" | relative_url }}) as parameters
-of [test functions](#test-functions).
+of [test functions](#functions).
 
 ```c++
 #include <otest2/otest2.h>
@@ -114,11 +114,13 @@ OT2_SUITE(SuiteName) {
 ## Fixtures
 
 Fixtures are just member variables which may be possibly initialized. **Just
-initilization by round braces** is supported only[^1]!
+initilizations by round braces (C++98 style) and by curly braces (C++11 style)**
+are supported only. The C-style assignment initialization is not supported.
 
 ```c++
   std::string fixture1_;
   std::string fixture2_("Hello world");
+  std::string fixture3_{"Hello world"};
 ```
 
 A fixture may be annotated by the macro `OT2_USER_DATA` or `OT2_USER_DATA_KEY`.
@@ -145,6 +147,9 @@ Just function annotation matters, not the function name!
 
 Functions of all three kinds must return `void`. Declared parameters are
 interpreted as [user data]({{ "/examples/userdata/" | relative_url }}).
+If the parameter is the type `const ::OTest2::Context&`
+[the OTest2 Context]({{ "api/html/classOTest2_1_1Context.html" | relative_url }})
+instance is passed into the parameter.
 
 Every function with no annotation is handled as a **user function**. The function
 is just copied into the generated source but it's wrapped by some mechanism
@@ -161,7 +166,3 @@ the [example]({{ "/examples/fixtures/" | relative_url }}).
 How to use the test states and user data is explained in the 
 [custom main loop]({{ "/examples/main-loop/" | relative_url }})
 and [user data]({{ "/examples/userdata/" | relative_url }}) examples. 
-
-[^1]: The initalization is copied into the initializer list of the generated
-      test object. Perhaps, the framework will support the curly braces in
-      the future.

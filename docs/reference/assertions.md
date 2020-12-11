@@ -19,6 +19,34 @@ can be used by helper methods to report some meaningful message.
 ## Relational Assertions
 
 ```c++
+template<template<typename, typename> class Comparator_, typename A_, typename B_>
+bool testAssertCmp(A_ a_, B_ b_);
+```
+
+This assertions checks two values (*a_* and *b_*) by the specified comparator.
+The compararator must be a template which can be instantiated with the types
+*A_* and *B_*. There are default comparators `::OTest2::Equal`,
+`::OTest2::NotEqual`, `::OTest2::Less`, `::OTest2::LessOrEqual`,
+`::OTest2::Greater` and `::OTest2::GreaterOrEqual` implemented
+in the [otest2/comparison.h]({{ "api/html/comparisons_8h_source.html" | relative_url }}).
+
+The default implementation compares values by the operators. There is one more
+specialization comparing the `const char*` by the `std::strcmp` function.
+
+If the compared type doesn't offer the comparison operator one can implement
+very own comparator. Or he can implement a specialization of the existing
+comparators.
+ 
+If the assertion fails it prints values of the operands. Hence, the operand
+must be printable by the `operator <<` to a C++ stream. If the compared type
+is not printable one can implement a specialization of the 
+[::OTest::PrintTrait]({{ "api/html/structOTest2_1_1PrintTrait.html" | relative_url }}).
+
+Note, that the chosen comparator is printed too. If you implement custom
+comparator you have to make its specialization of the `::OTest::PrintTrait`
+template too.
+
+```c++
 template<typename A_, typename B_>
 bool testAssertEqual(A_ a_, B_ b_);
 
@@ -38,16 +66,41 @@ template<typename A_, typename B_>
 bool testAssertGreaterOrEqual(A_ a_, B_ b_);
 ```
 
-These assertions compare two values by the appropriate relational operator 
-(e.g. `==`, `<`, etc.). The types of the values must implement the operator
-and they must be printable to a stream by the `operator <<`.
+These assertions are just shortcuts using the default comparators.
 
-If the type doesn't implement the operator, one can define a specialization
-of one of the traits defined in the header
-[comparison.h]({{ "api/html/comparisons_8h_source.html" | relative_url }}).
-If the type is not printable, the
-[PrintTrait]({{ "api/html/structOTest2_1_1PrintTrait.html" | relative_url }})
-can be specialized.
+### Item-Wise Assertions
+
+```c++
+template<template<typename, typename> class Comparator_, typename IterA_, typename IterB_>
+bool testAssertItemWise(
+    IterA_ begin_a_, IterA_ end_a_, IterB_ begin_b_, IterB_ end_b_);
+
+template<template<typename, typename> class Comparator_, typename ContainerA_, typename IterB_>
+bool testAssertItemWise(
+    const ContainerA_& a_, IterB_ begin_b_, IterB_ end_b_);
+
+template<template<typename, typename> class Comparator_, typename IterA_, typename ContainerB_>
+bool testAssertItemWise(
+    IterA_ begin_a_, IterA_ end_a_, const ContainerB_& b_);
+
+template<template<typename, typename> class Comparator_, typename ContainerA_, typename ContainerB_>
+bool testAssertItemWise(
+    const ContainerA_& a_, const ContainerB_& b_);
+```
+
+The item-wise assertions apply the specified comparator on each pair of items
+with the same index in both lists *a_* a *b_*. The assertion passes if
+all pairs pass. If the lists are different size the assertion fails.
+
+The items of the lists must be printable by the `operator <<` or they must
+have a specialization of
+the [::OTest::PrintTrait]({{ "api/html/structOTest2_1_1PrintTrait.html" | relative_url }}).
+
+User can pass just 2 pairs of forward iterators. Or it can pass entire container
+instead of the iterator pair. The framework access the container's iterators by the 
+[::OTest2::ListContainerTrait]({{ "api/html/structOTest2_1_1ListContainerTrait.html" | relative_url }}).
+The default implementation works with the STL-style methods `begin()` and `end()`.
+One can implement custom specialization of the trait. 
 
 ## Regression Assertions
 

@@ -22,28 +22,37 @@
 #include <otest2/assertions.h>
 
 #include <sstream>
+#include <type_traits>
+
+#include <typeinfo>
+#include <cxxabi.h>
 
 #include <otest2/printtraits.h>
 
 namespace OTest2 {
 
-template<typename Compare_, typename A_, typename B_>
+template<template<typename, typename> class Compare_, typename A_, typename B_>
 bool GenericAssertion::testAssertCompare(
-    A_ a_,
-    B_ b_) {
-  Compare_ cmp_;
+    A_&& a_,
+    B_&& b_) {
+  typedef typename AssertionParameter<A_>::Type AType_;
+  typedef typename AssertionParameter<B_>::Type BType_;
+  typedef Compare_<AType_, BType_> CmpType_;
+
+  /* -- compare the values */
+  CmpType_ cmp_;
   const bool condition_(cmp_(a_, b_));
 
   /* -- report the result and the used relation operator */
   std::ostringstream sos_;
   if(condition_) {
     sos_ << "check 'a ";
-    PrintTrait<Compare_>::print(sos_, cmp_);
+    PrintTrait<CmpType_>::print(sos_, cmp_);
     sos_ << " b' has passed";
   }
   else {
     sos_ << "check 'a ";
-    PrintTrait<Compare_>::print(sos_, cmp_);
+    PrintTrait<CmpType_>::print(sos_, cmp_);
     sos_ << " b' has failed";
   }
   enterAssertion(condition_, sos_.str(), false);
@@ -51,11 +60,11 @@ bool GenericAssertion::testAssertCompare(
   /* -- report values of the operands */
   sos_.str("");
   sos_ << "a = ";
-  PrintTrait<A_>::print(sos_, a_);
+  PrintTrait<AType_>::print(sos_, a_);
   assertionMessage(condition_, sos_.str());
   sos_.str("");
   sos_ << "b = ";
-  PrintTrait<B_>::print(sos_, b_);
+  PrintTrait<BType_>::print(sos_, b_);
   assertionMessage(condition_, sos_.str());
 
   return leaveAssertion(condition_);

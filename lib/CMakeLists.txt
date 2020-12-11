@@ -74,6 +74,7 @@ add_library(libotest2
     internalerror.cpp
     object.cpp
     objectpath.cpp
+    printutils.cpp
     registry.cpp
     regressions.cpp
     repeater.cpp

@@ -23,14 +23,14 @@ Current release version is [1.1.0]({{ site.repositoryurl }}/releases/tag/v1.1.0)
   assistance.
 * Very cautious usage of C macros.
 * Grouping of test cases into test suites.
-* A set of assertion functions. The user is allowed to implement custom
+* A rich set of assertion functions. The user is allowed to implement custom
   assertions.
 * Test fixtures at the level of either test case or test suite.
 * Test fixture objects - objects automatically initialized and destroyed
   during the start-up and tear-down phase.
-* Regression test marks - a text representation of inner state of some
-  structure which can be stored and checked.
-* Exception handling - the framework is able to check occurence of an
+* Regression test marks - a structured representation of an inner state of some
+  structure or an output which can be stored and checked in next test run.
+* Exception handling - the framework is able to check occurrence of an
   exception and it checks unexpected exceptions fired from the test cases.
 * Possible integration with custom main event loop.
 * User data passed from the main function into the testing functions.
@@ -53,21 +53,21 @@ in order to write a two-lines test. The OTest2 framework allows you to
 focus just on coding what you need. All the annoying work is done by
 a pre-processor based on the [libclang](https://clang.llvm.org/docs/Tooling.html).
 
-Libclang offers a full C++ parser opening doors to a world of almost unlimited
+Libclang offers a full C++ parser opening door to a world of almost unlimited
 possibilities. Hence, the OTest2 DSL has been implemented as a valid C++ source
 marked by some clang annotations[^1]. The pre-processor parses a source file
 and transforms it to another C++ source extended by all needed service code -
-like filling source locations into test assertions, enveloping of testing code
+filling source locations into test assertions, enveloping of testing code
 by classes, registration of factory functions of suites and cases or passing
 of fixture variables between testing objects.
 
 ### Extensible for Different Environments[^2]
 
-The framework offers several crucial interfaces which can be implemented
-by the user and injected into the framework. So it can be easily integrated
-with your custom main event loop or a custom collector of test results.
-The user is allowed to implement own test assertion, catcher of unhandled
-exceptions or his very own test reporter.
+The framework offers several interfaces which can be implemented by the user
+and injected into the framework. So it can be easily integrated with your
+custom main event loop or a custom collector of test results. The user is
+allowed to implement own test assertion, catcher of unhandled exceptions
+or his very own test reporter.
 
 More about extending is in the section
 [Extending the Framework]({{ "/extending/" | relative_url }}).
@@ -76,7 +76,7 @@ More about extending is in the section
 
 There are some testing frameworks defining their special DSL. This is a mighty
 approach allowing describing of everything needed. However, there is a dark side.
-The file is not valid C++ and all fancy features of IDEs like code highlighting
+The code is not valid C++ and all fancy features of IDEs like code highlighting
 or code assistance stop working until someone develops a plugin supporting
 the DSL. 
 

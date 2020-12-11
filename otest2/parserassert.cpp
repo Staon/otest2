@@ -28,6 +28,8 @@
 #include "parsertype.h"
 #include "typetemplate.h"
 
+#include <iostream>
+
 namespace OTest2 {
 
 namespace Parser {
@@ -94,6 +96,9 @@ bool AssertVisitor::VisitCallExpr(
           if(arg_.getKind() == clang::TemplateArgument::Type) {
             auto type_(arg_.getAsType());
             template_params_.push_back(type_.getAsString());
+          } else if(arg_.getKind() == clang::TemplateArgument::Template) {
+            auto templ_(arg_.getAsTemplate().getAsTemplateDecl());
+            template_params_.push_back(parseType(context, *templ_));
           }
         }
         if(!expandTemplates(annotation_args_, template_params_)) {

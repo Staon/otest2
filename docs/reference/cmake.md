@@ -31,6 +31,13 @@ and it adds the generated sources into the specified target.
 The `DOMAIN` parameter is passed into the `-d` switch of the preprocessor.
 However, you will need this option highly unlikely.
 
+The testing objects are registered into a registration "book". The domain
+is a "name" of the book. That's it, the domain parameter allows to separate
+parsed testing objects into different groups. This feature is used by the
+OTest2 selftests. There are test cases which run another test cases testing
+the framework features. The result of this "sub-tests" is then checked in
+the "main tests". 
+
 ### Generating Default Main Function
 
 ```cmake

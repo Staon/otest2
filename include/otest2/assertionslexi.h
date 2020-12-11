@@ -91,6 +91,8 @@ class LexicographicalAssertion : public AssertContext {
         const ContainerB_& b_);
 };
 
+namespace Assertions {
+
 /**
  * @brief Lexicographical comparison of two lists
  *
@@ -158,6 +160,8 @@ bool testAssertLexi(
     const ContainerA_& a_,
     const ContainerB_& b_)
 TEST_ASSERTION_MARK_TMPL("::OTest2::LexicographicalAssertion", "testAssertLexi< ::$1 >");
+
+} /* -- namespace Assertions */
 
 } /* -- namespace OTest2 */
 

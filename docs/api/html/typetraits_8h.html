@@ -73,14 +73,16 @@ $(function() {
 <div class="title">typetraits.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;type_traits&gt;</code><br />
+<div class="textblock"><code>#include &lt;cstddef&gt;</code><br />
+<code>#include &lt;type_traits&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for typetraits.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="typetraits_8h__incl.png" border="0" usemap="#include_2otest2_2typetraits_8h" alt=""/></div>
 <map name="include_2otest2_2typetraits_8h" id="include_2otest2_2typetraits_8h">
 <area shape="rect" title=" " alt="" coords="5,5,195,32"/>
-<area shape="rect" title=" " alt="" coords="55,80,145,107"/>
+<area shape="rect" title=" " alt="" coords="13,80,83,107"/>
+<area shape="rect" title=" " alt="" coords="107,80,197,107"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -88,16 +90,17 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="typetraits_8h__dep__incl.png" border="0" usemap="#include_2otest2_2typetraits_8hdep" alt=""/></div>
 <map name="include_2otest2_2typetraits_8hdep" id="include_2otest2_2typetraits_8hdep">
-<area shape="rect" title=" " alt="" coords="345,5,535,32"/>
-<area shape="rect" href="comparisons_8h.html" title=" " alt="" coords="224,80,435,107"/>
-<area shape="rect" href="userdata_8h.html" title=" " alt="" coords="459,80,645,107"/>
-<area shape="rect" href="assertions_8h.html" title=" " alt="" coords="237,155,432,181"/>
-<area shape="rect" href="printtraits_8h.html" title=" " alt="" coords="21,155,211,181"/>
-<area shape="rect" href="assertionsimpl_8h.html" title=" " alt="" coords="5,229,227,256"/>
-<area shape="rect" href="otest2_8h.html" title=" " alt="" coords="251,229,421,256"/>
-<area shape="rect" href="assertions_8cpp.html" title=" " alt="" coords="445,229,579,256"/>
-<area shape="rect" href="dfltenvironment_8cpp.html" title=" " alt="" coords="464,155,632,181"/>
-<area shape="rect" href="userdata_8cpp.html" title=" " alt="" coords="657,155,781,181"/>
+<area shape="rect" title=" " alt="" coords="308,5,497,32"/>
+<area shape="rect" href="assertionsitemwiseimpl_8h.html" title=" " alt="" coords="5,229,283,256"/>
+<area shape="rect" href="comparisons_8h.html" title=" " alt="" coords="369,80,580,107"/>
+<area shape="rect" href="printtraits_8h.html" title=" " alt="" coords="237,155,427,181"/>
+<area shape="rect" href="userdata_8h.html" title=" " alt="" coords="742,80,927,107"/>
+<area shape="rect" href="assertions_8h.html" title=" " alt="" coords="503,155,697,181"/>
+<area shape="rect" href="otest2_8h.html" title=" " alt="" coords="710,229,879,256"/>
+<area shape="rect" href="assertionsimpl_8h.html" title=" " alt="" coords="307,229,528,256"/>
+<area shape="rect" href="assertions_8cpp.html" title=" " alt="" coords="552,229,685,256"/>
+<area shape="rect" href="dfltenvironment_8cpp.html" title=" " alt="" coords="921,155,1089,181"/>
+<area shape="rect" href="userdata_8cpp.html" title=" " alt="" coords="773,155,897,181"/>
 </map>
 </div>
 </div>
@@ -113,6 +116,20 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTest2_1_1TypeTrait.html">OTest2::TypeTrait&lt; Type_ &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic type trait used by the framework.  <a href="structOTest2_1_1TypeTrait.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTest2_1_1NormalizeStringType.html">OTest2::NormalizeStringType&lt; Type_ &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A trait which is used to normalize types of string literals and C-strings.  <a href="structOTest2_1_1NormalizeStringType.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTest2_1_1NormalizeStringType_3_01char_0flen___0e_4.html">OTest2::NormalizeStringType&lt; char[len_]&gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTest2_1_1NormalizeStringType_3_01const_01char_0flen___0e_4.html">OTest2::NormalizeStringType&lt; const char[len_]&gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTest2_1_1NormalizeStringType_3_01char_01_5_01_4.html">OTest2::NormalizeStringType&lt; char * &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTest2_1_1NormalizeStringType_3_01const_01char_01_5_01_4.html">OTest2::NormalizeStringType&lt; const char * &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTest2_1_1AssertionParameter.html">OTest2::AssertionParameter&lt; Type_ &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A helper trait - get normalized type of a captured assertion parameter.  <a href="structOTest2_1_1AssertionParameter.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>

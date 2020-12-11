@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classOTest2_1_1CaseRegistry.html" title="Registry of factories of test cases." alt="" coords="5,5,160,32"/>
+<area shape="rect" id="node1" href="$classOTest2_1_1CaseFactory.html" title="Simple factory of one test case." alt="" coords="5,13,156,39"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1CaseGeneratedFactory.html" title=" " alt="" coords="204,5,423,47"/>
 </map>

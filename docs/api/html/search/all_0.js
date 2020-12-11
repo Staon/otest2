@@ -28,7 +28,10 @@ var searchData=
   ['assertcontext_2eh_25',['assertcontext.h',['../assertcontext_8h.html',1,'']]],
   ['assertionannotation_2eh_26',['assertionannotation.h',['../assertionannotation_8h.html',1,'']]],
   ['assertionmessage_27',['assertionMessage',['../classOTest2_1_1AssertContext.html#ac3959fb13e29d30e1235d47a3dd14633',1,'OTest2::AssertContext']]],
-  ['assertions_2ecpp_28',['assertions.cpp',['../assertions_8cpp.html',1,'']]],
-  ['assertions_2eh_29',['assertions.h',['../assertions_8h.html',1,'']]],
-  ['assertionsimpl_2eh_30',['assertionsimpl.h',['../assertionsimpl_8h.html',1,'']]]
+  ['assertionparameter_28',['AssertionParameter',['../structOTest2_1_1AssertionParameter.html',1,'OTest2']]],
+  ['assertions_2ecpp_29',['assertions.cpp',['../assertions_8cpp.html',1,'']]],
+  ['assertions_2eh_30',['assertions.h',['../assertions_8h.html',1,'']]],
+  ['assertionsimpl_2eh_31',['assertionsimpl.h',['../assertionsimpl_8h.html',1,'']]],
+  ['assertionsitemwise_2eh_32',['assertionsitemwise.h',['../assertionsitemwise_8h.html',1,'']]],
+  ['assertionsitemwiseimpl_2eh_33',['assertionsitemwiseimpl.h',['../assertionsitemwiseimpl_8h.html',1,'']]]
 ];

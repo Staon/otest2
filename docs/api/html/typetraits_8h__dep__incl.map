@@ -1,12 +1,13 @@
 <map id="include/otest2/typetraits.h" name="include/otest2/typetraits.h">
-<area shape="rect" id="node1" title=" " alt="" coords="345,5,535,32"/>
-<area shape="rect" id="node2" href="$comparisons_8h.html" title=" " alt="" coords="224,80,435,107"/>
-<area shape="rect" id="node8" href="$userdata_8h.html" title=" " alt="" coords="459,80,645,107"/>
-<area shape="rect" id="node3" href="$assertions_8h.html" title=" " alt="" coords="237,155,432,181"/>
-<area shape="rect" id="node7" href="$printtraits_8h.html" title=" " alt="" coords="21,155,211,181"/>
-<area shape="rect" id="node4" href="$assertionsimpl_8h.html" title=" " alt="" coords="5,229,227,256"/>
-<area shape="rect" id="node5" href="$otest2_8h.html" title=" " alt="" coords="251,229,421,256"/>
-<area shape="rect" id="node6" href="$assertions_8cpp.html" title=" " alt="" coords="445,229,579,256"/>
-<area shape="rect" id="node9" href="$dfltenvironment_8cpp.html" title=" " alt="" coords="464,155,632,181"/>
-<area shape="rect" id="node10" href="$userdata_8cpp.html" title=" " alt="" coords="657,155,781,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="308,5,497,32"/>
+<area shape="rect" id="node2" href="$assertionsitemwiseimpl_8h.html" title=" " alt="" coords="5,229,283,256"/>
+<area shape="rect" id="node3" href="$comparisons_8h.html" title=" " alt="" coords="369,80,580,107"/>
+<area shape="rect" id="node8" href="$printtraits_8h.html" title=" " alt="" coords="237,155,427,181"/>
+<area shape="rect" id="node9" href="$userdata_8h.html" title=" " alt="" coords="742,80,927,107"/>
+<area shape="rect" id="node4" href="$assertions_8h.html" title=" " alt="" coords="503,155,697,181"/>
+<area shape="rect" id="node6" href="$otest2_8h.html" title=" " alt="" coords="710,229,879,256"/>
+<area shape="rect" id="node5" href="$assertionsimpl_8h.html" title=" " alt="" coords="307,229,528,256"/>
+<area shape="rect" id="node7" href="$assertions_8cpp.html" title=" " alt="" coords="552,229,685,256"/>
+<area shape="rect" id="node10" href="$dfltenvironment_8cpp.html" title=" " alt="" coords="921,155,1089,181"/>
+<area shape="rect" id="node11" href="$userdata_8cpp.html" title=" " alt="" coords="773,155,897,181"/>
 </map>

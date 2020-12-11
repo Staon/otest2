@@ -141,7 +141,8 @@ Now it's time to declare the assertion function.
 
 bool testFileCompare(
     std::istream& file_,
-    std::istream& expected_) TEST_ASSERTION_MARK(::OTest2::Examples::FileCompare, testCompareFiles);
+    std::istream& expected_)
+TEST_ASSERTION_MARK(::OTest2::Examples::FileCompare, testCompareFiles);
 ```
 
 The assertion function is declared as any function. The only difference is the
@@ -163,8 +164,9 @@ conditionaly:
 
 If the assertion function is a function template, a special annotation
 [`TEST_ASSERTION_MARK_TMPL`]({{ "api/html/assertionannotation_8h.html" | relative_url }})
-can be used. A part of the annotation may be string `$n` which expands to
-a deduced type of the n-th template argument. See how
+can be used. A part of the annotation may be a sequence `$n` or `${n}` which
+expands to a deduced type of the n-th template argument (1 based index). Only
+template type parameters and template template parameters are supported. See how
 [the relational assertions]({{ "api/html/assertions_8h_source.html" | relative_url }})
 are implemented.
 

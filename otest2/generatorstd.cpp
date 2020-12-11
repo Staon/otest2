@@ -227,6 +227,8 @@ void GeneratorStd::beginFile() {
       << "#include <otest2/assertionsimpl.h>\n"
       << "#include <otest2/assertionsitemwise.h>\n"
       << "#include <otest2/assertionsitemwiseimpl.h>\n"
+      << "#include <otest2/assertionslexi.h>\n"
+      << "#include <otest2/assertionslexiimpl.h>\n"
       << "#include <otest2/casegenerated.h>\n"
       << "#include <otest2/context.h>\n"
       << "#include <otest2/fcemarshaler.h>\n"

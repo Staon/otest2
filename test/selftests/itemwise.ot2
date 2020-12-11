@@ -101,6 +101,31 @@ TEST_SUITE(ItemWiseComparisons) {
     }
   }
 
+  TEST_CASE(DequeComparison) {
+    TEST_SIMPLE() {
+      std::deque<int> a_{1, 2, 3};
+      std::deque<unsigned int> b_{1, 2, 3};
+      std::deque<int> c_{1, 2};
+      std::deque<int> d_{1, 2, 3, 4};
+      std::deque<int> e_{0, 1, 3};
+
+      testAssertItemWise<Equal>(a_, a_.begin(), a_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), a_);
+      testAssertItemWise<Equal>(a_, a_);
+      testAssertItemWise<Equal>(a_, b_.begin(), b_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), b_);
+      testAssertItemWise<Equal>(a_, c_.begin(), c_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), c_);
+      testAssertItemWise<Equal>(a_, c_);
+      testAssertItemWise<Equal>(a_, d_.begin(), d_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), d_);
+      testAssertItemWise<Equal>(a_, d_);
+      testAssertItemWise<Equal>(a_, e_.begin(), e_.end());
+      testAssertItemWise<Equal>(a_.begin(), a_.end(), e_);
+      testAssertItemWise<Equal>(a_, e_);
+    }
+  }
+
   TEST_CASE(SetComparison) {
     TEST_SIMPLE() {
       std::set<int> a_{1, 2, 3};
@@ -126,13 +151,13 @@ TEST_SUITE(ItemWiseComparisons) {
     }
   }
 
-  TEST_CASE(DequeComparison) {
+  TEST_CASE(MultisetComparison) {
     TEST_SIMPLE() {
-      std::deque<int> a_{1, 2, 3};
-      std::deque<unsigned int> b_{1, 2, 3};
-      std::deque<int> c_{1, 2};
-      std::deque<int> d_{1, 2, 3, 4};
-      std::deque<int> e_{0, 1, 3};
+      std::multiset<int> a_{1, 2, 3};
+      std::multiset<unsigned int> b_{1, 2, 3};
+      std::multiset<int> c_{1, 2};
+      std::multiset<int> d_{1, 2, 3, 4};
+      std::multiset<int> e_{0, 1, 3};
 
       testAssertItemWise<Equal>(a_, a_.begin(), a_.end());
       testAssertItemWise<Equal>(a_.begin(), a_.end(), a_);

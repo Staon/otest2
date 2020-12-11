@@ -1,0 +1,172 @@
+/*
+ * Copyright (C) 2020 Ondrej Starek
+ *
+ * This file is part of OTest2
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include <deque>
+#include <list>
+#include <set>
+#include <vector>
+
+namespace OTest2 {
+
+namespace SelfTest {
+
+TEST_SUITE(LexicographicalComparisons) {
+  TEST_CASE(VectorComparison) {
+    TEST_SIMPLE() {
+      std::vector<int> a_{1, 2, 3};
+      std::vector<int> b_{1, 2};
+      std::vector<int> c_{1, 2, 3, 4};
+      std::vector<int> d_{1, 1, 1};
+      std::vector<int> e_{1, 3, 3};
+
+      /* -- the < relation */
+      testAssertLexi<LexiLess>(a_.begin(), a_.end(), a_.begin(), a_.end());
+      testAssertLexi<LexiLess>(a_, a_.begin(), a_.end());
+      testAssertLexi<LexiLess>(a_.begin(), a_.end(), a_);
+      testAssertLexi<LexiLess>(a_, a_);
+
+      testAssertLexi<LexiLess>(a_.begin(), a_.end(), b_.begin(), b_.end());
+      testAssertLexi<LexiLess>(a_, b_.begin(), b_.end());
+      testAssertLexi<LexiLess>(a_.begin(), a_.end(), b_);
+      testAssertLexi<LexiLess>(a_, b_);
+
+      testAssertLexi<LexiLess>(a_.begin(), a_.end(), c_.begin(), c_.end());
+      testAssertLexi<LexiLess>(a_, c_.begin(), c_.end());
+      testAssertLexi<LexiLess>(a_.begin(), a_.end(), c_);
+      testAssertLexi<LexiLess>(a_, c_);
+
+      testAssertLexi<LexiLess>(a_.begin(), a_.end(), d_.begin(), d_.end());
+      testAssertLexi<LexiLess>(a_, d_.begin(), d_.end());
+      testAssertLexi<LexiLess>(a_.begin(), a_.end(), d_);
+      testAssertLexi<LexiLess>(a_, d_);
+
+      testAssertLexi<LexiLess>(a_.begin(), a_.end(), e_.begin(), e_.end());
+      testAssertLexi<LexiLess>(a_, e_.begin(), e_.end());
+      testAssertLexi<LexiLess>(a_.begin(), a_.end(), e_);
+      testAssertLexi<LexiLess>(a_, e_);
+
+      /* -- the <= relation */
+      testAssertLexi<LexiLessOrEqual>(a_.begin(), a_.end(), a_.begin(), a_.end());
+      testAssertLexi<LexiLessOrEqual>(a_.begin(), a_.end(), b_.begin(), b_.end());
+      testAssertLexi<LexiLessOrEqual>(a_.begin(), a_.end(), c_.begin(), c_.end());
+      testAssertLexi<LexiLessOrEqual>(a_.begin(), a_.end(), d_.begin(), d_.end());
+      testAssertLexi<LexiLessOrEqual>(a_.begin(), a_.end(), e_.begin(), e_.end());
+
+      /* -- the > relation */
+      testAssertLexi<LexiGreater>(a_.begin(), a_.end(), a_.begin(), a_.end());
+      testAssertLexi<LexiGreater>(a_.begin(), a_.end(), b_.begin(), b_.end());
+      testAssertLexi<LexiGreater>(a_.begin(), a_.end(), c_.begin(), c_.end());
+      testAssertLexi<LexiGreater>(a_.begin(), a_.end(), d_.begin(), d_.end());
+      testAssertLexi<LexiGreater>(a_.begin(), a_.end(), e_.begin(), e_.end());
+
+      /* -- the >= relation */
+      testAssertLexi<LexiGreaterOrEqual>(a_.begin(), a_.end(), a_.begin(), a_.end());
+      testAssertLexi<LexiGreaterOrEqual>(a_.begin(), a_.end(), b_.begin(), b_.end());
+      testAssertLexi<LexiGreaterOrEqual>(a_.begin(), a_.end(), c_.begin(), c_.end());
+      testAssertLexi<LexiGreaterOrEqual>(a_.begin(), a_.end(), d_.begin(), d_.end());
+      testAssertLexi<LexiGreaterOrEqual>(a_.begin(), a_.end(), e_.begin(), e_.end());
+    }
+  }
+
+  TEST_CASE(ListComparison) {
+    TEST_SIMPLE() {
+      std::list<int> a_{1, 2, 3};
+      std::list<int> b_{1, 2};
+      std::list<int> c_{1, 2, 3, 4};
+      std::list<int> d_{1, 1, 1};
+      std::list<int> e_{1, 3, 3};
+
+      testAssertLexi<LexiLess>(a_, a_);
+      testAssertLexi<LexiLess>(a_, b_);
+      testAssertLexi<LexiLess>(a_, c_);
+      testAssertLexi<LexiLess>(a_, d_);
+      testAssertLexi<LexiLess>(a_, e_);
+    }
+  }
+
+  TEST_CASE(DequeComparison) {
+    TEST_SIMPLE() {
+      std::deque<int> a_{1, 2, 3};
+      std::deque<int> b_{1, 2};
+      std::deque<int> c_{1, 2, 3, 4};
+      std::deque<int> d_{1, 1, 1};
+      std::deque<int> e_{1, 3, 3};
+
+      testAssertLexi<LexiLess>(a_, a_);
+      testAssertLexi<LexiLess>(a_, b_);
+      testAssertLexi<LexiLess>(a_, c_);
+      testAssertLexi<LexiLess>(a_, d_);
+      testAssertLexi<LexiLess>(a_, e_);
+    }
+  }
+
+  TEST_CASE(SetComparison) {
+    TEST_SIMPLE() {
+      std::set<int> a_{1, 3, 4};
+      std::set<int> b_{1, 3};
+      std::set<int> c_{1, 3, 4, 5};
+      std::set<int> d_{1, 2, 3};
+      std::set<int> e_{1, 4, 5};
+
+      testAssertLexi<LexiLess>(a_, a_);
+      testAssertLexi<LexiLess>(a_, b_);
+      testAssertLexi<LexiLess>(a_, c_);
+      testAssertLexi<LexiLess>(a_, d_);
+      testAssertLexi<LexiLess>(a_, e_);
+    }
+  }
+
+  TEST_CASE(MultisetComparison) {
+    TEST_SIMPLE() {
+      std::multiset<int> a_{1, 2, 3};
+      std::multiset<int> b_{1, 2};
+      std::multiset<int> c_{1, 2, 3, 4};
+      std::multiset<int> d_{1, 1, 1};
+      std::multiset<int> e_{1, 3, 3};
+
+      testAssertLexi<LexiLess>(a_, a_);
+      testAssertLexi<LexiLess>(a_, b_);
+      testAssertLexi<LexiLess>(a_, c_);
+      testAssertLexi<LexiLess>(a_, d_);
+      testAssertLexi<LexiLess>(a_, e_);
+    }
+  }
+
+  TEST_CASE(MixedComparison) {
+    TEST_SIMPLE() {
+      std::vector<int> a_{1, 2, 3};
+      std::list<int> b_{1, 2};
+      std::set<int> c_{1, 2, 3, 4};
+      std::deque<int> d_{1, 1, 1};
+      std::multiset<int> e_{1, 3, 3};
+
+      testAssertLexi<LexiLess>(a_, a_);
+      testAssertLexi<LexiLess>(a_, b_);
+      testAssertLexi<LexiLess>(a_, c_);
+      testAssertLexi<LexiLess>(a_, d_);
+      testAssertLexi<LexiLess>(a_, e_);
+    }
+  }
+}
+
+} /* -- namespace SelfTest */
+
+} /* -- namespace OTest2 */
+

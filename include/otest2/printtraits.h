@@ -23,6 +23,7 @@
 #include <string>
 
 #include <otest2/comparisons.h>
+#include <otest2/comparisonslexi.h>
 #include <otest2/typetraits.h>
 
 namespace OTest2 {
@@ -109,6 +110,40 @@ struct PrintTrait<GreaterOrEqual<A_, B_> > {
     static std::ostream& print(
         std::ostream& os_,
         const GreaterOrEqual<A_, B_>& value_) {
+      return os_ << ">=";
+    }
+};
+
+/* -- lexicographical comparators */
+template<typename A_, typename B_>
+struct PrintTrait<LexiLess<A_, B_> > {
+    static std::ostream& print(
+        std::ostream& os_,
+        const LexiLess<A_, B_>& value_) {
+      return os_ << "<";
+    }
+};
+template<typename A_, typename B_>
+struct PrintTrait<LexiLessOrEqual<A_, B_> > {
+    static std::ostream& print(
+        std::ostream& os_,
+        const LexiLessOrEqual<A_, B_>& value_) {
+      return os_ << "<=";
+    }
+};
+template<typename A_, typename B_>
+struct PrintTrait<LexiGreater<A_, B_> > {
+    static std::ostream& print(
+        std::ostream& os_,
+        const LexiGreater<A_, B_>& value_) {
+      return os_ << ">";
+    }
+};
+template<typename A_, typename B_>
+struct PrintTrait<LexiGreaterOrEqual<A_, B_> > {
+    static std::ostream& print(
+        std::ostream& os_,
+        const LexiGreaterOrEqual<A_, B_>& value_) {
       return os_ << ">=";
     }
 };

@@ -143,37 +143,41 @@ $(function() {
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keyword">const</span> ContainerB_&amp; b_);</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;};</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>, <span class="keyword">typename</span>&gt; <span class="keyword">class </span>Compare_, <span class="keyword">typename</span> IterA_, <span class="keyword">typename</span> IterB_&gt;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="keywordtype">bool</span> testAssertItemWise(</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    IterA_ begin_a_,</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    IterA_ end_a_,</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    IterB_ begin_b_,</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    IterB_ end_b_)</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<a class="code" href="assertionannotation_8h.html#a10fcf4f1a4e61f3cf1ac55f46defee6c">TEST_ASSERTION_MARK_TMPL</a>(<span class="stringliteral">&quot;::OTest2::ItemWiseAssertion&quot;</span>, <span class="stringliteral">&quot;testAssertItemWise&lt; ::$1 &gt;&quot;</span>);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>, <span class="keyword">typename</span>&gt; <span class="keyword">class </span>Compare_, <span class="keyword">typename</span> ContainerA_, <span class="keyword">typename</span> IterB_&gt;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="keywordtype">bool</span> testAssertItemWise(</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keyword">const</span> ContainerA_&amp; a_,</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    IterB_ begin_b_,</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    IterB_ end_b_)</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<a class="code" href="assertionannotation_8h.html#a10fcf4f1a4e61f3cf1ac55f46defee6c">TEST_ASSERTION_MARK_TMPL</a>(<span class="stringliteral">&quot;::OTest2::ItemWiseAssertion&quot;</span>, <span class="stringliteral">&quot;testAssertItemWise&lt; ::$1 &gt;&quot;</span>);</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>, <span class="keyword">typename</span>&gt; <span class="keyword">class </span>Compare_, <span class="keyword">typename</span> IterA_, <span class="keyword">typename</span> ContainerB_&gt;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="keywordtype">bool</span> testAssertItemWise(</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    IterA_ begin_a_,</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    IterA_ end_a_,</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keyword">const</span> ContainerB_&amp; b_)</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<a class="code" href="assertionannotation_8h.html#a10fcf4f1a4e61f3cf1ac55f46defee6c">TEST_ASSERTION_MARK_TMPL</a>(<span class="stringliteral">&quot;::OTest2::ItemWiseAssertion&quot;</span>, <span class="stringliteral">&quot;testAssertItemWise&lt; ::$1 &gt;&quot;</span>);</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>, <span class="keyword">typename</span>&gt; <span class="keyword">class </span>Compare_, <span class="keyword">typename</span> ContainerA_, <span class="keyword">typename</span> ContainerB_&gt;</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="keywordtype">bool</span> testAssertItemWise(</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keyword">const</span> ContainerA_&amp; a_,</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keyword">const</span> ContainerB_&amp; b_)</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<a class="code" href="assertionannotation_8h.html#a10fcf4f1a4e61f3cf1ac55f46defee6c">TEST_ASSERTION_MARK_TMPL</a>(<span class="stringliteral">&quot;::OTest2::ItemWiseAssertion&quot;</span>, <span class="stringliteral">&quot;testAssertItemWise&lt; ::$1 &gt;&quot;</span>);</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160; </div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="keyword">namespace </span>Assertions {</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>, <span class="keyword">typename</span>&gt; <span class="keyword">class </span>Compare_, <span class="keyword">typename</span> IterA_, <span class="keyword">typename</span> IterB_&gt;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="keywordtype">bool</span> testAssertItemWise(</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    IterA_ begin_a_,</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    IterA_ end_a_,</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    IterB_ begin_b_,</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    IterB_ end_b_)</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<a class="code" href="assertionannotation_8h.html#a10fcf4f1a4e61f3cf1ac55f46defee6c">TEST_ASSERTION_MARK_TMPL</a>(<span class="stringliteral">&quot;::OTest2::ItemWiseAssertion&quot;</span>, <span class="stringliteral">&quot;testAssertItemWise&lt; ::$1 &gt;&quot;</span>);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>, <span class="keyword">typename</span>&gt; <span class="keyword">class </span>Compare_, <span class="keyword">typename</span> ContainerA_, <span class="keyword">typename</span> IterB_&gt;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keywordtype">bool</span> testAssertItemWise(</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keyword">const</span> ContainerA_&amp; a_,</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    IterB_ begin_b_,</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    IterB_ end_b_)</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<a class="code" href="assertionannotation_8h.html#a10fcf4f1a4e61f3cf1ac55f46defee6c">TEST_ASSERTION_MARK_TMPL</a>(<span class="stringliteral">&quot;::OTest2::ItemWiseAssertion&quot;</span>, <span class="stringliteral">&quot;testAssertItemWise&lt; ::$1 &gt;&quot;</span>);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>, <span class="keyword">typename</span>&gt; <span class="keyword">class </span>Compare_, <span class="keyword">typename</span> IterA_, <span class="keyword">typename</span> ContainerB_&gt;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="keywordtype">bool</span> testAssertItemWise(</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    IterA_ begin_a_,</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    IterA_ end_a_,</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    <span class="keyword">const</span> ContainerB_&amp; b_)</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<a class="code" href="assertionannotation_8h.html#a10fcf4f1a4e61f3cf1ac55f46defee6c">TEST_ASSERTION_MARK_TMPL</a>(<span class="stringliteral">&quot;::OTest2::ItemWiseAssertion&quot;</span>, <span class="stringliteral">&quot;testAssertItemWise&lt; ::$1 &gt;&quot;</span>);</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>, <span class="keyword">typename</span>&gt; <span class="keyword">class </span>Compare_, <span class="keyword">typename</span> ContainerA_, <span class="keyword">typename</span> ContainerB_&gt;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="keywordtype">bool</span> testAssertItemWise(</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    <span class="keyword">const</span> ContainerA_&amp; a_,</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keyword">const</span> ContainerB_&amp; b_)</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<a class="code" href="assertionannotation_8h.html#a10fcf4f1a4e61f3cf1ac55f46defee6c">TEST_ASSERTION_MARK_TMPL</a>(<span class="stringliteral">&quot;::OTest2::ItemWiseAssertion&quot;</span>, <span class="stringliteral">&quot;testAssertItemWise&lt; ::$1 &gt;&quot;</span>);</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* -- OTest2_INCLUDE_OTEST2_ASSERTIONSITEMWISE_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;} <span class="comment">/* -- namespace Assertions */</span></div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* -- OTest2_INCLUDE_OTEST2_ASSERTIONSITEMWISE_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassOTest2_1_1AssertContext_html_a0ceeae0a89895755c9296b0836b043bc"><div class="ttname"><a href="classOTest2_1_1AssertContext.html#a0ceeae0a89895755c9296b0836b043bc">OTest2::AssertContext::AssertContext</a></div><div class="ttdeci">AssertContext(const AssertContext &amp;)=delete</div></div>
 <div class="ttc" id="aclassOTest2_1_1ItemWiseAssertion_html_a55076e0a93c683997762d2d41bb2c641"><div class="ttname"><a href="classOTest2_1_1ItemWiseAssertion.html#a55076e0a93c683997762d2d41bb2c641">OTest2::ItemWiseAssertion::ItemWiseAssertion</a></div><div class="ttdeci">ItemWiseAssertion(const ItemWiseAssertion &amp;)=delete</div></div>

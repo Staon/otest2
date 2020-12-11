@@ -27,6 +27,26 @@ namespace OTest2 {
 
 /**
  * @brief Implementation of lexicographical container assertions
+ *
+ * The lexicographical assertions check two lists lexicographically.
+ * That means that the algorithm takes one item by one item from the both
+ * lists. If the items equal the algorithm moves forward. If the they don't
+ * the assertion passes or fails according to used comparator.
+ *
+ * As the item-wise assertions do the lexicographical assertions use
+ * a comparator template. However, these comparators are different than
+ * the item-wise ones. They must resolve three relations: less, equal
+ * and greater. And the comparator must resolve result for remaining
+ * tails of the lists (if one list is a prefix of the other one).
+ *
+ * Thus the comparator must implements two functions:
+ *   * checkItems() which takes one item from the left list and one item
+ *     form the right list and returns {-1, 0, 1} in the meaning
+ *     {less, equal, greater}.
+ *   * checkRests() taking one boolean for the left list and one for the
+ *     right list. If the boolean is true the appropriate list has ended
+ *     (there is no remaining tail of the list). The function returns true
+ *     if the remaining tails fit the operator.
  */
 class LexicographicalAssertion : public AssertContext {
   private:

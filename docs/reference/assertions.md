@@ -88,8 +88,8 @@ bool testAssertItemWise(
     const ContainerA_& a_, const ContainerB_& b_);
 ```
 
-The item-wise assertions apply the specified comparator on each pair of items
-with the same index in both lists *a_* a *b_*. The assertion passes if
+The item-wise assertions apply the specified relational comparator on each pair
+of items with the same index in both lists *a_* a *b_*. The assertion passes if
 all pairs pass. If the lists are different size the assertion fails.
 
 The items of the lists must be printable by the `operator <<` or they must
@@ -97,7 +97,65 @@ have a specialization of
 the [::OTest::PrintTrait]({{ "api/html/structOTest2_1_1PrintTrait.html" | relative_url }}).
 
 User can pass just 2 pairs of forward iterators. Or it can pass entire container
-instead of the iterator pair. The framework access the container's iterators by the 
+instead of the iterator pair. The framework accesses the container's iterators by the 
+[::OTest2::ListContainerTrait]({{ "api/html/structOTest2_1_1ListContainerTrait.html" | relative_url }}).
+The default implementation works with the STL-style methods `begin()` and `end()`.
+One can implement custom specialization of the trait. 
+
+### Lexicographical Assertions
+
+```c++
+template<template<typename, typename> class Compare_, typename IterA_, typename IterB_>
+bool testAssertLexi(
+    IterA_ begin_a_, IterA_ end_a_, IterB_ begin_b_, IterB_ end_b_);
+
+template<template<typename, typename> class Compare_, typename ContainerA_, typename IterB_>
+bool testAssertLexi(
+    const ContainerA_& a_, IterB_ begin_b_, IterB_ end_b_);
+
+template<template<typename, typename> class Compare_, typename IterA_, typename ContainerB_>
+bool testAssertLexi(
+    IterA_ begin_a_, IterA_ end_a_, const ContainerB_& b_);
+
+template<template<typename, typename> class Compare_, typename ContainerA_, typename ContainerB_>
+bool testAssertLexi(
+    const ContainerA_& a_, const ContainerB_& b_);
+```
+
+The lexicographical assertions check two lists lexicographically. That means
+that the algorithm takes one item by one item from the both lists and compares
+them. If the items equal the algorithm moves forward to next item. If they
+don't the assertion passes or fails according to used comparator. If one list
+is the prefix of the other one the comparator must resolve the relation.
+
+There are prepared comparators `::OTest2::LexiLess`, `::OTest2::LexiLessOrEqual`,
+`::OTest2::LexiGrater` and `::OTest2::LexiGreaterOrEqual` implemented
+in the 
+[otest2/comparisonslexi.h]({{ "api/html/comparisonslexi_8h.html" | relative_url }}).
+The default implementation is a composition of the `::OTest2::Less` and
+`::OTest2::Greater` comparators. If you have a specialization of these
+comparators you can use the lexicographical comparators even for your
+custom types.
+
+A lexicographical comparator must implement two methods:
+ * **checkItems()** which takes one item from the left list and one item
+   form the right list and returns {-1, 0, 1} in the meaning
+   {less, equal, greater}.
+ * **checkRests()** taking one boolean for the left list and one for
+   the right list. If the boolean is true the appropriate list has ended
+   (there is no remaining tail of the list). The function returns true
+   if the remaining tails fit the operator.
+
+See the implementation in
+the [otest2/comparisonslexi.h]({{ "api/html/comparisonslexi_8h.html" | relative_url }})
+as an example.
+
+The items of the lists must be printable by the `operator <<` or they must
+have a specialization of
+the [::OTest::PrintTrait]({{ "api/html/structOTest2_1_1PrintTrait.html" | relative_url }}).
+
+User can pass just 2 pairs of forward iterators. Or it can pass entire container
+instead of the iterator pair. The framework accesses the container's iterators by the 
 [::OTest2::ListContainerTrait]({{ "api/html/structOTest2_1_1ListContainerTrait.html" | relative_url }}).
 The default implementation works with the STL-style methods `begin()` and `end()`.
 One can implement custom specialization of the trait. 

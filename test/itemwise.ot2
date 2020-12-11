@@ -182,6 +182,60 @@ TEST_SUITE(ItemWiseComparisons) {
     }
   }
 
+  TEST_CASE(DequeComparison) {
+    Runtime runtime("ItemWiseComparisons", "DequeComparison");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<ItemWiseComparisons>",
+        "enterCase<DequeComparison>",
+        "enterState<AnonymousState>",
+        "assert<the check has passed>: passed",
+        "leaveAssert<>",
+        "assert<the check has passed>: passed",
+        "leaveAssert<>",
+        "assert<the check has passed>: passed",
+        "leaveAssert<>",
+        "assert<the check has passed>: passed",
+        "leaveAssert<>",
+        "assert<the check has passed>: passed",
+        "leaveAssert<>",
+        "assert<left container is bigger then the right one>: failed",
+        "leaveAssert<>",
+        "assert<left container is bigger then the right one>: failed",
+        "leaveAssert<>",
+        "assert<left container is bigger then the right one>: failed",
+        "leaveAssert<>",
+        "assert<left container is smaller then the right one>: failed",
+        "leaveAssert<>",
+        "assert<left container is smaller then the right one>: failed",
+        "leaveAssert<>",
+        "assert<left container is smaller then the right one>: failed",
+        "leaveAssert<>",
+        "assert<the 0th item has failed: a[0] == b[0]>: failed",
+        "message<a[0] = 1>",
+        "message<b[0] = 0>",
+        "leaveAssert<>",
+        "assert<the 0th item has failed: a[0] == b[0]>: failed",
+        "message<a[0] = 1>",
+        "message<b[0] = 0>",
+        "leaveAssert<>",
+        "assert<the 0th item has failed: a[0] == b[0]>: failed",
+        "message<a[0] = 1>",
+        "message<b[0] = 0>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<DequeComparison>: failed",
+        "leaveSuite<ItemWiseComparisons>: failed",
+        "leaveTest<selftest>: failed",
+      };
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
   TEST_CASE(SetComparison) {
     Runtime runtime("ItemWiseComparisons", "SetComparison");
 
@@ -236,14 +290,14 @@ TEST_SUITE(ItemWiseComparisons) {
     }
   }
 
-  TEST_CASE(DequeComparison) {
-    Runtime runtime("ItemWiseComparisons", "DequeComparison");
+  TEST_CASE(MultisetComparison) {
+    Runtime runtime("ItemWiseComparisons", "MultisetComparison");
 
     TEST_SIMPLE() {
       std::vector<const char*> data_{
         "enterTest<selftest>",
         "enterSuite<ItemWiseComparisons>",
-        "enterCase<DequeComparison>",
+        "enterCase<MultisetComparison>",
         "enterState<AnonymousState>",
         "assert<the check has passed>: passed",
         "leaveAssert<>",
@@ -280,7 +334,7 @@ TEST_SUITE(ItemWiseComparisons) {
         "message<b[0] = 0>",
         "leaveAssert<>",
         "leaveState<AnonymousState>: failed",
-        "leaveCase<DequeComparison>: failed",
+        "leaveCase<MultisetComparison>: failed",
         "leaveSuite<ItemWiseComparisons>: failed",
         "leaveTest<selftest>: failed",
       };

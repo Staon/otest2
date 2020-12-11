@@ -23,8 +23,8 @@ Current release version is [1.1.0]({{ site.repositoryurl }}/releases/tag/v1.1.0)
   assistance.
 * Very cautious usage of C macros.
 * Grouping of test cases into test suites.
-* A rich set of assertion functions. The user is allowed to implement custom
-  assertions.
+* A rich set of [assertion functions]({{ "/reference/assertions/" | relative_url }}).
+  The user is allowed to implement custom assertions.
 * Test fixtures at the level of either test case or test suite.
 * Test fixture objects - objects automatically initialized and destroyed
   during the start-up and tear-down phase.

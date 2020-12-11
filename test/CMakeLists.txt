@@ -32,6 +32,7 @@ target_otest2_sources(selftest
     fixtureobject.ot2
     hirschberg.ot2
     itemwise.ot2
+    lexicographical.ot2
     mainloop.ot2
     regressions.ot2
     repeaters.ot2
@@ -46,6 +47,7 @@ target_otest2_sources(selftest DOMAIN selftest
     selftests/fixtures.ot2
     selftests/fixtureobject.ot2
     selftests/itemwise.ot2
+    selftests/lexicographical.ot2
     selftests/mainloop.ot2
     selftests/regressions.ot2
     selftests/repeaters.ot2

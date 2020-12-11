@@ -60,7 +60,7 @@ class ItemWiseAssertion : public AssertContext {
      *    from the test suite generated code. */
     using AssertContext::AssertContext;
 
-    /* -- generic item-wise assertion */
+    /* -- item-wise assertions */
     template<template<typename, typename> class Compare_, typename IterA_, typename IterB_>
     bool testAssertItemWise(
         IterA_ begin_a_,
@@ -99,7 +99,7 @@ bool testAssertItemWise(
     IterA_ end_a_,
     IterB_ begin_b_,
     IterB_ end_b_)
-TEST_ASSERTION_MARK_TMPL("::OTest2::ItemWiseAssertion", "testAssertItemWise<$1>");
+TEST_ASSERTION_MARK_TMPL("::OTest2::ItemWiseAssertion", "testAssertItemWise< ::$1 >");
 
 /**
  * @brief Compare two lists
@@ -115,7 +115,7 @@ bool testAssertItemWise(
     const ContainerA_& a_,
     IterB_ begin_b_,
     IterB_ end_b_)
-TEST_ASSERTION_MARK_TMPL("::OTest2::ItemWiseAssertion", "testAssertItemWise<$1>");
+TEST_ASSERTION_MARK_TMPL("::OTest2::ItemWiseAssertion", "testAssertItemWise< ::$1 >");
 
 /**
  * @brief Compare two lists
@@ -131,7 +131,7 @@ bool testAssertItemWise(
     IterA_ begin_a_,
     IterA_ end_a_,
     const ContainerB_& b_)
-TEST_ASSERTION_MARK_TMPL("::OTest2::ItemWiseAssertion", "testAssertItemWise<$1>");
+TEST_ASSERTION_MARK_TMPL("::OTest2::ItemWiseAssertion", "testAssertItemWise< ::$1 >");
 
 /**
  * @brief Compare two lists
@@ -144,7 +144,7 @@ template<template<typename, typename> class Compare_, typename ContainerA_, type
 bool testAssertItemWise(
     const ContainerA_& a_,
     const ContainerB_& b_)
-TEST_ASSERTION_MARK_TMPL("::OTest2::ItemWiseAssertion", "testAssertItemWise<$1>");
+TEST_ASSERTION_MARK_TMPL("::OTest2::ItemWiseAssertion", "testAssertItemWise< ::$1 >");
 
 } /* -- namespace OTest2 */
 

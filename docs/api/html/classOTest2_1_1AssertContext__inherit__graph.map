@@ -1,6 +1,7 @@
 <map id="OTest2::AssertContext" name="OTest2::AssertContext">
-<area shape="rect" id="node1" title="Assertion context." alt="" coords="225,5,389,32"/>
-<area shape="rect" id="node2" href="$classOTest2_1_1GenericAssertion.html" title="Implementation class of the generic assertions." alt="" coords="5,80,188,107"/>
-<area shape="rect" id="node3" href="$classOTest2_1_1ItemWiseAssertion.html" title="Implementation of item&#45;wise container assertions." alt="" coords="212,80,403,107"/>
-<area shape="rect" id="node4" href="$classOTest2_1_1RegressionAssertion.html" title="Implementation class of the regression assertions." alt="" coords="427,80,630,107"/>
+<area shape="rect" id="node1" title="Assertion context." alt="" coords="5,81,169,108"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1GenericAssertion.html" title="Implementation class of the generic assertions." alt="" coords="241,5,424,32"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1ItemWiseAssertion.html" title="Implementation of item&#45;wise container assertions." alt="" coords="237,56,428,83"/>
+<area shape="rect" id="node4" href="$classOTest2_1_1LexicographicalAssertion.html" title="Implementation of lexicographical container assertions." alt="" coords="217,107,448,133"/>
+<area shape="rect" id="node5" href="$classOTest2_1_1RegressionAssertion.html" title="Implementation class of the regression assertions." alt="" coords="231,157,434,184"/>
 </map>

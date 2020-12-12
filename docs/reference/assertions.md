@@ -25,10 +25,14 @@ bool testAssertCmp(A_ a_, B_ b_);
 
 This assertions checks two values (*a_* and *b_*) by the specified comparator.
 The compararator must be a template which can be instantiated with the types
-*A_* and *B_*. There are default comparators `::OTest2::Equal`,
-`::OTest2::NotEqual`, `::OTest2::Less`, `::OTest2::LessOrEqual`,
-`::OTest2::Greater` and `::OTest2::GreaterOrEqual` implemented
-in the [otest2/comparison.h]({{ "api/html/comparisons_8h_source.html" | relative_url }}).
+*A_* and *B_*. There are default comparators
+[`::OTest2::Equal`]({{ "api/html/structOTest2_1_1Equal.html" | relative_url }}),
+[`::OTest2::NotEqual`]({{ "api/html/structOTest2_1_1NotEqual.html" | relative_url }}),
+[`::OTest2::Less`]({{ "api/html/structOTest2_1_1Less.html" | relative_url }}),
+[`::OTest2::LessOrEqual`]({{ "api/html/structOTest2_1_1LessOrEqual.html" | relative_url }}),
+[`::OTest2::Greater`]({{ "api/html/structOTest2_1_1Greater.html" | relative_url }})
+and [`::OTest2::GreaterOrEqual`]({{ "api/html/structOTest2_1_1GreaterOrEqual.html" | relative_url }})
+implemented in the [otest2/comparison.h]({{ "api/html/comparisons_8h.html" | relative_url }}).
 
 The default implementation compares values by the operators. There is one more
 specialization comparing the `const char*` by the `std::strcmp` function.
@@ -40,7 +44,7 @@ comparators.
 If the assertion fails it prints values of the operands. Hence, the operand
 must be printable by the `operator <<` to a C++ stream. If the compared type
 is not printable one can implement a specialization of the 
-[::OTest::PrintTrait]({{ "api/html/structOTest2_1_1PrintTrait.html" | relative_url }}).
+[`::OTest::PrintTrait`]({{ "api/html/structOTest2_1_1PrintTrait.html" | relative_url }}).
 
 Note, that the chosen comparator is printed too. If you implement custom
 comparator you have to make its specialization of the `::OTest::PrintTrait`
@@ -94,11 +98,11 @@ all pairs pass. If the lists are different size the assertion fails.
 
 The items of the lists must be printable by the `operator <<` or they must
 have a specialization of
-the [::OTest::PrintTrait]({{ "api/html/structOTest2_1_1PrintTrait.html" | relative_url }}).
+the [`::OTest::PrintTrait`]({{ "api/html/structOTest2_1_1PrintTrait.html" | relative_url }}).
 
 User can pass just 2 pairs of forward iterators. Or it can pass entire container
 instead of the iterator pair. The framework accesses the container's iterators by the 
-[::OTest2::ListContainerTrait]({{ "api/html/structOTest2_1_1ListContainerTrait.html" | relative_url }}).
+[`::OTest2::ListContainerTrait`]({{ "api/html/structOTest2_1_1ListContainerTrait.html" | relative_url }}).
 The default implementation works with the STL-style methods `begin()` and `end()`.
 One can implement custom specialization of the trait. 
 
@@ -128,9 +132,12 @@ them. If the items equal the algorithm moves forward to next item. If they
 don't the assertion passes or fails according to used comparator. If one list
 is the prefix of the other one the comparator must resolve the relation.
 
-There are prepared comparators `::OTest2::LexiLess`, `::OTest2::LexiLessOrEqual`,
-`::OTest2::LexiGrater` and `::OTest2::LexiGreaterOrEqual` implemented
-in the 
+There are prepared comparators
+[`::OTest2::LexiLess`]({{ "api/html/classOTest2_1_1LexiLess.html" | relative_url }}),
+[`::OTest2::LexiLessOrEqual`]({{ "api/html/classOTest2_1_1LexiLessOrEqual.html" | relative_url }}),
+[`::OTest2::LexiGreater`]({{ "api/html/classOTest2_1_1LexiGreater.html" | relative_url }})
+and [`::OTest2::LexiGreaterOrEqual`]({{ "api/html/classOTest2_1_1LexiGreaterOrEqual.html" | relative_url }})
+implemented in the 
 [otest2/comparisonslexi.h]({{ "api/html/comparisonslexi_8h.html" | relative_url }}).
 The default implementation is a composition of the `::OTest2::Less` and
 `::OTest2::Greater` comparators. If you have a specialization of these
@@ -147,18 +154,50 @@ A lexicographical comparator must implement two methods:
    if the remaining tails fit the operator.
 
 See the implementation in
-the [otest2/comparisonslexi.h]({{ "api/html/comparisonslexi_8h.html" | relative_url }})
+the [otest2/comparisonslexi.h]({{ "api/html/comparisonslexi_8h_source.html" | relative_url }})
 as an example.
 
 The items of the lists must be printable by the `operator <<` or they must
 have a specialization of
-the [::OTest::PrintTrait]({{ "api/html/structOTest2_1_1PrintTrait.html" | relative_url }}).
+the [`::OTest::PrintTrait`]({{ "api/html/structOTest2_1_1PrintTrait.html" | relative_url }}).
 
 User can pass just 2 pairs of forward iterators. Or it can pass entire container
 instead of the iterator pair. The framework accesses the container's iterators by the 
-[::OTest2::ListContainerTrait]({{ "api/html/structOTest2_1_1ListContainerTrait.html" | relative_url }}).
+[`::OTest2::ListContainerTrait`]({{ "api/html/structOTest2_1_1ListContainerTrait.html" | relative_url }}).
 The default implementation works with the STL-style methods `begin()` and `end()`.
-One can implement custom specialization of the trait. 
+One can implement custom specialization of the trait.
+
+### Map Assertions
+
+```c++
+template<template<typename, typename> class Compare_, typename ContainerA_, typename ContainerB_>
+bool testAssertMap(const ContainerA_& a_, const ContainerB_& b_);
+```
+
+The assertion takes two associative containers and compares all items
+with the same key by the specified comparator. If a container is a multimap
+the items with the same key are compared in the order how they are iterated.
+
+**Note:** the `unordered_multimap` container is not generally supported
+as the order of items with the same key is not defined. The container may
+be used only if it contains just unique keys. 
+
+The algorithm accesses the containers by the 
+[`::OTest2::MapContainerTrait`]({{ "api/html/structOTest2_1_1MapContainerTrait.html" | relative_url }}).
+The user may write custom specialization to plug own container in. The default
+implementation works with the STL containers `std::map`, `std::multimap`,
+`std::unordered_map` and partially with the `std::unordered_multimap`.
+
+The implementation of the trait must offer:
+ * a typedef `KeyType`,
+ * a typedef `ValueType`,
+ * functions `begin` and `end` to access the container's iterators,
+ * a function `equalRange` returning range of items for specified key,
+ * and a function `keyEqual` comparing keys for equality.
+
+Both keys and value in the containers must be printable by the `operator <<`
+or they must have implementation of the
+[`::OTest::PrintTrait`]({{ "api/html/structOTest2_1_1PrintTrait.html" | relative_url }}). 
 
 ## Regression Assertions
 
@@ -185,7 +224,7 @@ the test case the stored marks won't be found and the test will start failing.
 
 The type of the `object_` parameter must implement the method
 `test_testMark` or a specialization of the
-[`RegressionTrait`]({{ "api/html/structOTest2_1_1RegressionTrait.html" | relative_url}})
+[`::OTest2::RegressionTrait`]({{ "api/html/structOTest2_1_1RegressionTrait.html" | relative_url}})
 must exist for.
 
 Usage of regression test marks is explained in

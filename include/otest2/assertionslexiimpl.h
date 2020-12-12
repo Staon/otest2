@@ -128,17 +128,17 @@ bool LexicographicalAssertion::testAssertLexiList(
     IterA_ end_a_,
     IterB_ begin_b_,
     IterB_ end_b_) {
-    /* -- check the container */
-    std::vector<std::string> messages_;
-    bool result_(Private::compareListsLexicographically<Compare_>(
-        messages_, begin_a_, end_a_, begin_b_, end_b_));
-    assert(messages_.size() > 0);
+  /* -- check the container */
+  std::vector<std::string> messages_;
+  bool result_(Private::compareListsLexicographically<Compare_>(
+      messages_, begin_a_, end_a_, begin_b_, end_b_));
+  assert(messages_.size() > 0);
 
-    /* -- report the result */
-    enterAssertion(result_, messages_[0], false);
-    for(int i_(1); i_ < messages_.size(); ++i_)
-      assertionMessage(result_, messages_[i_]);
-    return leaveAssertion(result_);
+  /* -- report the result */
+  enterAssertion(result_, messages_[0], false);
+  for(int i_(1); i_ < messages_.size(); ++i_)
+    assertionMessage(result_, messages_[i_]);
+  return leaveAssertion(result_);
 }
 
 template<template<typename, typename> class Compare_, typename IterA_, typename IterB_>

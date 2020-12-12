@@ -1,0 +1,288 @@
+/*
+ * Copyright (C) 2020 Ondrej Starek
+ *
+ * This file is part of OTest2
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include <iostream>
+#include <vector>
+
+#include "runtime.h"
+
+namespace OTest2 {
+
+namespace Test {
+
+TEST_SUITE(MapComparisons) {
+  TEST_CASE(MapAssertions) {
+    Runtime runtime("MapComparisons", "MapAssertions");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<MapComparisons>",
+        "enterCase<MapAssertions>",
+        "enterState<AnonymousState>",
+        "assert<the assertion a == b has passed>: passed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'C', 3> is not present in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'D', 4> is not present in the map a>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: check a['B'] == b['B'] has failed>: failed",
+        "message<a['B'] = 2>",
+        "message<b['B'] = 666>",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: check a['C'] == b['C'] has failed>: failed",
+        "message<a['C'] = 3>",
+        "message<b['C'] = 666>",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'A', 1> is not present in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'A', 1> is not present in the map a>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has passed>: passed",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<MapAssertions>: failed",
+        "leaveSuite<MapComparisons>: failed",
+        "leaveTest<selftest>: failed",
+      };
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(UnorderedMapAssertions) {
+    Runtime runtime("MapComparisons", "UnorderedMapAssertions");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<MapComparisons>",
+        "enterCase<UnorderedMapAssertions>",
+        "enterState<AnonymousState>",
+        "assert<the assertion a == b has passed>: passed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'C', 3> is not present in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'D', 4> is not present in the map a>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: check a['B'] == b['B'] has failed>: failed",
+        "message<a['B'] = 2>",
+        "message<b['B'] = 666>",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: check a['C'] == b['C'] has failed>: failed",
+        "message<a['C'] = 3>",
+        "message<b['C'] = 666>",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'A', 1> is not present in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'A', 1> is not present in the map a>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has passed>: passed",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<UnorderedMapAssertions>: failed",
+        "leaveSuite<MapComparisons>: failed",
+        "leaveTest<selftest>: failed",
+      };
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(MultiMapAssertions) {
+    Runtime runtime("MapComparisons", "MultiMapAssertions");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<MapComparisons>",
+        "enterCase<MultiMapAssertions>",
+        "enterState<AnonymousState>",
+        "assert<the assertion a == b has passed>: passed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'C', 3> is not present in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'D', 4> is not present in the map a>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: check a['B'] == b['B'] has failed>: failed",
+        "message<a['B'] = 2>",
+        "message<b['B'] = 666>",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: check a['C'] == b['C'] has failed>: failed",
+        "message<a['C'] = 3>",
+        "message<b['C'] = 666>",
+        "leaveAssert<>",
+        "assert<the assertion a == b has passed>: passed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: check a['B'] == b['B'] has failed>: failed",
+        "message<a['B'] = 2>",
+        "message<b['B'] = 666>",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: check a['B'] == b['B'] has failed>: failed",
+        "message<a['B'] = 3>",
+        "message<b['B'] = 666>",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: check a['C'] == b['C'] has failed>: failed",
+        "message<a['C'] = 4>",
+        "message<b['C'] = 666>",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: check a['C'] == b['C'] has failed>: failed",
+        "message<a['C'] = 5>",
+        "message<b['C'] = 666>",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the subsequence of items with the key 'B' is longer in the map a than in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'B', 2> is not present in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the subsequence of items with the key 'C' is longer in the map a than in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'C', 4> is not present in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the subsequence of items with the key 'B' is shorter in the map a than in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the subsequence of items with the key 'C' is shorter in the map a than in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'B', 2> is not present in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'B', 2> is not present in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has passed>: passed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'A', 1> is not present in the map a>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'A', 1> is not present in the map a>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'A', 1> is not present in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'A', 1> is not present in the map b>: failed",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<MultiMapAssertions>: failed",
+        "leaveSuite<MapComparisons>: failed",
+        "leaveTest<selftest>: failed",
+      };
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(UnorderedMultiMapAssertions) {
+    Runtime runtime("MapComparisons", "UnorderedMultiMapAssertions");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<MapComparisons>",
+        "enterCase<UnorderedMultiMapAssertions>",
+        "enterState<AnonymousState>",
+        "assert<the assertion a == b has passed>: passed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'C', 3> is not present in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'D', 4> is not present in the map a>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: check a['B'] == b['B'] has failed>: failed",
+        "message<a['B'] = 2>",
+        "message<b['B'] = 666>",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: check a['C'] == b['C'] has failed>: failed",
+        "message<a['C'] = 3>",
+        "message<b['C'] = 666>",
+        "leaveAssert<>",
+        "assert<the assertion a == b has passed>: passed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'A', 1> is not present in the map a>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'A', 1> is not present in the map b>: failed",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<UnorderedMultiMapAssertions>: failed",
+        "leaveSuite<MapComparisons>: failed",
+        "leaveTest<selftest>: failed",
+      };
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(MixedAssertions) {
+    Runtime runtime("MapComparisons", "MixedAssertions");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<MapComparisons>",
+        "enterCase<MixedAssertions>",
+        "enterState<AnonymousState>",
+        "assert<the assertion a == b has failed: the item <'A', 1> is not present in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'C', 3> is not present in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'D', 4> is not present in the map a>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: check a['B'] == b['B'] has failed>: failed",
+        "message<a['B'] = 2>",
+        "message<b['B'] = 666>",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: check a['C'] == b['C'] has failed>: failed",
+        "message<a['C'] = 3>",
+        "message<b['C'] = 666>",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the subsequence of items with the key 'B' is shorter in the map a than in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the subsequence of items with the key 'C' is shorter in the map a than in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'A', 1> is not present in the map a>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'C', 3> is not present in the map a>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the item <'D', 4> is not present in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: check a['B'] == b['B'] has failed>: failed",
+        "message<a['B'] = 666>",
+        "message<b['B'] = 2>",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: check a['C'] == b['C'] has failed>: failed",
+        "message<a['C'] = 666>",
+        "message<b['C'] = 3>",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the subsequence of items with the key 'B' is longer in the map a than in the map b>: failed",
+        "leaveAssert<>",
+        "assert<the assertion a == b has failed: the subsequence of items with the key 'C' is longer in the map a than in the map b>: failed",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<MixedAssertions>: failed",
+        "leaveSuite<MapComparisons>: failed",
+        "leaveTest<selftest>: failed",
+      };
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+}
+
+} /* -- namespace Test */
+
+} /* -- namespace OTest2 */

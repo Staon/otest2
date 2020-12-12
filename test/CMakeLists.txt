@@ -34,6 +34,7 @@ target_otest2_sources(selftest
     itemwise.ot2
     lexicographical.ot2
     mainloop.ot2
+    maps.ot2
     regressions.ot2
     repeaters.ot2
     tee.ot2
@@ -49,6 +50,7 @@ target_otest2_sources(selftest DOMAIN selftest
     selftests/itemwise.ot2
     selftests/lexicographical.ot2
     selftests/mainloop.ot2
+    selftests/maps.ot2
     selftests/regressions.ot2
     selftests/repeaters.ot2
     selftests/userdata.ot2

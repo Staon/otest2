@@ -33,9 +33,14 @@ namespace OTest2 {
  *
  * The default algorithm iterates first and then the second list and checks
  * values in the other list. It's not the most time effective algorithm
- * but it works for ordered maps as well as for unordered maps. The multimaps
- * are supported too - items with the same key must keep the same order
- * in both containers.
+ * but it works for ordered maps as well as for unordered maps.
+ *
+ * The std::multimap are supported too - items with the same key must keep
+ * the same order in both containers.
+ *
+ * As the std::unordered_multimap doesn't keep any defined order of items
+ * with the same key, the container is supported only in a special
+ * case when there are only unique keys inside.
  *
  * The algorithm is controlled by the MapContainerTrait. The default
  * implementation works with STL-like maps.

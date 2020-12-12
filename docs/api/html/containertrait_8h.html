@@ -73,14 +73,33 @@ $(function() {
 <div class="title">containertrait.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><div class="dynheader">
+<div class="textblock"><code>#include &lt;map&gt;</code><br />
+<code>#include &lt;unordered_map&gt;</code><br />
+<code>#include &lt;utility&gt;</code><br />
+<code>#include &lt;<a class="el" href="typetraits_8h_source.html">otest2/typetraits.h</a>&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for containertrait.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="containertrait_8h__incl.png" border="0" usemap="#include_2otest2_2containertrait_8h" alt=""/></div>
+<map name="include_2otest2_2containertrait_8h" id="include_2otest2_2containertrait_8h">
+<area shape="rect" title=" " alt="" coords="93,5,307,32"/>
+<area shape="rect" title=" " alt="" coords="5,80,56,107"/>
+<area shape="rect" title=" " alt="" coords="81,80,205,107"/>
+<area shape="rect" title=" " alt="" coords="229,80,285,107"/>
+<area shape="rect" href="typetraits_8h.html" title=" " alt="" coords="310,80,450,107"/>
+<area shape="rect" title=" " alt="" coords="293,155,363,181"/>
+<area shape="rect" title=" " alt="" coords="387,155,477,181"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="containertrait_8h__dep__incl.png" border="0" usemap="#include_2otest2_2containertrait_8hdep" alt=""/></div>
 <map name="include_2otest2_2containertrait_8hdep" id="include_2otest2_2containertrait_8hdep">
-<area shape="rect" title=" " alt="" coords="178,5,393,32"/>
+<area shape="rect" title=" " alt="" coords="321,5,535,32"/>
 <area shape="rect" href="assertionsitemwiseimpl_8h.html" title=" " alt="" coords="5,80,283,107"/>
 <area shape="rect" href="assertionslexiimpl_8h.html" title=" " alt="" coords="307,80,549,107"/>
+<area shape="rect" href="assertionsmapimpl_8h.html" title=" " alt="" coords="573,80,824,107"/>
 </map>
 </div>
 </div>
@@ -91,10 +110,25 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTest2_1_1ListContainerTrait.html">OTest2::ListContainerTrait&lt; Container_ &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A simple trait allowing access to list container's iterators.  <a href="structOTest2_1_1ListContainerTrait.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Private_1_1HasContainerKeyComp.html">OTest2::Private::HasContainerKeyComp&lt; Type_ &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTest2_1_1Private_1_1MapTraitImplCommon.html">OTest2::Private::MapTraitImplCommon&lt; Container_ &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTest2_1_1Private_1_1MapTraitImpl.html">OTest2::Private::MapTraitImpl&lt; Container_, key_comp_ &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTest2_1_1Private_1_1MapTraitImpl_3_01Container___00_01true_01_4.html">OTest2::Private::MapTraitImpl&lt; Container_, true &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTest2_1_1Private_1_1MapTraitImpl_3_01Container___00_01false_01_4.html">OTest2::Private::MapTraitImpl&lt; Container_, false &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTest2_1_1MapContainerTrait.html">OTest2::MapContainerTrait&lt; Container_ &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A trait for access to a map container.  <a href="structOTest2_1_1MapContainerTrait.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespaceOTest2"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOTest2.html">OTest2</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespaceOTest2_1_1Private"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceOTest2_1_1Private.html">OTest2::Private</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

@@ -1,20 +1,16 @@
 var searchData=
 [
-  ['registry_897',['Registry',['../classOTest2_1_1Registry.html',1,'OTest2']]],
-  ['regressionassertion_898',['RegressionAssertion',['../classOTest2_1_1RegressionAssertion.html',1,'OTest2']]],
-  ['regressiontrait_899',['RegressionTrait',['../structOTest2_1_1RegressionTrait.html',1,'OTest2']]],
-  ['repeater_900',['Repeater',['../classOTest2_1_1Repeater.html',1,'OTest2']]],
-  ['repeatervalue_901',['RepeaterValue',['../classOTest2_1_1RepeaterValue.html',1,'OTest2']]],
-  ['reporter_902',['Reporter',['../classOTest2_1_1Reporter.html',1,'OTest2']]],
-  ['reporterconsole_903',['ReporterConsole',['../classOTest2_1_1ReporterConsole.html',1,'OTest2']]],
-  ['reporterdebug_904',['ReporterDebug',['../classOTest2_1_1ReporterDebug.html',1,'OTest2']]],
-  ['reporterjunit_905',['ReporterJUnit',['../classOTest2_1_1ReporterJUnit.html',1,'OTest2']]],
-  ['reporterstatistics_906',['ReporterStatistics',['../classOTest2_1_1ReporterStatistics.html',1,'OTest2']]],
-  ['reportertee_907',['ReporterTee',['../classOTest2_1_1ReporterTee.html',1,'OTest2']]],
-  ['runner_908',['Runner',['../classOTest2_1_1Runner.html',1,'OTest2']]],
-  ['runnerfilter_909',['RunnerFilter',['../classOTest2_1_1RunnerFilter.html',1,'OTest2']]],
-  ['runnerfilterentire_910',['RunnerFilterEntire',['../classOTest2_1_1RunnerFilterEntire.html',1,'OTest2']]],
-  ['runnerfilterone_911',['RunnerFilterOne',['../classOTest2_1_1RunnerFilterOne.html',1,'OTest2']]],
-  ['runnerordinary_912',['RunnerOrdinary',['../classOTest2_1_1RunnerOrdinary.html',1,'OTest2']]],
-  ['runnerresult_913',['RunnerResult',['../classOTest2_1_1RunnerResult.html',1,'OTest2']]]
+  ['printtrait_909',['PrintTrait',['../structOTest2_1_1PrintTrait.html',1,'OTest2']]],
+  ['printtrait_3c_20const_20char_20_2a_20_3e_910',['PrintTrait&lt; const char * &gt;',['../structOTest2_1_1PrintTrait_3_01const_01char_01_5_01_4.html',1,'OTest2']]],
+  ['printtrait_3c_20equal_3c_20a_5f_2c_20b_5f_20_3e_20_3e_911',['PrintTrait&lt; Equal&lt; A_, B_ &gt; &gt;',['../structOTest2_1_1PrintTrait_3_01Equal_3_01A___00_01B___01_4_01_4.html',1,'OTest2']]],
+  ['printtrait_3c_20greater_3c_20a_5f_2c_20b_5f_20_3e_20_3e_912',['PrintTrait&lt; Greater&lt; A_, B_ &gt; &gt;',['../structOTest2_1_1PrintTrait_3_01Greater_3_01A___00_01B___01_4_01_4.html',1,'OTest2']]],
+  ['printtrait_3c_20greaterorequal_3c_20a_5f_2c_20b_5f_20_3e_20_3e_913',['PrintTrait&lt; GreaterOrEqual&lt; A_, B_ &gt; &gt;',['../structOTest2_1_1PrintTrait_3_01GreaterOrEqual_3_01A___00_01B___01_4_01_4.html',1,'OTest2']]],
+  ['printtrait_3c_20less_3c_20a_5f_2c_20b_5f_20_3e_20_3e_914',['PrintTrait&lt; Less&lt; A_, B_ &gt; &gt;',['../structOTest2_1_1PrintTrait_3_01Less_3_01A___00_01B___01_4_01_4.html',1,'OTest2']]],
+  ['printtrait_3c_20lessorequal_3c_20a_5f_2c_20b_5f_20_3e_20_3e_915',['PrintTrait&lt; LessOrEqual&lt; A_, B_ &gt; &gt;',['../structOTest2_1_1PrintTrait_3_01LessOrEqual_3_01A___00_01B___01_4_01_4.html',1,'OTest2']]],
+  ['printtrait_3c_20lexigreater_3c_20a_5f_2c_20b_5f_20_3e_20_3e_916',['PrintTrait&lt; LexiGreater&lt; A_, B_ &gt; &gt;',['../structOTest2_1_1PrintTrait_3_01LexiGreater_3_01A___00_01B___01_4_01_4.html',1,'OTest2']]],
+  ['printtrait_3c_20lexigreaterorequal_3c_20a_5f_2c_20b_5f_20_3e_20_3e_917',['PrintTrait&lt; LexiGreaterOrEqual&lt; A_, B_ &gt; &gt;',['../structOTest2_1_1PrintTrait_3_01LexiGreaterOrEqual_3_01A___00_01B___01_4_01_4.html',1,'OTest2']]],
+  ['printtrait_3c_20lexiless_3c_20a_5f_2c_20b_5f_20_3e_20_3e_918',['PrintTrait&lt; LexiLess&lt; A_, B_ &gt; &gt;',['../structOTest2_1_1PrintTrait_3_01LexiLess_3_01A___00_01B___01_4_01_4.html',1,'OTest2']]],
+  ['printtrait_3c_20lexilessorequal_3c_20a_5f_2c_20b_5f_20_3e_20_3e_919',['PrintTrait&lt; LexiLessOrEqual&lt; A_, B_ &gt; &gt;',['../structOTest2_1_1PrintTrait_3_01LexiLessOrEqual_3_01A___00_01B___01_4_01_4.html',1,'OTest2']]],
+  ['printtrait_3c_20notequal_3c_20a_5f_2c_20b_5f_20_3e_20_3e_920',['PrintTrait&lt; NotEqual&lt; A_, B_ &gt; &gt;',['../structOTest2_1_1PrintTrait_3_01NotEqual_3_01A___00_01B___01_4_01_4.html',1,'OTest2']]],
+  ['printtrait_3c_20std_3a_3astring_20_3e_921',['PrintTrait&lt; std::string &gt;',['../structOTest2_1_1PrintTrait_3_01std_1_1string_01_4.html',1,'OTest2']]]
 ];

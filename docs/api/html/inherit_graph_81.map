@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classOTest2_1_1TestMarkBuilder.html" title="Builder of test marks." alt="" coords="5,5,179,32"/>
+<area shape="rect" id="node1" href="$classOTest2_1_1SuiteRepeater.html" title="Generic interface of suite repeater." alt="" coords="5,46,168,73"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1SuiteRepeaterMulti.html" title=" " alt="" coords="217,5,411,47"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1SuiteRepeaterOnce.html" title=" " alt="" coords="216,71,412,112"/>
 </map>

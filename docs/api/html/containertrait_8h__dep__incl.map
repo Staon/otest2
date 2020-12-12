@@ -1,5 +1,6 @@
 <map id="include/otest2/containertrait.h" name="include/otest2/containertrait.h">
-<area shape="rect" id="node1" title=" " alt="" coords="178,5,393,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="321,5,535,32"/>
 <area shape="rect" id="node2" href="$assertionsitemwiseimpl_8h.html" title=" " alt="" coords="5,80,283,107"/>
 <area shape="rect" id="node3" href="$assertionslexiimpl_8h.html" title=" " alt="" coords="307,80,549,107"/>
+<area shape="rect" id="node4" href="$assertionsmapimpl_8h.html" title=" " alt="" coords="573,80,824,107"/>
 </map>

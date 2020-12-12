@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['now_1370',['now',['../classOTest2_1_1TimeSource.html#a536250771afc59351ad96970fb873ef1',1,'OTest2::TimeSource::now()'],['../classOTest2_1_1TimeSourceSys.html#a0a4f8ed41d85115de4254c807befc49f',1,'OTest2::TimeSourceSys::now()']]]
+  ['make_5funique_1398',['make_unique',['../namespaceOTest2.html#a7983b565255ac8563b9635aeb7b6f57b',1,'OTest2']]],
+  ['makepointer_1399',['makePointer',['../namespaceOTest2.html#a860152fd0e57a067685ba1cce29d685c',1,'OTest2']]],
+  ['mapassertion_1400',['MapAssertion',['../classOTest2_1_1MapAssertion.html#a5b58b1a2f09526b1aac9a6d7b039ecaf',1,'OTest2::MapAssertion']]]
 ];

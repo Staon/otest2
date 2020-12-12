@@ -35,5 +35,7 @@ var searchData=
   ['assertionsitemwise_2eh_32',['assertionsitemwise.h',['../assertionsitemwise_8h.html',1,'']]],
   ['assertionsitemwiseimpl_2eh_33',['assertionsitemwiseimpl.h',['../assertionsitemwiseimpl_8h.html',1,'']]],
   ['assertionslexi_2eh_34',['assertionslexi.h',['../assertionslexi_8h.html',1,'']]],
-  ['assertionslexiimpl_2eh_35',['assertionslexiimpl.h',['../assertionslexiimpl_8h.html',1,'']]]
+  ['assertionslexiimpl_2eh_35',['assertionslexiimpl.h',['../assertionslexiimpl_8h.html',1,'']]],
+  ['assertionsmap_2eh_36',['assertionsmap.h',['../assertionsmap_8h.html',1,'']]],
+  ['assertionsmapimpl_2eh_37',['assertionsmapimpl.h',['../assertionsmapimpl_8h.html',1,'']]]
 ];

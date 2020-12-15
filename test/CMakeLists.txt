@@ -33,6 +33,7 @@ target_otest2_sources(selftest
     hirschberg.ot2
     itemwise.ot2
     lexicographical.ot2
+    longtexts.ot2
     mainloop.ot2
     maps.ot2
     regressions.ot2
@@ -49,6 +50,7 @@ target_otest2_sources(selftest DOMAIN selftest
     selftests/fixtureobject.ot2
     selftests/itemwise.ot2
     selftests/lexicographical.ot2
+    selftests/longtexts.ot2
     selftests/mainloop.ot2
     selftests/maps.ot2
     selftests/regressions.ot2

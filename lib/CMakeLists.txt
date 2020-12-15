@@ -31,6 +31,7 @@ add_library(libotest2
     assertbean.cpp
     assertcontext.cpp
     assertions.cpp
+    assertionstext.cpp
     base64istream.cpp
     base64ostream.cpp
     bzip2istream.cpp

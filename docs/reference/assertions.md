@@ -199,6 +199,61 @@ Both keys and value in the containers must be printable by the `operator <<`
 or they must have implementation of the
 [`::OTest::PrintTrait`]({{ "api/html/structOTest2_1_1PrintTrait.html" | relative_url }}). 
 
+## Long Text Assertions
+
+This group of assertions computes diff (longest common sequence) of specified
+text files (difference is computed per text lines). If the texts are different,
+the assertion fails and the computed difference is printed. The text may be
+read from a C++ stream, from a string or from a text file.
+
+```c++
+bool testAssertLongTextSS(
+    std::istream& a_, std::istream& b_);
+
+bool testAssertLongTextST(
+    std::istream& a_, const std::string& b_);
+
+bool testAssertLongTextSF(
+    std::istream& a_,const std::string& file_b_);
+
+bool testAssertLongTextTS(
+    const std::string& a_, std::istream& b_);
+
+bool testAssertLongTextTT(
+    const std::string& a_, const std::string& b_);
+
+bool testAssertLongTextTF(
+    const std::string& a_, const std::string& file_b_);
+
+bool testAssertLongTextFS(
+    const std::string& file_a_, std::istream& b_);
+
+bool testAssertLongTextFT(
+    const std::string& file_a_, const std::string& b_);
+
+bool testAssertLongTextFF(
+    const std::string& file_a_, const std::string& file_b_);
+```
+
+The last two characters of the assertion's name code its parameters: **S**
+means *stream*, **T** means *text string* and **F** means *file name*.
+
+Example of the output:
+```
+[.../test/longtexts.ot2:256] selftest::LongTextsComparisons::StreamStreamCompari
+son: the texts are different
+    ........................................
+    0002 0002   : my awesome line 002
+    0003 0003   : my awesome line 003
+    0004 0004   : my awesome line 004
+    0005      < : my awesome line 005
+    0006      < : my awesome line 006
+         0005 > : my awesome replaced line 005
+    0007 0006   : my awesome line 007
+    0008 0007   : my awesome line 008
+    0009 0008   : my awesome line 009
+    ........................................
+```
 ## Regression Assertions
 
 ```c++

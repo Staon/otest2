@@ -1,13 +1,14 @@
 <map id="include/otest2/difflogreverse.h" name="include/otest2/difflogreverse.h">
-<area shape="rect" id="node1" title=" " alt="" coords="250,5,465,32"/>
-<area shape="rect" id="node2" href="$hirschberg_8h.html" title=" " alt="" coords="161,80,356,107"/>
-<area shape="rect" id="node11" href="$difflogreverse_8cpp.html" title=" " alt="" coords="381,80,534,107"/>
-<area shape="rect" id="node3" href="$difflogarray_8h.html" title=" " alt="" coords="24,155,221,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="417,5,631,32"/>
+<area shape="rect" id="node2" href="$hirschberg_8h.html" title=" " alt="" coords="328,80,523,107"/>
+<area shape="rect" id="node12" href="$difflogreverse_8cpp.html" title=" " alt="" coords="547,80,701,107"/>
+<area shape="rect" id="node3" href="$difflogarray_8h.html" title=" " alt="" coords="123,155,320,181"/>
 <area shape="rect" id="node5" href="$testmark_8cpp.html" title=" " alt="" coords="165,229,291,256"/>
-<area shape="rect" id="node6" href="$difflogblock_8h.html" title=" " alt="" coords="357,155,555,181"/>
+<area shape="rect" id="node6" href="$difflogblock_8h.html" title=" " alt="" coords="394,155,593,181"/>
+<area shape="rect" id="node10" href="$assertionstext_8cpp.html" title=" " alt="" coords="799,229,958,256"/>
 <area shape="rect" id="node4" href="$difflogarray_8cpp.html" title=" " alt="" coords="5,229,141,256"/>
 <area shape="rect" id="node7" href="$testmarkdiffprinter_8h.html" title=" " alt="" coords="365,229,611,256"/>
 <area shape="rect" id="node8" href="$regressions_8cpp.html" title=" " alt="" coords="257,304,399,331"/>
-<area shape="rect" id="node10" href="$difflogblock_8cpp.html" title=" " alt="" coords="636,229,775,256"/>
+<area shape="rect" id="node11" href="$difflogblock_8cpp.html" title=" " alt="" coords="636,229,775,256"/>
 <area shape="rect" id="node9" href="$testmarkdiffprinter_8cpp.html" title=" " alt="" coords="423,304,609,331"/>
 </map>

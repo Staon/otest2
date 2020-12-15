@@ -1,0 +1,139 @@
+/*
+ * Copyright (C) 2020 Ondrej Starek
+ *
+ * This file is part of OTest2
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include <iostream>
+#include <sstream>
+#include <string>
+
+namespace OTest2 {
+
+namespace SelfTest {
+
+namespace {
+
+const std::string FULL(R"string(my awesome line 001
+my awesome line 002
+my awesome line 003
+my awesome line 004
+my awesome line 005
+my awesome line 006
+my awesome line 007
+my awesome line 008
+my awesome line 009
+my awesome line 010
+my awesome line 011
+my awesome line 012
+my awesome line 013
+my awesome line 014
+my awesome line 015
+my awesome line 016
+)string");
+
+const std::string CHANGES_AT_EDGES(R"string(my awesome line 001
+my awesome line 002
+my awesome replace line 003
+my awesome line 004
+my awesome line 005
+my awesome line 006
+my awesome line 007
+my awesome line 008
+my awesome line 009
+my awesome line 010
+my awesome line 011
+my awesome line 012
+my awesome line 013
+my awesome line 014
+my awesome replaced line 015
+my awesome line 016
+)string");
+
+const std::string CHANGES_INSIDE(R"string(my awesome line 001
+my awesome line 002
+my awesome line 003
+my awesome line 004
+my awesome replaced line 005
+my awesome line 007
+my awesome line 008
+my awesome line 009
+my awesome line 009/2
+my awesome line 009/3
+my awesome line 010
+my awesome line 011
+my awesome line 013
+my awesome line 014
+my awesome line 015
+my awesome line 016
+)string");
+
+const std::string FULL_FILE("selftests/testdata/longtextfull.txt");
+const std::string CHANGED_FILE("selftests/testdata/longtextchanged.txt");
+
+} /* -- namespace */
+
+TEST_SUITE(LongTextsComparisons) {
+  TEST_CASE(DiffAssertions) {
+    TEST_SIMPLE() {
+      /* -- equal streams */
+      {
+        std::istringstream a_(FULL);
+        std::istringstream b_(FULL);
+        testAssertLongTextSS(a_, b_);
+      }
+
+      /* -- check how the diff is printed */
+      {
+        std::istringstream a_(FULL);
+        std::istringstream b_(CHANGES_AT_EDGES);
+        testAssertLongTextSS(a_, b_);
+      }
+      {
+        std::istringstream a_(FULL);
+        std::istringstream b_(CHANGES_INSIDE);
+        testAssertLongTextSS(a_, b_);
+      }
+
+      /* -- check other variants of the assertions */
+      {
+        std::istringstream a_(FULL);
+        testAssertLongTextST(a_, CHANGES_INSIDE);
+      }
+      {
+        std::istringstream a_(FULL);
+        testAssertLongTextSF(a_, CHANGED_FILE);
+      }
+      {
+        std::istringstream b_(CHANGES_INSIDE);
+        testAssertLongTextTS(FULL, b_);
+      }
+      testAssertLongTextTT(FULL, CHANGES_INSIDE);
+      testAssertLongTextTF(FULL, CHANGED_FILE);
+      {
+        std::istringstream b_(CHANGES_INSIDE);
+        testAssertLongTextFS(FULL_FILE, b_);
+      }
+      testAssertLongTextFT(FULL_FILE, CHANGES_INSIDE);
+      testAssertLongTextFF(FULL_FILE, CHANGED_FILE);
+    }
+  }
+}
+
+} /* -- namespace SelfTest */
+
+} /* -- namespace OTest2 */

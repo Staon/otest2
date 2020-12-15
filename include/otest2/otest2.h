@@ -24,6 +24,7 @@
 #include <otest2/assertionsitemwise.h>
 #include <otest2/assertionslexi.h>
 #include <otest2/assertionsmap.h>
+#include <otest2/assertionstext.h>
 #include <otest2/comparisons.h>
 #include <otest2/comparisonslexi.h>
 #include <otest2/controls.h>

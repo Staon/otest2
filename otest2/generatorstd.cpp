@@ -75,6 +75,7 @@ struct GeneratorStd::Impl {
     struct ObjectRecord {
         std::string name;
         std::string repeater_type;
+        Parser::ObjectTags tags;
     };
 
     /* -- list of suites */
@@ -242,6 +243,7 @@ void GeneratorStd::beginFile() {
       << "#include <otest2/regressionsimpl.h>\n"
       << "#include <otest2/stategenerated.h>\n"
       << "#include <otest2/suitegenerated.h>\n"
+      << "#include <otest2/tags.h>\n"
       << "#include <otest2/typetraits.h>\n"
       << "#include <otest2/userdata.h>\n"
       << '\n';
@@ -331,7 +333,8 @@ void GeneratorStd::endUserArea(
 }
 
 void GeneratorStd::enterSuite(
-    const std::string& suite_) {
+    const std::string& suite_,
+    const Parser::ObjectTags& tags_) {
   assert(pimpl->suite.empty() && pimpl->testcase.empty() && pimpl->state.empty());
   assert(!suite_.empty());
 
@@ -341,7 +344,7 @@ void GeneratorStd::enterSuite(
   pimpl->start_up_fce.emplace_back(nullptr);
   pimpl->tear_down_fce.emplace_back(nullptr);
   pimpl->repeater.push_back("");
-  pimpl->suites.push_back({suite_, ""});
+  pimpl->suites.push_back({suite_, "", tags_});
   pimpl->indent += 2;
 
   pimpl->output
@@ -392,7 +395,8 @@ void GeneratorStd::finishSuiteFunctions() {
 }
 
 void GeneratorStd::enterCase(
-    const std::string& case_) {
+    const std::string& case_,
+    const Parser::ObjectTags& tags_) {
   assert(!pimpl -> suite.empty() && pimpl -> testcase.empty() && pimpl -> state.empty());
   assert(!case_.empty());
 
@@ -402,7 +406,7 @@ void GeneratorStd::enterCase(
   pimpl->start_up_fce.emplace_back(nullptr);
   pimpl->tear_down_fce.emplace_back(nullptr);
   pimpl->repeater.push_back("");
-  pimpl->cases.push_back({case_, ""});
+  pimpl->cases.push_back({case_, "", tags_});
   pimpl->indent += 2;
 
   pimpl->output
@@ -696,7 +700,10 @@ void GeneratorStd::leaveSuite() {
     pimpl->output
       << " > > >(\n"
       << "              this,\n"
-      << "              &" << pimpl->suite << "::createCase_" << case_.name << "));\n";
+      << "              &" << pimpl->suite << "::createCase_" << case_.name << ",\n"
+      << "              ";
+    writeTags(pimpl->output, case_.tags, pimpl->indent);
+    pimpl->output << "));\n";
   }
   pimpl->output
       << "    }\n\n";
@@ -754,7 +761,9 @@ void GeneratorStd::endFile(
         pimpl->output << "::OTest2::SuiteRepeaterOnce< " << suite_.name;
       else
         pimpl->output << "::OTest2::SuiteRepeaterMulti< " << suite_.name << ", " << suite_.repeater_type;
-      pimpl->output << " > > >());\n";
+      pimpl->output << " > > >(";
+      writeTags(pimpl->output, suite_.tags, pimpl->indent);
+      pimpl->output << "));\n";
     }
     pimpl->output
         << "    }\n"

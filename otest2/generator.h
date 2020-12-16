@@ -24,6 +24,7 @@
 
 #include "function.h"
 #include "initializer.h"
+#include "objecttags.h"
 
 namespace OTest2 {
 
@@ -143,9 +144,11 @@ class Generator {
      * @brief Generate beginning of the suite class
      *
      * @param name_ Name of the suite
+     * @param tags_ Tags assigned to the suite object
      */
     virtual void enterSuite(
-        const std::string& name_) = 0;
+        const std::string& name_,
+        const Parser::ObjectTags& tags_) = 0;
 
     /**
      * @brief Finish block of suite's variables
@@ -161,9 +164,11 @@ class Generator {
      * @brief Beginning of a test case
      *
      * @param name_ Name of the case
+     * @param tags_ Tags assigned to the suite object
      */
     virtual void enterCase(
-        const std::string& name_) = 0;
+        const std::string& name_,
+        const Parser::ObjectTags& tags_) = 0;
 
     /**
      * @brief Finish block of case's variables

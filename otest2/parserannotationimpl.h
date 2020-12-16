@@ -32,7 +32,7 @@ namespace Parser {
 
 template<typename Compare_>
 bool hasAnnotation(
-    clang::Decl* decl_,
+    const clang::Decl* decl_,
     Compare_& cmp_) {
   if(decl_->hasAttrs()) {
     for(

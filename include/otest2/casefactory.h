@@ -25,6 +25,7 @@
 namespace OTest2 {
 
 class Context;
+class Tags;
 
 /**
  * @brief Simple factory of one test case
@@ -46,6 +47,11 @@ class CaseFactory {
      * @brief Dtor
      */
     virtual ~CaseFactory();
+
+    /**
+     * @brief Get the tags assigned to the testcase
+     */
+    virtual Tags getCaseTags() const = 0;
 
     /**
      * @brief Create the test case repeater

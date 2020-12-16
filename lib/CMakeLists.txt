@@ -102,6 +102,7 @@ add_library(libotest2
     suitegenerated.cpp
     suiteordinary.cpp
     suiterepeater.cpp
+    tags.cpp
     teeostream.cpp
     terminaldriver.cpp
     testmark.cpp

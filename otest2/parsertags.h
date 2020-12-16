@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2019 Ondrej Starek
+ * Copyright (C) 2020 Ondrej Starek
  *
- * This file is part of OTest2.
+ * This file is part of OTest2
  *
  * OTest2 is free software: you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by
@@ -16,36 +16,42 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef OTest2__OTEST2_GENERFMT_H_
-#define OTest2__OTEST2_GENERFMT_H_
 
-#include <iosfwd>
+#ifndef OTest2_OTEST2_PARSERTAGS_H_
+#define OTest2_OTEST2_PARSERTAGS_H_
+
+#include <set>
 #include <string>
 
 #include "objecttags.h"
 
+namespace clang {
+
+class Decl;
+
+} /* -- namespace clang */
+
 namespace OTest2 {
 
-/**
- * @brief Write specified string as a C string - in double quotes and escaped
- */
-std::ostream& writeCString(
-    std::ostream& os_,
-    const std::string& text_);
+class ParserContext;
+
+namespace Parser {
 
 /**
- * @brief Write initializer of tags of a testing object
+ * @brief Parse tags
  *
- * @param os_ An output stream
- * @param tags_ The tags
- * @param indent_ Indentation level
- * @return The output stream
+ * @param[in] context_ Parser context
+ * @param[in] decl_ A declaration object. The tag annotation is searched on.
+ * @param[out] tags_ A container which the tags are filled in
+ * @return True if the tags are correctly parsed. False if an error happens.
  */
-std::ostream& writeTags(
-    std::ostream& os_,
-    const Parser::ObjectTags& tags_,
-    int indent_);
+bool parseTags(
+    ParserContext* context_,
+    const clang::Decl* decl_,
+    ObjectTags& tags_);
+
+} /* -- namespace Parser */
 
 } /* -- namespace OTest2 */
 
-#endif /* OTest2__OTEST2_GENERFMT_H_ */
+#endif /* -- OTest2_OTEST2_PARSERTAGS_H_ */

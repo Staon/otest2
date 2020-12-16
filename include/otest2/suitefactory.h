@@ -25,6 +25,7 @@
 namespace OTest2 {
 
 class Context;
+class Tags;
 
 /**
  * @brief Simple interface for creation of a suite object
@@ -51,6 +52,11 @@ class SuiteFactory {
      * @brief Dtor
      */
     virtual ~SuiteFactory();
+
+    /**
+     * @brief Get tags assigned to the suite
+     */
+    virtual Tags getSuiteTags() const = 0;
 
     /**
      * @brief Create the suite

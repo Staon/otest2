@@ -29,6 +29,7 @@
 #include <otest2/repeateronce.h>
 #include <otest2/suitefactory.h>
 #include <otest2/suiteptr.h>
+#include <otest2/tags.h>
 
 namespace OTest2 {
 
@@ -49,6 +50,9 @@ struct TypeOfParent<T_&> {
 
 template<typename Repeater_>
 class SuiteGeneratedFactory : public SuiteFactory {
+  private:
+    Tags tags;
+
   public:
     /* -- avoid copying */
     SuiteGeneratedFactory(
@@ -56,11 +60,17 @@ class SuiteGeneratedFactory : public SuiteFactory {
     SuiteGeneratedFactory& operator =(
         const SuiteGeneratedFactory&) = delete;
 
-    SuiteGeneratedFactory() {
+    explicit SuiteGeneratedFactory(
+        Tags&& tags_) :
+      tags(std::move(tags_)) {
 
     }
 
     virtual ~SuiteGeneratedFactory() = default;
+
+    virtual Tags getSuiteTags() const override {
+      return tags;
+    }
 
     virtual SuiteRepeaterPtr createSuite(
         const Context& context_) {
@@ -73,6 +83,7 @@ class CaseGeneratedFactory : public CaseFactory {
   private:
     Suite_* suite;
     typename Repeater_::FactoryMethod factory_method;
+    Tags tags;
 
   public:
     /* -- avoid copying */
@@ -83,13 +94,19 @@ class CaseGeneratedFactory : public CaseFactory {
 
     explicit CaseGeneratedFactory(
         Suite_* suite_,
-        typename Repeater_::FactoryMethod factory_method_) :
+        typename Repeater_::FactoryMethod factory_method_,
+        Tags&& tags_) :
       suite(suite_),
-      factory_method(factory_method_) {
+      factory_method(factory_method_),
+      tags(std::move(tags_)) {
 
     }
 
     virtual ~CaseGeneratedFactory() = default;
+
+    virtual Tags getCaseTags() const override {
+      return tags;
+    }
 
     virtual CaseRepeaterPtr createCase(
         const Context& context_) {

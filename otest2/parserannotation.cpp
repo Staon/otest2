@@ -27,10 +27,11 @@ const std::string CASE_ANNOTATION("otest2::case");
 const std::string STATE_ANNOTATION("otest2::state");
 const std::string START_UP_ANNOTATION("otest2::startUp");
 const std::string TEAR_DOWN_ANNOTATION("otest2::tearDown");
-const std::string ASSERTION_ANNOTATION("^otest2::assertion[(]([^,]+([,][^,]+)*)[)]$");
+const std::string ASSERTION_ANNOTATION("^otest2::assertion[(](.*)[)]$");
 const std::string SWITCH_STATE_ANNOTATION("otest2::switchState");
 const std::string CATCH_ANNOTATION("otest2::catch");
 const std::string USER_DATA_VAR_ANNOTATION("^otest2::userData[(](.*)[)]$");
+const std::string TAG_ANNOTATION("^otest2::tags[(](.*)[)]$");
 
 bool AnnotationStringEqual::operator()(
     const std::string& annotation_) {

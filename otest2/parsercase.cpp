@@ -23,11 +23,13 @@
 
 #include "function.h"
 #include "generator.h"
+#include "objecttags.h"
 #include "parserannotation.h"
 #include "parsercode.h"
 #include "parsercontextimpl.h"
 #include "parserfixture.h"
 #include "parserfunction.h"
+#include "parsertags.h"
 
 namespace OTest2 {
 
@@ -144,7 +146,12 @@ bool parseCase(
     clang::NamespaceDecl* ns_) {
   context_->state = ParserContext::CASE_FIXTURES;
 
-  context_->generator->enterCase(ns_->getNameAsString());
+  /* -- parse case's tags */
+  ObjectTags tags_;
+  if(!parseTags(context_, ns_, tags_))
+    return false;
+
+  context_->generator->enterCase(ns_->getNameAsString(), tags_);
   if(!parseCaseBody(context_, ns_))
     return false;
   context_->generator->leaveCase();

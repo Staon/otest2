@@ -42,10 +42,11 @@ extern const std::string ASSERTION_ANNOTATION;
 extern const std::string SWITCH_STATE_ANNOTATION;
 extern const std::string CATCH_ANNOTATION;
 extern const std::string USER_DATA_VAR_ANNOTATION;
+extern const std::string TAG_ANNOTATION;
 
 template<typename Compare_>
 bool hasAnnotation(
-    clang::Decl* decl_,
+    const clang::Decl* decl_,
     Compare_& cmp_);
 
 struct AnnotationStringEqual {

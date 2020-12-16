@@ -31,6 +31,8 @@
 #include <objectpath.h>
 #include <reporter.h>
 #include <semanticstack.h>
+#include <tags.h>
+#include <tagsstack.h>
 #include <utils.h>
 
 namespace OTest2 {
@@ -42,6 +44,7 @@ struct RunnerOrdinary::Impl {
     CommandStack command_stack;
     SemanticStack semantic_stack;
     ObjectPath object_path;
+    TagsStack tags_stack;
     Registry* registry;
     std::string name;
     Context context;
@@ -62,6 +65,7 @@ struct RunnerOrdinary::Impl {
         TestMarkFactory* test_mark_factory_,
         TestMarkStorage* test_mark_storage_,
         UserData* user_data_,
+        TagFilter* tag_filter_,
         const std::string& name_);
     ~Impl();
 };
@@ -76,10 +80,13 @@ RunnerOrdinary::Impl::Impl(
     TestMarkFactory* test_mark_factory_,
     TestMarkStorage* test_mark_storage_,
     UserData* user_data_,
+    TagFilter* tag_filter_,
     const std::string& name_) :
   owner(owner_),
   command_stack(),
   semantic_stack(),
+  object_path(),
+  tags_stack(),
   registry(registry_),
   name(name_),
   context(
@@ -92,7 +99,9 @@ RunnerOrdinary::Impl::Impl(
       runner_filter_,
       test_mark_factory_,
       test_mark_storage_,
-      user_data_) {
+      user_data_,
+      &tags_stack,
+      tag_filter_) {
   assert(registry != nullptr);
   assert(context.reporter != nullptr);
   assert(context.runner_filter != nullptr);
@@ -101,6 +110,7 @@ RunnerOrdinary::Impl::Impl(
   /* -- prepare start of the test */
   command_stack.pushCommand(std::make_shared<CmdStartTest>(name, registry));
   semantic_stack.push(true); /* -- test passes by default */
+  tags_stack.pushTags(true, Tags()); /* -- no tags */
 }
 
 RunnerOrdinary::Impl::~Impl() {
@@ -116,6 +126,7 @@ RunnerOrdinary::RunnerOrdinary(
     TestMarkFactory* test_mark_factory_,
     TestMarkStorage* test_mark_storage_,
     UserData* user_data_,
+    TagFilter* tag_filter_,
     const std::string& name_) :
   pimpl(new Impl(
       this,
@@ -127,6 +138,7 @@ RunnerOrdinary::RunnerOrdinary(
       test_mark_factory_,
       test_mark_storage_,
       user_data_,
+      tag_filter_,
       name_)) {
 
 }

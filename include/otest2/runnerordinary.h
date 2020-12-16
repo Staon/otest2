@@ -30,6 +30,7 @@ class ExcCatcher;
 class Registry;
 class Reporter;
 class RunnerFilter;
+class TagFilter;
 class TestMarkFactory;
 class TestMarkStorage;
 class TimeSource;
@@ -68,6 +69,9 @@ class RunnerOrdinary : public Runner {
      *     taken.
      * @param user_data_ A container keeping user's data passed into the test.
      *     The ownership is not taken.
+     * @param tag_filter_ A tag filter - an object which keeps the tag
+     *     expression allowing filtering of testing objects by assigned tags.
+     *     The ownership is not taken.
      * @param name_ Name of the test (shown in the test report)
      */
     explicit RunnerOrdinary(
@@ -79,6 +83,7 @@ class RunnerOrdinary : public Runner {
         TestMarkFactory* test_mark_factory_,
         TestMarkStorage* test_mark_storage_,
         UserData* user_data_,
+        TagFilter* tag_filter_,
         const std::string& name_);
 
     /**

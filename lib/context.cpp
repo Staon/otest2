@@ -31,7 +31,9 @@ Context::Context(
     RunnerFilter* runner_filter_,
     TestMarkFactory* test_mark_factory_,
     TestMarkStorage* test_mark_storage_,
-    UserData* user_data_) :
+    UserData* user_data_,
+    TagsStack* tags_stack_,
+    TagFilter* tag_filter_) :
   command_stack(command_stack_),
   semantic_stack(semantic_stack_),
   object_path(object_path_),
@@ -41,7 +43,9 @@ Context::Context(
   runner_filter(runner_filter_),
   test_mark_factory(test_mark_factory_),
   test_mark_storage(test_mark_storage_),
-  user_data(user_data_) {
+  user_data(user_data_),
+  tags_stack(tags_stack_),
+  tag_filter(tag_filter_) {
 
 }
 

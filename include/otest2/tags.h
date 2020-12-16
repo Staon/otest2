@@ -85,6 +85,20 @@ class Tags {
      */
     void appendTag(
         const std::string& tag_);
+
+    /**
+     * @brief Find a tag in the list
+     *
+     * @param tag_ The tag
+     * @return True if the tag is present
+     */
+    bool findTag(
+        const std::string& tag_) const noexcept;
+
+    /**
+     * @brief Check if the list is empty
+     */
+    bool isEmpty() const noexcept;
 };
 
 } /* -- namespace OTest2 */

@@ -19,6 +19,7 @@
 
 #include <tags.h>
 
+#include <algorithm>
 #include <utility>
 
 namespace OTest2 {
@@ -71,6 +72,18 @@ Tags& Tags::operator = (
 void Tags::appendTag(
     const std::string& tag_) {
   tags.push_back(tag_);
+}
+
+bool Tags::findTag(
+    const std::string& tag_) const noexcept {
+  /* -- there should be maximally ones of tags -> there is no need
+   *    to implement better searching. */
+  auto iter_(std::find(tags.begin(), tags.end(), tag_));
+  return iter_ != tags.end();
+}
+
+bool Tags::isEmpty() const noexcept {
+  return tags.empty();
 }
 
 } /* -- namespace OTest2 */

@@ -24,12 +24,16 @@
 #include <string>
 
 #include <casefactory.h>
+#include <cmdpoptags.h>
 #include <cmdrepeatcase.h>
 #include <commandptr.h>
 #include <commandstack.h>
 #include <context.h>
 #include <runnerfilter.h>
 #include <suiteordinary.h>
+#include <tagfilter.h>
+#include <tags.h>
+#include <tagsstack.h>
 
 namespace OTest2 {
 
@@ -56,8 +60,13 @@ void CmdNextCase::run(
     context_.command_stack->pushCommand(
         std::make_shared<CmdNextCase>(suite, current + 1));
 
+    /* -- merge object's tags with parent's ones */
+    context_.command_stack->pushCommand(std::make_shared<CmdPopTags>());
+    context_.tags_stack->pushTags(false, factory_->getCaseTags());
+
     /* -- create and schedule the testcase repeater if it's not filtered */
-    if(!context_.runner_filter->filterCase(suite->getName(), case_name_)) {
+    if(!context_.runner_filter->filterCase(suite->getName(), case_name_)
+       && !context_.tag_filter->filterObject(*context_.tags_stack)) {
       auto repeater_(factory_->createCase(context_));
       context_.command_stack->pushCommand(std::make_shared<CmdRepeatCase>(
           repeater_, suite->getName(), case_name_));

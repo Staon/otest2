@@ -44,12 +44,13 @@ std::unique_ptr<TestMarkStorage> createTestMarkStorage(
 
 
 Runtime::ReportPaths Runtime::report_paths_mark;
+Runtime::Tags Runtime::tags_mark;
 Runtime::InternalCtor Runtime::internal_ctor;
 
 Runtime::Runtime(
     const std::string& suite_name_,
     const std::string& case_name_) :
-  Runtime(internal_ctor, suite_name_, case_name_, false, "") {
+  Runtime(internal_ctor, suite_name_, case_name_, false, "", "") {
 
 }
 
@@ -57,7 +58,7 @@ Runtime::Runtime(
     const std::string& suite_name_,
     const std::string& case_name_,
     const ReportPaths&) :
-  Runtime(internal_ctor, suite_name_, case_name_, true, "") {
+  Runtime(internal_ctor, suite_name_, case_name_, true, "", "") {
 
 }
 
@@ -70,7 +71,38 @@ Runtime::Runtime(
       suite_name_,
       case_name_,
       false,
-      regression_file_) {
+      regression_file_,
+      "") {
+
+}
+
+Runtime::Runtime(
+    const std::string& suite_name_,
+    const std::string& case_name_,
+    const Tags&,
+    const std::string& tag_expression_) :
+  Runtime(
+      internal_ctor,
+      suite_name_,
+      case_name_,
+      false,
+      "",
+      tag_expression_) {
+
+}
+
+Runtime::Runtime(
+    const std::string& suite_name_,
+    const std::string& case_name_,
+    const std::string& regression_file_,
+    const std::string& tag_expression_) :
+  Runtime(
+      internal_ctor,
+      suite_name_,
+      case_name_,
+      false,
+      regression_file_,
+      tag_expression_) {
 
 }
 
@@ -79,13 +111,15 @@ Runtime::Runtime(
     const std::string& suite_name_,
     const std::string& case_name_,
     bool report_paths_,
-    const std::string& regression_file_) :
+    const std::string& regression_file_,
+    const std::string& tag_expression_) :
   exc_catcher(),
   reporter(report_paths_),
   runner_filter(suite_name_, case_name_),
   test_mark_factory(),
   test_mark_storage(createTestMarkStorage(&test_mark_factory, regression_file_)),
   user_data(),
+  tag_filter(tag_expression_),
   runner(
       &time_source,
       &exc_catcher,
@@ -95,6 +129,7 @@ Runtime::Runtime(
       &test_mark_factory,
       test_mark_storage.get(),
       &user_data,
+      &tag_filter,
       "selftest") {
   /* -- prepare user data */
   user_data.setDatum("reporter_", &reporter);

@@ -24,6 +24,7 @@
 #include <otest2/exccatcherordinary.h>
 #include <otest2/runnerfilterone.h>
 #include <otest2/runnerordinary.h>
+#include <otest2/tagfilter.h>
 #include <otest2/testmarkfactory.h>
 #include <otest2/testmarkstorage.h>
 #include <otest2/userdata.h>
@@ -48,9 +49,11 @@ class Runtime {
     TestMarkFactory test_mark_factory;
     std::unique_ptr<TestMarkStorage> test_mark_storage;
     UserData user_data;
+    TagFilter tag_filter;
     RunnerOrdinary runner;
 
     static struct ReportPaths{} report_paths_mark;
+    static struct Tags{} tags_mark;
 
   public:
     /* -- avoid copying */
@@ -96,6 +99,37 @@ class Runtime {
         const std::string& case_name_,
         const std::string& regression_file_);
 
+    /**
+     * @brief Ctor
+     *
+     * @param suite_name_ Name of the suite to be run
+     * @param case_name_ Name of the case to be run. If it's empty the entire
+     *     suite is run.
+     * @param regression_file_ Name of the regression (test marks) file
+     * @param tag_mark_ A mark that the tag expression is set
+     * @param tag_expression_ The tag expression
+     */
+    explicit Runtime(
+        const std::string& suite_name_,
+        const std::string& case_name_,
+        const Tags&,
+        const std::string& tag_expression_);
+
+    /**
+     * @brief Ctor
+     *
+     * @param suite_name_ Name of the suite to be run
+     * @param case_name_ Name of the case to be run. If it's empty the entire
+     *     suite is run.
+     * @param regression_file_ Name of the regression (test marks) file
+     * @param tag_expression_ Specified tag expression
+     */
+    explicit Runtime(
+        const std::string& suite_name_,
+        const std::string& case_name_,
+        const std::string& regression_file_,
+        const std::string& tag_expression_);
+
   private:
     static struct InternalCtor{} internal_ctor;
     explicit Runtime(
@@ -103,7 +137,8 @@ class Runtime {
         const std::string& suite_name_,
         const std::string& case_name_,
         bool report_paths_,
-        const std::string& regression_file_);
+        const std::string& regression_file_,
+        const std::string& tag_expression_);
 
   public:
     /**

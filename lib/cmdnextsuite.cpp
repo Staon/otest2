@@ -23,6 +23,7 @@
 #include <memory>
 #include <string>
 
+#include <cmdpoptags.h>
 #include <cmdrepeatsuite.h>
 #include <commandstack.h>
 #include <context.h>
@@ -30,6 +31,9 @@
 #include <runnerfilter.h>
 #include <suitefactory.h>
 #include <suiterepeater.h>
+#include <tagfilter.h>
+#include <tags.h>
+#include <tagsstack.h>
 
 namespace OTest2 {
 
@@ -56,8 +60,13 @@ void CmdNextSuite::run(
     context_.command_stack->pushCommand(
         std::make_shared<CmdNextSuite>(registry, current + 1));
 
+    /* -- merge tags with parent ones */
+    context_.command_stack->pushCommand(std::make_shared<CmdPopTags>());
+    context_.tags_stack->pushTags(true, factory_->getSuiteTags());
+
     /* -- create and schedule the suite if it's not filtered */
-    if(!context_.runner_filter->filterSuite(suite_name_)) {
+    if(!context_.runner_filter->filterSuite(suite_name_)
+       && !context_.tag_filter->filterObject(*context_.tags_stack)) {
       /* -- schedule the repeater command */
       SuiteRepeaterPtr repeater_(factory_->createSuite(context_));
       context_.command_stack->pushCommand(

@@ -28,6 +28,8 @@ class ObjectPath;
 class Reporter;
 class RunnerFilter;
 class SemanticStack;
+class TagFilter;
+class TagsStack;
 class TestMarkFactory;
 class TestMarkStorage;
 class TimeSource;
@@ -48,6 +50,8 @@ class Context {
     TestMarkFactory* const test_mark_factory;
     TestMarkStorage* const test_mark_storage;
     UserData* const user_data;
+    TagsStack* const tags_stack;
+    TagFilter* const tag_filter;
 
     /* -- avoid copying */
     Context(
@@ -68,7 +72,9 @@ class Context {
         RunnerFilter* runner_filter_,
         TestMarkFactory* test_mark_factory_,
         TestMarkStorage* test_mark_storage_,
-        UserData* user_data_);
+        UserData* user_data_,
+        TagsStack* tags_stack_,
+        TagFilter* tag_filter_);
 
     /**
      * @brief Dtor

@@ -1,0 +1,255 @@
+/*
+ * Copyright (C) 2020 Ondrej Starek
+ *
+ * This file is part of OTest2
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+#include "runtime.h"
+
+namespace OTest2 {
+
+namespace Test {
+
+TEST_SUITE(TagFilters) {
+  TEST_CASE(AllObjects) {
+    Runtime runtime("TagFilters", "");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<TagFilters>",
+        "enterCase<UntaggedCase>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<UntaggedCase>: passed",
+        "enterCase<Tag1Case>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<Tag1Case>: passed",
+        "enterCase<Tag2Case>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<Tag2Case>: passed",
+        "enterCase<TwoTags>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<TwoTags>: passed",
+        "leaveSuite<TagFilters>: passed",
+        "leaveTest<selftest>: passed",
+      };
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(UntaggedObjects) {
+    Runtime runtime("TagFilters", "", Runtime::tags_mark, "<empty>");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<TagFilters>",
+        "enterCase<UntaggedCase>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<UntaggedCase>: passed",
+        "leaveSuite<TagFilters>: passed",
+        "leaveTest<selftest>: passed",
+      };
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(TaggedObjects) {
+    Runtime runtime("TagFilters", "", Runtime::tags_mark, "!<empty>");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<TagFilters>",
+        "enterCase<Tag1Case>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<Tag1Case>: passed",
+        "enterCase<Tag2Case>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<Tag2Case>: passed",
+        "enterCase<TwoTags>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<TwoTags>: passed",
+        "leaveSuite<TagFilters>: passed",
+        "leaveTest<selftest>: passed",
+      };
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(Tag1Objects) {
+    Runtime runtime("TagFilters", "", Runtime::tags_mark, "tag1");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<TagFilters>",
+        "enterCase<Tag1Case>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<Tag1Case>: passed",
+        "enterCase<TwoTags>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<TwoTags>: passed",
+        "leaveSuite<TagFilters>: passed",
+        "leaveTest<selftest>: passed",
+      };
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(NotTag2Objects) {
+    Runtime runtime("TagFilters", "", Runtime::tags_mark, "!tag2-_:.");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<TagFilters>",
+        "enterCase<UntaggedCase>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<UntaggedCase>: passed",
+        "enterCase<Tag1Case>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<Tag1Case>: passed",
+        "leaveSuite<TagFilters>: passed",
+        "leaveTest<selftest>: passed",
+      };
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(Tag1OrTag2Objects) {
+    Runtime runtime("TagFilters", "", Runtime::tags_mark, "tag1 || tag2-_:.");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<TagFilters>",
+        "enterCase<Tag1Case>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<Tag1Case>: passed",
+        "enterCase<Tag2Case>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<Tag2Case>: passed",
+        "enterCase<TwoTags>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<TwoTags>: passed",
+        "leaveSuite<TagFilters>: passed",
+        "leaveTest<selftest>: passed",
+      };
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(Tag1AndTag2Objects) {
+    Runtime runtime("TagFilters", "", Runtime::tags_mark, "tag1&&tag2-_:.");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<TagFilters>",
+        "enterCase<TwoTags>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<TwoTags>: passed",
+        "leaveSuite<TagFilters>: passed",
+        "leaveTest<selftest>: passed",
+      };
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(TaggedSuite) {
+    Runtime runtime("TaggedSuite", "", Runtime::tags_mark, "^tagged-suite");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<TaggedSuite>",
+        "enterCase<UntaggedCase>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<UntaggedCase>: passed",
+        "enterCase<TaggedCase>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<TaggedCase>: passed",
+        "leaveSuite<TaggedSuite>: passed",
+        "leaveTest<selftest>: passed",
+      };
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(TaggedSuiteAndCase) {
+    Runtime runtime("TaggedSuite", "", Runtime::tags_mark, "^tagged-suite && tagged-case");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<TaggedSuite>",
+        "enterCase<TaggedCase>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<TaggedCase>: passed",
+        "leaveSuite<TaggedSuite>: passed",
+        "leaveTest<selftest>: passed",
+      };
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+}
+
+} /* -- namespace Test */
+
+} /* -- namespace OTest2 */

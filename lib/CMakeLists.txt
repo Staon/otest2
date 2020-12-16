@@ -48,6 +48,7 @@ add_library(libotest2
     cmdleavesuite.cpp
     cmdnextcase.cpp
     cmdnextsuite.cpp
+    cmdpoptags.cpp
     cmdrepeatcase.cpp
     cmdrepeatsuite.cpp
     cmdrunstate.cpp
@@ -102,7 +103,9 @@ add_library(libotest2
     suitegenerated.cpp
     suiteordinary.cpp
     suiterepeater.cpp
+    tagfilter.cpp
     tags.cpp
+    tagsstack.cpp
     teeostream.cpp
     terminaldriver.cpp
     testmark.cpp

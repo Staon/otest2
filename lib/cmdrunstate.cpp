@@ -40,7 +40,7 @@ CmdRunState::CmdRunState(
   state(state_),
   wait_before(wait_before_),
   delay(delay_) {
-  assert(!parent.isNull() && !state.isNull() && (!wait_before || delay >= 0));
+  assert(parent != nullptr && state != nullptr && (!wait_before || delay >= 0));
 
 }
 

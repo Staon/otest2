@@ -23,6 +23,7 @@
 #include <string>
 
 #include <otest2/case.h>
+#include <otest2/caseordinaryptr.h>
 #include <otest2/stateptr.h>
 
 namespace OTest2 {
@@ -30,10 +31,8 @@ namespace OTest2 {
 class Context;
 
 /**
- * @brief Ordinary suite
- *
- * This is a helper class of test suites following ordinary initialization,
- * run and destruction.
+ * @brief An ordinary case object scheduled by the CmdFirstState,
+ *     CmdRunState and CmdState commands.
  */
 class CaseOrdinary : public Case {
   public:
@@ -71,33 +70,6 @@ class CaseOrdinary : public Case {
      */
     virtual StatePtr getState(
         const std::string& name_) const = 0;
-
-    /**
-     * @brief Run a start-up function
-     *
-     * @param context_ The otest2 context
-     * @param index_ A zero base index of the start-up function
-     * @return True if the start-up function has been invoked. False if there
-     *     is no function at the index.
-     */
-    virtual bool startUpCase(
-        const Context& context_,
-        int index_) = 0;
-
-    /**
-     * @brief Run a tear-down function
-     *
-     * @param context_ The otest2 context
-     * @param index_ Zero based index of the tear-down function
-     */
-    virtual void tearDownCase(
-        const Context& context_,
-        int index_) = 0;
-
-    /* -- test case interface */
-    virtual void scheduleRun(
-        const Context& context_,
-        CasePtr this_ptr_);
 };
 
 } /* namespace OTest2 */

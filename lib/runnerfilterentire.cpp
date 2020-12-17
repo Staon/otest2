@@ -31,14 +31,8 @@ RunnerFilterEntire::~RunnerFilterEntire() {
 
 }
 
-bool RunnerFilterEntire::filterSuite(
-    const std::string& suite_name_) const {
-  return false;
-}
-
-bool RunnerFilterEntire::filterCase(
-    const std::string& suite_name_,
-    const std::string& case_name_) const {
+bool RunnerFilterEntire::filterPath(
+    const ObjectPath& path_) const noexcept {
   return false;
 }
 

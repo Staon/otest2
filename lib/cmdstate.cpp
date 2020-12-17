@@ -37,7 +37,7 @@ CmdState::CmdState(
   testcase(testcase_),
   name(name_),
   delay(delay_) {
-  assert(!testcase.isNull() && !name_.empty() && delay_ >= 0);
+  assert(testcase != nullptr && !name_.empty() && delay_ >= 0);
 
 }
 
@@ -48,7 +48,7 @@ CmdState::~CmdState() {
 void CmdState::run(
     const Context& context_) {
   StatePtr state_(testcase->getState(name));
-  if(!state_.isNull()) {
+  if(state_ != nullptr) {
     state_->scheduleRun(context_, testcase, state_, true, delay);
   }
   else {

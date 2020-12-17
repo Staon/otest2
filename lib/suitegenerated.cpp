@@ -20,13 +20,17 @@
 #include <suitegenerated.h>
 
 #include <assert.h>
+#include <memory>
 #include <string>
 #include <vector>
 
-#include <caseregistry.h>
+#include <cmdnextobject.h>
+#include <commandstack.h>
 #include <context.h>
 #include <fcemarshaler.h>
 #include "runcode.h"
+#include <scenario.h>
+#include <scenarioiterptr.h>
 #include <utils.h>
 
 namespace OTest2 {
@@ -37,7 +41,6 @@ struct SuiteGenerated::Impl {
 
     const Context* context;
     std::string name;
-    CaseRegistry case_registry;
     std::vector<FceMarshalerPtr> start_ups;
     std::vector<FceMarshalerPtr> tear_downs;
 
@@ -61,7 +64,8 @@ SuiteGenerated::Impl::Impl(
   owner(owner_),
   context(&context_),
   name(name_),
-  case_registry() {
+  start_ups(),
+  tear_downs() {
 
 }
 
@@ -72,7 +76,7 @@ SuiteGenerated::Impl::~Impl() {
 SuiteGenerated::SuiteGenerated(
     const Context& context_,
     const std::string& name_) :
-  SuiteOrdinary(context_),
+  Suite(),
   pimpl(new Impl(this, context_, name_)) {
 
 }
@@ -85,18 +89,7 @@ std::string SuiteGenerated::getName() const {
   return pimpl->name;
 }
 
-const Context& SuiteGenerated::otest2Context() const {
-  return *pimpl->context;
-}
-
-CaseFactoryPtr SuiteGenerated::getCase(
-    const Context& context_,
-    int index_,
-    std::string* name_) const {
-  return pimpl->case_registry.getCase(index_, name_);
-}
-
-bool SuiteGenerated::startUpSuite(
+bool SuiteGenerated::startUpObject(
     const Context& context_,
     int index_) {
   if(index_ >= 0 && index_ < pimpl->start_ups.size()) {
@@ -109,7 +102,15 @@ bool SuiteGenerated::startUpSuite(
     return false;
 }
 
-void SuiteGenerated::tearDownSuite(
+void SuiteGenerated::scheduleBody(
+    const Context& context_,
+    ScenarioPtr scenario_,
+    ObjectPtr me_) {
+  context_.command_stack->pushCommand(
+      std::make_shared<CmdNextObject>(scenario_->getChildren(), me_));
+}
+
+void SuiteGenerated::tearDownObject(
     const Context& context_,
     int index_) {
   assert(index_ >= 0 && index_ < pimpl->tear_downs.size());
@@ -118,10 +119,8 @@ void SuiteGenerated::tearDownSuite(
   });
 }
 
-void SuiteGenerated::registerCase(
-    const std::string& name_,
-    CaseFactoryPtr case_factory_) {
-  pimpl->case_registry.registerCase(name_, case_factory_);
+const Context& SuiteGenerated::otest2Context() const {
+  return *pimpl->context;
 }
 
 void SuiteGenerated::registerFixture(

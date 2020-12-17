@@ -22,17 +22,12 @@
 #include <assert.h>
 #include <string>
 
-#include <cmdnextsuite.h>
-#include <cmdstarttest.h>
-#include <cmdstoptest.h>
+#include <cmdnextobject.h>
 #include <commandptr.h>
 #include <commandstack.h>
 #include <context.h>
 #include <objectpath.h>
-#include <reporter.h>
 #include <semanticstack.h>
-#include <tags.h>
-#include <tagsstack.h>
 #include <utils.h>
 
 namespace OTest2 {
@@ -44,9 +39,6 @@ struct RunnerOrdinary::Impl {
     CommandStack command_stack;
     SemanticStack semantic_stack;
     ObjectPath object_path;
-    TagsStack tags_stack;
-    Registry* registry;
-    std::string name;
     Context context;
 
     /* -- avoid copying */
@@ -60,13 +52,10 @@ struct RunnerOrdinary::Impl {
         TimeSource* time_source_,
         ExcCatcher* exc_catcher_,
         Reporter* reporter_,
-        Registry* registry_,
-        RunnerFilter* runner_filter_,
         TestMarkFactory* test_mark_factory_,
         TestMarkStorage* test_mark_storage_,
         UserData* user_data_,
-        TagFilter* tag_filter_,
-        const std::string& name_);
+        ScenarioIterPtr test_scenario_);
     ~Impl();
 };
 
@@ -75,20 +64,14 @@ RunnerOrdinary::Impl::Impl(
     TimeSource* time_source_,
     ExcCatcher* exc_catcher_,
     Reporter* reporter_,
-    Registry* registry_,
-    RunnerFilter* runner_filter_,
     TestMarkFactory* test_mark_factory_,
     TestMarkStorage* test_mark_storage_,
     UserData* user_data_,
-    TagFilter* tag_filter_,
-    const std::string& name_) :
+    ScenarioIterPtr test_scenario_) :
   owner(owner_),
   command_stack(),
   semantic_stack(),
   object_path(),
-  tags_stack(),
-  registry(registry_),
-  name(name_),
   context(
       &command_stack,
       &semantic_stack,
@@ -96,21 +79,17 @@ RunnerOrdinary::Impl::Impl(
       time_source_,
       exc_catcher_,
       reporter_,
-      runner_filter_,
       test_mark_factory_,
       test_mark_storage_,
-      user_data_,
-      &tags_stack,
-      tag_filter_) {
-  assert(registry != nullptr);
+      user_data_) {
   assert(context.reporter != nullptr);
-  assert(context.runner_filter != nullptr);
   assert(context.exception_catcher != nullptr);
 
-  /* -- prepare start of the test */
-  command_stack.pushCommand(std::make_shared<CmdStartTest>(name, registry));
+  /* -- prepare the context */
   semantic_stack.push(true); /* -- test passes by default */
-  tags_stack.pushTags(true, Tags()); /* -- no tags */
+
+  /* -- schedule start of the test */
+  command_stack.pushCommand(std::make_shared<CmdNextObject>(test_scenario_, nullptr));
 }
 
 RunnerOrdinary::Impl::~Impl() {
@@ -121,25 +100,19 @@ RunnerOrdinary::RunnerOrdinary(
     TimeSource* time_source_,
     ExcCatcher* exc_catcher_,
     Reporter* reporter_,
-    Registry* registry_,
-    RunnerFilter* runner_filter_,
     TestMarkFactory* test_mark_factory_,
     TestMarkStorage* test_mark_storage_,
     UserData* user_data_,
-    TagFilter* tag_filter_,
-    const std::string& name_) :
+    ScenarioIterPtr test_scenario_) :
   pimpl(new Impl(
       this,
       time_source_,
       exc_catcher_,
       reporter_,
-      registry_,
-      runner_filter_,
       test_mark_factory_,
       test_mark_storage_,
       user_data_,
-      tag_filter_,
-      name_)) {
+      test_scenario_)) {
 
 }
 

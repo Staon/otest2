@@ -23,6 +23,7 @@
 #include <unistd.h>
 
 #include <otest2/registry.h>
+#include <otest2/scenarioiterptr.h>
 #include <otest2/utils.h>
 
 namespace OTest2 {
@@ -40,8 +41,16 @@ std::unique_ptr<TestMarkStorage> createTestMarkStorage(
     return std::unique_ptr<TestMarkStorage>();
 }
 
-} /* -- namespace */
+ScenarioIterPtr prepareScenario(
+    const std::string& domain_,
+    const RunnerFilter& name_filter_,
+    const TagFilter& tag_filter_) {
+  Registry& registry_(Registry::instance(domain_));
+  registry_.setTestName(domain_);
+  return registry_.getTests(name_filter_, tag_filter_);
+}
 
+} /* -- namespace */
 
 Runtime::ReportPaths Runtime::report_paths_mark;
 Runtime::Tags Runtime::tags_mark;
@@ -124,13 +133,10 @@ Runtime::Runtime(
       &time_source,
       &exc_catcher,
       &reporter,
-      &Registry::instance("selftest"),
-      &runner_filter,
       &test_mark_factory,
       test_mark_storage.get(),
       &user_data,
-      &tag_filter,
-      "selftest") {
+      prepareScenario("selftest", runner_filter, tag_filter)) {
   /* -- prepare user data */
   user_data.setDatum("reporter_", &reporter);
 }

@@ -130,6 +130,10 @@ OT2_SUITE(UserDataParamsSuiteStartUp) {
       const std::string& wrong_) OT2_START_UP() {
 
   }
+
+  OT2_CASE(Something) {
+
+  }
 }
 
 OT2_SUITE(UserDataParamsSuiteTearDown) {

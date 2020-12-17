@@ -20,17 +20,14 @@
 #ifndef OTest2__INCLUDE_OTEST2_RUNNERORDINARY_H_
 #define OTest2__INCLUDE_OTEST2_RUNNERORDINARY_H_
 
-#include <string>
-
 #include <otest2/runner.h>
+#include <otest2/scenarioiterptr.h>
 
 namespace OTest2 {
 
 class ExcCatcher;
 class Registry;
 class Reporter;
-class RunnerFilter;
-class TagFilter;
 class TestMarkFactory;
 class TestMarkStorage;
 class TimeSource;
@@ -60,31 +57,22 @@ class RunnerOrdinary : public Runner {
      * @param time_source_ A source of current time. The ownership is not taken.
      * @param exc_catcher_ An exception catcher. The ownership is not taken.
      * @param reporter_ A reporter object. The ownership is not taken.
-     * @param registry_ A registry of suites to be run. The ownership is not taken.
-     * @param runner_filter_ A runner filter - an object which allows specification
-     *     of tests which should be run.
      * @param test_mark_factory_ A factory of test mark nodes. The ownership
      *     is not taken.
      * @param test_mark_storage_ Storage of test marks. The ownership is not
      *     taken.
      * @param user_data_ A container keeping user's data passed into the test.
      *     The ownership is not taken.
-     * @param tag_filter_ A tag filter - an object which keeps the tag
-     *     expression allowing filtering of testing objects by assigned tags.
-     *     The ownership is not taken.
-     * @param name_ Name of the test (shown in the test report)
+     * @param test_registry_ An iterator of the root scenario object
      */
     explicit RunnerOrdinary(
         TimeSource* time_source_,
         ExcCatcher* exc_catcher_,
         Reporter* reporter_,
-        Registry* registry_,
-        RunnerFilter* runner_filter_,
         TestMarkFactory* test_mark_factory_,
         TestMarkStorage* test_mark_storage_,
         UserData* user_data_,
-        TagFilter* tag_filter_,
-        const std::string& name_);
+        ScenarioIterPtr test_scenario_);
 
     /**
      * @brief Dtor

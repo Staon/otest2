@@ -31,13 +31,11 @@ namespace Test {
 TEST_SUITE(DslSuite) {
   TEST_CASE(EmptySuite) {
     TEST_SIMPLE() {
+      /* -- The empty suite is removed from the scenario. Hence, it's
+       *    not even entered in the report. */
       std::vector<const char*> data_{
         "enterTest<selftest>",
         "path: selftest",
-        "enterSuite<EmptySuite>",
-        "path: selftest::EmptySuite",
-        "leaveSuite<EmptySuite>: passed",
-        "path: selftest::EmptySuite",
         "leaveTest<selftest>: passed",
         "path: selftest",
       };

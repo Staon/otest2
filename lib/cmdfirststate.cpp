@@ -31,7 +31,7 @@ namespace OTest2 {
 CmdFirstState::CmdFirstState(
     CaseOrdinaryPtr case_) :
   testcase(case_) {
-  assert(!testcase.isNull());
+  assert(testcase != nullptr);
 
 }
 

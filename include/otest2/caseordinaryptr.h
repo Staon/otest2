@@ -20,12 +20,16 @@
 #ifndef OTest2__INCLUDE_OTEST2_CASEORDINARYPTR_H_
 #define OTest2__INCLUDE_OTEST2_CASEORDINARYPTR_H_
 
-#include <otest2/objectptr.h>
+#include <memory>
 
 namespace OTest2 {
 
 class CaseOrdinary;
-typedef ObjectPtr<CaseOrdinary> CaseOrdinaryPtr;
+
+/**
+ * @brief Shared pointer of the ordinary cases
+ */
+typedef std::shared_ptr<CaseOrdinary> CaseOrdinaryPtr;
 
 } /* -- namespace OTest2 */
 

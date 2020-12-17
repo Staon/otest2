@@ -21,20 +21,71 @@
 
 #include <assert.h>
 #include <map>
+#include <memory>
 #include <vector>
 
+#include <context.h>
+#include <objectpath.h>
+#include <objectrepeateronce.h>
+#include <reporter.h>
+#include <semanticstack.h>
+#include <scenario.h>
+#include <scenarioiter.h>
+#include <scenarioroot.h>
+#include <tagsstack.h>
 #include <utils.h>
 
 namespace OTest2 {
 
+namespace {
+
+class RootIter : public ScenarioIter {
+  private:
+    ScenarioPtr root;
+
+  public:
+    explicit RootIter(
+        ScenarioPtr root_);
+    virtual ~RootIter() = default;
+
+    /* -- avoid copying */
+    RootIter(
+        const RootIter&) = delete;
+    RootIter& operator = (
+        const RootIter&) = delete;
+
+    /* -- scenario iterator */
+    virtual bool isValid() const noexcept override;
+    virtual ScenarioPtr getScenario() const noexcept override;
+    virtual void next() noexcept override;
+};
+
+RootIter::RootIter(
+    ScenarioPtr root_) :
+  root(root_) {
+  assert(root != nullptr);
+
+}
+
+bool RootIter::isValid() const noexcept {
+  return root != nullptr;
+}
+
+ScenarioPtr RootIter::getScenario() const noexcept {
+  assert(root != nullptr);
+  return root;
+}
+
+void RootIter::next() noexcept {
+  root = nullptr;
+}
+
+} /* -- namespace */
+
 struct Registry::Impl {
   public:
     Registry* owner;
-
-    typedef std::map<std::string, int> SuiteRegistry;
-    SuiteRegistry registry;
-    typedef std::vector<std::pair<std::string, SuiteFactoryPtr> > Order;
-    Order order;
+    ScenarioContainerPtr scenario_root;
 
     /* -- avoid copying */
     Impl(
@@ -49,7 +100,8 @@ struct Registry::Impl {
 
 Registry::Impl::Impl(
     Registry* owner_) :
-  owner(owner_) {
+  owner(owner_),
+  scenario_root(std::make_shared<ScenarioRoot>("test")) {
 
 }
 
@@ -66,28 +118,30 @@ Registry::~Registry() {
   odelete(pimpl);
 }
 
-void Registry::registerSuite(
+void Registry::registerScenario(
     const std::string& name_,
-    SuiteFactoryPtr suite_factory_) {
-  assert(!name_.empty() && suite_factory_ != nullptr);
-  auto result_(pimpl->registry.insert(
-      Impl::SuiteRegistry::value_type(name_, pimpl->order.size())));
-  if(result_.second)
-    pimpl->order.push_back(Impl::Order::value_type(name_, suite_factory_));
+    ScenarioPtr scenario_) {
+  pimpl->scenario_root->appendScenario(name_, scenario_);
 }
 
-SuiteFactoryPtr Registry::getSuite(
-    int index_,
-    std::string* name_) const {
-  if(index_ >= 0
-     && static_cast<Impl::Order::size_type>(index_) < pimpl->order.size()) {
-    if(name_ != nullptr)
-      *name_ = pimpl->order[index_].first;
-    return pimpl->order[index_].second;
-  }
-  else {
-    return nullptr;
-  }
+void Registry::setTestName(
+    const std::string& name_) {
+  assert(!name_.empty());
+  std::static_pointer_cast<ScenarioRoot>(pimpl->scenario_root)->setName(name_);
+}
+
+ScenarioIterPtr Registry::getTests(
+    const RunnerFilter& name_filter_,
+    const TagFilter& tag_filter_) const {
+  /* -- filter the scenario */
+  ObjectPath path_;
+  TagsStack tags_stack_;
+  ScenarioPtr filtered_root_(
+      pimpl->scenario_root->filterScenario(
+          path_, tags_stack_, nullptr, name_filter_, tag_filter_));
+
+  /* -- return the iterator */
+  return std::make_shared<RootIter>(filtered_root_);
 }
 
 Registry& Registry::instance(

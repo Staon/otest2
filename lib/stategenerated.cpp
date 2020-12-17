@@ -87,7 +87,7 @@ std::string StateGenerated::getName() const {
 void StateGenerated::executeState(
     const Context& context_,
     CaseOrdinaryPtr parent_) {
-  assert(!parent_.isNull());
+  assert(parent_ != nullptr);
 
   pimpl->parent = parent_;
   runUserCode(context_, [this](const Context& context_) {
@@ -104,7 +104,7 @@ void StateGenerated::switchState(
     const Context& context_,
     const std::string& name_,
     int delay_) {
-  assert(!pimpl->parent.isNull() && !name_.empty() && delay_ >= 0);
+  assert(pimpl->parent != nullptr && !name_.empty() && delay_ >= 0);
 
   /* -- schedule the commands */
   context_.command_stack->replaceCommand(

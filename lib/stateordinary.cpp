@@ -44,12 +44,15 @@ void StateOrdinary::scheduleRun(
     StatePtr this_ptr_,
     bool wait_,
     int delay_) {
-  auto so_(this_ptr_.staticCast<StateOrdinary>());
-  assert(so_.get() == this);
+  assert(this_ptr_.get() == this);
 
   /* -- schedule the commands */
   context_.command_stack->pushCommand(
-      std::make_shared<CmdRunState>(parent_, so_, wait_, delay_));
+      std::make_shared<CmdRunState>(
+          parent_,
+          std::static_pointer_cast<StateOrdinary>(this_ptr_),
+          wait_,
+          delay_));
 }
 
 } /* namespace OTest2 */

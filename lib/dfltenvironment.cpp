@@ -34,6 +34,7 @@
 #include <runnerfilterentire.h>
 #include <runnerfilterone.h>
 #include <runnerordinary.h>
+#include <scenarioiterptr.h>
 #include <tagfilter.h>
 #include <testmarkfactory.h>
 #include <testmarkstorage.h>
@@ -271,29 +272,29 @@ Runner& DfltEnvironment::getRunner() {
 
     /* -- create default runner filter - run all tests */
     if(pimpl->filter == nullptr)
-      pimpl->filter.reset(new RunnerFilterEntire);
+      pimpl->filter = ::OTest2::make_unique<RunnerFilterEntire>();
 
     /* -- create the test mark storage */
     pimpl->test_mark_storage.reset(
         new TestMarkStorage(&pimpl->test_mark_factory, pimpl->regression_file));
 
     /* -- create the tag filter according to specified tag expression */
-    if(pimpl->tag_filter == nullptr) {
+    if(pimpl->tag_filter == nullptr)
       pimpl->tag_filter = ::OTest2::make_unique<TagFilter>("<empty>");
-    }
+
+    /* -- get the registry and set the test name */
+    Registry& registry_(Registry::instance("default"));
+    ScenarioIterPtr scenario_(registry_.getTests(*pimpl->filter, *pimpl->tag_filter));
 
     /* -- finally, create the test runner */
     pimpl->runner.reset(new RunnerOrdinary(
         &pimpl->time_source,
         pimpl->exc_catcher,
         &pimpl->reporter_root,
-        &Registry::instance("default"),
-        pimpl->filter.get(),
         &pimpl->test_mark_factory,
         pimpl->test_mark_storage.get(),
         &pimpl->user_data,
-        pimpl->tag_filter.get(),
-        pimpl->test_name));
+        scenario_));
   }
   return *pimpl->runner;
 }

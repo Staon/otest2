@@ -20,11 +20,12 @@
 #ifndef OTest2__INCLUDE_OTEST2_RUNNERFILTER_H_
 #define OTest2__INCLUDE_OTEST2_RUNNERFILTER_H_
 
-#include <otest2/suitefactoryptr.h>
+#include <string>
 
 namespace OTest2 {
 
 class Registry;
+class ObjectPath;
 
 /**
  * @brief Generic interface of a runner filter
@@ -51,24 +52,14 @@ class RunnerFilter {
     virtual ~RunnerFilter();
 
     /**
-     * @brief Filter specified suite
+     * @brief Check whether the path should be filtered
      *
-     * @param suite_name_ Name of the suite
-     * @return True if the suite should be filtered. False if it should run.
+     * @param path_ The path
+     * @return True if the path matches the filter and the object should be
+     *     filtered (not run)
      */
-    virtual bool filterSuite(
-        const std::string& suite_name_) const = 0;
-
-    /**
-     * @brief Filter specified testcase of a suite
-     *
-     * @param suite_name_ Name of the suite
-     * @param case_name_ Name of the test case
-     * @return True if the case should be filtered. False if it should run.
-     */
-    virtual bool filterCase(
-        const std::string& suite_name_,
-        const std::string& case_name_) const = 0;
+    virtual bool filterPath(
+        const ObjectPath& path_) const noexcept = 0;
 };
 
 } /* namespace OTest2 */

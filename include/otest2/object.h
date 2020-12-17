@@ -22,6 +22,8 @@
 
 #include <string>
 
+#include <otest2/objectptr.h>
+
 namespace OTest2 {
 
 /**

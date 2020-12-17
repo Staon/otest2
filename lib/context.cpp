@@ -28,24 +28,18 @@ Context::Context(
     TimeSource* time_source_,
     ExcCatcher* exception_catcher_,
     Reporter* reporter_,
-    RunnerFilter* runner_filter_,
     TestMarkFactory* test_mark_factory_,
     TestMarkStorage* test_mark_storage_,
-    UserData* user_data_,
-    TagsStack* tags_stack_,
-    TagFilter* tag_filter_) :
+    UserData* user_data_) :
   command_stack(command_stack_),
   semantic_stack(semantic_stack_),
   object_path(object_path_),
   time_source(time_source_),
   exception_catcher(exception_catcher_),
   reporter(reporter_),
-  runner_filter(runner_filter_),
   test_mark_factory(test_mark_factory_),
   test_mark_storage(test_mark_storage_),
-  user_data(user_data_),
-  tags_stack(tags_stack_),
-  tag_filter(tag_filter_) {
+  user_data(user_data_) {
 
 }
 

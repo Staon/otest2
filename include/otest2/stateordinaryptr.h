@@ -20,12 +20,16 @@
 #ifndef OTest2__INCLUDE_OTEST2_STATEORDINARYPTR_H_
 #define OTest2__INCLUDE_OTEST2_STATEORDINARYPTR_H_
 
-#include <otest2/objectptr.h>
+#include <memory>
 
 namespace OTest2 {
 
 class StateOrdinary;
-typedef ObjectPtr<StateOrdinary> StateOrdinaryPtr;
+
+/**
+ * @brief Shared pointer of ordinary states
+ */
+typedef std::shared_ptr<StateOrdinary> StateOrdinaryPtr;
 
 } /* -- namespace OTest2 */
 

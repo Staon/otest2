@@ -72,7 +72,7 @@ bool AssertVisitor::VisitCallExpr(
   if(hasAnnotation(declref_, cmp_)) {
     /* -- split the annotation arguments */
     auto annot_args_(cmp_.matches[1].str());
-    std::regex split_("(\\s*;\\s*)");
+    std::regex split_("(;)");
     std::sregex_token_iterator iter_(
         annot_args_.begin(), annot_args_.end(), split_, -1);
     std::vector<std::string> annotation_args_(iter_, std::sregex_token_iterator());

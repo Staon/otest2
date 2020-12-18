@@ -22,9 +22,13 @@
 
 #include <string>
 
-#include <otest2/suitefactoryptr.h>
+#include <otest2/scenarioiterptr.h>
+#include <otest2/scenarioptr.h>
 
 namespace OTest2 {
+
+class RunnerFilter;
+class TagFilter;
 
 /**
  * @brief Test registry
@@ -55,26 +59,35 @@ class Registry {
     ~Registry();
 
     /**
-     * @brief Register a suite
+     * @brief Register a scenario object
      *
-     * @param name_ Name of the suite
-     * @param suite_factory_ A factory which creates the suite
+     * @param name_ Name of the scenario (name of the testing object)
+     * @param scenario_ The scenario object
      */
-    void registerSuite(
+    void registerScenario(
         const std::string& name_,
-        SuiteFactoryPtr suite_factory_);
+        ScenarioPtr scenario_);
 
     /**
-     * @brief Get a suite factory at specified index
+     * @brief Set test name
      *
-     * @param[in] index_ The index. Zero based.
-     * @param[out] name_ Name of the suite. If the pointer is not null and
-     *     the suite is found, name of the suite is filled in.
-     * @return The suite factory or nullptr if the index is out of the bounds.
+     * The test name is a name of the entire test as it's reported
+     * into the reporter.
+     *
+     * @param name_ The test name
      */
-    SuiteFactoryPtr getSuite(
-        int index_,
-        std::string* name_ = nullptr) const;
+    void setTestName(
+        const std::string& name_);
+
+    /**
+     * @brief Get iterator of test roots
+     *
+     * @param name_filter_ Filter by object names
+     * @param tag_filter_ Filter by object's tags
+     */
+    ScenarioIterPtr getTests(
+        const RunnerFilter& name_filter_,
+        const TagFilter& tag_filter_) const;
 
     /**
      * @brief Access of the global instances

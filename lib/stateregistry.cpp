@@ -69,9 +69,9 @@ StateRegistry::~StateRegistry() {
 void StateRegistry::registerState(
     const std::string& name_,
     StatePtr state_) {
-  assert(!name_.empty() && !state_.isNull());
+  assert(!name_.empty() && state_ != nullptr);
   pimpl->states.insert(Impl::States::value_type(name_, state_));
-  if(pimpl->first_state.isNull())
+  if(pimpl->first_state == nullptr)
     pimpl->first_state = state_;
 }
 

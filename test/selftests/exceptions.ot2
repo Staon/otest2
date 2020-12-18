@@ -89,11 +89,19 @@ TEST_SUITE(ExceptionFromSuiteStartUp) {
   TEST_START_UP() {
     throw std::bad_exception();
   }
+
+  TEST_CASE(DummyCase) {
+
+  }
 }
 
 TEST_SUITE(ExceptionFromSuiteTearDown) {
   TEST_TEAR_DOWN() {
     throw std::bad_exception();
+  }
+
+  TEST_CASE(DummyCase) {
+
   }
 }
 

@@ -18,13 +18,18 @@
  */
 #include "parsersuite.h"
 
+#include <set>
+#include <string>
+
 #include "generator.h"
+#include "objecttags.h"
 #include "parserannotation.h"
 #include "parsercase.h"
 #include "parsercode.h"
 #include "parsercontextimpl.h"
 #include "parserfixture.h"
 #include "parserfunction.h"
+#include "parsertags.h"
 
 namespace OTest2 {
 
@@ -162,9 +167,14 @@ bool parseSuite(
   /* -- copy the input file */
   context_->copyInput(ns_, false);
 
+  /* -- parse suite's tags */
+  ObjectTags tags_;
+  if(!parseTags(context_, ns_, tags_))
+    return false;
+
   /* -- enter the suite */
   std::string suitename_(ns_->getNameAsString());
-  context_->generator->enterSuite(suitename_);
+  context_->generator->enterSuite(suitename_, tags_);
 
   /* -- parse body of the suite */
   context_->state = ParserContext::SUITE_FIXTURES;

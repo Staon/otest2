@@ -20,12 +20,16 @@
 #ifndef OTest2__INCLUDE_OTEST2_STATEPTR_H_
 #define OTest2__INCLUDE_OTEST2_STATEPTR_H_
 
-#include <otest2/objectptr.h>
+#include <memory>
 
 namespace OTest2 {
 
 class State;
-typedef ObjectPtr<State> StatePtr;
+
+/**
+ * @brief Pointer to test state objects
+ */
+typedef std::shared_ptr<State> StatePtr;
 
 } /* -- namespace OTest2 */
 

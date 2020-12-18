@@ -48,6 +48,8 @@ docs:
         url: "/reference/preprocessor/"
       - title: Default CLI
         url: "/reference/cmdline/"
+      - title: Tag Globs
+        url: "/reference/tagglob/"
       - title: CMake
         url: "/reference/cmake/"
       - title: API Reference

@@ -20,6 +20,8 @@
 
 #include <iostream>
 
+#include "formatting.h"
+
 namespace OTest2 {
 
 std::ostream& writeCString(
@@ -35,6 +37,24 @@ std::ostream& writeCString(
     }
   }
   os_ << '"';
+
+  return os_;
+}
+
+std::ostream& writeTags(
+    std::ostream& os_,
+    const Parser::ObjectTags& tags_,
+    int indent_) {
+  os_ << "::OTest2::Tags({";
+  bool first_(true);
+  for(const auto& tag_ : tags_) {
+    if(!first_)
+      os_ << ", ";
+    else
+      first_ = false;
+    writeCString(os_, tag_);
+  }
+  os_ << "})";
 
   return os_;
 }

@@ -37,27 +37,17 @@ add_library(libotest2
     bzip2istream.cpp
     bzip2ostream.cpp
     case.cpp
-    casefactory.cpp
     casegenerated.cpp
     caseordinary.cpp
-    caseregistry.cpp
-    caserepeater.cpp
     cmddummy.cpp
     cmdfirststate.cpp
-    cmdleavecase.cpp
-    cmdleavesuite.cpp
-    cmdnextcase.cpp
-    cmdnextsuite.cpp
-    cmdrepeatcase.cpp
-    cmdrepeatsuite.cpp
+    cmdleaveobject.cpp
+    cmdnextobject.cpp
+    cmdrepeatobject.cpp
     cmdrunstate.cpp
-    cmdstarttest.cpp
-    cmdstartupcase.cpp
-    cmdstartupsuite.cpp
+    cmdstartupobject.cpp
     cmdstate.cpp
-    cmdstoptest.cpp
-    cmdteardowncase.cpp
-    cmdteardownsuite.cpp
+    cmdteardownobject.cpp
     command.cpp
     commandstack.cpp
     context.cpp
@@ -75,6 +65,10 @@ add_library(libotest2
     internalerror.cpp
     object.cpp
     objectpath.cpp
+    objectrepeater.cpp
+    objectrepeaterfactory.cpp
+    objectrepeateronce.cpp
+    objectscenario.cpp
     printutils.cpp
     registry.cpp
     regressions.cpp
@@ -92,16 +86,24 @@ add_library(libotest2
     runnerfilterentire.cpp
     runnerfilterone.cpp
     runnerordinary.cpp
+    scenario.cpp
+    scenariocase.cpp
+    scenariocontainer.cpp
+    scenarioiter.cpp
+    scenarioitercontainer.cpp
+    scenarioitercontainer.h
+    scenarioroot.cpp
+    scenariosuite.cpp
     semanticstack.cpp
     state.cpp
     stategenerated.cpp
     stateordinary.cpp
     stateregistry.cpp
     suite.cpp
-    suitefactory.cpp
     suitegenerated.cpp
-    suiteordinary.cpp
-    suiterepeater.cpp
+    tagfilter.cpp
+    tags.cpp
+    tagsstack.cpp
     teeostream.cpp
     terminaldriver.cpp
     testmark.cpp
@@ -125,6 +127,7 @@ add_library(libotest2
     testmarkprinter.cpp
     testmarkstorage.cpp
     testmarkstring.cpp
+    testroot.cpp
     timesource.cpp
     timesourcesys.cpp
     userdata.cpp

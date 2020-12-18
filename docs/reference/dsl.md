@@ -29,7 +29,7 @@ is more simple and it actually suites most use cases.
 ```c++
 #include <otest2/otest2.h>
 
-TEST_SUITE(SuiteName) {
+TEST_SUITE(SuiteName) OT2_TAGS("..tags...") {
   /* -- Fixture block of the suite. Variables and declarations of user
    *    functions may be here. */
   int fixture;
@@ -43,7 +43,7 @@ TEST_SUITE(SuiteName) {
   TEST_TEAR_DOWN() { /* ... */ }
   
   /* -- Object block of the suite. Zero or more cases may be defined. */
-  TEST_CASE(CaseName) {
+  TEST_CASE(CaseName) OT2_TAGS("..tags...") {
     /* -- Fixture block of the case. Variables and declarations of user
      *    functions may be here. */
     int fixture(10);
@@ -75,7 +75,7 @@ of [test functions](#functions).
 ```c++
 #include <otest2/otest2.h>
 
-OT2_SUITE(SuiteName) {
+OT2_SUITE(SuiteName) OT2_TAGS("..tags...") {
   /* -- Fixture block of the suite. Variables and declarations of user
    *    functions may be here. */
   int fixture;
@@ -89,7 +89,7 @@ OT2_SUITE(SuiteName) {
   void tearDown() OT2_TEAR_DOWN() { /* ... */ }
   
   /* -- Object block of the suite. Zero or more cases may be defined. */
-  OT2_CASE(CaseName) {
+  OT2_CASE(CaseName) OT2_TAGS("..tags...") {
     /* -- Fixture block of the case. Variables and declarations of user
      *    functions may be here. */
     int fixture(10);
@@ -166,3 +166,18 @@ the [example]({{ "/examples/fixtures/" | relative_url }}).
 How to use the test states and user data is explained in the 
 [custom main loop]({{ "/examples/main-loop/" | relative_url }})
 and [user data]({{ "/examples/userdata/" | relative_url }}) examples. 
+
+## Tags
+
+Either suite or test case may be tagged by the directive `OT2_TAGS()`.
+The parameter is a string literal containing name of the tags separated
+by the comma. E.g.
+```c++
+OT2_TAGS("tag1,my-tag,otest.tag")
+```
+There are not allowed spaces around the commas. The tag name must match
+the regular expression `[a-zA-Z_][a-zA-Z0-9_.\-]*`.
+
+How to use tags is shown in [the tag example]({{ "/examples/tags/" | relative_url }}).
+The glob language used for filtering of testing objects is described in
+[the reference chapter]({{ "/reference/tagglob/" | relative_url }}).  

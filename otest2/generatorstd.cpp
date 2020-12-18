@@ -75,6 +75,7 @@ struct GeneratorStd::Impl {
     struct ObjectRecord {
         std::string name;
         std::string repeater_type;
+        Parser::ObjectTags tags;
     };
 
     /* -- list of suites */
@@ -192,7 +193,7 @@ void GeneratorStd::Impl::writeStateFactoryMethod(
   output
       << "        ::OTest2::StatePtr createState_" << state_ << "(\n"
       << "            const ::OTest2::Context& context_) {\n"
-      << "          return ::OTest2::makePointer<" << state_ << ">(\n"
+      << "          return std::make_shared<" << state_ << ">(\n"
       << "              context_";
   variables->printArguments(output, indent + 3);
   output
@@ -240,8 +241,11 @@ void GeneratorStd::beginFile() {
       << "#include <otest2/registry.h>\n"
       << "#include <otest2/regressions.h>\n"
       << "#include <otest2/regressionsimpl.h>\n"
+      << "#include <otest2/scenariocase.h>\n"
+      << "#include <otest2/scenariosuite.h>\n"
       << "#include <otest2/stategenerated.h>\n"
       << "#include <otest2/suitegenerated.h>\n"
+      << "#include <otest2/tags.h>\n"
       << "#include <otest2/typetraits.h>\n"
       << "#include <otest2/userdata.h>\n"
       << '\n';
@@ -331,7 +335,8 @@ void GeneratorStd::endUserArea(
 }
 
 void GeneratorStd::enterSuite(
-    const std::string& suite_) {
+    const std::string& suite_,
+    const Parser::ObjectTags& tags_) {
   assert(pimpl->suite.empty() && pimpl->testcase.empty() && pimpl->state.empty());
   assert(!suite_.empty());
 
@@ -341,7 +346,7 @@ void GeneratorStd::enterSuite(
   pimpl->start_up_fce.emplace_back(nullptr);
   pimpl->tear_down_fce.emplace_back(nullptr);
   pimpl->repeater.push_back("");
-  pimpl->suites.push_back({suite_, ""});
+  pimpl->suites.push_back({suite_, "", tags_});
   pimpl->indent += 2;
 
   pimpl->output
@@ -381,7 +386,6 @@ void GeneratorStd::finishSuiteFunctions() {
   pimpl->variables->printInitializers(pimpl->output, pimpl->indent + 1);
   pimpl->output
       << " {\n"
-      << "      registerAllCases();\n"
       << "      registerFixtures();\n"
       << "    }\n"
       << "\n"
@@ -392,7 +396,8 @@ void GeneratorStd::finishSuiteFunctions() {
 }
 
 void GeneratorStd::enterCase(
-    const std::string& case_) {
+    const std::string& case_,
+    const Parser::ObjectTags& tags_) {
   assert(!pimpl -> suite.empty() && pimpl -> testcase.empty() && pimpl -> state.empty());
   assert(!case_.empty());
 
@@ -402,7 +407,7 @@ void GeneratorStd::enterCase(
   pimpl->start_up_fce.emplace_back(nullptr);
   pimpl->tear_down_fce.emplace_back(nullptr);
   pimpl->repeater.push_back("");
-  pimpl->cases.push_back({case_, ""});
+  pimpl->cases.push_back({case_, "", tags_});
   pimpl->indent += 2;
 
   pimpl->output
@@ -594,7 +599,7 @@ void GeneratorStd::leaveState() {
   pimpl->output
       << "\n"
       << "            virtual void runState(\n"
-      << "                const Context& context_) {\n";
+      << "                const ::OTest2::Context& context_) {\n";
   pimpl->state_fce->generateInvocation(
       pimpl->output, pimpl->indent + 1, "stateFunction");
   pimpl->output
@@ -652,12 +657,12 @@ void GeneratorStd::leaveCase() {
 
   /* -- generate the factory method of the case */
   pimpl->output
-      << "    ::OTest2::CasePtr createCase_" << pimpl->testcase << "(\n"
+      << "    ::OTest2::ObjectScenarioPtr createCase_" << pimpl->testcase << "(\n"
       << "        const ::OTest2::Context& context_";
   pimpl->variables->printFactoryParameters(pimpl->output, pimpl->indent + 2);
   pimpl->output
       << ") {\n"
-      << "      return ::OTest2::makePointer<" << pimpl->testcase << ">(\n"
+      << "      return std::make_shared<" << pimpl->testcase << ">(\n"
       << "          context_";
   pimpl->variables->printArguments(pimpl->output, pimpl->indent + 3);
   pimpl->output
@@ -682,24 +687,30 @@ void GeneratorStd::leaveSuite() {
   /* -- generate registrations of the test cases */
   pimpl->output
       << "\n\n"
-      << "  private:\n"
-      << "    void registerAllCases() {\n";
+      << "  public:\n"
+      << "    static void registerAllCases(\n"
+      << "        ::OTest2::ScenarioContainerPtr parent_) {\n";
   for(const auto& case_ : pimpl->cases) {
     pimpl->output
-      << "      registerCase(\n"
+      << "      parent_->appendScenario(\n"
       << "          \"" << case_.name << "\",\n"
-      << "          std::make_shared< ::OTest2::CaseGeneratedFactory<" << pimpl->suite << ", " << case_.name << ", ";
+      << "          std::make_shared< ::OTest2::ScenarioCase >(\n"
+      << "              \"" << case_.name << "\",\n"
+      << "              ";
+    writeTags(pimpl->output, case_.tags, pimpl->indent);
+    pimpl->output << ",\n";
     if(case_.repeater_type.empty())
-      pimpl->output << "::OTest2::CaseRepeaterOnce< " << pimpl->suite << ", " << case_.name;
+      pimpl->output
+        << "              std::make_shared< ::OTest2::ObjectRepeaterFactoryOnceCase<" << pimpl->suite << ", " << case_.name << "> >(\n";
     else
-      pimpl->output << "::OTest2::CaseRepeaterMulti< " << pimpl->suite << ", " << case_.name << ", " << case_.repeater_type;
+      pimpl->output
+        << "              std::make_shared< ::OTest2::ObjectRepeaterFactoryMultiCase<" << pimpl->suite << ", " << case_.name << ", " << case_.repeater_type << " > >(\n";
     pimpl->output
-      << " > > >(\n"
-      << "              this,\n"
-      << "              &" << pimpl->suite << "::createCase_" << case_.name << "));\n";
+      << "                  &" << pimpl->suite << "::createCase_" << case_.name << ")));\n";
   }
   pimpl->output
-      << "    }\n\n";
+      << "    }\n\n"
+      << "  private:\n";
 
   /* -- add the suite's start-up and tear-down functions */
   pimpl->fixtures->prependFixture(
@@ -744,17 +755,26 @@ void GeneratorStd::endFile(
         << "    SuiteRegistrator() {\n";
     for(const auto& suite_ : pimpl->suites) {
       pimpl->output
-          << "      ::OTest2::Registry::instance(";
+          << "      {\n"
+          << "        auto scenario_(std::make_shared< ::OTest2::ScenarioSuite >(\n"
+          << "            \"" << suite_.name << "\",\n"
+          << "            ";
+      writeTags(pimpl->output, suite_.tags, pimpl->indent);
+      pimpl->output << ",\n";
+      if(suite_.repeater_type.empty())
+        pimpl->output
+          << "            std::make_shared< ::OTest2::ObjectRepeaterFactoryOnceSuite< " << suite_.name;
+      else
+        pimpl->output
+          << "            std::make_shared< ::OTest2::ObjectRepeaterFactoryMultiSuite< " << suite_.name << ", " << suite_.repeater_type;
+      pimpl->output
+          << " > >()));\n"
+          << "        " << suite_.name << "::registerAllCases(scenario_);\n"
+          << "        ::OTest2::Registry::instance(";
       writeCString(pimpl->output, pimpl->domain);
       pimpl->output
-          << ").registerSuite(\n"
-          << "          \"" << suite_.name << "\",\n"
-          << "          std::make_shared< ::OTest2::SuiteGeneratedFactory< ";
-      if(suite_.repeater_type.empty())
-        pimpl->output << "::OTest2::SuiteRepeaterOnce< " << suite_.name;
-      else
-        pimpl->output << "::OTest2::SuiteRepeaterMulti< " << suite_.name << ", " << suite_.repeater_type;
-      pimpl->output << " > > >());\n";
+          << ").registerScenario(\"" << suite_.name << "\", scenario_);\n"
+          << "      }\n";
     }
     pimpl->output
         << "    }\n"

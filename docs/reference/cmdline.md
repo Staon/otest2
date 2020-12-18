@@ -25,4 +25,7 @@ Options (all options are optional):
                               directory).
   -t name  --test=name        Name of the test how it's reported. The default
                               value is the name of the test's binary.
+  -T expr  --tags=glob        Specification of the tag glob allowing to filter
+                              testing objects from current run. The default
+                              value runs all untagged objects.
 ```

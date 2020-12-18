@@ -26,7 +26,6 @@ class CommandStack;
 class ExcCatcher;
 class ObjectPath;
 class Reporter;
-class RunnerFilter;
 class SemanticStack;
 class TestMarkFactory;
 class TestMarkStorage;
@@ -44,7 +43,6 @@ class Context {
     TimeSource* const time_source;
     ExcCatcher* const exception_catcher;
     Reporter* const reporter;
-    RunnerFilter* const runner_filter;
     TestMarkFactory* const test_mark_factory;
     TestMarkStorage* const test_mark_storage;
     UserData* const user_data;
@@ -65,7 +63,6 @@ class Context {
         TimeSource* time_source_,
         ExcCatcher* exception_catcher_,
         Reporter* reporter_,
-        RunnerFilter* runner_filter_,
         TestMarkFactory* test_mark_factory_,
         TestMarkStorage* test_mark_storage_,
         UserData* user_data_);

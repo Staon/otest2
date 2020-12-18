@@ -19,14 +19,6 @@
 
 #include <caseordinary.h>
 
-#include <assert.h>
-#include <memory>
-
-#include <cmdstartupcase.h>
-#include <commandptr.h>
-#include <commandstack.h>
-#include <context.h>
-
 namespace OTest2 {
 
 CaseOrdinary::CaseOrdinary(
@@ -36,16 +28,6 @@ CaseOrdinary::CaseOrdinary(
 
 CaseOrdinary::~CaseOrdinary() {
 
-}
-
-void CaseOrdinary::scheduleRun(
-    const Context& context_,
-    CasePtr this_ptr_) {
-  auto co_(this_ptr_.staticCast<CaseOrdinary>());
-  assert(co_.get() == this);
-
-  /* -- schedule the commands */
-  context_.command_stack->pushCommand(std::make_shared<CmdStartUpCase>(co_, 0));
 }
 
 } /* namespace OTest2 */

@@ -64,16 +64,22 @@ class CaseGenerated : public CaseOrdinary, public ContextObject {
     /* -- object interface */
     virtual std::string getName() const;
 
-    /* -- case ordinary interface */
-    virtual StatePtr getFirstState() const;
+    /* -- scenario object */
+    virtual bool startUpObject(
+        const Context& context_,
+        int index_) override;
+    virtual void scheduleBody(
+        const Context& context_,
+        ScenarioPtr scenario_,
+        ObjectPtr me_) override;
+    virtual void tearDownObject(
+        const Context& context_,
+        int index_) override;
+
+    /* -- ordinary case */
+    virtual StatePtr getFirstState() const override;
     virtual StatePtr getState(
-        const std::string& name_) const;
-    virtual bool startUpCase(
-        const Context& context_,
-        int index_);
-    virtual void tearDownCase(
-        const Context& context_,
-        int index_);
+        const std::string& name_) const override;
 
     /* -- context object */
     virtual const Context& otest2Context() const;

@@ -46,11 +46,8 @@ class RunnerFilterEntire : public RunnerFilter {
     virtual ~RunnerFilterEntire();
 
     /* -- the runner filter interface */
-    virtual bool filterSuite(
-        const std::string& suite_name_) const;
-    virtual bool filterCase(
-        const std::string& suite_name_,
-        const std::string& case_name_) const;
+    virtual bool filterPath(
+        const ObjectPath& path_) const noexcept override;
 };
 
 } /* namespace OTest2 */

@@ -22,6 +22,8 @@
 #include <iosfwd>
 #include <string>
 
+#include "objecttags.h"
+
 namespace OTest2 {
 
 /**
@@ -30,6 +32,19 @@ namespace OTest2 {
 std::ostream& writeCString(
     std::ostream& os_,
     const std::string& text_);
+
+/**
+ * @brief Write initializer of tags of a testing object
+ *
+ * @param os_ An output stream
+ * @param tags_ The tags
+ * @param indent_ Indentation level
+ * @return The output stream
+ */
+std::ostream& writeTags(
+    std::ostream& os_,
+    const Parser::ObjectTags& tags_,
+    int indent_);
 
 } /* -- namespace OTest2 */
 

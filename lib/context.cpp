@@ -28,7 +28,6 @@ Context::Context(
     TimeSource* time_source_,
     ExcCatcher* exception_catcher_,
     Reporter* reporter_,
-    RunnerFilter* runner_filter_,
     TestMarkFactory* test_mark_factory_,
     TestMarkStorage* test_mark_storage_,
     UserData* user_data_) :
@@ -38,7 +37,6 @@ Context::Context(
   time_source(time_source_),
   exception_catcher(exception_catcher_),
   reporter(reporter_),
-  runner_filter(runner_filter_),
   test_mark_factory(test_mark_factory_),
   test_mark_storage(test_mark_storage_),
   user_data(user_data_) {

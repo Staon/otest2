@@ -92,11 +92,13 @@ class GeneratorStd : public Generator {
     virtual void endUserArea(
         const Location& end_) override;
     virtual void enterSuite(
-        const std::string& name_) override;
+        const std::string& name_,
+        const Parser::ObjectTags& tags_) override;
     virtual void finishSuiteFixtures() override;
     virtual void finishSuiteFunctions() override;
     virtual void enterCase(
-        const std::string& name_) override;
+        const std::string& name_,
+        const Parser::ObjectTags& tags_) override;
     virtual void finishCaseFixtures() override;
     virtual void finishCaseFunctions() override;
     virtual void enterState(

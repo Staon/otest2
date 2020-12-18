@@ -38,6 +38,9 @@
 #define OT2_USER_DATA()
 #define OT2_USER_DATA_KEY(key_)
 
+/* -- tags */
+#define OT2_TAGS(tags_)
+
 #else /* -- OTEST2_PARSER_ACTIVE */
 
 #define OT2_START_UP() __attribute__((annotate("otest2::startUp")))
@@ -52,6 +55,8 @@
 
 #define OT2_USER_DATA() __attribute__((annotate("otest2::userData()")))
 #define OT2_USER_DATA_KEY(key_) __attribute__((annotate("otest2::userData(" key_ ")")))
+
+#define OT2_TAGS(tags_) __attribute__((annotate("otest2::tags(" tags_ ")")))
 
 #endif /* -- OTEST2_PARSER_ACTIVE */
 

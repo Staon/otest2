@@ -67,6 +67,8 @@ add_executable(otest2
     parserfunction.h
     parsersuite.cpp
     parsersuite.h
+    parsertags.cpp
+    parsertags.h
     parsertype.cpp
     parsertype.h
     typetemplate.cpp

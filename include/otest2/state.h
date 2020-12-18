@@ -32,13 +32,6 @@ class Context;
  * @brief Generic test state interface
  */
 class State : public Object {
-  private:
-    /* -- avoid copying */
-    State(
-        const State&);
-    State& operator =(
-        const State&);
-
   public:
     /**
      * @brief Ctor
@@ -49,6 +42,12 @@ class State : public Object {
      * @brief Dtor
      */
     virtual ~State();
+
+    /* -- avoid copying */
+    State(
+        const State&) = delete;
+    State& operator = (
+        const State&) = delete;
 
     /**
      * @brief Schedule run of the state

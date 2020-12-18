@@ -20,9 +20,12 @@
 #include <casegenerated.h>
 
 #include <assert.h>
+#include <memory>
 #include <string>
 #include <vector>
 
+#include <cmdfirststate.h>
+#include <commandstack.h>
 #include <context.h>
 #include <fcemarshaler.h>
 #include "runcode.h"
@@ -86,16 +89,7 @@ std::string CaseGenerated::getName() const {
   return pimpl->name;
 }
 
-StatePtr CaseGenerated::getFirstState() const {
-  return pimpl->state_registry.getFirstState();
-}
-
-StatePtr CaseGenerated::getState(
-    const std::string& name_) const {
-  return pimpl->state_registry.getState(name_);
-}
-
-bool CaseGenerated::startUpCase(
+bool CaseGenerated::startUpObject(
     const Context& context_,
     int index_) {
   if(index_ >= 0 && index_ < pimpl->start_ups.size()) {
@@ -108,7 +102,18 @@ bool CaseGenerated::startUpCase(
     return false;
 }
 
-void CaseGenerated::tearDownCase(
+void CaseGenerated::scheduleBody(
+    const Context& context_,
+    ScenarioPtr scenario_,
+    ObjectPtr me_) {
+  assert(me_.get() == this);
+
+  context_.command_stack->pushCommand(
+      std::make_shared<CmdFirstState>(
+          std::static_pointer_cast<CaseOrdinary>(me_)));
+}
+
+void CaseGenerated::tearDownObject(
     const Context& context_,
     int index_) {
   assert(index_ >= 0 && index_ < pimpl->tear_downs.size());
@@ -116,6 +121,15 @@ void CaseGenerated::tearDownCase(
   runUserCode(context_, [&](const Context& context_) {
     pimpl->tear_downs[index_]->runFunction(context_);
   });
+}
+
+StatePtr CaseGenerated::getFirstState() const {
+  return pimpl->state_registry.getFirstState();
+}
+
+StatePtr CaseGenerated::getState(
+    const std::string& name_) const {
+  return pimpl->state_registry.getState(name_);
 }
 
 const Context& CaseGenerated::otest2Context() const {

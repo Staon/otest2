@@ -22,6 +22,7 @@
 #include <assert.h>
 #include <string>
 
+#include <objectpath.h>
 #include <utils.h>
 
 namespace OTest2 {
@@ -92,19 +93,17 @@ std::unique_ptr<RunnerFilterOne> RunnerFilterOne::fromPath(
   }
 }
 
-bool RunnerFilterOne::filterSuite(
-    const std::string& suite_name_) const {
-  return suite_name_ != pimpl->suite_name;
-}
+bool RunnerFilterOne::filterPath(
+    const ObjectPath& path_) const noexcept {
+  /* -- filter suite name */
+  if(!path_.doesMatchSuite(pimpl->suite_name))
+    return true;
 
-bool RunnerFilterOne::filterCase(
-    const std::string& suite_name_,
-    const std::string& case_name_) const {
-  if(suite_name_ != pimpl->suite_name)
-    return true;  /* -- filter test cases of all other suites */
-  if(pimpl->case_name.empty())
-    return false; /* -- the entire suite should be run */
-  return case_name_ != pimpl->case_name;
+  /* -- filter case name */
+  if(!pimpl->case_name.empty() && !path_.doesMatchCase(pimpl->case_name))
+    return true;
+
+  return false;
 }
 
 } /* namespace OTest2 */

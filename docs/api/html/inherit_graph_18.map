@@ -1,3 +1,8 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structOTest2_1_1Equal_3_01const_01char_01_5_00_01const_01char_01_5_01_4.html" title=" " alt="" coords="5,5,172,47"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,81,89,108"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1Exception.html" title="Generic OTest2 exception." alt="" coords="151,56,286,83"/>
+<area shape="rect" id="node6" href="$classOTest2_1_1ExcTestMarkIn.html" title="An exception thrown from the testmark deserializer." alt="" coords="137,107,300,133"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1TagExpressionException.html" title="Invalid tag expression." alt="" coords="357,5,582,32"/>
+<area shape="rect" id="node4" href="$classOTest2_1_1UserDataMissingException.html" title="An exception thrown if user datum is missing." alt="" coords="348,56,591,83"/>
+<area shape="rect" id="node5" href="$classOTest2_1_1UserDataWrongTypeException.html" title="An exception thrown if the expected type of a user datum is different than the actual one." alt="" coords="369,107,570,149"/>
 </map>

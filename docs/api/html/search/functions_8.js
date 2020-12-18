@@ -1,13 +1,14 @@
 var searchData=
 [
-  ['infixiterator_1394',['InfixIterator',['../classOTest2_1_1InfixIterator.html#afec4dcc26646be1b7dca24c948e2f36e',1,'OTest2::InfixIterator']]],
-  ['instance_1395',['instance',['../classOTest2_1_1Registry.html#a60390be04debf5fdaab231215b5bb0b8',1,'OTest2::Registry']]],
-  ['internalerror_1396',['internalError',['../namespaceOTest2.html#ac5a3df96bffd96d1c51a91ff6371a69e',1,'OTest2']]],
-  ['isequal_1397',['isEqual',['../classOTest2_1_1TestMark.html#a22be7b015a9d3c8ee939e96a27ea4712',1,'OTest2::TestMark']]],
-  ['isequalvalue_1398',['isEqualValue',['../classOTest2_1_1TestMark.html#a74ed90fbd50fb8d93b63d0705490f91c',1,'OTest2::TestMark']]],
-  ['isequalvaluehash_1399',['isEqualValueHash',['../classOTest2_1_1TestMark.html#a6d47b308f4b1ade01978bdc43f7df53c',1,'OTest2::TestMark']]],
-  ['isfinished_1400',['isFinished',['../classOTest2_1_1RunnerResult.html#a70dc080fd64db2941218b3ec816ed770',1,'OTest2::RunnerResult::isFinished()'],['../classOTest2_1_1SemanticStack.html#aa416470a0a8aaef9bd34cdd35dd4a8f0',1,'OTest2::SemanticStack::isFinished()']]],
-  ['isnextrun_1401',['isNextRun',['../classOTest2_1_1CaseRepeater.html#ac3a2d077bf143bb0d146ead90b4898d8',1,'OTest2::CaseRepeater::isNextRun()'],['../classOTest2_1_1SuiteRepeaterMulti.html#ac72909e45e929826a799b2c23499116c',1,'OTest2::SuiteRepeaterMulti::isNextRun()'],['../classOTest2_1_1CaseRepeaterMulti.html#a47f62eff1812fb0108114d9d33820253',1,'OTest2::CaseRepeaterMulti::isNextRun()'],['../classOTest2_1_1SuiteRepeaterOnce.html#a0dc36eeb92a420775235604534b2ad87',1,'OTest2::SuiteRepeaterOnce::isNextRun()'],['../classOTest2_1_1CaseRepeaterOnce.html#aa7909b9cbe8844a4271062463532a022',1,'OTest2::CaseRepeaterOnce::isNextRun()'],['../classOTest2_1_1SuiteRepeater.html#ac12b843dc1ee783ed95c11bf4f58ee3e',1,'OTest2::SuiteRepeater::isNextRun()']]],
-  ['isnull_1402',['isNull',['../classOTest2_1_1ObjectPtr.html#a94219bd5fee931a13efb8310904ca9f9',1,'OTest2::ObjectPtr']]],
-  ['itemwiseassertion_1403',['ItemWiseAssertion',['../classOTest2_1_1ItemWiseAssertion.html#a55076e0a93c683997762d2d41bb2c641',1,'OTest2::ItemWiseAssertion']]]
+  ['infixiterator_1402',['InfixIterator',['../classOTest2_1_1InfixIterator.html#afec4dcc26646be1b7dca24c948e2f36e',1,'OTest2::InfixIterator']]],
+  ['instance_1403',['instance',['../classOTest2_1_1Registry.html#a60390be04debf5fdaab231215b5bb0b8',1,'OTest2::Registry']]],
+  ['internalerror_1404',['internalError',['../namespaceOTest2.html#ac5a3df96bffd96d1c51a91ff6371a69e',1,'OTest2']]],
+  ['isempty_1405',['isEmpty',['../classOTest2_1_1ScenarioContainer.html#a8d9e900c7cf2f73d9c6373b68896680d',1,'OTest2::ScenarioContainer::isEmpty()'],['../classOTest2_1_1ScenarioRoot.html#a239d6359d578cab9de9310a4428e76d9',1,'OTest2::ScenarioRoot::isEmpty()'],['../classOTest2_1_1ScenarioSuite.html#a88f170dfffbc82b122e26a91fdbcd953',1,'OTest2::ScenarioSuite::isEmpty()'],['../classOTest2_1_1Tags.html#ae9ab96680a191822e96b79f21d0efcf9',1,'OTest2::Tags::isEmpty()']]],
+  ['isequal_1406',['isEqual',['../classOTest2_1_1TestMark.html#a22be7b015a9d3c8ee939e96a27ea4712',1,'OTest2::TestMark']]],
+  ['isequalvalue_1407',['isEqualValue',['../classOTest2_1_1TestMark.html#a74ed90fbd50fb8d93b63d0705490f91c',1,'OTest2::TestMark']]],
+  ['isequalvaluehash_1408',['isEqualValueHash',['../classOTest2_1_1TestMark.html#a6d47b308f4b1ade01978bdc43f7df53c',1,'OTest2::TestMark']]],
+  ['isfinished_1409',['isFinished',['../classOTest2_1_1RunnerResult.html#a70dc080fd64db2941218b3ec816ed770',1,'OTest2::RunnerResult::isFinished()'],['../classOTest2_1_1SemanticStack.html#aa416470a0a8aaef9bd34cdd35dd4a8f0',1,'OTest2::SemanticStack::isFinished()']]],
+  ['isnextrun_1410',['isNextRun',['../classOTest2_1_1ObjectRepeater.html#aeb168d6160c3b780f5eba69445e6640c',1,'OTest2::ObjectRepeater::isNextRun()'],['../classOTest2_1_1ObjectRepeaterMultiSuite.html#a90c65be75b8fc191c7e23a71366f58a7',1,'OTest2::ObjectRepeaterMultiSuite::isNextRun()'],['../classOTest2_1_1ObjectRepeaterMultiCase.html#ad2d19728de3a9d6b92c07907c0d81857',1,'OTest2::ObjectRepeaterMultiCase::isNextRun()'],['../classOTest2_1_1ObjectRepeaterOnce.html#a1b9f0cf0def4d11d5ac3cb26ea1234bd',1,'OTest2::ObjectRepeaterOnce::isNextRun()'],['../classOTest2_1_1SuiteRepeaterMulti.html#ac72909e45e929826a799b2c23499116c',1,'OTest2::SuiteRepeaterMulti::isNextRun()'],['../classOTest2_1_1CaseRepeaterMulti.html#a47f62eff1812fb0108114d9d33820253',1,'OTest2::CaseRepeaterMulti::isNextRun()']]],
+  ['isvalid_1411',['isValid',['../classOTest2_1_1ScenarioIter.html#abac263d654055b859d8e71d0e87e84fc',1,'OTest2::ScenarioIter::isValid()'],['../classOTest2_1_1ScenarioIterContainer.html#a0ce005825c10fc6a51163b086b597349',1,'OTest2::ScenarioIterContainer::isValid()']]],
+  ['itemwiseassertion_1412',['ItemWiseAssertion',['../classOTest2_1_1ItemWiseAssertion.html#a55076e0a93c683997762d2d41bb2c641',1,'OTest2::ItemWiseAssertion']]]
 ];

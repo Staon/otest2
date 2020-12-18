@@ -1,3 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classOTest2_1_1DfltEnvironment.html" title="Default test environment." alt="" coords="5,5,181,32"/>
+<area shape="rect" id="node1" href="$classOTest2_1_1DiffLogBuilder.html" title="Generic interface of the log builder." alt="" coords="5,56,167,83"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1DiffLogBuilderArray.html" title="Builder of the diff array." alt="" coords="223,5,417,32"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1DiffLogBuilderBlock.html" title="Log builder making records of whole blocks of changes." alt="" coords="223,56,417,83"/>
+<area shape="rect" id="node4" href="$classOTest2_1_1DiffLogBuilderReverse.html" title="Simple decorator &#45; inversion of operations." alt="" coords="215,107,425,133"/>
 </map>

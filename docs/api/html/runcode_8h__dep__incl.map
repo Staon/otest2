@@ -1,9 +1,8 @@
 <map id="lib/runcode.h" name="lib/runcode.h">
-<area shape="rect" id="node1" title=" " alt="" coords="500,5,604,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="400,5,504,32"/>
 <area shape="rect" id="node2" href="$casegenerated_8cpp.html" title=" " alt="" coords="5,80,168,107"/>
-<area shape="rect" id="node3" href="$cmdrepeatcase_8cpp.html" title=" " alt="" coords="193,80,359,107"/>
-<area shape="rect" id="node4" href="$cmdrepeatsuite_8cpp.html" title=" " alt="" coords="384,80,552,107"/>
-<area shape="rect" id="node5" href="$runcode_8cpp.html" title=" " alt="" coords="577,80,695,107"/>
-<area shape="rect" id="node6" href="$stategenerated_8cpp.html" title=" " alt="" coords="719,80,886,107"/>
-<area shape="rect" id="node7" href="$suitegenerated_8cpp.html" title=" " alt="" coords="910,80,1074,107"/>
+<area shape="rect" id="node3" href="$cmdrepeatobject_8cpp.html" title=" " alt="" coords="192,80,368,107"/>
+<area shape="rect" id="node4" href="$runcode_8cpp.html" title=" " alt="" coords="393,80,511,107"/>
+<area shape="rect" id="node5" href="$stategenerated_8cpp.html" title=" " alt="" coords="535,80,702,107"/>
+<area shape="rect" id="node6" href="$suitegenerated_8cpp.html" title=" " alt="" coords="726,80,890,107"/>
 </map>

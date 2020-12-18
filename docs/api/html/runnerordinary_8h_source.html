@@ -92,68 +92,64 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#ifndef OTest2__INCLUDE_OTEST2_RUNNERORDINARY_H_</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#define OTest2__INCLUDE_OTEST2_RUNNERORDINARY_H_</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="runner_8h.html">otest2/runner.h</a>&gt;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">class </span>ExcCatcher;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">class </span>Registry;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">class </span>Reporter;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">class </span>RunnerFilter;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">class </span>TestMarkFactory;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">class </span>TestMarkStorage;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">class </span>TimeSource;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">class </span>UserData;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="classOTest2_1_1RunnerOrdinary.html">   44</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOTest2_1_1RunnerOrdinary.html">RunnerOrdinary</a> : <span class="keyword">public</span> <a class="code" href="classOTest2_1_1Runner.html">Runner</a> {</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">struct </span>Impl;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    Impl* pimpl;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="classOTest2_1_1RunnerOrdinary.html#ad55e5b5d75e73216465b78c72f3ed30b">RunnerOrdinary</a>(</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="runner_8h.html">otest2/runner.h</a>&gt;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="scenarioiterptr_8h.html">otest2/scenarioiterptr.h</a>&gt;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">class </span>ExcCatcher;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">class </span>Registry;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">class </span>Reporter;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">class </span>TestMarkFactory;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">class </span>TestMarkStorage;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">class </span>TimeSource;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">class </span>UserData;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classOTest2_1_1RunnerOrdinary.html">   42</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOTest2_1_1RunnerOrdinary.html">RunnerOrdinary</a> : <span class="keyword">public</span> <a class="code" href="classOTest2_1_1Runner.html">Runner</a> {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">struct </span>Impl;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    Impl* pimpl;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="classOTest2_1_1RunnerOrdinary.html#ad55e5b5d75e73216465b78c72f3ed30b">RunnerOrdinary</a>(</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1RunnerOrdinary.html">RunnerOrdinary</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="classOTest2_1_1RunnerOrdinary.html">RunnerOrdinary</a>&amp; <a class="code" href="classOTest2_1_1RunnerOrdinary.html#a2411588e63708b239a317d2af6c300ec">operator =</a>(</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1RunnerOrdinary.html">RunnerOrdinary</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <a class="code" href="classOTest2_1_1RunnerOrdinary.html">RunnerOrdinary</a>&amp; <a class="code" href="classOTest2_1_1RunnerOrdinary.html#a2411588e63708b239a317d2af6c300ec">operator =</a>(</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1RunnerOrdinary.html">RunnerOrdinary</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classOTest2_1_1RunnerOrdinary.html#ad55e5b5d75e73216465b78c72f3ed30b">RunnerOrdinary</a>(</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <a class="code" href="classOTest2_1_1TimeSource.html">TimeSource</a>* time_source_,</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="classOTest2_1_1ExcCatcher.html">ExcCatcher</a>* exc_catcher_,</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <a class="code" href="classOTest2_1_1Reporter.html">Reporter</a>* reporter_,</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <a class="code" href="classOTest2_1_1Registry.html">Registry</a>* registry_,</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <a class="code" href="classOTest2_1_1RunnerFilter.html">RunnerFilter</a>* runner_filter_,</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <a class="code" href="classOTest2_1_1TestMarkFactory.html">TestMarkFactory</a>* test_mark_factory_,</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <a class="code" href="classOTest2_1_1TestMarkStorage.html">TestMarkStorage</a>* test_mark_storage_,</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <a class="code" href="classOTest2_1_1UserData.html">UserData</a>* user_data_,</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keyword">const</span> std::string&amp; name_);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classOTest2_1_1RunnerOrdinary.html#aabdf4c89e65b0f75597bca5aab05d8b5">~RunnerOrdinary</a>();</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="comment">/* -- runner interface */</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classOTest2_1_1RunnerResult.html">RunnerResult</a> <a class="code" href="classOTest2_1_1RunnerOrdinary.html#a9e875a07ff2be14c67ff29b1c8260808">runNext</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;};</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* OTest2__INCLUDE_OTEST2_RUNNERORDINARY_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classOTest2_1_1RunnerOrdinary.html#ad55e5b5d75e73216465b78c72f3ed30b">RunnerOrdinary</a>(</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <a class="code" href="classOTest2_1_1TimeSource.html">TimeSource</a>* time_source_,</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <a class="code" href="classOTest2_1_1ExcCatcher.html">ExcCatcher</a>* exc_catcher_,</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <a class="code" href="classOTest2_1_1Reporter.html">Reporter</a>* reporter_,</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <a class="code" href="classOTest2_1_1TestMarkFactory.html">TestMarkFactory</a>* test_mark_factory_,</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <a class="code" href="classOTest2_1_1TestMarkStorage.html">TestMarkStorage</a>* test_mark_storage_,</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <a class="code" href="classOTest2_1_1UserData.html">UserData</a>* user_data_,</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="namespaceOTest2.html#acba59c569e67a301963dec19b0e40f9f">ScenarioIterPtr</a> test_scenario_);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classOTest2_1_1RunnerOrdinary.html#aabdf4c89e65b0f75597bca5aab05d8b5">~RunnerOrdinary</a>();</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="comment">/* -- runner interface */</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classOTest2_1_1RunnerResult.html">RunnerResult</a> <a class="code" href="classOTest2_1_1RunnerOrdinary.html#a9e875a07ff2be14c67ff29b1c8260808">runNext</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;};</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* OTest2__INCLUDE_OTEST2_RUNNERORDINARY_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassOTest2_1_1RunnerOrdinary_html_a9e875a07ff2be14c67ff29b1c8260808"><div class="ttname"><a href="classOTest2_1_1RunnerOrdinary.html#a9e875a07ff2be14c67ff29b1c8260808">OTest2::RunnerOrdinary::runNext</a></div><div class="ttdeci">virtual RunnerResult runNext() override</div><div class="ttdoc">Run next pack of work.</div><div class="ttdef"><b>Definition:</b> <a href="runnerordinary_8cpp_source.html#l00138">runnerordinary.cpp:138</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1RunnerFilter_html"><div class="ttname"><a href="classOTest2_1_1RunnerFilter.html">OTest2::RunnerFilter</a></div><div class="ttdoc">Generic interface of a runner filter.</div><div class="ttdef"><b>Definition:</b> <a href="runnerfilter_8h_source.html#l00035">runnerfilter.h:35</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1RunnerOrdinary_html_a9e875a07ff2be14c67ff29b1c8260808"><div class="ttname"><a href="classOTest2_1_1RunnerOrdinary.html#a9e875a07ff2be14c67ff29b1c8260808">OTest2::RunnerOrdinary::runNext</a></div><div class="ttdeci">virtual RunnerResult runNext() override</div><div class="ttdoc">Run next pack of work.</div><div class="ttdef"><b>Definition:</b> <a href="runnerordinary_8cpp_source.html#l00123">runnerordinary.cpp:123</a></div></div>
+<div class="ttc" id="ascenarioiterptr_8h_html"><div class="ttname"><a href="scenarioiterptr_8h.html">scenarioiterptr.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1Reporter_html"><div class="ttname"><a href="classOTest2_1_1Reporter.html">OTest2::Reporter</a></div><div class="ttdoc">Generic test reporter.</div><div class="ttdef"><b>Definition:</b> <a href="reporter_8h_source.html#l00032">reporter.h:32</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1RunnerOrdinary_html"><div class="ttname"><a href="classOTest2_1_1RunnerOrdinary.html">OTest2::RunnerOrdinary</a></div><div class="ttdoc">Ordinary implementation of the Runner interface.</div><div class="ttdef"><b>Definition:</b> <a href="runnerordinary_8h_source.html#l00044">runnerordinary.h:44</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1RunnerOrdinary_html"><div class="ttname"><a href="classOTest2_1_1RunnerOrdinary.html">OTest2::RunnerOrdinary</a></div><div class="ttdoc">Ordinary implementation of the Runner interface.</div><div class="ttdef"><b>Definition:</b> <a href="runnerordinary_8h_source.html#l00042">runnerordinary.h:42</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TimeSource_html"><div class="ttname"><a href="classOTest2_1_1TimeSource.html">OTest2::TimeSource</a></div><div class="ttdoc">Generic interface for getting of current time.</div><div class="ttdef"><b>Definition:</b> <a href="timesource_8h_source.html#l00030">timesource.h:30</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1UserData_html"><div class="ttname"><a href="classOTest2_1_1UserData.html">OTest2::UserData</a></div><div class="ttdoc">An object keeping user data passed from user's custom main function.</div><div class="ttdef"><b>Definition:</b> <a href="userdata_8h_source.html#l00119">userdata.h:119</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1Runner_html"><div class="ttname"><a href="classOTest2_1_1Runner.html">OTest2::Runner</a></div><div class="ttdoc">Generic test runner.</div><div class="ttdef"><b>Definition:</b> <a href="runner_8h_source.html#l00112">runner.h:112</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkStorage_html"><div class="ttname"><a href="classOTest2_1_1TestMarkStorage.html">OTest2::TestMarkStorage</a></div><div class="ttdoc">Storage of test marks.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkstorage_8h_source.html#l00034">testmarkstorage.h:34</a></div></div>
+<div class="ttc" id="anamespaceOTest2_html_acba59c569e67a301963dec19b0e40f9f"><div class="ttname"><a href="namespaceOTest2.html#acba59c569e67a301963dec19b0e40f9f">OTest2::ScenarioIterPtr</a></div><div class="ttdeci">std::shared_ptr&lt; ScenarioIter &gt; ScenarioIterPtr</div><div class="ttdoc">Shared pointer of the scenario iter interface.</div><div class="ttdef"><b>Definition:</b> <a href="scenarioiterptr_8h_source.html#l00027">scenarioiterptr.h:27</a></div></div>
 <div class="ttc" id="arunner_8h_html"><div class="ttname"><a href="runner_8h.html">runner.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1RunnerOrdinary_html_aabdf4c89e65b0f75597bca5aab05d8b5"><div class="ttname"><a href="classOTest2_1_1RunnerOrdinary.html#aabdf4c89e65b0f75597bca5aab05d8b5">OTest2::RunnerOrdinary::~RunnerOrdinary</a></div><div class="ttdeci">virtual ~RunnerOrdinary()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="runnerordinary_8cpp_source.html#l00134">runnerordinary.cpp:134</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1RunnerOrdinary_html_aabdf4c89e65b0f75597bca5aab05d8b5"><div class="ttname"><a href="classOTest2_1_1RunnerOrdinary.html#aabdf4c89e65b0f75597bca5aab05d8b5">OTest2::RunnerOrdinary::~RunnerOrdinary</a></div><div class="ttdeci">virtual ~RunnerOrdinary()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="runnerordinary_8cpp_source.html#l00119">runnerordinary.cpp:119</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1RunnerOrdinary_html_ad55e5b5d75e73216465b78c72f3ed30b"><div class="ttname"><a href="classOTest2_1_1RunnerOrdinary.html#ad55e5b5d75e73216465b78c72f3ed30b">OTest2::RunnerOrdinary::RunnerOrdinary</a></div><div class="ttdeci">RunnerOrdinary(const RunnerOrdinary &amp;)=delete</div></div>
 <div class="ttc" id="aclassOTest2_1_1RunnerResult_html"><div class="ttname"><a href="classOTest2_1_1RunnerResult.html">OTest2::RunnerResult</a></div><div class="ttdoc">Result of test run.</div><div class="ttdef"><b>Definition:</b> <a href="runner_8h_source.html#l00040">runner.h:40</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1Registry_html"><div class="ttname"><a href="classOTest2_1_1Registry.html">OTest2::Registry</a></div><div class="ttdoc">Test registry.</div><div class="ttdef"><b>Definition:</b> <a href="registry_8h_source.html#l00034">registry.h:34</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1RunnerOrdinary_html_a2411588e63708b239a317d2af6c300ec"><div class="ttname"><a href="classOTest2_1_1RunnerOrdinary.html#a2411588e63708b239a317d2af6c300ec">OTest2::RunnerOrdinary::operator=</a></div><div class="ttdeci">RunnerOrdinary &amp; operator=(const RunnerOrdinary &amp;)=delete</div></div>
 <div class="ttc" id="aclassOTest2_1_1ExcCatcher_html"><div class="ttname"><a href="classOTest2_1_1ExcCatcher.html">OTest2::ExcCatcher</a></div><div class="ttdoc">Generic exception catcher interface.</div><div class="ttdef"><b>Definition:</b> <a href="exccatcher_8h_source.html#l00039">exccatcher.h:39</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkFactory_html"><div class="ttname"><a href="classOTest2_1_1TestMarkFactory.html">OTest2::TestMarkFactory</a></div><div class="ttdoc">A factory of testmark objects used for deserialization.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkfactory_8h_source.html#l00045">testmarkfactory.h:45</a></div></div>

@@ -1,0 +1,7 @@
+<map id="OTest2::ObjectRepeaterFactory" name="OTest2::ObjectRepeaterFactory">
+<area shape="rect" id="node1" title="Factory of object repeater objects." alt="" coords="5,127,223,153"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1ObjectRepeaterFactoryMultiCase.html" title=" " alt="" coords="279,5,497,61"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1ObjectRepeaterFactoryMultiSuite.html" title=" " alt="" coords="271,86,505,127"/>
+<area shape="rect" id="node4" href="$classOTest2_1_1ObjectRepeaterFactoryOnceCase.html" title=" " alt="" coords="277,151,499,193"/>
+<area shape="rect" id="node5" href="$classOTest2_1_1ObjectRepeaterFactoryOnceSuite.html" title=" " alt="" coords="279,217,497,258"/>
+</map>

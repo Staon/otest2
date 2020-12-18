@@ -1,13 +1,13 @@
 <map id="include/otest2/suitegenerated.h" name="include/otest2/suitegenerated.h">
-<area shape="rect" id="node1" title=" " alt="" coords="213,5,438,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="152,304,211,331"/>
-<area shape="rect" id="node3" href="$casefactoryptr_8h.html" title=" " alt="" coords="406,155,576,181"/>
-<area shape="rect" id="node5" href="$contextobject_8h.html" title=" " alt="" coords="28,155,194,181"/>
-<area shape="rect" id="node6" href="$fcemarshalerptr_8h.html" title=" " alt="" coords="513,80,693,107"/>
-<area shape="rect" id="node7" href="$suiteordinary_8h.html" title=" " alt="" coords="246,80,406,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="530,379,606,405"/>
-<area shape="rect" id="node8" href="$suite_8h.html" title=" " alt="" coords="270,155,381,181"/>
-<area shape="rect" id="node9" href="$object_8h.html" title=" " alt="" coords="261,229,380,256"/>
-<area shape="rect" id="node10" href="$suiteptr_8h.html" title=" " alt="" coords="404,229,530,256"/>
-<area shape="rect" id="node11" href="$objectptr_8h.html" title=" " alt="" coords="396,304,530,331"/>
+<area shape="rect" id="node1" title=" " alt="" coords="169,5,395,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="181,304,239,331"/>
+<area shape="rect" id="node3" href="$contextobject_8h.html" title=" " alt="" coords="5,155,172,181"/>
+<area shape="rect" id="node4" href="$fcemarshalerptr_8h.html" title=" " alt="" coords="553,80,733,107"/>
+<area shape="rect" id="node6" href="$suite_8h.html" title=" " alt="" coords="299,80,409,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="527,379,603,405"/>
+<area shape="rect" id="node7" href="$objectscenario_8h.html" title=" " alt="" coords="319,155,491,181"/>
+<area shape="rect" id="node8" href="$object_8h.html" title=" " alt="" coords="248,229,367,256"/>
+<area shape="rect" id="node9" href="$objectptr_8h.html" title=" " alt="" coords="327,304,461,331"/>
+<area shape="rect" id="node10" href="$objectscenarioptr_8h.html" title=" " alt="" coords="537,304,726,331"/>
+<area shape="rect" id="node11" href="$scenarioptr_8h.html" title=" " alt="" coords="443,229,593,256"/>
 </map>

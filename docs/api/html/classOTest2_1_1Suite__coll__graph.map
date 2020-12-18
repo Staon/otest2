@@ -1,4 +1,5 @@
 <map id="OTest2::Suite" name="OTest2::Suite">
-<area shape="rect" id="node1" title="Suite interface." alt="" coords="9,80,116,107"/>
-<area shape="rect" id="node2" href="$classOTest2_1_1Object.html" title="Generic testing object." alt="" coords="5,5,120,32"/>
+<area shape="rect" id="node1" title="Suite interface." alt="" coords="37,155,144,181"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1ObjectScenario.html" title="Inteface of a testing object scheduled by the scenario (test, suite and test case)" alt="" coords="5,80,176,107"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1Object.html" title="Generic testing object." alt="" coords="33,5,148,32"/>
 </map>

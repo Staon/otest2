@@ -1,0 +1,8 @@
+<map id="OTest2::ObjectRepeater" name="OTest2::ObjectRepeater">
+<area shape="rect" id="node1" title="Generic interface of a repeater of a testing object (this repeater is not a part of the OTest2 API)" alt="" coords="5,93,176,120"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1ObjectRepeaterMultiCase.html" title=" " alt="" coords="226,5,427,61"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1ObjectRepeaterMultiSuite.html" title=" " alt="" coords="224,86,429,127"/>
+<area shape="rect" id="node4" href="$classOTest2_1_1ObjectRepeaterOnce.html" title="Object repeater which runs the test just once." alt="" coords="225,152,429,179"/>
+<area shape="rect" id="node5" href="$classOTest2_1_1ObjectRepeaterOnceCase.html" title=" " alt="" coords="477,111,681,153"/>
+<area shape="rect" id="node6" href="$classOTest2_1_1ObjectRepeaterOnceSuite.html" title=" " alt="" coords="477,177,681,218"/>
+</map>

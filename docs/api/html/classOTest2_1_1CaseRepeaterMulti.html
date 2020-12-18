@@ -82,7 +82,7 @@ Inheritance diagram for OTest2::CaseRepeaterMulti&lt; Suite_, Case_, Repeater_ &
 <div class="center"><img src="classOTest2_1_1CaseRepeaterMulti__inherit__graph.png" border="0" usemap="#OTest2_1_1CaseRepeaterMulti_3_01Suite___00_01Case___00_01Repeater___01_4_inherit__map" alt="Inheritance graph"/></div>
 <map name="OTest2_1_1CaseRepeaterMulti_3_01Suite___00_01Case___00_01Repeater___01_4_inherit__map" id="OTest2_1_1CaseRepeaterMulti_3_01Suite___00_01Case___00_01Repeater___01_4_inherit__map">
 <area shape="rect" title=" " alt="" coords="5,80,216,121"/>
-<area shape="rect" href="classOTest2_1_1CaseRepeater.html" title="Generic interface of a testcase repeater." alt="" coords="29,5,192,32"/>
+<area shape="rect" title=" " alt="" coords="55,5,166,32"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -91,13 +91,13 @@ Collaboration diagram for OTest2::CaseRepeaterMulti&lt; Suite_, Case_, Repeater_
 <div class="center"><img src="classOTest2_1_1CaseRepeaterMulti__coll__graph.png" border="0" usemap="#OTest2_1_1CaseRepeaterMulti_3_01Suite___00_01Case___00_01Repeater___01_4_coll__map" alt="Collaboration graph"/></div>
 <map name="OTest2_1_1CaseRepeaterMulti_3_01Suite___00_01Case___00_01Repeater___01_4_coll__map" id="OTest2_1_1CaseRepeaterMulti_3_01Suite___00_01Case___00_01Repeater___01_4_coll__map">
 <area shape="rect" title=" " alt="" coords="5,80,216,121"/>
-<area shape="rect" href="classOTest2_1_1CaseRepeater.html" title="Generic interface of a testcase repeater." alt="" coords="29,5,192,32"/>
+<area shape="rect" title=" " alt="" coords="55,5,166,32"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a87e46bf7a32133d1af80424b27449bb1"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="namespaceOTest2.html#a93f6d5bd4ad39632831d4f95b8e51042">CasePtr</a>(Suite_::*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1CaseRepeaterMulti.html#a87e46bf7a32133d1af80424b27449bb1">FactoryMethod</a>) (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;, std::shared_ptr&lt; Repeater_ &gt; &amp;)</td></tr>
+<tr class="memitem:a87e46bf7a32133d1af80424b27449bb1"><td class="memItemLeft" align="right" valign="top">typedef CasePtr(Suite_::*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1CaseRepeaterMulti.html#a87e46bf7a32133d1af80424b27449bb1">FactoryMethod</a>) (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;, std::shared_ptr&lt; Repeater_ &gt; &amp;)</td></tr>
 <tr class="separator:a87e46bf7a32133d1af80424b27449bb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -111,25 +111,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0b6b7e21f2b8e0b1b40dd9880ca7b2d0"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1CaseRepeaterMulti.html#a0b6b7e21f2b8e0b1b40dd9880ca7b2d0">~CaseRepeaterMulti</a> ()=default</td></tr>
 <tr class="separator:a0b6b7e21f2b8e0b1b40dd9880ca7b2d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47f62eff1812fb0108114d9d33820253"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1CaseRepeaterMulti.html#a47f62eff1812fb0108114d9d33820253">isNextRun</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_) const override</td></tr>
-<tr class="memdesc:a47f62eff1812fb0108114d9d33820253"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether next run of the suite is planned.  <a href="classOTest2_1_1CaseRepeaterMulti.html#a47f62eff1812fb0108114d9d33820253">More...</a><br /></td></tr>
 <tr class="separator:a47f62eff1812fb0108114d9d33820253"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d91231284b3a3f566a45fb630a43ef7"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1CaseRepeaterMulti.html#a4d91231284b3a3f566a45fb630a43ef7">transformName</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, const std::string &amp;case_name_) const override</td></tr>
-<tr class="memdesc:a4d91231284b3a3f566a45fb630a43ef7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decorate case name for next run.  <a href="classOTest2_1_1CaseRepeaterMulti.html#a4d91231284b3a3f566a45fb630a43ef7">More...</a><br /></td></tr>
 <tr class="separator:a4d91231284b3a3f566a45fb630a43ef7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac24e93978ff984c1b78d78ed5b076a58"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceOTest2.html#a93f6d5bd4ad39632831d4f95b8e51042">CasePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1CaseRepeaterMulti.html#ac24e93978ff984c1b78d78ed5b076a58">createCase</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, const std::string &amp;case_name_) override</td></tr>
-<tr class="memdesc:ac24e93978ff984c1b78d78ed5b076a58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create next run of the test case.  <a href="classOTest2_1_1CaseRepeaterMulti.html#ac24e93978ff984c1b78d78ed5b076a58">More...</a><br /></td></tr>
+<tr class="memitem:ac24e93978ff984c1b78d78ed5b076a58"><td class="memItemLeft" align="right" valign="top">virtual CasePtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1CaseRepeaterMulti.html#ac24e93978ff984c1b78d78ed5b076a58">createCase</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, const std::string &amp;case_name_) override</td></tr>
 <tr class="separator:ac24e93978ff984c1b78d78ed5b076a58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_classOTest2_1_1CaseRepeater"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classOTest2_1_1CaseRepeater')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classOTest2_1_1CaseRepeater.html">OTest2::CaseRepeater</a></td></tr>
-<tr class="memitem:a7beeb7f73a29ac372b4c46fdd826a2de inherit pub_methods_classOTest2_1_1CaseRepeater"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1CaseRepeater.html#a7beeb7f73a29ac372b4c46fdd826a2de">CaseRepeater</a> (const <a class="el" href="classOTest2_1_1CaseRepeater.html">CaseRepeater</a> &amp;)=delete</td></tr>
-<tr class="separator:a7beeb7f73a29ac372b4c46fdd826a2de inherit pub_methods_classOTest2_1_1CaseRepeater"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f029a9cfb9a6f3fde6dbde46c27c41a inherit pub_methods_classOTest2_1_1CaseRepeater"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOTest2_1_1CaseRepeater.html">CaseRepeater</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1CaseRepeater.html#a7f029a9cfb9a6f3fde6dbde46c27c41a">operator=</a> (const <a class="el" href="classOTest2_1_1CaseRepeater.html">CaseRepeater</a> &amp;)=delete</td></tr>
-<tr class="separator:a7f029a9cfb9a6f3fde6dbde46c27c41a inherit pub_methods_classOTest2_1_1CaseRepeater"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcf447ad8e2d53d02c4b587eb0ddfdc2 inherit pub_methods_classOTest2_1_1CaseRepeater"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1CaseRepeater.html#afcf447ad8e2d53d02c4b587eb0ddfdc2">CaseRepeater</a> ()</td></tr>
-<tr class="memdesc:afcf447ad8e2d53d02c4b587eb0ddfdc2 inherit pub_methods_classOTest2_1_1CaseRepeater"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ctor.  <a href="classOTest2_1_1CaseRepeater.html#afcf447ad8e2d53d02c4b587eb0ddfdc2">More...</a><br /></td></tr>
-<tr class="separator:afcf447ad8e2d53d02c4b587eb0ddfdc2 inherit pub_methods_classOTest2_1_1CaseRepeater"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a922d97c372fb7809ee1bf4469bfcffb6 inherit pub_methods_classOTest2_1_1CaseRepeater"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1CaseRepeater.html#a922d97c372fb7809ee1bf4469bfcffb6">~CaseRepeater</a> ()</td></tr>
-<tr class="memdesc:a922d97c372fb7809ee1bf4469bfcffb6 inherit pub_methods_classOTest2_1_1CaseRepeater"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="classOTest2_1_1CaseRepeater.html#a922d97c372fb7809ee1bf4469bfcffb6">More...</a><br /></td></tr>
-<tr class="separator:a922d97c372fb7809ee1bf4469bfcffb6 inherit pub_methods_classOTest2_1_1CaseRepeater"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename Suite_, typename Case_, typename Repeater_&gt;<br />
@@ -147,7 +133,7 @@ class OTest2::CaseRepeaterMulti&lt; Suite_, Case_, Repeater_ &gt;</h3>
 template&lt;typename Suite_ , typename Case_ , typename Repeater_ &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="namespaceOTest2.html#a93f6d5bd4ad39632831d4f95b8e51042">CasePtr</a>(Suite_::* <a class="el" href="classOTest2_1_1CaseRepeaterMulti.html">OTest2::CaseRepeaterMulti</a>&lt; Suite_, Case_, Repeater_ &gt;::FactoryMethod) (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;, std::shared_ptr&lt; Repeater_ &gt; &amp;)</td>
+          <td class="memname">typedef CasePtr(Suite_::* <a class="el" href="classOTest2_1_1CaseRepeaterMulti.html">OTest2::CaseRepeaterMulti</a>&lt; Suite_, Case_, Repeater_ &gt;::FactoryMethod) (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;, std::shared_ptr&lt; Repeater_ &gt; &amp;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -265,7 +251,7 @@ template&lt;typename Suite_ , typename Case_ , typename Repeater_ &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="namespaceOTest2.html#a93f6d5bd4ad39632831d4f95b8e51042">CasePtr</a> <a class="el" href="classOTest2_1_1CaseRepeaterMulti.html">OTest2::CaseRepeaterMulti</a>&lt; Suite_, Case_, Repeater_ &gt;::createCase </td>
+          <td class="memname">virtual CasePtr <a class="el" href="classOTest2_1_1CaseRepeaterMulti.html">OTest2::CaseRepeaterMulti</a>&lt; Suite_, Case_, Repeater_ &gt;::createCase </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;&#160;</td>
           <td class="paramname"><em>context_</em>, </td>
@@ -288,19 +274,6 @@ template&lt;typename Suite_ , typename Case_ , typename Repeater_ &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Create next run of the test case. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">context_</td><td>The <a class="el" href="namespaceOTest2.html">OTest2</a> context </td></tr>
-    <tr><td class="paramname">case_name_</td><td>Decorated case name </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The created case </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>The method may be called only if the <a class="el" href="classOTest2_1_1CaseRepeaterMulti.html#a47f62eff1812fb0108114d9d33820253" title="Check whether next run of the suite is planned.">isNextRun()</a> is true! </dd></dl>
-
-<p>Implements <a class="el" href="classOTest2_1_1CaseRepeater.html#a2642670a0f941371aa56efcbf7e0739d">OTest2::CaseRepeater</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="repeatermulti_8h_source.html#l00133">133</a> of file <a class="el" href="repeatermulti_8h_source.html">repeatermulti.h</a>.</p>
 
@@ -331,17 +304,6 @@ template&lt;typename Suite_ , typename Case_ , typename Repeater_ &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Check whether next run of the suite is planned. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">context_</td><td>The otest2 context </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True if next run is prepared </dd></dl>
-
-<p>Implements <a class="el" href="classOTest2_1_1CaseRepeater.html#ac3a2d077bf143bb0d146ead90b4898d8">OTest2::CaseRepeater</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="repeatermulti_8h_source.html#l00116">116</a> of file <a class="el" href="repeatermulti_8h_source.html">repeatermulti.h</a>.</p>
 
@@ -410,18 +372,6 @@ template&lt;typename Suite_ , typename Case_ , typename Repeater_ &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Decorate case name for next run. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">case_name_</td><td>Bare case name </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Decorated case name </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>The method may be called only if the <a class="el" href="classOTest2_1_1CaseRepeaterMulti.html#a47f62eff1812fb0108114d9d33820253" title="Check whether next run of the suite is planned.">isNextRun()</a> is true! </dd></dl>
-
-<p>Implements <a class="el" href="classOTest2_1_1CaseRepeater.html#a348359efeada35a2039117e2cc97d38a">OTest2::CaseRepeater</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="repeatermulti_8h_source.html#l00125">125</a> of file <a class="el" href="repeatermulti_8h_source.html">repeatermulti.h</a>.</p>
 

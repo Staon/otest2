@@ -98,12 +98,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae48f7fcb5d46e5388ab6d7d18e94f9f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Registry.html#ae48f7fcb5d46e5388ab6d7d18e94f9f3">~Registry</a> ()</td></tr>
 <tr class="memdesc:ae48f7fcb5d46e5388ab6d7d18e94f9f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="classOTest2_1_1Registry.html#ae48f7fcb5d46e5388ab6d7d18e94f9f3">More...</a><br /></td></tr>
 <tr class="separator:ae48f7fcb5d46e5388ab6d7d18e94f9f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cbecf546fe1eabd28c35950ec7f7377"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Registry.html#a5cbecf546fe1eabd28c35950ec7f7377">registerSuite</a> (const std::string &amp;name_, <a class="el" href="namespaceOTest2.html#a5f6550e3b03d0ca6e8bdf2472fc5f22b">SuiteFactoryPtr</a> suite_factory_)</td></tr>
-<tr class="memdesc:a5cbecf546fe1eabd28c35950ec7f7377"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a suite.  <a href="classOTest2_1_1Registry.html#a5cbecf546fe1eabd28c35950ec7f7377">More...</a><br /></td></tr>
-<tr class="separator:a5cbecf546fe1eabd28c35950ec7f7377"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac9e25dd4db75a0502c2d2d367d619ee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceOTest2.html#a5f6550e3b03d0ca6e8bdf2472fc5f22b">SuiteFactoryPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Registry.html#aac9e25dd4db75a0502c2d2d367d619ee">getSuite</a> (int index_, std::string *name_=nullptr) const</td></tr>
-<tr class="memdesc:aac9e25dd4db75a0502c2d2d367d619ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a suite factory at specified index.  <a href="classOTest2_1_1Registry.html#aac9e25dd4db75a0502c2d2d367d619ee">More...</a><br /></td></tr>
-<tr class="separator:aac9e25dd4db75a0502c2d2d367d619ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f91a80df6fafe02e36e8dd40184327e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Registry.html#a4f91a80df6fafe02e36e8dd40184327e">registerScenario</a> (const std::string &amp;name_, <a class="el" href="namespaceOTest2.html#a74a48b7dff9988ac9dfc6f098dca5cb2">ScenarioPtr</a> scenario_)</td></tr>
+<tr class="memdesc:a4f91a80df6fafe02e36e8dd40184327e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a scenario object.  <a href="classOTest2_1_1Registry.html#a4f91a80df6fafe02e36e8dd40184327e">More...</a><br /></td></tr>
+<tr class="separator:a4f91a80df6fafe02e36e8dd40184327e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ddef979ac89b8679b6d269eee1abff2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Registry.html#a7ddef979ac89b8679b6d269eee1abff2">setTestName</a> (const std::string &amp;name_)</td></tr>
+<tr class="memdesc:a7ddef979ac89b8679b6d269eee1abff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set test name.  <a href="classOTest2_1_1Registry.html#a7ddef979ac89b8679b6d269eee1abff2">More...</a><br /></td></tr>
+<tr class="separator:a7ddef979ac89b8679b6d269eee1abff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55abf2d7c3c6ec86094e4e4327ac0346"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceOTest2.html#acba59c569e67a301963dec19b0e40f9f">ScenarioIterPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Registry.html#a55abf2d7c3c6ec86094e4e4327ac0346">getTests</a> (const <a class="el" href="classOTest2_1_1RunnerFilter.html">RunnerFilter</a> &amp;name_filter_, const <a class="el" href="classOTest2_1_1TagFilter.html">TagFilter</a> &amp;tag_filter_) const</td></tr>
+<tr class="memdesc:a55abf2d7c3c6ec86094e4e4327ac0346"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get iterator of test roots.  <a href="classOTest2_1_1Registry.html#a55abf2d7c3c6ec86094e4e4327ac0346">More...</a><br /></td></tr>
+<tr class="separator:a55abf2d7c3c6ec86094e4e4327ac0346"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -115,7 +118,7 @@ Static Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Test registry. </p>
 <p>This class collects test suites. </p>
 
-<p class="definition">Definition at line <a class="el" href="registry_8h_source.html#l00034">34</a> of file <a class="el" href="registry_8h_source.html">registry.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="registry_8h_source.html#l00038">38</a> of file <a class="el" href="registry_8h_source.html">registry.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a85e72225dc166770f1ccc659b92e806c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a85e72225dc166770f1ccc659b92e806c">&#9670;&nbsp;</a></span>Registry() <span class="overload">[1/2]</span></h2>
@@ -160,7 +163,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Ctor. </p>
 
-<p class="definition">Definition at line <a class="el" href="registry_8cpp_source.html#l00060">60</a> of file <a class="el" href="registry_8cpp_source.html">registry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="registry_8cpp_source.html#l00112">112</a> of file <a class="el" href="registry_8cpp_source.html">registry.cpp</a>.</p>
 
 </div>
 </div>
@@ -181,28 +184,28 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p class="definition">Definition at line <a class="el" href="registry_8cpp_source.html#l00065">65</a> of file <a class="el" href="registry_8cpp_source.html">registry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="registry_8cpp_source.html#l00117">117</a> of file <a class="el" href="registry_8cpp_source.html">registry.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aac9e25dd4db75a0502c2d2d367d619ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac9e25dd4db75a0502c2d2d367d619ee">&#9670;&nbsp;</a></span>getSuite()</h2>
+<a id="a55abf2d7c3c6ec86094e4e4327ac0346"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55abf2d7c3c6ec86094e4e4327ac0346">&#9670;&nbsp;</a></span>getTests()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespaceOTest2.html#a5f6550e3b03d0ca6e8bdf2472fc5f22b">SuiteFactoryPtr</a> OTest2::Registry::getSuite </td>
+          <td class="memname"><a class="el" href="namespaceOTest2.html#acba59c569e67a301963dec19b0e40f9f">ScenarioIterPtr</a> OTest2::Registry::getTests </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>index_</em>, </td>
+          <td class="paramtype">const <a class="el" href="classOTest2_1_1RunnerFilter.html">RunnerFilter</a> &amp;&#160;</td>
+          <td class="paramname"><em>name_filter_</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string *&#160;</td>
-          <td class="paramname"><em>name_</em> = <code>nullptr</code>&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOTest2_1_1TagFilter.html">TagFilter</a> &amp;&#160;</td>
+          <td class="paramname"><em>tag_filter_</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -212,17 +215,16 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Get a suite factory at specified index. </p>
+<p>Get iterator of test roots. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">index_</td><td>The index. Zero based. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">name_</td><td>Name of the suite. If the pointer is not null and the suite is found, name of the suite is filled in. </td></tr>
+    <tr><td class="paramname">name_filter_</td><td>Filter by object names </td></tr>
+    <tr><td class="paramname">tag_filter_</td><td>Filter by object's tags </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The suite factory or nullptr if the index is out of the bounds. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="registry_8cpp_source.html#l00079">79</a> of file <a class="el" href="registry_8cpp_source.html">registry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="registry_8cpp_source.html#l00133">133</a> of file <a class="el" href="registry_8cpp_source.html">registry.cpp</a>.</p>
 
 </div>
 </div>
@@ -259,7 +261,7 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="registry_8cpp_source.html#l00093">93</a> of file <a class="el" href="registry_8cpp_source.html">registry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="registry_8cpp_source.html#l00147">147</a> of file <a class="el" href="registry_8cpp_source.html">registry.cpp</a>.</p>
 
 </div>
 </div>
@@ -289,14 +291,14 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a5cbecf546fe1eabd28c35950ec7f7377"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5cbecf546fe1eabd28c35950ec7f7377">&#9670;&nbsp;</a></span>registerSuite()</h2>
+<a id="a4f91a80df6fafe02e36e8dd40184327e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f91a80df6fafe02e36e8dd40184327e">&#9670;&nbsp;</a></span>registerScenario()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void OTest2::Registry::registerSuite </td>
+          <td class="memname">void OTest2::Registry::registerScenario </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name_</em>, </td>
@@ -304,8 +306,8 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespaceOTest2.html#a5f6550e3b03d0ca6e8bdf2472fc5f22b">SuiteFactoryPtr</a>&#160;</td>
-          <td class="paramname"><em>suite_factory_</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceOTest2.html#a74a48b7dff9988ac9dfc6f098dca5cb2">ScenarioPtr</a>&#160;</td>
+          <td class="paramname"><em>scenario_</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -315,16 +317,45 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Register a suite. </p>
+<p>Register a scenario object. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">name_</td><td>Name of the suite </td></tr>
-    <tr><td class="paramname">suite_factory_</td><td>A factory which creates the suite </td></tr>
+    <tr><td class="paramname">name_</td><td>Name of the scenario (name of the testing object) </td></tr>
+    <tr><td class="paramname">scenario_</td><td>The scenario object </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="registry_8cpp_source.html#l00069">69</a> of file <a class="el" href="registry_8cpp_source.html">registry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="registry_8cpp_source.html#l00121">121</a> of file <a class="el" href="registry_8cpp_source.html">registry.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a7ddef979ac89b8679b6d269eee1abff2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ddef979ac89b8679b6d269eee1abff2">&#9670;&nbsp;</a></span>setTestName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OTest2::Registry::setTestName </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name_</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set test name. </p>
+<p>The test name is a name of the entire test as it's reported into the reporter.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name_</td><td>The test name </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="registry_8cpp_source.html#l00127">127</a> of file <a class="el" href="registry_8cpp_source.html">registry.cpp</a>.</p>
 
 </div>
 </div>

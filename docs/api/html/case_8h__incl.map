@@ -1,8 +1,10 @@
 <map id="include/otest2/case.h" name="include/otest2/case.h">
-<area shape="rect" id="node1" title=" " alt="" coords="67,5,225,32"/>
-<area shape="rect" id="node2" href="$caseptr_8h.html" title=" " alt="" coords="9,80,136,107"/>
-<area shape="rect" id="node5" href="$object_8h.html" title=" " alt="" coords="160,80,279,107"/>
-<area shape="rect" id="node3" href="$objectptr_8h.html" title=" " alt="" coords="5,155,140,181"/>
-<area shape="rect" id="node4" title=" " alt="" coords="35,229,111,256"/>
-<area shape="rect" id="node6" title=" " alt="" coords="190,155,249,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="218,5,377,32"/>
+<area shape="rect" id="node2" href="$objectscenario_8h.html" title=" " alt="" coords="211,80,383,107"/>
+<area shape="rect" id="node3" href="$object_8h.html" title=" " alt="" coords="97,155,215,181"/>
+<area shape="rect" id="node5" href="$objectptr_8h.html" title=" " alt="" coords="89,229,223,256"/>
+<area shape="rect" id="node7" href="$objectscenarioptr_8h.html" title=" " alt="" coords="248,229,437,256"/>
+<area shape="rect" id="node8" href="$scenarioptr_8h.html" title=" " alt="" coords="389,155,539,181"/>
+<area shape="rect" id="node4" title=" " alt="" coords="5,229,64,256"/>
+<area shape="rect" id="node6" title=" " alt="" coords="305,304,381,331"/>
 </map>

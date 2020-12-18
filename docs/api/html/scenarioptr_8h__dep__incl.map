@@ -1,0 +1,46 @@
+<map id="include/otest2/scenarioptr.h" name="include/otest2/scenarioptr.h">
+<area shape="rect" id="node1" title=" " alt="" coords="1953,5,2151,32"/>
+<area shape="rect" id="node2" href="$cmdleaveobject_8h.html" title=" " alt="" coords="1436,80,1665,107"/>
+<area shape="rect" id="node5" href="$cmdrepeatobject_8h.html" title=" " alt="" coords="1689,80,1927,107"/>
+<area shape="rect" id="node7" href="$cmdstartupobject_8h.html" title=" " alt="" coords="2178,80,2419,107"/>
+<area shape="rect" id="node9" href="$cmdteardownobject_8h.html" title=" " alt="" coords="2495,80,2750,107"/>
+<area shape="rect" id="node11" href="$objectscenario_8h.html" title=" " alt="" coords="2799,80,3020,107"/>
+<area shape="rect" id="node25" href="$scenarioroot_8cpp.html" title=" " alt="" coords="2672,304,2819,331"/>
+<area shape="rect" id="node28" href="$registry_8h.html" title=" " alt="" coords="261,80,435,107"/>
+<area shape="rect" id="node32" href="$scenario_8h.html" title=" " alt="" coords="1229,80,1411,107"/>
+<area shape="rect" id="node35" href="$scenariocontainer_8h.html" title=" " alt="" coords="690,155,931,181"/>
+<area shape="rect" id="node41" href="$scenarioiter_8h.html" title=" " alt="" coords="1951,80,2153,107"/>
+<area shape="rect" id="node43" href="$scenarioitercontainer_8h.html" title=" " alt="" coords="2232,155,2419,181"/>
+<area shape="rect" id="node3" href="$cmdleaveobject_8cpp.html" title=" " alt="" coords="1437,155,1605,181"/>
+<area shape="rect" id="node4" href="$cmdrepeatobject_8cpp.html" title=" " alt="" coords="1816,155,1992,181"/>
+<area shape="rect" id="node6" href="$cmdnextobject_8cpp.html" title=" " alt="" coords="1629,155,1792,181"/>
+<area shape="rect" id="node8" href="$cmdstartupobject_8cpp.html" title=" " alt="" coords="2443,155,2623,181"/>
+<area shape="rect" id="node10" href="$cmdteardownobject_8cpp.html" title=" " alt="" coords="2647,155,2841,181"/>
+<area shape="rect" id="node12" href="$case_8h.html" title=" " alt="" coords="3435,155,3594,181"/>
+<area shape="rect" id="node20" href="$suite_8h.html" title=" " alt="" coords="3253,155,3411,181"/>
+<area shape="rect" id="node24" href="$testroot_8h.html" title=" " alt="" coords="2865,155,3044,181"/>
+<area shape="rect" id="node27" href="$objectscenario_8cpp.html" title=" " alt="" coords="3068,155,3228,181"/>
+<area shape="rect" id="node13" href="$caseordinary_8h.html" title=" " alt="" coords="3669,229,3877,256"/>
+<area shape="rect" id="node19" href="$case_8cpp.html" title=" " alt="" coords="3466,229,3563,256"/>
+<area shape="rect" id="node14" href="$casegenerated_8h.html" title=" " alt="" coords="3556,304,3780,331"/>
+<area shape="rect" id="node16" href="$caseordinary_8cpp.html" title=" " alt="" coords="3804,304,3951,331"/>
+<area shape="rect" id="node17" href="$cmdfirststate_8cpp.html" title=" " alt="" coords="3975,304,4127,331"/>
+<area shape="rect" id="node18" href="$cmdstate_8cpp.html" title=" " alt="" coords="3404,304,3532,331"/>
+<area shape="rect" id="node15" href="$casegenerated_8cpp.html" title=" " alt="" coords="3587,379,3749,405"/>
+<area shape="rect" id="node21" href="$suitegenerated_8h.html" title=" " alt="" coords="2621,229,2846,256"/>
+<area shape="rect" id="node23" href="$suite_8cpp.html" title=" " alt="" coords="3283,229,3381,256"/>
+<area shape="rect" id="node22" href="$suitegenerated_8cpp.html" title=" " alt="" coords="1882,304,2046,331"/>
+<area shape="rect" id="node26" href="$testroot_8cpp.html" title=" " alt="" coords="1637,229,1755,256"/>
+<area shape="rect" id="node29" href="$dfltenvironment_8cpp.html" title=" " alt="" coords="5,155,173,181"/>
+<area shape="rect" id="node30" href="$registry_8cpp.html" title=" " alt="" coords="697,304,810,331"/>
+<area shape="rect" id="node31" href="$runnerfilterentire_8cpp.html" title=" " alt="" coords="198,155,373,181"/>
+<area shape="rect" id="node33" href="$scenariocase_8h.html" title=" " alt="" coords="1101,155,1313,181"/>
+<area shape="rect" id="node40" href="$scenario_8cpp.html" title=" " alt="" coords="955,155,1077,181"/>
+<area shape="rect" id="node34" href="$scenariocase_8cpp.html" title=" " alt="" coords="1174,229,1325,256"/>
+<area shape="rect" id="node36" href="$scenarioroot_8h.html" title=" " alt="" coords="941,229,1149,256"/>
+<area shape="rect" id="node37" href="$scenariosuite_8h.html" title=" " alt="" coords="704,229,917,256"/>
+<area shape="rect" id="node39" href="$scenariocontainer_8cpp.html" title=" " alt="" coords="499,229,679,256"/>
+<area shape="rect" id="node38" href="$scenariosuite_8cpp.html" title=" " alt="" coords="1220,304,1372,331"/>
+<area shape="rect" id="node42" href="$scenarioiter_8cpp.html" title=" " alt="" coords="2067,155,2208,181"/>
+<area shape="rect" id="node44" href="$scenarioitercontainer_8cpp.html" title=" " alt="" coords="2225,229,2426,256"/>
+</map>

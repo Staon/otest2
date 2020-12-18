@@ -1,0 +1,6 @@
+<map id="OTest2::ScenarioContainer" name="OTest2::ScenarioContainer">
+<area shape="rect" id="node1" title="Generic interface of a scenario container." alt="" coords="81,80,271,107"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1ScenarioRoot.html" title="Scenario object representing entire test." alt="" coords="5,155,163,181"/>
+<area shape="rect" id="node4" href="$classOTest2_1_1ScenarioSuite.html" title="A scenario object representing one test suite." alt="" coords="187,155,349,181"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1Scenario.html" title="Generic scenario object." alt="" coords="111,5,241,32"/>
+</map>

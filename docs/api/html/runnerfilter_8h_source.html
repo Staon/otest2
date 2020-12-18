@@ -92,44 +92,40 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#ifndef OTest2__INCLUDE_OTEST2_RUNNERFILTER_H_</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#define OTest2__INCLUDE_OTEST2_RUNNERFILTER_H_</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="suitefactoryptr_8h.html">otest2/suitefactoryptr.h</a>&gt;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">class </span>Registry;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classOTest2_1_1RunnerFilter.html">   35</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOTest2_1_1RunnerFilter.html">RunnerFilter</a> {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="classOTest2_1_1RunnerFilter.html#a4a234bb28bacfeb284919a3fd308f8d7">RunnerFilter</a>(</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1RunnerFilter.html">RunnerFilter</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="classOTest2_1_1RunnerFilter.html">RunnerFilter</a>&amp; <a class="code" href="classOTest2_1_1RunnerFilter.html#ad78125249f8d5387ee5f918265ee3e11">operator =</a>(</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1RunnerFilter.html">RunnerFilter</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <a class="code" href="classOTest2_1_1RunnerFilter.html#a4a234bb28bacfeb284919a3fd308f8d7">RunnerFilter</a>();</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classOTest2_1_1RunnerFilter.html#a5995628294c0efe64cb5bfb40053fd75">~RunnerFilter</a>();</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1RunnerFilter.html#af8ecd74099cf70260226a7cf3c7b6144">filterSuite</a>(</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keyword">const</span> std::string&amp; suite_name_) <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1RunnerFilter.html#a5089293990b1a6151fd0ac552026cfd4">filterCase</a>(</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keyword">const</span> std::string&amp; suite_name_,</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keyword">const</span> std::string&amp; case_name_) <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;};</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* OTest2__INCLUDE_OTEST2_RUNNERFILTER_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">class </span>ObjectPath;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classOTest2_1_1RunnerFilter.html">   36</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOTest2_1_1RunnerFilter.html">RunnerFilter</a> {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="classOTest2_1_1RunnerFilter.html#a4a234bb28bacfeb284919a3fd308f8d7">RunnerFilter</a>(</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1RunnerFilter.html">RunnerFilter</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="classOTest2_1_1RunnerFilter.html">RunnerFilter</a>&amp; <a class="code" href="classOTest2_1_1RunnerFilter.html#ad78125249f8d5387ee5f918265ee3e11">operator =</a>(</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1RunnerFilter.html">RunnerFilter</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="classOTest2_1_1RunnerFilter.html#a4a234bb28bacfeb284919a3fd308f8d7">RunnerFilter</a>();</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classOTest2_1_1RunnerFilter.html#a5995628294c0efe64cb5bfb40053fd75">~RunnerFilter</a>();</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1RunnerFilter.html#aa69a8ab75122ed2390fba0857f600a34">filterPath</a>(</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1ObjectPath.html">ObjectPath</a>&amp; path_) <span class="keyword">const</span> noexcept = 0;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;};</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* OTest2__INCLUDE_OTEST2_RUNNERFILTER_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassOTest2_1_1RunnerFilter_html_a4a234bb28bacfeb284919a3fd308f8d7"><div class="ttname"><a href="classOTest2_1_1RunnerFilter.html#a4a234bb28bacfeb284919a3fd308f8d7">OTest2::RunnerFilter::RunnerFilter</a></div><div class="ttdeci">RunnerFilter()</div><div class="ttdoc">Ctor.</div><div class="ttdef"><b>Definition:</b> <a href="runnerfilter_8cpp_source.html#l00024">runnerfilter.cpp:24</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1RunnerFilter_html_a5089293990b1a6151fd0ac552026cfd4"><div class="ttname"><a href="classOTest2_1_1RunnerFilter.html#a5089293990b1a6151fd0ac552026cfd4">OTest2::RunnerFilter::filterCase</a></div><div class="ttdeci">virtual bool filterCase(const std::string &amp;suite_name_, const std::string &amp;case_name_) const =0</div><div class="ttdoc">Filter specified testcase of a suite.</div></div>
-<div class="ttc" id="asuitefactoryptr_8h_html"><div class="ttname"><a href="suitefactoryptr_8h.html">suitefactoryptr.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1RunnerFilter_html"><div class="ttname"><a href="classOTest2_1_1RunnerFilter.html">OTest2::RunnerFilter</a></div><div class="ttdoc">Generic interface of a runner filter.</div><div class="ttdef"><b>Definition:</b> <a href="runnerfilter_8h_source.html#l00035">runnerfilter.h:35</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ObjectPath_html"><div class="ttname"><a href="classOTest2_1_1ObjectPath.html">OTest2::ObjectPath</a></div><div class="ttdoc">This is a simple object keeping path to current testing object.</div><div class="ttdef"><b>Definition:</b> <a href="objectpath_8h_source.html#l00030">objectpath.h:30</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1RunnerFilter_html"><div class="ttname"><a href="classOTest2_1_1RunnerFilter.html">OTest2::RunnerFilter</a></div><div class="ttdoc">Generic interface of a runner filter.</div><div class="ttdef"><b>Definition:</b> <a href="runnerfilter_8h_source.html#l00036">runnerfilter.h:36</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1RunnerFilter_html_aa69a8ab75122ed2390fba0857f600a34"><div class="ttname"><a href="classOTest2_1_1RunnerFilter.html#aa69a8ab75122ed2390fba0857f600a34">OTest2::RunnerFilter::filterPath</a></div><div class="ttdeci">virtual bool filterPath(const ObjectPath &amp;path_) const noexcept=0</div><div class="ttdoc">Check whether the path should be filtered.</div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1RunnerFilter_html_a5995628294c0efe64cb5bfb40053fd75"><div class="ttname"><a href="classOTest2_1_1RunnerFilter.html#a5995628294c0efe64cb5bfb40053fd75">OTest2::RunnerFilter::~RunnerFilter</a></div><div class="ttdeci">virtual ~RunnerFilter()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="runnerfilter_8cpp_source.html#l00028">runnerfilter.cpp:28</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1RunnerFilter_html_ad78125249f8d5387ee5f918265ee3e11"><div class="ttname"><a href="classOTest2_1_1RunnerFilter.html#ad78125249f8d5387ee5f918265ee3e11">OTest2::RunnerFilter::operator=</a></div><div class="ttdeci">RunnerFilter &amp; operator=(const RunnerFilter &amp;)=delete</div></div>
-<div class="ttc" id="aclassOTest2_1_1RunnerFilter_html_af8ecd74099cf70260226a7cf3c7b6144"><div class="ttname"><a href="classOTest2_1_1RunnerFilter.html#af8ecd74099cf70260226a7cf3c7b6144">OTest2::RunnerFilter::filterSuite</a></div><div class="ttdeci">virtual bool filterSuite(const std::string &amp;suite_name_) const =0</div><div class="ttdoc">Filter specified suite.</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

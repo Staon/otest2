@@ -92,150 +92,171 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="casegenerated_8h.html">casegenerated.h</a>&gt;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;assert.h&gt;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="context_8h.html">context.h</a>&gt;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="fcemarshaler_8h.html">fcemarshaler.h</a>&gt;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="runcode_8h.html">runcode.h</a>&quot;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="stateptr_8h.html">stateptr.h</a>&gt;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="stateregistry_8h.html">stateregistry.h</a>&gt;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="utils_8h.html">utils.h</a>&gt;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">struct </span>CaseGenerated::Impl {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="classOTest2_1_1CaseGenerated.html#a5c67e8f212b7c4b8f98b030946cf5e55">CaseGenerated</a>* owner;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">const</span> Context* context;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    std::string name;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    StateRegistry state_registry;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    std::vector&lt;FceMarshalerPtr&gt; start_ups;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    std::vector&lt;FceMarshalerPtr&gt; tear_downs;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    Impl(</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keyword">const</span> Impl&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    Impl&amp; <a class="code" href="classOTest2_1_1CaseGenerated.html#a8e4655683eb578d734c3f8c44d50ac00">operator =</a>(</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keyword">const</span> Impl&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">explicit</span> Impl(</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <a class="code" href="classOTest2_1_1CaseGenerated.html#a5c67e8f212b7c4b8f98b030946cf5e55">CaseGenerated</a>* owner_,</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keyword">const</span> Context&amp; context_,</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keyword">const</span> std::string&amp; name_);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    ~Impl();</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;};</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;CaseGenerated::Impl::Impl(</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    CaseGenerated* owner_,</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keyword">const</span> Context&amp; context_,</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">const</span> std::string&amp; name_) :</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  owner(owner_),</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  context(&amp;context_),</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  name(name_),</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  state_registry() {</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;}</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;CaseGenerated::Impl::~Impl() {</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#abf9011eabab1463d1bcce27a697757e7">   73</a></span>&#160;<a class="code" href="classOTest2_1_1CaseGenerated.html#a5c67e8f212b7c4b8f98b030946cf5e55">CaseGenerated::CaseGenerated</a>(</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">const</span> std::string&amp; name_) :</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <a class="code" href="classOTest2_1_1CaseOrdinary.html">CaseOrdinary</a>(context_),</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  pimpl(new Impl(this, context_, name_)) {</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#a22f6e820539706d8adc76dedc91b6406">   81</a></span>&#160;<a class="code" href="classOTest2_1_1CaseGenerated.html#a22f6e820539706d8adc76dedc91b6406">CaseGenerated::~CaseGenerated</a>() {</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  <a class="code" href="namespaceOTest2.html#a9c0e5683fb529ec38164c2f418172b30">odelete</a>(pimpl);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;}</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#a0b6457347f419535efa1e361318aab1c">   85</a></span>&#160;std::string <a class="code" href="classOTest2_1_1CaseGenerated.html#a0b6457347f419535efa1e361318aab1c">CaseGenerated::getName</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keywordflow">return</span> pimpl-&gt;name;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#a045436fb760c4383c0524d6c8ba3804b">   89</a></span>&#160;<a class="code" href="classOTest2_1_1ObjectPtr.html">StatePtr</a> <a class="code" href="classOTest2_1_1CaseGenerated.html#a045436fb760c4383c0524d6c8ba3804b">CaseGenerated::getFirstState</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  <span class="keywordflow">return</span> pimpl-&gt;state_registry.getFirstState();</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;}</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#a810f463470ce721c1f80c3ab9a0dac11">   93</a></span>&#160;<a class="code" href="classOTest2_1_1ObjectPtr.html">StatePtr</a> <a class="code" href="classOTest2_1_1CaseGenerated.html#a810f463470ce721c1f80c3ab9a0dac11">CaseGenerated::getState</a>(</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keyword">const</span> std::string&amp; name_)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="keywordflow">return</span> pimpl-&gt;state_registry.getState(name_);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
-<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#ae183c74a4b1cdbfe91462ad4f3b0146c">   98</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1CaseGenerated.html#ae183c74a4b1cdbfe91462ad4f3b0146c">CaseGenerated::startUpCase</a>(</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordtype">int</span> index_) {</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <span class="keywordflow">if</span>(index_ &gt;= 0 &amp;&amp; index_ &lt; pimpl-&gt;start_ups.size()) {</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <a class="code" href="namespaceOTest2.html#a433f1fb71a2f018642e10d076d75665e">runUserCode</a>(context_, [&amp;](<span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_) {</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;      pimpl-&gt;start_ups[index_]-&gt;runFunction(context_);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    });</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  }</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;}</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="cmdfirststate_8h.html">cmdfirststate.h</a>&gt;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="commandstack_8h.html">commandstack.h</a>&gt;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="context_8h.html">context.h</a>&gt;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="fcemarshaler_8h.html">fcemarshaler.h</a>&gt;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="runcode_8h.html">runcode.h</a>&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="stateptr_8h.html">stateptr.h</a>&gt;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="stateregistry_8h.html">stateregistry.h</a>&gt;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="utils_8h.html">utils.h</a>&gt;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">struct </span>CaseGenerated::Impl {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="classOTest2_1_1CaseGenerated.html#a5c67e8f212b7c4b8f98b030946cf5e55">CaseGenerated</a>* owner;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">const</span> Context* context;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    std::string name;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    StateRegistry state_registry;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    std::vector&lt;FceMarshalerPtr&gt; start_ups;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    std::vector&lt;FceMarshalerPtr&gt; tear_downs;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    Impl(</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">const</span> Impl&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    Impl&amp; <a class="code" href="classOTest2_1_1CaseGenerated.html#a8e4655683eb578d734c3f8c44d50ac00">operator =</a>(</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">const</span> Impl&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">explicit</span> Impl(</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <a class="code" href="classOTest2_1_1CaseGenerated.html#a5c67e8f212b7c4b8f98b030946cf5e55">CaseGenerated</a>* owner_,</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keyword">const</span> std::string&amp; name_);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    ~Impl();</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;};</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;CaseGenerated::Impl::Impl(</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    CaseGenerated* owner_,</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keyword">const</span> std::string&amp; name_) :</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  owner(owner_),</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  context(&amp;context_),</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  name(name_),</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  state_registry() {</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;CaseGenerated::Impl::~Impl() {</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;}</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#abf9011eabab1463d1bcce27a697757e7">   76</a></span>&#160;<a class="code" href="classOTest2_1_1CaseGenerated.html#a5c67e8f212b7c4b8f98b030946cf5e55">CaseGenerated::CaseGenerated</a>(</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">const</span> std::string&amp; name_) :</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <a class="code" href="classOTest2_1_1CaseOrdinary.html">CaseOrdinary</a>(context_),</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  pimpl(new Impl(this, context_, name_)) {</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#a22f6e820539706d8adc76dedc91b6406">   84</a></span>&#160;<a class="code" href="classOTest2_1_1CaseGenerated.html#a22f6e820539706d8adc76dedc91b6406">CaseGenerated::~CaseGenerated</a>() {</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <a class="code" href="namespaceOTest2.html#a9c0e5683fb529ec38164c2f418172b30">odelete</a>(pimpl);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#a0b6457347f419535efa1e361318aab1c">   88</a></span>&#160;std::string <a class="code" href="classOTest2_1_1CaseGenerated.html#a0b6457347f419535efa1e361318aab1c">CaseGenerated::getName</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  <span class="keywordflow">return</span> pimpl-&gt;name;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;}</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#a95e495acffe272d469ce9cc257fbccd9">   92</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1CaseGenerated.html#a95e495acffe272d469ce9cc257fbccd9">CaseGenerated::startUpObject</a>(</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordtype">int</span> index_) {</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="keywordflow">if</span>(index_ &gt;= 0 &amp;&amp; index_ &lt; pimpl-&gt;start_ups.size()) {</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <a class="code" href="namespaceOTest2.html#a433f1fb71a2f018642e10d076d75665e">runUserCode</a>(context_, [&amp;](<span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_) {</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;      pimpl-&gt;start_ups[index_]-&gt;runFunction(context_);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    });</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  }</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;}</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#a405800b9be32c22210c7daac1a9c58a5">  105</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1CaseGenerated.html#a405800b9be32c22210c7daac1a9c58a5">CaseGenerated::scheduleBody</a>(</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <a class="code" href="namespaceOTest2.html#a74a48b7dff9988ac9dfc6f098dca5cb2">ScenarioPtr</a> scenario_,</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <a class="code" href="namespaceOTest2.html#a368e06f0a87b365130f00b43126ff538">ObjectPtr</a> me_) {</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  assert(me_.get() == <span class="keyword">this</span>);</div>
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
-<div class="line"><a name="l00111"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#aca110dc32743f920d6bb10fac9f11c0a">  111</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1CaseGenerated.html#aca110dc32743f920d6bb10fac9f11c0a">CaseGenerated::tearDownCase</a>(</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordtype">int</span> index_) {</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  assert(index_ &gt;= 0 &amp;&amp; index_ &lt; pimpl-&gt;tear_downs.size());</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  context_.<a class="code" href="classOTest2_1_1Context.html#a37b104877fc82d0107e7155ee94b3da4">command_stack</a>-&gt;<a class="code" href="classOTest2_1_1CommandStack.html#a269ce599606862d6889c94b797c0e785">pushCommand</a>(</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      std::make_shared&lt;CmdFirstState&gt;(</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;          std::static_pointer_cast&lt;CaseOrdinary&gt;(me_)));</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;}</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  <a class="code" href="namespaceOTest2.html#a433f1fb71a2f018642e10d076d75665e">runUserCode</a>(context_, [&amp;](<span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_) {</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    pimpl-&gt;tear_downs[index_]-&gt;runFunction(context_);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  });</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;}</div>
+<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#a27e4126499af8287e2fa0f1c6f363047">  116</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1CaseGenerated.html#a27e4126499af8287e2fa0f1c6f363047">CaseGenerated::tearDownObject</a>(</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keywordtype">int</span> index_) {</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  assert(index_ &gt;= 0 &amp;&amp; index_ &lt; pimpl-&gt;tear_downs.size());</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#a4aae9c2bf79716fa9e049270ebaa70ec">  121</a></span>&#160;<span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; <a class="code" href="classOTest2_1_1CaseGenerated.html#a4aae9c2bf79716fa9e049270ebaa70ec">CaseGenerated::otest2Context</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  <span class="keywordflow">return</span> *pimpl-&gt;context;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
-<div class="line"><a name="l00125"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#ab0deac62735db422d5bc6105d3d39274">  125</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1CaseGenerated.html#ab0deac62735db422d5bc6105d3d39274">CaseGenerated::registerState</a>(</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <span class="keyword">const</span> std::string&amp; name_,</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <a class="code" href="classOTest2_1_1ObjectPtr.html">StatePtr</a> state_) {</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  pimpl-&gt;state_registry.registerState(name_, state_);</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;}</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00131"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#a230d76de3e6f0c0581fcbcabcd9f4535">  131</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1CaseGenerated.html#a230d76de3e6f0c0581fcbcabcd9f4535">CaseGenerated::registerFixture</a>(</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <a class="code" href="namespaceOTest2.html#ad26cf6c5609408e1e188b29a62ffec54">FceMarshalerPtr</a> start_up_,</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <a class="code" href="namespaceOTest2.html#ad26cf6c5609408e1e188b29a62ffec54">FceMarshalerPtr</a> tear_down_) {</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;  assert(start_up_ != <span class="keyword">nullptr</span> &amp;&amp; tear_down_ != <span class="keyword">nullptr</span>);</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  pimpl-&gt;start_ups.push_back(start_up_);</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  pimpl-&gt;tear_downs.push_back(tear_down_);</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;}</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160; </div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;  <a class="code" href="namespaceOTest2.html#a433f1fb71a2f018642e10d076d75665e">runUserCode</a>(context_, [&amp;](<span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_) {</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    pimpl-&gt;tear_downs[index_]-&gt;runFunction(context_);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  });</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;}</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
+<div class="line"><a name="l00126"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#ad9910e70a58aac6bee2440fd2bc7f0d3">  126</a></span>&#160;<a class="code" href="namespaceOTest2.html#a85dd661d9e820001497de510286d6fdd">StatePtr</a> <a class="code" href="classOTest2_1_1CaseGenerated.html#ad9910e70a58aac6bee2440fd2bc7f0d3">CaseGenerated::getFirstState</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  <span class="keywordflow">return</span> pimpl-&gt;state_registry.getFirstState();</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;}</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
+<div class="line"><a name="l00130"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#adca4342babe6ec3daa00ab6cca31324d">  130</a></span>&#160;<a class="code" href="namespaceOTest2.html#a85dd661d9e820001497de510286d6fdd">StatePtr</a> <a class="code" href="classOTest2_1_1CaseGenerated.html#adca4342babe6ec3daa00ab6cca31324d">CaseGenerated::getState</a>(</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="keyword">const</span> std::string&amp; name_)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;  <span class="keywordflow">return</span> pimpl-&gt;state_registry.getState(name_);</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;}</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
+<div class="line"><a name="l00135"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#a4aae9c2bf79716fa9e049270ebaa70ec">  135</a></span>&#160;<span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; <a class="code" href="classOTest2_1_1CaseGenerated.html#a4aae9c2bf79716fa9e049270ebaa70ec">CaseGenerated::otest2Context</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  <span class="keywordflow">return</span> *pimpl-&gt;context;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;}</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
+<div class="line"><a name="l00139"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#ab0deac62735db422d5bc6105d3d39274">  139</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1CaseGenerated.html#ab0deac62735db422d5bc6105d3d39274">CaseGenerated::registerState</a>(</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="keyword">const</span> std::string&amp; name_,</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    <a class="code" href="namespaceOTest2.html#a85dd661d9e820001497de510286d6fdd">StatePtr</a> state_) {</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  pimpl-&gt;state_registry.registerState(name_, state_);</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;}</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160; </div>
+<div class="line"><a name="l00145"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseGenerated.html#a230d76de3e6f0c0581fcbcabcd9f4535">  145</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1CaseGenerated.html#a230d76de3e6f0c0581fcbcabcd9f4535">CaseGenerated::registerFixture</a>(</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <a class="code" href="namespaceOTest2.html#ad26cf6c5609408e1e188b29a62ffec54">FceMarshalerPtr</a> start_up_,</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    <a class="code" href="namespaceOTest2.html#ad26cf6c5609408e1e188b29a62ffec54">FceMarshalerPtr</a> tear_down_) {</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  assert(start_up_ != <span class="keyword">nullptr</span> &amp;&amp; tear_down_ != <span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; </div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  pimpl-&gt;start_ups.push_back(start_up_);</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  pimpl-&gt;tear_downs.push_back(tear_down_);</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;}</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160; </div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_a0b6457347f419535efa1e361318aab1c"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#a0b6457347f419535efa1e361318aab1c">OTest2::CaseGenerated::getName</a></div><div class="ttdeci">virtual std::string getName() const</div><div class="ttdoc">Get object's name.</div><div class="ttdef"><b>Definition:</b> <a href="casegenerated_8cpp_source.html#l00085">casegenerated.cpp:85</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_a0b6457347f419535efa1e361318aab1c"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#a0b6457347f419535efa1e361318aab1c">OTest2::CaseGenerated::getName</a></div><div class="ttdeci">virtual std::string getName() const</div><div class="ttdoc">Get object's name.</div><div class="ttdef"><b>Definition:</b> <a href="casegenerated_8cpp_source.html#l00088">casegenerated.cpp:88</a></div></div>
 <div class="ttc" id="afcemarshaler_8h_html"><div class="ttname"><a href="fcemarshaler_8h.html">fcemarshaler.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_a8e4655683eb578d734c3f8c44d50ac00"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#a8e4655683eb578d734c3f8c44d50ac00">OTest2::CaseGenerated::operator=</a></div><div class="ttdeci">CaseGenerated &amp; operator=(const CaseGenerated &amp;)=delete</div></div>
-<div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_a4aae9c2bf79716fa9e049270ebaa70ec"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#a4aae9c2bf79716fa9e049270ebaa70ec">OTest2::CaseGenerated::otest2Context</a></div><div class="ttdeci">virtual const Context &amp; otest2Context() const</div><div class="ttdoc">Get the OTest2 context.</div><div class="ttdef"><b>Definition:</b> <a href="casegenerated_8cpp_source.html#l00121">casegenerated.cpp:121</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_aca110dc32743f920d6bb10fac9f11c0a"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#aca110dc32743f920d6bb10fac9f11c0a">OTest2::CaseGenerated::tearDownCase</a></div><div class="ttdeci">virtual void tearDownCase(const Context &amp;context_, int index_)</div><div class="ttdoc">Run a tear-down function.</div><div class="ttdef"><b>Definition:</b> <a href="casegenerated_8cpp_source.html#l00111">casegenerated.cpp:111</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_a22f6e820539706d8adc76dedc91b6406"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#a22f6e820539706d8adc76dedc91b6406">OTest2::CaseGenerated::~CaseGenerated</a></div><div class="ttdeci">virtual ~CaseGenerated()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="casegenerated_8cpp_source.html#l00081">casegenerated.cpp:81</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_a810f463470ce721c1f80c3ab9a0dac11"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#a810f463470ce721c1f80c3ab9a0dac11">OTest2::CaseGenerated::getState</a></div><div class="ttdeci">virtual StatePtr getState(const std::string &amp;name_) const</div><div class="ttdoc">Get state with specified name_.</div><div class="ttdef"><b>Definition:</b> <a href="casegenerated_8cpp_source.html#l00093">casegenerated.cpp:93</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_a27e4126499af8287e2fa0f1c6f363047"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#a27e4126499af8287e2fa0f1c6f363047">OTest2::CaseGenerated::tearDownObject</a></div><div class="ttdeci">virtual void tearDownObject(const Context &amp;context_, int index_) override</div><div class="ttdoc">Execute tear-down function at specified index.</div><div class="ttdef"><b>Definition:</b> <a href="casegenerated_8cpp_source.html#l00116">casegenerated.cpp:116</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_a4aae9c2bf79716fa9e049270ebaa70ec"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#a4aae9c2bf79716fa9e049270ebaa70ec">OTest2::CaseGenerated::otest2Context</a></div><div class="ttdeci">virtual const Context &amp; otest2Context() const</div><div class="ttdoc">Get the OTest2 context.</div><div class="ttdef"><b>Definition:</b> <a href="casegenerated_8cpp_source.html#l00135">casegenerated.cpp:135</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_a22f6e820539706d8adc76dedc91b6406"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#a22f6e820539706d8adc76dedc91b6406">OTest2::CaseGenerated::~CaseGenerated</a></div><div class="ttdeci">virtual ~CaseGenerated()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="casegenerated_8cpp_source.html#l00084">casegenerated.cpp:84</a></div></div>
 <div class="ttc" id="acasegenerated_8h_html"><div class="ttname"><a href="casegenerated_8h.html">casegenerated.h</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1CommandStack_html_a269ce599606862d6889c94b797c0e785"><div class="ttname"><a href="classOTest2_1_1CommandStack.html#a269ce599606862d6889c94b797c0e785">OTest2::CommandStack::pushCommand</a></div><div class="ttdeci">void pushCommand(CommandPtr command_)</div><div class="ttdoc">Push a command into the stack.</div><div class="ttdef"><b>Definition:</b> <a href="commandstack_8cpp_source.html#l00067">commandstack.cpp:67</a></div></div>
+<div class="ttc" id="acommandstack_8h_html"><div class="ttname"><a href="commandstack_8h.html">commandstack.h</a></div></div>
 <div class="ttc" id="autils_8h_html"><div class="ttname"><a href="utils_8h.html">utils.h</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html_ad26cf6c5609408e1e188b29a62ffec54"><div class="ttname"><a href="namespaceOTest2.html#ad26cf6c5609408e1e188b29a62ffec54">OTest2::FceMarshalerPtr</a></div><div class="ttdeci">std::shared_ptr&lt; FceMarshaler &gt; FceMarshalerPtr</div><div class="ttdef"><b>Definition:</b> <a href="fcemarshalerptr_8h_source.html#l00027">fcemarshalerptr.h:27</a></div></div>
+<div class="ttc" id="anamespaceOTest2_html_a368e06f0a87b365130f00b43126ff538"><div class="ttname"><a href="namespaceOTest2.html#a368e06f0a87b365130f00b43126ff538">OTest2::ObjectPtr</a></div><div class="ttdeci">std::shared_ptr&lt; Object &gt; ObjectPtr</div><div class="ttdoc">Shared pointer to a testing object.</div><div class="ttdef"><b>Definition:</b> <a href="objectptr_8h_source.html#l00027">objectptr.h:27</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_adca4342babe6ec3daa00ab6cca31324d"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#adca4342babe6ec3daa00ab6cca31324d">OTest2::CaseGenerated::getState</a></div><div class="ttdeci">virtual StatePtr getState(const std::string &amp;name_) const override</div><div class="ttdoc">Get state with specified name_.</div><div class="ttdef"><b>Definition:</b> <a href="casegenerated_8cpp_source.html#l00130">casegenerated.cpp:130</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1Context_html_a37b104877fc82d0107e7155ee94b3da4"><div class="ttname"><a href="classOTest2_1_1Context.html#a37b104877fc82d0107e7155ee94b3da4">OTest2::Context::command_stack</a></div><div class="ttdeci">CommandStack *const command_stack</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00040">context.h:40</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_a95e495acffe272d469ce9cc257fbccd9"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#a95e495acffe272d469ce9cc257fbccd9">OTest2::CaseGenerated::startUpObject</a></div><div class="ttdeci">virtual bool startUpObject(const Context &amp;context_, int index_) override</div><div class="ttdoc">Execute start-up function at specified index.</div><div class="ttdef"><b>Definition:</b> <a href="casegenerated_8cpp_source.html#l00092">casegenerated.cpp:92</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html_a433f1fb71a2f018642e10d076d75665e"><div class="ttname"><a href="namespaceOTest2.html#a433f1fb71a2f018642e10d076d75665e">OTest2::runUserCode</a></div><div class="ttdeci">bool runUserCode(const Context &amp;context_, std::function&lt; void(const Context &amp;)&gt; ftor_) noexcept</div><div class="ttdef"><b>Definition:</b> <a href="runcode_8cpp_source.html#l00033">runcode.cpp:33</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ObjectPtr_html"><div class="ttname"><a href="classOTest2_1_1ObjectPtr.html">OTest2::ObjectPtr</a></div><div class="ttdoc">Pointer to a testing object.</div><div class="ttdef"><b>Definition:</b> <a href="objectptr_8h_source.html#l00033">objectptr.h:33</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_a230d76de3e6f0c0581fcbcabcd9f4535"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#a230d76de3e6f0c0581fcbcabcd9f4535">OTest2::CaseGenerated::registerFixture</a></div><div class="ttdeci">void registerFixture(FceMarshalerPtr start_up_, FceMarshalerPtr tear_down_)</div><div class="ttdoc">Register a pair of start-up and tear-down functions.</div><div class="ttdef"><b>Definition:</b> <a href="casegenerated_8cpp_source.html#l00131">casegenerated.cpp:131</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1CaseOrdinary_html"><div class="ttname"><a href="classOTest2_1_1CaseOrdinary.html">OTest2::CaseOrdinary</a></div><div class="ttdoc">Ordinary suite.</div><div class="ttdef"><b>Definition:</b> <a href="caseordinary_8h_source.html#l00038">caseordinary.h:38</a></div></div>
+<div class="ttc" id="anamespaceOTest2_html_a74a48b7dff9988ac9dfc6f098dca5cb2"><div class="ttname"><a href="namespaceOTest2.html#a74a48b7dff9988ac9dfc6f098dca5cb2">OTest2::ScenarioPtr</a></div><div class="ttdeci">std::shared_ptr&lt; Scenario &gt; ScenarioPtr</div><div class="ttdoc">Shared pointer of the scenario object.</div><div class="ttdef"><b>Definition:</b> <a href="scenarioptr_8h_source.html#l00027">scenarioptr.h:27</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_a230d76de3e6f0c0581fcbcabcd9f4535"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#a230d76de3e6f0c0581fcbcabcd9f4535">OTest2::CaseGenerated::registerFixture</a></div><div class="ttdeci">void registerFixture(FceMarshalerPtr start_up_, FceMarshalerPtr tear_down_)</div><div class="ttdoc">Register a pair of start-up and tear-down functions.</div><div class="ttdef"><b>Definition:</b> <a href="casegenerated_8cpp_source.html#l00145">casegenerated.cpp:145</a></div></div>
+<div class="ttc" id="anamespaceOTest2_html_a85dd661d9e820001497de510286d6fdd"><div class="ttname"><a href="namespaceOTest2.html#a85dd661d9e820001497de510286d6fdd">OTest2::StatePtr</a></div><div class="ttdeci">std::shared_ptr&lt; State &gt; StatePtr</div><div class="ttdoc">Pointer to test state objects.</div><div class="ttdef"><b>Definition:</b> <a href="stateptr_8h_source.html#l00027">stateptr.h:27</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1CaseOrdinary_html"><div class="ttname"><a href="classOTest2_1_1CaseOrdinary.html">OTest2::CaseOrdinary</a></div><div class="ttdoc">An ordinary case object scheduled by the CmdFirstState, CmdRunState and CmdState commands.</div><div class="ttdef"><b>Definition:</b> <a href="caseordinary_8h_source.html#l00037">caseordinary.h:37</a></div></div>
 <div class="ttc" id="aruncode_8h_html"><div class="ttname"><a href="runcode_8h.html">runcode.h</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_ad9910e70a58aac6bee2440fd2bc7f0d3"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#ad9910e70a58aac6bee2440fd2bc7f0d3">OTest2::CaseGenerated::getFirstState</a></div><div class="ttdeci">virtual StatePtr getFirstState() const override</div><div class="ttdoc">Get the initial state.</div><div class="ttdef"><b>Definition:</b> <a href="casegenerated_8cpp_source.html#l00126">casegenerated.cpp:126</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_a5c67e8f212b7c4b8f98b030946cf5e55"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#a5c67e8f212b7c4b8f98b030946cf5e55">OTest2::CaseGenerated::CaseGenerated</a></div><div class="ttdeci">CaseGenerated(const CaseGenerated &amp;)=delete</div></div>
 <div class="ttc" id="acontext_8h_html"><div class="ttname"><a href="context_8h.html">context.h</a></div></div>
 <div class="ttc" id="astateregistry_8h_html"><div class="ttname"><a href="stateregistry_8h.html">stateregistry.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_ab0deac62735db422d5bc6105d3d39274"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#ab0deac62735db422d5bc6105d3d39274">OTest2::CaseGenerated::registerState</a></div><div class="ttdeci">void registerState(const std::string &amp;name_, StatePtr state_)</div><div class="ttdoc">Register new test state.</div><div class="ttdef"><b>Definition:</b> <a href="casegenerated_8cpp_source.html#l00125">casegenerated.cpp:125</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_ab0deac62735db422d5bc6105d3d39274"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#ab0deac62735db422d5bc6105d3d39274">OTest2::CaseGenerated::registerState</a></div><div class="ttdeci">void registerState(const std::string &amp;name_, StatePtr state_)</div><div class="ttdoc">Register new test state.</div><div class="ttdef"><b>Definition:</b> <a href="casegenerated_8cpp_source.html#l00139">casegenerated.cpp:139</a></div></div>
 <div class="ttc" id="astateptr_8h_html"><div class="ttname"><a href="stateptr_8h.html">stateptr.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1Context_html"><div class="ttname"><a href="classOTest2_1_1Context.html">OTest2::Context</a></div><div class="ttdoc">OTest2 runtime context.</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00039">context.h:39</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_ae183c74a4b1cdbfe91462ad4f3b0146c"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#ae183c74a4b1cdbfe91462ad4f3b0146c">OTest2::CaseGenerated::startUpCase</a></div><div class="ttdeci">virtual bool startUpCase(const Context &amp;context_, int index_)</div><div class="ttdoc">Run a start-up function.</div><div class="ttdef"><b>Definition:</b> <a href="casegenerated_8cpp_source.html#l00098">casegenerated.cpp:98</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1Context_html"><div class="ttname"><a href="classOTest2_1_1Context.html">OTest2::Context</a></div><div class="ttdoc">OTest2 runtime context.</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00038">context.h:38</a></div></div>
+<div class="ttc" id="acmdfirststate_8h_html"><div class="ttname"><a href="cmdfirststate_8h.html">cmdfirststate.h</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_a405800b9be32c22210c7daac1a9c58a5"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#a405800b9be32c22210c7daac1a9c58a5">OTest2::CaseGenerated::scheduleBody</a></div><div class="ttdeci">virtual void scheduleBody(const Context &amp;context_, ScenarioPtr scenario_, ObjectPtr me_) override</div><div class="ttdoc">Schedule body of the testing object.</div><div class="ttdef"><b>Definition:</b> <a href="casegenerated_8cpp_source.html#l00105">casegenerated.cpp:105</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html_a9c0e5683fb529ec38164c2f418172b30"><div class="ttname"><a href="namespaceOTest2.html#a9c0e5683fb529ec38164c2f418172b30">OTest2::odelete</a></div><div class="ttdeci">void odelete(T_ *&amp;object_)</div><div class="ttdoc">Delete a pointer and set it invalid.</div><div class="ttdef"><b>Definition:</b> <a href="utils_8h_source.html#l00034">utils.h:34</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1CaseGenerated_html_a045436fb760c4383c0524d6c8ba3804b"><div class="ttname"><a href="classOTest2_1_1CaseGenerated.html#a045436fb760c4383c0524d6c8ba3804b">OTest2::CaseGenerated::getFirstState</a></div><div class="ttdeci">virtual StatePtr getFirstState() const</div><div class="ttdoc">Get the initial state.</div><div class="ttdef"><b>Definition:</b> <a href="casegenerated_8cpp_source.html#l00089">casegenerated.cpp:89</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

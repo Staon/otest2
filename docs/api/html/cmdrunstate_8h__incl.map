@@ -1,8 +1,7 @@
 <map id="include/otest2/cmdrunstate.h" name="include/otest2/cmdrunstate.h">
 <area shape="rect" id="node1" title=" " alt="" coords="175,5,385,32"/>
 <area shape="rect" id="node2" href="$caseordinaryptr_8h.html" title=" " alt="" coords="5,80,184,107"/>
-<area shape="rect" id="node5" href="$command_8h.html" title=" " alt="" coords="208,80,352,107"/>
-<area shape="rect" id="node6" href="$stateordinaryptr_8h.html" title=" " alt="" coords="376,80,557,107"/>
-<area shape="rect" id="node3" href="$objectptr_8h.html" title=" " alt="" coords="213,155,347,181"/>
-<area shape="rect" id="node4" title=" " alt="" coords="242,229,318,256"/>
+<area shape="rect" id="node4" href="$command_8h.html" title=" " alt="" coords="208,80,352,107"/>
+<area shape="rect" id="node5" href="$stateordinaryptr_8h.html" title=" " alt="" coords="376,80,557,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="242,155,318,181"/>
 </map>

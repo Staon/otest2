@@ -1,12 +1,12 @@
 <map id="include/otest2/stategenerated.h" name="include/otest2/stategenerated.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,232,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="19,304,77,331"/>
-<area shape="rect" id="node3" href="$contextobject_8h.html" title=" " alt="" coords="35,155,202,181"/>
-<area shape="rect" id="node4" href="$stateordinary_8h.html" title=" " alt="" coords="212,80,375,107"/>
-<area shape="rect" id="node5" href="$caseordinaryptr_8h.html" title=" " alt="" coords="383,229,561,256"/>
-<area shape="rect" id="node8" href="$state_8h.html" title=" " alt="" coords="237,155,349,181"/>
-<area shape="rect" id="node6" href="$objectptr_8h.html" title=" " alt="" coords="315,304,450,331"/>
-<area shape="rect" id="node7" title=" " alt="" coords="345,379,421,405"/>
-<area shape="rect" id="node9" href="$object_8h.html" title=" " alt="" coords="86,229,205,256"/>
-<area shape="rect" id="node10" href="$stateptr_8h.html" title=" " alt="" coords="229,229,358,256"/>
+<area shape="rect" id="node1" title=" " alt="" coords="97,5,323,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="147,304,206,331"/>
+<area shape="rect" id="node3" href="$contextobject_8h.html" title=" " alt="" coords="5,155,172,181"/>
+<area shape="rect" id="node4" href="$stateordinary_8h.html" title=" " alt="" coords="331,80,494,107"/>
+<area shape="rect" id="node5" href="$caseordinaryptr_8h.html" title=" " alt="" coords="450,229,629,256"/>
+<area shape="rect" id="node7" href="$state_8h.html" title=" " alt="" coords="357,155,469,181"/>
+<area shape="rect" id="node6" title=" " alt="" coords="416,379,492,405"/>
+<area shape="rect" id="node8" href="$object_8h.html" title=" " alt="" coords="248,229,367,256"/>
+<area shape="rect" id="node10" href="$stateptr_8h.html" title=" " alt="" coords="389,304,519,331"/>
+<area shape="rect" id="node9" href="$objectptr_8h.html" title=" " alt="" coords="231,304,365,331"/>
 </map>

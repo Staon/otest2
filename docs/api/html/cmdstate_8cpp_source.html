@@ -103,13 +103,13 @@ $(function() {
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
 <div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classOTest2_1_1CmdState.html#a751fdddea29a0a8bb12758d21dd8c98c">   33</a></span>&#160;<a class="code" href="classOTest2_1_1CmdState.html#a95113b27dded6382c018cace00a61883">CmdState::CmdState</a>(</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="classOTest2_1_1ObjectPtr.html">CaseOrdinaryPtr</a> testcase_,</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="namespaceOTest2.html#a3ee94bac3095616d591bc32c9b8b4e4c">CaseOrdinaryPtr</a> testcase_,</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">const</span> std::string&amp; name_,</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">int</span> delay_) :</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  testcase(testcase_),</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  name(name_),</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  delay(delay_) {</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  assert(!testcase.<a class="code" href="classOTest2_1_1ObjectPtr.html#a94219bd5fee931a13efb8310904ca9f9">isNull</a>() &amp;&amp; !name_.empty() &amp;&amp; delay_ &gt;= 0);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  assert(testcase != <span class="keyword">nullptr</span> &amp;&amp; !name_.empty() &amp;&amp; delay_ &gt;= 0);</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
@@ -119,8 +119,8 @@ $(function() {
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
 <div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classOTest2_1_1CmdState.html#a9695340b4799f826579b533579f12936">   48</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1CmdState.html#a9695340b4799f826579b533579f12936">CmdState::run</a>(</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_) {</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <a class="code" href="classOTest2_1_1ObjectPtr.html">StatePtr</a> state_(testcase-&gt;<a class="code" href="classOTest2_1_1CaseOrdinary.html#a7a94edb496fd2ab6d0c1fe3f8c314f57">getState</a>(name));</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordflow">if</span>(!state_.<a class="code" href="classOTest2_1_1ObjectPtr.html#a94219bd5fee931a13efb8310904ca9f9">isNull</a>()) {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <a class="code" href="namespaceOTest2.html#a85dd661d9e820001497de510286d6fdd">StatePtr</a> state_(testcase-&gt;getState(name));</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordflow">if</span>(state_ != <span class="keyword">nullptr</span>) {</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    state_-&gt;scheduleRun(context_, testcase, state_, <span class="keyword">true</span>, delay);</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  }</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordflow">else</span> {</div>
@@ -137,14 +137,13 @@ $(function() {
 <div class="ttc" id="acaseordinary_8h_html"><div class="ttname"><a href="caseordinary_8h.html">caseordinary.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1CmdState_html_a9695340b4799f826579b533579f12936"><div class="ttname"><a href="classOTest2_1_1CmdState.html#a9695340b4799f826579b533579f12936">OTest2::CmdState::run</a></div><div class="ttdeci">virtual void run(const Context &amp;context_)</div><div class="ttdoc">Run the command.</div><div class="ttdef"><b>Definition:</b> <a href="cmdstate_8cpp_source.html#l00048">cmdstate.cpp:48</a></div></div>
 <div class="ttc" id="acmdstate_8h_html"><div class="ttname"><a href="cmdstate_8h.html">cmdstate.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1CaseOrdinary_html_a7a94edb496fd2ab6d0c1fe3f8c314f57"><div class="ttname"><a href="classOTest2_1_1CaseOrdinary.html#a7a94edb496fd2ab6d0c1fe3f8c314f57">OTest2::CaseOrdinary::getState</a></div><div class="ttdeci">virtual StatePtr getState(const std::string &amp;name_) const =0</div><div class="ttdoc">Get state with specified name_.</div></div>
+<div class="ttc" id="anamespaceOTest2_html_a3ee94bac3095616d591bc32c9b8b4e4c"><div class="ttname"><a href="namespaceOTest2.html#a3ee94bac3095616d591bc32c9b8b4e4c">OTest2::CaseOrdinaryPtr</a></div><div class="ttdeci">std::shared_ptr&lt; CaseOrdinary &gt; CaseOrdinaryPtr</div><div class="ttdoc">Shared pointer of the ordinary cases.</div><div class="ttdef"><b>Definition:</b> <a href="caseordinaryptr_8h_source.html#l00027">caseordinaryptr.h:27</a></div></div>
 <div class="ttc" id="ainternalerror_8h_html"><div class="ttname"><a href="internalerror_8h.html">internalerror.h</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html_ac5a3df96bffd96d1c51a91ff6371a69e"><div class="ttname"><a href="namespaceOTest2.html#ac5a3df96bffd96d1c51a91ff6371a69e">OTest2::internalError</a></div><div class="ttdeci">void internalError(const Context &amp;context_, const std::string &amp;message_) noexcept</div><div class="ttdoc">Fail the running test because of an internal error.</div><div class="ttdef"><b>Definition:</b> <a href="internalerror_8cpp_source.html#l00027">internalerror.cpp:27</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ObjectPtr_html"><div class="ttname"><a href="classOTest2_1_1ObjectPtr.html">OTest2::ObjectPtr&lt; CaseOrdinary &gt;</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ObjectPtr_html_a94219bd5fee931a13efb8310904ca9f9"><div class="ttname"><a href="classOTest2_1_1ObjectPtr.html#a94219bd5fee931a13efb8310904ca9f9">OTest2::ObjectPtr::isNull</a></div><div class="ttdeci">bool isNull() const</div><div class="ttdoc">Check whether the pointer is null.</div><div class="ttdef"><b>Definition:</b> <a href="objectptr_8h_source.html#l00124">objectptr.h:124</a></div></div>
+<div class="ttc" id="anamespaceOTest2_html_a85dd661d9e820001497de510286d6fdd"><div class="ttname"><a href="namespaceOTest2.html#a85dd661d9e820001497de510286d6fdd">OTest2::StatePtr</a></div><div class="ttdeci">std::shared_ptr&lt; State &gt; StatePtr</div><div class="ttdoc">Pointer to test state objects.</div><div class="ttdef"><b>Definition:</b> <a href="stateptr_8h_source.html#l00027">stateptr.h:27</a></div></div>
 <div class="ttc" id="acontext_8h_html"><div class="ttname"><a href="context_8h.html">context.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1Context_html"><div class="ttname"><a href="classOTest2_1_1Context.html">OTest2::Context</a></div><div class="ttdoc">OTest2 runtime context.</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00039">context.h:39</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1Context_html"><div class="ttname"><a href="classOTest2_1_1Context.html">OTest2::Context</a></div><div class="ttdoc">OTest2 runtime context.</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00038">context.h:38</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1CmdState_html_a95113b27dded6382c018cace00a61883"><div class="ttname"><a href="classOTest2_1_1CmdState.html#a95113b27dded6382c018cace00a61883">OTest2::CmdState::CmdState</a></div><div class="ttdeci">CmdState(const CmdState &amp;)=delete</div></div>
 <div class="ttc" id="astate_8h_html"><div class="ttname"><a href="state_8h.html">state.h</a></div></div>
 <!-- start footer part -->

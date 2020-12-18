@@ -1,6 +1,7 @@
 <map id="include/otest2/registry.h" name="include/otest2/registry.h">
-<area shape="rect" id="node1" title=" " alt="" coords="17,5,191,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="86,5,261,32"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,80,64,107"/>
-<area shape="rect" id="node3" href="$suitefactoryptr_8h.html" title=" " alt="" coords="88,80,259,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="135,155,211,181"/>
+<area shape="rect" id="node3" href="$scenarioiterptr_8h.html" title=" " alt="" coords="88,80,259,107"/>
+<area shape="rect" id="node5" href="$scenarioptr_8h.html" title=" " alt="" coords="283,80,434,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="227,155,303,181"/>
 </map>

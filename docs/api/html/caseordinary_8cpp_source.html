@@ -91,52 +91,24 @@ $(function() {
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="caseordinary_8h.html">caseordinary.h</a>&gt;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;assert.h&gt;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="cmdstartupcase_8h.html">cmdstartupcase.h</a>&gt;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="commandptr_8h.html">commandptr.h</a>&gt;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="commandstack_8h.html">commandstack.h</a>&gt;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="context_8h.html">context.h</a>&gt;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseOrdinary.html#a2be6d08ae01ea41bb1f46d2c188cab8f">   32</a></span>&#160;<a class="code" href="classOTest2_1_1CaseOrdinary.html#a4d9d0ca418dc61ba20f1e7dc25bc4688">CaseOrdinary::CaseOrdinary</a>(</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_) {</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseOrdinary.html#a2f47e5df577cf39b57c585c08f82f7f1">   37</a></span>&#160;<a class="code" href="classOTest2_1_1CaseOrdinary.html#a2f47e5df577cf39b57c585c08f82f7f1">CaseOrdinary::~CaseOrdinary</a>() {</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseOrdinary.html#a0250dc112ba318ae816526b011334f88">   41</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1CaseOrdinary.html#a0250dc112ba318ae816526b011334f88">CaseOrdinary::scheduleRun</a>(</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="classOTest2_1_1ObjectPtr.html">CasePtr</a> this_ptr_) {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keyword">auto</span> co_(this_ptr_.<a class="code" href="classOTest2_1_1ObjectPtr.html#ac225105aacd86fbd113c37921391b640">staticCast</a>&lt;<a class="code" href="classOTest2_1_1CaseOrdinary.html">CaseOrdinary</a>&gt;());</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  assert(co_.get() == <span class="keyword">this</span>);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="comment">/* -- schedule the commands */</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  context_.<a class="code" href="classOTest2_1_1Context.html#a37b104877fc82d0107e7155ee94b3da4">command_stack</a>-&gt;<a class="code" href="classOTest2_1_1CommandStack.html#a269ce599606862d6889c94b797c0e785">pushCommand</a>(std::make_shared&lt;CmdStartUpCase&gt;(co_, 0));</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseOrdinary.html#a2be6d08ae01ea41bb1f46d2c188cab8f">   24</a></span>&#160;<a class="code" href="classOTest2_1_1CaseOrdinary.html#a4d9d0ca418dc61ba20f1e7dc25bc4688">CaseOrdinary::CaseOrdinary</a>(</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_) {</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classOTest2_1_1CaseOrdinary.html#a2f47e5df577cf39b57c585c08f82f7f1">   29</a></span>&#160;<a class="code" href="classOTest2_1_1CaseOrdinary.html#a2f47e5df577cf39b57c585c08f82f7f1">CaseOrdinary::~CaseOrdinary</a>() {</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="acaseordinary_8h_html"><div class="ttname"><a href="caseordinary_8h.html">caseordinary.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1CommandStack_html_a269ce599606862d6889c94b797c0e785"><div class="ttname"><a href="classOTest2_1_1CommandStack.html#a269ce599606862d6889c94b797c0e785">OTest2::CommandStack::pushCommand</a></div><div class="ttdeci">void pushCommand(CommandPtr command_)</div><div class="ttdoc">Push a command into the stack.</div><div class="ttdef"><b>Definition:</b> <a href="commandstack_8cpp_source.html#l00067">commandstack.cpp:67</a></div></div>
-<div class="ttc" id="acommandstack_8h_html"><div class="ttname"><a href="commandstack_8h.html">commandstack.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1CaseOrdinary_html_a2f47e5df577cf39b57c585c08f82f7f1"><div class="ttname"><a href="classOTest2_1_1CaseOrdinary.html#a2f47e5df577cf39b57c585c08f82f7f1">OTest2::CaseOrdinary::~CaseOrdinary</a></div><div class="ttdeci">virtual ~CaseOrdinary()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="caseordinary_8cpp_source.html#l00037">caseordinary.cpp:37</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1CaseOrdinary_html_a2f47e5df577cf39b57c585c08f82f7f1"><div class="ttname"><a href="classOTest2_1_1CaseOrdinary.html#a2f47e5df577cf39b57c585c08f82f7f1">OTest2::CaseOrdinary::~CaseOrdinary</a></div><div class="ttdeci">virtual ~CaseOrdinary()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="caseordinary_8cpp_source.html#l00029">caseordinary.cpp:29</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1CaseOrdinary_html_a4d9d0ca418dc61ba20f1e7dc25bc4688"><div class="ttname"><a href="classOTest2_1_1CaseOrdinary.html#a4d9d0ca418dc61ba20f1e7dc25bc4688">OTest2::CaseOrdinary::CaseOrdinary</a></div><div class="ttdeci">CaseOrdinary(const CaseOrdinary &amp;)=delete</div></div>
-<div class="ttc" id="aclassOTest2_1_1Context_html_a37b104877fc82d0107e7155ee94b3da4"><div class="ttname"><a href="classOTest2_1_1Context.html#a37b104877fc82d0107e7155ee94b3da4">OTest2::Context::command_stack</a></div><div class="ttdeci">CommandStack *const command_stack</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00041">context.h:41</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
-<div class="ttc" id="acmdstartupcase_8h_html"><div class="ttname"><a href="cmdstartupcase_8h.html">cmdstartupcase.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1CaseOrdinary_html_a0250dc112ba318ae816526b011334f88"><div class="ttname"><a href="classOTest2_1_1CaseOrdinary.html#a0250dc112ba318ae816526b011334f88">OTest2::CaseOrdinary::scheduleRun</a></div><div class="ttdeci">virtual void scheduleRun(const Context &amp;context_, CasePtr this_ptr_)</div><div class="ttdoc">Schedule run of the case.</div><div class="ttdef"><b>Definition:</b> <a href="caseordinary_8cpp_source.html#l00041">caseordinary.cpp:41</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ObjectPtr_html"><div class="ttname"><a href="classOTest2_1_1ObjectPtr.html">OTest2::ObjectPtr</a></div><div class="ttdoc">Pointer to a testing object.</div><div class="ttdef"><b>Definition:</b> <a href="objectptr_8h_source.html#l00033">objectptr.h:33</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ObjectPtr_html_ac225105aacd86fbd113c37921391b640"><div class="ttname"><a href="classOTest2_1_1ObjectPtr.html#ac225105aacd86fbd113c37921391b640">OTest2::ObjectPtr::staticCast</a></div><div class="ttdeci">ObjectPtr&lt; DstObject_ &gt; staticCast() const</div><div class="ttdoc">Static cast.</div><div class="ttdef"><b>Definition:</b> <a href="objectptr_8h_source.html#l00146">objectptr.h:146</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1CaseOrdinary_html"><div class="ttname"><a href="classOTest2_1_1CaseOrdinary.html">OTest2::CaseOrdinary</a></div><div class="ttdoc">Ordinary suite.</div><div class="ttdef"><b>Definition:</b> <a href="caseordinary_8h_source.html#l00038">caseordinary.h:38</a></div></div>
-<div class="ttc" id="acontext_8h_html"><div class="ttname"><a href="context_8h.html">context.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1Context_html"><div class="ttname"><a href="classOTest2_1_1Context.html">OTest2::Context</a></div><div class="ttdoc">OTest2 runtime context.</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00039">context.h:39</a></div></div>
-<div class="ttc" id="acommandptr_8h_html"><div class="ttname"><a href="commandptr_8h.html">commandptr.h</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1Context_html"><div class="ttname"><a href="classOTest2_1_1Context.html">OTest2::Context</a></div><div class="ttdoc">OTest2 runtime context.</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00038">context.h:38</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

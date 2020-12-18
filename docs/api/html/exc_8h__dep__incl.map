@@ -1,8 +1,11 @@
 <map id="include/otest2/exc.h" name="include/otest2/exc.h">
-<area shape="rect" id="node1" title=" " alt="" coords="261,5,411,32"/>
-<area shape="rect" id="node2" href="$userdata_8h.html" title=" " alt="" coords="82,80,267,107"/>
-<area shape="rect" id="node5" href="$exc_8cpp.html" title=" " alt="" coords="291,80,381,107"/>
-<area shape="rect" id="node6" href="$exccatcherordinary_8cpp.html" title=" " alt="" coords="405,80,592,107"/>
-<area shape="rect" id="node3" href="$dfltenvironment_8cpp.html" title=" " alt="" coords="5,155,173,181"/>
-<area shape="rect" id="node4" href="$userdata_8cpp.html" title=" " alt="" coords="198,155,322,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="448,5,599,32"/>
+<area shape="rect" id="node2" href="$tagfilter_8h.html" title=" " alt="" coords="150,80,326,107"/>
+<area shape="rect" id="node6" href="$userdata_8h.html" title=" " alt="" coords="351,80,536,107"/>
+<area shape="rect" id="node8" href="$exc_8cpp.html" title=" " alt="" coords="560,80,649,107"/>
+<area shape="rect" id="node9" href="$exccatcherordinary_8cpp.html" title=" " alt="" coords="674,80,861,107"/>
+<area shape="rect" id="node3" href="$dfltenvironment_8cpp.html" title=" " alt="" coords="319,155,487,181"/>
+<area shape="rect" id="node4" href="$scenariocase_8cpp.html" title=" " alt="" coords="5,155,156,181"/>
+<area shape="rect" id="node5" href="$tagfilter_8cpp.html" title=" " alt="" coords="181,155,295,181"/>
+<area shape="rect" id="node7" href="$userdata_8cpp.html" title=" " alt="" coords="512,155,636,181"/>
 </map>

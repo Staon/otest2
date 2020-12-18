@@ -1,4 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classOTest2_1_1ExcCatcher.html" title="Generic exception catcher interface." alt="" coords="5,5,151,32"/>
-<area shape="rect" id="node2" href="$classOTest2_1_1ExcCatcherOrdinary.html" title="Ordinary exception catcher handling std::exception." alt="" coords="199,5,397,32"/>
+<area shape="rect" id="node1" href="$classOTest2_1_1FceMarshaler.html" title="Generic interface of a function marshaler." alt="" coords="5,5,164,32"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1EmptyMarshaler.html" title="Empty marshaler &#45; no function is invoked." alt="" coords="212,5,389,32"/>
 </map>

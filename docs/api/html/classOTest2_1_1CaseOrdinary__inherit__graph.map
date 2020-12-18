@@ -1,6 +1,7 @@
 <map id="OTest2::CaseOrdinary" name="OTest2::CaseOrdinary">
-<area shape="rect" id="node1" title="Ordinary suite." alt="" coords="13,155,171,181"/>
-<area shape="rect" id="node4" href="$classOTest2_1_1CaseGenerated.html" title="Common implementation of a generated test case." alt="" coords="5,229,179,256"/>
-<area shape="rect" id="node2" href="$classOTest2_1_1Case.html" title="Interface of a test case." alt="" coords="39,80,145,107"/>
-<area shape="rect" id="node3" href="$classOTest2_1_1Object.html" title="Generic testing object." alt="" coords="35,5,149,32"/>
+<area shape="rect" id="node1" title="An ordinary case object scheduled by the CmdFirstState, CmdRunState and CmdState commands." alt="" coords="13,229,171,256"/>
+<area shape="rect" id="node5" href="$classOTest2_1_1CaseGenerated.html" title="Common implementation of a generated test case." alt="" coords="5,304,179,331"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1Case.html" title="Interface of a test case." alt="" coords="39,155,145,181"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1ObjectScenario.html" title="Inteface of a testing object scheduled by the scenario (test, suite and test case)" alt="" coords="7,80,177,107"/>
+<area shape="rect" id="node4" href="$classOTest2_1_1Object.html" title="Generic testing object." alt="" coords="35,5,149,32"/>
 </map>

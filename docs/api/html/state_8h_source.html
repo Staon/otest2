@@ -101,39 +101,40 @@ $(function() {
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">class </span>Context;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
 <div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classOTest2_1_1State.html">   34</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOTest2_1_1State.html">State</a> : <span class="keyword">public</span> <a class="code" href="classOTest2_1_1Object.html">Object</a> {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="classOTest2_1_1State.html#acded501b5253492e856880b2832b15e6">State</a>(</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1State.html">State</a>&amp;);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="classOTest2_1_1State.html">State</a>&amp; operator =(</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1State.html">State</a>&amp;);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <a class="code" href="classOTest2_1_1State.html#acded501b5253492e856880b2832b15e6">State</a>();</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classOTest2_1_1State.html#a453f0d94e4b009e21d7b224d6cc65177">~State</a>();</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1State.html#a7011bd907a01b4b526b9ef825dca5a24">scheduleRun</a>(</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <a class="code" href="classOTest2_1_1ObjectPtr.html">CaseOrdinaryPtr</a> parent_,</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <a class="code" href="classOTest2_1_1ObjectPtr.html">StatePtr</a> this_ptr_,</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordtype">bool</span> delay_cmd_,</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordtype">int</span> delay_) = 0;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;};</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* -- OTest2INCLUDE_STATE_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="classOTest2_1_1State.html#acded501b5253492e856880b2832b15e6">State</a>();</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classOTest2_1_1State.html#a453f0d94e4b009e21d7b224d6cc65177">~State</a>();</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="classOTest2_1_1State.html#acded501b5253492e856880b2832b15e6">State</a>(</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1State.html">State</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <a class="code" href="classOTest2_1_1State.html">State</a>&amp; <a class="code" href="classOTest2_1_1State.html#afee0d7abd75f56fcad3378c8afa07fd9">operator = </a>(</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1State.html">State</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1State.html#a7011bd907a01b4b526b9ef825dca5a24">scheduleRun</a>(</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <a class="code" href="namespaceOTest2.html#a3ee94bac3095616d591bc32c9b8b4e4c">CaseOrdinaryPtr</a> parent_,</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <a class="code" href="namespaceOTest2.html#a85dd661d9e820001497de510286d6fdd">StatePtr</a> this_ptr_,</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordtype">bool</span> delay_cmd_,</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordtype">int</span> delay_) = 0;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;};</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* -- OTest2INCLUDE_STATE_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="acaseordinaryptr_8h_html"><div class="ttname"><a href="caseordinaryptr_8h.html">caseordinaryptr.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1Object_html"><div class="ttname"><a href="classOTest2_1_1Object.html">OTest2::Object</a></div><div class="ttdoc">Generic testing object.</div><div class="ttdef"><b>Definition:</b> <a href="object_8h_source.html#l00030">object.h:30</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1Object_html"><div class="ttname"><a href="classOTest2_1_1Object.html">OTest2::Object</a></div><div class="ttdoc">Generic testing object.</div><div class="ttdef"><b>Definition:</b> <a href="object_8h_source.html#l00032">object.h:32</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1State_html_a7011bd907a01b4b526b9ef825dca5a24"><div class="ttname"><a href="classOTest2_1_1State.html#a7011bd907a01b4b526b9ef825dca5a24">OTest2::State::scheduleRun</a></div><div class="ttdeci">virtual void scheduleRun(const Context &amp;context_, CaseOrdinaryPtr parent_, StatePtr this_ptr_, bool delay_cmd_, int delay_)=0</div><div class="ttdoc">Schedule run of the state.</div></div>
+<div class="ttc" id="anamespaceOTest2_html_a3ee94bac3095616d591bc32c9b8b4e4c"><div class="ttname"><a href="namespaceOTest2.html#a3ee94bac3095616d591bc32c9b8b4e4c">OTest2::CaseOrdinaryPtr</a></div><div class="ttdeci">std::shared_ptr&lt; CaseOrdinary &gt; CaseOrdinaryPtr</div><div class="ttdoc">Shared pointer of the ordinary cases.</div><div class="ttdef"><b>Definition:</b> <a href="caseordinaryptr_8h_source.html#l00027">caseordinaryptr.h:27</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1State_html_afee0d7abd75f56fcad3378c8afa07fd9"><div class="ttname"><a href="classOTest2_1_1State.html#afee0d7abd75f56fcad3378c8afa07fd9">OTest2::State::operator=</a></div><div class="ttdeci">State &amp; operator=(const State &amp;)=delete</div></div>
 <div class="ttc" id="aclassOTest2_1_1State_html"><div class="ttname"><a href="classOTest2_1_1State.html">OTest2::State</a></div><div class="ttdoc">Generic test state interface.</div><div class="ttdef"><b>Definition:</b> <a href="state_8h_source.html#l00034">state.h:34</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ObjectPtr_html"><div class="ttname"><a href="classOTest2_1_1ObjectPtr.html">OTest2::ObjectPtr&lt; CaseOrdinary &gt;</a></div></div>
+<div class="ttc" id="anamespaceOTest2_html_a85dd661d9e820001497de510286d6fdd"><div class="ttname"><a href="namespaceOTest2.html#a85dd661d9e820001497de510286d6fdd">OTest2::StatePtr</a></div><div class="ttdeci">std::shared_ptr&lt; State &gt; StatePtr</div><div class="ttdoc">Pointer to test state objects.</div><div class="ttdef"><b>Definition:</b> <a href="stateptr_8h_source.html#l00027">stateptr.h:27</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1State_html_a453f0d94e4b009e21d7b224d6cc65177"><div class="ttname"><a href="classOTest2_1_1State.html#a453f0d94e4b009e21d7b224d6cc65177">OTest2::State::~State</a></div><div class="ttdeci">virtual ~State()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="state_8cpp_source.html#l00028">state.cpp:28</a></div></div>
 <div class="ttc" id="astateptr_8h_html"><div class="ttname"><a href="stateptr_8h.html">stateptr.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1Context_html"><div class="ttname"><a href="classOTest2_1_1Context.html">OTest2::Context</a></div><div class="ttdoc">OTest2 runtime context.</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00039">context.h:39</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1Context_html"><div class="ttname"><a href="classOTest2_1_1Context.html">OTest2::Context</a></div><div class="ttdoc">OTest2 runtime context.</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00038">context.h:38</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1State_html_acded501b5253492e856880b2832b15e6"><div class="ttname"><a href="classOTest2_1_1State.html#acded501b5253492e856880b2832b15e6">OTest2::State::State</a></div><div class="ttdeci">State()</div><div class="ttdoc">Ctor.</div><div class="ttdef"><b>Definition:</b> <a href="state_8cpp_source.html#l00024">state.cpp:24</a></div></div>
 <div class="ttc" id="aobject_8h_html"><div class="ttname"><a href="object_8h.html">object.h</a></div></div>
 <!-- start footer part -->

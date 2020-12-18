@@ -1,7 +1,6 @@
 <map id="include/otest2/registry.h" name="include/otest2/registry.h">
-<area shape="rect" id="node1" title=" " alt="" coords="263,5,438,32"/>
-<area shape="rect" id="node2" href="$cmdnextsuite_8cpp.html" title=" " alt="" coords="5,80,160,107"/>
-<area shape="rect" id="node3" href="$dfltenvironment_8cpp.html" title=" " alt="" coords="184,80,352,107"/>
-<area shape="rect" id="node4" href="$registry_8cpp.html" title=" " alt="" coords="377,80,490,107"/>
-<area shape="rect" id="node5" href="$runnerfilterentire_8cpp.html" title=" " alt="" coords="514,80,689,107"/>
+<area shape="rect" id="node1" title=" " alt="" coords="167,5,342,32"/>
+<area shape="rect" id="node2" href="$dfltenvironment_8cpp.html" title=" " alt="" coords="5,80,173,107"/>
+<area shape="rect" id="node3" href="$registry_8cpp.html" title=" " alt="" coords="198,80,311,107"/>
+<area shape="rect" id="node4" href="$runnerfilterentire_8cpp.html" title=" " alt="" coords="335,80,510,107"/>
 </map>

@@ -119,12 +119,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9a68e23e8094d78054dd903498e0b2e0"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1RunnerFilterOne.html#a9a68e23e8094d78054dd903498e0b2e0">~RunnerFilterOne</a> ()</td></tr>
 <tr class="memdesc:a9a68e23e8094d78054dd903498e0b2e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="classOTest2_1_1RunnerFilterOne.html#a9a68e23e8094d78054dd903498e0b2e0">More...</a><br /></td></tr>
 <tr class="separator:a9a68e23e8094d78054dd903498e0b2e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96985b9a56760e6a4115cdb256c627ee"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1RunnerFilterOne.html#a96985b9a56760e6a4115cdb256c627ee">filterSuite</a> (const std::string &amp;suite_name_) const</td></tr>
-<tr class="memdesc:a96985b9a56760e6a4115cdb256c627ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter specified suite.  <a href="classOTest2_1_1RunnerFilterOne.html#a96985b9a56760e6a4115cdb256c627ee">More...</a><br /></td></tr>
-<tr class="separator:a96985b9a56760e6a4115cdb256c627ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42bae11ec2124369523aeda57fd21c38"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1RunnerFilterOne.html#a42bae11ec2124369523aeda57fd21c38">filterCase</a> (const std::string &amp;suite_name_, const std::string &amp;case_name_) const</td></tr>
-<tr class="memdesc:a42bae11ec2124369523aeda57fd21c38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter specified testcase of a suite.  <a href="classOTest2_1_1RunnerFilterOne.html#a42bae11ec2124369523aeda57fd21c38">More...</a><br /></td></tr>
-<tr class="separator:a42bae11ec2124369523aeda57fd21c38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fc390850f8ae184da0cb5d07a10e66b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1RunnerFilterOne.html#a8fc390850f8ae184da0cb5d07a10e66b">filterPath</a> (const <a class="el" href="classOTest2_1_1ObjectPath.html">ObjectPath</a> &amp;path_) const noexcept override</td></tr>
+<tr class="memdesc:a8fc390850f8ae184da0cb5d07a10e66b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether the path should be filtered.  <a href="classOTest2_1_1RunnerFilterOne.html#a8fc390850f8ae184da0cb5d07a10e66b">More...</a><br /></td></tr>
+<tr class="separator:a8fc390850f8ae184da0cb5d07a10e66b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classOTest2_1_1RunnerFilter"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classOTest2_1_1RunnerFilter')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classOTest2_1_1RunnerFilter.html">OTest2::RunnerFilter</a></td></tr>
 <tr class="memitem:a31771b9db9390cfb3ba1663097f22288 inherit pub_methods_classOTest2_1_1RunnerFilter"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1RunnerFilter.html#a31771b9db9390cfb3ba1663097f22288">RunnerFilter</a> (const <a class="el" href="classOTest2_1_1RunnerFilter.html">RunnerFilter</a> &amp;)=delete</td></tr>
 <tr class="separator:a31771b9db9390cfb3ba1663097f22288 inherit pub_methods_classOTest2_1_1RunnerFilter"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -206,7 +203,7 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="runnerfilterone_8cpp_source.html#l00058">58</a> of file <a class="el" href="runnerfilterone_8cpp_source.html">runnerfilterone.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="runnerfilterone_8cpp_source.html#l00059">59</a> of file <a class="el" href="runnerfilterone_8cpp_source.html">runnerfilterone.cpp</a>.</p>
 
 </div>
 </div>
@@ -253,7 +250,7 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="runnerfilterone_8cpp_source.html#l00065">65</a> of file <a class="el" href="runnerfilterone_8cpp_source.html">runnerfilterone.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="runnerfilterone_8cpp_source.html#l00066">66</a> of file <a class="el" href="runnerfilterone_8cpp_source.html">runnerfilterone.cpp</a>.</p>
 
 </div>
 </div>
@@ -282,13 +279,13 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p class="definition">Definition at line <a class="el" href="runnerfilterone_8cpp_source.html#l00073">73</a> of file <a class="el" href="runnerfilterone_8cpp_source.html">runnerfilterone.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="runnerfilterone_8cpp_source.html#l00074">74</a> of file <a class="el" href="runnerfilterone_8cpp_source.html">runnerfilterone.cpp</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a42bae11ec2124369523aeda57fd21c38"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42bae11ec2124369523aeda57fd21c38">&#9670;&nbsp;</a></span>filterCase()</h2>
+<a id="a8fc390850f8ae184da0cb5d07a10e66b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8fc390850f8ae184da0cb5d07a10e66b">&#9670;&nbsp;</a></span>filterPath()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -297,82 +294,32 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool OTest2::RunnerFilterOne::filterCase </td>
+          <td class="memname">bool OTest2::RunnerFilterOne::filterPath </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>suite_name_</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>case_name_</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Filter specified testcase of a suite. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">suite_name_</td><td>Name of the suite </td></tr>
-    <tr><td class="paramname">case_name_</td><td>Name of the test case </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the case should be filtered. False if it should run. </dd></dl>
-
-<p>Implements <a class="el" href="classOTest2_1_1RunnerFilter.html#a5089293990b1a6151fd0ac552026cfd4">OTest2::RunnerFilter</a>.</p>
-
-<p class="definition">Definition at line <a class="el" href="runnerfilterone_8cpp_source.html#l00100">100</a> of file <a class="el" href="runnerfilterone_8cpp_source.html">runnerfilterone.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a96985b9a56760e6a4115cdb256c627ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a96985b9a56760e6a4115cdb256c627ee">&#9670;&nbsp;</a></span>filterSuite()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool OTest2::RunnerFilterOne::filterSuite </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>suite_name_</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classOTest2_1_1ObjectPath.html">ObjectPath</a> &amp;&#160;</td>
+          <td class="paramname"><em>path_</em></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Filter specified suite. </p>
+<p>Check whether the path should be filtered. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">suite_name_</td><td>Name of the suite </td></tr>
+    <tr><td class="paramname">path_</td><td>The path </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the suite should be filtered. False if it should run. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the path matches the filter and the object should be filtered (not run) </dd></dl>
 
-<p>Implements <a class="el" href="classOTest2_1_1RunnerFilter.html#af8ecd74099cf70260226a7cf3c7b6144">OTest2::RunnerFilter</a>.</p>
+<p>Implements <a class="el" href="classOTest2_1_1RunnerFilter.html#aa69a8ab75122ed2390fba0857f600a34">OTest2::RunnerFilter</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="runnerfilterone_8cpp_source.html#l00095">95</a> of file <a class="el" href="runnerfilterone_8cpp_source.html">runnerfilterone.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="runnerfilterone_8cpp_source.html#l00096">96</a> of file <a class="el" href="runnerfilterone_8cpp_source.html">runnerfilterone.cpp</a>.</p>
 
 </div>
 </div>
@@ -410,7 +357,7 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The created filter </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="runnerfilterone_8cpp_source.html#l00077">77</a> of file <a class="el" href="runnerfilterone_8cpp_source.html">runnerfilterone.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="runnerfilterone_8cpp_source.html#l00078">78</a> of file <a class="el" href="runnerfilterone_8cpp_source.html">runnerfilterone.cpp</a>.</p>
 
 </div>
 </div>

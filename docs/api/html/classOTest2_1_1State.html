@@ -107,7 +107,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a453f0d94e4b009e21d7b224d6cc65177"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1State.html#a453f0d94e4b009e21d7b224d6cc65177">~State</a> ()</td></tr>
 <tr class="memdesc:a453f0d94e4b009e21d7b224d6cc65177"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="classOTest2_1_1State.html#a453f0d94e4b009e21d7b224d6cc65177">More...</a><br /></td></tr>
 <tr class="separator:a453f0d94e4b009e21d7b224d6cc65177"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7011bd907a01b4b526b9ef825dca5a24"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1State.html#a7011bd907a01b4b526b9ef825dca5a24">scheduleRun</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, <a class="el" href="namespaceOTest2.html#aacc65a4a3354617316d05c0401fafcd5">CaseOrdinaryPtr</a> parent_, <a class="el" href="namespaceOTest2.html#a2bb2b9684c25ed690e8d2f49b0470d52">StatePtr</a> this_ptr_, bool delay_cmd_, int delay_)=0</td></tr>
+<tr class="memitem:a49dd6cdce5c917518773ac0366b01b2a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1State.html#a49dd6cdce5c917518773ac0366b01b2a">State</a> (const <a class="el" href="classOTest2_1_1State.html">State</a> &amp;)=delete</td></tr>
+<tr class="separator:a49dd6cdce5c917518773ac0366b01b2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afee0d7abd75f56fcad3378c8afa07fd9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOTest2_1_1State.html">State</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1State.html#afee0d7abd75f56fcad3378c8afa07fd9">operator=</a> (const <a class="el" href="classOTest2_1_1State.html">State</a> &amp;)=delete</td></tr>
+<tr class="separator:afee0d7abd75f56fcad3378c8afa07fd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7011bd907a01b4b526b9ef825dca5a24"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1State.html#a7011bd907a01b4b526b9ef825dca5a24">scheduleRun</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, <a class="el" href="namespaceOTest2.html#a3ee94bac3095616d591bc32c9b8b4e4c">CaseOrdinaryPtr</a> parent_, <a class="el" href="namespaceOTest2.html#a85dd661d9e820001497de510286d6fdd">StatePtr</a> this_ptr_, bool delay_cmd_, int delay_)=0</td></tr>
 <tr class="memdesc:a7011bd907a01b4b526b9ef825dca5a24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Schedule run of the state.  <a href="classOTest2_1_1State.html#a7011bd907a01b4b526b9ef825dca5a24">More...</a><br /></td></tr>
 <tr class="separator:a7011bd907a01b4b526b9ef825dca5a24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classOTest2_1_1Object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classOTest2_1_1Object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classOTest2_1_1Object.html">OTest2::Object</a></td></tr>
@@ -131,7 +135,7 @@ Public Member Functions</h2></td></tr>
 <p class="definition">Definition at line <a class="el" href="state_8h_source.html#l00034">34</a> of file <a class="el" href="state_8h_source.html">state.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="acded501b5253492e856880b2832b15e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acded501b5253492e856880b2832b15e6">&#9670;&nbsp;</a></span>State()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acded501b5253492e856880b2832b15e6">&#9670;&nbsp;</a></span>State() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -180,7 +184,59 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a49dd6cdce5c917518773ac0366b01b2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49dd6cdce5c917518773ac0366b01b2a">&#9670;&nbsp;</a></span>State() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">OTest2::State::State </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classOTest2_1_1State.html">State</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="afee0d7abd75f56fcad3378c8afa07fd9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afee0d7abd75f56fcad3378c8afa07fd9">&#9670;&nbsp;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classOTest2_1_1State.html">State</a>&amp; OTest2::State::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classOTest2_1_1State.html">State</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a7011bd907a01b4b526b9ef825dca5a24"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7011bd907a01b4b526b9ef825dca5a24">&#9670;&nbsp;</a></span>scheduleRun()</h2>
 
@@ -199,13 +255,13 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespaceOTest2.html#aacc65a4a3354617316d05c0401fafcd5">CaseOrdinaryPtr</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceOTest2.html#a3ee94bac3095616d591bc32c9b8b4e4c">CaseOrdinaryPtr</a>&#160;</td>
           <td class="paramname"><em>parent_</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespaceOTest2.html#a2bb2b9684c25ed690e8d2f49b0470d52">StatePtr</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespaceOTest2.html#a85dd661d9e820001497de510286d6fdd">StatePtr</a>&#160;</td>
           <td class="paramname"><em>this_ptr_</em>, </td>
         </tr>
         <tr>

@@ -1,6 +1,5 @@
 <map id="include/otest2/cmdfirststate.h" name="include/otest2/cmdfirststate.h">
-<area shape="rect" id="node1" title=" " alt="" coords="152,5,365,32"/>
-<area shape="rect" id="node2" href="$cmdfirststate_8cpp.html" title=" " alt="" coords="5,80,157,107"/>
-<area shape="rect" id="node3" href="$cmdstartcase_8cpp.html" title=" " alt="" coords="181,80,336,107"/>
-<area shape="rect" id="node4" href="$cmdstartupcase_8cpp.html" title=" " alt="" coords="360,80,531,107"/>
+<area shape="rect" id="node1" title=" " alt="" coords="71,5,284,32"/>
+<area shape="rect" id="node2" href="$casegenerated_8cpp.html" title=" " alt="" coords="5,80,168,107"/>
+<area shape="rect" id="node3" href="$cmdfirststate_8cpp.html" title=" " alt="" coords="192,80,344,107"/>
 </map>

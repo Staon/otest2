@@ -70,28 +70,9 @@ void printHelpMessage(
   std::cout << "                              directory)." << std::endl;
   std::cout << "  -t name  --test=name        Name of the test how it's reported. The default" << std::endl;
   std::cout << "                              value is the name of the test's binary." << std::endl;
-  std::cout << "  -T expr  --tags=expr        Specification of the tag expression allowing" << std::endl;
-  std::cout << "                              filtering of testing objects out of current run." << std::endl;
-  std::cout << "                              The default value runs all untagged objects." << std::endl;
-  std::cout << std::endl;
-  std::cout << "Tag Expressions:" << std::endl;
-  std::cout << "  The tag expression allows to specify which testing objects should be run." << std::endl;
-  std::cout << "  If the tags assigned to a testing object (suite, test case) matches" << std::endl;
-  std::cout << "  the expression the object is accepted into current test run." << std::endl;
-  std::cout << std::endl;
-  std::cout << "  The expression may be empty. In this case all testing objects will be run." << std::endl;
-  std::cout << "      Expression := " << std::endl;
-  std::cout << "  Or the expression may be just a tag name. Then only objects with this tag" << std::endl;
-  std::cout << "  assigned will be run." << std::endl;
-  std::cout << "      Expression := <tag-name>" << std::endl;
-  std::cout << "  The expression may be the empty class. Then only objects with no assigned" << std::endl;
-  std::cout << "  tag will be run." << std::endl;
-  std::cout << "      Expression := '<empty>'" << std::endl;
-  std::cout << "  Or the expression may be a combination of expressions by logical operators." << std::endl;
-  std::cout << "      Expression := '!' Expression" << std::endl;
-  std::cout << "      Expression := Expression '||' Expression" << std::endl;
-  std::cout << "      Expression := Expression '&&' Expression" << std::endl;
-  std::cout << "      Expression := '(' Expression ')'" << std::endl;
+  std::cout << "  -T expr  --tags=glob        Specification of the tag glob allowing to filter" << std::endl;
+  std::cout << "                              testing objects from current run. The default" << std::endl;
+  std::cout << "                              value runs all untagged objects." << std::endl;
   std::cout << std::endl;
 }
 

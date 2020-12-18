@@ -1,6 +1,11 @@
-version: 2
+version: 2.1
+
 jobs:
   build:
+    parameters:
+      build-artifacts:
+        type: boolean
+        default: false
     docker:
       - image: staon/otest2-ci:latest
     steps:
@@ -13,34 +18,40 @@ jobs:
             mkdir -p build
             cd build
             cmake ..
-      - run:
-          name: Making the Source Package...
-          command: |
-            cd build
-            make package_source
-            mv *.tar.gz ../artifacts
+      - when:
+          condition: << parameters.build-artifacts >>
+          steps:
+            - run:
+                name: Making the Source Package...
+                command: |
+                  cd build
+                  make package_source
+                  mv *.tar.gz ../artifacts
       - run:
           name: Building the Framework...
           command: |
             cd build
-            make
+            make -j4
       - run:
           name: Running Selftests...
           environment:
             TERM: ansi
           command: |
             cd build
-            make check-circleci
-      - run:
-          name: Making Binary Packages...
-          command: |
-            cd build
-            make package
-            mv *.tar.gz *.deb ../artifacts
+            make -j4 check-circleci
       - store_test_results:
           path: test-results
-      - store_artifacts:
-          path: artifacts
+      - when:
+          condition: << parameters.build-artifacts >>
+          steps:
+            - run:
+                name: Making Binary Packages...
+                command: |
+                  cd build
+                  make package
+                  mv *.tar.gz *.deb ../artifacts
+            - store_artifacts:
+                path: artifacts
 
   doxygen:
     docker:
@@ -66,10 +77,21 @@ workflows:
   version: 2
   build:
     jobs:
-      - build
+      - build:
+          build-artifacts: false
+          name: "build-branch"
+      - build:
+          build-artifacts: true
+          name: "build-release"
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v\d+[.]\d+[.]\d+.*$/
       - doxygen:
           requires: 
-            - build
+            - build-branch
+            - build-release
           filters:
             branches:
               only: master

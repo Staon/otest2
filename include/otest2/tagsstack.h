@@ -21,6 +21,7 @@
 #define OTest2_INCLUDE_OTEST2_TAGSSTACK_H_
 
 #include <string>
+#include <vector>
 
 namespace OTest2 {
 
@@ -57,11 +58,9 @@ class TagsStack {
     /**
      * @brief Push tags
      *
-     * @param suite_ True if the tags belongs to a suite
      * @param tags_ The tags
      */
     void pushTags(
-        bool suite_,
         const Tags& tags_);
 
     /**
@@ -70,37 +69,12 @@ class TagsStack {
     void popTags();
 
     /**
-     * @brief Check if current tags are empty
-     */
-    bool isTopEmpty() const noexcept;
-
-    /**
-     * @brief Check whether the top tags are tags of a suite
-     */
-    bool isTopSuite() const noexcept;
-
-    /**
-     * @brief Find a tag in the top tags
+     * @brief Fill the stack into a vector (used for glob evaluation)
      *
-     * @param tag_ Name of the tag
-     * @return True if the tag is found
+     * @param[out] tags_ The tag vector
      */
-    bool findTag(
-        const std::string& tag_) const noexcept;
-
-    /**
-     * @brief Find a tag in the stack
-     *
-     * @param tag_ Name of the tag
-     * @return True if the tag is found
-     */
-    bool findTagParent(
-        const std::string& tag_) const noexcept;
-
-    /**
-     * @brief Check whether all pushed tags are empty
-     */
-    bool allAreEmpty() const noexcept;
+    void fillTags(
+        std::vector<Tags>& tags_) const;
 };
 
 } /* -- namespace OTest2 */

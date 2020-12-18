@@ -22,9 +22,12 @@
 #include <cctype>
 #include <iostream>
 #include <memory>
+#include <set>
 #include <sstream>
 #include <utility>
+#include <vector>
 
+#include <tags.h>
 #include <tagsstack.h>
 #include <utils.h>
 
@@ -82,8 +85,7 @@ class TagExpression {
      * @brief Return true if the tags matches the expression
      */
     virtual bool matches(
-        bool parent_,
-        const TagsStack& tags_stack_) const noexcept = 0;
+        const Tags& tags_) const noexcept = 0;
 };
 
 typedef std::shared_ptr<TagExpression> TagExpressionPtr;
@@ -106,8 +108,7 @@ class TagExpressionOr : public TagExpression {
         const TagExpressionOr&) = delete;
 
     virtual bool matches(
-        bool parent_,
-        const TagsStack& tags_stack_) const noexcept override;
+        const Tags& tags_) const noexcept override;
 };
 
 class TagExpressionAnd : public TagExpression {
@@ -128,8 +129,7 @@ class TagExpressionAnd : public TagExpression {
         const TagExpressionAnd&) = delete;
 
     virtual bool matches(
-        bool parent_,
-        const TagsStack& tags_stack_) const noexcept override;
+        const Tags& tags_) const noexcept override;
 };
 
 class TagExpressionTag : public TagExpression {
@@ -148,8 +148,7 @@ class TagExpressionTag : public TagExpression {
         const TagExpressionTag&) = delete;
 
     virtual bool matches(
-        bool parent_,
-        const TagsStack& tags_stack_) const noexcept override;
+        const Tags& tags_) const noexcept override;
 };
 
 class TagExpressionEmpty : public TagExpression {
@@ -164,8 +163,7 @@ class TagExpressionEmpty : public TagExpression {
         const TagExpressionEmpty&) = delete;
 
     virtual bool matches(
-        bool parent_,
-        const TagsStack& tags_stack_) const noexcept override;
+        const Tags& tags_) const noexcept override;
 };
 
 class TagExpressionNot : public TagExpression {
@@ -184,44 +182,7 @@ class TagExpressionNot : public TagExpression {
         const TagExpressionNot&) = delete;
 
     virtual bool matches(
-        bool parent_,
-        const TagsStack& tags_stack_) const noexcept override;
-};
-
-class TagExpressionParent : public TagExpression {
-  private:
-    TagExpressionPtr operand;
-
-  public:
-    explicit TagExpressionParent(
-        TagExpressionPtr operand_);
-    virtual ~TagExpressionParent() = default;
-
-    /* -- avoid copying */
-    TagExpressionParent(
-        const TagExpressionParent&) = delete;
-    TagExpressionParent& operator = (
-        const TagExpressionParent&) = delete;
-
-    virtual bool matches(
-        bool parent_,
-        const TagsStack& tags_stack_) const noexcept override;
-};
-
-class TagExpressionNull : public TagExpression {
-  public:
-    TagExpressionNull() = default;
-    virtual ~TagExpressionNull() = default;
-
-    /* -- avoid copying */
-    TagExpressionNull(
-        const TagExpressionNull&) = delete;
-    TagExpressionNull& operator = (
-        const TagExpressionNull&) = delete;
-
-    virtual bool matches(
-        bool parent_,
-        const TagsStack& tags_stack_) const noexcept override;
+        const Tags& tags_) const noexcept override;
 };
 
 TagExpressionOr::TagExpressionOr(
@@ -233,9 +194,8 @@ TagExpressionOr::TagExpressionOr(
 }
 
 bool TagExpressionOr::matches(
-    bool parent_,
-    const TagsStack& tags_stack_) const noexcept {
-  return left->matches(parent_, tags_stack_) || right->matches(parent_, tags_stack_);
+    const Tags& tags_) const noexcept {
+  return left->matches(tags_) || right->matches(tags_);
 }
 
 TagExpressionAnd::TagExpressionAnd(
@@ -247,9 +207,8 @@ TagExpressionAnd::TagExpressionAnd(
 }
 
 bool TagExpressionAnd::matches(
-    bool parent_,
-    const TagsStack& tags_stack_) const noexcept {
-  return left->matches(parent_, tags_stack_) && right->matches(parent_, tags_stack_);
+    const Tags& tags_) const noexcept {
+  return left->matches(tags_) && right->matches(tags_);
 }
 
 TagExpressionTag::TagExpressionTag(
@@ -259,31 +218,13 @@ TagExpressionTag::TagExpressionTag(
 }
 
 bool TagExpressionTag::matches(
-    bool parent_,
-    const TagsStack& tags_stack_) const noexcept {
-  if(!parent_) {
-    if(tags_stack_.isTopSuite())
-      return true; /* -- enter the suite even though it doesn't contain the tag */
-    else
-      return tags_stack_.findTag(tag);
-  }
-  else {
-    return tags_stack_.findTagParent(tag);
-  }
+    const Tags& tags_) const noexcept {
+  return tags_.findTag(tag);
 }
 
 bool TagExpressionEmpty::matches(
-    bool parent_,
-    const TagsStack& tags_stack_) const noexcept {
-  if(!parent_) {
-    if(tags_stack_.isTopEmpty())
-      return true; /* -- always entry the suite */
-    else
-      return tags_stack_.isTopEmpty();
-  }
-  else {
-    return tags_stack_.allAreEmpty();
-  }
+    const Tags& tags_) const noexcept {
+  return tags_.isEmpty();
 }
 
 TagExpressionNot::TagExpressionNot(
@@ -293,39 +234,214 @@ TagExpressionNot::TagExpressionNot(
 }
 
 bool TagExpressionNot::matches(
-    bool parent_,
-    const TagsStack& tags_stack_) const noexcept {
-  return !operand->matches(parent_, tags_stack_);
+    const Tags& tags_) const noexcept {
+  return !operand->matches(tags_);
 }
 
-TagExpressionParent::TagExpressionParent(
-    TagExpressionPtr operand_) :
-  operand(operand_) {
+class TagGlobPart {
+  public:
+    TagGlobPart() = default;
+    virtual ~TagGlobPart() = default;
+
+    /* -- avoid copying */
+    TagGlobPart(
+        const TagGlobPart&) = delete;
+    TagGlobPart& operator = (
+        const TagGlobPart&) = delete;
+
+    virtual void transition(
+        std::set<int>& current_states_,
+        std::set<int>& new_states_,
+        int state_index_,
+        const Tags& tags_) const = 0;
+};
+
+typedef std::shared_ptr<TagGlobPart> TagGlobPartPtr;
+
+class TagGlobPartExpression : public TagGlobPart {
+  public:
+    enum Repeating {
+      ONCE,
+      ZERO_MORE,
+      ONCE_MORE,
+    };
+
+  private:
+    TagExpressionPtr expr;
+    Repeating repeating;
+
+  public:
+    explicit TagGlobPartExpression(
+        TagExpressionPtr expr_,
+        Repeating repeating_);
+    virtual ~TagGlobPartExpression() = default;
+
+    /* -- avoid copying */
+    TagGlobPartExpression(
+        const TagGlobPartExpression&) = delete;
+    TagGlobPartExpression& operator = (
+        const TagGlobPartExpression&) = delete;
+
+    virtual void transition(
+        std::set<int>& current_states_,
+        std::set<int>& new_states_,
+        int state_index_,
+        const Tags& tags_) const override;
+};
+
+class TagGlobPartStar : public TagGlobPart {
+  public:
+    TagGlobPartStar() = default;
+    virtual ~TagGlobPartStar() = default;
+
+    /* -- avoid copying */
+    TagGlobPartStar(
+        const TagGlobPartStar&) = delete;
+    TagGlobPartStar& operator = (
+        const TagGlobPartStar&) = delete;
+
+    virtual void transition(
+        std::set<int>& current_states_,
+        std::set<int>& new_states_,
+        int state_index_,
+        const Tags& tags_) const override;
+};
+
+class TagGlobPartDouble : public TagGlobPart {
+  public:
+    TagGlobPartDouble() = default;
+    virtual ~TagGlobPartDouble() = default;
+
+    /* -- avoid copying */
+    TagGlobPartDouble(
+        const TagGlobPartDouble&) = delete;
+    TagGlobPartDouble& operator = (
+        const TagGlobPartDouble&) = delete;
+
+    virtual void transition(
+        std::set<int>& current_states_,
+        std::set<int>& new_states_,
+        int state_index_,
+        const Tags& tags_) const override;
+};
+
+TagGlobPartExpression::TagGlobPartExpression(
+    TagExpressionPtr expr_,
+    Repeating repeating_) :
+  expr(expr_),
+  repeating(repeating_) {
 
 }
 
-bool TagExpressionParent::matches(
-    bool parent_,
-    const TagsStack& tags_stack_) const noexcept {
-  return operand->matches(true, tags_stack_);
+void TagGlobPartExpression::transition(
+    std::set<int>& current_states_,
+    std::set<int>& new_states_,
+    int state_index_,
+    const Tags& tags_) const {
+  if(expr->matches(tags_)) {
+    new_states_.insert(state_index_ + 1);
+    if(repeating != ONCE)
+      new_states_.insert(state_index_);
+  }
+
+  /* -- always suppose I'm repeated zero times */
+  if(repeating == ZERO_MORE)
+    current_states_.insert(state_index_ + 1);
 }
 
-bool TagExpressionNull::matches(
-    bool parent_,
-    const TagsStack& tags_stack_) const noexcept {
-  return true; /* -- always true */
+void TagGlobPartStar::transition(
+    std::set<int>& current_states_,
+    std::set<int>& new_states_,
+    int state_index_,
+    const Tags& tags_) const {
+  new_states_.insert(state_index_ + 1);
 }
+
+void TagGlobPartDouble::transition(
+    std::set<int>& current_states_,
+    std::set<int>& new_states_,
+    int state_index_,
+    const Tags& tags_) const {
+  current_states_.insert(state_index_ + 1);
+  new_states_.insert(state_index_);
+  new_states_.insert(state_index_ + 1);
+}
+
+class TagGlob {
+  private:
+    std::vector<TagGlobPartPtr> globs;
+
+  public:
+    TagGlob() = default;
+    virtual ~TagGlob() = default;
+
+    /* -- avoid copying */
+    TagGlob(
+        const TagGlob&) = delete;
+    TagGlob& operator = (
+        const TagGlob&) = delete;
+
+    /**
+     * @brief Append part into the glob object
+     */
+    void appendPart(
+        TagGlobPartPtr part_);
+
+    /**
+     * @brief Check whether a tag stack matches the glob
+     *
+     * @param tags_stack_ The tag stack
+     * @return True if the stack matches
+     */
+    bool matches(
+        const std::vector<Tags>& tags_stack_) const;
+};
+
+void TagGlob::appendPart(
+    TagGlobPartPtr part_) {
+  globs.push_back(part_);
+}
+
+bool TagGlob::matches(
+    const std::vector<Tags>& tags_stack_) const {
+  /* -- non-deterministic automaton */
+  std::set<int> states_{0};
+  for(const auto& tags_ : tags_stack_) {
+    /* -- compute new generation of states */
+    std::set<int> new_states_;
+    while(!states_.empty()) {
+      int state_index_(*states_.begin());
+      states_.erase(states_.begin());
+      if(state_index_ < globs.size())
+        globs[state_index_]->transition(
+            states_, new_states_, state_index_, tags_);
+    }
+
+    /* -- switch new generation of states */
+    states_.swap(new_states_);
+    new_states_.clear();
+  }
+
+  /* -- if the final state has been reached */
+  return states_.find(globs.size()) != states_.end();
+}
+
+typedef std::shared_ptr<TagGlob> TagGlobPtr;
 
 enum class TokenType {
   NONE,
   TAG,   /**< a tag name */
-  PARENT,/**< reference to a parent tag */
   CLASS, /**< a tag class name */
   NOT,   /**< not operator */
   AND,   /**< and operator */
   OR,    /**< or operator */
   LEFT,  /**< left parenthesis */
   RIGHT, /**< right parenthesis */
+  QUAD,  /**< quad-dot */
+  STAR,  /**< one glob star */
+  DOUBLE,/**< double star */
+  LBRACK,/**< left bracket */
+  RBRACK,/**< right bracket */
   END,   /**< end of expression */
 };
 
@@ -342,6 +458,8 @@ class Lexan {
       CLASS,
       OR,
       AND,
+      QUAD,
+      STAR,
     };
 
     std::istream* is;
@@ -399,9 +517,6 @@ Token Lexan::getNextToken() {
             state = State::TAG;
             value.push_back(c_);
           }
-          else if(c_ == '^') {
-            return {TokenType::PARENT, "^"};
-          }
           else if(c_ == '<') {
             state = State::CLASS;
           }
@@ -420,6 +535,18 @@ Token Lexan::getNextToken() {
           else if(c_ == ')') {
             return {TokenType::RIGHT, ")"};
           }
+          else if(c_ == ':') {
+            state = State::QUAD;
+          }
+          else if(c_ == '*') {
+            state = State::STAR;
+          }
+          else if(c_ == '[') {
+            return {TokenType::LBRACK, "["};
+          }
+          else if(c_ == ']') {
+            return {TokenType::RBRACK, "]"};
+          }
           else {
             /* -- invalid character */
             throw TagExpressionException(location, c_);
@@ -437,13 +564,8 @@ Token Lexan::getNextToken() {
             state = State::START;
             return resetValue(TokenType::TAG);
           }
-          else if(std::isalnum(c_) || c_ == '_' || c_ == ':' || c_ == '-' || c_ == '.') {
+          else if(std::isalnum(c_) || c_ == '_' || c_ == '-' || c_ == '.') {
             value.push_back(c_);
-          }
-          else if(c_ == '^') {
-            prepared = {TokenType::PARENT, "^"};
-            state = State::START;
-            return resetValue(TokenType::TAG);
           }
           else if(c_ == '<') {
             state = State::CLASS;
@@ -469,6 +591,24 @@ Token Lexan::getNextToken() {
           }
           else if(c_ == ')') {
             prepared = {TokenType::RIGHT, ")"};
+            state = State::START;
+            return resetValue(TokenType::TAG);
+          }
+          else if(c_ == ':') {
+            state = State::QUAD;
+            return resetValue(TokenType::TAG);
+          }
+          else if(c_ == '*') {
+            state = State::STAR;
+            return resetValue(TokenType::TAG);
+          }
+          else if(c_ == '[') {
+            prepared = {TokenType::LBRACK, "["};
+            state = State::START;
+            return resetValue(TokenType::TAG);
+          }
+          else if(c_ == ']') {
+            prepared = {TokenType::RBRACK, "]"};
             state = State::START;
             return resetValue(TokenType::TAG);
           }
@@ -529,6 +669,88 @@ Token Lexan::getNextToken() {
           throw TagExpressionException("unexpected end of the expression");
         }
 
+      case State::QUAD:
+        if(std::istream::traits_type::not_eof(c_)) {
+          if(c_ == ':') {
+            state = State::START;
+            return {TokenType::QUAD, "::"};
+          }
+          else {
+            throw TagExpressionException(location, c_);
+          }
+        }
+        else {
+          throw TagExpressionException("unexpected end of the expression");
+        }
+
+      case State::STAR:
+        if(std::istream::traits_type::not_eof(c_)) {
+          if(std::isspace(c_)) {
+            /* -- ignore spaces */
+            state = State::START;
+            return {TokenType::STAR, "*"};
+          }
+          else if(std::isalpha(c_) || c_ == '_') {
+            state = State::TAG;
+            value.push_back(c_);
+            return {TokenType::STAR, "*"};
+          }
+          else if(c_ == '<') {
+            state = State::CLASS;
+            return {TokenType::STAR, "*"};
+          }
+          else if(c_ == '!') {
+            prepared = {TokenType::NOT, "!"};
+            state = State::START;
+            return {TokenType::STAR, "*"};
+          }
+          else if(c_ == '|') {
+            state = State::OR;
+            return {TokenType::STAR, "*"};
+          }
+          else if(c_ == '&') {
+            state = State::AND;
+            return {TokenType::STAR, "*"};
+          }
+          else if(c_ == '(') {
+            prepared = {TokenType::LEFT, "("};
+            state = State::START;
+            return {TokenType::STAR, "*"};
+         }
+          else if(c_ == ')') {
+            prepared = {TokenType::RIGHT, ")"};
+            state = State::START;
+            return {TokenType::STAR, "*"};
+          }
+          else if(c_ == ':') {
+            state = State::QUAD;
+            return {TokenType::STAR, "*"};
+          }
+          else if(c_ == '*') {
+            state = State::START;
+            return {TokenType::DOUBLE, "**"};
+          }
+          else if(c_ == '[') {
+            prepared = {TokenType::LBRACK, "["};
+            state = State::START;
+            return resetValue(TokenType::STAR);
+          }
+          else if(c_ == ']') {
+            prepared = {TokenType::RBRACK, "]"};
+            state = State::START;
+            return resetValue(TokenType::STAR);
+          }
+          else {
+            /* -- invalid character */
+            throw TagExpressionException(location, c_);
+          }
+          break;
+        }
+        else {
+          state = State::START;
+          return {TokenType::STAR, "*"};
+        }
+
       default:
         assert(false);
         break;
@@ -549,6 +771,7 @@ class SyntaxParser {
     void compare(
         TokenType type_);
 
+    TagGlobPtr glob();
     TagExpressionPtr expression();
     TagExpressionPtr expressionTail(
         TagExpressionPtr left_term_);
@@ -563,7 +786,7 @@ class SyntaxParser {
     explicit SyntaxParser(
         Lexan* lexan_);
 
-    TagExpressionPtr parse();
+    TagGlobPtr parse();
 };
 
 SyntaxParser::SyntaxParser(
@@ -594,6 +817,60 @@ void SyntaxParser::compare(
 
   /* -- consume the token */
   peek.type = TokenType::NONE;
+}
+
+TagGlobPtr SyntaxParser::glob() {
+  TagGlobPtr glob_(std::make_shared<TagGlob>());
+
+  /* -- empty glob -> accept all */
+  Token l_(lookAhead());
+  if(l_.type == TokenType::END) {
+    glob_->appendPart(std::make_shared<TagGlobPartDouble>());
+    return glob_;
+  }
+
+  /* -- sequence of expressions, stars or double stars */
+  while(true) {
+    if(l_.type == TokenType::STAR) {
+      glob_->appendPart(std::make_shared<TagGlobPartStar>());
+      compare(TokenType::STAR);
+    }
+    else if(l_.type == TokenType::DOUBLE) {
+      glob_->appendPart(std::make_shared<TagGlobPartDouble>());
+      compare(TokenType::DOUBLE);
+    }
+    else if(l_.type == TokenType::LBRACK) {
+      compare(TokenType::LBRACK);
+      TagExpressionPtr expr_(expression());
+      compare(TokenType::RBRACK);
+      l_ = lookAhead();
+      if(l_.type == TokenType::STAR) {
+        compare(TokenType::STAR);
+        glob_->appendPart(std::make_shared<TagGlobPartExpression>(
+            expr_, TagGlobPartExpression::ZERO_MORE));
+      }
+      else {
+        glob_->appendPart(std::make_shared<TagGlobPartExpression>(
+            expr_, TagGlobPartExpression::ONCE_MORE));
+      }
+    }
+    else {
+      TagExpressionPtr expr_(expression());
+      glob_->appendPart(std::make_shared<TagGlobPartExpression>(
+          expr_, TagGlobPartExpression::ONCE));
+    }
+
+    /* -- end of the glob */
+    l_ = lookAhead();
+    if(l_.type == TokenType::END)
+      break;
+
+    /* -- move to next */
+    compare(TokenType::QUAD);
+    l_ = lookAhead();
+  }
+
+  return glob_;
 }
 
 TagExpressionPtr SyntaxParser::expression() {
@@ -636,10 +913,6 @@ TagExpressionPtr SyntaxParser::factor() {
     compare(TokenType::TAG);
     return std::make_shared<TagExpressionTag>(l_.value);
   }
-  else if(l_.type == TokenType::PARENT) {
-    compare(TokenType::PARENT);
-    return std::make_shared<TagExpressionParent>(factor());
-  }
   else if(l_.type == TokenType::CLASS) {
     compare(TokenType::CLASS);
     return createClass(l_.value);
@@ -668,23 +941,16 @@ TagExpressionPtr SyntaxParser::createClass(
   }
 }
 
-TagExpressionPtr SyntaxParser::parse() {
-  Token l_(lookAhead());
-  TagExpressionPtr expr_;
-  if(l_.type == TokenType::END) {
-    expr_ = std::make_shared<TagExpressionNull>();
-  }
-  else {
-    expr_ = expression();
-  }
+TagGlobPtr SyntaxParser::parse() {
+  TagGlobPtr glob_(glob());
   compare(TokenType::END);
-  return expr_;
+  return glob_;
 }
 
 } /* -- namespace */
 
 struct TagFilter::Impl {
-    TagExpressionPtr expression;
+    TagGlobPtr glob;
 
     /* -- avoid copying */
     Impl(
@@ -702,7 +968,7 @@ TagFilter::Impl::Impl(
   std::istringstream iss_(tag_expression_);
   Lexan lexan_(&iss_);
   SyntaxParser parser_(&lexan_);
-  expression = parser_.parse();
+  glob = parser_.parse();
 }
 
 TagFilter::Impl::~Impl() {
@@ -726,7 +992,9 @@ TagFilter::~TagFilter() {
 
 bool TagFilter::filterObject(
     const TagsStack& tags_stack_) const noexcept {
-  return !pimpl->expression->matches(false, tags_stack_);
+  std::vector<Tags> tags_;
+  tags_stack_.fillTags(tags_);
+  return !pimpl->glob->matches(tags_);
 }
 
 } /* -- namespace OTest2 */

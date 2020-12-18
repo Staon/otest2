@@ -695,7 +695,10 @@ void GeneratorStd::leaveSuite() {
       << "      parent_->appendScenario(\n"
       << "          \"" << case_.name << "\",\n"
       << "          std::make_shared< ::OTest2::ScenarioCase >(\n"
-      << "              \"" << case_.name << "\",\n";
+      << "              \"" << case_.name << "\",\n"
+      << "              ";
+    writeTags(pimpl->output, case_.tags, pimpl->indent);
+    pimpl->output << ",\n";
     if(case_.repeater_type.empty())
       pimpl->output
         << "              std::make_shared< ::OTest2::ObjectRepeaterFactoryOnceCase<" << pimpl->suite << ", " << case_.name << "> >(\n";
@@ -754,7 +757,10 @@ void GeneratorStd::endFile(
       pimpl->output
           << "      {\n"
           << "        auto scenario_(std::make_shared< ::OTest2::ScenarioSuite >(\n"
-          << "            \"" << suite_.name << "\",\n";
+          << "            \"" << suite_.name << "\",\n"
+          << "            ";
+      writeTags(pimpl->output, suite_.tags, pimpl->indent);
+      pimpl->output << ",\n";
       if(suite_.repeater_type.empty())
         pimpl->output
           << "            std::make_shared< ::OTest2::ObjectRepeaterFactoryOnceSuite< " << suite_.name;

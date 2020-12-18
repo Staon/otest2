@@ -27,12 +27,16 @@
 #include <reporter.h>
 #include <runnerfilter.h>
 #include <scenariocontainer.h>
+#include <tagfilter.h>
+#include <tags.h>
+#include <tagsstack.h>
 #include <utils.h>
 
 namespace OTest2 {
 
 struct ScenarioCase::Impl {
     std::string name;
+    Tags tags;
     ObjectRepeaterFactoryPtr repeater_factory;
 
     /* -- avoid copying */
@@ -43,14 +47,17 @@ struct ScenarioCase::Impl {
 
     explicit Impl(
         const std::string& name_,
+        const Tags& tags_,
         ObjectRepeaterFactoryPtr repeater_factory_);
     ~Impl();
 };
 
 ScenarioCase::Impl::Impl(
     const std::string& name_,
+    const Tags& tags_,
     ObjectRepeaterFactoryPtr repeater_factory_) :
   name(name_),
+  tags(tags_),
   repeater_factory(repeater_factory_) {
   assert(!name.empty() && repeater_factory != nullptr);
 
@@ -62,8 +69,9 @@ ScenarioCase::Impl::~Impl() {
 
 ScenarioCase::ScenarioCase(
     const std::string& name_,
+    const Tags& tags_,
     ObjectRepeaterFactoryPtr repeater_factory_) :
-  pimpl(new Impl(name_, repeater_factory_)) {
+  pimpl(new Impl(name_, tags_, repeater_factory_)) {
 
 }
 
@@ -79,18 +87,21 @@ ScenarioPtr ScenarioCase::filterScenario(
     const TagFilter& tag_filter_) const {
   /* -- add my name into the whole path */
   path_.pushName(pimpl->name);
+  tags_.pushTags(pimpl->tags);
 
   /* -- if the object is not filtered append it into the parent container */
-  if(!name_filter_.filterPath(path_)) {
+  if(!name_filter_.filterPath(path_) && !tag_filter_.filterObject(tags_)) {
     /* -- the object is supposed to be run add myself into the parent
      *    container. */
     parent_->appendScenario(
         pimpl->name,
-        std::make_shared<ScenarioCase>(pimpl->name, pimpl->repeater_factory));
+        std::make_shared<ScenarioCase>(
+            pimpl->name, pimpl->tags, pimpl->repeater_factory));
   }
 
   /* -- pop my name */
   path_.popName();
+  tags_.popTags();
 
   return parent_;
 }

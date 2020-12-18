@@ -27,6 +27,8 @@
 
 namespace OTest2 {
 
+class Tags;
+
 /**
  * @brief A scenario object representing one test suite
  */
@@ -42,10 +44,12 @@ class ScenarioSuite : public ScenarioContainer {
      * @brief Create scenario object of a test suite
      *
      * @param name_ Name of the suite
+     * @param tags_ Tags assigned to the object
      * @param repeater_factory_ Factory of the repeater objects of the suite
      */
     explicit ScenarioSuite(
         const std::string& name_,
+        const Tags& tags_,
         ObjectRepeaterFactoryPtr repeater_factory_);
 
     /**

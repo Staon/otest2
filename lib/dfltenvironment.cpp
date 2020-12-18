@@ -280,7 +280,7 @@ Runner& DfltEnvironment::getRunner() {
 
     /* -- create the tag filter according to specified tag expression */
     if(pimpl->tag_filter == nullptr)
-      pimpl->tag_filter = ::OTest2::make_unique<TagFilter>("<empty>");
+      pimpl->tag_filter = ::OTest2::make_unique<TagFilter>("[<empty>]");
 
     /* -- get the registry and set the test name */
     Registry& registry_(Registry::instance("default"));

@@ -25,6 +25,8 @@
 
 namespace OTest2 {
 
+class Tags;
+
 /**
  * @brief Scenario object of a test case
  */
@@ -38,10 +40,12 @@ class ScenarioCase : public Scenario {
      * @brief Ctor
      *
      * @param name_ Name of the test case
+     * @param tags_ Tags assigned to the object
      * @param repeater_factory A factory of repeater objects of the test case
      */
     explicit ScenarioCase(
         const std::string& name_,
+        const Tags& tags_,
         ObjectRepeaterFactoryPtr repeater_factory_);
 
     /**

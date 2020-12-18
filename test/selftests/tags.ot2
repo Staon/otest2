@@ -31,11 +31,11 @@ TEST_SUITE(TagFilters) {
 
   }
 
-  TEST_CASE(Tag2Case) OT2_TAGS("tag2-_:.") {
+  TEST_CASE(Tag2Case) OT2_TAGS("tag2-_.") {
 
   }
 
-  TEST_CASE(TwoTags) OT2_TAGS("tag1,tag2-_:.") {
+  TEST_CASE(TwoTags) OT2_TAGS("tag1,tag2-_.") {
 
   }
 }

@@ -30,12 +30,15 @@
 #include <objectrepeaterfactory.h>
 #include <reporter.h>
 #include "scenarioitercontainer.h"
+#include <tags.h>
+#include <tagsstack.h>
 #include <utils.h>
 
 namespace OTest2 {
 
 struct ScenarioSuite::Impl {
     std::string name;
+    Tags tags;
     ObjectRepeaterFactoryPtr repeater_factory;
     typedef std::map<std::string, ScenarioPtr> Children;
     Children children;
@@ -50,14 +53,17 @@ struct ScenarioSuite::Impl {
 
     explicit Impl(
         const std::string& name_,
+        const Tags& tags_,
         ObjectRepeaterFactoryPtr repeater_factory_);
     ~Impl();
 };
 
 ScenarioSuite::Impl::Impl(
     const std::string& name_,
+    const Tags& tags_,
     ObjectRepeaterFactoryPtr repeater_factory_) :
   name(name_),
+  tags(tags_),
   repeater_factory(repeater_factory_),
   children() {
   assert(!name_.empty() && repeater_factory != nullptr);
@@ -70,8 +76,9 @@ ScenarioSuite::Impl::~Impl() {
 
 ScenarioSuite::ScenarioSuite(
     const std::string& name_,
+    const Tags& tags_,
     ObjectRepeaterFactoryPtr repeater_factory_) :
-  pimpl(new Impl(name_, repeater_factory_)) {
+  pimpl(new Impl(name_, tags_, repeater_factory_)) {
 
 }
 
@@ -85,12 +92,13 @@ ScenarioPtr ScenarioSuite::filterScenario(
     ScenarioContainerPtr parent_,
     const RunnerFilter& name_filter_,
     const TagFilter& tag_filter_) const {
-  /* -- add myself into the object path */
+  /* -- add myself into the stacks */
   path_.pushName(pimpl->name);
+  tags_.pushTags(pimpl->tags);
 
   /* -- create new suite container and filter children */
   ScenarioContainerPtr suite_(std::make_shared<ScenarioSuite>(
-      pimpl->name, pimpl->repeater_factory));
+      pimpl->name, pimpl->tags, pimpl->repeater_factory));
   for(auto iter_ : pimpl->order) {
     (*iter_).second->filterScenario(
         path_, tags_, suite_, name_filter_, tag_filter_);
@@ -103,6 +111,7 @@ ScenarioPtr ScenarioSuite::filterScenario(
 
   /* -- remove myself from the object path */
   path_.popName();
+  tags_.popTags();
 
   return parent_;
 }

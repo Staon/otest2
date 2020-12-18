@@ -62,7 +62,7 @@ TEST_SUITE(TagFilters) {
   }
 
   TEST_CASE(UntaggedObjects) {
-    Runtime runtime("TagFilters", "", Runtime::tags_mark, "<empty>");
+    Runtime runtime("TagFilters", "", Runtime::tags_mark, "[<empty>]");
 
     TEST_SIMPLE() {
       std::vector<const char*> data_{
@@ -81,8 +81,8 @@ TEST_SUITE(TagFilters) {
     }
   }
 
-  TEST_CASE(TaggedObjects) {
-    Runtime runtime("TagFilters", "", Runtime::tags_mark, "!<empty>");
+  TEST_CASE(TaggedCases) {
+    Runtime runtime("TagFilters", "", Runtime::tags_mark, "**::!<empty>");
 
     TEST_SIMPLE() {
       std::vector<const char*> data_{
@@ -105,12 +105,12 @@ TEST_SUITE(TagFilters) {
       };
       testAssert(runtime.runTheTest());
       testAssert(runtime.reporter.checkRecords(data_));
-      runtime.reporter.dumpRecords(std::cout);
+//      runtime.reporter.dumpRecords(std::cout);
     }
   }
 
   TEST_CASE(Tag1Objects) {
-    Runtime runtime("TagFilters", "", Runtime::tags_mark, "tag1");
+    Runtime runtime("TagFilters", "", Runtime::tags_mark, "**::tag1");
 
     TEST_SIMPLE() {
       std::vector<const char*> data_{
@@ -134,7 +134,7 @@ TEST_SUITE(TagFilters) {
   }
 
   TEST_CASE(NotTag2Objects) {
-    Runtime runtime("TagFilters", "", Runtime::tags_mark, "!tag2-_:.");
+    Runtime runtime("TagFilters", "", Runtime::tags_mark, "**::!tag2-_.");
 
     TEST_SIMPLE() {
       std::vector<const char*> data_{
@@ -158,7 +158,7 @@ TEST_SUITE(TagFilters) {
   }
 
   TEST_CASE(Tag1OrTag2Objects) {
-    Runtime runtime("TagFilters", "", Runtime::tags_mark, "tag1 || tag2-_:.");
+    Runtime runtime("TagFilters", "", Runtime::tags_mark, "** :: tag1 || tag2-_.");
 
     TEST_SIMPLE() {
       std::vector<const char*> data_{
@@ -186,7 +186,7 @@ TEST_SUITE(TagFilters) {
   }
 
   TEST_CASE(Tag1AndTag2Objects) {
-    Runtime runtime("TagFilters", "", Runtime::tags_mark, "tag1&&tag2-_:.");
+    Runtime runtime("TagFilters", "", Runtime::tags_mark, "*::tag1&&tag2-_.");
 
     TEST_SIMPLE() {
       std::vector<const char*> data_{
@@ -206,7 +206,7 @@ TEST_SUITE(TagFilters) {
   }
 
   TEST_CASE(TaggedSuite) {
-    Runtime runtime("TaggedSuite", "", Runtime::tags_mark, "^tagged-suite");
+    Runtime runtime("TaggedSuite", "", Runtime::tags_mark, "**::tagged-suite::*");
 
     TEST_SIMPLE() {
       std::vector<const char*> data_{
@@ -230,7 +230,27 @@ TEST_SUITE(TagFilters) {
   }
 
   TEST_CASE(TaggedSuiteAndCase) {
-    Runtime runtime("TaggedSuite", "", Runtime::tags_mark, "^tagged-suite && tagged-case");
+    Runtime runtime("TaggedSuite", "", Runtime::tags_mark, "tagged-suite::tagged-case");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<TaggedSuite>",
+        "enterCase<TaggedCase>",
+        "enterState<AnonymousState>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<TaggedCase>: passed",
+        "leaveSuite<TaggedSuite>: passed",
+        "leaveTest<selftest>: passed",
+      };
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(TaggedSuiteAndCaseZeroRepeat) {
+    Runtime runtime("TaggedSuite", "", Runtime::tags_mark, "tagged-suite::[dummy]*::tagged-case");
 
     TEST_SIMPLE() {
       std::vector<const char*> data_{

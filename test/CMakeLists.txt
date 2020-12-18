@@ -38,7 +38,7 @@ target_otest2_sources(selftest
     maps.ot2
     regressions.ot2
     repeaters.ot2
-#    tags.ot2
+    tags.ot2
     tee.ot2
     testmarks.ot2
     userdata.ot2
@@ -56,7 +56,7 @@ target_otest2_sources(selftest DOMAIN selftest
     selftests/maps.ot2
     selftests/regressions.ot2
     selftests/repeaters.ot2
-#    selftests/tags.ot2
+    selftests/tags.ot2
     selftests/userdata.ot2
 )
 target_otest2_main(selftest)

@@ -43,7 +43,7 @@ bool parseTags(
   std::regex split_("(,)");
   std::sregex_token_iterator iter_(
       tags_string_.begin(), tags_string_.end(), split_, -1);
-  std::regex tag_name_("[a-zA-Z_][a-zA-Z0-9_:.\\-]*");
+  std::regex tag_name_("[a-zA-Z_][a-zA-Z0-9_.\\-]*");
   for(; iter_ != std::sregex_token_iterator(); ++iter_) {
     /* -- check the tag name */
     const std::string& tag_((*iter_).str());

@@ -18,7 +18,9 @@
  */
 #include <tagsstack.h>
 
+#include <algorithm>
 #include <assert.h>
+#include <iterator>
 #include <vector>
 
 #include <tags.h>
@@ -27,11 +29,7 @@
 namespace OTest2 {
 
 struct TagsStack::Impl {
-    struct Record {
-        bool suite;
-        Tags tags;
-    };
-    std::vector<Record> stack;
+    std::vector<Tags> stack;
 
     /* -- avoid copying */
     Impl(
@@ -61,9 +59,8 @@ TagsStack::~TagsStack() {
 }
 
 void TagsStack::pushTags(
-    bool suite_,
     const Tags& tags_) {
-  pimpl->stack.push_back({suite_, tags_});
+  pimpl->stack.push_back(tags_);
 }
 
 void TagsStack::popTags() {
@@ -71,39 +68,9 @@ void TagsStack::popTags() {
   pimpl->stack.pop_back();
 }
 
-bool TagsStack::isTopEmpty() const noexcept {
-  assert(!pimpl->stack.empty());
-  return pimpl->stack.back().tags.isEmpty();
-}
-
-bool TagsStack::isTopSuite() const noexcept {
-  assert(!pimpl->stack.empty());
-  return pimpl->stack.back().suite;
-}
-
-bool TagsStack::findTag(
-    const std::string& tag_) const noexcept {
-  assert(!pimpl->stack.empty());
-  return pimpl->stack.back().tags.findTag(tag_);
-}
-
-bool TagsStack::findTagParent(
-    const std::string& tag_) const noexcept {
-  assert(!pimpl->stack.empty());
-  for(const auto& tags_ : pimpl->stack) {
-    if(tags_.tags.findTag(tag_))
-      return true;
-  }
-  return false;
-}
-
-bool TagsStack::allAreEmpty() const noexcept {
-  assert(!pimpl->stack.empty());
-  for(const auto& tags_ : pimpl->stack) {
-    if(!tags_.tags.isEmpty())
-      return false;
-  }
-  return true;
+void TagsStack::fillTags(
+    std::vector<Tags>& tags_) const {
+  std::copy(pimpl->stack.begin(), pimpl->stack.end(), std::back_inserter(tags_));
 }
 
 } /* -- namespace OTest2 */

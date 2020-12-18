@@ -1,7 +1,10 @@
 ---
 title: Tag Globs and Expressions
 permalink: /reference/tagglob/
+toc: true
 ---
+
+# Grammar
 
 A tag glob is a simple sequence of glob parts separated by quad-dot:
 ```
@@ -56,7 +59,7 @@ an intention to make the model more flexible allowing cases placed outside
 of any suite or suites placed in another suite. The glob grammar is already
 prepared.
  
-### Examples
+# Examples
 
  * `**::quick-test` matches all test cases (last part of the glob) with
    tag `quick-test`.

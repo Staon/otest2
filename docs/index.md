@@ -3,15 +3,16 @@ title: "About"
 permalink: /
 author_profile: true
 circleci: true
+toc: true
 ---
 
 **OTest2** is a small C++ framework designated for writing of any kind of
 automated tests (unit tests, integration tests, etc.). Its design is derived
 from an older project of mine written while I was working for
-[Aveco](http://www.aveco.com/) - that's why there is 2 in the name. As far as
-I know the original project is still in use.
+[Aveco](http://www.aveco.com/) - that's why there is number 2 in the name.
+As far as I know the original project is still in use.
 
-Current release version is [1.1.0]({{ site.repositoryurl }}/releases/tag/v1.1.0).
+Current release version is [1.2.0]({{ site.repositoryurl }}/releases/tag/v1.2.0).
 
 [Github Repository]({{ site.repositoryurl }})
 
@@ -19,24 +20,53 @@ Current release version is [1.1.0]({{ site.repositoryurl }}/releases/tag/v1.1.0)
 
 * An [xUnit](https://en.wikipedia.org/wiki/XUnit) kind framework.
 * No need to write boiler plate code - it's done by a generator.
-* DSL is a valid C++ which doesn't break fancy IDE functions like code
+* DSL is a valid C++ code which doesn't break fancy IDE functions like code
   assistance.
 * Very cautious usage of C macros.
-* Grouping of test cases into test suites.
+* Test cases are grouped in suites.
+* [Tags]({{ "/examples/tags/" | relative_url }}) can be assigned to both test
+  suites and test cases. There is
+  a [tag glob language]({{ "/reference/tagglob/" | relative_url }})
+  allowing filtering of teting objects from test execution.
 * A rich set of [assertion functions]({{ "/reference/assertions/" | relative_url }}).
-  The user is allowed to implement custom assertions.
-* Test fixtures at the level of either test case or test suite.
-* Test fixture objects - objects automatically initialized and destroyed
-  during the start-up and tear-down phase.
-* Regression test marks - a structured representation of an inner state of some
-  structure or an output which can be stored and checked in next test run.
-* Exception handling - the framework is able to check occurrence of an
-  exception and it checks unexpected exceptions fired from the test cases.
-* Possible integration with custom main event loop.
-* User data passed from the main function into the testing functions.
-* Repeated runs of test cases or entire test suites.
-* Nice color console output.
-* Reporting in the JUnit XML file format.
+  Beside the generic assertion there are relational assertions, assertions
+  comparing content of STL containers or text files. The framework allows
+  implementation of custom assertion functions.
+* [Test fixtures]({{ "/examples/fixtures/" | relative_url }})
+  are supported both in the suites or the test cases. The fixtures may be
+  initialized and destroyed by their constructor and destructor methods
+  (as it's common in C++) or they can be initialized in special start-up
+  and tear-down methods.  
+* User can implement
+  [own fixture objects]({{ "/examples/fixture-objects/" | relative_url }})
+  with hook methods invoked during start-up and tear-down phase of suite
+  or test case where the object is used.
+* Possible [integration with custom main event loop]({{ "/examples/main-loop/" | relative_url }}).
+  The framework doesn't control run of the tests but it offers an API which
+  can be invoked from the main loop. A default implementation of the loop
+  is available too.
+* [User data]({{ "/examples/userdata/" | relative_url }}) may be passed from
+  the main function into the testing functions. User can inject some context
+  into tests.
+* [Regression test marks]({{ "/examples/regressions/" | relative_url }}) - 
+  a structured representation of complex data like logical state of an object
+  or some complex output of something. The marks can be stored and then checked
+  in following runs of the test.
+* [Exception handling]({{ "/examples/exceptions/" | relative_url }}). 
+  The framework offers special try/catch directive which allows to check
+  whether an expected exception occurs. Unexpected exceptions unwound from
+  testing objects are caught, reported and the test is failed.
+* A custom [exception catcher]({{ "/extending/catcher/" | relative_url }})
+  can be injected into the framework to handle your exception objects. 
+* One can implement a [repeater object]({{ "/examples/repeaters/" | relative_url }})
+  which controls repeated run of testing objects. The repeater is not just
+  a list of values but a dynamic object with possible access to fixture objects. 
+* Optional report in the [JUnit](https://junit.org/junit5/) XML file format.
+* Nice color console report:
+ 
+{:refdef: style="text-align: center;"}
+![color console report]({{ "/assets/console-reporter.png/" | relative_url }})
+{:refdef}
 
 ### Supported Platforms
 

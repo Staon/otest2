@@ -4,7 +4,7 @@
 
 **Current CI status:** [![Staon](https://circleci.com/gh/Staon/otest2.svg?style=svg)](https://circleci.com/gh/Staon/workflows/otest2/tree/master)
 
-**Current version:** [1.1.0](https://github.com/Staon/otest2/releases/tag/v1.1.0)
+**Current version:** [1.2.0](https://github.com/Staon/otest2/releases/tag/v1.2.0)
 
 **Downloads:** [https://github.com/Staon/otest2/releases/](https://github.com/Staon/otest2/releases/)
 
@@ -14,32 +14,53 @@ from an older project of mine written while I was working for
 [Aveco](http://www.aveco.com/) - that's why there is 2 in the name. As far as
 I know the original project is still in use.
 
-The project follows several design goals:
+## Project's design goals
 
 1. getting rid of writing boiler plate code,
 2. extensibility of the framework for different development environments,
 3. DSL compatible with IDE functions like syntax highlighting and code assist.
 
-The framework offers features:
+## Features
 
-* a preprocessor generating service code.
-* DSL is a valid C++ which doesn't break fancy IDE functions like code
+* An [xUnit](https://en.wikipedia.org/wiki/XUnit) kind framework.
+* No need to write boiler plate code - it's done by a generator.
+* DSL is a valid C++ code which doesn't break fancy IDE functions like code
   assistance.
-* Grouping of test cases into test suites.
-* A set of assertion functions. The user is allowed to implement custom
-  assertions.
-* Test fixtures at the level of either test case or test suite.
-* Test fixture objects - objects automatically initialized and destroyed
-  during the start-up and tear-down phase.
-* Regression test marks - a text representation of inner state of some
-  structure which can be stored and checked.
-* Exception handling - the framework is able to check occurence of an
-  exception and it checks unexpected exceptions fired from the test cases.
-* Possible integration with custom main event loop.
-* User data passed from the main function into the testing functions.
-* Repeated runs of test cases or entire test suites.
-* Nice color console output.
-* Reporting in the JUnit XML file format.
+* Very cautious usage of C macros.
+* Test cases are grouped in suites.
+* Tags can be assigned to both test suites and test cases. There is
+  a tag glob language allowing filtering of testing objects from test execution.
+* A rich set of assertion functions. Beside the generic assertion there
+  are relational assertions, assertions comparing content of STL containers
+  or text files. The framework allows implementation of custom assertion functions.
+* Test fixtures are supported both in the suites or the test cases. The fixtures
+  may be initialized and destroyed by their constructor and destructor methods
+  (as it's common in C++) or they can be initialized in special start-up
+  and tear-down methods.  
+* User can implement own fixture objects with hook methods invoked during
+  start-up and tear-down phase of suite or test case where the object is used.
+* Possible integration with custom main event loop. The framework doesn't
+  control run of the tests but it offers an API which can be invoked from
+  the main loop. A default implementation of the loop is available too.
+* User data may be passed from the main function into the testing functions.
+  User can inject some context into tests.
+* Regression test marks - a structured representation of complex data like
+  logical state of an object or some complex output of something. The marks
+  can be stored and then checked in following runs of the test.
+* Exception handling. The framework offers special try/catch directive which
+  allows to check whether an expected exception occurs. Unexpected exceptions
+  unwound from testing objects are caught, reported and the test is failed.
+* A custom exception catcher can be injected into the framework to handle your
+  exception objects. 
+* One can implement a repeater object which controls repeated run of testing
+  objects. The repeater is not just a list of values but a dynamic object
+  with possible access to fixture objects. 
+* Optional report in the JUnit XML file format.
+* Nice color console report.
+
+<p align="center">
+  <img width="563" src="docs/assets/console-reporter.png">
+</p> 
 
 See the project site [https://staon.github.io/otest2/](https://staon.github.io/otest2/)
 for detailed documentation, examples and the install guide.

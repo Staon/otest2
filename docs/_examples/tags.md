@@ -66,7 +66,7 @@ $ ./tags -T ''
   Test total                                                          [Passed]
  ==============================================================================
 ```
-Or we can ask for just tagged cases:
+Or we can ask just for tagged cases:
 ```plaintext
 staon@otest2:~/programovani/otest2/examples/tags/build$ ./tags -T '**::slow'
  ================================= TagsSuite ==================================

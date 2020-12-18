@@ -599,7 +599,7 @@ void GeneratorStd::leaveState() {
   pimpl->output
       << "\n"
       << "            virtual void runState(\n"
-      << "                const Context& context_) {\n";
+      << "                const ::OTest2::Context& context_) {\n";
   pimpl->state_fce->generateInvocation(
       pimpl->output, pimpl->indent + 1, "stateFunction");
   pimpl->output
@@ -689,7 +689,7 @@ void GeneratorStd::leaveSuite() {
       << "\n\n"
       << "  public:\n"
       << "    static void registerAllCases(\n"
-      << "        ScenarioContainerPtr parent_) {\n";
+      << "        ::OTest2::ScenarioContainerPtr parent_) {\n";
   for(const auto& case_ : pimpl->cases) {
     pimpl->output
       << "      parent_->appendScenario(\n"

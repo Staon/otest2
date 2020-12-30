@@ -10,14 +10,14 @@ there is no usable binary distribution of the library and it must be built
 manually.
 
 There are some needed dependencies:
-* [cmake](https://cmake.org/) (>= 3.7)
+* [cmake](https://cmake.org/) (>= 3.17)
 * libtinfo or libncurses
 * [libbz2](https://www.sourceware.org/bzip2/)
 * [Boost Endian Library](https://www.boost.org/doc/libs/1_63_0/libs/endian/doc/index.html)
 * [Pugi XML](https://pugixml.org/)
 
-If you work on Debian Stretch all of them are in the system repository
-with an appropriate version.
+If you work on Debian Stretch all of them but the cmake are in the system
+repository with an appropriate version.
 
 If you want to compile the examples one of them depends on:
 * [pkg-config](https://www.freedesktop.org/wiki/Software/pkg-config/)

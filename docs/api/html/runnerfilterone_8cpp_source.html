@@ -155,13 +155,13 @@ $(function() {
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <span class="keyword">auto</span> index_(object_path_.find(<span class="stringliteral">&quot;::&quot;</span>));</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keywordflow">if</span>(index_ == std::string::npos) {</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="comment">/* -- one whole suite */</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordflow">return</span> std::unique_ptr&lt;RunnerFilterOne&gt;(<span class="keyword">new</span> <a class="code" href="classOTest2_1_1RunnerFilterOne.html#a879eb365a0752387e56095417159feef">RunnerFilterOne</a>(object_path_));</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    return ::OTest2::make_unique&lt;RunnerFilterOne&gt;(object_path_);</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  }</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keywordflow">else</span> {</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="comment">/* -- just one testcase */</span></div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    std::string suite_(object_path_.substr(0, index_));</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    std::string testcase_(object_path_.substr(index_ + 2));</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordflow">return</span> std::unique_ptr&lt;RunnerFilterOne&gt;(<span class="keyword">new</span> <a class="code" href="classOTest2_1_1RunnerFilterOne.html#a879eb365a0752387e56095417159feef">RunnerFilterOne</a>(suite_, testcase_));</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    return ::OTest2::make_unique&lt;RunnerFilterOne&gt;(suite_, testcase_);</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  }</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;}</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>

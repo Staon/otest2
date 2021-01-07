@@ -42,7 +42,7 @@ class Tags {
     /**
      * @brief Ctor - initialized list of tags
      */
-    Tags(
+    /* implicit */ Tags(
         std::initializer_list<std::string> initializer_);
 
     /**
@@ -55,7 +55,7 @@ class Tags {
      * @brief Move ctor
      */
     Tags(
-        Tags&& other_);
+        Tags&& other_) noexcept;
 
     /**
      * @brief Dtor

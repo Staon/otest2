@@ -46,7 +46,7 @@ class Error : public Exception {
      * @brief Move ctor
      */
     Error(
-        Error&& exc_);
+        Error&& exc_) noexcept;
 
     /**
      * @brief Dtor

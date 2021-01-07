@@ -191,7 +191,7 @@ class ParserFailure : public Exception {
      * @brief Move ctor
      */
     ParserFailure(
-        ParserFailure&& exc_);
+        ParserFailure&& exc_) noexcept;
 
     /**
      * @brief Dtor
@@ -213,7 +213,7 @@ ParserFailure::ParserFailure() {
 }
 
 ParserFailure::ParserFailure(
-    ParserFailure&& exc_) :
+    ParserFailure&& exc_) noexcept :
   Exception(std::move(exc_)) {
 
 }

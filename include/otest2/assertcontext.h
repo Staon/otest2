@@ -46,7 +46,6 @@ class AssertContext {
     AssertContext& operator =(
         const AssertContext&) = delete;
 
-  public:
     /**
      * @brief Ctor
      *
@@ -60,7 +59,7 @@ class AssertContext {
         const Context& context_,
         const std::string& file_,
         int lineno_,
-        const std::string expression_);
+        const std::string& expression_);
 
   protected:
     /**

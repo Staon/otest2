@@ -48,7 +48,7 @@ class ParserException : public Exception {
      * @brief Move ctor
      */
     ParserException(
-        ParserException&& exc_);
+        ParserException&& exc_) noexcept;
 
     /**
      * @brief Dtor

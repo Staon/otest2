@@ -30,8 +30,8 @@ Error::Error(
 }
 
 Error::Error(
-    Error&& exc_) :
-  Exception(std::forward<Exception>(exc_)),
+    Error&& exc_) noexcept :
+  Exception(std::move(exc_)),
   message(std::move(exc_.message)) {
 
 }

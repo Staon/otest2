@@ -51,7 +51,7 @@ class TestMarkHash {
      * @brief Move ctor
      */
     TestMarkHash(
-        TestMarkHash&& other_);
+        TestMarkHash&& other_) noexcept;
 
     /**
      * @brief Dtor

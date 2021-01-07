@@ -31,7 +31,7 @@ AssertContext::AssertContext(
     const Context& context_,
     const std::string& file_,
     int lineno_,
-    const std::string expression_) :
+    const std::string& expression_) :
   context(&context_),
   file(file_),
   lineno(lineno_),
@@ -39,9 +39,7 @@ AssertContext::AssertContext(
 
 }
 
-AssertContext::~AssertContext() {
-
-}
+AssertContext::~AssertContext() = default;
 
 void AssertContext::enterAssertion(
     bool condition_,

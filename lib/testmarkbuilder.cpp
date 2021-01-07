@@ -113,7 +113,7 @@ TestMarkBuilder::TestMarkBuilder() :
   pimpl(new Impl) {
   pimpl->stack.emplace_back(
       "",
-      std::unique_ptr<Container>(new Impl::RootContainer(&pimpl->root)));
+      ::OTest2::make_unique<Impl::RootContainer>(&pimpl->root));
 }
 
 TestMarkBuilder::~TestMarkBuilder() {
@@ -161,21 +161,21 @@ void TestMarkBuilder::openContainerImpl(
 }
 
 void TestMarkBuilder::openList() {
-  openContainer(std::unique_ptr<TestMarkList>(new TestMarkList));
+  openContainer(::OTest2::make_unique<TestMarkList>());
 }
 
 void TestMarkBuilder::openList(
     const std::string& prefix_) {
-  openContainer(std::unique_ptr<TestMarkList>(new TestMarkList(prefix_)));
+  openContainer(::OTest2::make_unique<TestMarkList>(prefix_));
 }
 
 void TestMarkBuilder::openMap() {
-  openContainer(std::unique_ptr<TestMarkMap>(new TestMarkMap));
+  openContainer(::OTest2::make_unique<TestMarkMap>());
 }
 
 void TestMarkBuilder::openMap(
     const std::string& prefix_) {
-  openContainer(std::unique_ptr<TestMarkMap>(new TestMarkMap(prefix_)));
+  openContainer(::OTest2::make_unique<TestMarkMap>(prefix_));
 }
 
 void TestMarkBuilder::closeContainer() {

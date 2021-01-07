@@ -29,6 +29,7 @@
 
 #include <otest2/exc.h>
 #include <otest2/typetraits.h>
+#include <otest2/utils.h>
 
 namespace OTest2 {
 
@@ -52,7 +53,7 @@ class UserDataMissingException : public Exception {
      * @brief Move ctor
      */
     UserDataMissingException(
-        UserDataMissingException&& exc_);
+        UserDataMissingException&& exc_) noexcept;
 
     /**
      * @brief Dtor
@@ -96,7 +97,7 @@ class UserDataWrongTypeException : public Exception {
      * @brief Move ctor
      */
     UserDataWrongTypeException(
-        UserDataWrongTypeException&& exc_);
+        UserDataWrongTypeException&& exc_) noexcept;
 
     /**
      * @brief Dtor
@@ -146,9 +147,7 @@ class UserData {
 
         }
 
-        virtual ~TypedDatum() {
-
-        }
+        virtual ~TypedDatum() = default;
 
         /* -- avoid copying */
         TypedDatum(
@@ -169,6 +168,12 @@ class UserData {
 
 
   public:
+    /* -- avoid copying */
+    UserData(
+        const UserData&) = delete;
+    UserData& operator = (
+        const UserData&) = delete;
+
     /**
      * @brief Ctor
      */
@@ -190,8 +195,7 @@ class UserData {
     void setDatum(
         const std::string& name_,
         Type_* datum_) {
-      std::unique_ptr<Datum> d_(new TypedDatum<Type_>(datum_));
-      doSetDatum(name_, std::move(d_));
+      doSetDatum(name_, ::OTest2::make_unique<TypedDatum<Type_> >(datum_));
     }
 
     /**

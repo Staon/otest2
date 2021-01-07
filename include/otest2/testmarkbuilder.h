@@ -59,7 +59,7 @@ class TestMarkBuilder {
   private:
     class Container {
       public:
-        virtual ~Container() {};
+        virtual ~Container() = default;
         virtual void append(
             const std::string& key_,
             TestMarkPtr mark_) = 0;
@@ -122,16 +122,16 @@ class TestMarkBuilder {
     std::unique_ptr<Container> createContainer(
         std::unique_ptr<ContainerMark_>&& container_,
         void (ContainerMark_::*)(TestMarkPtr)) {
-      return std::unique_ptr<Container>(
-          new OrderedContainer<ContainerMark_>(std::move(container_)));
+      return ::OTest2::make_unique<OrderedContainer<ContainerMark_> >(
+          std::move(container_));
     }
 
     template<typename ContainerMark_>
     std::unique_ptr<Container> createContainer(
         std::unique_ptr<ContainerMark_>&& container_,
         void (ContainerMark_::*)(const std::string&, TestMarkPtr)) {
-      return std::unique_ptr<Container>(
-          new UnorderedContainer<ContainerMark_>(std::move(container_)));
+      return ::OTest2::make_unique<UnorderedContainer<ContainerMark_> >(
+          std::move(container_));
     }
 
     void openContainerImpl(

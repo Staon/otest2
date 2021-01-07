@@ -83,13 +83,13 @@ std::unique_ptr<RunnerFilterOne> RunnerFilterOne::fromPath(
   auto index_(object_path_.find("::"));
   if(index_ == std::string::npos) {
     /* -- one whole suite */
-    return std::unique_ptr<RunnerFilterOne>(new RunnerFilterOne(object_path_));
+    return ::OTest2::make_unique<RunnerFilterOne>(object_path_);
   }
   else {
     /* -- just one testcase */
     std::string suite_(object_path_.substr(0, index_));
     std::string testcase_(object_path_.substr(index_ + 2));
-    return std::unique_ptr<RunnerFilterOne>(new RunnerFilterOne(suite_, testcase_));
+    return ::OTest2::make_unique<RunnerFilterOne>(suite_, testcase_);
   }
 }
 

@@ -56,11 +56,13 @@ TagExpressionException::TagExpressionException(
 }
 
 TagExpressionException::TagExpressionException(
-    TagExpressionException&& exc_) :
+    TagExpressionException&& exc_) noexcept :
   Exception(std::move(exc_)),
   message(std::move(exc_.message)) {
 
 }
+
+TagExpressionException::~TagExpressionException() = default;
 
 std::string TagExpressionException::reason() const {
   return message;
@@ -744,7 +746,6 @@ Token Lexan::getNextToken() {
             /* -- invalid character */
             throw TagExpressionException(location, c_);
           }
-          break;
         }
         else {
           state = State::START;
@@ -924,7 +925,6 @@ TagExpressionPtr SyntaxParser::factor() {
   else if(l_.type == TokenType::LEFT) {
     compare(TokenType::LEFT);
     return expression();
-    compare(TokenType::RIGHT);
   }
   else {
     throw TagExpressionException(lexan->getLocation(), l_.value);

@@ -38,6 +38,12 @@ class DfltEnvironment {
     Impl* pimpl;
 
   public:
+    /* -- avoid copying */
+    DfltEnvironment(
+        const DfltEnvironment&) = delete;
+    DfltEnvironment& operator = (
+        const DfltEnvironment&) = delete;
+
     /**
      * @brief Ctor - default running environment
      *

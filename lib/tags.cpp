@@ -42,7 +42,7 @@ Tags::Tags(
 }
 
 Tags::Tags(
-    Tags&& other_) :
+    Tags&& other_) noexcept :
   tags(std::move(other_.tags)) {
 
 }

@@ -29,7 +29,7 @@ TestMarkHash::TestMarkHash() :
 }
 
 TestMarkHash::TestMarkHash(
-    TestMarkHash&& other_) :
+    TestMarkHash&& other_) noexcept :
   hash(other_.hash) {
 
 }

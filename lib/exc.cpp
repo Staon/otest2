@@ -26,7 +26,7 @@ Exception::Exception() {
 }
 
 Exception::Exception(
-    Exception&& exc_) {
+    Exception&& exc_) noexcept {
 
 }
 

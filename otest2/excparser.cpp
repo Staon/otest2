@@ -35,8 +35,8 @@ ParserException::ParserException() :
 }
 
 ParserException::ParserException(
-    ParserException&& exc_) :
-  Exception(std::forward<Exception>(exc_)),
+    ParserException&& exc_) noexcept :
+  Exception(std::move(exc_)),
   message(std::move(exc_.message)),
   file(std::move(exc_.file)),
   begin_line(exc_.begin_line),

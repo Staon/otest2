@@ -47,7 +47,6 @@ class Registry {
     Registry& operator =(
         const Registry&) = delete;
 
-  public:
     /**
      * @brief Ctor
      */

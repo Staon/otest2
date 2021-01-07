@@ -33,6 +33,12 @@ class ObjectPath {
     Impl* pimpl;
 
   public:
+    /* -- avoid copying */
+    ObjectPath(
+        const ObjectPath&) = delete;
+    ObjectPath& operator = (
+        const ObjectPath&) = delete;
+
     /**
      * @brief Ctor
      */

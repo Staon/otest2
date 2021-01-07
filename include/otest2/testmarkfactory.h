@@ -52,6 +52,12 @@ class TestMarkFactory {
         std::function<TestMarkPtr()> ctor_);
 
   public:
+    /* -- avoid copying */
+    TestMarkFactory(
+        const TestMarkFactory&) = delete;
+    TestMarkFactory& operator = (
+        const TestMarkFactory&) = delete;
+
     /**
      * @brief Ctor
      *
@@ -84,7 +90,7 @@ class TestMarkFactory {
       doRegisterRecord(
           Mark_::typeMark(),
           []() {
-            return TestMarkPtr(new Mark_(static_cast<CtorMark*>(nullptr)));
+            return std::make_shared<Mark_>(static_cast<CtorMark*>(nullptr));
           });
     }
 };

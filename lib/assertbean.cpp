@@ -38,15 +38,9 @@ AssertBean::AssertBean(
 }
 
 AssertBean::AssertBean(
-    const AssertBean& src_) :
-  condition(src_.condition),
-  message(src_.message) {
+    const AssertBean& src_) = default;
 
-}
-
-AssertBean::~AssertBean() {
-
-}
+AssertBean::~AssertBean() = default;
 
 void AssertBean::swap(
     AssertBean& b2_) noexcept {
@@ -55,11 +49,7 @@ void AssertBean::swap(
 }
 
 AssertBean& AssertBean::operator = (
-    const AssertBean& src_) {
-  AssertBean tmp_(src_);
-  swap(tmp_);
-  return *this;
-}
+    const AssertBean& src_) = default;
 
 bool AssertBean::getCondition() const {
   return condition;

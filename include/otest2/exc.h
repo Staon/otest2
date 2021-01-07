@@ -39,7 +39,7 @@ class Exception : public std::exception {
      * @brief Move ctor
      */
     Exception(
-        Exception&& exc_);
+        Exception&& exc_) noexcept;
 
     /**
      * @brief Dtor

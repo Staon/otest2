@@ -68,7 +68,12 @@ class TagExpressionException : public Exception {
      * @brief Move ctor
      */
     TagExpressionException(
-        TagExpressionException&& exc_);
+        TagExpressionException&& exc_) noexcept;
+
+    /**
+     * @brief Dtor
+     */
+    virtual ~TagExpressionException();
 
     /* -- avoid copying */
     TagExpressionException(

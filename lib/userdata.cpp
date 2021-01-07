@@ -33,7 +33,7 @@ UserDataMissingException::UserDataMissingException(
 }
 
 UserDataMissingException::UserDataMissingException(
-    UserDataMissingException&& exc_) :
+    UserDataMissingException&& exc_) noexcept :
   Exception(std::move(exc_)),
   name(std::move(exc_.name)) {
 
@@ -58,7 +58,7 @@ UserDataWrongTypeException::UserDataWrongTypeException(
 }
 
 UserDataWrongTypeException::UserDataWrongTypeException(
-    UserDataWrongTypeException&& exc_) :
+    UserDataWrongTypeException&& exc_) noexcept :
   Exception(std::move(exc_)),
   name(std::move(exc_.name)),
   actual_type(std::move(exc_.actual_type)),

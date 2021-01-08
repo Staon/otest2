@@ -122,19 +122,19 @@ $(function() {
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="comment">/* -- skip unchanged lines */</span></div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordflow">if</span>(left_line_ &lt; diff_.left_begin - context_)</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      os_ &lt;&lt; <span class="stringliteral">&quot;  ......... \n&quot;</span>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">for</span>(; left_line_ &lt; diff_.left_begin - context_;)</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordflow">while</span>(left_line_ &lt; diff_.left_begin - context_)</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      left_printer_.<a class="code" href="classOTest2_1_1TestMarkPrinter.html#a3689ed67cf3bd689c7ac4581ebeba937">skipLine</a>(os_);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">for</span>(; right_line_ &lt; diff_.right_begin;)</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">while</span>(right_line_ &lt; diff_.right_begin)</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      right_printer_.<a class="code" href="classOTest2_1_1TestMarkPrinter.html#a3689ed67cf3bd689c7ac4581ebeba937">skipLine</a>(os_);</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="comment">/* -- print the context lines */</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordflow">for</span>(; left_line_ &lt; diff_.left_begin;)</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordflow">while</span>(left_line_ &lt; diff_.left_begin)</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;      left_printer_.<a class="code" href="classOTest2_1_1TestMarkPrinter.html#a2157e0d20ea290879c22102e44159def">printLine</a>(os_, <span class="stringliteral">&quot;  &quot;</span>);</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="comment">/* -- print the changes */</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">for</span>(; right_line_ &lt; diff_.right_end;)</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">while</span>(right_line_ &lt; diff_.right_end)</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;      right_printer_.<a class="code" href="classOTest2_1_1TestMarkPrinter.html#a2157e0d20ea290879c22102e44159def">printLine</a>(os_, <span class="stringliteral">&quot;- &quot;</span>);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">for</span>(; left_line_ &lt; diff_.left_end;)</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">while</span>(left_line_ &lt; diff_.left_end)</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;      left_printer_.<a class="code" href="classOTest2_1_1TestMarkPrinter.html#a2157e0d20ea290879c22102e44159def">printLine</a>(os_, <span class="stringliteral">&quot;+ &quot;</span>);</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  }</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>

@@ -101,9 +101,9 @@ $(function() {
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;}</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classOTest2_1_1ExcTestMarkIn.html#affea721fd026dd218f5c59f1a7c74c52">   32</a></span>&#160;<a class="code" href="classOTest2_1_1ExcTestMarkIn.html#a2c3445e50ec82a2fcb3992c1d9db80e2">ExcTestMarkIn::ExcTestMarkIn</a>(</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <a class="code" href="classOTest2_1_1ExcTestMarkIn.html">ExcTestMarkIn</a>&amp;&amp; exc_) :</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  std::exception(std::move(exc_)),</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classOTest2_1_1ExcTestMarkIn.html#ac35f30cfcdce271ca8c58572f0812199">   32</a></span>&#160;<a class="code" href="classOTest2_1_1ExcTestMarkIn.html#a2c3445e50ec82a2fcb3992c1d9db80e2">ExcTestMarkIn::ExcTestMarkIn</a>(</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <a class="code" href="classOTest2_1_1ExcTestMarkIn.html">ExcTestMarkIn</a>&amp;&amp; exc_) noexcept :</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <a class="code" href="classOTest2_1_1Exception.html">Exception</a>(std::move(exc_)),</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  message(std::move(exc_.message)) {</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
@@ -112,17 +112,18 @@ $(function() {
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classOTest2_1_1ExcTestMarkIn.html#ac26a1810dc14f87bc507e5f81478d0e6">   43</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="classOTest2_1_1ExcTestMarkIn.html#ac26a1810dc14f87bc507e5f81478d0e6">ExcTestMarkIn::what</a>() const noexcept {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keywordflow">return</span> message.c_str();</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classOTest2_1_1ExcTestMarkIn.html#adf4681301b6555a0ea0cfdf641926ff4">   43</a></span>&#160;std::string <a class="code" href="classOTest2_1_1ExcTestMarkIn.html#adf4681301b6555a0ea0cfdf641926ff4">ExcTestMarkIn::reason</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keywordflow">return</span> message;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassOTest2_1_1ExcTestMarkIn_html_ac26a1810dc14f87bc507e5f81478d0e6"><div class="ttname"><a href="classOTest2_1_1ExcTestMarkIn.html#ac26a1810dc14f87bc507e5f81478d0e6">OTest2::ExcTestMarkIn::what</a></div><div class="ttdeci">virtual const char * what() const noexcept</div><div class="ttdef"><b>Definition:</b> <a href="exctestmarkin_8cpp_source.html#l00043">exctestmarkin.cpp:43</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ExcTestMarkIn_html"><div class="ttname"><a href="classOTest2_1_1ExcTestMarkIn.html">OTest2::ExcTestMarkIn</a></div><div class="ttdoc">An exception thrown from the testmark deserializer.</div><div class="ttdef"><b>Definition:</b> <a href="exctestmarkin_8h_source.html#l00031">exctestmarkin.h:31</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ExcTestMarkIn_html_adf4681301b6555a0ea0cfdf641926ff4"><div class="ttname"><a href="classOTest2_1_1ExcTestMarkIn.html#adf4681301b6555a0ea0cfdf641926ff4">OTest2::ExcTestMarkIn::reason</a></div><div class="ttdeci">virtual std::string reason() const override</div><div class="ttdoc">Get exception reason.</div><div class="ttdef"><b>Definition:</b> <a href="exctestmarkin_8cpp_source.html#l00043">exctestmarkin.cpp:43</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ExcTestMarkIn_html"><div class="ttname"><a href="classOTest2_1_1ExcTestMarkIn.html">OTest2::ExcTestMarkIn</a></div><div class="ttdoc">An exception thrown from the testmark deserializer.</div><div class="ttdef"><b>Definition:</b> <a href="exctestmarkin_8h_source.html#l00033">exctestmarkin.h:33</a></div></div>
 <div class="ttc" id="aexctestmarkin_8h_html"><div class="ttname"><a href="exctestmarkin_8h.html">exctestmarkin.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1ExcTestMarkIn_html_a2c3445e50ec82a2fcb3992c1d9db80e2"><div class="ttname"><a href="classOTest2_1_1ExcTestMarkIn.html#a2c3445e50ec82a2fcb3992c1d9db80e2">OTest2::ExcTestMarkIn::ExcTestMarkIn</a></div><div class="ttdeci">ExcTestMarkIn(const std::string &amp;message_)</div><div class="ttdoc">Ctor.</div><div class="ttdef"><b>Definition:</b> <a href="exctestmarkin_8cpp_source.html#l00026">exctestmarkin.cpp:26</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1Exception_html"><div class="ttname"><a href="classOTest2_1_1Exception.html">OTest2::Exception</a></div><div class="ttdoc">Generic OTest2 exception.</div><div class="ttdef"><b>Definition:</b> <a href="exc_8h_source.html#l00031">exc.h:31</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1ExcTestMarkIn_html_aa633e6bb475fe87fa7ac266c69dbe592"><div class="ttname"><a href="classOTest2_1_1ExcTestMarkIn.html#aa633e6bb475fe87fa7ac266c69dbe592">OTest2::ExcTestMarkIn::~ExcTestMarkIn</a></div><div class="ttdeci">virtual ~ExcTestMarkIn()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="exctestmarkin_8cpp_source.html#l00039">exctestmarkin.cpp:39</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

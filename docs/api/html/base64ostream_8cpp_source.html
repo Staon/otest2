@@ -162,7 +162,7 @@ $(function() {
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="keywordtype">void</span> Base64OStream::Buffer::finishData() {</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  <span class="comment">/* -- compute length of data */</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  <span class="keywordtype">int</span> length_(pptr() - output_buffer);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  <span class="keyword">auto</span> length_(pptr() - output_buffer);</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  assert(length_ &gt;= 0 &amp;&amp; length_ &lt;= output_raw_width);</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  <span class="comment">/* -- encode the output buffer */</span></div>
@@ -198,8 +198,8 @@ $(function() {
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  setp(output_buffer, output_buffer + output_raw_width);</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  <span class="comment">/* -- push the encoded data into the decorated stream buffer */</span></div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  <span class="keywordtype">int</span> coded_length_(out_ - buffer_);</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  decorated-&gt;write(buffer_, coded_length_);</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  <span class="keyword">auto</span> coded_length_(out_ - buffer_);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  decorated-&gt;write(buffer_, <span class="keyword">static_cast&lt;</span>std::streamsize<span class="keyword">&gt;</span>(coded_length_));</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;}</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="keywordtype">int</span> Base64OStream::Buffer::overflow(</div>

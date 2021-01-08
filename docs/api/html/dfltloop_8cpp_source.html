@@ -90,34 +90,35 @@ $(function() {
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment"> */</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="dfltloop_8h.html">dfltloop.h</a>&gt;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="runner_8h.html">runner.h</a>&gt;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="namespaceOTest2.html#a833b8d9d3a5ba8a938ee458d77afae07">   27</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="namespaceOTest2.html#a833b8d9d3a5ba8a938ee458d77afae07">defaultMainLoop</a>(</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <a class="code" href="classOTest2_1_1Runner.html">Runner</a>&amp; runner_) {</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;  <a class="code" href="classOTest2_1_1RunnerResult.html">::OTest2::RunnerResult</a> result_;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="keywordflow">while</span>(<span class="keyword">true</span>) {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="comment">/* -- do the test step */</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    result_ = runner_.<a class="code" href="classOTest2_1_1Runner.html#a66566c5a2a784992dc7347197434d5b0">runNext</a>();</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordflow">if</span>(result_.<a class="code" href="classOTest2_1_1RunnerResult.html#a70dc080fd64db2941218b3ec816ed770">isFinished</a>())</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;      <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="comment">/* -- wait for next step */</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">int</span> delay_ms_(result_.<a class="code" href="classOTest2_1_1RunnerResult.html#abc33c519741302659e04a0946e8b721c">getDelayMS</a>());</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordflow">if</span>(delay_ms_ &gt; 0)</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;      usleep(delay_ms_ * 1000);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  }</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keywordflow">if</span>(result_.<a class="code" href="classOTest2_1_1RunnerResult.html#a9176c88e2bd0bf4af59adc74caad8cda">getResult</a>())</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;chrono&gt;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;thread&gt;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="runner_8h.html">runner.h</a>&gt;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="namespaceOTest2.html#a833b8d9d3a5ba8a938ee458d77afae07">   28</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="namespaceOTest2.html#a833b8d9d3a5ba8a938ee458d77afae07">defaultMainLoop</a>(</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="classOTest2_1_1Runner.html">Runner</a>&amp; runner_) {</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <a class="code" href="classOTest2_1_1RunnerResult.html">::OTest2::RunnerResult</a> result_;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="keywordflow">while</span>(<span class="keyword">true</span>) {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="comment">/* -- do the test step */</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    result_ = runner_.<a class="code" href="classOTest2_1_1Runner.html#a66566c5a2a784992dc7347197434d5b0">runNext</a>();</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordflow">if</span>(result_.<a class="code" href="classOTest2_1_1RunnerResult.html#a70dc080fd64db2941218b3ec816ed770">isFinished</a>())</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;      <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="comment">/* -- wait for next step */</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keyword">const</span> std::chrono::milliseconds delay_(result_.<a class="code" href="classOTest2_1_1RunnerResult.html#abc33c519741302659e04a0946e8b721c">getDelayMS</a>());</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordflow">if</span>(delay_ &gt; std::chrono::milliseconds(0))</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;      std::this_thread::sleep_for(delay_);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  }</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordflow">if</span>(result_.<a class="code" href="classOTest2_1_1RunnerResult.html#a9176c88e2bd0bf4af59adc74caad8cda">getResult</a>())</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassOTest2_1_1Runner_html_a66566c5a2a784992dc7347197434d5b0"><div class="ttname"><a href="classOTest2_1_1Runner.html#a66566c5a2a784992dc7347197434d5b0">OTest2::Runner::runNext</a></div><div class="ttdeci">virtual RunnerResult runNext()=0</div><div class="ttdoc">Run next pack of work.</div></div>
 <div class="ttc" id="adfltloop_8h_html"><div class="ttname"><a href="dfltloop_8h.html">dfltloop.h</a></div></div>
@@ -128,7 +129,7 @@ $(function() {
 <div class="ttc" id="aclassOTest2_1_1RunnerResult_html_a70dc080fd64db2941218b3ec816ed770"><div class="ttname"><a href="classOTest2_1_1RunnerResult.html#a70dc080fd64db2941218b3ec816ed770">OTest2::RunnerResult::isFinished</a></div><div class="ttdeci">bool isFinished() const</div><div class="ttdoc">Check whether the test has already finished.</div><div class="ttdef"><b>Definition:</b> <a href="runner_8cpp_source.html#l00071">runner.cpp:71</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1RunnerResult_html"><div class="ttname"><a href="classOTest2_1_1RunnerResult.html">OTest2::RunnerResult</a></div><div class="ttdoc">Result of test run.</div><div class="ttdef"><b>Definition:</b> <a href="runner_8h_source.html#l00040">runner.h:40</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1RunnerResult_html_a9176c88e2bd0bf4af59adc74caad8cda"><div class="ttname"><a href="classOTest2_1_1RunnerResult.html#a9176c88e2bd0bf4af59adc74caad8cda">OTest2::RunnerResult::getResult</a></div><div class="ttdeci">bool getResult() const</div><div class="ttdoc">Get result of the test - true if the test has passed.</div><div class="ttdef"><b>Definition:</b> <a href="runner_8cpp_source.html#l00080">runner.cpp:80</a></div></div>
-<div class="ttc" id="anamespaceOTest2_html_a833b8d9d3a5ba8a938ee458d77afae07"><div class="ttname"><a href="namespaceOTest2.html#a833b8d9d3a5ba8a938ee458d77afae07">OTest2::defaultMainLoop</a></div><div class="ttdeci">int defaultMainLoop(Runner &amp;runner_)</div><div class="ttdoc">Default main loop.</div><div class="ttdef"><b>Definition:</b> <a href="dfltloop_8cpp_source.html#l00027">dfltloop.cpp:27</a></div></div>
+<div class="ttc" id="anamespaceOTest2_html_a833b8d9d3a5ba8a938ee458d77afae07"><div class="ttname"><a href="namespaceOTest2.html#a833b8d9d3a5ba8a938ee458d77afae07">OTest2::defaultMainLoop</a></div><div class="ttdeci">int defaultMainLoop(Runner &amp;runner_)</div><div class="ttdoc">Default main loop.</div><div class="ttdef"><b>Definition:</b> <a href="dfltloop_8cpp_source.html#l00028">dfltloop.cpp:28</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

@@ -153,7 +153,7 @@ $(function() {
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="comment">/* -- Default test name is derived from the test binary as the last part</span></div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">   *    of the path. */</span></div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  std::string test_name_(binname_);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keywordtype">int</span> last_slash_(test_name_.find_last_of(<span class="charliteral">&#39;/&#39;</span>));</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keyword">auto</span> last_slash_(test_name_.find_last_of(<span class="charliteral">&#39;/&#39;</span>));</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  <span class="keywordflow">if</span>(last_slash_ != std::string::npos)</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    test_name_.erase(0, last_slash_ + 1);</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordflow">return</span> test_name_;</div>
@@ -268,7 +268,7 @@ $(function() {
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        <span class="keywordflow">try</span> {</div>
 <div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;          pimpl-&gt;tag_filter = ::OTest2::make_unique&lt;TagFilter&gt;(optarg);</div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;        }</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;        <span class="keywordflow">catch</span>(<a class="code" href="classOTest2_1_1Exception.html">Exception</a>&amp; exc_) {</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;        <span class="keywordflow">catch</span>(<span class="keyword">const</span> <a class="code" href="classOTest2_1_1Exception.html">Exception</a>&amp; exc_) {</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;          std::cout &lt;&lt; <span class="stringliteral">&quot;invalid tag expression: &quot;</span> &lt;&lt; exc_.<a class="code" href="classOTest2_1_1Exception.html#a194067bb950d8a6f964eff1a109aff32">reason</a>() &lt;&lt; std::endl;</div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;          std::exit(2);</div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;        }</div>
@@ -278,7 +278,7 @@ $(function() {
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;        printHelpMessage(argv_[0]);</div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;        std::exit(0);</div>
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;      <span class="keywordflow">case</span> <span class="charliteral">&#39;?&#39;</span>:</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;      <span class="keywordflow">default</span>:</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        printHelpMessage(argv_[0]);</div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;        std::exit(1);</div>
 <div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        <span class="keywordflow">break</span>;</div>
@@ -336,7 +336,7 @@ $(function() {
 <div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;      pimpl-&gt;tag_filter = ::OTest2::make_unique&lt;TagFilter&gt;(<span class="stringliteral">&quot;[&lt;empty&gt;]&quot;</span>);</div>
 <div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160; </div>
 <div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    <span class="comment">/* -- get the registry and set the test name */</span></div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    <a class="code" href="classOTest2_1_1Registry.html">Registry</a>&amp; registry_(<a class="code" href="classOTest2_1_1Registry.html#a60390be04debf5fdaab231215b5bb0b8">Registry::instance</a>(<span class="stringliteral">&quot;default&quot;</span>));</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Registry.html">Registry</a>&amp; registry_(<a class="code" href="classOTest2_1_1Registry.html#a60390be04debf5fdaab231215b5bb0b8">Registry::instance</a>(<span class="stringliteral">&quot;default&quot;</span>));</div>
 <div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    <a class="code" href="namespaceOTest2.html#acba59c569e67a301963dec19b0e40f9f">ScenarioIterPtr</a> scenario_(registry_.<a class="code" href="classOTest2_1_1Registry.html#a55abf2d7c3c6ec86094e4e4327ac0346">getTests</a>(*pimpl-&gt;filter, *pimpl-&gt;tag_filter));</div>
 <div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160; </div>
 <div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <span class="comment">/* -- finally, create the test runner */</span></div>

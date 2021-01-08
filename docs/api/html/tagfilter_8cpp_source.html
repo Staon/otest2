@@ -485,7 +485,7 @@ $(function() {
 <div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;  }</div>
 <div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160; </div>
 <div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;  <span class="comment">/* -- if the final state has been reached */</span></div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;  <span class="keywordflow">return</span> states_.find(globs.size()) != states_.end();</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;  <span class="keywordflow">return</span> states_.find(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(globs.size())) != states_.end();</div>
 <div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;}</div>
 <div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160; </div>
 <div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;<span class="keyword">typedef</span> std::shared_ptr&lt;TagGlob&gt; TagGlobPtr;</div>

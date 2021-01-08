@@ -148,7 +148,7 @@ $(function() {
 <div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="classOTest2_1_1Bzip2OStream_1_1Buffer.html#a9c85b0a4f8bc5f27e2cae06c0673ac56">   76</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1Bzip2OStream_1_1Buffer.html#a9c85b0a4f8bc5f27e2cae06c0673ac56">Bzip2OStream::Buffer::finish</a>(</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordtype">bool</span> reuse_) {</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="comment">/* -- get size of already written data */</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> data_size_(pptr() - buffer);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> data_size_(<span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">int</span><span class="keyword">&gt;</span>(pptr() - buffer));</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  assert(data_size_ &lt;= BUFFER_SIZE);</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="keywordflow">if</span>(data_size_ == 0) <span class="comment">/* -- nothing to do */</span></div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordflow">return</span>;</div>

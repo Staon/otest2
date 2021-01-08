@@ -251,21 +251,20 @@ $(function() {
 <div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;}</div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
 <div class="line"><a name="l00181"></a><span class="lineno"><a class="line" href="classOTest2_1_1TestMarkBuilder.html#a0ac220e9d793df71cd88bb387b343445">  181</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1TestMarkBuilder.html#a0ac220e9d793df71cd88bb387b343445">TestMarkBuilder::closeContainer</a>() {</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  <span class="keyword">auto</span>&amp; top_(pimpl-&gt;stack.back());</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  std::unique_ptr&lt;TestMark&gt; container_(top_.container-&gt;getMark());</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;  pimpl-&gt;stack.pop_back();</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;  pimpl-&gt;appendItem(container_.release());</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;}</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
-<div class="line"><a name="l00188"></a><span class="lineno"><a class="line" href="classOTest2_1_1TestMarkBuilder.html#ac8dbbc8ce9cf2fb387f86f47fc787a29">  188</a></span>&#160;<a class="code" href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">TestMarkPtr</a> <a class="code" href="classOTest2_1_1TestMarkBuilder.html#ac8dbbc8ce9cf2fb387f86f47fc787a29">TestMarkBuilder::stealMark</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  assert(pimpl-&gt;stack.size() == 1);</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  assert(pimpl-&gt;root != <span class="keyword">nullptr</span>);</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  <a class="code" href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">TestMarkPtr</a> retval(pimpl-&gt;root);</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  pimpl-&gt;root.reset();</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  <span class="keywordflow">return</span> retval;</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;}</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160; </div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  std::unique_ptr&lt;TestMark&gt; container_(pimpl-&gt;stack.back().container-&gt;getMark());</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  pimpl-&gt;stack.pop_back();</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;  pimpl-&gt;appendItem(container_.release());</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;}</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160; </div>
+<div class="line"><a name="l00187"></a><span class="lineno"><a class="line" href="classOTest2_1_1TestMarkBuilder.html#ac8dbbc8ce9cf2fb387f86f47fc787a29">  187</a></span>&#160;<a class="code" href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">TestMarkPtr</a> <a class="code" href="classOTest2_1_1TestMarkBuilder.html#ac8dbbc8ce9cf2fb387f86f47fc787a29">TestMarkBuilder::stealMark</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  assert(pimpl-&gt;stack.size() == 1);</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  assert(pimpl-&gt;root != <span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  <a class="code" href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">TestMarkPtr</a> retval(pimpl-&gt;root);</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  pimpl-&gt;root.reset();</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  <span class="keywordflow">return</span> retval;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;}</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160; </div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassOTest2_1_1TestMarkBool_html"><div class="ttname"><a href="classOTest2_1_1TestMarkBool.html">OTest2::TestMarkBool</a></div><div class="ttdoc">Bool test mark.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkbool_8h_source.html#l00032">testmarkbool.h:32</a></div></div>
 <div class="ttc" id="atestmarkbuilder_8h_html"><div class="ttname"><a href="testmarkbuilder_8h.html">testmarkbuilder.h</a></div></div>
@@ -277,7 +276,7 @@ $(function() {
 <div class="ttc" id="anamespaceOTest2_html_a1040dd8a46edf0aae5f6af1ff4c4db8f"><div class="ttname"><a href="namespaceOTest2.html#a1040dd8a46edf0aae5f6af1ff4c4db8f">OTest2::TestMarkHashCode</a></div><div class="ttdeci">std::uint64_t TestMarkHashCode</div><div class="ttdef"><b>Definition:</b> <a href="testmarkhashcode_8h_source.html#l00028">testmarkhashcode.h:28</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkBuilder_html_a0ac220e9d793df71cd88bb387b343445"><div class="ttname"><a href="classOTest2_1_1TestMarkBuilder.html#a0ac220e9d793df71cd88bb387b343445">OTest2::TestMarkBuilder::closeContainer</a></div><div class="ttdeci">void closeContainer()</div><div class="ttdoc">Close currently opened container.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkbuilder_8cpp_source.html#l00181">testmarkbuilder.cpp:181</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkString_html"><div class="ttname"><a href="classOTest2_1_1TestMarkString.html">OTest2::TestMarkString</a></div><div class="ttdoc">String test mark.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkstring_8h_source.html#l00034">testmarkstring.h:34</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1TestMarkBuilder_html_ac8dbbc8ce9cf2fb387f86f47fc787a29"><div class="ttname"><a href="classOTest2_1_1TestMarkBuilder.html#ac8dbbc8ce9cf2fb387f86f47fc787a29">OTest2::TestMarkBuilder::stealMark</a></div><div class="ttdeci">TestMarkPtr stealMark() const</div><div class="ttdoc">Get constructed testmark and reset the builder.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkbuilder_8cpp_source.html#l00188">testmarkbuilder.cpp:188</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1TestMarkBuilder_html_ac8dbbc8ce9cf2fb387f86f47fc787a29"><div class="ttname"><a href="classOTest2_1_1TestMarkBuilder.html#ac8dbbc8ce9cf2fb387f86f47fc787a29">OTest2::TestMarkBuilder::stealMark</a></div><div class="ttdeci">TestMarkPtr stealMark() const</div><div class="ttdoc">Get constructed testmark and reset the builder.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkbuilder_8cpp_source.html#l00187">testmarkbuilder.cpp:187</a></div></div>
 <div class="ttc" id="autils_8h_html"><div class="ttname"><a href="utils_8h.html">utils.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkBuilder_html_a99744a335f8193ac3aad55401695b2e7"><div class="ttname"><a href="classOTest2_1_1TestMarkBuilder.html#a99744a335f8193ac3aad55401695b2e7">OTest2::TestMarkBuilder::openMap</a></div><div class="ttdeci">void openMap()</div><div class="ttdoc">Open nested map.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkbuilder_8cpp_source.html#l00172">testmarkbuilder.cpp:172</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html_a64c42b3de3a782325e19a5e740edebbc"><div class="ttname"><a href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">OTest2::TestMarkPtr</a></div><div class="ttdeci">std::shared_ptr&lt; TestMark &gt; TestMarkPtr</div><div class="ttdef"><b>Definition:</b> <a href="testmarkptr_8h_source.html#l00026">testmarkptr.h:26</a></div></div>

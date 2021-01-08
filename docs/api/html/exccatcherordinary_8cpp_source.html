@@ -115,13 +115,13 @@ $(function() {
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <span class="keywordflow">try</span> {</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    ftor_(context_);</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  }</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordflow">catch</span>(<a class="code" href="classOTest2_1_1Exception.html">Exception</a>&amp; exc_) {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordflow">catch</span>(<span class="keyword">const</span> <a class="code" href="classOTest2_1_1Exception.html">Exception</a>&amp; exc_) {</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    std::ostringstream sos_;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    sos_ &lt;&lt; <span class="stringliteral">&quot;unexpected exception: &quot;</span> &lt;&lt; exc_.<a class="code" href="classOTest2_1_1Exception.html#a194067bb950d8a6f964eff1a109aff32">reason</a>();</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    message_ = sos_.str();</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keywordflow">catch</span>(std::exception&amp; exc_) {</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keywordflow">catch</span>(<span class="keyword">const</span> std::exception&amp; exc_) {</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    std::ostringstream sos_;</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    sos_ &lt;&lt; <span class="stringliteral">&quot;unexpected exception: &quot;</span> &lt;&lt; exc_.what();</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    message_ = sos_.str();</div>

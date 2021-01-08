@@ -1,5 +1,6 @@
 <map id="include/otest2/exctestmarkin.h" name="include/otest2/exctestmarkin.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,224,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="25,80,109,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="133,80,192,107"/>
+<area shape="rect" id="node1" title=" " alt="" coords="6,5,225,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,155,89,181"/>
+<area shape="rect" id="node3" title=" " alt="" coords="154,155,213,181"/>
+<area shape="rect" id="node4" href="$exc_8h.html" title=" " alt="" coords="65,80,166,107"/>
 </map>

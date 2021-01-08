@@ -111,98 +111,105 @@ $(function() {
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">bool</span> eof;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classOTest2_1_1Bzip2IStream_1_1Buffer.html#a8236b6c0f5d99649a33f37cff18476c0">Buffer</a>(</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        std::istream* decorated_);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classOTest2_1_1Bzip2IStream_1_1Buffer.html#aec42cc9faf3b9124b3922431f4fe47b2">~Buffer</a>();</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">int</span> underflow() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;};</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classOTest2_1_1Bzip2IStream_1_1Buffer.html#a8236b6c0f5d99649a33f37cff18476c0">   50</a></span>&#160;<a class="code" href="classOTest2_1_1Bzip2IStream_1_1Buffer.html#a8236b6c0f5d99649a33f37cff18476c0">Bzip2IStream::Buffer::Buffer</a>(</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    std::istream* decorated_) :</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  decorated(decorated_),</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  eof(false) {</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  assert(decorated != <span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="classOTest2_1_1Bzip2IStream_1_1Buffer.html#a505c9a19936fbd9eb84072835525d875">Buffer</a>(</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Bzip2IStream_1_1Buffer.html">Buffer</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <a class="code" href="classOTest2_1_1Bzip2IStream_1_1Buffer.html">Buffer</a>&amp; <a class="code" href="classOTest2_1_1Bzip2IStream_1_1Buffer.html#a212c5d5f16b05b8b44eb13bb2fd788ff">operator = </a>(</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Bzip2IStream_1_1Buffer.html">Buffer</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classOTest2_1_1Bzip2IStream_1_1Buffer.html#a505c9a19936fbd9eb84072835525d875">Buffer</a>(</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        std::istream* decorated_);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classOTest2_1_1Bzip2IStream_1_1Buffer.html#aec42cc9faf3b9124b3922431f4fe47b2">~Buffer</a>();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">int</span> underflow() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;};</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="comment">/* -- initialize the bzip context */</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  std::memset(&amp;bzip_stream, 0, <span class="keyword">sizeof</span>(bzip_stream));</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="keyword">auto</span> info_(BZ2_bzDecompressInit(&amp;bzip_stream, 0, 0 <span class="comment">/* -- no reducing of memory */</span>));</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  assert(info_ == BZ_OK);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="comment">/* -- there are no decompressed data yet, don&#39;t set the stream buffer pointers */</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classOTest2_1_1Bzip2IStream_1_1Buffer.html#aec42cc9faf3b9124b3922431f4fe47b2">   64</a></span>&#160;<a class="code" href="classOTest2_1_1Bzip2IStream_1_1Buffer.html#aec42cc9faf3b9124b3922431f4fe47b2">Bzip2IStream::Buffer::~Buffer</a>() {</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  BZ2_bzDecompressEnd(&amp;bzip_stream);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keywordtype">int</span> Bzip2IStream::Buffer::underflow() {</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="comment">/* -- the end of the stream has been already reached */</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keywordflow">if</span>(eof)</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordflow">return</span> traits_type::eof();</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="comment">/* -- prepare buffer for decompressed data */</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  bzip_stream.next_out = obuffer;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  bzip_stream.avail_out = BUFFER_SIZE;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keywordtype">int</span> info_;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keywordflow">do</span> {</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="comment">/* -- move remaining input data at the beginning of the input buffer */</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    std::memmove(ibuffer, bzip_stream.next_in, bzip_stream.avail_in);</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="comment">/* -- read next data from the decorated stream */</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    decorated-&gt;read(ibuffer, BUFFER_SIZE - bzip_stream.avail_in);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordtype">int</span> read_bytes_(decorated-&gt;gcount());</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordflow">if</span>(read_bytes_ &lt;= 0 &amp;&amp; bzip_stream.avail_in == 0) {</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;      eof = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;      <span class="keywordflow">return</span> traits_type::eof();</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="comment">/* -- decompress data */</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    bzip_stream.next_in = ibuffer;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    bzip_stream.avail_in += read_bytes_;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    info_ = BZ2_bzDecompress(&amp;bzip_stream);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    assert(info_ == BZ_OK || info_ == BZ_STREAM_END);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  }</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keywordflow">while</span>(info_ != BZ_STREAM_END &amp;&amp; bzip_stream.next_out == obuffer);</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  <span class="comment">/* -- the stream is finished (the bzlib library detected the end of the</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="comment">   *    compressed sequence. */</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keywordflow">if</span>(info_ == BZ_STREAM_END) {</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    eof = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="comment">/* -- no output data are valid only at the end of the sequence */</span></div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordflow">if</span>(obuffer == bzip_stream.next_out)</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;      <span class="keywordflow">return</span> traits_type::eof();</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  }</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  assert(obuffer != bzip_stream.next_out);</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classOTest2_1_1Bzip2IStream_1_1Buffer.html#a8236b6c0f5d99649a33f37cff18476c0">   56</a></span>&#160;<a class="code" href="classOTest2_1_1Bzip2IStream_1_1Buffer.html#a505c9a19936fbd9eb84072835525d875">Bzip2IStream::Buffer::Buffer</a>(</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    std::istream* decorated_) :</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  decorated(decorated_),</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  eof(false) {</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  assert(decorated != <span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="comment">/* -- initialize the bzip context */</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  std::memset(&amp;bzip_stream, 0, <span class="keyword">sizeof</span>(bzip_stream));</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  <span class="keyword">auto</span> info_(BZ2_bzDecompressInit(&amp;bzip_stream, 0, 0 <span class="comment">/* -- no reducing of memory */</span>));</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  assert(info_ == BZ_OK);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="comment">/* -- there are no decompressed data yet, don&#39;t set the stream buffer pointers */</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;}</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="classOTest2_1_1Bzip2IStream_1_1Buffer.html#aec42cc9faf3b9124b3922431f4fe47b2">   70</a></span>&#160;<a class="code" href="classOTest2_1_1Bzip2IStream_1_1Buffer.html#aec42cc9faf3b9124b3922431f4fe47b2">Bzip2IStream::Buffer::~Buffer</a>() {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  BZ2_bzDecompressEnd(&amp;bzip_stream);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keywordtype">int</span> Bzip2IStream::Buffer::underflow() {</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="comment">/* -- the end of the stream has been already reached */</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keywordflow">if</span>(eof)</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordflow">return</span> traits_type::eof();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <span class="comment">/* -- prepare buffer for decompressed data */</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;  bzip_stream.next_out = obuffer;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  bzip_stream.avail_out = BUFFER_SIZE;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <span class="keywordtype">int</span> info_;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keywordflow">do</span> {</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="comment">/* -- move remaining input data at the beginning of the input buffer */</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    std::memmove(ibuffer, bzip_stream.next_in, bzip_stream.avail_in);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="comment">/* -- read next data from the decorated stream */</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    decorated-&gt;read(ibuffer, BUFFER_SIZE - bzip_stream.avail_in);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keyword">auto</span> read_bytes_(decorated-&gt;gcount());</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordflow">if</span>(read_bytes_ &lt;= 0 &amp;&amp; bzip_stream.avail_in == 0) {</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;      eof = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      <span class="keywordflow">return</span> traits_type::eof();</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    }</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="comment">/* -- decompress data */</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    bzip_stream.next_in = ibuffer;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    bzip_stream.avail_in += read_bytes_;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    info_ = BZ2_bzDecompress(&amp;bzip_stream);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    assert(info_ == BZ_OK || info_ == BZ_STREAM_END);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  }</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <span class="keywordflow">while</span>(info_ != BZ_STREAM_END &amp;&amp; bzip_stream.next_out == obuffer);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <span class="comment">/* -- the stream is finished (the bzlib library detected the end of the</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="comment">   *    compressed sequence. */</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <span class="keywordflow">if</span>(info_ == BZ_STREAM_END) {</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    eof = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  <span class="comment">/* -- set the stream buffer pointers */</span></div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  setg(obuffer, obuffer, bzip_stream.next_out);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  <span class="keywordflow">return</span> traits_type::to_int_type(*obuffer);</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;}</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="comment">/* -- no output data are valid only at the end of the sequence */</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keywordflow">if</span>(obuffer == bzip_stream.next_out)</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      <span class="keywordflow">return</span> traits_type::eof();</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;  }</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  assert(obuffer != bzip_stream.next_out);</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="classOTest2_1_1Bzip2IStream.html#a020b61cdfcf7d97167c550e9cc272352">  115</a></span>&#160;<a class="code" href="classOTest2_1_1Bzip2IStream.html#a020b61cdfcf7d97167c550e9cc272352">Bzip2IStream::Bzip2IStream</a>(</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    std::istream* decorated_) :</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  buffer(new <a class="code" href="classOTest2_1_1Bzip2IStream_1_1Buffer.html">Buffer</a>(decorated_)) {</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  rdbuf(buffer);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  <span class="comment">/* -- set the stream buffer pointers */</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;  setg(obuffer, obuffer, bzip_stream.next_out);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <span class="keywordflow">return</span> traits_type::to_int_type(*obuffer);</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;}</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno"><a class="line" href="classOTest2_1_1Bzip2IStream.html#a5d76e407f4635ed202e8958f5ccee8c9">  121</a></span>&#160;<a class="code" href="classOTest2_1_1Bzip2IStream.html#a5d76e407f4635ed202e8958f5ccee8c9">Bzip2IStream::~Bzip2IStream</a>() {</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  <a class="code" href="namespaceOTest2.html#a9c0e5683fb529ec38164c2f418172b30">odelete</a>(buffer);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno"><a class="line" href="classOTest2_1_1Bzip2IStream.html#a020b61cdfcf7d97167c550e9cc272352">  121</a></span>&#160;<a class="code" href="classOTest2_1_1Bzip2IStream.html#a020b61cdfcf7d97167c550e9cc272352">Bzip2IStream::Bzip2IStream</a>(</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    std::istream* decorated_) :</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  buffer(new <a class="code" href="classOTest2_1_1Bzip2IStream_1_1Buffer.html">Buffer</a>(decorated_)) {</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  rdbuf(buffer);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;}</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
+<div class="line"><a name="l00127"></a><span class="lineno"><a class="line" href="classOTest2_1_1Bzip2IStream.html#a5d76e407f4635ed202e8958f5ccee8c9">  127</a></span>&#160;<a class="code" href="classOTest2_1_1Bzip2IStream.html#a5d76e407f4635ed202e8958f5ccee8c9">Bzip2IStream::~Bzip2IStream</a>() {</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  <a class="code" href="namespaceOTest2.html#a9c0e5683fb529ec38164c2f418172b30">odelete</a>(buffer);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;}</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassOTest2_1_1Bzip2IStream_html_a5d76e407f4635ed202e8958f5ccee8c9"><div class="ttname"><a href="classOTest2_1_1Bzip2IStream.html#a5d76e407f4635ed202e8958f5ccee8c9">OTest2::Bzip2IStream::~Bzip2IStream</a></div><div class="ttdeci">virtual ~Bzip2IStream()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="bzip2istream_8cpp_source.html#l00121">bzip2istream.cpp:121</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1Bzip2IStream_1_1Buffer_html_aec42cc9faf3b9124b3922431f4fe47b2"><div class="ttname"><a href="classOTest2_1_1Bzip2IStream_1_1Buffer.html#aec42cc9faf3b9124b3922431f4fe47b2">OTest2::Bzip2IStream::Buffer::~Buffer</a></div><div class="ttdeci">virtual ~Buffer()</div><div class="ttdef"><b>Definition:</b> <a href="bzip2istream_8cpp_source.html#l00064">bzip2istream.cpp:64</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1Bzip2IStream_html_a5d76e407f4635ed202e8958f5ccee8c9"><div class="ttname"><a href="classOTest2_1_1Bzip2IStream.html#a5d76e407f4635ed202e8958f5ccee8c9">OTest2::Bzip2IStream::~Bzip2IStream</a></div><div class="ttdeci">virtual ~Bzip2IStream()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="bzip2istream_8cpp_source.html#l00127">bzip2istream.cpp:127</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1Bzip2IStream_1_1Buffer_html_aec42cc9faf3b9124b3922431f4fe47b2"><div class="ttname"><a href="classOTest2_1_1Bzip2IStream_1_1Buffer.html#aec42cc9faf3b9124b3922431f4fe47b2">OTest2::Bzip2IStream::Buffer::~Buffer</a></div><div class="ttdeci">virtual ~Buffer()</div><div class="ttdef"><b>Definition:</b> <a href="bzip2istream_8cpp_source.html#l00070">bzip2istream.cpp:70</a></div></div>
 <div class="ttc" id="autils_8h_html"><div class="ttname"><a href="utils_8h.html">utils.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1Bzip2IStream_1_1Buffer_html"><div class="ttname"><a href="classOTest2_1_1Bzip2IStream_1_1Buffer.html">OTest2::Bzip2IStream::Buffer</a></div><div class="ttdef"><b>Definition:</b> <a href="bzip2istream_8cpp_source.html#l00031">bzip2istream.cpp:31</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1Bzip2IStream_1_1Buffer_html_a8236b6c0f5d99649a33f37cff18476c0"><div class="ttname"><a href="classOTest2_1_1Bzip2IStream_1_1Buffer.html#a8236b6c0f5d99649a33f37cff18476c0">OTest2::Bzip2IStream::Buffer::Buffer</a></div><div class="ttdeci">Buffer(std::istream *decorated_)</div><div class="ttdef"><b>Definition:</b> <a href="bzip2istream_8cpp_source.html#l00050">bzip2istream.cpp:50</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1Bzip2IStream_1_1Buffer_html_a505c9a19936fbd9eb84072835525d875"><div class="ttname"><a href="classOTest2_1_1Bzip2IStream_1_1Buffer.html#a505c9a19936fbd9eb84072835525d875">OTest2::Bzip2IStream::Buffer::Buffer</a></div><div class="ttdeci">Buffer(const Buffer &amp;)=delete</div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1Bzip2IStream_html_a020b61cdfcf7d97167c550e9cc272352"><div class="ttname"><a href="classOTest2_1_1Bzip2IStream.html#a020b61cdfcf7d97167c550e9cc272352">OTest2::Bzip2IStream::Bzip2IStream</a></div><div class="ttdeci">Bzip2IStream(std::istream *decorated_)</div><div class="ttdoc">Ctor.</div><div class="ttdef"><b>Definition:</b> <a href="bzip2istream_8cpp_source.html#l00115">bzip2istream.cpp:115</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1Bzip2IStream_1_1Buffer_html_a212c5d5f16b05b8b44eb13bb2fd788ff"><div class="ttname"><a href="classOTest2_1_1Bzip2IStream_1_1Buffer.html#a212c5d5f16b05b8b44eb13bb2fd788ff">OTest2::Bzip2IStream::Buffer::operator=</a></div><div class="ttdeci">Buffer &amp; operator=(const Buffer &amp;)=delete</div></div>
+<div class="ttc" id="aclassOTest2_1_1Bzip2IStream_html_a020b61cdfcf7d97167c550e9cc272352"><div class="ttname"><a href="classOTest2_1_1Bzip2IStream.html#a020b61cdfcf7d97167c550e9cc272352">OTest2::Bzip2IStream::Bzip2IStream</a></div><div class="ttdeci">Bzip2IStream(std::istream *decorated_)</div><div class="ttdoc">Ctor.</div><div class="ttdef"><b>Definition:</b> <a href="bzip2istream_8cpp_source.html#l00121">bzip2istream.cpp:121</a></div></div>
 <div class="ttc" id="abzip2istream_8h_html"><div class="ttname"><a href="bzip2istream_8h.html">bzip2istream.h</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html_a9c0e5683fb529ec38164c2f418172b30"><div class="ttname"><a href="namespaceOTest2.html#a9c0e5683fb529ec38164c2f418172b30">OTest2::odelete</a></div><div class="ttdeci">void odelete(T_ *&amp;object_)</div><div class="ttdoc">Delete a pointer and set it invalid.</div><div class="ttdef"><b>Definition:</b> <a href="utils_8h_source.html#l00034">utils.h:34</a></div></div>
 <!-- start footer part -->

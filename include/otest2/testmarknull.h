@@ -68,7 +68,7 @@ class TestMarkNull : public TestMark {
      * @brief Deserialization ctor
      */
     explicit TestMarkNull(
-        CtorMark*);
+        const CtorMark*);
 
     /**
      * @brief Dtor

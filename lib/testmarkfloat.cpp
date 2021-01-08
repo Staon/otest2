@@ -43,7 +43,7 @@ TestMarkFloat::TestMarkFloat(
 }
 
 TestMarkFloat::TestMarkFloat(
-    CtorMark*) :
+    const CtorMark*) :
   value(0.0L) {
 
 }

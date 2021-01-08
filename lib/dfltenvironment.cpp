@@ -81,7 +81,7 @@ std::string createDefaultTestName(
   /* -- Default test name is derived from the test binary as the last part
    *    of the path. */
   std::string test_name_(binname_);
-  int last_slash_(test_name_.find_last_of('/'));
+  auto last_slash_(test_name_.find_last_of('/'));
   if(last_slash_ != std::string::npos)
     test_name_.erase(0, last_slash_ + 1);
   return test_name_;
@@ -196,7 +196,7 @@ DfltEnvironment::DfltEnvironment(
         try {
           pimpl->tag_filter = ::OTest2::make_unique<TagFilter>(optarg);
         }
-        catch(Exception& exc_) {
+        catch(const Exception& exc_) {
           std::cout << "invalid tag expression: " << exc_.reason() << std::endl;
           std::exit(2);
         }
@@ -206,7 +206,7 @@ DfltEnvironment::DfltEnvironment(
         printHelpMessage(argv_[0]);
         std::exit(0);
         break;
-      case '?':
+      default:
         printHelpMessage(argv_[0]);
         std::exit(1);
         break;
@@ -264,7 +264,7 @@ Runner& DfltEnvironment::getRunner() {
       pimpl->tag_filter = ::OTest2::make_unique<TagFilter>("[<empty>]");
 
     /* -- get the registry and set the test name */
-    Registry& registry_(Registry::instance("default"));
+    const Registry& registry_(Registry::instance("default"));
     ScenarioIterPtr scenario_(registry_.getTests(*pimpl->filter, *pimpl->tag_filter));
 
     /* -- finally, create the test runner */

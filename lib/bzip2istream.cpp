@@ -39,6 +39,12 @@ class Bzip2IStream::Buffer : public std::streambuf {
     bool eof;
 
   public:
+    /* -- avoid copying */
+    Buffer(
+        const Buffer&) = delete;
+    Buffer& operator = (
+        const Buffer&) = delete;
+
     explicit Buffer(
         std::istream* decorated_);
     virtual ~Buffer();
@@ -81,7 +87,7 @@ int Bzip2IStream::Buffer::underflow() {
 
     /* -- read next data from the decorated stream */
     decorated->read(ibuffer, BUFFER_SIZE - bzip_stream.avail_in);
-    int read_bytes_(decorated->gcount());
+    auto read_bytes_(decorated->gcount());
     if(read_bytes_ <= 0 && bzip_stream.avail_in == 0) {
       eof = true;
       return traits_type::eof();

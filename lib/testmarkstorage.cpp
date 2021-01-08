@@ -19,6 +19,7 @@
 
 #include <testmarkstorage.h>
 
+#include <algorithm>
 #include <assert.h>
 #include <cctype>
 #include <fstream>
@@ -45,11 +46,8 @@ namespace {
 
 bool isLineEmpty(
     const std::string& line_) {
-  for(char c_ : line_) {
-    if(!std::isspace(c_))
-      return false;
-  }
-  return true;
+  return std::all_of(
+      line_.begin(), line_.end(), [](char c_) { return std::isspace(c_); });
 }
 
 std::string::size_type searchForSeparator(
@@ -61,14 +59,11 @@ std::string::size_type searchForSeparator(
     if(escaped_) {
       escaped_ = false;
     }
-    else {
-      if(c_ == '\\') {
-        escaped_ = true;
-      }
-      else {
-        if(c_ == ':')
-          return i_;
-      }
+    else if(c_ == '\\') {
+      escaped_ = true;
+    }
+    else if(c_ == ':') {
+      return i_;
     }
   }
   return std::string::npos;

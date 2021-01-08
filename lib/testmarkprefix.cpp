@@ -36,7 +36,7 @@ TestMarkPrefix::TestMarkPrefix(
 }
 
 TestMarkPrefix::TestMarkPrefix(
-    CtorMark*,
+    const CtorMark*,
     const char* serialize_type_mark_) :
   serialize_type_mark(serialize_type_mark_),
   prefix(),

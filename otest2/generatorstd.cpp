@@ -345,7 +345,7 @@ void GeneratorStd::enterSuite(
   pimpl->fixtures = std::make_shared<Functions>(nullptr);
   pimpl->start_up_fce.emplace_back(nullptr);
   pimpl->tear_down_fce.emplace_back(nullptr);
-  pimpl->repeater.push_back("");
+  pimpl->repeater.emplace_back("");
   pimpl->suites.push_back({suite_, "", tags_});
   pimpl->indent += 2;
 
@@ -406,7 +406,7 @@ void GeneratorStd::enterCase(
   pimpl->fixtures = std::make_shared<Functions>(pimpl->fixtures);
   pimpl->start_up_fce.emplace_back(nullptr);
   pimpl->tear_down_fce.emplace_back(nullptr);
-  pimpl->repeater.push_back("");
+  pimpl->repeater.emplace_back("");
   pimpl->cases.push_back({case_, "", tags_});
   pimpl->indent += 2;
 

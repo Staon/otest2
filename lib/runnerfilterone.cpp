@@ -77,9 +77,6 @@ RunnerFilterOne::~RunnerFilterOne() {
 
 std::unique_ptr<RunnerFilterOne> RunnerFilterOne::fromPath(
     const std::string& object_path_) {
-  std::string suite_;
-  std::string testcase_;
-
   auto index_(object_path_.find("::"));
   if(index_ == std::string::npos) {
     /* -- one whole suite */

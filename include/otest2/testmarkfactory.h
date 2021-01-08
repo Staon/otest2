@@ -90,7 +90,7 @@ class TestMarkFactory {
       doRegisterRecord(
           Mark_::typeMark(),
           []() {
-            return std::make_shared<Mark_>(static_cast<CtorMark*>(nullptr));
+            return std::make_shared<Mark_>(static_cast<const CtorMark*>(nullptr));
           });
     }
 };

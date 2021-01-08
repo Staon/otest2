@@ -23,12 +23,14 @@
 #include <exception>
 #include <string>
 
+#include <otest2/exc.h>
+
 namespace OTest2 {
 
 /**
  * @brief An exception thrown from the testmark deserializer
  */
-class ExcTestMarkIn : public std::exception {
+class ExcTestMarkIn : public Exception {
   private:
     std::string message;
 
@@ -45,7 +47,7 @@ class ExcTestMarkIn : public std::exception {
      * @brief Move ctor
      */
     ExcTestMarkIn(
-        ExcTestMarkIn&& exc_);
+        ExcTestMarkIn&& exc_) noexcept;
 
     /**
      * @brief Dtor
@@ -58,8 +60,8 @@ class ExcTestMarkIn : public std::exception {
     ExcTestMarkIn& operator = (
         const ExcTestMarkIn&) = delete;
 
-    /* -- std::exception interface */
-    virtual const char* what() const noexcept;
+    /* -- exception interface */
+    virtual std::string reason() const override;
 };
 
 } /* -- namespace OTest2 */

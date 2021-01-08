@@ -73,7 +73,7 @@ void CmdRepeatObject::run(
 
     /* -- The constructor method of the suite may throw and exception.
      *    So I do the creation in a protected environment. */
-    runUserCode(context_, [&](const Context& context_) {
+    runUserCode(context_, [this, &decorated_name_](const Context& context_) {
       ObjectScenarioPtr object_(
           repeater->createObject(context_, decorated_name_, parent));
       context_.command_stack->pushCommand(

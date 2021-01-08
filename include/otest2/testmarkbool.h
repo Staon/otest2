@@ -73,7 +73,7 @@ class TestMarkBool : public TestMark {
      * @brief Deserialization ctor
      */
     explicit TestMarkBool(
-        CtorMark*);
+        const CtorMark*);
 
     /**
      * @brief Dtor

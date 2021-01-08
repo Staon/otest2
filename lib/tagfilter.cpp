@@ -425,7 +425,7 @@ bool TagGlob::matches(
   }
 
   /* -- if the final state has been reached */
-  return states_.find(globs.size()) != states_.end();
+  return states_.find(static_cast<int>(globs.size())) != states_.end();
 }
 
 typedef std::shared_ptr<TagGlob> TagGlobPtr;

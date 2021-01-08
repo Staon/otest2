@@ -34,11 +34,11 @@ int main(
     ::OTest2::Options options_(argc_, argv_);
     ::OTest2::parse(options_);
   }
-  catch(::OTest2::Exception& exc_) {
+  catch(const ::OTest2::Exception& exc_) {
     std::cerr << exc_.reason() << std::endl;
     return -1;
   }
-  catch(std::exception& exc_) {
+  catch(const std::exception& exc_) {
     std::cerr << exc_.what() << std::endl;
     return -1;
   }

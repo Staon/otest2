@@ -76,7 +76,7 @@ Bzip2OStream::Buffer::~Buffer() {
 void Bzip2OStream::Buffer::finish(
     bool reuse_) {
   /* -- get size of already written data */
-  unsigned int data_size_(pptr() - buffer);
+  unsigned int data_size_(static_cast<unsigned int>(pptr() - buffer));
   assert(data_size_ <= BUFFER_SIZE);
   if(data_size_ == 0) /* -- nothing to do */
     return;

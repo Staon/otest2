@@ -179,8 +179,7 @@ void TestMarkBuilder::openMap(
 }
 
 void TestMarkBuilder::closeContainer() {
-  auto& top_(pimpl->stack.back());
-  std::unique_ptr<TestMark> container_(top_.container->getMark());
+  std::unique_ptr<TestMark> container_(pimpl->stack.back().container->getMark());
   pimpl->stack.pop_back();
   pimpl->appendItem(container_.release());
 }

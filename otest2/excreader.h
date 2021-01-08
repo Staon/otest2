@@ -49,7 +49,7 @@ class ReaderException {
      * @brief Move ctor
      */
     ReaderException(
-        ReaderException&& exc_);
+        ReaderException&& exc_) noexcept;
 
     /**
      * @brief Dtor

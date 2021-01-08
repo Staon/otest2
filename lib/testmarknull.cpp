@@ -38,7 +38,7 @@ TestMarkNull::TestMarkNull() {
 }
 
 TestMarkNull::TestMarkNull(
-    CtorMark*) {
+    const CtorMark*) {
 
 }
 

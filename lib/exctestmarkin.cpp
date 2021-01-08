@@ -30,8 +30,8 @@ ExcTestMarkIn::ExcTestMarkIn(
 }
 
 ExcTestMarkIn::ExcTestMarkIn(
-    ExcTestMarkIn&& exc_) :
-  std::exception(std::move(exc_)),
+    ExcTestMarkIn&& exc_) noexcept :
+  Exception(std::move(exc_)),
   message(std::move(exc_.message)) {
 
 }
@@ -40,8 +40,8 @@ ExcTestMarkIn::~ExcTestMarkIn() {
 
 }
 
-const char* ExcTestMarkIn::what() const noexcept {
-  return message.c_str();
+std::string ExcTestMarkIn::reason() const {
+  return message;
 }
 
 } /* -- namespace OTest2 */

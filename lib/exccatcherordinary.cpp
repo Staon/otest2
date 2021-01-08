@@ -43,13 +43,13 @@ bool ExcCatcherOrdinary::catchException(
   try {
     ftor_(context_);
   }
-  catch(Exception& exc_) {
+  catch(const Exception& exc_) {
     std::ostringstream sos_;
     sos_ << "unexpected exception: " << exc_.reason();
     message_ = sos_.str();
     return true;
   }
-  catch(std::exception& exc_) {
+  catch(const std::exception& exc_) {
     std::ostringstream sos_;
     sos_ << "unexpected exception: " << exc_.what();
     message_ = sos_.str();

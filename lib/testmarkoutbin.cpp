@@ -58,8 +58,6 @@ void TestMarkOutBin::writeTypeMark(
 
 void TestMarkOutBin::writeInt(
     std::int64_t value_) {
-  std::uint64_t rvalue_(static_cast<std::uint64_t>(value_));
-
   if(value_ >= std::numeric_limits<std::int8_t>::min()
       && value_ <= std::numeric_limits<std::int8_t>::max()) {
     writeTag(TestMarkOutBinTag::INT_SHORT);

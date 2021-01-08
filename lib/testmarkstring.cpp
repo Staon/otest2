@@ -41,7 +41,7 @@ TestMarkString::TestMarkString(
 }
 
 TestMarkString::TestMarkString(
-    CtorMark*) :
+    const CtorMark*) :
   value() {
 
 }

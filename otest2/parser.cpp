@@ -228,12 +228,6 @@ std::string ParserFailure::reason() const {
 
 } /* -- namespace Parser */
 
-/* -- command line options */
-llvm::cl::OptionCategory ParserOptCategory("otest2 options");
-llvm::cl::extrahelp CommonHelp(
-    clang::tooling::CommonOptionsParser::HelpMessage);
-llvm::cl::extrahelp MoreHelp("\nOTest2 preprocessor");
-
 void parse(
     const Options& options_) {
   /* -- prepare the options */
@@ -263,7 +257,11 @@ void parse(
       options_.getOutfile());
 
   /* -- parse the file */
-  int argc_(argv_.size());
+  llvm::cl::OptionCategory ParserOptCategory("otest2 options");
+  llvm::cl::extrahelp CommonHelp(
+      clang::tooling::CommonOptionsParser::HelpMessage);
+  llvm::cl::extrahelp MoreHelp("\nOTest2 preprocessor");
+  int argc_(static_cast<int>(argv_.size()));
   clang::tooling::CommonOptionsParser parseropts_(
       argc_, argv_.data(), ParserOptCategory);
   clang::tooling::ClangTool tool_(
@@ -275,8 +273,8 @@ void parse(
       tool_.run(new Parser::FrontendFactory(&generator_, &failure_, &exception_)));
   if(retval_ != 0) {
     /* -- remove the half created file */
-//    if(options_.getOutfile() != "-")
-//      unlink(options_.getOutfile().c_str());
+    if(options_.getOutfile() != "-")
+      unlink(options_.getOutfile().c_str());
 
     throw Parser::ParserFailure();
   }

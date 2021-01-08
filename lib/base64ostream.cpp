@@ -113,7 +113,7 @@ Base64OStream::Buffer::~Buffer() {
 
 void Base64OStream::Buffer::finishData() {
   /* -- compute length of data */
-  int length_(pptr() - output_buffer);
+  auto length_(pptr() - output_buffer);
   assert(length_ >= 0 && length_ <= output_raw_width);
 
   /* -- encode the output buffer */
@@ -149,8 +149,8 @@ void Base64OStream::Buffer::finishData() {
   setp(output_buffer, output_buffer + output_raw_width);
 
   /* -- push the encoded data into the decorated stream buffer */
-  int coded_length_(out_ - buffer_);
-  decorated->write(buffer_, coded_length_);
+  auto coded_length_(out_ - buffer_);
+  decorated->write(buffer_, static_cast<std::streamsize>(coded_length_));
 }
 
 int Base64OStream::Buffer::overflow(

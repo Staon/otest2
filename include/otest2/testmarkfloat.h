@@ -73,7 +73,7 @@ class TestMarkFloat : public TestMark {
      * @brief Deserialization ctor
      */
     explicit TestMarkFloat(
-        CtorMark*);
+        const CtorMark*);
 
     /**
      * @brief Dtor

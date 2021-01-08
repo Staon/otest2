@@ -117,7 +117,7 @@ bool TestMarkPrinter::Impl::handleItem(
     assert(!stack.empty());
 
     /* -- level(s) up from the tree */
-    auto* top_(&stack.back());
+    const auto* top_(&stack.back());
     if(top_->mark->level + 1 != curr_.level) {
       printTop(os_, false);
       stack.pop_back();

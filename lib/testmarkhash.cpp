@@ -24,7 +24,7 @@
 namespace OTest2 {
 
 TestMarkHash::TestMarkHash() :
-  hash(0xcbf29ce484222325ull) {
+  hash(0xcbf29ce484222325ULL) {
 
 }
 

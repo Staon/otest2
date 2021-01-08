@@ -46,7 +46,7 @@ TestMarkMap::TestMarkMap(
 }
 
 TestMarkMap::TestMarkMap(
-    CtorMark* ctor_mark_) :
+    const CtorMark* ctor_mark_) :
   TestMarkPrefix(ctor_mark_, SERIALIZE_TYPE_MARK),
   map() {
 

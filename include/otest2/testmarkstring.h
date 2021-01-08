@@ -75,7 +75,7 @@ class TestMarkString : public TestMark {
      * @brief Deserialization ctor
      */
     explicit TestMarkString(
-        CtorMark*);
+        const CtorMark*);
 
     /**
      * @brief Dtor

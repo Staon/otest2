@@ -50,19 +50,19 @@ void printTestMarkDiff(
     /* -- skip unchanged lines */
     if(left_line_ < diff_.left_begin - context_)
       os_ << "  ......... \n";
-    for(; left_line_ < diff_.left_begin - context_;)
+    while(left_line_ < diff_.left_begin - context_)
       left_printer_.skipLine(os_);
-    for(; right_line_ < diff_.right_begin;)
+    while(right_line_ < diff_.right_begin)
       right_printer_.skipLine(os_);
 
     /* -- print the context lines */
-    for(; left_line_ < diff_.left_begin;)
+    while(left_line_ < diff_.left_begin)
       left_printer_.printLine(os_, "  ");
 
     /* -- print the changes */
-    for(; right_line_ < diff_.right_end;)
+    while(right_line_ < diff_.right_end)
       right_printer_.printLine(os_, "- ");
-    for(; left_line_ < diff_.left_end;)
+    while(left_line_ < diff_.left_end)
       left_printer_.printLine(os_, "+ ");
   }
 

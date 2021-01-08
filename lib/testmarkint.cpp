@@ -40,7 +40,7 @@ TestMarkInt::TestMarkInt(
 }
 
 TestMarkInt::TestMarkInt(
-    CtorMark*) :
+    const CtorMark*) :
   value(0) {
 
 }

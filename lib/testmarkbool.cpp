@@ -43,7 +43,7 @@ TestMarkBool::TestMarkBool(
 }
 
 TestMarkBool::TestMarkBool(
-    CtorMark*) :
+    const CtorMark*) :
   value(false) {
 
 }

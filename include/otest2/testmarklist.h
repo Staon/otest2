@@ -72,7 +72,7 @@ class TestMarkList : public TestMarkPrefix {
      * @brief Deserialization ctor
      */
     explicit TestMarkList(
-        CtorMark*);
+        const CtorMark*);
 
     /**
      * @brief Dtor

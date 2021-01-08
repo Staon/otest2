@@ -35,10 +35,10 @@ ReaderException::ReaderException(
 }
 
 ReaderException::ReaderException(
-    ReaderException&& exc_) :
+    ReaderException&& exc_) noexcept :
   message(std::move(exc_.message)),
-  line(std::move(exc_.line)),
-  column(std::move(exc_.column)) {
+  line(exc_.line),
+  column(exc_.column) {
 
 }
 

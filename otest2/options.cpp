@@ -29,8 +29,6 @@
 
 namespace OTest2 {
 
-extern char const GLOBAL_CONFIG_FILE_PACKAGE[];
-
 namespace {
 
 const char LOCAL_CONFIG_FILE_NAME[] = ".otest2_includes";
@@ -57,18 +55,6 @@ void printHelp(
   os_ << "                                 directories -Idir. Don't forget to precede" << std::endl;
   os_ << "                                 -- to the compiler options." << std::endl;
   os_ << std::endl;
-}
-
-std::string& ltrim(std::string& str, const std::string& chars = "\t\n\v\f\r ")
-{
-    str.erase(0, str.find_first_not_of(chars));
-    return str;
-}
-
-std::string& rtrim(std::string& str, const std::string& chars = "\t\n\v\f\r ")
-{
-    str.erase(str.find_last_not_of(chars) + 1);
-    return str;
 }
 
 void trimString(
@@ -121,7 +107,6 @@ Options::Options(
       case 'o':
         outfile = optarg;
         break;
-      case '?':
       default:
         printHelp(std::cerr);
         std::exit(-1);
@@ -139,7 +124,7 @@ Options::Options(
 
   /* -- store options of the compiler */
   for(int i_(optind); i_ < argc_; ++i_)
-    compiler_options.push_back(argv_[i_]);
+    compiler_options.emplace_back(argv_[i_]);
 }
 
 Options::~Options() {
@@ -161,20 +146,20 @@ const std::string& Options::getDomain() const noexcept {
 void Options::fillClangToolOptions(
     std::vector<std::string>& options_) const {
   /* -- name of the application shown in the output messages */
-  options_.push_back("otest2");
+  options_.emplace_back("otest2");
 
   /* -- the OTest2 DSL is a C++ code */
-  options_.push_back("--extra-arg-before=-xc++");
+  options_.emplace_back("--extra-arg-before=-xc++");
 
   /* -- the OTest2 DSL needs at least C++11 */
-  options_.push_back("--extra-arg-before=--std=c++11");
+  options_.emplace_back("--extra-arg-before=--std=c++11");
 
   /* -- turn on conditional compilation */
-  options_.push_back("--extra-arg-before=-DOTEST2_PARSER_ACTIVE");
+  options_.emplace_back("--extra-arg-before=-DOTEST2_PARSER_ACTIVE");
 
   /* -- push compiler options passed by user from the command line */
   for(const auto& opt_ : compiler_options)
-    options_.push_back("--extra-arg-before=" + opt_);
+    options_.emplace_back("--extra-arg-before=" + opt_);
 
   /* -- Insert configured include directories. The configuration is read
    *    from several configuration files:
@@ -196,7 +181,7 @@ void Options::fillClangToolOptions(
   options_.push_back(infile);
 
   /* -- this avoid searching for the Clang's compilation database */
-  options_.push_back("--");
+  options_.emplace_back("--");
 }
 
 } /* namespace OTest2 */

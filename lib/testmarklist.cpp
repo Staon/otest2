@@ -45,7 +45,7 @@ TestMarkList::TestMarkList(
 }
 
 TestMarkList::TestMarkList(
-    CtorMark* ctor_mark_) :
+    const CtorMark* ctor_mark_) :
   TestMarkPrefix(ctor_mark_, SERIALIZE_TYPE_MARK),
   list() {
 

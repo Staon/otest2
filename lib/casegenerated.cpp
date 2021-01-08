@@ -93,7 +93,7 @@ bool CaseGenerated::startUpObject(
     const Context& context_,
     int index_) {
   if(index_ >= 0 && index_ < pimpl->start_ups.size()) {
-    runUserCode(context_, [&](const Context& context_) {
+    runUserCode(context_, [this, index_](const Context& context_) {
       pimpl->start_ups[index_]->runFunction(context_);
     });
     return true;
@@ -118,7 +118,7 @@ void CaseGenerated::tearDownObject(
     int index_) {
   assert(index_ >= 0 && index_ < pimpl->tear_downs.size());
 
-  runUserCode(context_, [&](const Context& context_) {
+  runUserCode(context_, [this, index_](const Context& context_) {
     pimpl->tear_downs[index_]->runFunction(context_);
   });
 }

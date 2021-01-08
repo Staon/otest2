@@ -18,7 +18,8 @@
  */
 #include <dfltloop.h>
 
-#include <unistd.h>
+#include <chrono>
+#include <thread>
 
 #include <runner.h>
 
@@ -34,9 +35,9 @@ int defaultMainLoop(
       break;
 
     /* -- wait for next step */
-    int delay_ms_(result_.getDelayMS());
-    if(delay_ms_ > 0)
-      usleep(delay_ms_ * 1000);
+    const std::chrono::milliseconds delay_(result_.getDelayMS());
+    if(delay_ > std::chrono::milliseconds(0))
+      std::this_thread::sleep_for(delay_);
   }
 
   if(result_.getResult())

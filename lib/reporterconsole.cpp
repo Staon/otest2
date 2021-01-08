@@ -44,7 +44,7 @@ void printHR(
   /* -- label width */
   int label_width_(0);
   if(!label_.empty()) {
-    label_width_ = label_.size() + 2;
+    label_width_ = static_cast<int>(label_.size()) + 2;
   }
 
   /* -- compute length of the left and righ part of the rule */
@@ -73,7 +73,7 @@ void printResultLine(
     TerminalDriver& driver_,
     const std::string& label_,
     bool result_) {
-  int label_width_(label_.size());
+  int label_width_(static_cast<int>(label_.size()));
   int free_space_width_(WIDTH - 4 - label_width_ - 8);
 
   os_ << "  " << label_;
@@ -100,9 +100,9 @@ void printTotalResultLine(
     const std::string& ok_,
     const std::string& failed_,
     const std::string& total_) {
-  int label_width_(label_.size());
-  int ok_width_(ok_.size());
-  int failed_width_(failed_.size());
+  int label_width_(static_cast<int>(label_.size()));
+  int ok_width_(static_cast<int>(ok_.size()));
+  int failed_width_(static_cast<int>(failed_.size()));
 
   enum {
     OK_COLUMN = 20,
@@ -161,7 +161,6 @@ struct ReporterConsole::Impl {
     bool verbose;
     bool last_condition;
 
-  public:
     /* -- avoid copying */
     Impl(
         const Impl&) = delete;
@@ -188,9 +187,7 @@ ReporterConsole::Impl::Impl(
 
 }
 
-ReporterConsole::Impl::~Impl() {
-
-}
+ReporterConsole::Impl::~Impl() = default;
 
 ReporterConsole::ReporterConsole(
     std::ostream* os_,

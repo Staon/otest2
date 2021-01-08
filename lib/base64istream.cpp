@@ -113,7 +113,7 @@ int Base64IStream::Buffer::underflow() {
   }
 
   char* out_(buffer);
-  char* const end_(buffer + BUFFER_SIZE);
+  char const* const end_(buffer + BUFFER_SIZE);
   while(out_ < end_) {
     /* -- read data from the decorated buffer */
     std::uint8_t quaternion_[4];

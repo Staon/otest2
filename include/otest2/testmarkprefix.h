@@ -114,7 +114,7 @@ class TestMarkPrefix : public TestMark {
      * @brief Deserialization ctor
      */
     explicit TestMarkPrefix(
-        CtorMark*,
+        const CtorMark*,
         const char* serialize_type_mark_);
 
     /**

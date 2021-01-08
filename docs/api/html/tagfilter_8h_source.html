@@ -117,54 +117,57 @@ $(function() {
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keyword">const</span> std::string&amp; token_);</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <a class="code" href="classOTest2_1_1TagExpressionException.html#ae9ea41ce04c875733d9e7b9c0d45ddf5">TagExpressionException</a>(</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <a class="code" href="classOTest2_1_1TagExpressionException.html">TagExpressionException</a>&amp;&amp; exc_);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <a class="code" href="classOTest2_1_1TagExpressionException.html">TagExpressionException</a>&amp;&amp; exc_) noexcept;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <a class="code" href="classOTest2_1_1TagExpressionException.html#ae9ea41ce04c875733d9e7b9c0d45ddf5">TagExpressionException</a>(</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TagExpressionException.html">TagExpressionException</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <a class="code" href="classOTest2_1_1TagExpressionException.html">TagExpressionException</a>&amp; <a class="code" href="classOTest2_1_1TagExpressionException.html#aaacfeaad9127f009aa51670f2421ed97">operator = </a>(</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TagExpressionException.html">TagExpressionException</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="comment">/* -- exception interface */</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">virtual</span> std::string <a class="code" href="classOTest2_1_1TagExpressionException.html#a9a6e51135caa0216ef9e4a9be7055831">reason</a>() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;};</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="classOTest2_1_1TagFilter.html">   86</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOTest2_1_1TagFilter.html">TagFilter</a> {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keyword">struct </span>Impl;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    Impl* pimpl;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <a class="code" href="classOTest2_1_1TagFilter.html#a05730c07c04c9cd923415a541f6e0e00">TagFilter</a>();</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classOTest2_1_1TagFilter.html#a05730c07c04c9cd923415a541f6e0e00">TagFilter</a>(</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keyword">const</span> std::string&amp; tag_expression_);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <a class="code" href="classOTest2_1_1TagFilter.html#a0e792e0fdb295372d8bbfab12491faef">~TagFilter</a>();</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="classOTest2_1_1TagExpressionException.html#a6d8828a82e832f8616c0a11f7755c18c">~TagExpressionException</a>();</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <a class="code" href="classOTest2_1_1TagExpressionException.html#ae9ea41ce04c875733d9e7b9c0d45ddf5">TagExpressionException</a>(</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TagExpressionException.html">TagExpressionException</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <a class="code" href="classOTest2_1_1TagExpressionException.html">TagExpressionException</a>&amp; <a class="code" href="classOTest2_1_1TagExpressionException.html#aaacfeaad9127f009aa51670f2421ed97">operator = </a>(</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TagExpressionException.html">TagExpressionException</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="comment">/* -- exception interface */</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keyword">virtual</span> std::string <a class="code" href="classOTest2_1_1TagExpressionException.html#a9a6e51135caa0216ef9e4a9be7055831">reason</a>() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;};</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="classOTest2_1_1TagFilter.html">   91</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOTest2_1_1TagFilter.html">TagFilter</a> {</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keyword">struct </span>Impl;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    Impl* pimpl;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <a class="code" href="classOTest2_1_1TagFilter.html#a05730c07c04c9cd923415a541f6e0e00">TagFilter</a>();</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classOTest2_1_1TagFilter.html#a05730c07c04c9cd923415a541f6e0e00">TagFilter</a>(</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keyword">const</span> std::string&amp; tag_expression_);</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <a class="code" href="classOTest2_1_1TagFilter.html#a05730c07c04c9cd923415a541f6e0e00">TagFilter</a>(</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TagFilter.html">TagFilter</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <a class="code" href="classOTest2_1_1TagFilter.html">TagFilter</a>&amp; <a class="code" href="classOTest2_1_1TagFilter.html#af495e54cf7c7abf44fba1a658a0095eb">operator = </a>(</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TagFilter.html">TagFilter</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1TagFilter.html#a7b910079511d42e821c9f94c3da4b02a">filterObject</a>(</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TagsStack.html">TagsStack</a>&amp; tags_stack_) <span class="keyword">const</span> noexcept;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;};</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* -- OTest2_INCLUDE_OTEST2_TAGFILTER_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <a class="code" href="classOTest2_1_1TagFilter.html#a0e792e0fdb295372d8bbfab12491faef">~TagFilter</a>();</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <a class="code" href="classOTest2_1_1TagFilter.html#a05730c07c04c9cd923415a541f6e0e00">TagFilter</a>(</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TagFilter.html">TagFilter</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <a class="code" href="classOTest2_1_1TagFilter.html">TagFilter</a>&amp; <a class="code" href="classOTest2_1_1TagFilter.html#af495e54cf7c7abf44fba1a658a0095eb">operator = </a>(</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TagFilter.html">TagFilter</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1TagFilter.html#a7b910079511d42e821c9f94c3da4b02a">filterObject</a>(</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TagsStack.html">TagsStack</a>&amp; tags_stack_) <span class="keyword">const</span> noexcept;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;};</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* -- OTest2_INCLUDE_OTEST2_TAGFILTER_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aclassOTest2_1_1TagExpressionException_html_a6d8828a82e832f8616c0a11f7755c18c"><div class="ttname"><a href="classOTest2_1_1TagExpressionException.html#a6d8828a82e832f8616c0a11f7755c18c">OTest2::TagExpressionException::~TagExpressionException</a></div><div class="ttdeci">virtual ~TagExpressionException()</div><div class="ttdoc">Dtor.</div></div>
 <div class="ttc" id="aclassOTest2_1_1TagFilter_html_af495e54cf7c7abf44fba1a658a0095eb"><div class="ttname"><a href="classOTest2_1_1TagFilter.html#af495e54cf7c7abf44fba1a658a0095eb">OTest2::TagFilter::operator=</a></div><div class="ttdeci">TagFilter &amp; operator=(const TagFilter &amp;)=delete</div></div>
-<div class="ttc" id="aclassOTest2_1_1TagExpressionException_html_a9a6e51135caa0216ef9e4a9be7055831"><div class="ttname"><a href="classOTest2_1_1TagExpressionException.html#a9a6e51135caa0216ef9e4a9be7055831">OTest2::TagExpressionException::reason</a></div><div class="ttdeci">virtual std::string reason() const override</div><div class="ttdoc">Get exception reason.</div><div class="ttdef"><b>Definition:</b> <a href="tagfilter_8cpp_source.html#l00065">tagfilter.cpp:65</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1TagExpressionException_html_a9a6e51135caa0216ef9e4a9be7055831"><div class="ttname"><a href="classOTest2_1_1TagExpressionException.html#a9a6e51135caa0216ef9e4a9be7055831">OTest2::TagExpressionException::reason</a></div><div class="ttdeci">virtual std::string reason() const override</div><div class="ttdoc">Get exception reason.</div><div class="ttdef"><b>Definition:</b> <a href="tagfilter_8cpp_source.html#l00067">tagfilter.cpp:67</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TagExpressionException_html"><div class="ttname"><a href="classOTest2_1_1TagExpressionException.html">OTest2::TagExpressionException</a></div><div class="ttdoc">Invalid tag expression.</div><div class="ttdef"><b>Definition:</b> <a href="tagfilter_8h_source.html#l00034">tagfilter.h:34</a></div></div>
 <div class="ttc" id="aexc_8h_html"><div class="ttname"><a href="exc_8h.html">exc.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TagExpressionException_html_ae9ea41ce04c875733d9e7b9c0d45ddf5"><div class="ttname"><a href="classOTest2_1_1TagExpressionException.html#ae9ea41ce04c875733d9e7b9c0d45ddf5">OTest2::TagExpressionException::TagExpressionException</a></div><div class="ttdeci">TagExpressionException(const std::string &amp;message_)</div><div class="ttdoc">Ctor.</div><div class="ttdef"><b>Definition:</b> <a href="tagfilter_8cpp_source.html#l00036">tagfilter.cpp:36</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TagFilter_html_a0e792e0fdb295372d8bbfab12491faef"><div class="ttname"><a href="classOTest2_1_1TagFilter.html#a0e792e0fdb295372d8bbfab12491faef">OTest2::TagFilter::~TagFilter</a></div><div class="ttdeci">~TagFilter()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="tagfilter_8cpp_source.html#l00989">tagfilter.cpp:989</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1Exception_html"><div class="ttname"><a href="classOTest2_1_1Exception.html">OTest2::Exception</a></div><div class="ttdoc">Generic OTest2 exception.</div><div class="ttdef"><b>Definition:</b> <a href="exc_8h_source.html#l00031">exc.h:31</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1TagFilter_html"><div class="ttname"><a href="classOTest2_1_1TagFilter.html">OTest2::TagFilter</a></div><div class="ttdoc">Filter of tagged testing objects.</div><div class="ttdef"><b>Definition:</b> <a href="tagfilter_8h_source.html#l00086">tagfilter.h:86</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1TagFilter_html"><div class="ttname"><a href="classOTest2_1_1TagFilter.html">OTest2::TagFilter</a></div><div class="ttdoc">Filter of tagged testing objects.</div><div class="ttdef"><b>Definition:</b> <a href="tagfilter_8h_source.html#l00091">tagfilter.h:91</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TagExpressionException_html_aaacfeaad9127f009aa51670f2421ed97"><div class="ttname"><a href="classOTest2_1_1TagExpressionException.html#aaacfeaad9127f009aa51670f2421ed97">OTest2::TagExpressionException::operator=</a></div><div class="ttdeci">TagExpressionException &amp; operator=(const TagExpressionException &amp;)=delete</div></div>
 <div class="ttc" id="aclassOTest2_1_1TagsStack_html"><div class="ttname"><a href="classOTest2_1_1TagsStack.html">OTest2::TagsStack</a></div><div class="ttdoc">Stack of assigned tags.</div><div class="ttdef"><b>Definition:</b> <a href="tagsstack_8h_source.html#l00036">tagsstack.h:36</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TagFilter_html_a7b910079511d42e821c9f94c3da4b02a"><div class="ttname"><a href="classOTest2_1_1TagFilter.html#a7b910079511d42e821c9f94c3da4b02a">OTest2::TagFilter::filterObject</a></div><div class="ttdeci">bool filterObject(const TagsStack &amp;tags_stack_) const noexcept</div><div class="ttdoc">Check whether the testing object is filtered from the run.</div><div class="ttdef"><b>Definition:</b> <a href="tagfilter_8cpp_source.html#l00993">tagfilter.cpp:993</a></div></div>

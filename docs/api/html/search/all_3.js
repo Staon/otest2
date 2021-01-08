@@ -5,7 +5,7 @@ var searchData=
   ['delete_140',['DELETE',['../namespaceOTest2.html#a2baa442fbc6b25b61c438167a04ac4e3a32f68a60cef40faedbc6af20298c1a1e',1,'OTest2']]],
   ['deserialize_141',['deserialize',['../classOTest2_1_1TestMarkIn.html#a243cef3aab0c772cc153fa069a021309',1,'OTest2::TestMarkIn']]],
   ['deserializemark_142',['deserializeMark',['../classOTest2_1_1TestMark.html#a23c08441245c9b9410e6f29a3203340b',1,'OTest2::TestMark']]],
-  ['dfltenvironment_143',['DfltEnvironment',['../classOTest2_1_1DfltEnvironment.html',1,'OTest2::DfltEnvironment'],['../classOTest2_1_1DfltEnvironment.html#add562ca928ced5b7b7bcb50cf161605d',1,'OTest2::DfltEnvironment::DfltEnvironment(const std::string &amp;testname_)'],['../classOTest2_1_1DfltEnvironment.html#af2f59268a29fcacf8d53329fb16480aa',1,'OTest2::DfltEnvironment::DfltEnvironment(int argc_, char *argv_[])']]],
+  ['dfltenvironment_143',['DfltEnvironment',['../classOTest2_1_1DfltEnvironment.html',1,'OTest2::DfltEnvironment'],['../classOTest2_1_1DfltEnvironment.html#ab7bf8e51cffefc1134ee43410372c688',1,'OTest2::DfltEnvironment::DfltEnvironment(const DfltEnvironment &amp;)=delete'],['../classOTest2_1_1DfltEnvironment.html#add562ca928ced5b7b7bcb50cf161605d',1,'OTest2::DfltEnvironment::DfltEnvironment(const std::string &amp;testname_)'],['../classOTest2_1_1DfltEnvironment.html#af2f59268a29fcacf8d53329fb16480aa',1,'OTest2::DfltEnvironment::DfltEnvironment(int argc_, char *argv_[])']]],
   ['dfltenvironment_2ecpp_144',['dfltenvironment.cpp',['../dfltenvironment_8cpp.html',1,'']]],
   ['dfltenvironment_2eh_145',['dfltenvironment.h',['../dfltenvironment_8h.html',1,'']]],
   ['dfltloop_2ecpp_146',['dfltloop.cpp',['../dfltloop_8cpp.html',1,'']]],

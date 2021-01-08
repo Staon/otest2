@@ -109,48 +109,38 @@ $(function() {
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classOTest2_1_1AssertBean.html#ab3ea203ae922248de482e23cdb8c3623">   40</a></span>&#160;<a class="code" href="classOTest2_1_1AssertBean.html#a7cdefee0926cdf9f788edfd235a7f790">AssertBean::AssertBean</a>(</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1AssertBean.html">AssertBean</a>&amp; src_) :</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  condition(src_.condition),</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  message(src_.message) {</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<a class="code" href="classOTest2_1_1AssertBean.html#a7cdefee0926cdf9f788edfd235a7f790">AssertBean::AssertBean</a>(</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1AssertBean.html">AssertBean</a>&amp; src_) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<a class="code" href="classOTest2_1_1AssertBean.html#a001848291718027136fb4d2a08d70764">AssertBean::~AssertBean</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;}</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classOTest2_1_1AssertBean.html#a001848291718027136fb4d2a08d70764">   47</a></span>&#160;<a class="code" href="classOTest2_1_1AssertBean.html#a001848291718027136fb4d2a08d70764">AssertBean::~AssertBean</a>() {</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classOTest2_1_1AssertBean.html#a850dddc513c151df5de36e63cf8ebe15">   45</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1AssertBean.html#a850dddc513c151df5de36e63cf8ebe15">AssertBean::swap</a>(</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <a class="code" href="classOTest2_1_1AssertBean.html">AssertBean</a>&amp; b2_) noexcept {</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  std::swap(condition, b2_.condition);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  message.swap(b2_.message);</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="classOTest2_1_1AssertBean.html#a850dddc513c151df5de36e63cf8ebe15">   51</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1AssertBean.html#a850dddc513c151df5de36e63cf8ebe15">AssertBean::swap</a>(</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="classOTest2_1_1AssertBean.html">AssertBean</a>&amp; b2_) noexcept {</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  std::swap(condition, b2_.condition);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  message.swap(b2_.message);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classOTest2_1_1AssertBean.html#a84fa3d1404c6d1cf7ad265e2cd508ca9">   57</a></span>&#160;<a class="code" href="classOTest2_1_1AssertBean.html">AssertBean</a>&amp; <a class="code" href="classOTest2_1_1AssertBean.html#a84fa3d1404c6d1cf7ad265e2cd508ca9">AssertBean::operator = </a>(</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1AssertBean.html">AssertBean</a>&amp; src_) {</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <a class="code" href="classOTest2_1_1AssertBean.html">AssertBean</a> tmp_(src_);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <a class="code" href="classOTest2_1_1AssertBean.html#a850dddc513c151df5de36e63cf8ebe15">swap</a>(tmp_);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classOTest2_1_1AssertBean.html#a436769866d859cebaf891d6949955dc3">   64</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1AssertBean.html#a436769866d859cebaf891d6949955dc3">AssertBean::getCondition</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <span class="keywordflow">return</span> condition;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classOTest2_1_1AssertBean.html#a8406d1328d7ba7daf6112b00bbba0673">   68</a></span>&#160;<span class="keyword">const</span> std::string&amp; <a class="code" href="classOTest2_1_1AssertBean.html#a8406d1328d7ba7daf6112b00bbba0673">AssertBean::getMessage</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keywordflow">return</span> message;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<a class="code" href="classOTest2_1_1AssertBean.html">AssertBean</a>&amp; <a class="code" href="classOTest2_1_1AssertBean.html#a84fa3d1404c6d1cf7ad265e2cd508ca9">AssertBean::operator = </a>(</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1AssertBean.html">AssertBean</a>&amp; src_) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="classOTest2_1_1AssertBean.html#a436769866d859cebaf891d6949955dc3">   54</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1AssertBean.html#a436769866d859cebaf891d6949955dc3">AssertBean::getCondition</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="keywordflow">return</span> condition;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="classOTest2_1_1AssertBean.html#a8406d1328d7ba7daf6112b00bbba0673">   58</a></span>&#160;<span class="keyword">const</span> std::string&amp; <a class="code" href="classOTest2_1_1AssertBean.html#a8406d1328d7ba7daf6112b00bbba0673">AssertBean::getMessage</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <span class="keywordflow">return</span> message;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassOTest2_1_1AssertBean_html_a436769866d859cebaf891d6949955dc3"><div class="ttname"><a href="classOTest2_1_1AssertBean.html#a436769866d859cebaf891d6949955dc3">OTest2::AssertBean::getCondition</a></div><div class="ttdeci">bool getCondition() const</div><div class="ttdoc">Get assertion condition.</div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8cpp_source.html#l00064">assertbean.cpp:64</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1AssertBean_html_a001848291718027136fb4d2a08d70764"><div class="ttname"><a href="classOTest2_1_1AssertBean.html#a001848291718027136fb4d2a08d70764">OTest2::AssertBean::~AssertBean</a></div><div class="ttdeci">~AssertBean()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8cpp_source.html#l00047">assertbean.cpp:47</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1AssertBean_html_a436769866d859cebaf891d6949955dc3"><div class="ttname"><a href="classOTest2_1_1AssertBean.html#a436769866d859cebaf891d6949955dc3">OTest2::AssertBean::getCondition</a></div><div class="ttdeci">bool getCondition() const</div><div class="ttdoc">Get assertion condition.</div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8cpp_source.html#l00054">assertbean.cpp:54</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1AssertBean_html_a001848291718027136fb4d2a08d70764"><div class="ttname"><a href="classOTest2_1_1AssertBean.html#a001848291718027136fb4d2a08d70764">OTest2::AssertBean::~AssertBean</a></div><div class="ttdeci">~AssertBean()</div><div class="ttdoc">Dtor.</div></div>
 <div class="ttc" id="aclassOTest2_1_1AssertBean_html_a7cdefee0926cdf9f788edfd235a7f790"><div class="ttname"><a href="classOTest2_1_1AssertBean.html#a7cdefee0926cdf9f788edfd235a7f790">OTest2::AssertBean::AssertBean</a></div><div class="ttdeci">AssertBean()</div><div class="ttdoc">Default ctor - false condition, empty message.</div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8cpp_source.html#l00026">assertbean.cpp:26</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1AssertBean_html_a84fa3d1404c6d1cf7ad265e2cd508ca9"><div class="ttname"><a href="classOTest2_1_1AssertBean.html#a84fa3d1404c6d1cf7ad265e2cd508ca9">OTest2::AssertBean::operator=</a></div><div class="ttdeci">AssertBean &amp; operator=(const AssertBean &amp;src_)</div><div class="ttdoc">Copy operator.</div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8cpp_source.html#l00057">assertbean.cpp:57</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1AssertBean_html_a84fa3d1404c6d1cf7ad265e2cd508ca9"><div class="ttname"><a href="classOTest2_1_1AssertBean.html#a84fa3d1404c6d1cf7ad265e2cd508ca9">OTest2::AssertBean::operator=</a></div><div class="ttdeci">AssertBean &amp; operator=(const AssertBean &amp;src_)</div><div class="ttdoc">Copy operator.</div></div>
 <div class="ttc" id="aclassOTest2_1_1AssertBean_html"><div class="ttname"><a href="classOTest2_1_1AssertBean.html">OTest2::AssertBean</a></div><div class="ttdoc">A helper class packing assertion condition and an assertion message together.</div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00031">assertbean.h:31</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1AssertBean_html_a8406d1328d7ba7daf6112b00bbba0673"><div class="ttname"><a href="classOTest2_1_1AssertBean.html#a8406d1328d7ba7daf6112b00bbba0673">OTest2::AssertBean::getMessage</a></div><div class="ttdeci">const std::string &amp; getMessage() const</div><div class="ttdoc">Get assertion message.</div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8cpp_source.html#l00068">assertbean.cpp:68</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1AssertBean_html_a8406d1328d7ba7daf6112b00bbba0673"><div class="ttname"><a href="classOTest2_1_1AssertBean.html#a8406d1328d7ba7daf6112b00bbba0673">OTest2::AssertBean::getMessage</a></div><div class="ttdeci">const std::string &amp; getMessage() const</div><div class="ttdoc">Get assertion message.</div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8cpp_source.html#l00058">assertbean.cpp:58</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1AssertBean_html_a850dddc513c151df5de36e63cf8ebe15"><div class="ttname"><a href="classOTest2_1_1AssertBean.html#a850dddc513c151df5de36e63cf8ebe15">OTest2::AssertBean::swap</a></div><div class="ttdeci">void swap(AssertBean &amp;b2_) noexcept</div><div class="ttdoc">Swap contents.</div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8cpp_source.html#l00051">assertbean.cpp:51</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1AssertBean_html_a850dddc513c151df5de36e63cf8ebe15"><div class="ttname"><a href="classOTest2_1_1AssertBean.html#a850dddc513c151df5de36e63cf8ebe15">OTest2::AssertBean::swap</a></div><div class="ttdeci">void swap(AssertBean &amp;b2_) noexcept</div><div class="ttdoc">Swap contents.</div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8cpp_source.html#l00045">assertbean.cpp:45</a></div></div>
 <div class="ttc" id="aassertbean_8h_html"><div class="ttname"><a href="assertbean_8h.html">assertbean.h</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

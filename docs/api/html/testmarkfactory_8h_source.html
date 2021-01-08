@@ -112,31 +112,38 @@ $(function() {
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        std::function&lt;<a class="code" href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">TestMarkPtr</a>()&gt; ctor_);</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <a class="code" href="classOTest2_1_1TestMarkFactory.html#ae34d4966a811fc254f985cf0975673f0">TestMarkFactory</a>();</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <a class="code" href="classOTest2_1_1TestMarkFactory.html#a6000d3310ef0d589980bb8bdbc631af7">~TestMarkFactory</a>();</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <a class="code" href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">TestMarkPtr</a> <a class="code" href="classOTest2_1_1TestMarkFactory.html#ac45b33e933736aa5109c329245174fa8">createMark</a>(</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keyword">const</span> std::string&amp; typemark_);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Mark_&gt;</div>
-<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="classOTest2_1_1TestMarkFactory.html#a9cf32c144c2669e23b3694ae736216f0">   83</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1TestMarkFactory.html#a9cf32c144c2669e23b3694ae736216f0">registerMark</a>() {</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      doRegisterRecord(</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;          Mark_::typeMark(),</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;          []() {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">TestMarkPtr</a>(<span class="keyword">new</span> Mark_(<span class="keyword">static_cast&lt;</span>CtorMark*<span class="keyword">&gt;</span>(<span class="keyword">nullptr</span>)));</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;          });</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    }</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;};</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* -- OTest2__INCLUDE_OTEST2_TESTMARKFACTORY_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <a class="code" href="classOTest2_1_1TestMarkFactory.html#ae34d4966a811fc254f985cf0975673f0">TestMarkFactory</a>(</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TestMarkFactory.html">TestMarkFactory</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="classOTest2_1_1TestMarkFactory.html">TestMarkFactory</a>&amp; <a class="code" href="classOTest2_1_1TestMarkFactory.html#a8cc1a86bff164838131e2586295e2519">operator = </a>(</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TestMarkFactory.html">TestMarkFactory</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <a class="code" href="classOTest2_1_1TestMarkFactory.html#ae34d4966a811fc254f985cf0975673f0">TestMarkFactory</a>();</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <a class="code" href="classOTest2_1_1TestMarkFactory.html#a6000d3310ef0d589980bb8bdbc631af7">~TestMarkFactory</a>();</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <a class="code" href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">TestMarkPtr</a> <a class="code" href="classOTest2_1_1TestMarkFactory.html#ac45b33e933736aa5109c329245174fa8">createMark</a>(</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keyword">const</span> std::string&amp; typemark_);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Mark_&gt;</div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="classOTest2_1_1TestMarkFactory.html#a9cf32c144c2669e23b3694ae736216f0">   89</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1TestMarkFactory.html#a9cf32c144c2669e23b3694ae736216f0">registerMark</a>() {</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;      doRegisterRecord(</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;          Mark_::typeMark(),</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;          []() {</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            <span class="keywordflow">return</span> std::make_shared&lt;Mark_&gt;(<span class="keyword">static_cast&lt;</span>CtorMark*<span class="keyword">&gt;</span>(<span class="keyword">nullptr</span>));</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;          });</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    }</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;};</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* -- OTest2__INCLUDE_OTEST2_TESTMARKFACTORY_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="atestmarkptr_8h_html"><div class="ttname"><a href="testmarkptr_8h.html">testmarkptr.h</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1TestMarkFactory_html_a8cc1a86bff164838131e2586295e2519"><div class="ttname"><a href="classOTest2_1_1TestMarkFactory.html#a8cc1a86bff164838131e2586295e2519">OTest2::TestMarkFactory::operator=</a></div><div class="ttdeci">TestMarkFactory &amp; operator=(const TestMarkFactory &amp;)=delete</div></div>
 <div class="ttc" id="anamespaceOTest2_html_a64c42b3de3a782325e19a5e740edebbc"><div class="ttname"><a href="namespaceOTest2.html#a64c42b3de3a782325e19a5e740edebbc">OTest2::TestMarkPtr</a></div><div class="ttdeci">std::shared_ptr&lt; TestMark &gt; TestMarkPtr</div><div class="ttdef"><b>Definition:</b> <a href="testmarkptr_8h_source.html#l00026">testmarkptr.h:26</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1TestMarkFactory_html_a9cf32c144c2669e23b3694ae736216f0"><div class="ttname"><a href="classOTest2_1_1TestMarkFactory.html#a9cf32c144c2669e23b3694ae736216f0">OTest2::TestMarkFactory::registerMark</a></div><div class="ttdeci">void registerMark()</div><div class="ttdoc">Register a testmark type.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkfactory_8h_source.html#l00083">testmarkfactory.h:83</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1TestMarkFactory_html_a9cf32c144c2669e23b3694ae736216f0"><div class="ttname"><a href="classOTest2_1_1TestMarkFactory.html#a9cf32c144c2669e23b3694ae736216f0">OTest2::TestMarkFactory::registerMark</a></div><div class="ttdeci">void registerMark()</div><div class="ttdoc">Register a testmark type.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkfactory_8h_source.html#l00089">testmarkfactory.h:89</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkFactory_html_ac45b33e933736aa5109c329245174fa8"><div class="ttname"><a href="classOTest2_1_1TestMarkFactory.html#ac45b33e933736aa5109c329245174fa8">OTest2::TestMarkFactory::createMark</a></div><div class="ttdeci">TestMarkPtr createMark(const std::string &amp;typemark_)</div><div class="ttdoc">Create new empty testmark.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkfactory_8cpp_source.html#l00082">testmarkfactory.cpp:82</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkFactory_html_ae34d4966a811fc254f985cf0975673f0"><div class="ttname"><a href="classOTest2_1_1TestMarkFactory.html#ae34d4966a811fc254f985cf0975673f0">OTest2::TestMarkFactory::TestMarkFactory</a></div><div class="ttdeci">TestMarkFactory()</div><div class="ttdoc">Ctor.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkfactory_8cpp_source.html#l00065">testmarkfactory.cpp:65</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkFactory_html"><div class="ttname"><a href="classOTest2_1_1TestMarkFactory.html">OTest2::TestMarkFactory</a></div><div class="ttdoc">A factory of testmark objects used for deserialization.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkfactory_8h_source.html#l00045">testmarkfactory.h:45</a></div></div>

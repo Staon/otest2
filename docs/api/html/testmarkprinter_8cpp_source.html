@@ -144,7 +144,7 @@ $(function() {
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">bool</span> open_) {</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  assert(!stack.empty());</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="keyword">auto</span>&amp; top_(stack.back());</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="keyword">const</span> <span class="keyword">auto</span>&amp; top_(stack.back());</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keywordflow">if</span>(!top_.skip) {</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    std::ostringstream oss_;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    oss_ &lt;&lt; top_.prefix;</div>

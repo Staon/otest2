@@ -136,8 +136,12 @@ bool parseSuiteBody(
         if(clang::isa<clang::NamespaceDecl>(*iter_)) {
           auto casens_(clang::cast<clang::NamespaceDecl>(*iter_));
 
-          /* -- parse a child test case */
-          if(hasAnnotation(casens_, CASE_ANNOTATION)) {
+          /* -- parse children objects (test case or a nested suite) */
+          if(hasAnnotation(casens_, SUITE_ANNOTATION)) {
+            if(!parseSuite(context_, casens_))
+              return false;
+          }
+          else if(hasAnnotation(casens_, CASE_ANNOTATION)) {
             if(!parseCase(context_, casens_))
               return false;
           }

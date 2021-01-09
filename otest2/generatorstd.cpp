@@ -106,6 +106,8 @@ struct GeneratorStd::Impl {
         const std::vector<std::string>& ctor_lines_);
     void writeStateFactoryMethod(
         const std::string& state_);
+    void writeObjectFactoryMethod(
+        const std::string& object_);
 };
 
 GeneratorStd::Impl::Impl(
@@ -238,6 +240,29 @@ void GeneratorStd::Impl::writeStateFactoryMethod(
   output << ");\n";
   Formatting::printIndent(output, indent);
   output << "}";
+}
+
+void GeneratorStd::Impl::writeObjectFactoryMethod(
+    const std::string& object_) {
+  /* -- Generate the factory method of the object. The method is generated
+   *    just for nested objects - root objects are created directly by
+   *    the constructor method. */
+  if(objects.size() > 1) { /* -- file itself */
+    Formatting::printIndent(output, indent);
+    output << "::OTest2::ObjectScenarioPtr create" << object_ << "_" << objectpath.back() << "(\n";
+    Formatting::printIndent(output, indent + 2);
+    output << "const ::OTest2::Context& context_";
+    variables->printFactoryParameters(output, indent + 2);
+    output << ") {\n";
+    Formatting::printIndent(output, indent + 1);
+    output << "return std::make_shared<" << objectpath.back() << ">(\n";
+    Formatting::printIndent(output, indent + 3);
+    output << "context_";
+    variables->printArguments(output, indent + 3);
+    output << ");\n";
+    Formatting::printIndent(output, indent);
+    output << "}";
+  }
 }
 
 GeneratorStd::GeneratorStd(
@@ -396,8 +421,8 @@ void GeneratorStd::enterSuite(
   pimpl->objectpath.push_back(suite_);
   pimpl->objects.back()->appendSuite(suite_, tags_);
   pimpl->objects.push_back(::OTest2::make_unique<Parser::ObjectList>());
-  pimpl->variables = std::make_shared<VarTable>("suite_", nullptr);
-  pimpl->fixtures = std::make_shared<Functions>(nullptr);
+  pimpl->variables = std::make_shared<VarTable>("suite_", pimpl->variables);
+  pimpl->fixtures = std::make_shared<Functions>(pimpl->fixtures);
   pimpl->start_up_fce.emplace_back(nullptr);
   pimpl->tear_down_fce.emplace_back(nullptr);
   pimpl->repeater.emplace_back("");
@@ -429,7 +454,7 @@ void GeneratorStd::finishSuiteFunctions() {
 
   /* -- children are declared private */
   pimpl->output << "\n\n";
-  Formatting::printIndent(pimpl->output, pimpl->indent + 1);
+  Formatting::printIndent(pimpl->output, pimpl->indent - 1);
   pimpl->output << "private:\n";
 }
 
@@ -674,25 +699,8 @@ void GeneratorStd::leaveCase() {
 
   pimpl->indent -= 2;
 
-  /* -- Generate the factory method of the case. The method is generated
-   *    just for nested objects - root objects are created directly by
-   *    the constructor method. */
-  if(pimpl->objects.size() > 1) { /* -- file itself */
-    Formatting::printIndent(pimpl->output, pimpl->indent);
-    pimpl->output << "::OTest2::ObjectScenarioPtr createCase_" << pimpl->objectpath.back() << "(\n";
-    Formatting::printIndent(pimpl->output, pimpl->indent + 2);
-    pimpl->output << "const ::OTest2::Context& context_";
-    pimpl->variables->printFactoryParameters(pimpl->output, pimpl->indent + 2);
-    pimpl->output << ") {\n";
-    Formatting::printIndent(pimpl->output, pimpl->indent + 1);
-    pimpl->output << "return std::make_shared<" << pimpl->objectpath.back() << ">(\n";
-    Formatting::printIndent(pimpl->output, pimpl->indent + 3);
-    pimpl->output << "context_";
-    pimpl->variables->printArguments(pimpl->output, pimpl->indent + 3);
-    pimpl->output << ");\n";
-    Formatting::printIndent(pimpl->output, pimpl->indent);
-    pimpl->output << "}";
-  }
+  /* -- generate the factory method of the test case */
+  pimpl->writeObjectFactoryMethod("Case");
 
   /* -- store type of the repeater */
   pimpl->objects.back()->setRepeaterType(pimpl->repeater.back());
@@ -709,7 +717,7 @@ void GeneratorStd::leaveCase() {
 void GeneratorStd::leaveSuite() {
   assert(!pimpl->objectpath.empty() && !pimpl->objects.empty());
 
-  /* -- generate registrations of the test cases */
+  /* -- generate registrations of the children (test cases and nested suites) */
   pimpl->output << "\n\n";
   Formatting::printIndent(pimpl->output, pimpl->indent - 1);
   pimpl->output << "public:\n";
@@ -731,27 +739,31 @@ void GeneratorStd::leaveSuite() {
   /* -- generate fixture marshalers */
   pimpl->fixtures->generateMarshalers(
       pimpl->output, pimpl->indent, pimpl->objectpath.back());
-  pimpl->output
-      << "    void registerFixtures() {\n";
+  Formatting::printIndent(pimpl->output, pimpl->indent);
+  pimpl->output << "void registerFixtures() {\n";
   pimpl->fixtures->generateRegistration(
       pimpl->output, pimpl->indent + 1, pimpl->objectpath.back());
-  pimpl->output
-      << "    }\n";
+  Formatting::printIndent(pimpl->output, pimpl->indent);
+  pimpl->output << "}\n";
 
-  pimpl->output
-      << "};\n";
+  Formatting::printIndent(pimpl->output, pimpl->indent - 2);
+  pimpl->output << "};\n\n";
+
+  pimpl->indent -= 2;
+
+  /* -- generate the suite's factory method */
+  pimpl->writeObjectFactoryMethod("Suite");
 
   /* -- store type of the repeater */
   pimpl->objects.pop_back();
   pimpl->objects.back()->setRepeaterType(pimpl->repeater.back());
 
   pimpl->objectpath.pop_back();
-  pimpl->variables = nullptr;
-  pimpl->fixtures = nullptr;
+  pimpl->variables = pimpl->variables->getPrevLevel();
+  pimpl->fixtures = pimpl->fixtures->getPrevLevel();
   pimpl->start_up_fce.pop_back();
   pimpl->tear_down_fce.pop_back();
   pimpl->repeater.pop_back();
-  pimpl->indent -= 2;
 }
 
 void GeneratorStd::endFile(

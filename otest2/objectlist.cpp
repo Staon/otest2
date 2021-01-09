@@ -105,7 +105,28 @@ void SuiteRecord::printRegistrationInSuite(
     std::ostream& os_,
     const std::string& suite_,
     int indent_) const {
-  assert(false);
+  Formatting::printIndent(os_, indent_);
+  os_ << "{\n";
+  Formatting::printIndent(os_, indent_ + 2);
+  os_ << "auto scenario_(std::make_shared< ::OTest2::ScenarioSuite >(\n";
+  Formatting::printIndent(os_, indent_ + 4);
+  os_ << "\"" << name << "\",\n";
+  Formatting::printIndent(os_, indent_ + 4);
+  writeTags(os_, tags, indent_ + 2);
+  os_ << ",\n";
+  Formatting::printIndent(os_, indent_ + 4);
+  if(repeater_type.empty())
+    os_ << "std::make_shared< ::OTest2::ObjectRepeaterFactoryOnceNested<" << suite_ << ", " << name << "> >(\n";
+  else
+    os_ << "std::make_shared< ::OTest2::ObjectRepeaterFactoryMultiNested<" << suite_ << ", " << name << ", " << repeater_type << " > >(\n";
+  Formatting::printIndent(os_, indent_ + 6);
+  os_ << "&" << suite_ << "::createSuite_" << name << ")));\n";
+  Formatting::printIndent(os_, indent_ + 2);
+  os_ << name << "::registerAllChildren(scenario_);\n";
+  Formatting::printIndent(os_, indent_ + 2);
+  os_ << "parent_->appendScenario(\"" << name << "\", scenario_);\n";
+  Formatting::printIndent(os_, indent_);
+  os_ << "}\n";
 }
 
 void SuiteRecord::printRegistrationInFile(

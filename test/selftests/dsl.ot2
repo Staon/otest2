@@ -125,6 +125,24 @@ OT2_CASE(StandaloneCase) {
   }
 }
 
+OT2_SUITE(NestedSuites) {
+  OT2_SUITE(TheNestedSuite) {
+    OT2_CASE(NestedCase) {
+      void secondState();
+
+      void firstState() OT2_STATE() {
+        testAssertNotEqual("hello", "world");
+
+        switchState(secondState, 10);
+      }
+
+      void secondState() OT2_STATE() {
+        testAssertEqual("hello", "world");
+      }
+    }
+  }
+}
+
 } /* -- namespace SelfTest */
 
 } /* -- namespace OTest2 */

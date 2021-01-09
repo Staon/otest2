@@ -92,7 +92,7 @@ bool AssertVisitor::VisitCallExpr(
       if(args_ != nullptr) {
         std::vector<std::string> template_params_;
         for(int i_(0); i_ < static_cast<int>(args_->size()); ++i_) {
-          auto arg_(args_->get(i_));
+          const auto& arg_(args_->get(i_));
           if(arg_.getKind() == clang::TemplateArgument::Type) {
             auto type_(arg_.getAsType());
             template_params_.push_back(type_.getAsString());

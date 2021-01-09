@@ -72,7 +72,7 @@ void TestMarkPrinter::Impl::printTop(
     bool open_) {
   assert(!stack.empty());
 
-  auto& top_(stack.back());
+  const auto& top_(stack.back());
   if(!top_.skip) {
     std::ostringstream oss_;
     oss_ << top_.prefix;

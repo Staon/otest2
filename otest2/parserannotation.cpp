@@ -55,7 +55,7 @@ bool AnnotationAny::operator()(
 }
 
 bool hasAnnotation(
-    clang::Decl* decl_,
+    const clang::Decl* decl_,
     const std::string& annotation_) {
   AnnotationStringEqual cmp_{annotation_};
   return hasAnnotation(decl_, cmp_);

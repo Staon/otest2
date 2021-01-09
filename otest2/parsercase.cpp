@@ -122,7 +122,7 @@ bool parseCaseBody(
   switch(context_->state) {
     case ParserContext::CASE_FIXTURES:
       context_->generator->finishCaseFixtures();
-      /* -- missing break is expected */
+      [[fallthrough]] /* -- missing break is expected */
     case ParserContext::CASE_FUNCTIONS: {
       context_->generator->finishCaseFunctions();
 

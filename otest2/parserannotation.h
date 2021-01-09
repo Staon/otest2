@@ -59,7 +59,7 @@ struct AnnotationRegex {
     std::regex expr;
     std::smatch matches;
 
-    AnnotationRegex(
+    explicit AnnotationRegex(
         const std::string& expr_);
     bool operator()(
         const std::string& annotation_);
@@ -71,7 +71,7 @@ struct AnnotationAny {
 };
 
 bool hasAnnotation(
-    clang::Decl* decl_,
+    const clang::Decl* decl_,
     const std::string& annotation_);
 
 } /* -- namespace Parser */

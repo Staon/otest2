@@ -40,17 +40,22 @@ bool parseCaseBody(
     clang::NamespaceDecl* ns_) {
   FunctionFlags fce_flags_(true);
 
-  for(
-      auto iter_(ns_->decls_begin());
-      iter_ != ns_->decls_end();
-      ++iter_) {
-    switch(context_->state) {
-      case ParserContext::CASE_FIXTURES: {
+  enum class State {
+      FIXTURES,
+      FUNCTIONS,
+      STATES,
+  } state_(State::FIXTURES);
+  auto iter_(ns_->decls_begin());
+  while(iter_ != ns_->decls_end()) {
+    switch(state_) {
+      case State::FIXTURES: {
         /* -- case variable */
         if(clang::isa<clang::VarDecl>(*iter_)) {
           auto vardecl_(clang::cast<clang::VarDecl>(*iter_));
           if(!parseVariable(context_, vardecl_))
             return false;
+
+          ++iter_;
           continue;
         }
 
@@ -61,21 +66,15 @@ bool parseCaseBody(
             /* -- The function doesn't stop the fixtures block. The forward
              *    declarations of functions are ignored as they are not
              *    needed in the generated code anymore. */
+            ++iter_;
             continue;
           }
 
+          /* -- finish the fixture block */
           context_->generator->finishCaseFixtures();
 
-          /* -- Function can be a case function or a test case. It can
-           *    be distinguished by the second flag of the returned
-           *    pair. */
-          auto result_(parseFunction(context_, fce_, fce_flags_));
-          if(!result_.first)
-            return false;
-          if(result_.second)
-            context_->state = ParserContext::CASE_STATES;
-          else
-            context_->state = ParserContext::CASE_FUNCTIONS;
+          /* -- enter the function block */
+          state_ = State::FUNCTIONS;
           continue;
         }
 
@@ -83,15 +82,17 @@ bool parseCaseBody(
         return false;
       }
 
-      case ParserContext::CASE_FUNCTIONS: {
-        /* -- tear down functions */
+      case State::FUNCTIONS: {
+        /* -- start-up, tear-down and user functions */
         if(clang::isa<clang::FunctionDecl>(*iter_)) {
           auto fce_(clang::cast<clang::FunctionDecl>(*iter_));
           auto result_(parseFunction(context_, fce_, fce_flags_));
           if(!result_.first)
             return false;
           if(result_.second)
-            context_->state = ParserContext::CASE_STATES;
+            state_ = State::STATES;
+
+          ++iter_;
           continue;
         }
 
@@ -99,12 +100,14 @@ bool parseCaseBody(
         return false;
       }
 
-      case ParserContext::CASE_STATES: {
-        /* -- tear down functions */
+      case State::STATES: {
+        /* -- state functions */
         if(clang::isa<clang::FunctionDecl>(*iter_)) {
           auto fce_(clang::cast<clang::FunctionDecl>(*iter_));
           if(!parseFunction(context_, fce_, fce_flags_).first)
             return false;
+
+          ++iter_;
           continue;
         }
 
@@ -113,25 +116,22 @@ bool parseCaseBody(
       }
 
       default:
+        assert(false);
         context_->setError("Invalid case item", *iter_);
         return false;
     }
   }
 
-  /* -- handle empty case */
-  switch(context_->state) {
-    case ParserContext::CASE_FIXTURES:
+  /* -- correctly finish object which is not complete */
+  switch(state_) {
+    case State::FIXTURES:
       context_->generator->finishCaseFixtures();
       [[fallthrough]] /* -- missing break is expected */
-    case ParserContext::CASE_FUNCTIONS: {
+    case State::FUNCTIONS:
       context_->generator->finishCaseFunctions();
-
-      /* -- generate empty state object */
       context_->generator->emptyState();
-
-      break;
-    }
-    case ParserContext::CASE_STATES:
+      [[fallthrough]]
+    case State::STATES:
       break;
     default:
       context_->setError("invalid format of the case", ns_);
@@ -144,8 +144,6 @@ bool parseCaseBody(
 bool parseCase(
     ParserContext* context_,
     clang::NamespaceDecl* ns_) {
-  context_->state = ParserContext::CASE_FIXTURES;
-
   /* -- parse case's tags */
   ObjectTags tags_;
   if(!parseTags(context_, ns_, tags_))
@@ -155,8 +153,6 @@ bool parseCase(
   if(!parseCaseBody(context_, ns_))
     return false;
   context_->generator->leaveCase();
-
-  context_->state = ParserContext::SUITE_CASES;
 
   return true;
 }

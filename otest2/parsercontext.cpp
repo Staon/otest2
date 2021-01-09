@@ -34,7 +34,6 @@ ParserContext::ParserContext(
     ParserException* exception_) :
   failure(failure_),
   exception(exception_),
-  state(ROOT),
   comp_context(comp_context_),
   srcmgr(srcmgr_),
   langopts(langopts_),

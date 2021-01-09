@@ -426,6 +426,11 @@ void GeneratorStd::finishSuiteFunctions() {
 
   /* -- ctor and dtor */
   pimpl->writeObjectCtors("::OTest2::SuiteGenerated", {"registerFixtures();"});
+
+  /* -- children are declared private */
+  pimpl->output << "\n\n";
+  Formatting::printIndent(pimpl->output, pimpl->indent + 1);
+  pimpl->output << "private:\n";
 }
 
 void GeneratorStd::enterCase(
@@ -442,9 +447,7 @@ void GeneratorStd::enterCase(
   pimpl->repeater.emplace_back("");
   pimpl->indent += 2;
 
-  pimpl->output << "\n\n";
-  Formatting::printIndent(pimpl->output, pimpl->indent - 3);
-  pimpl->output << "private:\n";
+  /* -- begin the generated case class */
   Formatting::printIndent(pimpl->output, pimpl->indent - 2);
   pimpl->output << "class " << case_ << " : public ::OTest2::CaseGenerated {\n";
   Formatting::printIndent(pimpl->output, pimpl->indent - 1);
@@ -671,21 +674,25 @@ void GeneratorStd::leaveCase() {
 
   pimpl->indent -= 2;
 
-  /* -- generate the factory method of the case */
-  Formatting::printIndent(pimpl->output, pimpl->indent);
-  pimpl->output << "::OTest2::ObjectScenarioPtr createCase_" << pimpl->objectpath.back() << "(\n";
-  Formatting::printIndent(pimpl->output, pimpl->indent + 2);
-  pimpl->output << "const ::OTest2::Context& context_";
-  pimpl->variables->printFactoryParameters(pimpl->output, pimpl->indent + 2);
-  pimpl->output << ") {\n";
-  Formatting::printIndent(pimpl->output, pimpl->indent + 1);
-  pimpl->output << "return std::make_shared<" << pimpl->objectpath.back() << ">(\n";
-  Formatting::printIndent(pimpl->output, pimpl->indent + 3);
-  pimpl->output << "context_";
-  pimpl->variables->printArguments(pimpl->output, pimpl->indent + 3);
-  pimpl->output << ");\n";
-  Formatting::printIndent(pimpl->output, pimpl->indent);
-  pimpl->output << "}";
+  /* -- Generate the factory method of the case. The method is generated
+   *    just for nested objects - root objects are created directly by
+   *    the constructor method. */
+  if(pimpl->objects.size() > 1) { /* -- file itself */
+    Formatting::printIndent(pimpl->output, pimpl->indent);
+    pimpl->output << "::OTest2::ObjectScenarioPtr createCase_" << pimpl->objectpath.back() << "(\n";
+    Formatting::printIndent(pimpl->output, pimpl->indent + 2);
+    pimpl->output << "const ::OTest2::Context& context_";
+    pimpl->variables->printFactoryParameters(pimpl->output, pimpl->indent + 2);
+    pimpl->output << ") {\n";
+    Formatting::printIndent(pimpl->output, pimpl->indent + 1);
+    pimpl->output << "return std::make_shared<" << pimpl->objectpath.back() << ">(\n";
+    Formatting::printIndent(pimpl->output, pimpl->indent + 3);
+    pimpl->output << "context_";
+    pimpl->variables->printArguments(pimpl->output, pimpl->indent + 3);
+    pimpl->output << ");\n";
+    Formatting::printIndent(pimpl->output, pimpl->indent);
+    pimpl->output << "}";
+  }
 
   /* -- store type of the repeater */
   pimpl->objects.back()->setRepeaterType(pimpl->repeater.back());

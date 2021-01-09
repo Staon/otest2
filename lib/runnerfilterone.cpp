@@ -59,7 +59,6 @@ RunnerFilterOne::Impl::~Impl() {
 RunnerFilterOne::RunnerFilterOne(
     const std::string& suite_) :
   pimpl(new Impl(suite_, "")) {
-  assert(!pimpl->suite_name.empty());
 
 }
 
@@ -67,7 +66,6 @@ RunnerFilterOne::RunnerFilterOne(
     const std::string& suite_,
     const std::string& testcase_) :
   pimpl(new Impl(suite_, testcase_)) {
-  assert(!pimpl->suite_name.empty());
 
 }
 
@@ -93,7 +91,7 @@ std::unique_ptr<RunnerFilterOne> RunnerFilterOne::fromPath(
 bool RunnerFilterOne::filterPath(
     const ObjectPath& path_) const noexcept {
   /* -- filter suite name */
-  if(!path_.doesMatchSuite(pimpl->suite_name))
+  if(!pimpl->suite_name.empty() && !path_.doesMatchSuite(pimpl->suite_name))
     return true;
 
   /* -- filter case name */

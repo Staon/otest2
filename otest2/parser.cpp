@@ -28,6 +28,8 @@
 #include <clang/Tooling/CommonOptionsParser.h>
 #include <clang/Tooling/Tooling.h>
 #include <llvm/Support/CommandLine.h>
+#include <otest2/exc.h>
+#include <otest2/utils.h>
 #include <fstream>
 #include <iostream>
 #include <memory>
@@ -39,7 +41,6 @@
 #include "filereader.h"
 #include "generatorstd.h"
 #include "options.h"
-#include <otest2/exc.h>
 #include "parsercontext.h"
 #include "parsersuite.h"
 
@@ -137,7 +138,7 @@ ParserAction::~ParserAction() {
 std::unique_ptr<clang::ASTConsumer> ParserAction::CreateASTConsumer(
     clang::CompilerInstance& ci_,
     clang::StringRef strref_) {
-  return std::make_unique<ParserConsumer>(
+  return ::OTest2::make_unique<ParserConsumer>(
       generator,
       failure,
       exception,

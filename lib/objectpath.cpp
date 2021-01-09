@@ -89,14 +89,14 @@ std::string ObjectPath::getRegressionKey(
 
 bool ObjectPath::doesMatchCase(
     const std::string& case_name_) const noexcept {
-  if(pimpl->path_stack_.size() != 3) /* test::suite::case */
+  if(pimpl->path_stack_.size() < 2) /* at least test::case */
     return false;
-  return pimpl->path_stack_[2] == case_name_;
+  return pimpl->path_stack_.back() == case_name_;
 }
 
 bool ObjectPath::doesMatchSuite(
     const std::string& suite_name_) const noexcept {
-  if(pimpl->path_stack_.size() != 3) /* test::suite::case */
+  if(pimpl->path_stack_.size() < 3) /* at least test::suite::case */
     return false;
   return pimpl->path_stack_[1] == suite_name_;
 }

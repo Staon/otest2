@@ -119,6 +119,12 @@ OT2_SUITE(ExtendedDslSuite) {
   }
 }
 
+OT2_CASE(StandaloneCase) {
+  OT2_SIMPLE() {
+    testAssertEqual(10, 10);
+  }
+}
+
 } /* -- namespace SelfTest */
 
 } /* -- namespace OTest2 */

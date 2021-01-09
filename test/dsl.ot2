@@ -175,6 +175,39 @@ TEST_SUITE(DslSuite) {
 //      runtime_.reporter.dumpRecords(std::cout);
     }
   }
+
+  TEST_CASE(StandaloneCase) {
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "path: selftest",
+        "enterCase<StandaloneCase>",
+        "path: selftest::StandaloneCase",
+        "enterState<AnonymousState>",
+        "path: selftest::StandaloneCase",
+        "assert<check 'a == b' has passed>: passed",
+        "path: selftest::StandaloneCase",
+        "message<a = 10>",
+        "path: selftest::StandaloneCase",
+        "message<b = 10>",
+        "path: selftest::StandaloneCase",
+        "leaveAssert<>",
+        "path: selftest::StandaloneCase",
+        "leaveState<AnonymousState>: passed",
+        "path: selftest::StandaloneCase",
+        "leaveCase<StandaloneCase>: passed",
+        "path: selftest::StandaloneCase",
+        "leaveTest<selftest>: passed",
+        "path: selftest",
+      };
+
+      Runtime runtime_("", "StandaloneCase", Runtime::report_paths_mark);
+
+      testAssert(runtime_.runTheTest());
+      testAssert(runtime_.reporter.checkRecords(data_));
+//      runtime_.reporter.dumpRecords(std::cout);
+    }
+  }
 }
 
 } /* -- namespace Test */

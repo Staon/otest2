@@ -18,6 +18,7 @@
  */
 #include "parsersuite.h"
 
+#include <functional>
 #include <set>
 #include <string>
 
@@ -90,8 +91,8 @@ bool parseSuiteBody(
             context_->generator->finishSuiteFunctions();
             if(!parseCase(context_, casens_))
               return false;
-            continue;
           }
+          continue;
         }
 
         context_->setError("Invalid suite item", *iter_);
@@ -114,8 +115,8 @@ bool parseSuiteBody(
             context_->generator->finishSuiteFunctions();
             if(!parseCase(context_, casens_))
               return false;
-            continue;
           }
+          continue;
         }
 
         context_->setError("Invalid suite item", *iter_);
@@ -129,8 +130,8 @@ bool parseSuiteBody(
           if(hasAnnotation(casens_, CASE_ANNOTATION)) {
             if(!parseCase(context_, casens_))
               return false;
-            continue;
           }
+          continue;
         }
 
         context_->setError("Invalid suite item", *iter_);
@@ -147,6 +148,7 @@ bool parseSuiteBody(
   switch(context_->state) {
     case ParserContext::SUITE_FIXTURES:
       context_->generator->finishSuiteFixtures();
+      [[fallthrough]]
       /* -- missing break is expected */
     case ParserContext::SUITE_FUNCTIONS:
       context_->generator->finishSuiteFunctions();
@@ -164,9 +166,6 @@ bool parseSuiteBody(
 bool parseSuite(
     ParserContext* context_,
     clang::NamespaceDecl* ns_) {
-  /* -- copy the input file */
-  context_->copyInput(ns_, false);
-
   /* -- parse suite's tags */
   ObjectTags tags_;
   if(!parseTags(context_, ns_, tags_))
@@ -185,20 +184,38 @@ bool parseSuite(
   /* -- leave the suite */
   context_->generator->leaveSuite();
 
-  /* -- skip the body of the function */
+  return true;
+}
+
+bool parseRootObject(
+    ParserContext* context_,
+    clang::NamespaceDecl* ns_,
+    std::function<bool(ParserContext*, clang::NamespaceDecl*)> parse_fce_) {
+  /* -- copy content of the source file before the test object */
+  context_->copyInput(ns_, false);
+
+  /* -- run the parsing function */
+  if(!parse_fce_(context_, ns_))
+    return false;
+
+  /* -- skip the already parsed content of the source file */
   context_->moveToEnd(ns_);
 
   return true;
 }
 
-bool SuiteVisitor::VisitNamespaceDecl(
+bool SuiteVisitor::TraverseNamespaceDecl(
     clang::NamespaceDecl* ns_) {
+  /* -- at this level suites and cases are allowed */
   if(hasAnnotation(ns_, SUITE_ANNOTATION)) {
-    if(!parseSuite(context, ns_))
-      return false;
+    return parseRootObject(context, ns_, parseSuite);
   }
-
-  return true;
+  else if(hasAnnotation(ns_, CASE_ANNOTATION)) {
+    return parseRootObject(context, ns_, parseCase);
+  }
+  else {
+    return Parent::TraverseNamespaceDecl(ns_);
+  }
 }
 
 } /* -- namespace Parser */

@@ -124,9 +124,9 @@ void SuiteRecord::printRegistrationInFile(
   os_ << ",\n";
   Formatting::printIndent(os_, indent_ + 3);
   if(repeater_type.empty())
-    os_ << "std::make_shared< ::OTest2::ObjectRepeaterFactoryOnceSuite< " << name;
+    os_ << "std::make_shared< ::OTest2::ObjectRepeaterFactoryOnceRoot< " << name;
   else
-    os_ << "std::make_shared< ::OTest2::ObjectRepeaterFactoryMultiSuite< " << name << ", " << repeater_type;
+    os_ << "std::make_shared< ::OTest2::ObjectRepeaterFactoryMultiRoot< " << name << ", " << repeater_type;
   os_<< " > >()));\n";
   Formatting::printIndent(os_, indent_ + 1);
   os_<< name << "::registerAllChildren(scenario_);\n";
@@ -198,9 +198,9 @@ void CaseRecord::printRegistrationInSuite(
   os_ << ",\n";
   Formatting::printIndent(os_, indent_ + 4);
   if(repeater_type.empty())
-    os_ << "std::make_shared< ::OTest2::ObjectRepeaterFactoryOnceCase<" << suite_ << ", " << name << "> >(\n";
+    os_ << "std::make_shared< ::OTest2::ObjectRepeaterFactoryOnceNested<" << suite_ << ", " << name << "> >(\n";
   else
-    os_ << "std::make_shared< ::OTest2::ObjectRepeaterFactoryMultiCase<" << suite_ << ", " << name << ", " << repeater_type << " > >(\n";
+    os_ << "std::make_shared< ::OTest2::ObjectRepeaterFactoryMultiNested<" << suite_ << ", " << name << ", " << repeater_type << " > >(\n";
   Formatting::printIndent(os_, indent_ + 6);
   os_ << "&" << suite_ << "::createCase_" << name << ")));\n";
 }
@@ -209,7 +209,28 @@ void CaseRecord::printRegistrationInFile(
     std::ostream& os_,
     const std::string& domain_,
     int indent_) const {
-  assert(false);
+  Formatting::printIndent(os_, indent_);
+  os_ << "{\n";
+  Formatting::printIndent(os_, indent_ + 1);
+  os_ << "auto scenario_(std::make_shared< ::OTest2::ScenarioCase >(\n";
+  Formatting::printIndent(os_, indent_ + 3);
+  os_ << "\"" << name << "\",\n";
+  Formatting::printIndent(os_, indent_ + 3);
+  os_ << "";
+  writeTags(os_, tags, indent_ + 3);
+  os_ << ",\n";
+  Formatting::printIndent(os_, indent_ + 3);
+  if(repeater_type.empty())
+    os_ << "std::make_shared< ::OTest2::ObjectRepeaterFactoryOnceRoot< " << name;
+  else
+    os_ << "std::make_shared< ::OTest2::ObjectRepeaterFactoryMultiRoot< " << name << ", " << repeater_type;
+  os_<< " > >()));\n";
+  Formatting::printIndent(os_, indent_ + 1);
+  os_ <<"::OTest2::Registry::instance(";
+  writeCString(os_, domain_);
+  os_ << ").registerScenario(\"" << name << "\", scenario_);\n";
+  Formatting::printIndent(os_, indent_);
+  os_ << "}\n";
 }
 
 } /* -- namespace */

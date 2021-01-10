@@ -1,0 +1,156 @@
+/*
+ * Copyright (C) 2021 Ondrej Starek
+ *
+ * This file is part of OTest2
+ *
+ * OTest2 is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or (at your option) any later version.
+ *
+ * OTest2 is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
+ */
+#include <otest2/otest2.h>
+
+#include <cstdio>
+#include <iostream>
+#include <otest2/reporterconsole.h>
+#include <otest2/reporterjunit.h>
+#include <sstream>
+
+#include "runtime.h"
+
+namespace OTest2 {
+
+namespace Test {
+
+namespace {
+
+constexpr const char JUNIT_FILE_1[] = "junit-report.xml";
+constexpr const char JUNIT_FILE_2[] = "junit-report-2.xml";
+
+} /* -- namespace */
+
+OT2_SUITE(Reporters) {
+  OT2_SUITE(NestedReportersSuite) {
+    OT2_CASE(ConsoleReporterNestedSuite) {
+      OT2_SIMPLE() {
+        std::ostringstream oss_;
+        ReporterConsole reporter_(&oss_, false, true);
+        Runtime runtime_("NestedSuites", "", &reporter_);
+        testAssert(!runtime_.runTheTest());
+        testAssertLongTextTT(
+            oss_.str(),
+R"result( ================================ NestedSuites ================================
+   ============================== TheNestedSuite ==============================
+[...] selftest::NestedSuites::TheNestedSuite::NestedCase: check 'a == b' has failed
+    a = 'hello'
+    b = 'world'
+    NestedCase                                                        [Failed]
+     ============================ ThirdLevelSuite =============================
+      ThirdLevelCase                                                  [Passed]
+     --------------------------------------------------------------------------
+      Suite total                                                     [Passed]
+   ----------------------------------------------------------------------------
+    Suite total                                                       [Failed]
+   ============================================================================
+  CaseAtFirstLevel                                                    [Passed]
+ ------------------------------------------------------------------------------
+  Suite total                                                         [Failed]
+ ================================ Test results ================================
+                      Passed              Failed               Total
+  Suites                   1                   2                   3
+  Cases                    2                   1                   3
+  Checks                   3                   1                   4
+  Errors                                                           0
+  Test total                                                          [Failed]
+ ==============================================================================
+)result");
+      }
+    }
+
+    OT2_CASE(ConsoleReporterStandaloneCase) {
+      OT2_SIMPLE() {
+        std::ostringstream oss_;
+        ReporterConsole reporter_(&oss_, false, true);
+        Runtime runtime_("", "StandaloneCase", &reporter_);
+        testAssert(runtime_.runTheTest());
+        testAssertLongTextTT(
+            oss_.str(),
+R"result( ==============================================================================
+  StandaloneCase                                                      [Passed]
+ ================================ Test results ================================
+                      Passed              Failed               Total
+  Suites                   0                   0                   0
+  Cases                    1                   0                   1
+  Checks                   1                   0                   1
+  Errors                                                           0
+  Test total                                                          [Passed]
+ ==============================================================================
+)result");
+      }
+    }
+  }
+
+  OT2_CASE(JUnitReporterNestedSuites) {
+    void tearDown() OT2_TEAR_DOWN() {
+      std::remove(JUNIT_FILE_1);
+    }
+
+    OT2_SIMPLE() {
+      ReporterJUnit reporter_(JUNIT_FILE_1, true);
+      Runtime runtime_("NestedSuites", "", &reporter_);
+      testAssert(!runtime_.runTheTest());
+      testAssertLongTextFT(
+          JUNIT_FILE_1,
+R"result(<?xml version="1.0"?>
+<testsuites>
+	<testsuite timestamp="1970-01-02T03:31:00" time="0.000" tests="3" failures="1" errors="0">
+		<testsuite name="NestedSuites" timestamp="1970-01-02T03:31:00" time="0.000" tests="3" failures="1" errors="0">
+			<testsuite name="TheNestedSuite" timestamp="1970-01-02T03:31:00" time="0.000" tests="2" failures="1" errors="0">
+				<testcase name="NestedCase" time="0.000">
+					<failure message="check 'a == b' has failed" />
+				</testcase>
+				<testsuite name="ThirdLevelSuite" timestamp="1970-01-02T03:31:00" time="0.000" tests="1" failures="0" errors="0">
+					<testcase name="ThirdLevelCase" time="0.000" />
+				</testsuite>
+			</testsuite>
+			<testcase name="CaseAtFirstLevel" time="0.000" />
+		</testsuite>
+	</testsuite>
+</testsuites>
+)result");
+    }
+  }
+}
+
+OT2_CASE(JUnitReporterStandaloneCase) {
+  void tearDown() OT2_TEAR_DOWN() {
+    std::remove(JUNIT_FILE_2);
+  }
+
+  OT2_SIMPLE() {
+    ReporterJUnit reporter_(JUNIT_FILE_2, true);
+    Runtime runtime_("", "StandaloneCase", &reporter_);
+    testAssert(runtime_.runTheTest());
+    testAssertLongTextFT(
+          JUNIT_FILE_2,
+R"result(<?xml version="1.0"?>
+<testsuites>
+	<testsuite timestamp="1970-01-02T03:31:00" time="0.000" tests="1" failures="0" errors="0">
+		<testcase name="StandaloneCase" time="0.000" />
+	</testsuite>
+</testsuites>
+)result");
+  }
+}
+
+} /* -- namespace Test */
+
+} /* -- namespace OTest2 */

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <tagfilter.h>
+#include <runnerfiltertags.h>
 
 #include <assert.h>
 #include <cctype>
@@ -84,9 +84,10 @@ class TagExpression {
         const TagExpression&) = delete;
 
     /**
-     * @brief Return true if the tags matches the expression
+     * @brief Return true if the name and tags match the expression
      */
     virtual bool matches(
+        const std::string& name_,
         const Tags& tags_) const noexcept = 0;
 };
 
@@ -110,6 +111,7 @@ class TagExpressionOr : public TagExpression {
         const TagExpressionOr&) = delete;
 
     virtual bool matches(
+        const std::string& name_,
         const Tags& tags_) const noexcept override;
 };
 
@@ -131,6 +133,27 @@ class TagExpressionAnd : public TagExpression {
         const TagExpressionAnd&) = delete;
 
     virtual bool matches(
+        const std::string& name_,
+        const Tags& tags_) const noexcept override;
+};
+
+class TagExpressionName : public TagExpression {
+  private:
+    std::string name;
+
+  public:
+    explicit TagExpressionName(
+        const std::string& name_);
+    virtual ~TagExpressionName() = default;
+
+    /* -- avoid copying */
+    TagExpressionName(
+        const TagExpressionName&) = delete;
+    TagExpressionName& operator = (
+        const TagExpressionName&) = delete;
+
+    virtual bool matches(
+        const std::string& name_,
         const Tags& tags_) const noexcept override;
 };
 
@@ -150,6 +173,7 @@ class TagExpressionTag : public TagExpression {
         const TagExpressionTag&) = delete;
 
     virtual bool matches(
+        const std::string& name_,
         const Tags& tags_) const noexcept override;
 };
 
@@ -165,6 +189,7 @@ class TagExpressionEmpty : public TagExpression {
         const TagExpressionEmpty&) = delete;
 
     virtual bool matches(
+        const std::string& name_,
         const Tags& tags_) const noexcept override;
 };
 
@@ -184,6 +209,7 @@ class TagExpressionNot : public TagExpression {
         const TagExpressionNot&) = delete;
 
     virtual bool matches(
+        const std::string& name_,
         const Tags& tags_) const noexcept override;
 };
 
@@ -196,8 +222,9 @@ TagExpressionOr::TagExpressionOr(
 }
 
 bool TagExpressionOr::matches(
+    const std::string& name_,
     const Tags& tags_) const noexcept {
-  return left->matches(tags_) || right->matches(tags_);
+  return left->matches(name_, tags_) || right->matches(name_, tags_);
 }
 
 TagExpressionAnd::TagExpressionAnd(
@@ -209,8 +236,21 @@ TagExpressionAnd::TagExpressionAnd(
 }
 
 bool TagExpressionAnd::matches(
+    const std::string& name_,
     const Tags& tags_) const noexcept {
-  return left->matches(tags_) && right->matches(tags_);
+  return left->matches(name_, tags_) && right->matches(name_, tags_);
+}
+
+TagExpressionName::TagExpressionName(
+    const std::string& name_) :
+  name(name_) {
+
+}
+
+bool TagExpressionName::matches(
+    const std::string& name_,
+    const Tags& tags_) const noexcept {
+  return name == name_;
 }
 
 TagExpressionTag::TagExpressionTag(
@@ -220,11 +260,13 @@ TagExpressionTag::TagExpressionTag(
 }
 
 bool TagExpressionTag::matches(
+    const std::string& name_,
     const Tags& tags_) const noexcept {
   return tags_.findTag(tag);
 }
 
 bool TagExpressionEmpty::matches(
+    const std::string& name_,
     const Tags& tags_) const noexcept {
   return tags_.isEmpty();
 }
@@ -236,8 +278,9 @@ TagExpressionNot::TagExpressionNot(
 }
 
 bool TagExpressionNot::matches(
+    const std::string& name_,
     const Tags& tags_) const noexcept {
-  return !operand->matches(tags_);
+  return !operand->matches(name_, tags_);
 }
 
 class TagGlobPart {
@@ -255,6 +298,7 @@ class TagGlobPart {
         std::set<int>& current_states_,
         std::set<int>& new_states_,
         int state_index_,
+        const std::string& name_,
         const Tags& tags_) const = 0;
 };
 
@@ -288,6 +332,7 @@ class TagGlobPartExpression : public TagGlobPart {
         std::set<int>& current_states_,
         std::set<int>& new_states_,
         int state_index_,
+        const std::string& name_,
         const Tags& tags_) const override;
 };
 
@@ -306,6 +351,7 @@ class TagGlobPartStar : public TagGlobPart {
         std::set<int>& current_states_,
         std::set<int>& new_states_,
         int state_index_,
+        const std::string& name_,
         const Tags& tags_) const override;
 };
 
@@ -324,6 +370,7 @@ class TagGlobPartDouble : public TagGlobPart {
         std::set<int>& current_states_,
         std::set<int>& new_states_,
         int state_index_,
+        const std::string& name_,
         const Tags& tags_) const override;
 };
 
@@ -339,8 +386,9 @@ void TagGlobPartExpression::transition(
     std::set<int>& current_states_,
     std::set<int>& new_states_,
     int state_index_,
+    const std::string& name_,
     const Tags& tags_) const {
-  if(expr->matches(tags_)) {
+  if(expr->matches(name_, tags_)) {
     new_states_.insert(state_index_ + 1);
     if(repeating != ONCE)
       new_states_.insert(state_index_);
@@ -355,6 +403,7 @@ void TagGlobPartStar::transition(
     std::set<int>& current_states_,
     std::set<int>& new_states_,
     int state_index_,
+    const std::string& name_,
     const Tags& tags_) const {
   new_states_.insert(state_index_ + 1);
 }
@@ -363,6 +412,7 @@ void TagGlobPartDouble::transition(
     std::set<int>& current_states_,
     std::set<int>& new_states_,
     int state_index_,
+    const std::string& name_,
     const Tags& tags_) const {
   current_states_.insert(state_index_ + 1);
   new_states_.insert(state_index_);
@@ -396,7 +446,7 @@ class TagGlob {
      * @return True if the stack matches
      */
     bool matches(
-        const std::vector<Tags>& tags_stack_) const;
+        const std::vector<TagsStack::TagRecord>& tags_stack_) const;
 };
 
 void TagGlob::appendPart(
@@ -405,7 +455,7 @@ void TagGlob::appendPart(
 }
 
 bool TagGlob::matches(
-    const std::vector<Tags>& tags_stack_) const {
+    const std::vector<TagsStack::TagRecord>& tags_stack_) const {
   /* -- non-deterministic automaton */
   std::set<int> states_{0};
   for(const auto& tags_ : tags_stack_) {
@@ -416,7 +466,7 @@ bool TagGlob::matches(
       states_.erase(states_.begin());
       if(state_index_ < globs.size())
         globs[state_index_]->transition(
-            states_, new_states_, state_index_, tags_);
+            states_, new_states_, state_index_, tags_.name, tags_.tags);
     }
 
     /* -- switch new generation of states */
@@ -432,6 +482,7 @@ typedef std::shared_ptr<TagGlob> TagGlobPtr;
 
 enum class TokenType {
   NONE,
+  NAME,  /**< an object name */
   TAG,   /**< a tag name */
   CLASS, /**< a tag class name */
   NOT,   /**< not operator */
@@ -456,6 +507,8 @@ class Lexan {
   private:
     enum class State {
       START,
+      NAME,
+      TAG_BEGIN,
       TAG,
       CLASS,
       OR,
@@ -516,8 +569,11 @@ Token Lexan::getNextToken() {
             /* -- ignore spaces */
           }
           else if(std::isalpha(c_) || c_ == '_') {
-            state = State::TAG;
+            state = State::NAME;
             value.push_back(c_);
+          }
+          else if(c_ == '#') {
+            state = State::TAG;
           }
           else if(c_ == '<') {
             state = State::CLASS;
@@ -560,6 +616,85 @@ Token Lexan::getNextToken() {
           return {TokenType::END, ""};
         }
 
+      case State::NAME:
+        if(std::istream::traits_type::not_eof(c_)) {
+          if(std::isspace(c_)) {
+            state = State::START;
+            return resetValue(TokenType::NAME);
+          }
+          else if(std::isalnum(c_) || c_ == '_') {
+            value.push_back(c_);
+          }
+          else if(c_ == '#') {
+            state = State::TAG_BEGIN;
+            return resetValue(TokenType::NAME);
+          }
+          else if(c_ == '<') {
+            state = State::CLASS;
+            return resetValue(TokenType::NAME);
+          }
+          else if(c_ == '!') {
+            prepared = {TokenType::NOT, "!"};
+            state = State::START;
+            return resetValue(TokenType::NAME);
+          }
+          else if(c_ == '|') {
+            state = State::OR;
+            return resetValue(TokenType::NAME);
+          }
+          else if(c_ == '&') {
+            state = State::AND;
+            return resetValue(TokenType::NAME);
+          }
+          else if(c_ == '(') {
+            prepared = {TokenType::LEFT, "("};
+            state = State::START;
+            return resetValue(TokenType::NAME);
+          }
+          else if(c_ == ')') {
+            prepared = {TokenType::RIGHT, ")"};
+            state = State::START;
+            return resetValue(TokenType::NAME);
+          }
+          else if(c_ == ':') {
+            state = State::QUAD;
+            return resetValue(TokenType::NAME);
+          }
+          else if(c_ == '*') {
+            state = State::STAR;
+            return resetValue(TokenType::NAME);
+          }
+          else if(c_ == '[') {
+            prepared = {TokenType::LBRACK, "["};
+            state = State::START;
+            return resetValue(TokenType::NAME);
+          }
+          else if(c_ == ']') {
+            prepared = {TokenType::RBRACK, "]"};
+            state = State::START;
+            return resetValue(TokenType::NAME);
+          }
+          else {
+            throw TagExpressionException(location, c_);
+          }
+          break;
+        }
+        else {
+          /* -- end of string -> return the parsed tag */
+          state = State::START;
+          return resetValue(TokenType::NAME);
+        }
+
+      case State::TAG_BEGIN:
+        if(std::istream::traits_type::not_eof(c_)) {
+          if(std::isalpha(c_)) {
+            state = State::TAG;
+            value.push_back(c_);
+            break;
+          }
+        }
+        throw TagExpressionException(location, c_);
+
       case State::TAG:
         if(std::istream::traits_type::not_eof(c_)) {
           if(std::isspace(c_)) {
@@ -568,6 +703,10 @@ Token Lexan::getNextToken() {
           }
           else if(std::isalnum(c_) || c_ == '_' || c_ == '-' || c_ == '.') {
             value.push_back(c_);
+          }
+          else if(c_ == '#') {
+            state = State::TAG_BEGIN;
+            return resetValue(TokenType::TAG);
           }
           else if(c_ == '<') {
             state = State::CLASS;
@@ -693,8 +832,12 @@ Token Lexan::getNextToken() {
             return {TokenType::STAR, "*"};
           }
           else if(std::isalpha(c_) || c_ == '_') {
-            state = State::TAG;
+            state = State::NAME;
             value.push_back(c_);
+            return {TokenType::STAR, "*"};
+          }
+          else if(c_ == '#') {
+            state = State::TAG_BEGIN;
             return {TokenType::STAR, "*"};
           }
           else if(c_ == '<') {
@@ -910,7 +1053,11 @@ TagExpressionPtr SyntaxParser::termTail(
 
 TagExpressionPtr SyntaxParser::factor() {
   Token l_(lookAhead());
-  if(l_.type == TokenType::TAG) {
+  if(l_.type == TokenType::NAME) {
+    compare(TokenType::NAME);
+    return std::make_shared<TagExpressionName>(l_.value);
+  }
+  else if(l_.type == TokenType::TAG) {
     compare(TokenType::TAG);
     return std::make_shared<TagExpressionTag>(l_.value);
   }
@@ -949,7 +1096,7 @@ TagGlobPtr SyntaxParser::parse() {
 
 } /* -- namespace */
 
-struct TagFilter::Impl {
+struct RunnerFilterTags::Impl {
     TagGlobPtr glob;
 
     /* -- avoid copying */
@@ -963,7 +1110,7 @@ struct TagFilter::Impl {
     ~Impl();
 };
 
-TagFilter::Impl::Impl(
+RunnerFilterTags::Impl::Impl(
     const std::string& tag_expression_) {
   std::istringstream iss_(tag_expression_);
   Lexan lexan_(&iss_);
@@ -971,29 +1118,29 @@ TagFilter::Impl::Impl(
   glob = parser_.parse();
 }
 
-TagFilter::Impl::~Impl() {
+RunnerFilterTags::Impl::~Impl() {
 
 }
 
-TagFilter::TagFilter() :
+RunnerFilterTags::RunnerFilterTags() :
   pimpl(new Impl("")) {
 
 }
 
-TagFilter::TagFilter(
+RunnerFilterTags::RunnerFilterTags(
     const std::string& tag_expression_) :
   pimpl(new Impl(tag_expression_)) {
 
 }
 
-TagFilter::~TagFilter() {
+RunnerFilterTags::~RunnerFilterTags() {
   odelete(pimpl);
 }
 
-bool TagFilter::filterObject(
-    const TagsStack& tags_stack_) const noexcept {
-  std::vector<Tags> tags_;
-  tags_stack_.fillTags(tags_);
+bool RunnerFilterTags::filterPath(
+    const TagsStack& path_) const noexcept {
+  std::vector<TagsStack::TagRecord> tags_;
+  path_.fillTags(tags_);
   return !pimpl->glob->matches(tags_);
 }
 

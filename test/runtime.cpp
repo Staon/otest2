@@ -20,6 +20,7 @@
 #include "runtime.h"
 
 #include <iostream>
+#include <sstream>
 #include <unistd.h>
 
 #include <otest2/registry.h>
@@ -43,11 +44,26 @@ std::unique_ptr<TestMarkStorage> createTestMarkStorage(
 
 ScenarioIterPtr prepareScenario(
     const std::string& domain_,
-    const RunnerFilter& name_filter_,
-    const TagFilter& tag_filter_) {
+    const RunnerFilter& filter_) {
   Registry& registry_(Registry::instance(domain_));
   registry_.setTestName(domain_);
-  return registry_.getTests(name_filter_, tag_filter_);
+  return registry_.getTests(filter_);
+}
+
+std::string createTagGlob(
+    const std::string& suite_name_,
+    const std::string& case_name_) {
+  std::ostringstream oss_;
+  if(suite_name_.empty())
+    oss_ << "**";
+  else
+    oss_ << suite_name_;
+  oss_ << "::";
+  if(case_name_.empty())
+    oss_ << "**";
+  else
+    oss_ << case_name_;
+  return oss_.str();
 }
 
 } /* -- namespace */
@@ -59,7 +75,12 @@ Runtime::InternalCtor Runtime::internal_ctor;
 Runtime::Runtime(
     const std::string& suite_name_,
     const std::string& case_name_) :
-  Runtime(internal_ctor, suite_name_, case_name_, false, "", "") {
+  Runtime(
+      internal_ctor,
+      createTagGlob(suite_name_, case_name_),
+      nullptr,
+      false,
+      "") {
 
 }
 
@@ -67,7 +88,12 @@ Runtime::Runtime(
     const std::string& suite_name_,
     const std::string& case_name_,
     const ReportPaths&) :
-  Runtime(internal_ctor, suite_name_, case_name_, true, "", "") {
+  Runtime(
+      internal_ctor,
+      createTagGlob(suite_name_, case_name_),
+      nullptr,
+      true,
+      "") {
 
 }
 
@@ -77,66 +103,61 @@ Runtime::Runtime(
     const std::string& regression_file_) :
   Runtime(
       internal_ctor,
-      suite_name_,
-      case_name_,
+      createTagGlob(suite_name_, case_name_),
+      nullptr,
       false,
-      regression_file_,
+      regression_file_) {
+
+}
+
+Runtime::Runtime(
+    const Tags&,
+    const std::string& tag_glob_) :
+  Runtime(internal_ctor, tag_glob_, nullptr, false, "") {
+
+}
+
+Runtime::Runtime(
+    const std::string& regression_file_,
+    const Tags&,
+    const std::string& tag_glob_) :
+  Runtime(internal_ctor, tag_glob_, nullptr, false, regression_file_) {
+
+}
+
+Runtime::Runtime(
+    const std::string& suite_name_,
+    const std::string& case_name_,
+    Reporter* reporter_) :
+  Runtime(
+      internal_ctor,
+      createTagGlob(suite_name_, case_name_),
+      reporter_,
+      false,
       "") {
 
 }
 
 Runtime::Runtime(
-    const std::string& suite_name_,
-    const std::string& case_name_,
-    const Tags&,
-    const std::string& tag_expression_) :
-  Runtime(
-      internal_ctor,
-      suite_name_,
-      case_name_,
-      false,
-      "",
-      tag_expression_) {
-
-}
-
-Runtime::Runtime(
-    const std::string& suite_name_,
-    const std::string& case_name_,
-    const std::string& regression_file_,
-    const std::string& tag_expression_) :
-  Runtime(
-      internal_ctor,
-      suite_name_,
-      case_name_,
-      false,
-      regression_file_,
-      tag_expression_) {
-
-}
-
-Runtime::Runtime(
     const Runtime::InternalCtor&,
-    const std::string& suite_name_,
-    const std::string& case_name_,
+    const std::string& tag_glob_,
+    Reporter* reporter_,
     bool report_paths_,
-    const std::string& regression_file_,
-    const std::string& tag_expression_) :
+    const std::string& regression_file_) :
   exc_catcher(),
   reporter(report_paths_),
-  runner_filter(suite_name_, case_name_),
+  runner_filter(tag_glob_),
   test_mark_factory(),
   test_mark_storage(createTestMarkStorage(&test_mark_factory, regression_file_)),
   user_data(),
-  tag_filter(tag_expression_),
   runner(
       &time_source,
       &exc_catcher,
-      &reporter,
+      (reporter_ == nullptr)?(&reporter):reporter_,
       &test_mark_factory,
       test_mark_storage.get(),
       &user_data,
-      prepareScenario("selftest", runner_filter, tag_filter)) {
+      prepareScenario("selftest", runner_filter)) {
   /* -- prepare user data */
   user_data.setDatum("reporter_", &reporter);
 }

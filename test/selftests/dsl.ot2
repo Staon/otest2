@@ -119,6 +119,44 @@ OT2_SUITE(ExtendedDslSuite) {
   }
 }
 
+OT2_CASE(StandaloneCase) {
+  OT2_SIMPLE() {
+    testAssertEqual(10, 10);
+  }
+}
+
+OT2_SUITE(NestedSuites) {
+  OT2_SUITE(TheNestedSuite) {
+    OT2_CASE(NestedCase) {
+      void secondState();
+
+      void firstState() OT2_STATE() {
+        testAssertNotEqual("hello", "world");
+
+        switchState(secondState, 10);
+      }
+
+      void secondState() OT2_STATE() {
+        testAssertEqual("hello", "world");
+      }
+    }
+
+    OT2_SUITE(ThirdLevelSuite) {
+      OT2_CASE(ThirdLevelCase) {
+        OT2_SIMPLE() {
+          testAssert(10 < 100);
+        }
+      }
+    }
+  }
+
+  OT2_CASE(CaseAtFirstLevel) {
+    OT2_SIMPLE() {
+      testAssertEqual("foo", "foo");
+    }
+  }
+}
+
 } /* -- namespace SelfTest */
 
 } /* -- namespace OTest2 */

@@ -175,6 +175,123 @@ TEST_SUITE(DslSuite) {
 //      runtime_.reporter.dumpRecords(std::cout);
     }
   }
+
+  TEST_CASE(StandaloneCase) {
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "path: selftest",
+        "enterCase<StandaloneCase>",
+        "path: selftest::StandaloneCase",
+        "enterState<AnonymousState>",
+        "path: selftest::StandaloneCase",
+        "assert<check 'a == b' has passed>: passed",
+        "path: selftest::StandaloneCase",
+        "message<a = 10>",
+        "path: selftest::StandaloneCase",
+        "message<b = 10>",
+        "path: selftest::StandaloneCase",
+        "leaveAssert<>",
+        "path: selftest::StandaloneCase",
+        "leaveState<AnonymousState>: passed",
+        "path: selftest::StandaloneCase",
+        "leaveCase<StandaloneCase>: passed",
+        "path: selftest::StandaloneCase",
+        "leaveTest<selftest>: passed",
+        "path: selftest",
+      };
+
+      Runtime runtime_("", "StandaloneCase", Runtime::report_paths_mark);
+
+      testAssert(runtime_.runTheTest());
+      testAssert(runtime_.reporter.checkRecords(data_));
+//      runtime_.reporter.dumpRecords(std::cout);
+    }
+  }
+
+  TEST_CASE(NestedSuites) {
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "path: selftest",
+        "enterSuite<NestedSuites>",
+        "path: selftest::NestedSuites",
+        "enterSuite<TheNestedSuite>",
+        "path: selftest::NestedSuites::TheNestedSuite",
+        "enterCase<NestedCase>",
+        "path: selftest::NestedSuites::TheNestedSuite::NestedCase",
+        "enterState<firstState>",
+        "path: selftest::NestedSuites::TheNestedSuite::NestedCase",
+        "assert<check 'a != b' has passed>: passed",
+        "path: selftest::NestedSuites::TheNestedSuite::NestedCase",
+        "message<a = 'hello'>",
+        "path: selftest::NestedSuites::TheNestedSuite::NestedCase",
+        "message<b = 'world'>",
+        "path: selftest::NestedSuites::TheNestedSuite::NestedCase",
+        "leaveAssert<>",
+        "path: selftest::NestedSuites::TheNestedSuite::NestedCase",
+        "leaveState<firstState>: passed",
+        "path: selftest::NestedSuites::TheNestedSuite::NestedCase",
+        "delay<10>",
+        "enterState<secondState>",
+        "path: selftest::NestedSuites::TheNestedSuite::NestedCase",
+        "assert<check 'a == b' has failed>: failed",
+        "path: selftest::NestedSuites::TheNestedSuite::NestedCase",
+        "message<a = 'hello'>",
+        "path: selftest::NestedSuites::TheNestedSuite::NestedCase",
+        "message<b = 'world'>",
+        "path: selftest::NestedSuites::TheNestedSuite::NestedCase",
+        "leaveAssert<>",
+        "path: selftest::NestedSuites::TheNestedSuite::NestedCase",
+        "leaveState<secondState>: failed",
+        "path: selftest::NestedSuites::TheNestedSuite::NestedCase",
+        "leaveCase<NestedCase>: failed",
+        "path: selftest::NestedSuites::TheNestedSuite::NestedCase",
+        "enterSuite<ThirdLevelSuite>",
+        "path: selftest::NestedSuites::TheNestedSuite::ThirdLevelSuite",
+        "enterCase<ThirdLevelCase>",
+        "path: selftest::NestedSuites::TheNestedSuite::ThirdLevelSuite::ThirdLevelCase",
+        "enterState<AnonymousState>",
+        "path: selftest::NestedSuites::TheNestedSuite::ThirdLevelSuite::ThirdLevelCase",
+        "assert<'10 < 100'>: passed",
+        "path: selftest::NestedSuites::TheNestedSuite::ThirdLevelSuite::ThirdLevelCase",
+        "leaveAssert<>",
+        "path: selftest::NestedSuites::TheNestedSuite::ThirdLevelSuite::ThirdLevelCase",
+        "leaveState<AnonymousState>: passed",
+        "path: selftest::NestedSuites::TheNestedSuite::ThirdLevelSuite::ThirdLevelCase",
+        "leaveCase<ThirdLevelCase>: passed",
+        "path: selftest::NestedSuites::TheNestedSuite::ThirdLevelSuite::ThirdLevelCase",
+        "leaveSuite<ThirdLevelSuite>: passed",
+        "path: selftest::NestedSuites::TheNestedSuite::ThirdLevelSuite",
+        "leaveSuite<TheNestedSuite>: failed",
+        "path: selftest::NestedSuites::TheNestedSuite",
+        "enterCase<CaseAtFirstLevel>",
+        "path: selftest::NestedSuites::CaseAtFirstLevel",
+        "enterState<AnonymousState>",
+        "path: selftest::NestedSuites::CaseAtFirstLevel",
+        "assert<check 'a == b' has passed>: passed",
+        "path: selftest::NestedSuites::CaseAtFirstLevel",
+        "message<a = 'foo'>",
+        "path: selftest::NestedSuites::CaseAtFirstLevel",
+        "message<b = 'foo'>",
+        "path: selftest::NestedSuites::CaseAtFirstLevel",
+        "leaveAssert<>",
+        "path: selftest::NestedSuites::CaseAtFirstLevel",
+        "leaveState<AnonymousState>: passed",
+        "path: selftest::NestedSuites::CaseAtFirstLevel",
+        "leaveCase<CaseAtFirstLevel>: passed",
+        "path: selftest::NestedSuites::CaseAtFirstLevel",
+        "leaveSuite<NestedSuites>: failed",
+        "path: selftest::NestedSuites",
+        "leaveTest<selftest>: failed",
+        "path: selftest",
+      };
+      Runtime runtime_("NestedSuites", "", Runtime::report_paths_mark);
+      testAssert(!runtime_.runTheTest());
+      testAssert(runtime_.reporter.checkRecords(data_));
+//      runtime_.reporter.dumpRecords(std::cout);
+    }
+  }
 }
 
 } /* -- namespace Test */

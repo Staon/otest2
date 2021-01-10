@@ -35,39 +35,32 @@ or more consequent objects with any tags.
 The `TagExpression` may consist of tag names, the empty class and several
 logical operators:
 ```
-TagExpression := <tag name>
+TagExpression := <object name>
+TagExpression := #tag_name
 TagExpression := '<empty>'
 TagExpression := '(' TagExpression ')'
 TagExpression := '!' TagExpression
 TagExpression := TagExpression '&&' TagExpression
 TagExpression := TagExpression '||' TagExpression
 ```
-The tag name matches if the tag is set on the object. The class `<empty>`
-matches if there is no tag set on the object. The logical operators have
-the same meaning like the C/C++ operators. Ordered priority of the operators
-is: `!`, `&&` and `||`.
-
-The tag name must match following regular expression:
-```
-[a-zA-Z_][a-zA-Z0-9_.\-]*
-```
-Generally, it must start by a letter or the underscore. Then it can follow
-a sequence of letters, numbers, underscores, dots and minuses.
-
-Note: currently the data model is fixed `<suite>::<case>`. There is
-an intention to make the model more flexible allowing cases placed outside
-of any suite or suites placed in another suite. The glob grammar is already
-prepared.
+* The object name matches if the name of the object is equal in the
+  case sensitive manner. The object name must match regular expression
+  `[a-zA-Z_][a-zA-Z0-9_]*`.
+* The tag name matches if the tag is set on the object. The tag must match
+  regular expression `[a-zA-Z_][a-zA-Z0-9_.\-]*`.
+* The class `<empty>` matches if there is no tag set on the object.
+* The logical operators have the same meaning like the C/C++ operators.
+  Ordered priority of the operators is: `!`, `&&` and `||`.
  
 # Examples
 
- * `**::quick-test` matches all test cases (last part of the glob) with
+ * `MySuite::**` matches all children objects in the root object `MySuite`.
+ * `**::#quick-test` matches all test cases (last part of the glob) with
    tag `quick-test`.
- * `**::extra-suite::**` matches all objects which are tagged or whose
+ * `**::#extra-suite::**` matches all objects which are tagged or whose
    ancestor is tagged by the `extra-suite`.
  * `[<empty>]` matches all untagged cases in all untagged suites.
  * `[!<empty>]` matches all tagged cases in all tagged suites.
- * `**::my-tag::*` matches all cases whose first parent has set the tag `my-tag`.
- * `**::tag1 && tag2` matches cases with both tags set.
- * `**::tag1 || tag2` matches cases with one of the tags.
-
+ * `**::#my-tag::*` matches all cases whose first parent has set the tag `my-tag`.
+ * `**::#tag1 && #tag2` matches cases with both tags set.
+ * `**::#tag1 || #tag2` matches cases with one of the tags.

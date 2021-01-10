@@ -45,6 +45,8 @@ add_executable(otest2
     location.cpp
     location.h
     main.cpp
+    objectlist.cpp
+    objectlist.h
     options.cpp
     options.h
     parser.cpp

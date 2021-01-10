@@ -87,21 +87,17 @@ ScenarioSuite::~ScenarioSuite() {
 }
 
 ScenarioPtr ScenarioSuite::filterScenario(
-    ObjectPath& path_,
     TagsStack& tags_,
     ScenarioContainerPtr parent_,
-    const RunnerFilter& name_filter_,
-    const TagFilter& tag_filter_) const {
-  /* -- add myself into the stacks */
-  path_.pushName(pimpl->name);
-  tags_.pushTags(pimpl->tags);
+    const RunnerFilter& filter_) const {
+  /* -- add myself into the object path */
+  tags_.pushTags(pimpl->name, pimpl->tags);
 
   /* -- create new suite container and filter children */
   ScenarioContainerPtr suite_(std::make_shared<ScenarioSuite>(
       pimpl->name, pimpl->tags, pimpl->repeater_factory));
   for(auto iter_ : pimpl->order) {
-    (*iter_).second->filterScenario(
-        path_, tags_, suite_, name_filter_, tag_filter_);
+    (*iter_).second->filterScenario(tags_, suite_, filter_);
   }
 
   /* -- append myself if there are some not-filtered children */
@@ -110,7 +106,6 @@ ScenarioPtr ScenarioSuite::filterScenario(
   }
 
   /* -- remove myself from the object path */
-  path_.popName();
   tags_.popTags();
 
   return parent_;

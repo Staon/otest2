@@ -109,20 +109,13 @@ void ScenarioRoot::setName(
 }
 
 ScenarioPtr ScenarioRoot::filterScenario(
-    ObjectPath& path_,
     TagsStack& tags_,
     ScenarioContainerPtr parent_,
-    const RunnerFilter& name_filter_,
-    const TagFilter& tag_filter_) const {
-  path_.pushName(pimpl->name);
-
+    const RunnerFilter& filter_) const {
   ScenarioContainerPtr root_(std::make_shared<ScenarioRoot>(pimpl->name));
   for(const auto& item_ : pimpl->children) {
-    item_.second->filterScenario(
-        path_, tags_, root_, name_filter_, tag_filter_);
+    item_.second->filterScenario(tags_, root_, filter_);
   }
-
-  path_.popName();
 
   return root_;
 }

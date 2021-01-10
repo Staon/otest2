@@ -18,6 +18,7 @@
  */
 #include "parsersuite.h"
 
+#include <functional>
 #include <set>
 #include <string>
 
@@ -50,17 +51,22 @@ bool parseSuiteBody(
     clang::NamespaceDecl* ns_) {
   FunctionFlags fce_flags_(false);
 
-  for(
-      auto iter_(ns_->decls_begin());
-      iter_ != ns_->decls_end();
-      ++iter_) {
-    switch(context_->state) {
-      case ParserContext::SUITE_FIXTURES: {
+  enum class State {
+      FIXTURES,
+      FUNCTIONS,
+      CHILDREN,
+  } state_(State::FIXTURES);
+  auto iter_(ns_->decls_begin());
+  while(iter_ != ns_->decls_end()) {
+    switch(state_) {
+      case State::FIXTURES: {
         /* -- suite variable */
         if(clang::isa<clang::VarDecl>(*iter_)) {
           auto vardecl_(clang::cast<clang::VarDecl>(*iter_));
           if(!parseVariable(context_, vardecl_))
             return false;
+
+          ++iter_;
           continue;
         }
 
@@ -71,66 +77,80 @@ bool parseSuiteBody(
             /* -- The function doesn't stop the fixtures block. The forward
              *    declarations of functions are ignored as they are not
              *    needed in the generated code anymore. */
+            ++iter_;
             continue;
           }
           else {
+            /* -- finish the block of fixtures */
             context_->generator->finishSuiteFixtures();
-            context_->state = ParserContext::SUITE_FUNCTIONS;
-            if(!parseFunction(context_, fce_, fce_flags_).first)
-              return false;
+
+            /* -- enter the block of suite's functions */
+            state_ = State::FUNCTIONS;
             continue;
           }
         }
 
         /* -- test case */
         if(clang::isa<clang::NamespaceDecl>(*iter_)) {
-          auto casens_(clang::cast<clang::NamespaceDecl>(*iter_));
-          if(hasAnnotation(casens_, CASE_ANNOTATION)) {
-            context_->generator->finishSuiteFixtures();
-            context_->generator->finishSuiteFunctions();
-            if(!parseCase(context_, casens_))
-              return false;
-            continue;
-          }
+          /* -- finish the fixture and function blocks */
+          context_->generator->finishSuiteFixtures();
+          context_->generator->finishSuiteFunctions();
+
+          /* -- enter the children block */
+          state_ = State::CHILDREN;
+          continue;
         }
 
         context_->setError("Invalid suite item", *iter_);
         return false;
       }
 
-      case ParserContext::SUITE_FUNCTIONS: {
-        /* -- tear down functions */
+      case State::FUNCTIONS: {
+        /* -- start-up, tear-down and user functions */
         if(clang::isa<clang::FunctionDecl>(*iter_)) {
+          /* -- parse the function */
           auto fce_(clang::cast<clang::FunctionDecl>(*iter_));
           if(!parseFunction(context_, fce_, fce_flags_).first)
             return false;
+
+          ++iter_;
           continue;
         }
 
         /* -- test case */
         if(clang::isa<clang::NamespaceDecl>(*iter_)) {
-          auto casens_(clang::cast<clang::NamespaceDecl>(*iter_));
-          if(hasAnnotation(casens_, CASE_ANNOTATION)) {
-            context_->generator->finishSuiteFunctions();
-            if(!parseCase(context_, casens_))
-              return false;
-            continue;
-          }
+          /* -- finish the function block */
+          context_->generator->finishSuiteFunctions();
+
+          /* -- enter the children block */
+          state_ = State::CHILDREN;
+          continue;
         }
 
         context_->setError("Invalid suite item", *iter_);
         return false;
       }
 
-      case ParserContext::SUITE_CASES: {
+      case State::CHILDREN: {
         /* -- test case */
         if(clang::isa<clang::NamespaceDecl>(*iter_)) {
           auto casens_(clang::cast<clang::NamespaceDecl>(*iter_));
-          if(hasAnnotation(casens_, CASE_ANNOTATION)) {
+
+          /* -- parse children objects (test case or a nested suite) */
+          if(hasAnnotation(casens_, SUITE_ANNOTATION)) {
+            if(!parseSuite(context_, casens_))
+              return false;
+          }
+          else if(hasAnnotation(casens_, CASE_ANNOTATION)) {
             if(!parseCase(context_, casens_))
               return false;
-            continue;
           }
+
+          /* -- Not annotated namespaces are ignored as I create a simple
+           *    namespace importing the assertion and control functions.
+           *    Their content is not copied into the generated file. */
+          ++iter_;
+          continue;
         }
 
         context_->setError("Invalid suite item", *iter_);
@@ -138,22 +158,24 @@ bool parseSuiteBody(
       }
 
       default:
+        assert(false);
         context_->setError("Invalid suite item", *iter_);
         return false;
     }
   }
 
-  /* -- handle empty suite */
-  switch(context_->state) {
-    case ParserContext::SUITE_FIXTURES:
+  /* -- finish correctly suite which is not complete */
+  switch(state_) {
+    case State::FIXTURES:
       context_->generator->finishSuiteFixtures();
-      /* -- missing break is expected */
-    case ParserContext::SUITE_FUNCTIONS:
+      [[fallthrough]]
+    case State::FUNCTIONS:
       context_->generator->finishSuiteFunctions();
-      break;
-    case ParserContext::SUITE_CASES:
+      [[fallthrough]]
+    case State::CHILDREN:
       break;
     default:
+      assert(false);
       context_->setError("invalid format of the suite", ns_);
       return false;
   }
@@ -164,9 +186,6 @@ bool parseSuiteBody(
 bool parseSuite(
     ParserContext* context_,
     clang::NamespaceDecl* ns_) {
-  /* -- copy the input file */
-  context_->copyInput(ns_, false);
-
   /* -- parse suite's tags */
   ObjectTags tags_;
   if(!parseTags(context_, ns_, tags_))
@@ -177,28 +196,44 @@ bool parseSuite(
   context_->generator->enterSuite(suitename_, tags_);
 
   /* -- parse body of the suite */
-  context_->state = ParserContext::SUITE_FIXTURES;
   if(!parseSuiteBody(context_, ns_))
     return false;
-  context_->state = ParserContext::ROOT;
 
   /* -- leave the suite */
   context_->generator->leaveSuite();
 
-  /* -- skip the body of the function */
+  return true;
+}
+
+bool parseRootObject(
+    ParserContext* context_,
+    clang::NamespaceDecl* ns_,
+    std::function<bool(ParserContext*, clang::NamespaceDecl*)> parse_fce_) {
+  /* -- copy content of the source file before the test object */
+  context_->copyInput(ns_, false);
+
+  /* -- run the parsing function */
+  if(!parse_fce_(context_, ns_))
+    return false;
+
+  /* -- skip the already parsed content of the source file */
   context_->moveToEnd(ns_);
 
   return true;
 }
 
-bool SuiteVisitor::VisitNamespaceDecl(
+bool SuiteVisitor::TraverseNamespaceDecl(
     clang::NamespaceDecl* ns_) {
+  /* -- at this level suites and cases are allowed */
   if(hasAnnotation(ns_, SUITE_ANNOTATION)) {
-    if(!parseSuite(context, ns_))
-      return false;
+    return parseRootObject(context, ns_, parseSuite);
   }
-
-  return true;
+  else if(hasAnnotation(ns_, CASE_ANNOTATION)) {
+    return parseRootObject(context, ns_, parseCase);
+  }
+  else {
+    return Parent::TraverseNamespaceDecl(ns_);
+  }
 }
 
 } /* -- namespace Parser */

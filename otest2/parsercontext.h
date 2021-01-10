@@ -44,17 +44,7 @@ struct ParserContext {
     bool* failure;
     ParserException* exception;
 
-    /* -- parser state */
-    enum State {
-      ROOT = 0,
-      SUITE_FIXTURES,
-      SUITE_FUNCTIONS,
-      SUITE_CASES,
-      CASE_FIXTURES,
-      CASE_FUNCTIONS,
-      CASE_STATES,
-    };
-    State state;
+    /* -- context of the Clang AST */
     clang::ASTContext* comp_context;
     clang::SourceManager* srcmgr;
     clang::LangOptions* langopts;

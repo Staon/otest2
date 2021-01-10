@@ -23,9 +23,9 @@
 #include <string>
 #include <vector>
 
-namespace OTest2 {
+#include <otest2/tags.h>
 
-class Tags;
+namespace OTest2 {
 
 /**
  * @brief Stack of assigned tags
@@ -58,9 +58,11 @@ class TagsStack {
     /**
      * @brief Push tags
      *
+     * @param name_ Name of the test object
      * @param tags_ The tags
      */
     void pushTags(
+        const std::string& name_,
         const Tags& tags_);
 
     /**
@@ -69,12 +71,20 @@ class TagsStack {
     void popTags();
 
     /**
+     * @brief One record of the tag stack
+     */
+    struct TagRecord {
+        std::string name;  /**< name of the test object */
+        Tags tags;         /**< object's tags */
+    };
+
+    /**
      * @brief Fill the stack into a vector (used for glob evaluation)
      *
      * @param[out] tags_ The tag vector
      */
     void fillTags(
-        std::vector<Tags>& tags_) const;
+        std::vector<TagRecord>& tags_) const;
 };
 
 } /* -- namespace OTest2 */

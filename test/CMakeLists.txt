@@ -38,6 +38,7 @@ target_otest2_sources(selftest
     maps.ot2
     regressions.ot2
     repeaters.ot2
+    reporters.ot2
     tags.ot2
     tee.ot2
     testmarks.ot2

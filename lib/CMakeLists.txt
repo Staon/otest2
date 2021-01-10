@@ -84,7 +84,8 @@ add_library(libotest2
     runner.cpp
     runnerfilter.cpp
     runnerfilterentire.cpp
-    runnerfilterone.cpp
+    runnerfilteruntagged.cpp
+    runnerfiltertags.cpp
     runnerordinary.cpp
     scenario.cpp
     scenariocase.cpp
@@ -101,7 +102,6 @@ add_library(libotest2
     stateregistry.cpp
     suite.cpp
     suitegenerated.cpp
-    tagfilter.cpp
     tags.cpp
     tagsstack.cpp
     teeostream.cpp

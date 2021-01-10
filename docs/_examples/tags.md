@@ -51,7 +51,7 @@ the second test case is not run. The default tag filter runs just untagged
 objects. If we want to run all tests
 the empty [tag glob]({{ "/reference/tagglob/" | relative_url }}) must be specified:
 ```plaintext
-$ ./tags -T '' 
+$ ./tags -r '' 
  ================================= TagsSuite ==================================
   QuickCase                                                           [Passed]
   SlowCase                                                            [Passed]
@@ -68,7 +68,7 @@ $ ./tags -T ''
 ```
 Or we can ask just for tagged cases:
 ```plaintext
-staon@otest2:~/programovani/otest2/examples/tags/build$ ./tags -T '**::slow'
+staon@otest2:~/programovani/otest2/examples/tags/build$ ./tags -r '**::#slow'
  ================================= TagsSuite ==================================
   SlowCase                                                            [Passed]
  ------------------------------------------------------------------------------

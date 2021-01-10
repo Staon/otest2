@@ -29,7 +29,7 @@
 namespace OTest2 {
 
 struct TagsStack::Impl {
-    std::vector<Tags> stack;
+    std::vector<TagRecord> stack;
 
     /* -- avoid copying */
     Impl(
@@ -59,8 +59,9 @@ TagsStack::~TagsStack() {
 }
 
 void TagsStack::pushTags(
+    const std::string& name_,
     const Tags& tags_) {
-  pimpl->stack.push_back(tags_);
+  pimpl->stack.push_back({name_, tags_});
 }
 
 void TagsStack::popTags() {
@@ -69,7 +70,7 @@ void TagsStack::popTags() {
 }
 
 void TagsStack::fillTags(
-    std::vector<Tags>& tags_) const {
+    std::vector<TagRecord>& tags_) const {
   std::copy(pimpl->stack.begin(), pimpl->stack.end(), std::back_inserter(tags_));
 }
 

@@ -30,25 +30,25 @@
 namespace OTest2 {
 
 template<typename Object_, typename Repeater_>
-class ObjectRepeaterMultiSuite : public ObjectRepeater {
+class ObjectRepeaterMultiRoot : public ObjectRepeater {
   private:
     int index;
     std::shared_ptr<Repeater_> repeater_object;
 
   public:
-    explicit ObjectRepeaterMultiSuite() :
+    explicit ObjectRepeaterMultiRoot() :
       index(1),
       repeater_object() {
 
     }
 
-    virtual ~ObjectRepeaterMultiSuite() = default;
+    virtual ~ObjectRepeaterMultiRoot() = default;
 
     /* -- avoid copying */
-    ObjectRepeaterMultiSuite(
-        const ObjectRepeaterMultiSuite&) = delete;
-    ObjectRepeaterMultiSuite& operator = (
-        const ObjectRepeaterMultiSuite&) = delete;
+    ObjectRepeaterMultiRoot(
+        const ObjectRepeaterMultiRoot&) = delete;
+    ObjectRepeaterMultiRoot& operator = (
+        const ObjectRepeaterMultiRoot&) = delete;
 
     virtual bool isNextRun(
         const Context& context_) const override {
@@ -77,25 +77,25 @@ class ObjectRepeaterMultiSuite : public ObjectRepeater {
 };
 
 template<typename Object_, typename Repeater_>
-class ObjectRepeaterFactoryMultiSuite : public ObjectRepeaterFactory {
+class ObjectRepeaterFactoryMultiRoot : public ObjectRepeaterFactory {
   public:
-    ObjectRepeaterFactoryMultiSuite() = default;
-    virtual ~ObjectRepeaterFactoryMultiSuite() = default;
+    ObjectRepeaterFactoryMultiRoot() = default;
+    virtual ~ObjectRepeaterFactoryMultiRoot() = default;
 
     /* -- avoid copying */
-    ObjectRepeaterFactoryMultiSuite(
-        const ObjectRepeaterFactoryMultiSuite&) = delete;
-    ObjectRepeaterFactoryMultiSuite& operator = (
-        const ObjectRepeaterFactoryMultiSuite&) = delete;
+    ObjectRepeaterFactoryMultiRoot(
+        const ObjectRepeaterFactoryMultiRoot&) = delete;
+    ObjectRepeaterFactoryMultiRoot& operator = (
+        const ObjectRepeaterFactoryMultiRoot&) = delete;
 
     virtual ObjectRepeaterPtr createRepeater(
         const Context& context_) const {
-      return std::make_shared<ObjectRepeaterMultiSuite<Object_, Repeater_> >();
+      return std::make_shared<ObjectRepeaterMultiRoot<Object_, Repeater_> >();
     }
 };
 
 template<typename Parent_, typename Object_, typename Repeater_>
-class ObjectRepeaterMultiCase : public ObjectRepeater {
+class ObjectRepeaterMultiNested : public ObjectRepeater {
   public:
     typedef ObjectScenarioPtr (Parent_::* FactoryMethod)(
         const Context&,
@@ -107,7 +107,7 @@ class ObjectRepeaterMultiCase : public ObjectRepeater {
     FactoryMethod factory_method;
 
   public:
-    explicit ObjectRepeaterMultiCase(
+    explicit ObjectRepeaterMultiNested(
         FactoryMethod factory_method_) :
       index(1),
       repeater_object(),
@@ -116,13 +116,13 @@ class ObjectRepeaterMultiCase : public ObjectRepeater {
 
     }
 
-    virtual ~ObjectRepeaterMultiCase() = default;
+    virtual ~ObjectRepeaterMultiNested() = default;
 
     /* -- avoid copying */
-    ObjectRepeaterMultiCase(
-        const ObjectRepeaterMultiCase&) = delete;
-    ObjectRepeaterMultiCase& operator = (
-        const ObjectRepeaterMultiCase&) = delete;
+    ObjectRepeaterMultiNested(
+        const ObjectRepeaterMultiNested&) = delete;
+    ObjectRepeaterMultiNested& operator = (
+        const ObjectRepeaterMultiNested&) = delete;
 
     virtual bool isNextRun(
         const Context& context_) const override {
@@ -153,31 +153,31 @@ class ObjectRepeaterMultiCase : public ObjectRepeater {
 };
 
 template<typename Parent_, typename Object_, typename Repeater_>
-class ObjectRepeaterFactoryMultiCase : public ObjectRepeaterFactory {
+class ObjectRepeaterFactoryMultiNested : public ObjectRepeaterFactory {
   public:
-    typedef typename ObjectRepeaterMultiCase<Parent_, Object_, Repeater_>::FactoryMethod FactoryMethod;
+    typedef typename ObjectRepeaterMultiNested<Parent_, Object_, Repeater_>::FactoryMethod FactoryMethod;
 
   private:
     FactoryMethod factory_method;
 
   public:
-    ObjectRepeaterFactoryMultiCase(
+    ObjectRepeaterFactoryMultiNested(
         FactoryMethod factory_method_) :
       factory_method(factory_method_) {
 
     }
 
-    virtual ~ObjectRepeaterFactoryMultiCase() = default;
+    virtual ~ObjectRepeaterFactoryMultiNested() = default;
 
     /* -- avoid copying */
-    ObjectRepeaterFactoryMultiCase(
-        const ObjectRepeaterFactoryMultiCase&) = delete;
-    ObjectRepeaterFactoryMultiCase& operator = (
-        const ObjectRepeaterFactoryMultiCase&) = delete;
+    ObjectRepeaterFactoryMultiNested(
+        const ObjectRepeaterFactoryMultiNested&) = delete;
+    ObjectRepeaterFactoryMultiNested& operator = (
+        const ObjectRepeaterFactoryMultiNested&) = delete;
 
     virtual ObjectRepeaterPtr createRepeater(
         const Context& context_) const {
-      return std::make_shared<ObjectRepeaterMultiCase<Parent_, Object_, Repeater_> >(factory_method);
+      return std::make_shared<ObjectRepeaterMultiNested<Parent_, Object_, Repeater_> >(factory_method);
     }
 };
 

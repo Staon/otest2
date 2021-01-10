@@ -45,12 +45,14 @@ class SuiteVisitor : public clang::RecursiveASTVisitor<SuiteVisitor> {
   private:
     ParserContext* context;
 
+    typedef clang::RecursiveASTVisitor<SuiteVisitor> Parent;
+
   public:
     explicit SuiteVisitor(
         ParserContext* context_);
     virtual ~SuiteVisitor();
 
-    bool VisitNamespaceDecl(
+    bool TraverseNamespaceDecl(
         clang::NamespaceDecl* ns_);
 };
 

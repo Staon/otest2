@@ -26,7 +26,7 @@
 #define OT2_START_UP()
 #define OT2_TEAR_DOWN()
 #define OT2_SUITE(name_) namespace name_ { using namespace ::OTest2::Assertions; using namespace ::OTest2::Controls; } namespace name_
-#define OT2_CASE(name_) namespace name_
+#define OT2_CASE(name_) namespace name_ { using namespace ::OTest2::Assertions; using namespace ::OTest2::Controls; } namespace name_
 #define OT2_STATE()
 #define OT2_SIMPLE() void AnonymousState() OT2_STATE()
 
@@ -46,7 +46,7 @@
 #define OT2_START_UP() __attribute__((annotate("otest2::startUp")))
 #define OT2_TEAR_DOWN() __attribute__((annotate("otest2::tearDown")))
 #define OT2_SUITE(name_) namespace name_ { using namespace ::OTest2::Assertions; using namespace ::OTest2::Controls; } namespace name_ __attribute__((annotate("otest2::suite")))
-#define OT2_CASE(name_) namespace name_ __attribute__((annotate("otest2::case")))
+#define OT2_CASE(name_) namespace name_ { using namespace ::OTest2::Assertions; using namespace ::OTest2::Controls; } namespace name_ __attribute__((annotate("otest2::case")))
 #define OT2_STATE() __attribute__((annotate("otest2::state")))
 #define OT2_SIMPLE() void AnonymousState() OT2_STATE()
 

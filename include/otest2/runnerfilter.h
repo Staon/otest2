@@ -24,8 +24,7 @@
 
 namespace OTest2 {
 
-class Registry;
-class ObjectPath;
+class TagsStack;
 
 /**
  * @brief Generic interface of a runner filter
@@ -54,12 +53,13 @@ class RunnerFilter {
     /**
      * @brief Check whether the path should be filtered
      *
-     * @param path_ The path
+     * @param path_ Stack of names and tags of the current object and its
+     *     ancestors.
      * @return True if the path matches the filter and the object should be
-     *     filtered (not run)
+     *     filtered out (not run).
      */
     virtual bool filterPath(
-        const ObjectPath& path_) const noexcept = 0;
+        const TagsStack& path_) const noexcept = 0;
 };
 
 } /* namespace OTest2 */

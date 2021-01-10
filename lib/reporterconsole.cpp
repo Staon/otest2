@@ -22,6 +22,7 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <utility>
 
 #include <context.h>
 #include <objectpath.h>
@@ -35,12 +36,22 @@ namespace {
 
 enum : int {
   WIDTH = 80,
+  INDENT_SPACE = 2,
 };
+
+void printIndent(
+    std::ostream& os_,
+    int indent_) {
+  for(int i_(0); i_ < indent_; ++i_)
+    for(int j_(0); j_ < INDENT_SPACE; ++j_)
+      os_ << ' ';
+}
 
 void printHR(
     std::ostream& os_,
     char rule_char_,
-    const std::string& label_) {
+    const std::string& label_,
+    int indent_) {
   /* -- label width */
   int label_width_(0);
   if(!label_.empty()) {
@@ -48,8 +59,12 @@ void printHR(
   }
 
   /* -- compute length of the left and righ part of the rule */
-  int left_width_((WIDTH - 2 - label_width_) / 2);
-  int right_width_(WIDTH - 2 - label_width_ - left_width_);
+  const int width_(WIDTH - 2 - INDENT_SPACE * indent_);
+  int left_width_((width_ - label_width_) / 2);
+  int right_width_(width_ - label_width_ - left_width_);
+
+  /* -- print indentation */
+  printIndent(os_, indent_);
 
   /* -- print left rule */
   os_ << ' ';
@@ -72,9 +87,12 @@ void printResultLine(
     std::ostream& os_,
     TerminalDriver& driver_,
     const std::string& label_,
-    bool result_) {
+    bool result_,
+    int indent_) {
   int label_width_(static_cast<int>(label_.size()));
-  int free_space_width_(WIDTH - 4 - label_width_ - 8);
+  int free_space_width_(WIDTH - 4 - INDENT_SPACE * indent_ - label_width_ - 8);
+
+  printIndent(os_, indent_);
 
   os_ << "  " << label_;
   for(int i_(0); i_ < free_space_width_; ++i_)
@@ -157,9 +175,15 @@ struct ReporterConsole::Impl {
     TerminalDriver term_driver;
     ReporterStatistics statistics;
 
+    /* -- reporter state */
+    int level;
+
     /* -- assertion printing */
     bool verbose;
+    bool hide_location;
     bool last_condition;
+    int indent;
+    std::pair<int, char> stacked_hr;
 
     /* -- avoid copying */
     Impl(
@@ -170,29 +194,49 @@ struct ReporterConsole::Impl {
     explicit Impl(
         ReporterConsole* owner_,
         std::ostream* os_,
-        bool verbose_);
+        bool verbose_,
+        bool hide_location_);
     ~Impl();
+
+    void printStackedHR();
+    void resetStackedHR();
 };
 
 ReporterConsole::Impl::Impl(
     ReporterConsole* owner_,
     std::ostream* os_,
-    bool verbose_) :
+    bool verbose_,
+    bool hide_location_) :
   owner(owner_),
   os(os_),
   term_driver(os_),
+  level(0),
   verbose(verbose_),
-  last_condition(true) {
+  hide_location(hide_location_),
+  last_condition(true),
+  indent(-1),
+  stacked_hr(0, '=') {
   assert(os != nullptr);
 
 }
 
 ReporterConsole::Impl::~Impl() = default;
 
+void ReporterConsole::Impl::printStackedHR() {
+  if(stacked_hr.first >= 0)
+    printHR(*os, stacked_hr.second, "", stacked_hr.first);
+  stacked_hr = {-1, ' '};
+}
+
+void ReporterConsole::Impl::resetStackedHR() {
+  stacked_hr = {-1, ' '};
+}
+
 ReporterConsole::ReporterConsole(
     std::ostream* os_,
-    bool verbose_) :
-  pimpl(new Impl(this, os_, verbose_)) {
+    bool verbose_,
+    bool hide_location_) :
+  pimpl(new Impl(this, os_, verbose_, hide_location_)) {
 
 }
 
@@ -209,13 +253,24 @@ void ReporterConsole::enterTest(
 void ReporterConsole::enterSuite(
     const Context& context_,
     const std::string& name_) {
-  printHR(*pimpl->os, '=', name_);
+  /* -- print the separator */
+  ++pimpl->indent;
+  pimpl->resetStackedHR();
+  printHR(*pimpl->os, '=', name_, pimpl->indent);
+
+  /* -- increase level of nesting */
+  ++pimpl->level;
 }
 
 void ReporterConsole::enterCase(
     const Context& context_,
     const std::string& name_) {
+  /* -- correct indentation of a standalone test case */
+  if(pimpl->level == 0)
+    pimpl->indent = 0;
 
+  /* -- increase level of nesting */
+  ++pimpl->level;
 }
 
 void ReporterConsole::enterState(
@@ -237,9 +292,15 @@ void ReporterConsole::enterAssert(
   pimpl->last_condition = condition_;
 
   /* -- print the assertion status */
+  pimpl->printStackedHR();
   if(pimpl->verbose || !condition_) {
+    *pimpl->os << '[';
+    if(!pimpl->hide_location)
+      *pimpl->os << file_ << ':' << lineno_;
+    else
+      *pimpl->os << "...";
     *pimpl->os
-        << '[' << file_ << ':' << lineno_ << "] "
+        << "] "
         << context_.object_path->getCurrentPath()  << ": " << message_
         << std::endl;
   }
@@ -255,6 +316,7 @@ void ReporterConsole::enterError(
   pimpl->last_condition = false;
 
   /* -- print the error */
+  pimpl->printStackedHR();
   *pimpl->os
       << "error in " << context_.object_path->getCurrentPath() << ": " << message_
       << std::endl;
@@ -280,7 +342,7 @@ void ReporterConsole::leaveState(
     const Context& context_,
     const std::string& name_,
     bool result_) {
-
+  /* -- nothing to do */
 }
 
 void ReporterConsole::leaveCase(
@@ -289,7 +351,14 @@ void ReporterConsole::leaveCase(
     bool result_) {
   pimpl->statistics.reportCase(result_);
 
-  printResultLine(*pimpl->os, pimpl->term_driver, name_, result_);
+  /* -- print result of the test case */
+  pimpl->printStackedHR();
+  printResultLine(*pimpl->os, pimpl->term_driver, name_, result_, pimpl->indent);
+
+  /* -- decrease level of nesting and indentation */
+  --pimpl->level;
+  if(pimpl->level == 0)
+    --pimpl->indent;
 }
 
 void ReporterConsole::leaveSuite(
@@ -298,15 +367,25 @@ void ReporterConsole::leaveSuite(
     bool result_) {
   pimpl->statistics.reportSuite(result_);
 
-  printHR(*pimpl->os, '-', "");
-  printResultLine(*pimpl->os, pimpl->term_driver, "Suite total", result_);
+  /* -- print result of the suite */
+  pimpl->resetStackedHR();
+  printHR(*pimpl->os, '-', "", pimpl->indent);
+  printResultLine(*pimpl->os, pimpl->term_driver, "Suite total", result_, pimpl->indent);
+
+  /* -- stack the suite ending separator */
+  pimpl->stacked_hr = {pimpl->indent, '='};
+
+  /* -- decrease level of nesting and indentation */
+  --pimpl->level;
+  --pimpl->indent;
 }
 
 void ReporterConsole::leaveTest(
     const Context& context_,
     const std::string& name_,
     bool result_) {
-  printHR(*pimpl->os, '=', "Test results");
+  pimpl->resetStackedHR();
+  printHR(*pimpl->os, '=', "Test results", 0);
   printTotalResultLine(
       *pimpl->os,
       "",
@@ -332,8 +411,8 @@ void ReporterConsole::leaveTest(
       pimpl->statistics.getAssertionsFailed(),
       pimpl->statistics.getAssertions());
   printTotalErrors(*pimpl->os, "Errors", pimpl->statistics.getErrors());
-  printResultLine(*pimpl->os, pimpl->term_driver, "Test total", result_);
-  printHR(*pimpl->os, '=', "");
+  printResultLine(*pimpl->os, pimpl->term_driver, "Test total", result_, 0);
+  printHR(*pimpl->os, '=', "", 0);
 }
 
 } /* namespace OTest2 */

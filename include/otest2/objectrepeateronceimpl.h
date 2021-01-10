@@ -29,7 +29,7 @@
 namespace OTest2 {
 
 template<typename Object_>
-class ObjectRepeaterOnceSuite : public ObjectRepeaterOnce {
+class ObjectRepeaterOnceRoot : public ObjectRepeaterOnce {
   private:
     virtual ObjectScenarioPtr doCreateObject(
         const Context& context_,
@@ -39,36 +39,36 @@ class ObjectRepeaterOnceSuite : public ObjectRepeaterOnce {
     }
 
   public:
-    ObjectRepeaterOnceSuite() = default;
-    virtual ~ObjectRepeaterOnceSuite() = default;
+    ObjectRepeaterOnceRoot() = default;
+    virtual ~ObjectRepeaterOnceRoot() = default;
 
     /* -- avoid copying */
-    ObjectRepeaterOnceSuite(
-        const ObjectRepeaterOnceSuite&) = delete;
-    ObjectRepeaterOnceSuite& operator = (
-        const ObjectRepeaterOnceSuite&) = delete;
+    ObjectRepeaterOnceRoot(
+        const ObjectRepeaterOnceRoot&) = delete;
+    ObjectRepeaterOnceRoot& operator = (
+        const ObjectRepeaterOnceRoot&) = delete;
 };
 
 template<typename Object_>
-class ObjectRepeaterFactoryOnceSuite : public ObjectRepeaterFactory {
+class ObjectRepeaterFactoryOnceRoot : public ObjectRepeaterFactory {
   public:
-    ObjectRepeaterFactoryOnceSuite() = default;
-    virtual ~ObjectRepeaterFactoryOnceSuite() = default;
+    ObjectRepeaterFactoryOnceRoot() = default;
+    virtual ~ObjectRepeaterFactoryOnceRoot() = default;
 
     /* -- avoid copying */
-    ObjectRepeaterFactoryOnceSuite(
-        const ObjectRepeaterFactoryOnceSuite&) = delete;
-    ObjectRepeaterFactoryOnceSuite& operator = (
-        const ObjectRepeaterFactoryOnceSuite&) = delete;
+    ObjectRepeaterFactoryOnceRoot(
+        const ObjectRepeaterFactoryOnceRoot&) = delete;
+    ObjectRepeaterFactoryOnceRoot& operator = (
+        const ObjectRepeaterFactoryOnceRoot&) = delete;
 
     virtual ObjectRepeaterPtr createRepeater(
         const Context& context_) const {
-      return std::make_shared<ObjectRepeaterOnceSuite<Object_> >();
+      return std::make_shared<ObjectRepeaterOnceRoot<Object_> >();
     }
 };
 
 template<typename Parent_, typename Object_>
-class ObjectRepeaterOnceCase : public ObjectRepeaterOnce {
+class ObjectRepeaterOnceNested : public ObjectRepeaterOnce {
   public:
     typedef ObjectScenarioPtr (Parent_::* FactoryMethod)(const Context&);
 
@@ -85,47 +85,47 @@ class ObjectRepeaterOnceCase : public ObjectRepeaterOnce {
     }
 
   public:
-    explicit ObjectRepeaterOnceCase(
+    explicit ObjectRepeaterOnceNested(
         FactoryMethod factory_method_) :
       factory_method(factory_method_) {
 
     }
 
-    virtual ~ObjectRepeaterOnceCase() = default;
+    virtual ~ObjectRepeaterOnceNested() = default;
 
     /* -- avoid copying */
-    ObjectRepeaterOnceCase(
-        const ObjectRepeaterOnceCase&) = delete;
-    ObjectRepeaterOnceCase& operator = (
-        const ObjectRepeaterOnceCase&) = delete;
+    ObjectRepeaterOnceNested(
+        const ObjectRepeaterOnceNested&) = delete;
+    ObjectRepeaterOnceNested& operator = (
+        const ObjectRepeaterOnceNested&) = delete;
 };
 
 template<typename Parent_, typename Object_>
-class ObjectRepeaterFactoryOnceCase : public ObjectRepeaterFactory {
+class ObjectRepeaterFactoryOnceNested : public ObjectRepeaterFactory {
   public:
-    typedef typename ObjectRepeaterOnceCase<Parent_, Object_>::FactoryMethod FactoryMethod;
+    typedef typename ObjectRepeaterOnceNested<Parent_, Object_>::FactoryMethod FactoryMethod;
 
   private:
     FactoryMethod factory_method;
 
   public:
-    ObjectRepeaterFactoryOnceCase(
+    ObjectRepeaterFactoryOnceNested(
         FactoryMethod factory_method_) :
       factory_method(factory_method_) {
 
     }
 
-    virtual ~ObjectRepeaterFactoryOnceCase() = default;
+    virtual ~ObjectRepeaterFactoryOnceNested() = default;
 
     /* -- avoid copying */
-    ObjectRepeaterFactoryOnceCase(
-        const ObjectRepeaterFactoryOnceCase&) = delete;
-    ObjectRepeaterFactoryOnceCase& operator = (
-        const ObjectRepeaterFactoryOnceCase&) = delete;
+    ObjectRepeaterFactoryOnceNested(
+        const ObjectRepeaterFactoryOnceNested&) = delete;
+    ObjectRepeaterFactoryOnceNested& operator = (
+        const ObjectRepeaterFactoryOnceNested&) = delete;
 
     virtual ObjectRepeaterPtr createRepeater(
         const Context& context_) const {
-      return std::make_shared<ObjectRepeaterOnceCase<Parent_, Object_> >(factory_method);
+      return std::make_shared<ObjectRepeaterOnceNested<Parent_, Object_> >(factory_method);
     }
 };
 

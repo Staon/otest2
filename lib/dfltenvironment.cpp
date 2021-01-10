@@ -31,11 +31,10 @@
 #include <reporterconsole.h>
 #include <reporterjunit.h>
 #include <reportertee.h>
-#include <runnerfilterentire.h>
-#include <runnerfilterone.h>
+#include <runnerfilteruntagged.h>
+#include <runnerfiltertags.h>
 #include <runnerordinary.h>
 #include <scenarioiterptr.h>
-#include <tagfilter.h>
 #include <testmarkfactory.h>
 #include <testmarkstorage.h>
 #include <timesourcesys.h>
@@ -60,19 +59,13 @@ void printHelpMessage(
   std::cout << "  -j file  --junit=file       Print report into a file in the JUnit XML format." << std::endl;
   std::cout << "                              This option may be used several times. Several" << std::endl;
   std::cout << "                              files will then be written." << std::endl;
-  std::cout << "  -r obj   --restrictive=obj  Run just only the specified testing object." << std::endl;
-  std::cout << "                              'obj' is in the format '<suite>[::<case>]'." << std::endl;
-  std::cout << "                              If just the suite name is got the whole suite" << std::endl;
-  std::cout << "                              is run. A complete object path means running" << std::endl;
-  std::cout << "                              of just one test case." << std::endl;
+  std::cout << "  -r glob  --restrictive=glob Run just test object which match the tag glob." << std::endl;
+  std::cout << "                              The default value runs all untagged objects." << std::endl;
   std::cout << "  -m file  --regression=file  Path of the regression file. The default value" << std::endl;
   std::cout << "                              is 'regression.ot2tm' (stored in the working" << std::endl;
   std::cout << "                              directory)." << std::endl;
   std::cout << "  -t name  --test=name        Name of the test how it's reported. The default" << std::endl;
   std::cout << "                              value is the name of the test's binary." << std::endl;
-  std::cout << "  -T expr  --tags=glob        Specification of the tag glob allowing to filter" << std::endl;
-  std::cout << "                              testing objects from current run. The default" << std::endl;
-  std::cout << "                              value runs all untagged objects." << std::endl;
   std::cout << std::endl;
 }
 
@@ -100,7 +93,6 @@ struct DfltEnvironment::Impl {
     TestMarkFactory test_mark_factory;
     std::unique_ptr<TestMarkStorage> test_mark_storage;
     UserData user_data;
-    std::unique_ptr<TagFilter> tag_filter;
     std::unique_ptr<Runner> runner;
 
     /* -- builder state */
@@ -150,7 +142,6 @@ DfltEnvironment::DfltEnvironment(
     RESTRICTIVE_RUN,
     REGRESSION_FILE,
     TEST_NAME,
-    TAG_EXPRESSION,
     HELP,
   };
   struct option long_options_[] = {
@@ -160,12 +151,11 @@ DfltEnvironment::DfltEnvironment(
       {"restrictive", 1, nullptr, RESTRICTIVE_RUN},
       {"regression", 1, nullptr, REGRESSION_FILE},
       {"test", 1, nullptr, TEST_NAME},
-      {"tags", 1, nullptr, TAG_EXPRESSION},
       {"help", 0, nullptr, HELP},
       {nullptr, 0, nullptr, 0},
   };
   int opt_;
-  while((opt_ = getopt_long(argc_, argv_, "vj:r:m:t:T:h", long_options_, nullptr)) >= 0) {
+  while((opt_ = getopt_long(argc_, argv_, "vj:r:m:t:h", long_options_, nullptr)) >= 0) {
     switch(opt_) {
       case DISABLE_CONSOLE_REPORTER:
         pimpl->console_reporter = false;
@@ -176,12 +166,18 @@ DfltEnvironment::DfltEnvironment(
         break;
       case 'j':
       case JUNIT_REPORTER:
-        pimpl->reporters.emplace_back(new ReporterJUnit(optarg));
+        pimpl->reporters.emplace_back(new ReporterJUnit(optarg, false));
         pimpl->reporter_root.appendReporter(pimpl->reporters.back().get());
         break;
       case 'r':
       case RESTRICTIVE_RUN:
-        pimpl->filter = RunnerFilterOne::fromPath(optarg);
+        try {
+          pimpl->filter = ::OTest2::make_unique<RunnerFilterTags>(optarg);
+        }
+        catch(const Exception& exc_) {
+          std::cout << "invalid tag expression: " << exc_.reason() << std::endl;
+          std::exit(2);
+        }
         break;
       case 'm':
       case REGRESSION_FILE:
@@ -190,16 +186,6 @@ DfltEnvironment::DfltEnvironment(
       case 't':
       case TEST_NAME:
         pimpl->test_name = optarg;
-        break;
-      case 'T':
-      case TAG_EXPRESSION:
-        try {
-          pimpl->tag_filter = ::OTest2::make_unique<TagFilter>(optarg);
-        }
-        catch(const Exception& exc_) {
-          std::cout << "invalid tag expression: " << exc_.reason() << std::endl;
-          std::exit(2);
-        }
         break;
       case 'h':
       case HELP:
@@ -247,25 +233,21 @@ Runner& DfltEnvironment::getRunner() {
     /* -- create the console reporter if it's not disabled */
     if(pimpl->console_reporter) {
       pimpl->reporters.emplace_back(new ReporterConsole(
-          &std::cout, pimpl->console_verbose));
+          &std::cout, pimpl->console_verbose, false));
       pimpl->reporter_root.appendReporter(pimpl->reporters.back().get());
     }
 
-    /* -- create default runner filter - run all tests */
+    /* -- create default runner filter - run all untagged tests */
     if(pimpl->filter == nullptr)
-      pimpl->filter = ::OTest2::make_unique<RunnerFilterEntire>();
+      pimpl->filter = ::OTest2::make_unique<RunnerFilterUntagged>();
 
     /* -- create the test mark storage */
     pimpl->test_mark_storage.reset(
         new TestMarkStorage(&pimpl->test_mark_factory, pimpl->regression_file));
 
-    /* -- create the tag filter according to specified tag expression */
-    if(pimpl->tag_filter == nullptr)
-      pimpl->tag_filter = ::OTest2::make_unique<TagFilter>("[<empty>]");
-
     /* -- get the registry and set the test name */
     const Registry& registry_(Registry::instance("default"));
-    ScenarioIterPtr scenario_(registry_.getTests(*pimpl->filter, *pimpl->tag_filter));
+    ScenarioIterPtr scenario_(registry_.getTests(*pimpl->filter));
 
     /* -- finally, create the test runner */
     pimpl->runner.reset(new RunnerOrdinary(

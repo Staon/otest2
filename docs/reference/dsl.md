@@ -8,18 +8,21 @@ toc: true
 ## Basic Structure
 
 The OTest2 files are valid C++ sources using simple macros and clang annotations
-to describe the test. There are two flavours of the DSL: _compact syntax_
+to describe the test. There are two flavors of the DSL: _compact syntax_
 and _full syntax_. Both may be mixed together.
+
+Test cases may contain zero or more test states. Suites may contain zero or
+more test suites or test cases. Both test suite and test case may be
+a root object (not placed in a parent).
 
 Definition of a suite or a test case is divided into 3 blocks:
   1. Declaration of fixtures and user functions - **fixture block**.
   2. Definition of start-up, tear-down and user functions - **function block**.
-  3. Definition of nested objects (cases for a suite, test states for
-     a test case) - **object block**.
+  3. Definition of nested objects - **object block**.
      
 There are no special marks dividing the blocks. First defined function
 stops the fixture block and starts the function block. First nested
-object stops the function block. 
+object stops the function block.
 
 ### Compact Syntax
 
@@ -29,39 +32,57 @@ is more simple and it actually suites most use cases.
 ```c++
 #include <otest2/otest2.h>
 
-TEST_SUITE(SuiteName) OT2_TAGS("..tags...") {
+TEST_CASE(CaseName) {
+  /* -- Fixture block of the case. Variables and declarations of user
+   *    functions may be here. */
+  int fixture(666);
+  int myUserFunction();
+  /* ... other fixtures ... */
+  
+  /* -- Function block of the suite. Maximally one start-up and one
+   *    tear-down function may be defined. Number of user functions
+   *    is not limited. */
+  int myUserFunction() { /* ... */ }
+  TEST_START_UP() { /* ... */ }
+  TEST_TEAR_DOWN() { /* ... */ }
+  /* ... other user functions ... */
+
+  /* -- Children objects. A test case may contain just test states.
+   *    The first implemented state is the entering state. As the
+   *    state switching function needs to know the state functions
+   *    empty forward declarations of state functions are allowed
+   *    too. */
+  TEST_STATE(SecondState);              /* -- declaration */
+    
+  TEST_STATE(FirstState) { /* ... */ }  /* -- entering state */
+  
+  TEST_STATE(SecondState) { /* ... */ } /* -- second state */
+  
+  /* -- Following macro is a shortcut for cases which don't need
+   *    to switch states - it creates one AnonymousState. */
+  TEST_SIMPLE() { /* ... */ }
+  
+  /* ... other states ... */
+}
+
+TEST_SUITE(SuiteName) {
   /* -- Fixture block of the suite. Variables and declarations of user
    *    functions may be here. */
   int fixture;
   int myUserFunction();
+  /* ... other fixtures ... */
   
   /* -- Function block of the suite. Maximally one start-up and one
-   *    tear-down function must be defined. The user functions
-   *    are unlimited. */
+   *    tear-down function may be defined. The number of user functions
+   *    is not limited. */
   int myUserFunction() { /* ... */ }
   TEST_START_UP() { /* ... */ }
   TEST_TEAR_DOWN() { /* ... */ }
+  /* ... other user functions */
   
-  /* -- Object block of the suite. Zero or more cases may be defined. */
-  TEST_CASE(CaseName) OT2_TAGS("..tags...") {
-    /* -- Fixture block of the case. Variables and declarations of user
-     *    functions may be here. */
-    int fixture(10);
-    int myUserFunction();
-    
-    /* -- Function block of the case. Maximally one start-up and one
-     *    tear-down function must be defined. The user functions
-     *    are unlimited. */
-    int myUserFunction() { /* ... */ }
-    TEST_START_UP() { /* ... */ }
-    TEST_TEAR_DOWN() { /* ... */ }
-    
-    /* -- Object block of the case. One simple state or zero or more
-     *    states. */
-    TEST_SIMPLE() { /* ... */ }
-    
-    TEST_STATE(StateName) { /* ... */ }
-  }
+  /* -- Object block of the suite. Zero or more nested suites or
+   *    test cases may be specified here. */
+  /* ... children objects ... */
 }
 ```
 
@@ -75,39 +96,57 @@ of [test functions](#functions).
 ```c++
 #include <otest2/otest2.h>
 
-OT2_SUITE(SuiteName) OT2_TAGS("..tags...") {
+OT2_CASE(CaseName) OT2_TAGS("...tags...") {
+  /* -- Fixture block of the case. Variables and declarations of user
+   *    functions may be here. */
+  int fixture(666);
+  int myUserFunction();
+  /* ... other fixtures ... */
+  
+  /* -- Function block of the suite. Maximally one start-up and one
+   *    tear-down function may be defined. Number of user functions
+   *    is not limited. */
+  int myUserFunction() { /* ... */ }
+  void startUp() OT2_START_UP() { /* ... */ }
+  void tearDown() OT2_TEAR_DOWN() { /* ... */ }
+  /* ... other user functions ... */
+
+  /* -- Children objects. A test case may contain just test states.
+   *    The first implemented state is the entering state. As the
+   *    state switching function needs to know the state functions
+   *    empty forward declarations of state functions are allowed
+   *    too. */
+  void secondState() OT2_STATE();              /* -- declaration */
+    
+  void firstState() OT2_STATE() { /* ... */ }  /* -- entering state */
+  
+  void secondState() OT2_STATE() { /* ... */ } /* -- second state */
+  
+  /* -- Following macro is a shortcut for cases which don't need
+   *    to switch states - it creates one AnonymousState. */
+  OT2_SIMPLE() { /* ... */ }
+  
+  /* ... other states ... */
+}
+
+OT2_SUITE(SuiteName) OT2_TAGS("...tags...") {
   /* -- Fixture block of the suite. Variables and declarations of user
    *    functions may be here. */
   int fixture;
   int myUserFunction();
+  /* ... other fixtures ... */
   
   /* -- Function block of the suite. Maximally one start-up and one
-   *    tear-down function must be defined. The user functions
-   *    are unlimited. */
+   *    tear-down function may be defined. The number of user functions
+   *    is not limited. */
   int myUserFunction() { /* ... */ }
   void startUp() OT2_START_UP() { /* ... */ }
   void tearDown() OT2_TEAR_DOWN() { /* ... */ }
+  /* ... other user functions */
   
-  /* -- Object block of the suite. Zero or more cases may be defined. */
-  OT2_CASE(CaseName) OT2_TAGS("..tags...") {
-    /* -- Fixture block of the case. Variables and declarations of user
-     *    functions may be here. */
-    int fixture(10);
-    int myUserFunction();
-    
-    /* -- Function block of the case. Maximally one start-up and one
-     *    tear-down function must be defined. The user functions
-     *    are unlimited. */
-    int myUserFunction() { /* ... */ }
-    void startUp() OT2_START_UP() { /* ... */ }
-    void tearDown() OT2_TEAR_DOWN() { /* ... */ }
-    
-    /* -- Object block of the case. One simple state or zero or more
-     *    states. */
-    OT2_SIMPLE() { /* ... */ }
-    
-    void StateName() OT2_STATE() { /* ... */ }
-  }
+  /* -- Object block of the suite. Zero or more nested suites or
+   *    test cases may be specified here. */
+  /* ... children objects ... */
 }
 ```
 

@@ -59,7 +59,7 @@ Runtime::InternalCtor Runtime::internal_ctor;
 Runtime::Runtime(
     const std::string& suite_name_,
     const std::string& case_name_) :
-  Runtime(internal_ctor, suite_name_, case_name_, false, "", "") {
+  Runtime(internal_ctor, suite_name_, case_name_, nullptr, false, "", "") {
 
 }
 
@@ -67,7 +67,7 @@ Runtime::Runtime(
     const std::string& suite_name_,
     const std::string& case_name_,
     const ReportPaths&) :
-  Runtime(internal_ctor, suite_name_, case_name_, true, "", "") {
+  Runtime(internal_ctor, suite_name_, case_name_, nullptr, true, "", "") {
 
 }
 
@@ -79,6 +79,7 @@ Runtime::Runtime(
       internal_ctor,
       suite_name_,
       case_name_,
+      nullptr,
       false,
       regression_file_,
       "") {
@@ -94,6 +95,7 @@ Runtime::Runtime(
       internal_ctor,
       suite_name_,
       case_name_,
+      nullptr,
       false,
       "",
       tag_expression_) {
@@ -109,6 +111,7 @@ Runtime::Runtime(
       internal_ctor,
       suite_name_,
       case_name_,
+      nullptr,
       false,
       regression_file_,
       tag_expression_) {
@@ -116,9 +119,18 @@ Runtime::Runtime(
 }
 
 Runtime::Runtime(
+    const std::string& suite_name_,
+    const std::string& case_name_,
+    Reporter* reporter_) :
+  Runtime(internal_ctor, suite_name_, case_name_, reporter_, false, "", "") {
+
+}
+
+Runtime::Runtime(
     const Runtime::InternalCtor&,
     const std::string& suite_name_,
     const std::string& case_name_,
+    Reporter* reporter_,
     bool report_paths_,
     const std::string& regression_file_,
     const std::string& tag_expression_) :
@@ -132,7 +144,7 @@ Runtime::Runtime(
   runner(
       &time_source,
       &exc_catcher,
-      &reporter,
+      (reporter_ == nullptr)?(&reporter):reporter_,
       &test_mark_factory,
       test_mark_storage.get(),
       &user_data,

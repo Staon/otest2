@@ -176,7 +176,7 @@ DfltEnvironment::DfltEnvironment(
         break;
       case 'j':
       case JUNIT_REPORTER:
-        pimpl->reporters.emplace_back(new ReporterJUnit(optarg));
+        pimpl->reporters.emplace_back(new ReporterJUnit(optarg, false));
         pimpl->reporter_root.appendReporter(pimpl->reporters.back().get());
         break;
       case 'r':
@@ -247,7 +247,7 @@ Runner& DfltEnvironment::getRunner() {
     /* -- create the console reporter if it's not disabled */
     if(pimpl->console_reporter) {
       pimpl->reporters.emplace_back(new ReporterConsole(
-          &std::cout, pimpl->console_verbose));
+          &std::cout, pimpl->console_verbose, false));
       pimpl->reporter_root.appendReporter(pimpl->reporters.back().get());
     }
 

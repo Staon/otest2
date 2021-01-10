@@ -140,6 +140,20 @@ OT2_SUITE(NestedSuites) {
         testAssertEqual("hello", "world");
       }
     }
+
+    OT2_SUITE(ThirdLevelSuite) {
+      OT2_CASE(ThirdLevelCase) {
+        OT2_SIMPLE() {
+          testAssert(10 < 100);
+        }
+      }
+    }
+  }
+
+  OT2_CASE(CaseAtFirstLevel) {
+    OT2_SIMPLE() {
+      testAssertEqual("foo", "foo");
+    }
   }
 }
 

@@ -49,10 +49,13 @@ class ReporterConsole : public Reporter {
      * @param out_ An output stream. The ownership is not taken.
      * @param verbose_ If it's true all assertions are printed. If it's false
      *     just the failed assertions are printed out.
+     * @param hide_location_ If the flag is true, the assertion locations
+     *     are hidden (replaced by '...').
      */
     explicit ReporterConsole(
         std::ostream* out_,
-        bool verbose_);
+        bool verbose_,
+        bool hide_location_);
 
     /**
      * @brief Dtor

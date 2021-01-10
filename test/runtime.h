@@ -34,8 +34,9 @@
 
 namespace OTest2 {
 
-namespace Test {
+class Reporter;
 
+namespace Test {
 
 /**
  * @brief Generic runtime of the OTest2 self tests
@@ -119,8 +120,7 @@ class Runtime {
      * @brief Ctor
      *
      * @param suite_name_ Name of the suite to be run
-     * @param case_name_ Name of the case to be run. If it's empty the entire
-     *     suite is run.
+     * @param case_name_ Name of the case to be run.
      * @param regression_file_ Name of the regression (test marks) file
      * @param tag_expression_ Specified tag expression
      */
@@ -130,12 +130,26 @@ class Runtime {
         const std::string& regression_file_,
         const std::string& tag_expression_);
 
+    /**
+     * @brief Ctor
+     *
+     * @param suite_name_ Name of the suite to be run
+     * @param case_name_ Name of the case to be run.
+     * @param reporter_ A reporter object injected into the runtime.
+     *     The ownership is not taken.
+     */
+    explicit Runtime(
+        const std::string& suite_name_,
+        const std::string& case_name_,
+        Reporter* reporter_);
+
   private:
     static struct InternalCtor{} internal_ctor;
     explicit Runtime(
         const InternalCtor&,
         const std::string& suite_name_,
         const std::string& case_name_,
+        Reporter* reporter_,
         bool report_paths_,
         const std::string& regression_file_,
         const std::string& tag_expression_);

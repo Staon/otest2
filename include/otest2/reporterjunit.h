@@ -39,9 +39,12 @@ class ReporterJUnit : public Reporter {
      * @brief Ctor
      *
      * @param file_ filename of the generated XML report
+     * @param hide_location_ If it's true the location information (file
+     *     and line number is omitted in the generated XML file.
      */
     explicit ReporterJUnit(
-        const std::string& file_);
+        const std::string& file_,
+        bool hide_location_);
 
     /**
      * @brief Dtor

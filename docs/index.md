@@ -65,7 +65,7 @@ Current release version is [1.2.0]({{ site.repositoryurl }}/releases/tag/v1.2.0)
 * Nice color console report:
  
 {:refdef: style="text-align: center;"}
-![color console report]({{ "/assets/console-reporter.png/" | relative_url }})
+![color console report]({{ "/assets/console-reporter.png" | relative_url }})
 {:refdef}
 
 ### Supported Platforms

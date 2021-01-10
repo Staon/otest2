@@ -247,19 +247,49 @@ TEST_SUITE(DslSuite) {
         "path: selftest::NestedSuites::TheNestedSuite::NestedCase",
         "leaveCase<NestedCase>: failed",
         "path: selftest::NestedSuites::TheNestedSuite::NestedCase",
+        "enterSuite<ThirdLevelSuite>",
+        "path: selftest::NestedSuites::TheNestedSuite::ThirdLevelSuite",
+        "enterCase<ThirdLevelCase>",
+        "path: selftest::NestedSuites::TheNestedSuite::ThirdLevelSuite::ThirdLevelCase",
+        "enterState<AnonymousState>",
+        "path: selftest::NestedSuites::TheNestedSuite::ThirdLevelSuite::ThirdLevelCase",
+        "assert<'10 < 100'>: passed",
+        "path: selftest::NestedSuites::TheNestedSuite::ThirdLevelSuite::ThirdLevelCase",
+        "leaveAssert<>",
+        "path: selftest::NestedSuites::TheNestedSuite::ThirdLevelSuite::ThirdLevelCase",
+        "leaveState<AnonymousState>: passed",
+        "path: selftest::NestedSuites::TheNestedSuite::ThirdLevelSuite::ThirdLevelCase",
+        "leaveCase<ThirdLevelCase>: passed",
+        "path: selftest::NestedSuites::TheNestedSuite::ThirdLevelSuite::ThirdLevelCase",
+        "leaveSuite<ThirdLevelSuite>: passed",
+        "path: selftest::NestedSuites::TheNestedSuite::ThirdLevelSuite",
         "leaveSuite<TheNestedSuite>: failed",
         "path: selftest::NestedSuites::TheNestedSuite",
+        "enterCase<CaseAtFirstLevel>",
+        "path: selftest::NestedSuites::CaseAtFirstLevel",
+        "enterState<AnonymousState>",
+        "path: selftest::NestedSuites::CaseAtFirstLevel",
+        "assert<check 'a == b' has passed>: passed",
+        "path: selftest::NestedSuites::CaseAtFirstLevel",
+        "message<a = 'foo'>",
+        "path: selftest::NestedSuites::CaseAtFirstLevel",
+        "message<b = 'foo'>",
+        "path: selftest::NestedSuites::CaseAtFirstLevel",
+        "leaveAssert<>",
+        "path: selftest::NestedSuites::CaseAtFirstLevel",
+        "leaveState<AnonymousState>: passed",
+        "path: selftest::NestedSuites::CaseAtFirstLevel",
+        "leaveCase<CaseAtFirstLevel>: passed",
+        "path: selftest::NestedSuites::CaseAtFirstLevel",
         "leaveSuite<NestedSuites>: failed",
         "path: selftest::NestedSuites",
         "leaveTest<selftest>: failed",
         "path: selftest",
       };
-
       Runtime runtime_("NestedSuites", "", Runtime::report_paths_mark);
-
       testAssert(!runtime_.runTheTest());
       testAssert(runtime_.reporter.checkRecords(data_));
-      //      runtime_.reporter.dumpRecords(std::cout);
+//      runtime_.reporter.dumpRecords(std::cout);
     }
   }
 }

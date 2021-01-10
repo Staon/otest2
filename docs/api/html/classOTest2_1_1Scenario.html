@@ -103,9 +103,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac96b4812e58486eee447a8c43053f5ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b7a61d8d85bc9b22f66daff349cc54d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOTest2_1_1Scenario.html">Scenario</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Scenario.html#a4b7a61d8d85bc9b22f66daff349cc54d">operator=</a> (const <a class="el" href="classOTest2_1_1Scenario.html">Scenario</a> &amp;)=delete</td></tr>
 <tr class="separator:a4b7a61d8d85bc9b22f66daff349cc54d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a904a53076161062e2df0c00d9a02041c"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceOTest2.html#a74a48b7dff9988ac9dfc6f098dca5cb2">ScenarioPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Scenario.html#a904a53076161062e2df0c00d9a02041c">filterScenario</a> (<a class="el" href="classOTest2_1_1ObjectPath.html">ObjectPath</a> &amp;path_, <a class="el" href="classOTest2_1_1TagsStack.html">TagsStack</a> &amp;tags_, <a class="el" href="namespaceOTest2.html#a565464137de27ac2ac93d695a470c322">ScenarioContainerPtr</a> parent_, const <a class="el" href="classOTest2_1_1RunnerFilter.html">RunnerFilter</a> &amp;name_filter_, const <a class="el" href="classOTest2_1_1TagFilter.html">TagFilter</a> &amp;tag_filter_) const =0</td></tr>
-<tr class="memdesc:a904a53076161062e2df0c00d9a02041c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter the scenario.  <a href="classOTest2_1_1Scenario.html#a904a53076161062e2df0c00d9a02041c">More...</a><br /></td></tr>
-<tr class="separator:a904a53076161062e2df0c00d9a02041c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92a7ec643cf9ea33ed4ae449debdbb14"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceOTest2.html#a74a48b7dff9988ac9dfc6f098dca5cb2">ScenarioPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Scenario.html#a92a7ec643cf9ea33ed4ae449debdbb14">filterScenario</a> (<a class="el" href="classOTest2_1_1TagsStack.html">TagsStack</a> &amp;tags_, <a class="el" href="namespaceOTest2.html#a565464137de27ac2ac93d695a470c322">ScenarioContainerPtr</a> parent_, const <a class="el" href="classOTest2_1_1RunnerFilter.html">RunnerFilter</a> &amp;filter_) const =0</td></tr>
+<tr class="memdesc:a92a7ec643cf9ea33ed4ae449debdbb14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filter the scenario.  <a href="classOTest2_1_1Scenario.html#a92a7ec643cf9ea33ed4ae449debdbb14">More...</a><br /></td></tr>
+<tr class="separator:a92a7ec643cf9ea33ed4ae449debdbb14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0658996ad2a279875c783c8fa921e02"><td class="memItemLeft" align="right" valign="top">virtual std::pair&lt; std::string, <a class="el" href="namespaceOTest2.html#a09bd49f984fc343c80222bf08df40b4b">ObjectRepeaterPtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Scenario.html#aa0658996ad2a279875c783c8fa921e02">createRepeater</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_) const =0</td></tr>
 <tr class="memdesc:aa0658996ad2a279875c783c8fa921e02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create repeater object for testing object represented by this scenario object.  <a href="classOTest2_1_1Scenario.html#aa0658996ad2a279875c783c8fa921e02">More...</a><br /></td></tr>
 <tr class="separator:aa0658996ad2a279875c783c8fa921e02"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -240,8 +240,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a904a53076161062e2df0c00d9a02041c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a904a53076161062e2df0c00d9a02041c">&#9670;&nbsp;</a></span>filterScenario()</h2>
+<a id="a92a7ec643cf9ea33ed4ae449debdbb14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92a7ec643cf9ea33ed4ae449debdbb14">&#9670;&nbsp;</a></span>filterScenario()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -252,12 +252,6 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual <a class="el" href="namespaceOTest2.html#a74a48b7dff9988ac9dfc6f098dca5cb2">ScenarioPtr</a> OTest2::Scenario::filterScenario </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOTest2_1_1ObjectPath.html">ObjectPath</a> &amp;&#160;</td>
-          <td class="paramname"><em>path_</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype"><a class="el" href="classOTest2_1_1TagsStack.html">TagsStack</a> &amp;&#160;</td>
           <td class="paramname"><em>tags_</em>, </td>
         </tr>
@@ -271,13 +265,7 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="classOTest2_1_1RunnerFilter.html">RunnerFilter</a> &amp;&#160;</td>
-          <td class="paramname"><em>name_filter_</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classOTest2_1_1TagFilter.html">TagFilter</a> &amp;&#160;</td>
-          <td class="paramname"><em>tag_filter_</em>&#160;</td>
+          <td class="paramname"><em>filter_</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -296,17 +284,15 @@ Public Member Functions</h2></td></tr>
 <p>This method filters the scenario object. Objects which don't match the filters are removed.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">path_</td><td>Current object path </td></tr>
-    <tr><td class="paramname">tags_</td><td>Current tags </td></tr>
+    <tr><td class="paramname">tags_</td><td>Stack of object names and tags </td></tr>
     <tr><td class="paramname">parent_</td><td>Parent container </td></tr>
-    <tr><td class="paramname">name_filter_</td><td>Filter by object names </td></tr>
-    <tr><td class="paramname">tag_filter_</td><td>Filter by tags </td></tr>
+    <tr><td class="paramname">filter_</td><td>Used filter </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The <em>parent_</em> object if it's not null. Otherwise the new container object. </dd></dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1ScenarioSuite.html#a7cb44fee056aa590fecafc12445c67dc">OTest2::ScenarioSuite</a>, <a class="el" href="classOTest2_1_1ScenarioCase.html#a294217fd21562bee37b6af3d2cdeefe1">OTest2::ScenarioCase</a>, and <a class="el" href="classOTest2_1_1ScenarioRoot.html#aca224d4429baf66357000fe88913f5f3">OTest2::ScenarioRoot</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1ScenarioSuite.html#a612aa1629d81cbee98a3bd20e44396f2">OTest2::ScenarioSuite</a>, <a class="el" href="classOTest2_1_1ScenarioRoot.html#a2fb238caa38f3725367a08de15ad95d4">OTest2::ScenarioRoot</a>, and <a class="el" href="classOTest2_1_1ScenarioCase.html#ae38836b23203e772b14ee8c9c295c6a4">OTest2::ScenarioCase</a>.</p>
 
 </div>
 </div>

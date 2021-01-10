@@ -1,8 +1,9 @@
 <map id="include/otest2/tagsstack.h" name="include/otest2/tagsstack.h">
-<area shape="rect" id="node1" title=" " alt="" coords="299,5,489,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="436,5,627,32"/>
 <area shape="rect" id="node2" href="$registry_8cpp.html" title=" " alt="" coords="5,80,119,107"/>
-<area shape="rect" id="node3" href="$scenariocase_8cpp.html" title=" " alt="" coords="143,80,293,107"/>
-<area shape="rect" id="node4" href="$scenariosuite_8cpp.html" title=" " alt="" coords="318,80,470,107"/>
-<area shape="rect" id="node5" href="$tagfilter_8cpp.html" title=" " alt="" coords="494,80,609,107"/>
-<area shape="rect" id="node6" href="$tagsstack_8cpp.html" title=" " alt="" coords="633,80,763,107"/>
+<area shape="rect" id="node3" href="$runnerfiltertags_8cpp.html" title=" " alt="" coords="143,80,309,107"/>
+<area shape="rect" id="node4" href="$runnerfilteruntagged_8cpp.html" title=" " alt="" coords="333,80,532,107"/>
+<area shape="rect" id="node5" href="$scenariocase_8cpp.html" title=" " alt="" coords="556,80,707,107"/>
+<area shape="rect" id="node6" href="$scenariosuite_8cpp.html" title=" " alt="" coords="731,80,883,107"/>
+<area shape="rect" id="node7" href="$tagsstack_8cpp.html" title=" " alt="" coords="908,80,1037,107"/>
 </map>

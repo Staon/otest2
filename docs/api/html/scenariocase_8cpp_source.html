@@ -93,152 +93,139 @@ $(function() {
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;assert.h&gt;</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="context_8h.html">context.h</a>&gt;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="objectpath_8h.html">objectpath.h</a>&gt;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="objectrepeater_8h.html">objectrepeater.h</a>&gt;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="objectrepeaterfactory_8h.html">objectrepeaterfactory.h</a>&gt;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="reporter_8h.html">reporter.h</a>&gt;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="runnerfilter_8h.html">runnerfilter.h</a>&gt;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="scenariocontainer_8h.html">scenariocontainer.h</a>&gt;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="tagfilter_8h.html">tagfilter.h</a>&gt;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="tags_8h.html">tags.h</a>&gt;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="tagsstack_8h.html">tagsstack.h</a>&gt;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="utils_8h.html">utils.h</a>&gt;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="objectrepeater_8h.html">objectrepeater.h</a>&gt;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="objectrepeaterfactory_8h.html">objectrepeaterfactory.h</a>&gt;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="reporter_8h.html">reporter.h</a>&gt;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="runnerfilter_8h.html">runnerfilter.h</a>&gt;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="scenariocontainer_8h.html">scenariocontainer.h</a>&gt;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="tags_8h.html">tags.h</a>&gt;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="tagsstack_8h.html">tagsstack.h</a>&gt;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="utils_8h.html">utils.h</a>&gt;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">struct </span>ScenarioCase::Impl {</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    std::string name;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    Tags tags;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="namespaceOTest2.html#ad286e8341e2ba1c41df47c60d4bf8549">ObjectRepeaterFactoryPtr</a> repeater_factory;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    Impl(</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">struct </span>ScenarioCase::Impl {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    std::string name;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    Tags tags;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="namespaceOTest2.html#ad286e8341e2ba1c41df47c60d4bf8549">ObjectRepeaterFactoryPtr</a> repeater_factory;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    Impl(</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">const</span> Impl&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    Impl&amp; <a class="code" href="classOTest2_1_1ScenarioCase.html#aadd05b1c7f3d84665bfc56c4546af40d">operator = </a>(</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">const</span> Impl&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    Impl&amp; <a class="code" href="classOTest2_1_1ScenarioCase.html#aadd05b1c7f3d84665bfc56c4546af40d">operator = </a>(</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keyword">const</span> Impl&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">explicit</span> Impl(</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keyword">const</span> std::string&amp; name_,</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">const</span> Tags&amp; tags_,</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <a class="code" href="namespaceOTest2.html#ad286e8341e2ba1c41df47c60d4bf8549">ObjectRepeaterFactoryPtr</a> repeater_factory_);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    ~Impl();</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;};</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;ScenarioCase::Impl::Impl(</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">const</span> std::string&amp; name_,</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">const</span> Tags&amp; tags_,</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="namespaceOTest2.html#ad286e8341e2ba1c41df47c60d4bf8549">ObjectRepeaterFactoryPtr</a> repeater_factory_) :</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  name(name_),</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  tags(tags_),</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  repeater_factory(repeater_factory_) {</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  assert(!name.empty() &amp;&amp; repeater_factory != <span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">explicit</span> Impl(</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keyword">const</span> std::string&amp; name_,</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keyword">const</span> Tags&amp; tags_,</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <a class="code" href="namespaceOTest2.html#ad286e8341e2ba1c41df47c60d4bf8549">ObjectRepeaterFactoryPtr</a> repeater_factory_);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    ~Impl();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;};</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;ScenarioCase::Impl::Impl(</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">const</span> std::string&amp; name_,</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">const</span> Tags&amp; tags_,</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <a class="code" href="namespaceOTest2.html#ad286e8341e2ba1c41df47c60d4bf8549">ObjectRepeaterFactoryPtr</a> repeater_factory_) :</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  name(name_),</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  tags(tags_),</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  repeater_factory(repeater_factory_) {</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  assert(!name.empty() &amp;&amp; repeater_factory != <span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;ScenarioCase::Impl::~Impl() {</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;ScenarioCase::Impl::~Impl() {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;}</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="classOTest2_1_1ScenarioCase.html#aa426d1f87961eabde6131fe7ecb53aa9">   70</a></span>&#160;<a class="code" href="classOTest2_1_1ScenarioCase.html#aa426d1f87961eabde6131fe7ecb53aa9">ScenarioCase::ScenarioCase</a>(</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keyword">const</span> std::string&amp; name_,</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Tags.html">Tags</a>&amp; tags_,</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <a class="code" href="namespaceOTest2.html#ad286e8341e2ba1c41df47c60d4bf8549">ObjectRepeaterFactoryPtr</a> repeater_factory_) :</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  pimpl(new Impl(name_, tags_, repeater_factory_)) {</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classOTest2_1_1ScenarioCase.html#aa426d1f87961eabde6131fe7ecb53aa9">   68</a></span>&#160;<a class="code" href="classOTest2_1_1ScenarioCase.html#aa426d1f87961eabde6131fe7ecb53aa9">ScenarioCase::ScenarioCase</a>(</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">const</span> std::string&amp; name_,</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Tags.html">Tags</a>&amp; tags_,</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <a class="code" href="namespaceOTest2.html#ad286e8341e2ba1c41df47c60d4bf8549">ObjectRepeaterFactoryPtr</a> repeater_factory_) :</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  pimpl(new Impl(name_, tags_, repeater_factory_)) {</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;}</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;}</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="classOTest2_1_1ScenarioCase.html#a98c140a6b6c6ade7d833e1f77166b483">   78</a></span>&#160;<a class="code" href="classOTest2_1_1ScenarioCase.html#a98c140a6b6c6ade7d833e1f77166b483">ScenarioCase::~ScenarioCase</a>() {</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <a class="code" href="namespaceOTest2.html#a9c0e5683fb529ec38164c2f418172b30">odelete</a>(pimpl);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="classOTest2_1_1ScenarioCase.html#a294217fd21562bee37b6af3d2cdeefe1">   82</a></span>&#160;<a class="code" href="namespaceOTest2.html#a74a48b7dff9988ac9dfc6f098dca5cb2">ScenarioPtr</a> <a class="code" href="classOTest2_1_1ScenarioCase.html#a294217fd21562bee37b6af3d2cdeefe1">ScenarioCase::filterScenario</a>(</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <a class="code" href="classOTest2_1_1ObjectPath.html">ObjectPath</a>&amp; path_,</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <a class="code" href="classOTest2_1_1TagsStack.html">TagsStack</a>&amp; tags_,</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <a class="code" href="namespaceOTest2.html#a565464137de27ac2ac93d695a470c322">ScenarioContainerPtr</a> parent_,</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1RunnerFilter.html">RunnerFilter</a>&amp; name_filter_,</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TagFilter.html">TagFilter</a>&amp; tag_filter_)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="comment">/* -- add my name into the whole path */</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  path_.<a class="code" href="classOTest2_1_1ObjectPath.html#a38ec55853b9f538fcae143d964faf411">pushName</a>(pimpl-&gt;name);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;  tags_.<a class="code" href="classOTest2_1_1TagsStack.html#a3b760691f75a5a2c17c9cae593b31766">pushTags</a>(pimpl-&gt;tags);</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="comment">/* -- if the object is not filtered append it into the parent container */</span></div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keywordflow">if</span>(!name_filter_.<a class="code" href="classOTest2_1_1RunnerFilter.html#aa69a8ab75122ed2390fba0857f600a34">filterPath</a>(path_) &amp;&amp; !tag_filter_.<a class="code" href="classOTest2_1_1TagFilter.html#a7b910079511d42e821c9f94c3da4b02a">filterObject</a>(tags_)) {</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="comment">/* -- the object is supposed to be run add myself into the parent</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="comment">     *    container. */</span></div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    parent_-&gt;appendScenario(</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        pimpl-&gt;name,</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        std::make_shared&lt;ScenarioCase&gt;(</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            pimpl-&gt;name, pimpl-&gt;tags, pimpl-&gt;repeater_factory));</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  }</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <span class="comment">/* -- pop my name */</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;  path_.<a class="code" href="classOTest2_1_1ObjectPath.html#a328406a4783034d8ba8a17accb7da552">popName</a>();</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  tags_.<a class="code" href="classOTest2_1_1TagsStack.html#a866c4a6f74096563e0395897df882816">popTags</a>();</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <span class="keywordflow">return</span> parent_;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;}</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno"><a class="line" href="classOTest2_1_1ScenarioCase.html#a1cd25c0dd1623a25e6e3651014c13e8a">  109</a></span>&#160;std::pair&lt;std::string, ObjectRepeaterPtr&gt; <a class="code" href="classOTest2_1_1ScenarioCase.html#a1cd25c0dd1623a25e6e3651014c13e8a">ScenarioCase::createRepeater</a>(</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  <span class="keywordflow">return</span> {pimpl-&gt;name, pimpl-&gt;repeater_factory-&gt;createRepeater(context_)};</div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="classOTest2_1_1ScenarioCase.html#a98c140a6b6c6ade7d833e1f77166b483">   76</a></span>&#160;<a class="code" href="classOTest2_1_1ScenarioCase.html#a98c140a6b6c6ade7d833e1f77166b483">ScenarioCase::~ScenarioCase</a>() {</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <a class="code" href="namespaceOTest2.html#a9c0e5683fb529ec38164c2f418172b30">odelete</a>(pimpl);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="classOTest2_1_1ScenarioCase.html#ae38836b23203e772b14ee8c9c295c6a4">   80</a></span>&#160;<a class="code" href="namespaceOTest2.html#a74a48b7dff9988ac9dfc6f098dca5cb2">ScenarioPtr</a> <a class="code" href="classOTest2_1_1ScenarioCase.html#ae38836b23203e772b14ee8c9c295c6a4">ScenarioCase::filterScenario</a>(</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <a class="code" href="classOTest2_1_1TagsStack.html">TagsStack</a>&amp; tags_,</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <a class="code" href="namespaceOTest2.html#a565464137de27ac2ac93d695a470c322">ScenarioContainerPtr</a> parent_,</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1RunnerFilter.html">RunnerFilter</a>&amp; filter_)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="comment">/* -- add my name nad tags into the whole path */</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;  tags_.<a class="code" href="classOTest2_1_1TagsStack.html#aff3b5658a4e773cd7a55ef5ccd75c7f5">pushTags</a>(pimpl-&gt;name, pimpl-&gt;tags);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="comment">/* -- if the object is not filtered append it into the parent container */</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keywordflow">if</span>(!filter_.<a class="code" href="classOTest2_1_1RunnerFilter.html#a6be7fceb5d117011b0968ae9fff8351a">filterPath</a>(tags_)) {</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="comment">/* -- the object is supposed to be run add myself into the parent</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment">     *    container. */</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    parent_-&gt;appendScenario(</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        pimpl-&gt;name,</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        std::make_shared&lt;ScenarioCase&gt;(</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            pimpl-&gt;name, pimpl-&gt;tags, pimpl-&gt;repeater_factory));</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  }</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="comment">/* -- pop me */</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  tags_.<a class="code" href="classOTest2_1_1TagsStack.html#a866c4a6f74096563e0395897df882816">popTags</a>();</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keywordflow">return</span> parent_;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;}</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno"><a class="line" href="classOTest2_1_1ScenarioCase.html#a1cd25c0dd1623a25e6e3651014c13e8a">  103</a></span>&#160;std::pair&lt;std::string, ObjectRepeaterPtr&gt; <a class="code" href="classOTest2_1_1ScenarioCase.html#a1cd25c0dd1623a25e6e3651014c13e8a">ScenarioCase::createRepeater</a>(</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="keywordflow">return</span> {pimpl-&gt;name, pimpl-&gt;repeater_factory-&gt;createRepeater(context_)};</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;}</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="classOTest2_1_1ScenarioCase.html#acbcfa8cabc6b266918866d491831316e">  108</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ScenarioCase.html#acbcfa8cabc6b266918866d491831316e">ScenarioCase::reportEntering</a>(</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keyword">const</span> std::string&amp; decorated_name_) <span class="keyword">const</span> noexcept {</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  context_.reporter-&gt;enterCase(context_, decorated_name_);</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;}</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
-<div class="line"><a name="l00114"></a><span class="lineno"><a class="line" href="classOTest2_1_1ScenarioCase.html#acbcfa8cabc6b266918866d491831316e">  114</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ScenarioCase.html#acbcfa8cabc6b266918866d491831316e">ScenarioCase::reportEntering</a>(</div>
+<div class="line"><a name="l00114"></a><span class="lineno"><a class="line" href="classOTest2_1_1ScenarioCase.html#af433345da9b2d4190770e689bc5eb010">  114</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ScenarioCase.html#af433345da9b2d4190770e689bc5eb010">ScenarioCase::reportLeaving</a>(</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keyword">const</span> std::string&amp; decorated_name_) <span class="keyword">const</span> noexcept {</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  context_.reporter-&gt;enterCase(context_, decorated_name_);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;}</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
-<div class="line"><a name="l00120"></a><span class="lineno"><a class="line" href="classOTest2_1_1ScenarioCase.html#af433345da9b2d4190770e689bc5eb010">  120</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ScenarioCase.html#af433345da9b2d4190770e689bc5eb010">ScenarioCase::reportLeaving</a>(</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keyword">const</span> std::string&amp; decorated_name_,</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="keywordtype">bool</span> result_) <span class="keyword">const</span> noexcept {</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;  context_.reporter-&gt;leaveCase(context_, decorated_name_, result_);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;}</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
-<div class="line"><a name="l00127"></a><span class="lineno"><a class="line" href="classOTest2_1_1ScenarioCase.html#a7afd184337ce95494f91b7e943e2ea5b">  127</a></span>&#160;<a class="code" href="namespaceOTest2.html#acba59c569e67a301963dec19b0e40f9f">ScenarioIterPtr</a> <a class="code" href="classOTest2_1_1ScenarioCase.html#a7afd184337ce95494f91b7e943e2ea5b">ScenarioCase::getChildren</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  assert(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="namespaceOTest2.html#acba59c569e67a301963dec19b0e40f9f">ScenarioIterPtr</a>();</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;}</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keyword">const</span> std::string&amp; decorated_name_,</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keywordtype">bool</span> result_) <span class="keyword">const</span> noexcept {</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  context_.reporter-&gt;leaveCase(context_, decorated_name_, result_);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;}</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
+<div class="line"><a name="l00121"></a><span class="lineno"><a class="line" href="classOTest2_1_1ScenarioCase.html#a7afd184337ce95494f91b7e943e2ea5b">  121</a></span>&#160;<a class="code" href="namespaceOTest2.html#acba59c569e67a301963dec19b0e40f9f">ScenarioIterPtr</a> <a class="code" href="classOTest2_1_1ScenarioCase.html#a7afd184337ce95494f91b7e943e2ea5b">ScenarioCase::getChildren</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  assert(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="namespaceOTest2.html#acba59c569e67a301963dec19b0e40f9f">ScenarioIterPtr</a>();</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;}</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aobjectrepeater_8h_html"><div class="ttname"><a href="objectrepeater_8h.html">objectrepeater.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ObjectPath_html"><div class="ttname"><a href="classOTest2_1_1ObjectPath.html">OTest2::ObjectPath</a></div><div class="ttdoc">This is a simple object keeping path to current testing object.</div><div class="ttdef"><b>Definition:</b> <a href="objectpath_8h_source.html#l00030">objectpath.h:30</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1ScenarioCase_html_aadd05b1c7f3d84665bfc56c4546af40d"><div class="ttname"><a href="classOTest2_1_1ScenarioCase.html#aadd05b1c7f3d84665bfc56c4546af40d">OTest2::ScenarioCase::operator=</a></div><div class="ttdeci">ScenarioCase &amp; operator=(const ScenarioCase &amp;)=delete</div></div>
-<div class="ttc" id="aclassOTest2_1_1ObjectPath_html_a328406a4783034d8ba8a17accb7da552"><div class="ttname"><a href="classOTest2_1_1ObjectPath.html#a328406a4783034d8ba8a17accb7da552">OTest2::ObjectPath::popName</a></div><div class="ttdeci">void popName()</div><div class="ttdoc">Pop name of currently leaving testing object.</div><div class="ttdef"><b>Definition:</b> <a href="objectpath_8cpp_source.html#l00054">objectpath.cpp:54</a></div></div>
-<div class="ttc" id="atagfilter_8h_html"><div class="ttname"><a href="tagfilter_8h.html">tagfilter.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1RunnerFilter_html"><div class="ttname"><a href="classOTest2_1_1RunnerFilter.html">OTest2::RunnerFilter</a></div><div class="ttdoc">Generic interface of a runner filter.</div><div class="ttdef"><b>Definition:</b> <a href="runnerfilter_8h_source.html#l00036">runnerfilter.h:36</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1RunnerFilter_html"><div class="ttname"><a href="classOTest2_1_1RunnerFilter.html">OTest2::RunnerFilter</a></div><div class="ttdoc">Generic interface of a runner filter.</div><div class="ttdef"><b>Definition:</b> <a href="runnerfilter_8h_source.html#l00035">runnerfilter.h:35</a></div></div>
 <div class="ttc" id="atags_8h_html"><div class="ttname"><a href="tags_8h.html">tags.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ScenarioCase_html_a294217fd21562bee37b6af3d2cdeefe1"><div class="ttname"><a href="classOTest2_1_1ScenarioCase.html#a294217fd21562bee37b6af3d2cdeefe1">OTest2::ScenarioCase::filterScenario</a></div><div class="ttdeci">virtual ScenarioPtr filterScenario(ObjectPath &amp;path_, TagsStack &amp;tags_, ScenarioContainerPtr parent_, const RunnerFilter &amp;name_filter_, const TagFilter &amp;tag_filter_) const override</div><div class="ttdoc">Filter the scenario.</div><div class="ttdef"><b>Definition:</b> <a href="scenariocase_8cpp_source.html#l00082">scenariocase.cpp:82</a></div></div>
 <div class="ttc" id="atagsstack_8h_html"><div class="ttname"><a href="tagsstack_8h.html">tagsstack.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ObjectPath_html_a38ec55853b9f538fcae143d964faf411"><div class="ttname"><a href="classOTest2_1_1ObjectPath.html#a38ec55853b9f538fcae143d964faf411">OTest2::ObjectPath::pushName</a></div><div class="ttdeci">void pushName(const std::string &amp;name_)</div><div class="ttdoc">Push name of currently entering testing object.</div><div class="ttdef"><b>Definition:</b> <a href="objectpath_8cpp_source.html#l00048">objectpath.cpp:48</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ScenarioCase_html_a7afd184337ce95494f91b7e943e2ea5b"><div class="ttname"><a href="classOTest2_1_1ScenarioCase.html#a7afd184337ce95494f91b7e943e2ea5b">OTest2::ScenarioCase::getChildren</a></div><div class="ttdeci">virtual ScenarioIterPtr getChildren() const override</div><div class="ttdoc">Get iterator of children object.</div><div class="ttdef"><b>Definition:</b> <a href="scenariocase_8cpp_source.html#l00127">scenariocase.cpp:127</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ScenarioCase_html_a7afd184337ce95494f91b7e943e2ea5b"><div class="ttname"><a href="classOTest2_1_1ScenarioCase.html#a7afd184337ce95494f91b7e943e2ea5b">OTest2::ScenarioCase::getChildren</a></div><div class="ttdeci">virtual ScenarioIterPtr getChildren() const override</div><div class="ttdoc">Get iterator of children object.</div><div class="ttdef"><b>Definition:</b> <a href="scenariocase_8cpp_source.html#l00121">scenariocase.cpp:121</a></div></div>
 <div class="ttc" id="areporter_8h_html"><div class="ttname"><a href="reporter_8h.html">reporter.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1TagsStack_html_a866c4a6f74096563e0395897df882816"><div class="ttname"><a href="classOTest2_1_1TagsStack.html#a866c4a6f74096563e0395897df882816">OTest2::TagsStack::popTags</a></div><div class="ttdeci">void popTags()</div><div class="ttdoc">Pop tags at the top of the stack.</div><div class="ttdef"><b>Definition:</b> <a href="tagsstack_8cpp_source.html#l00066">tagsstack.cpp:66</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1RunnerFilter_html_aa69a8ab75122ed2390fba0857f600a34"><div class="ttname"><a href="classOTest2_1_1RunnerFilter.html#aa69a8ab75122ed2390fba0857f600a34">OTest2::RunnerFilter::filterPath</a></div><div class="ttdeci">virtual bool filterPath(const ObjectPath &amp;path_) const noexcept=0</div><div class="ttdoc">Check whether the path should be filtered.</div></div>
+<div class="ttc" id="aclassOTest2_1_1TagsStack_html_a866c4a6f74096563e0395897df882816"><div class="ttname"><a href="classOTest2_1_1TagsStack.html#a866c4a6f74096563e0395897df882816">OTest2::TagsStack::popTags</a></div><div class="ttdeci">void popTags()</div><div class="ttdoc">Pop tags at the top of the stack.</div><div class="ttdef"><b>Definition:</b> <a href="tagsstack_8cpp_source.html#l00067">tagsstack.cpp:67</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1TagsStack_html_aff3b5658a4e773cd7a55ef5ccd75c7f5"><div class="ttname"><a href="classOTest2_1_1TagsStack.html#aff3b5658a4e773cd7a55ef5ccd75c7f5">OTest2::TagsStack::pushTags</a></div><div class="ttdeci">void pushTags(const std::string &amp;name_, const Tags &amp;tags_)</div><div class="ttdoc">Push tags.</div><div class="ttdef"><b>Definition:</b> <a href="tagsstack_8cpp_source.html#l00061">tagsstack.cpp:61</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ScenarioCase_html_ae38836b23203e772b14ee8c9c295c6a4"><div class="ttname"><a href="classOTest2_1_1ScenarioCase.html#ae38836b23203e772b14ee8c9c295c6a4">OTest2::ScenarioCase::filterScenario</a></div><div class="ttdeci">virtual ScenarioPtr filterScenario(TagsStack &amp;tags_, ScenarioContainerPtr parent_, const RunnerFilter &amp;filter_) const override</div><div class="ttdoc">Filter the scenario.</div><div class="ttdef"><b>Definition:</b> <a href="scenariocase_8cpp_source.html#l00080">scenariocase.cpp:80</a></div></div>
 <div class="ttc" id="autils_8h_html"><div class="ttname"><a href="utils_8h.html">utils.h</a></div></div>
 <div class="ttc" id="ascenariocase_8h_html"><div class="ttname"><a href="scenariocase_8h.html">scenariocase.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ScenarioCase_html_acbcfa8cabc6b266918866d491831316e"><div class="ttname"><a href="classOTest2_1_1ScenarioCase.html#acbcfa8cabc6b266918866d491831316e">OTest2::ScenarioCase::reportEntering</a></div><div class="ttdeci">virtual void reportEntering(const Context &amp;context_, const std::string &amp;decorated_name_) const noexcept override</div><div class="ttdoc">Report entering of the testing object.</div><div class="ttdef"><b>Definition:</b> <a href="scenariocase_8cpp_source.html#l00114">scenariocase.cpp:114</a></div></div>
-<div class="ttc" id="aobjectpath_8h_html"><div class="ttname"><a href="objectpath_8h.html">objectpath.h</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ScenarioCase_html_acbcfa8cabc6b266918866d491831316e"><div class="ttname"><a href="classOTest2_1_1ScenarioCase.html#acbcfa8cabc6b266918866d491831316e">OTest2::ScenarioCase::reportEntering</a></div><div class="ttdeci">virtual void reportEntering(const Context &amp;context_, const std::string &amp;decorated_name_) const noexcept override</div><div class="ttdoc">Report entering of the testing object.</div><div class="ttdef"><b>Definition:</b> <a href="scenariocase_8cpp_source.html#l00108">scenariocase.cpp:108</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html_ad286e8341e2ba1c41df47c60d4bf8549"><div class="ttname"><a href="namespaceOTest2.html#ad286e8341e2ba1c41df47c60d4bf8549">OTest2::ObjectRepeaterFactoryPtr</a></div><div class="ttdeci">std::shared_ptr&lt; ObjectRepeaterFactory &gt; ObjectRepeaterFactoryPtr</div><div class="ttdoc">Shared pointer of the object repeater factories.</div><div class="ttdef"><b>Definition:</b> <a href="objectrepeaterfactoryptr_8h_source.html#l00027">objectrepeaterfactoryptr.h:27</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ScenarioCase_html_aa426d1f87961eabde6131fe7ecb53aa9"><div class="ttname"><a href="classOTest2_1_1ScenarioCase.html#aa426d1f87961eabde6131fe7ecb53aa9">OTest2::ScenarioCase::ScenarioCase</a></div><div class="ttdeci">ScenarioCase(const std::string &amp;name_, const Tags &amp;tags_, ObjectRepeaterFactoryPtr repeater_factory_)</div><div class="ttdoc">Ctor.</div><div class="ttdef"><b>Definition:</b> <a href="scenariocase_8cpp_source.html#l00070">scenariocase.cpp:70</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ScenarioCase_html_aa426d1f87961eabde6131fe7ecb53aa9"><div class="ttname"><a href="classOTest2_1_1ScenarioCase.html#aa426d1f87961eabde6131fe7ecb53aa9">OTest2::ScenarioCase::ScenarioCase</a></div><div class="ttdeci">ScenarioCase(const std::string &amp;name_, const Tags &amp;tags_, ObjectRepeaterFactoryPtr repeater_factory_)</div><div class="ttdoc">Ctor.</div><div class="ttdef"><b>Definition:</b> <a href="scenariocase_8cpp_source.html#l00068">scenariocase.cpp:68</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html_acba59c569e67a301963dec19b0e40f9f"><div class="ttname"><a href="namespaceOTest2.html#acba59c569e67a301963dec19b0e40f9f">OTest2::ScenarioIterPtr</a></div><div class="ttdeci">std::shared_ptr&lt; ScenarioIter &gt; ScenarioIterPtr</div><div class="ttdoc">Shared pointer of the scenario iter interface.</div><div class="ttdef"><b>Definition:</b> <a href="scenarioiterptr_8h_source.html#l00027">scenarioiterptr.h:27</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ScenarioCase_html_af433345da9b2d4190770e689bc5eb010"><div class="ttname"><a href="classOTest2_1_1ScenarioCase.html#af433345da9b2d4190770e689bc5eb010">OTest2::ScenarioCase::reportLeaving</a></div><div class="ttdeci">virtual void reportLeaving(const Context &amp;context_, const std::string &amp;decorated_name_, bool result_) const noexcept override</div><div class="ttdoc">Report leaving of the testing object.</div><div class="ttdef"><b>Definition:</b> <a href="scenariocase_8cpp_source.html#l00120">scenariocase.cpp:120</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ScenarioCase_html_af433345da9b2d4190770e689bc5eb010"><div class="ttname"><a href="classOTest2_1_1ScenarioCase.html#af433345da9b2d4190770e689bc5eb010">OTest2::ScenarioCase::reportLeaving</a></div><div class="ttdeci">virtual void reportLeaving(const Context &amp;context_, const std::string &amp;decorated_name_, bool result_) const noexcept override</div><div class="ttdoc">Report leaving of the testing object.</div><div class="ttdef"><b>Definition:</b> <a href="scenariocase_8cpp_source.html#l00114">scenariocase.cpp:114</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html_a74a48b7dff9988ac9dfc6f098dca5cb2"><div class="ttname"><a href="namespaceOTest2.html#a74a48b7dff9988ac9dfc6f098dca5cb2">OTest2::ScenarioPtr</a></div><div class="ttdeci">std::shared_ptr&lt; Scenario &gt; ScenarioPtr</div><div class="ttdoc">Shared pointer of the scenario object.</div><div class="ttdef"><b>Definition:</b> <a href="scenarioptr_8h_source.html#l00027">scenarioptr.h:27</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1TagFilter_html"><div class="ttname"><a href="classOTest2_1_1TagFilter.html">OTest2::TagFilter</a></div><div class="ttdoc">Filter of tagged testing objects.</div><div class="ttdef"><b>Definition:</b> <a href="tagfilter_8h_source.html#l00091">tagfilter.h:91</a></div></div>
 <div class="ttc" id="arunnerfilter_8h_html"><div class="ttname"><a href="runnerfilter_8h.html">runnerfilter.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ScenarioCase_html_a1cd25c0dd1623a25e6e3651014c13e8a"><div class="ttname"><a href="classOTest2_1_1ScenarioCase.html#a1cd25c0dd1623a25e6e3651014c13e8a">OTest2::ScenarioCase::createRepeater</a></div><div class="ttdeci">virtual std::pair&lt; std::string, ObjectRepeaterPtr &gt; createRepeater(const Context &amp;context_) const override</div><div class="ttdoc">Create repeater object for testing object represented by this scenario object.</div><div class="ttdef"><b>Definition:</b> <a href="scenariocase_8cpp_source.html#l00109">scenariocase.cpp:109</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ScenarioCase_html_a1cd25c0dd1623a25e6e3651014c13e8a"><div class="ttname"><a href="classOTest2_1_1ScenarioCase.html#a1cd25c0dd1623a25e6e3651014c13e8a">OTest2::ScenarioCase::createRepeater</a></div><div class="ttdeci">virtual std::pair&lt; std::string, ObjectRepeaterPtr &gt; createRepeater(const Context &amp;context_) const override</div><div class="ttdoc">Create repeater object for testing object represented by this scenario object.</div><div class="ttdef"><b>Definition:</b> <a href="scenariocase_8cpp_source.html#l00103">scenariocase.cpp:103</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TagsStack_html"><div class="ttname"><a href="classOTest2_1_1TagsStack.html">OTest2::TagsStack</a></div><div class="ttdoc">Stack of assigned tags.</div><div class="ttdef"><b>Definition:</b> <a href="tagsstack_8h_source.html#l00036">tagsstack.h:36</a></div></div>
 <div class="ttc" id="acontext_8h_html"><div class="ttname"><a href="context_8h.html">context.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1Tags_html"><div class="ttname"><a href="classOTest2_1_1Tags.html">OTest2::Tags</a></div><div class="ttdoc">List of tags assigned to a testing object.</div><div class="ttdef"><b>Definition:</b> <a href="tags_8h_source.html#l00032">tags.h:32</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1TagFilter_html_a7b910079511d42e821c9f94c3da4b02a"><div class="ttname"><a href="classOTest2_1_1TagFilter.html#a7b910079511d42e821c9f94c3da4b02a">OTest2::TagFilter::filterObject</a></div><div class="ttdeci">bool filterObject(const TagsStack &amp;tags_stack_) const noexcept</div><div class="ttdoc">Check whether the testing object is filtered from the run.</div><div class="ttdef"><b>Definition:</b> <a href="tagfilter_8cpp_source.html#l00993">tagfilter.cpp:993</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1Context_html"><div class="ttname"><a href="classOTest2_1_1Context.html">OTest2::Context</a></div><div class="ttdoc">OTest2 runtime context.</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00038">context.h:38</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1TagsStack_html_a3b760691f75a5a2c17c9cae593b31766"><div class="ttname"><a href="classOTest2_1_1TagsStack.html#a3b760691f75a5a2c17c9cae593b31766">OTest2::TagsStack::pushTags</a></div><div class="ttdeci">void pushTags(const Tags &amp;tags_)</div><div class="ttdoc">Push tags.</div><div class="ttdef"><b>Definition:</b> <a href="tagsstack_8cpp_source.html#l00061">tagsstack.cpp:61</a></div></div>
 <div class="ttc" id="aobjectrepeaterfactory_8h_html"><div class="ttname"><a href="objectrepeaterfactory_8h.html">objectrepeaterfactory.h</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html_a565464137de27ac2ac93d695a470c322"><div class="ttname"><a href="namespaceOTest2.html#a565464137de27ac2ac93d695a470c322">OTest2::ScenarioContainerPtr</a></div><div class="ttdeci">std::shared_ptr&lt; ScenarioContainer &gt; ScenarioContainerPtr</div><div class="ttdoc">Shared pointer to a scenario container.</div><div class="ttdef"><b>Definition:</b> <a href="scenariocontainerptr_8h_source.html#l00027">scenariocontainerptr.h:27</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ScenarioCase_html_a98c140a6b6c6ade7d833e1f77166b483"><div class="ttname"><a href="classOTest2_1_1ScenarioCase.html#a98c140a6b6c6ade7d833e1f77166b483">OTest2::ScenarioCase::~ScenarioCase</a></div><div class="ttdeci">virtual ~ScenarioCase()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="scenariocase_8cpp_source.html#l00078">scenariocase.cpp:78</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ScenarioCase_html_a98c140a6b6c6ade7d833e1f77166b483"><div class="ttname"><a href="classOTest2_1_1ScenarioCase.html#a98c140a6b6c6ade7d833e1f77166b483">OTest2::ScenarioCase::~ScenarioCase</a></div><div class="ttdeci">virtual ~ScenarioCase()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="scenariocase_8cpp_source.html#l00076">scenariocase.cpp:76</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1RunnerFilter_html_a6be7fceb5d117011b0968ae9fff8351a"><div class="ttname"><a href="classOTest2_1_1RunnerFilter.html#a6be7fceb5d117011b0968ae9fff8351a">OTest2::RunnerFilter::filterPath</a></div><div class="ttdeci">virtual bool filterPath(const TagsStack &amp;path_) const noexcept=0</div><div class="ttdoc">Check whether the path should be filtered.</div></div>
 <div class="ttc" id="anamespaceOTest2_html_a9c0e5683fb529ec38164c2f418172b30"><div class="ttname"><a href="namespaceOTest2.html#a9c0e5683fb529ec38164c2f418172b30">OTest2::odelete</a></div><div class="ttdeci">void odelete(T_ *&amp;object_)</div><div class="ttdoc">Delete a pointer and set it invalid.</div><div class="ttdef"><b>Definition:</b> <a href="utils_8h_source.html#l00034">utils.h:34</a></div></div>
 <div class="ttc" id="ascenariocontainer_8h_html"><div class="ttname"><a href="scenariocontainer_8h.html">scenariocontainer.h</a></div></div>
 <!-- start footer part -->

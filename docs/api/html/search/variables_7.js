@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['reporter_1725',['reporter',['../classOTest2_1_1Context.html#a143b0da7accfa0ed1609435c8c3c2c6a',1,'OTest2::Context']]],
-  ['right_5fbegin_1726',['right_begin',['../structOTest2_1_1DiffBlock.html#a0fb66cb0fa6bd25ec10627edf73d4b33',1,'OTest2::DiffBlock']]],
-  ['right_5fend_1727',['right_end',['../structOTest2_1_1DiffBlock.html#ad118ad679f00baea382b55c5973a8065',1,'OTest2::DiffBlock']]],
-  ['right_5findex_1728',['right_index',['../structOTest2_1_1DiffRecord.html#ad36d9736a178417f217e0bb4302e09c9',1,'OTest2::DiffRecord']]]
+  ['object_5fpath_1719',['object_path',['../classOTest2_1_1Context.html#a7e973ae8c8e7128d1d6db9178fbdbe57',1,'OTest2::Context']]],
+  ['os_1720',['os',['../classOTest2_1_1ReporterDebug.html#a1e265fcc5a883440341eccd6b5fce01c',1,'OTest2::ReporterDebug']]]
 ];

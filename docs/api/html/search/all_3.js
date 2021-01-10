@@ -29,9 +29,7 @@ var searchData=
   ['difflogreverse_2eh_164',['difflogreverse.h',['../difflogreverse_8h.html',1,'']]],
   ['diffrecord_165',['DiffRecord',['../structOTest2_1_1DiffRecord.html',1,'OTest2']]],
   ['diffscorelcs_166',['DiffScoreLCS',['../classOTest2_1_1DiffScoreLCS.html',1,'OTest2']]],
-  ['doesmatchcase_167',['doesMatchCase',['../classOTest2_1_1ObjectPath.html#adad7f659f90418bf9864430e180b32d9',1,'OTest2::ObjectPath']]],
-  ['doesmatchsuite_168',['doesMatchSuite',['../classOTest2_1_1ObjectPath.html#a2e7d436ac02605f54b4ebb2790dfaa4f',1,'OTest2::ObjectPath']]],
-  ['dolinearizedmark_169',['doLinearizedMark',['../classOTest2_1_1TestMark.html#aa9cdb00f17a869378c35b3c210b1a429',1,'OTest2::TestMark']]],
-  ['dsl_2eh_170',['dsl.h',['../dsl_8h.html',1,'']]],
-  ['duration_171',['duration',['../classOTest2_1_1TimeSource.html#af147afd4a18395d469225f896fe5d751',1,'OTest2::TimeSource']]]
+  ['dolinearizedmark_167',['doLinearizedMark',['../classOTest2_1_1TestMark.html#aa9cdb00f17a869378c35b3c210b1a429',1,'OTest2::TestMark']]],
+  ['dsl_2eh_168',['dsl.h',['../dsl_8h.html',1,'']]],
+  ['duration_169',['duration',['../classOTest2_1_1TimeSource.html#af147afd4a18395d469225f896fe5d751',1,'OTest2::TimeSource']]]
 ];

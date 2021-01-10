@@ -104,9 +104,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7ddef979ac89b8679b6d269eee1abff2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Registry.html#a7ddef979ac89b8679b6d269eee1abff2">setTestName</a> (const std::string &amp;name_)</td></tr>
 <tr class="memdesc:a7ddef979ac89b8679b6d269eee1abff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set test name.  <a href="classOTest2_1_1Registry.html#a7ddef979ac89b8679b6d269eee1abff2">More...</a><br /></td></tr>
 <tr class="separator:a7ddef979ac89b8679b6d269eee1abff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55abf2d7c3c6ec86094e4e4327ac0346"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceOTest2.html#acba59c569e67a301963dec19b0e40f9f">ScenarioIterPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Registry.html#a55abf2d7c3c6ec86094e4e4327ac0346">getTests</a> (const <a class="el" href="classOTest2_1_1RunnerFilter.html">RunnerFilter</a> &amp;name_filter_, const <a class="el" href="classOTest2_1_1TagFilter.html">TagFilter</a> &amp;tag_filter_) const</td></tr>
-<tr class="memdesc:a55abf2d7c3c6ec86094e4e4327ac0346"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get iterator of test roots.  <a href="classOTest2_1_1Registry.html#a55abf2d7c3c6ec86094e4e4327ac0346">More...</a><br /></td></tr>
-<tr class="separator:a55abf2d7c3c6ec86094e4e4327ac0346"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41e14f21fa456130d2ee520aa926c75e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceOTest2.html#acba59c569e67a301963dec19b0e40f9f">ScenarioIterPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Registry.html#a41e14f21fa456130d2ee520aa926c75e">getTests</a> (const <a class="el" href="classOTest2_1_1RunnerFilter.html">RunnerFilter</a> &amp;filter_) const</td></tr>
+<tr class="memdesc:a41e14f21fa456130d2ee520aa926c75e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get iterator of test roots.  <a href="classOTest2_1_1Registry.html#a41e14f21fa456130d2ee520aa926c75e">More...</a><br /></td></tr>
+<tr class="separator:a41e14f21fa456130d2ee520aa926c75e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -189,8 +189,8 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a55abf2d7c3c6ec86094e4e4327ac0346"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55abf2d7c3c6ec86094e4e4327ac0346">&#9670;&nbsp;</a></span>getTests()</h2>
+<a id="a41e14f21fa456130d2ee520aa926c75e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41e14f21fa456130d2ee520aa926c75e">&#9670;&nbsp;</a></span>getTests()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -199,18 +199,8 @@ Static Public Member Functions</h2></td></tr>
           <td class="memname"><a class="el" href="namespaceOTest2.html#acba59c569e67a301963dec19b0e40f9f">ScenarioIterPtr</a> OTest2::Registry::getTests </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classOTest2_1_1RunnerFilter.html">RunnerFilter</a> &amp;&#160;</td>
-          <td class="paramname"><em>name_filter_</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="classOTest2_1_1TagFilter.html">TagFilter</a> &amp;&#160;</td>
-          <td class="paramname"><em>tag_filter_</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
+          <td class="paramname"><em>filter_</em></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -218,8 +208,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Get iterator of test roots. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">name_filter_</td><td>Filter by object names </td></tr>
-    <tr><td class="paramname">tag_filter_</td><td>Filter by object's tags </td></tr>
+    <tr><td class="paramname">name_filter_</td><td>Filter of testing objects </td></tr>
   </table>
   </dd>
 </dl>
@@ -261,7 +250,7 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="registry_8cpp_source.html#l00147">147</a> of file <a class="el" href="registry_8cpp_source.html">registry.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="registry_8cpp_source.html#l00144">144</a> of file <a class="el" href="registry_8cpp_source.html">registry.cpp</a>.</p>
 
 </div>
 </div>

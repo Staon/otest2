@@ -84,11 +84,11 @@ Inheritance diagram for OTest2::ObjectRepeater:</div>
 <div class="center"><img src="classOTest2_1_1ObjectRepeater__inherit__graph.png" border="0" usemap="#OTest2_1_1ObjectRepeater_inherit__map" alt="Inheritance graph"/></div>
 <map name="OTest2_1_1ObjectRepeater_inherit__map" id="OTest2_1_1ObjectRepeater_inherit__map">
 <area shape="rect" title="Generic interface of a repeater of a testing object (this repeater is not a part of the OTest2 API)" alt="" coords="5,93,176,120"/>
-<area shape="rect" href="classOTest2_1_1ObjectRepeaterMultiCase.html" title=" " alt="" coords="226,5,427,61"/>
-<area shape="rect" href="classOTest2_1_1ObjectRepeaterMultiSuite.html" title=" " alt="" coords="224,86,429,127"/>
-<area shape="rect" href="classOTest2_1_1ObjectRepeaterOnce.html" title="Object repeater which runs the test just once." alt="" coords="225,152,429,179"/>
-<area shape="rect" href="classOTest2_1_1ObjectRepeaterOnceCase.html" title=" " alt="" coords="477,111,681,153"/>
-<area shape="rect" href="classOTest2_1_1ObjectRepeaterOnceSuite.html" title=" " alt="" coords="477,177,681,218"/>
+<area shape="rect" href="classOTest2_1_1ObjectRepeaterMultiNested.html" title=" " alt="" coords="225,5,427,61"/>
+<area shape="rect" href="classOTest2_1_1ObjectRepeaterMultiRoot.html" title=" " alt="" coords="225,86,427,127"/>
+<area shape="rect" href="classOTest2_1_1ObjectRepeaterOnce.html" title="Object repeater which runs the test just once." alt="" coords="224,152,428,179"/>
+<area shape="rect" href="classOTest2_1_1ObjectRepeaterOnceNested.html" title=" " alt="" coords="476,111,680,153"/>
+<area shape="rect" href="classOTest2_1_1ObjectRepeaterOnceRoot.html" title=" " alt="" coords="476,177,680,218"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -248,7 +248,7 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The created object </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>The method may be called only if the <a class="el" href="classOTest2_1_1ObjectRepeater.html#aeb168d6160c3b780f5eba69445e6640c" title="Check whether next run of the object is planned.">isNextRun()</a> is true! </dd></dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1ObjectRepeaterOnce.html#a3c808cd005fb4d2493e73207f18c4e68">OTest2::ObjectRepeaterOnce</a>, <a class="el" href="classOTest2_1_1ObjectRepeaterMultiCase.html#a23f7cbff5da85e29b48a22c732261e82">OTest2::ObjectRepeaterMultiCase&lt; Parent_, Object_, Repeater_ &gt;</a>, and <a class="el" href="classOTest2_1_1ObjectRepeaterMultiSuite.html#a8b13566c1b4ee3911f1207bbe20e6698">OTest2::ObjectRepeaterMultiSuite&lt; Object_, Repeater_ &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1ObjectRepeaterOnce.html#a3c808cd005fb4d2493e73207f18c4e68">OTest2::ObjectRepeaterOnce</a>, <a class="el" href="classOTest2_1_1ObjectRepeaterMultiNested.html#a6625aa6a6b76568906e5d96ad67cbbc0">OTest2::ObjectRepeaterMultiNested&lt; Parent_, Object_, Repeater_ &gt;</a>, and <a class="el" href="classOTest2_1_1ObjectRepeaterMultiRoot.html#ae897806b80771f54bb9e103e1a3c2c5d">OTest2::ObjectRepeaterMultiRoot&lt; Object_, Repeater_ &gt;</a>.</p>
 
 </div>
 </div>
@@ -285,7 +285,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if next run is prepared </dd></dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1ObjectRepeaterMultiCase.html#ad2d19728de3a9d6b92c07907c0d81857">OTest2::ObjectRepeaterMultiCase&lt; Parent_, Object_, Repeater_ &gt;</a>, <a class="el" href="classOTest2_1_1ObjectRepeaterOnce.html#a1b9f0cf0def4d11d5ac3cb26ea1234bd">OTest2::ObjectRepeaterOnce</a>, and <a class="el" href="classOTest2_1_1ObjectRepeaterMultiSuite.html#a90c65be75b8fc191c7e23a71366f58a7">OTest2::ObjectRepeaterMultiSuite&lt; Object_, Repeater_ &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1ObjectRepeaterMultiNested.html#adfb392355948ab0f8d7cf45aedd37300">OTest2::ObjectRepeaterMultiNested&lt; Parent_, Object_, Repeater_ &gt;</a>, <a class="el" href="classOTest2_1_1ObjectRepeaterOnce.html#a1b9f0cf0def4d11d5ac3cb26ea1234bd">OTest2::ObjectRepeaterOnce</a>, and <a class="el" href="classOTest2_1_1ObjectRepeaterMultiRoot.html#a86689b9d786b6de075e2467b4b846bb6">OTest2::ObjectRepeaterMultiRoot&lt; Object_, Repeater_ &gt;</a>.</p>
 
 </div>
 </div>
@@ -359,7 +359,7 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Decorated object name </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>The method may be called only if the <a class="el" href="classOTest2_1_1ObjectRepeater.html#aeb168d6160c3b780f5eba69445e6640c" title="Check whether next run of the object is planned.">isNextRun()</a> is true! </dd></dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1ObjectRepeaterMultiSuite.html#a7cb9a04c6f0154105628e103dc5a1957">OTest2::ObjectRepeaterMultiSuite&lt; Object_, Repeater_ &gt;</a>, <a class="el" href="classOTest2_1_1ObjectRepeaterOnce.html#a7948befe71771e9b39d9c529365f2f85">OTest2::ObjectRepeaterOnce</a>, and <a class="el" href="classOTest2_1_1ObjectRepeaterMultiCase.html#aea8195c3133c8c4abbd37e7241150879">OTest2::ObjectRepeaterMultiCase&lt; Parent_, Object_, Repeater_ &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1ObjectRepeaterMultiRoot.html#a450b066c87dc86e28b81975617521930">OTest2::ObjectRepeaterMultiRoot&lt; Object_, Repeater_ &gt;</a>, <a class="el" href="classOTest2_1_1ObjectRepeaterOnce.html#a7948befe71771e9b39d9c529365f2f85">OTest2::ObjectRepeaterOnce</a>, and <a class="el" href="classOTest2_1_1ObjectRepeaterMultiNested.html#ae81de66ad6234e60d9eda077120c352d">OTest2::ObjectRepeaterMultiNested&lt; Parent_, Object_, Repeater_ &gt;</a>.</p>
 
 </div>
 </div>

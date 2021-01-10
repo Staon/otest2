@@ -1,10 +1,12 @@
 <map id="include/otest2/runnerfilter.h" name="include/otest2/runnerfilter.h">
-<area shape="rect" id="node1" title=" " alt="" coords="414,5,611,32"/>
-<area shape="rect" id="node2" href="$runnerfilterentire_8h.html" title=" " alt="" coords="42,80,277,107"/>
-<area shape="rect" id="node5" href="$runnerfilterone_8h.html" title=" " alt="" coords="300,80,523,107"/>
-<area shape="rect" id="node7" href="$runnerfilter_8cpp.html" title=" " alt="" coords="546,80,682,107"/>
-<area shape="rect" id="node8" href="$scenariocase_8cpp.html" title=" " alt="" coords="707,80,857,107"/>
-<area shape="rect" id="node3" href="$dfltenvironment_8cpp.html" title=" " alt="" coords="205,155,373,181"/>
-<area shape="rect" id="node4" href="$runnerfilterentire_8cpp.html" title=" " alt="" coords="5,155,180,181"/>
-<area shape="rect" id="node6" href="$runnerfilterone_8cpp.html" title=" " alt="" coords="397,155,559,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="545,5,743,32"/>
+<area shape="rect" id="node2" href="$runnerfilterentire_8h.html" title=" " alt="" coords="5,80,240,107"/>
+<area shape="rect" id="node4" href="$runnerfiltertags_8h.html" title=" " alt="" coords="264,80,491,107"/>
+<area shape="rect" id="node7" href="$runnerfilteruntagged_8h.html" title=" " alt="" coords="515,80,773,107"/>
+<area shape="rect" id="node9" href="$runnerfilter_8cpp.html" title=" " alt="" coords="797,80,933,107"/>
+<area shape="rect" id="node10" href="$scenariocase_8cpp.html" title=" " alt="" coords="958,80,1109,107"/>
+<area shape="rect" id="node3" href="$runnerfilterentire_8cpp.html" title=" " alt="" coords="35,155,210,181"/>
+<area shape="rect" id="node5" href="$dfltenvironment_8cpp.html" title=" " alt="" coords="453,155,621,181"/>
+<area shape="rect" id="node6" href="$runnerfiltertags_8cpp.html" title=" " alt="" coords="264,155,429,181"/>
+<area shape="rect" id="node8" href="$runnerfilteruntagged_8cpp.html" title=" " alt="" coords="646,155,845,181"/>
 </map>

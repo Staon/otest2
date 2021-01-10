@@ -83,9 +83,10 @@ Inheritance diagram for OTest2::RunnerFilter:</div>
 <div class="dyncontent">
 <div class="center"><img src="classOTest2_1_1RunnerFilter__inherit__graph.png" border="0" usemap="#OTest2_1_1RunnerFilter_inherit__map" alt="Inheritance graph"/></div>
 <map name="OTest2_1_1RunnerFilter_inherit__map" id="OTest2_1_1RunnerFilter_inherit__map">
-<area shape="rect" title="Generic interface of a runner filter." alt="" coords="125,5,272,32"/>
-<area shape="rect" href="classOTest2_1_1RunnerFilterEntire.html" title="Simple runner filter which allows all suites and test cases." alt="" coords="5,80,189,107"/>
-<area shape="rect" href="classOTest2_1_1RunnerFilterOne.html" title="A filter which allows run of only one test case or only one suite." alt="" coords="213,80,387,107"/>
+<area shape="rect" title="Generic interface of a runner filter." alt="" coords="228,5,375,32"/>
+<area shape="rect" href="classOTest2_1_1RunnerFilterEntire.html" title="Run all objects." alt="" coords="5,80,189,107"/>
+<area shape="rect" href="classOTest2_1_1RunnerFilterTags.html" title="Filter of tagged testing objects." alt="" coords="214,80,389,107"/>
+<area shape="rect" href="classOTest2_1_1RunnerFilterUntagged.html" title="Run all untagged objects." alt="" coords="413,80,624,107"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -101,15 +102,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5995628294c0efe64cb5bfb40053fd75"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1RunnerFilter.html#a5995628294c0efe64cb5bfb40053fd75">~RunnerFilter</a> ()</td></tr>
 <tr class="memdesc:a5995628294c0efe64cb5bfb40053fd75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="classOTest2_1_1RunnerFilter.html#a5995628294c0efe64cb5bfb40053fd75">More...</a><br /></td></tr>
 <tr class="separator:a5995628294c0efe64cb5bfb40053fd75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa69a8ab75122ed2390fba0857f600a34"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1RunnerFilter.html#aa69a8ab75122ed2390fba0857f600a34">filterPath</a> (const <a class="el" href="classOTest2_1_1ObjectPath.html">ObjectPath</a> &amp;path_) const noexcept=0</td></tr>
-<tr class="memdesc:aa69a8ab75122ed2390fba0857f600a34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether the path should be filtered.  <a href="classOTest2_1_1RunnerFilter.html#aa69a8ab75122ed2390fba0857f600a34">More...</a><br /></td></tr>
-<tr class="separator:aa69a8ab75122ed2390fba0857f600a34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6be7fceb5d117011b0968ae9fff8351a"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1RunnerFilter.html#a6be7fceb5d117011b0968ae9fff8351a">filterPath</a> (const <a class="el" href="classOTest2_1_1TagsStack.html">TagsStack</a> &amp;path_) const noexcept=0</td></tr>
+<tr class="memdesc:a6be7fceb5d117011b0968ae9fff8351a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether the path should be filtered.  <a href="classOTest2_1_1RunnerFilter.html#a6be7fceb5d117011b0968ae9fff8351a">More...</a><br /></td></tr>
+<tr class="separator:a6be7fceb5d117011b0968ae9fff8351a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Generic interface of a runner filter. </p>
 <p>The runner filter allows filtering of suites and test cases. So the user can specify only some of the test which he wants to run. </p>
 
-<p class="definition">Definition at line <a class="el" href="runnerfilter_8h_source.html#l00036">36</a> of file <a class="el" href="runnerfilter_8h_source.html">runnerfilter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="runnerfilter_8h_source.html#l00035">35</a> of file <a class="el" href="runnerfilter_8h_source.html">runnerfilter.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a31771b9db9390cfb3ba1663097f22288"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a31771b9db9390cfb3ba1663097f22288">&#9670;&nbsp;</a></span>RunnerFilter() <span class="overload">[1/2]</span></h2>
@@ -188,8 +189,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aa69a8ab75122ed2390fba0857f600a34"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa69a8ab75122ed2390fba0857f600a34">&#9670;&nbsp;</a></span>filterPath()</h2>
+<a id="a6be7fceb5d117011b0968ae9fff8351a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6be7fceb5d117011b0968ae9fff8351a">&#9670;&nbsp;</a></span>filterPath()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -200,7 +201,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual bool OTest2::RunnerFilter::filterPath </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classOTest2_1_1ObjectPath.html">ObjectPath</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOTest2_1_1TagsStack.html">TagsStack</a> &amp;&#160;</td>
           <td class="paramname"><em>path_</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -215,13 +216,13 @@ Public Member Functions</h2></td></tr>
 <p>Check whether the path should be filtered. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">path_</td><td>The path </td></tr>
+    <tr><td class="paramname">path_</td><td>Stack of names and tags of the current object and its ancestors. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the path matches the filter and the object should be filtered (not run) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the path matches the filter and the object should be filtered out (not run). </dd></dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1RunnerFilterOne.html#a8fc390850f8ae184da0cb5d07a10e66b">OTest2::RunnerFilterOne</a>, and <a class="el" href="classOTest2_1_1RunnerFilterEntire.html#a3c8e0d9c7d88b65aba67335159083138">OTest2::RunnerFilterEntire</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1RunnerFilterTags.html#ace129aed6eb9a88b38545c72714bdbf2">OTest2::RunnerFilterTags</a>, <a class="el" href="classOTest2_1_1RunnerFilterEntire.html#a0a02b4ce8e3224cb4e0d0a1d96a35c98">OTest2::RunnerFilterEntire</a>, and <a class="el" href="classOTest2_1_1RunnerFilterUntagged.html#ab6cdb059decd08a2b93c39277f553fb9">OTest2::RunnerFilterUntagged</a>.</p>
 
 </div>
 </div>

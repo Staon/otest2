@@ -105,9 +105,9 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0390970dd3b8f933a4ecbd2ddcffdde8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ReporterJUnit.html#a0390970dd3b8f933a4ecbd2ddcffdde8">ReporterJUnit</a> (const std::string &amp;file_)</td></tr>
-<tr class="memdesc:a0390970dd3b8f933a4ecbd2ddcffdde8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ctor.  <a href="classOTest2_1_1ReporterJUnit.html#a0390970dd3b8f933a4ecbd2ddcffdde8">More...</a><br /></td></tr>
-<tr class="separator:a0390970dd3b8f933a4ecbd2ddcffdde8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad35b1dcb91f715fbe6993b1974cb31a0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ReporterJUnit.html#ad35b1dcb91f715fbe6993b1974cb31a0">ReporterJUnit</a> (const std::string &amp;file_, bool hide_location_)</td></tr>
+<tr class="memdesc:ad35b1dcb91f715fbe6993b1974cb31a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ctor.  <a href="classOTest2_1_1ReporterJUnit.html#ad35b1dcb91f715fbe6993b1974cb31a0">More...</a><br /></td></tr>
+<tr class="separator:ad35b1dcb91f715fbe6993b1974cb31a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad50a4cb780cc9a0088bbed7f66d72098"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ReporterJUnit.html#ad50a4cb780cc9a0088bbed7f66d72098">~ReporterJUnit</a> ()</td></tr>
 <tr class="memdesc:ad50a4cb780cc9a0088bbed7f66d72098"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="classOTest2_1_1ReporterJUnit.html#ad50a4cb780cc9a0088bbed7f66d72098">More...</a><br /></td></tr>
 <tr class="separator:ad50a4cb780cc9a0088bbed7f66d72098"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -168,8 +168,8 @@ Public Member Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="reporterjunit_8h_source.html#l00032">32</a> of file <a class="el" href="reporterjunit_8h_source.html">reporterjunit.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a0390970dd3b8f933a4ecbd2ddcffdde8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0390970dd3b8f933a4ecbd2ddcffdde8">&#9670;&nbsp;</a></span>ReporterJUnit() <span class="overload">[1/2]</span></h2>
+<a id="ad35b1dcb91f715fbe6993b1974cb31a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad35b1dcb91f715fbe6993b1974cb31a0">&#9670;&nbsp;</a></span>ReporterJUnit() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -181,8 +181,18 @@ Public Member Functions</h2></td></tr>
           <td class="memname">OTest2::ReporterJUnit::ReporterJUnit </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>file_</em></td><td>)</td>
+          <td class="paramname"><em>file_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>hide_location_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -196,11 +206,12 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">file_</td><td>filename of the generated XML report </td></tr>
+    <tr><td class="paramname">hide_location_</td><td>If it's true the location information (file and line number is omitted in the generated XML file. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00123">123</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00186">186</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
 
 </div>
 </div>
@@ -229,7 +240,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00129">129</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00193">193</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
 
 </div>
 </div>
@@ -327,7 +338,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classOTest2_1_1Reporter.html#a8f4f6d749a8cd842f85aff2dc288f697">OTest2::Reporter</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00183">183</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00256">256</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
 
 </div>
 </div>
@@ -376,7 +387,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classOTest2_1_1Reporter.html#a1588b600e8647f76d2f7f14fbe179515">OTest2::Reporter</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00160">160</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00234">234</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
 
 </div>
 </div>
@@ -427,7 +438,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classOTest2_1_1Reporter.html#a1b60d18ffc9f8bd9ac63fa34000f43a3">OTest2::Reporter</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00207">207</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00283">283</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
 
 </div>
 </div>
@@ -476,7 +487,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classOTest2_1_1Reporter.html#a360a9d3df24237970484472733dbbb41">OTest2::Reporter</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00177">177</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00250">250</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
 
 </div>
 </div>
@@ -525,7 +536,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classOTest2_1_1Reporter.html#a901e3c79093c3003d9d0cde39c9e6cb1">OTest2::Reporter</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00139">139</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00217">217</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
 
 </div>
 </div>
@@ -574,7 +585,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classOTest2_1_1Reporter.html#a0c706cdcd87ff98eaf480b064c673712">OTest2::Reporter</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00133">133</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00197">197</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
 
 </div>
 </div>
@@ -612,7 +623,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classOTest2_1_1Reporter.html#a6ead07f2863098dc2f6cecd4534ddd5c">OTest2::Reporter</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00228">228</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00305">305</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
 
 </div>
 </div>
@@ -668,7 +679,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classOTest2_1_1Reporter.html#a0f1b7e9ba134910c905f282e7579cf94">OTest2::Reporter</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00240">240</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00317">317</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
 
 </div>
 </div>
@@ -724,7 +735,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classOTest2_1_1Reporter.html#a01e28dd6ea93fa0aac186896724836c1">OTest2::Reporter</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00233">233</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00310">310</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
 
 </div>
 </div>
@@ -780,7 +791,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classOTest2_1_1Reporter.html#ad8f15f5314ce0a6d0096074c5bf234a4">OTest2::Reporter</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00251">251</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00331">331</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
 
 </div>
 </div>
@@ -836,7 +847,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classOTest2_1_1Reporter.html#a2c6b96dc5f2e10d5f3e3caf2aac78573">OTest2::Reporter</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00274">274</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00346">346</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
 
 </div>
 </div>
@@ -912,7 +923,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classOTest2_1_1Reporter.html#ad27db7da7ec012c2b62fc6f7639d009d">OTest2::Reporter</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00222">222</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="reporterjunit_8cpp_source.html#l00299">299</a> of file <a class="el" href="reporterjunit_8cpp_source.html">reporterjunit.cpp</a>.</p>
 
 </div>
 </div>

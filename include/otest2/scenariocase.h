@@ -61,11 +61,9 @@ class ScenarioCase : public Scenario {
 
     /* -- scenario */
     virtual ScenarioPtr filterScenario(
-        ObjectPath& path_,
         TagsStack& tags_,
         ScenarioContainerPtr parent_,
-        const RunnerFilter& name_filter_,
-        const TagFilter& tag_filter_) const override;
+        const RunnerFilter& filter_) const override;
     virtual std::pair<std::string, ObjectRepeaterPtr> createRepeater(
         const Context& context_) const override;
     virtual void reportEntering(

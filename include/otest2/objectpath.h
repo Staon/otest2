@@ -85,24 +85,6 @@ class ObjectPath {
      */
     std::string getRegressionKey(
         const std::string& local_key_) const;
-
-    /**
-     * @brief Check whether the case name matches current path
-     *
-     * @note This is a hackish temporary solution until the path globs
-     *     are done.
-     */
-    bool doesMatchCase(
-        const std::string& case_name_) const noexcept;
-
-    /**
-     * @brief Check whether the suite name matches current path
-     *
-     * @note This is a hackish temporary solution until the path globs
-     *     are done.
-     */
-    bool doesMatchSuite(
-        const std::string& suite_name_) const noexcept;
 };
 
 } /* -- namespace OTest2 */

@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2019 Ondrej Starek
+ * Copyright (C) 2021 Ondrej Starek
  *
- * This file is part of OTest2.
+ * This file is part of OTest2
  *
  * OTest2 is free software: you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by
@@ -17,39 +17,39 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OTest2__INCLUDE_OTEST2_RUNNERFILTERENTIRE_H_
-#define OTest2__INCLUDE_OTEST2_RUNNERFILTERENTIRE_H_
+#ifndef OTest2_INCLUDE_OTEST2_RUNNERFILTERUNTAGGED_H_
+#define OTest2_INCLUDE_OTEST2_RUNNERFILTERUNTAGGED_H_
 
 #include <otest2/runnerfilter.h>
 
 namespace OTest2 {
 
 /**
- * @brief Run all objects
+ * @brief Run all untagged objects
  */
-class RunnerFilterEntire : public RunnerFilter {
+class RunnerFilterUntagged : public RunnerFilter {
   public:
     /* -- avoid copying */
-    RunnerFilterEntire(
-        const RunnerFilterEntire&) = delete;
-    RunnerFilterEntire& operator =(
-        const RunnerFilterEntire&) = delete;
+    RunnerFilterUntagged(
+        const RunnerFilterUntagged&) = delete;
+    RunnerFilterUntagged& operator = (
+        const RunnerFilterUntagged&) = delete;
 
     /**
      * @brief Ctor
      */
-    RunnerFilterEntire();
+    RunnerFilterUntagged();
 
     /**
      * @brief Dtor
      */
-    virtual ~RunnerFilterEntire();
+    virtual ~RunnerFilterUntagged();
 
-    /* -- the runner filter interface */
+    /* -- runner filter */
     virtual bool filterPath(
         const TagsStack& path_) const noexcept override;
 };
 
-} /* namespace OTest2 */
+} /* -- namespace OTest2 */
 
-#endif /* OTest2__INCLUDE_OTEST2_RUNNERFILTERENTIRE_H_ */
+#endif /* -- OTest2_INCLUDE_OTEST2_RUNNERFILTERUNTAGGED_H_ */

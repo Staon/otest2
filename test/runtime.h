@@ -22,9 +22,8 @@
 
 #include <memory>
 #include <otest2/exccatcherordinary.h>
-#include <otest2/runnerfilterone.h>
+#include <otest2/runnerfiltertags.h>
 #include <otest2/runnerordinary.h>
-#include <otest2/tagfilter.h>
 #include <otest2/testmarkfactory.h>
 #include <otest2/testmarkstorage.h>
 #include <otest2/userdata.h>
@@ -46,11 +45,10 @@ class Runtime {
     TimeSourceMock time_source;
     ExcCatcherOrdinary exc_catcher;
     ReporterMock reporter;
-    RunnerFilterOne runner_filter;
+    RunnerFilterTags runner_filter;
     TestMarkFactory test_mark_factory;
     std::unique_ptr<TestMarkStorage> test_mark_storage;
     UserData user_data;
-    TagFilter tag_filter;
     RunnerOrdinary runner;
 
     static struct ReportPaths{} report_paths_mark;
@@ -103,32 +101,24 @@ class Runtime {
     /**
      * @brief Ctor
      *
-     * @param suite_name_ Name of the suite to be run
-     * @param case_name_ Name of the case to be run. If it's empty the entire
-     *     suite is run.
-     * @param regression_file_ Name of the regression (test marks) file
-     * @param tag_mark_ A mark that the tag expression is set
-     * @param tag_expression_ The tag expression
+     * @param tag_mark_ A mark that the tag glob is used
+     * @param tag_glob_ The tag glob
      */
     explicit Runtime(
-        const std::string& suite_name_,
-        const std::string& case_name_,
-        const Tags&,
-        const std::string& tag_expression_);
+        const Tags& tag_mark_,
+        const std::string& tag_glob_);
 
     /**
      * @brief Ctor
      *
-     * @param suite_name_ Name of the suite to be run
-     * @param case_name_ Name of the case to be run.
      * @param regression_file_ Name of the regression (test marks) file
-     * @param tag_expression_ Specified tag expression
+     * @param tag_mark_ A mark that the tag glob is used
+     * @param tag_glob_ Specified tag glob
      */
     explicit Runtime(
-        const std::string& suite_name_,
-        const std::string& case_name_,
         const std::string& regression_file_,
-        const std::string& tag_expression_);
+        const Tags& tag_mark_,
+        const std::string& tag_glob_);
 
     /**
      * @brief Ctor
@@ -147,12 +137,10 @@ class Runtime {
     static struct InternalCtor{} internal_ctor;
     explicit Runtime(
         const InternalCtor&,
-        const std::string& suite_name_,
-        const std::string& case_name_,
+        const std::string& tag_glob_,
         Reporter* reporter_,
         bool report_paths_,
-        const std::string& regression_file_,
-        const std::string& tag_expression_);
+        const std::string& regression_file_);
 
   public:
     /**

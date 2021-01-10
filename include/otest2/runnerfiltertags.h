@@ -17,12 +17,13 @@
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OTest2_INCLUDE_OTEST2_TAGFILTER_H_
-#define OTest2_INCLUDE_OTEST2_TAGFILTER_H_
+#ifndef OTest2_INCLUDE_OTEST2_RUNNERFILTERTAGS_H_
+#define OTest2_INCLUDE_OTEST2_RUNNERFILTERTAGS_H_
 
 #include <string>
 
 #include <otest2/exc.h>
+#include <otest2/runnerfilter.h>
 
 namespace OTest2 {
 
@@ -88,7 +89,7 @@ class TagExpressionException : public Exception {
 /**
  * @brief Filter of tagged testing objects
  */
-class TagFilter {
+class RunnerFilterTags : public RunnerFilter {
   private:
     struct Impl;
     Impl* pimpl;
@@ -97,38 +98,32 @@ class TagFilter {
     /**
      * @brief Empty filter - all objects are run
      */
-    TagFilter();
+    RunnerFilterTags();
 
     /**
      * @brief Ctor
      *
      * @param tag_expression_ A tag expression
      */
-    explicit TagFilter(
+    explicit RunnerFilterTags(
         const std::string& tag_expression_);
 
     /**
      * @brief Dtor
      */
-    ~TagFilter();
+    ~RunnerFilterTags();
 
     /* -- avoid copying */
-    TagFilter(
-        const TagFilter&) = delete;
-    TagFilter& operator = (
-        const TagFilter&) = delete;
+    RunnerFilterTags(
+        const RunnerFilterTags&) = delete;
+    RunnerFilterTags& operator = (
+        const RunnerFilterTags&) = delete;
 
-    /**
-     * @brief Check whether the testing object is filtered from the run
-     *
-     * @param tags_stack_ Stack of objects' tags
-     * @return True if the tags don't match and the object is rejected
-     *     from the test run.
-     */
-    bool filterObject(
-        const TagsStack& tags_stack_) const noexcept;
+    /* -- runner filter */
+    virtual bool filterPath(
+        const TagsStack& path_) const noexcept override;
 };
 
 } /* -- namespace OTest2 */
 
-#endif /* -- OTest2_INCLUDE_OTEST2_TAGFILTER_H_ */
+#endif /* -- OTest2_INCLUDE_OTEST2_RUNNERFILTERTAGS_H_ */

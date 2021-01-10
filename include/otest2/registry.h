@@ -28,7 +28,7 @@
 namespace OTest2 {
 
 class RunnerFilter;
-class TagFilter;
+class RunnerFilterTags;
 
 /**
  * @brief Test registry
@@ -81,12 +81,10 @@ class Registry {
     /**
      * @brief Get iterator of test roots
      *
-     * @param name_filter_ Filter by object names
-     * @param tag_filter_ Filter by object's tags
+     * @param name_filter_ Filter of testing objects
      */
     ScenarioIterPtr getTests(
-        const RunnerFilter& name_filter_,
-        const TagFilter& tag_filter_) const;
+        const RunnerFilter& filter_) const;
 
     /**
      * @brief Access of the global instances

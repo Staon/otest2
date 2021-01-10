@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2019 Ondrej Starek
+ * Copyright (C) 2021 Ondrej Starek
  *
- * This file is part of OTest2.
+ * This file is part of OTest2
  *
  * OTest2 is free software: you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by
@@ -16,24 +16,28 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include <runnerfilteruntagged.h>
 
-#include <runnerfilterentire.h>
+#include <vector>
 
-#include <registry.h>
+#include <tags.h>
+#include <tagsstack.h>
 
 namespace OTest2 {
 
-RunnerFilterEntire::RunnerFilterEntire() {
+RunnerFilterUntagged::RunnerFilterUntagged() = default;
 
-}
+RunnerFilterUntagged::~RunnerFilterUntagged() = default;
 
-RunnerFilterEntire::~RunnerFilterEntire() {
-
-}
-
-bool RunnerFilterEntire::filterPath(
+bool RunnerFilterUntagged::filterPath(
     const TagsStack& path_) const noexcept {
+  std::vector<TagsStack::TagRecord> tags_;
+  path_.fillTags(tags_);
+  for(const auto& item_ : tags_) {
+    if(!item_.tags.isEmpty())
+      return true;
+  }
   return false;
 }
 
-} /* namespace OTest2 */
+} /* -- namespace OTest2 */

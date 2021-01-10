@@ -131,14 +131,11 @@ void Registry::setTestName(
 }
 
 ScenarioIterPtr Registry::getTests(
-    const RunnerFilter& name_filter_,
-    const TagFilter& tag_filter_) const {
+    const RunnerFilter& filter_) const {
   /* -- filter the scenario */
-  ObjectPath path_;
   TagsStack tags_stack_;
   ScenarioPtr filtered_root_(
-      pimpl->scenario_root->filterScenario(
-          path_, tags_stack_, nullptr, name_filter_, tag_filter_));
+      pimpl->scenario_root->filterScenario(tags_stack_, nullptr, filter_));
 
   /* -- return the iterator */
   return std::make_shared<RootIter>(filtered_root_);

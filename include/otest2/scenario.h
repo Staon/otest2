@@ -32,7 +32,7 @@ namespace OTest2 {
 class Context;
 class ObjectPath;
 class RunnerFilter;
-class TagFilter;
+class RunnerFilterTags;
 class TagsStack;
 
 /**
@@ -67,20 +67,16 @@ class Scenario {
      * This method filters the scenario object. Objects which don't match
      * the filters are removed.
      *
-     * @param path_ Current object path
-     * @param tags_ Current tags
+     * @param tags_ Stack of object names and tags
      * @param parent_ Parent container
-     * @param name_filter_ Filter by object names
-     * @param tag_filter_ Filter by tags
+     * @param filter_ Used filter
      * @return The @a parent_ object if it's not null. Otherwise the new
      *     container object.
      */
     virtual ScenarioPtr filterScenario(
-        ObjectPath& path_,
         TagsStack& tags_,
         ScenarioContainerPtr parent_,
-        const RunnerFilter& name_filter_,
-        const TagFilter& tag_filter_) const = 0;
+        const RunnerFilter& filter_) const = 0;
 
     /**
      * @brief Create repeater object for testing object represented by this

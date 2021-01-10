@@ -21,13 +21,11 @@
 #include <assert.h>
 
 #include <context.h>
-#include <objectpath.h>
 #include <objectrepeater.h>
 #include <objectrepeaterfactory.h>
 #include <reporter.h>
 #include <runnerfilter.h>
 #include <scenariocontainer.h>
-#include <tagfilter.h>
 #include <tags.h>
 #include <tagsstack.h>
 #include <utils.h>
@@ -80,17 +78,14 @@ ScenarioCase::~ScenarioCase() {
 }
 
 ScenarioPtr ScenarioCase::filterScenario(
-    ObjectPath& path_,
     TagsStack& tags_,
     ScenarioContainerPtr parent_,
-    const RunnerFilter& name_filter_,
-    const TagFilter& tag_filter_) const {
-  /* -- add my name into the whole path */
-  path_.pushName(pimpl->name);
-  tags_.pushTags(pimpl->tags);
+    const RunnerFilter& filter_) const {
+  /* -- add my name nad tags into the whole path */
+  tags_.pushTags(pimpl->name, pimpl->tags);
 
   /* -- if the object is not filtered append it into the parent container */
-  if(!name_filter_.filterPath(path_) && !tag_filter_.filterObject(tags_)) {
+  if(!filter_.filterPath(tags_)) {
     /* -- the object is supposed to be run add myself into the parent
      *    container. */
     parent_->appendScenario(
@@ -99,8 +94,7 @@ ScenarioPtr ScenarioCase::filterScenario(
             pimpl->name, pimpl->tags, pimpl->repeater_factory));
   }
 
-  /* -- pop my name */
-  path_.popName();
+  /* -- pop me */
   tags_.popTags();
 
   return parent_;

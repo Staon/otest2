@@ -63,6 +63,26 @@ TEST_SUITE(MainLoopSuite) {
 //      runtime.reporter.dumpRecords(std::cout);
     }
   }
+
+  TEST_CASE(Bug22) {
+    /* -- The switchState function has accepted a pointer to a function
+     *    with no arguments. If the state had had some user data or the
+     *    OTest2 context parameters the switching would have not able
+     *    to compile. */
+    int loop(0);
+
+    void firstState(
+        const Context& context_) OT2_STATE() {
+      if(loop < 1) {
+        testAssertEqual(loop, 0);
+        ++loop;
+        switchState(firstState, 10);
+      }
+      else {
+        testAssertEqual(loop, 1);
+      }
+    }
+  }
 }
 
 } /* -- namespace Test */

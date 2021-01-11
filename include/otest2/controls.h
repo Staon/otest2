@@ -43,8 +43,9 @@ namespace Controls {
  * @param delay_ Delay in milliseconds between end of the current state
  *     and run of the next state.
  */
+template<typename... Args_>
 void switchState(
-    void (*state_)(),
+    void (*state_)(Args_... args_),
     int delay_) TEST_CONTROLS_SWITCH_STATE();
 
 }  /* -- namespace Controls */

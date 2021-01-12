@@ -100,6 +100,23 @@ bool testAssert(
     const AssertBean& bean_) TEST_ASSERTION_MARK(::OTest2::GenericAssertion, testAssert);
 
 /**
+ * @brief Generic assertion with parsed expression
+ *
+ * This assertion function parses specified boolean expression. If the root
+ * operator one of the relational operators (==, != etc.) it will separate
+ * left and right operands and it will process the assertion as the relational
+ * assertion testAssertCmp().
+ *
+ * If the root operator is not any of the relational operators the assertion
+ * works as the generic testAssert() function.
+ *
+ * @param expression_ The boolean expression
+ * @return Value of the boolean expression
+ */
+bool testAssertExpr(
+    bool expression_) TEST_ASSERTION_EXPR_MARK("::OTest2::GenericAssertion", "testAssert", "testAssertCompare< ::$1 >");
+
+/**
  * @brief Generic comparison assertion
  *
  * @tparam Compare_ The comparison template

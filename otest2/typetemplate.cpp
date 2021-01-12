@@ -26,6 +26,8 @@
 
 namespace OTest2 {
 
+namespace Parser {
+
 namespace {
 
 class Automaton {
@@ -140,6 +142,7 @@ bool Automaton::step(
       if(c_ >= '0' && c_ <= '9') {
         state = PAR_NUM2;
         argnum = (c_ - '0');
+        return true;
       }
       else {
         return false;
@@ -177,16 +180,16 @@ bool expandTemplate(
   return parser_.step(os_, -1, args_);
 }
 
-bool expandTemplates(
-    std::vector<std::string>& templates_,
+bool expandTemplate(
+    std::string& template_,
     const std::vector<std::string>& args_) {
-  for(auto& template_ : templates_) {
-    std::ostringstream sos_;
-    if(!expandTemplate(sos_, template_, args_))
-      return false;
-    template_ = sos_.str();
-  }
+  std::ostringstream sos_;
+  if(!expandTemplate(sos_, template_, args_))
+    return false;
+  template_ = sos_.str();
   return true;
 }
+
+} /* -- namespace Parser */
 
 } /* namespace OTest2 */

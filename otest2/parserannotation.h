@@ -39,6 +39,7 @@ extern const std::string STATE_ANNOTATION;
 extern const std::string START_UP_ANNOTATION;
 extern const std::string TEAR_DOWN_ANNOTATION;
 extern const std::string ASSERTION_ANNOTATION;
+extern const std::string ASSERTION_EXPR_ANNOTATION;
 extern const std::string SWITCH_STATE_ANNOTATION;
 extern const std::string CATCH_ANNOTATION;
 extern const std::string USER_DATA_VAR_ANNOTATION;

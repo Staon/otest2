@@ -148,6 +148,20 @@ TEST_SUITE(AssertionsSuite) {
       testAssertCmp<LessOrEqual>(10, 10);
     }
   }
+
+  TEST_CASE(ExpressionAssertion) {
+    TEST_SIMPLE() {
+      testAssertExpr(10 == 2 * 5);
+      testAssertExpr(((2 * 6 != 5 + 5)));
+      testAssertExpr(10 > 5);
+      testAssertExpr(10 >= 5);
+      testAssertExpr(10 < 5);
+      testAssertExpr(10
+          <= 5);
+      testAssertExpr(std::string().empty());
+      testAssertExpr(!(10 == 15));
+    }
+  }
 }
 
 } /* -- namespace SelfTest */

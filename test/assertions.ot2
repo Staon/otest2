@@ -525,6 +525,54 @@ TEST_SUITE(AssertionsSuite) {
 //      runtime.reporter.dumpRecords(std::cout);
     }
   }
+
+  TEST_CASE(ExpressionAssertion) {
+    Runtime runtime("AssertionsSuite", "ExpressionAssertion");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<ExpressionAssertion>",
+        "enterState<AnonymousState>",
+        "assert<check 'a == b' has passed>: passed",
+        "message<a = 10>",
+        "message<b = 10>",
+        "leaveAssert<>",
+        "assert<check 'a != b' has passed>: passed",
+        "message<a = 12>",
+        "message<b = 10>",
+        "leaveAssert<>",
+        "assert<check 'a > b' has passed>: passed",
+        "message<a = 10>",
+        "message<b = 5>",
+        "leaveAssert<>",
+        "assert<check 'a >= b' has passed>: passed",
+        "message<a = 10>",
+        "message<b = 5>",
+        "leaveAssert<>",
+        "assert<check 'a < b' has failed>: failed",
+        "message<a = 10>",
+        "message<b = 5>",
+        "leaveAssert<>",
+        "assert<check 'a <= b' has failed>: failed",
+        "message<a = 10>",
+        "message<b = 5>",
+        "leaveAssert<>",
+        "assert<'std::string().empty()'>: passed",
+        "leaveAssert<>",
+        "assert<'!(10 == 15)'>: passed",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: failed",
+        "leaveCase<ExpressionAssertion>: failed",
+        "leaveSuite<AssertionsSuite>: failed",
+        "leaveTest<selftest>: failed",
+      };
+      testAssert(!runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
 }
 
 } /* -- namespace Test */

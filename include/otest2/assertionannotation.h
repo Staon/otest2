@@ -24,11 +24,13 @@
 
 #define TEST_ASSERTION_MARK(class_, method_)
 #define TEST_ASSERTION_MARK_TMPL(class_, method_)
+#define TEST_ASSERTION_EXPR_MARK(class_, generic_method_, comparison_method_)
 
 #else /* -- OTEST2_PARSER_ACTIVE */
 
 #define TEST_ASSERTION_MARK(class_, method_) __attribute__((annotate("otest2::assertion(" #class_ ";" #method_ ")")))
 #define TEST_ASSERTION_MARK_TMPL(class_, method_) __attribute__((annotate("otest2::assertion(" class_ ";" method_ ")")))
+#define TEST_ASSERTION_EXPR_MARK(class_, generic_method_, comparison_method_) __attribute__((annotate("otest2::assertionExpr(" class_ ";" generic_method_ ";" comparison_method_ ")")))
 
 #endif /* -- OTEST2_PARSER_ACTIVE */
 

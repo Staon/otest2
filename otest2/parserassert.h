@@ -22,7 +22,9 @@
 
 #include <clang/AST/RecursiveASTVisitor.h>
 #include <clang/AST/Stmt.h>
+#include <utility>
 
+#include "generator.h"
 #include "location.h"
 #include "parsercontext.h"
 
@@ -30,11 +32,38 @@ namespace OTest2 {
 
 namespace Parser {
 
+struct AnnotationRegex;
+
 class AssertVisitor : public clang::RecursiveASTVisitor<AssertVisitor> {
   private:
     ParserContext* context;
     Location current;
     clang::Stmt* subtree_root;
+
+    bool generateAssertion(
+        clang::CallExpr* expr_,
+        clang::Decl* declref_,
+        clang::FunctionDecl* fce_,
+        std::string class_arg_,
+        std::string method_arg_,
+        std::vector<std::string> template_params_,
+        std::vector<Generator::AssertionArg> args_ranges_,
+        int ignored_params_);
+
+    bool visitAssertion(
+        clang::CallExpr* expr_,
+        clang::Decl* declref_,
+        clang::FunctionDecl* fce_,
+        const AnnotationRegex& cmp_);
+    bool visitAssertionExpr(
+        clang::CallExpr* expr_,
+        clang::Decl* declref_,
+        clang::FunctionDecl* fce_,
+        const AnnotationRegex& cmp_);
+    bool visitSwitchState(
+        clang::CallExpr* expr_,
+        clang::Decl* declref_,
+        clang::FunctionDecl* fce_);
 
   public:
     explicit AssertVisitor(

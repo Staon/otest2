@@ -75,9 +75,7 @@ class GeneratorStd : public Generator {
     virtual void makeAssertion(
         const std::string& assertion_class_,
         const std::string& assertion_method_,
-        const Location& begin_,
-        const Location& end_,
-        const Location& expr_end_) override;
+        const std::vector<AssertionArg>& args_ranges_) override;
     virtual void makeStateSwitch(
         const Location& state_begin_,
         const Location& state_end_,

@@ -74,6 +74,13 @@ class Generator {
         const Location& begin_,
         const Location& end_) = 0;
 
+    struct AssertionArg {
+        Location begin;    /**< beginning location of the argument */
+        Location end;      /**< ending location of the argument */
+        bool append_comma; /**< if it's true the command will be appended
+                                the argument. */
+    };
+
     /**
      * @brief Make a test assertion
      *
@@ -83,17 +90,13 @@ class Generator {
      *
      * @param assertion_class_ Name of the assertion class
      * @param assertion_method_ Name of the assertion method
-     * @param begin_ Beginning location of the assertion arguments.
-     * @param end_ Ending location of the assertion arguments.
-     * @param expr_end_ Ending location of the checked expression.
-     *     The expression is expected in the range <begin_, expr_end_)
+     * @param args_ranges_ Ordered ranges of assertion arguments. The first
+     *     range is used as a message in the generic assertion functions.
      */
     virtual void makeAssertion(
         const std::string& assertion_class_,
         const std::string& assertion_method_,
-        const Location& begin_,
-        const Location& end_,
-        const Location& expr_end_) = 0;
+        const std::vector<AssertionArg>& args_ranges_) = 0;
 
     /**
      * @brief Generate state switch
@@ -101,7 +104,7 @@ class Generator {
      * @param state_begin_ Beginning location of the state name
      * @param state_end_ Ending location of the state name
      * @param delay_begin_ Beginning location of the delay expression
-     * @param delay_end_ End locatino of the delay expression
+     * @param delay_end_ End location of the delay expression
      */
     virtual void makeStateSwitch(
         const Location& state_begin_,

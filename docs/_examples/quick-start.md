@@ -23,12 +23,26 @@ TEST_SUITE(QuickStart) {
       testAssertEqual(10, 9);
     }
   }
+
+  TEST_CASE(TestExpression) {
+    TEST_SIMPLE() {
+      testAssertExpr(std::string("hello").length() == 6);
+    }
+  }
 }
 {% endhighlight %}
 
-The file describes one test suite _QuickStart_ containing two test cases:
+The file describes one test suite _QuickStart_ containing three test cases:
 _TestOK_ and _TestFailed_. The first case should pass, the second one should
 fail.
+
+The third test case shows a special assertion `testAssertExpr` which parses
+relational operators in the specified expression and it's able to print
+both operands. In this case the string is not 6 characters long so the
+test case fails.
+
+See [the reference page]({{ "reference/assertions/" | relative_url }})
+to explore the entire rich set of assertions offered by the framework.
 
 The OTest2 framework offers a cmake package, so the test can be easily used
 in your cmake project:
@@ -81,6 +95,11 @@ ck 'a == b' has failed
     a = 10
     b = 9
   TestFailed                                                          [Failed]
+[.../examples/quick-start/quick.ot2:37] quick-start::QuickStart::TestExpression:
+check 'a == b' has failed
+    a = 5
+    b = 6
+  TestExpression                                                      [Failed]
  ------------------------------------------------------------------------------
   Suite total                                                         [Failed]
  ================================ Test results ================================

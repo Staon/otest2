@@ -334,25 +334,46 @@ void GeneratorStd::copySource(
 void GeneratorStd::makeAssertion(
     const std::string& assertion_class_,
     const std::string& assertion_method_,
-    const Location& begin_,
-    const Location& end_,
-    const Location& expr_end_) {
+    const std::vector<AssertionArg>& args_ranges_) {
+  assert(!args_ranges_.empty());
+
   pimpl->writeGenerLineDirective();
+
+  /* -- get the assertion expression used as the assertion message */
+  std::string expression_(pimpl->reader->getPart(
+      args_ranges_.front().begin, args_ranges_.front().end));
+  bool print_comma_(args_ranges_.front().append_comma);
 
   /* -- make an instance of the assertion class initialized with the filename,
    *    line number and the checked expression. */
   pimpl->output << assertion_class_ << "(otest2Context(), ";
   writeCString(pimpl->output, pimpl->infile);
-  pimpl->output << ", " << begin_.getLine() << ", ";
-  std::string expression_(pimpl->reader->getPart(begin_, expr_end_));
+  pimpl->output << ", " << args_ranges_.front().begin.getLine() << ", ";
   writeCString(pimpl->output, expression_);
   pimpl->output << ")";
 
   /* -- invoke the assertion method */
-  std::string rest_args_(pimpl->reader->getPart(expr_end_, end_));
   pimpl->output << "." << assertion_method_ << "(";
-  pimpl->writeUserLineDirective(begin_);
-  pimpl->output << expression_ << rest_args_;
+  pimpl->writeUserLineDirective(args_ranges_.front().begin);
+  pimpl->output << expression_;
+
+  /* -- print the arguments */
+  int line_(args_ranges_.front().begin.getLine());
+  for(int i_(1); i_ < args_ranges_.size(); ++i_) {
+    if(print_comma_) {
+      pimpl->output << ", ";
+
+      /* -- insert new lines to synchronize the line numbers with the source */
+      int nline_(args_ranges_[i_].begin.getLine());
+      while(line_ < nline_) {
+        pimpl->output << '\n';
+        ++line_;
+      }
+    }
+    pimpl->reader->writePart(
+        pimpl->output, args_ranges_[i_].begin, &args_ranges_[i_].end);
+    print_comma_ = args_ranges_[i_].append_comma;
+  }
 }
 
 void GeneratorStd::makeStateSwitch(

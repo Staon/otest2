@@ -25,6 +25,8 @@
 
 namespace OTest2 {
 
+namespace Parser {
+
 /**
  * @brief Expand one template
  *
@@ -41,13 +43,15 @@ bool expandTemplate(
 /**
  * @brief Expand one template
  *
- * @param[in,out] templates_ List of the templates to be expanded
+ * @param[in,out] template_ The template
  * @param[in] args_ List of templates' parameters
  * @return False if the templates cannot be parsed
  */
-bool expandTemplates(
-    std::vector<std::string>& templates_,
+bool expandTemplate(
+    std::string& templates_,
     const std::vector<std::string>& args_);
+
+} /* -- namespace Parser */
 
 } /* namespace OTest2 */
 

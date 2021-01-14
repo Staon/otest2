@@ -96,15 +96,17 @@ $(function() {
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
 <div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="assertionannotation_8h.html#a7c860cac3cade4d5cc77ecd968840711">   25</a></span>&#160;<span class="preprocessor">#define TEST_ASSERTION_MARK(class_, method_)</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="assertionannotation_8h.html#a10fcf4f1a4e61f3cf1ac55f46defee6c">   26</a></span>&#160;<span class="preprocessor">#define TEST_ASSERTION_MARK_TMPL(class_, method_)</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#else </span><span class="comment">/* -- OTEST2_PARSER_ACTIVE */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#define TEST_ASSERTION_MARK(class_, method_) __attribute__((annotate(&quot;otest2::assertion(&quot; #class_ &quot;;&quot; #method_ &quot;)&quot;)))</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define TEST_ASSERTION_MARK_TMPL(class_, method_) __attribute__((annotate(&quot;otest2::assertion(&quot; class_ &quot;;&quot; method_ &quot;)&quot;)))</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* -- OTEST2_PARSER_ACTIVE */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="assertionannotation_8h.html#a0042ed2693cf6996fcad82ca5bd73c72">   27</a></span>&#160;<span class="preprocessor">#define TEST_ASSERTION_EXPR_MARK(class_, generic_method_, comparison_method_)</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#else </span><span class="comment">/* -- OTEST2_PARSER_ACTIVE */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define TEST_ASSERTION_MARK(class_, method_) __attribute__((annotate(&quot;otest2::assertion(&quot; #class_ &quot;;&quot; #method_ &quot;)&quot;)))</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#define TEST_ASSERTION_MARK_TMPL(class_, method_) __attribute__((annotate(&quot;otest2::assertion(&quot; class_ &quot;;&quot; method_ &quot;)&quot;)))</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#define TEST_ASSERTION_EXPR_MARK(class_, generic_method_, comparison_method_) __attribute__((annotate(&quot;otest2::assertionExpr(&quot; class_ &quot;;&quot; generic_method_ &quot;;&quot; comparison_method_ &quot;)&quot;)))</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* -- OTest2__INCLUDE_OTEST2_ASSERTIONANNOTATION_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* -- OTEST2_PARSER_ACTIVE */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* -- OTest2__INCLUDE_OTEST2_ASSERTIONANNOTATION_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

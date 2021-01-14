@@ -16,6 +16,25 @@ Assertions for general usage. The assertion passes when the condition is
 true. The [`AssertBean`]({{ "api/html/classOTest2_1_1AssertBean.html" | relative_url }})
 can be used by helper methods to report some meaningful message.
 
+### Expression Assertion
+
+There is one special assertion
+```c++
+bool testAssertExpr(bool condition_);
+```
+It's signature is exactly the same as the generic assertion `testAssert`.
+The difference is that OTest2 pre-processor parses expression passed as
+the parameter. If the root operator of the expression is one of the relational
+operators the assertion is handled exactly as
+[the relational assertions](#relational-assertions) are.
+
+This is an implementation of the commont feature present in the 
+[Boost](https://www.boost.org/doc/libs/1_73_0/libs/test/doc/html/index.html)
+or [Catch2](https://github.com/catchorg/Catch2). However, as it's usual
+in the OTest2 framework, the feature is much cleaner. The pre-processor
+just parses the AST and there are no dirty tricks with templates and stealing
+of operands from the expression by prepending some text. 
+
 ## Relational Assertions
 
 ```c++

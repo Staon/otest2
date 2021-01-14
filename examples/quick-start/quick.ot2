@@ -31,4 +31,10 @@ TEST_SUITE(QuickStart) {
       testAssertEqual(10, 9);
     }
   }
+
+  TEST_CASE(TestExpression) {
+    TEST_SIMPLE() {
+      testAssertExpr(std::string("hello").length() == 6);
+    }
+  }
 }

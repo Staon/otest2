@@ -19,8 +19,9 @@
 
 #include <assertcontext.h>
 
-#include <sstream>
+#include <assert.h>
 
+#include <assertstream.h>
 #include <context.h>
 #include <reporter.h>
 #include <semanticstack.h>
@@ -31,55 +32,47 @@ AssertContext::AssertContext(
     const Context& context_,
     const std::string& file_,
     int lineno_,
-    const std::string& expression_) :
+    std::initializer_list<const char*> parameters_) :
   context(&context_),
   file(file_),
   lineno(lineno_),
-  expression(expression_) {
+  parameters(parameters_) {
 
 }
 
 AssertContext::~AssertContext() = default;
 
-void AssertContext::enterAssertion(
-    bool condition_,
-    const std::string& message_,
-    bool use_expression_) {
+AssertStream AssertContext::enterAssertion(
+    bool result_) {
   /* -- change the result of current object */
-  if(!condition_)
+  if(!result_)
     context->semantic_stack->setTop(false);
 
-  /* -- report the assertion */
-  std::ostringstream sos_;
-  if(use_expression_ && !expression.empty())
-    sos_ << '\'' << expression << '\'';
-  if(!message_.empty()) {
-    if(use_expression_ && !expression.empty())
-      sos_ << " ";
-    sos_ << message_;
-  }
-  context->reporter->enterAssert(
-      *context, condition_, sos_.str(), file, lineno);
-}
+  /* -- open the assertion for additional messages */
+  auto assert_buffer_(context->reporter->enterAssert(
+      *context, result_, file, lineno));
 
-void AssertContext::assertionMessage(
-    bool condition_,
-    const std::string& message_) {
-  context->reporter->reportAssertionMessage(*context, message_);
-}
-
-bool AssertContext::leaveAssertion(
-    bool condition_) {
-  context->reporter->leaveAssert(*context);
-  return condition_;
+  return AssertStream(*context, assert_buffer_, result_, parameters);
 }
 
 bool AssertContext::simpleAssertionImpl(
     bool condition_,
     const std::string& message_,
-    bool use_expression_) {
-  enterAssertion(condition_, message_, use_expression_);
-  return leaveAssertion(condition_);
+    bool print_expression_) {
+  /* -- open the assertion */
+  AssertStream report_(enterAssertion(condition_));
+
+  /* -- report the assertion */
+  if(print_expression_)
+    report_ << '\'' << assertPar(0) << '\'';
+  if(!message_.empty()) {
+    if(print_expression_)
+      report_ << ' ';
+    report_ << message_;
+  }
+  report_ << commitMsg();
+
+  return report_.getResult();
 }
 
 const Context& AssertContext::otest2Context() const {

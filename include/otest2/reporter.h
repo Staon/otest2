@@ -20,6 +20,7 @@
 #ifndef OTest2__INCLUDE_OTEST2_REPORTER_H_
 #define OTest2__INCLUDE_OTEST2_REPORTER_H_
 
+#include <otest2/assertbufferptr.h>
 #include <string>
 
 namespace OTest2 {
@@ -90,23 +91,22 @@ class Reporter {
     /**
      * @brief Enter an assertion
      *
-     * The assertion is opened and closed similarly to states, cases and
-     * suites. While the assertion is opened some messages may be reported
-     * by the reportAssertionMessage() method. The assertion is closed by
-     * the method leaveAssert().
+     * The assertion is opened similarly to states, cases and suites until
+     * the AsssertBuffer::commitAssertion() method of the returned
+     * assertion buffer is invoked.
+     *
+     * @warning Just one assertion at time may be opened!
      *
      * @param context_ the OTest2 context
      * @param condition_ result of the assertion (false means failed assertion)
-     * @param message_ Initial assertion message. Usually it's shown at
-     *     the same line as the rest of assertion data. More messages
-     *     may be added by the method reportAssertionMessage().
      * @param file_ name of the source file
      * @param lineno_ line number in the source file
+     * @return An assertion buffer object which is used for formatting
+     *     the assertion report.
      */
-    virtual void enterAssert(
+    virtual AssertBufferPtr enterAssert(
         const Context& context_,
         bool condition_,
-        const std::string& message_,
         const std::string& file_,
         int lineno_) = 0;
 
@@ -116,41 +116,20 @@ class Reporter {
      * This method is used to report errors happened in the testing framework.
      * Errors mean failure of the test. However, they cannot be located in
      * the user code (no filename, no line number). A good example is
-     * a not handled exception caught by the framework outside the test case.
+     * a not handled exception caught by the framework outside test cases.
      *
      * The method works as well as the enterAssert() method with failed condition
      * and with no location info. The opened error state is closed by the
-     * method leaveAssert().
+     * AssertBuffer::commitAssertion() method of the returned assertion
+     * buffer.
+     *
+     * @warning Just one assertion at time may be opened!
      *
      * @param context_ the context
-     * @param message_ initial error message. The message is usually shown
-     *     at the same line as the rest of the assertion reporting. More
-     *     message may be added by the method reportAssertionMessage().
+     * @return An assertion buffer object which is used for formatting
+     *     the assertion report.
      */
-    virtual void enterError(
-        const Context& context_,
-        const std::string& message_) = 0;
-
-    /**
-     * @brief Add a supplementary assertion message
-     *
-     * This method allows to add more descriptive messages connected to
-     * an opened assertion. For example, differences of test marks are
-     * reported this way.
-     *
-     * @param context_ The OTest2 context
-     * @param message_ The message
-     */
-    virtual void reportAssertionMessage(
-        const Context& context_,
-        const std::string& message_) = 0;
-
-    /**
-     * @brief Leave an opened assertion or error
-     *
-     * @param context_ The OTest2 context
-     */
-    virtual void leaveAssert(
+    virtual AssertBufferPtr enterError(
         const Context& context_) = 0;
 
     /**

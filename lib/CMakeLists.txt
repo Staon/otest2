@@ -29,9 +29,12 @@ target_include_directories(libotest2common PRIVATE ${PROJECT_SOURCE_DIR}/include
 # -- the otest2 library
 add_library(libotest2
     assertbean.cpp
+    assertbuffer.cpp
+    assertbufferstr.cpp
     assertcontext.cpp
     assertions.cpp
     assertionstext.cpp
+    assertstream.cpp
     base64istream.cpp
     base64ostream.cpp
     bzip2istream.cpp
@@ -75,7 +78,6 @@ add_library(libotest2
     repeater.cpp
     reporter.cpp
     reporterconsole.cpp
-    reporterdebug.cpp
     reporterjunit.cpp
     reporterstatistics.cpp
     reportertee.cpp

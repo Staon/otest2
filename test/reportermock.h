@@ -105,19 +105,12 @@ class ReporterMock : public Reporter {
     virtual void enterState(
         const Context& context_,
         const std::string& name_);
-    virtual void enterAssert(
+    virtual AssertBufferPtr enterAssert(
         const Context& context_,
         bool condition_,
-        const std::string& message_,
         const std::string& file_,
         int lineno_);
-    virtual void enterError(
-        const Context& context_,
-        const std::string& message_);
-    virtual void reportAssertionMessage(
-        const Context& context_,
-        const std::string& message_);
-    virtual void leaveAssert(
+    virtual AssertBufferPtr enterError(
         const Context& context_);
     virtual void leaveState(
         const Context& context_,

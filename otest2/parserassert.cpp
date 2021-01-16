@@ -119,28 +119,19 @@ bool AssertVisitor::generateAssertion(
   /* -- Get range of the source code containing assertion's parameters.
    *    A couple of first parameters may be ignored (they are parsed by
    *    the expression assertion functions. */
-  auto endarg_(expr_->getArg(last_index_));
-  clang::SourceRange endrange_(context->getNodeRange(endarg_));
-  auto args_end_(context->createLocation(endrange_.getEnd()));
-  if(last_index_ >= ignored_params_) {
-    /* -- if there are some not ignored parameters add them into the list
-     *    of parameter ranges in the source file. */
-    auto begarg_(expr_->getArg(ignored_params_));
-    clang::SourceRange begrange_(context->getNodeRange(begarg_));
-    /* -- first parameter is used as a message in the generic assertions */
-    args_ranges_.push_back({
-        context->createLocation(begrange_.getBegin()),
-        context->createLocation(begrange_.getEnd()),
-        false});
-    args_ranges_.push_back({
-        context->createLocation(begrange_.getEnd()),
-        args_end_,
-        false});
+  for(int i_(ignored_params_); i_ <= last_index_; ++i_) {
+    auto arg_(expr_->getArg(i_));
+    clang::SourceRange range_(context->getNodeRange(arg_));
+    auto arg_begin_(context->createLocation(range_.getBegin()));
+    auto arg_end_(context->createLocation(range_.getEnd()));
+    args_ranges_.push_back({arg_begin_, arg_end_});
   }
   context->generator->makeAssertion(class_arg_, method_arg_, args_ranges_);
 
   /* -- keep last position for next source copying */
-  current = args_end_;
+  auto endarg_(expr_->getArg(last_index_));
+  clang::SourceRange endrange_(context->getNodeRange(endarg_));
+  current = context->createLocation(endrange_.getEnd());
 
   return true;
 
@@ -177,7 +168,7 @@ bool AssertVisitor::visitAssertionExpr(
     const AnnotationRegex& cmp_) {
   /* -- split the annotation arguments:
    *       0: assertion class
-   *       1: generic asssertion function
+   *       1: generic assertion function
    *       2: comparison assertion function
    */
   std::vector<std::string> annotation_args_(parseAnnotationArguments(cmp_));
@@ -233,14 +224,12 @@ bool AssertVisitor::visitAssertionExpr(
       clang::SourceRange leftrange_(context->getNodeRange(left_));
       args_ranges_.push_back({
           context->createLocation(leftrange_.getBegin()),
-          context->createLocation(leftrange_.getEnd()),
-          true});
+          context->createLocation(leftrange_.getEnd())});
       auto right_(oper_->getRHS());
       clang::SourceRange rightrange_(context->getNodeRange(right_));
       args_ranges_.push_back({
           context->createLocation(rightrange_.getBegin()),
-          context->createLocation(rightrange_.getEnd()),
-          true});
+          context->createLocation(rightrange_.getEnd())});
 
       /* -- add the comparator into the template parameters */
       template_args_.push_back("OTest2::" + comparator_);

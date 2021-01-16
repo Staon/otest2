@@ -335,44 +335,58 @@ void GeneratorStd::makeAssertion(
     const std::string& assertion_class_,
     const std::string& assertion_method_,
     const std::vector<AssertionArg>& args_ranges_) {
-  assert(!args_ranges_.empty());
-
   pimpl->writeGenerLineDirective();
 
-  /* -- get the assertion expression used as the assertion message */
-  std::string expression_(pimpl->reader->getPart(
-      args_ranges_.front().begin, args_ranges_.front().end));
-  bool print_comma_(args_ranges_.front().append_comma);
+  /* -- read all assertion parameters */
+  std::vector<std::string> args_texts_;
+  for(const auto& arg_ : args_ranges_) {
+    args_texts_.push_back(pimpl->reader->getPart(arg_.begin, arg_.end));
+  }
 
   /* -- make an instance of the assertion class initialized with the filename,
-   *    line number and the checked expression. */
+   *    line number and the list of stringifized arguments */
   pimpl->output << assertion_class_ << "(otest2Context(), ";
   writeCString(pimpl->output, pimpl->infile);
-  pimpl->output << ", " << args_ranges_.front().begin.getLine() << ", ";
-  writeCString(pimpl->output, expression_);
-  pimpl->output << ")";
+  pimpl->output << ", " << args_ranges_.front().begin.getLine() << ", {";
+  bool comma_(false);
+  for(const auto& arg_ : args_texts_) {
+    if(comma_)
+      pimpl->output << ", ";
+    else
+      comma_ = true;
+    writeCString(pimpl->output, arg_);
+  }
+  pimpl->output << "})";
 
   /* -- invoke the assertion method */
   pimpl->output << "." << assertion_method_ << "(";
   pimpl->writeUserLineDirective(args_ranges_.front().begin);
-  pimpl->output << expression_;
 
   /* -- print the arguments */
-  int line_(args_ranges_.front().begin.getLine());
-  for(int i_(1); i_ < args_ranges_.size(); ++i_) {
-    if(print_comma_) {
+  int line_(0);
+  comma_ = false;
+  for(int i_(0); i_ < args_ranges_.size(); ++i_) {
+    const AssertionArg& range_(args_ranges_[i_]);
+
+    /* -- print the comma after previous argument */
+    if(comma_) {
       pimpl->output << ", ";
 
       /* -- insert new lines to synchronize the line numbers with the source */
-      int nline_(args_ranges_[i_].begin.getLine());
+      int nline_(range_.begin.getLine());
       while(line_ < nline_) {
         pimpl->output << '\n';
         ++line_;
       }
     }
-    pimpl->reader->writePart(
-        pimpl->output, args_ranges_[i_].begin, &args_ranges_[i_].end);
-    print_comma_ = args_ranges_[i_].append_comma;
+    else
+      comma_ = true;
+
+    /* -- print the argument */
+    pimpl->output << args_texts_[i_];
+
+    /* -- store current line to allow synchronization with the source */
+    line_ = range_.end.getLine();
   }
 }
 
@@ -398,7 +412,7 @@ void GeneratorStd::makeTryCatchBegin(
   Formatting::printIndent(pimpl->output, pimpl->indent + 1);
   pimpl->output << "::OTest2::GenericAssertion(otest2Context(), ";
   writeCString(pimpl->output, pimpl->infile);
-  pimpl->output << ", " << begin_.getLine() << ", \"\").testException(\n";
+  pimpl->output << ", " << begin_.getLine() << ", {}).testException(\n";
   Formatting::printIndent(pimpl->output, pimpl->indent + 3);
   pimpl->output << "[&]()->bool {\n";
   Formatting::printIndent(pimpl->output, pimpl->indent + 4);

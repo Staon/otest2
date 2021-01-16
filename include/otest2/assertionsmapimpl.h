@@ -28,6 +28,7 @@
 #include <string>
 #include <vector>
 
+#include <otest2/assertstream.h>
 #include <otest2/containertrait.h>
 #include <otest2/printtraits.h>
 #include <otest2/typetraits.h>
@@ -182,10 +183,10 @@ bool MapAssertion::testAssertMap(
   bool result_(Private::compareMaps<Compare_>(messages_, a_, b_));
   assert(!messages_.empty());
 
-  enterAssertion(result_, messages_[0], false);
-  for(int i_(1); i_ < messages_.size(); ++i_)
-    assertionMessage(result_, messages_[i_]);
-  return leaveAssertion(result_);
+  AssertStream report_(enterAssertion(result_));
+  for(const auto& message_ : messages_)
+    report_ << message_ << commitMsg();
+  return report_.getResult();
 }
 
 } /* -- namespace OTest2 */

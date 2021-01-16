@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <otest2/assertionstext.h>
+#include <assertionstext.h>
 
 #include <assert.h>
 #include <fstream>
@@ -27,8 +27,9 @@
 #include <utility>
 #include <vector>
 
-#include <otest2/difflogblock.h>
-#include <otest2/hirschberg.h>
+#include <assertstream.h>
+#include <difflogblock.h>
+#include <hirschberg.h>
 
 namespace OTest2 {
 
@@ -42,31 +43,31 @@ void slurpFile(
   }
 }
 
-std::string formatLine(
+void formatLine(
+    AssertStream& os_,
     int left_line_,
     int right_line_,
     char change_,
     const std::string& line_) {
-  std::ostringstream oss_;
-  oss_ << std::setfill('0');
+  os_ << std::setfill('0');
 
   /* -- left line number */
   if(left_line_ >= 0)
-    oss_ << std::setw(4) << (left_line_ + 1);
+    os_ << std::setw(4) << (left_line_ + 1);
   else
-    oss_ << "    ";
+    os_ << "    ";
 
-  oss_ << ' ';
+  os_ << ' ';
 
   /* -- right line number */
   if(right_line_ >= 0)
-    oss_ << std::setw(4) << (right_line_ + 1);
+    os_ << std::setw(4) << (right_line_ + 1);
   else
-    oss_ << "    ";
+    os_ << "    ";
 
-  oss_ << " " << change_ << " : " << line_;
+  os_ << " " << change_ << " : " << line_;
 
-  return oss_.str();
+  os_ << commitMsg();
 }
 
 } /* -- namespace */
@@ -86,92 +87,80 @@ bool LongTextAssertion::testAssertImpl(
   hirschbergDiff(a_data_, b_data_, log_builder_);
 
   bool result_(diff_log_.empty());
+  AssertStream report_(enterAssertion(result_));
   if(result_) {
     /* -- There is no difference, the files match */
-    enterAssertion(result_, "the texts are equal", false);
+    report_ << "the texts are equal" << commitMsg();
+    return report_.getResult();
   }
-  else {
-    /* -- the files are different */
-    enterAssertion(result_, "the texts are different", false);
 
-    /* -- print the difference */
-    constexpr int CONTEXT(3);
-    bool trailing_context_(false);
-    int left_line_(0);
-    int right_line_(0);
-    std::ostringstream oss_;
-    for(const auto& difference_ : diff_log_) {
-      /* -- print trailing context of previous change */
-      if(trailing_context_) {
-        const int context_end_(left_line_ + CONTEXT);
-        for(;
-            left_line_ < difference_.left_begin && left_line_ < context_end_;
-            ++left_line_, ++right_line_) {
-          assert(right_line_ < difference_.right_begin);
+  /* -- The files are different, report the difference */
+  report_ << "the texts are different" << commitMsg();
 
-          assertionMessage(
-              result_,
-              formatLine(left_line_, right_line_, ' ', a_data_[left_line_]));
-        }
-      }
-      else
-        trailing_context_ = true;
-
-      /* -- skip unchanged lines */
-      if(left_line_ < difference_.left_begin - CONTEXT) {
-        assert(right_line_ < difference_.right_begin);
-
-        assertionMessage(result_, "........................................");
-        left_line_ = difference_.left_begin - CONTEXT;
-        right_line_ = difference_.right_begin - CONTEXT;
-      }
-
-      /* -- print entering context of the change */
+  /* -- print the difference */
+  constexpr int CONTEXT(3);
+  bool trailing_context_(false);
+  int left_line_(0);
+  int right_line_(0);
+  std::ostringstream oss_;
+  for(const auto& difference_ : diff_log_) {
+    /* -- print trailing context of previous change */
+    if(trailing_context_) {
+      const int context_end_(left_line_ + CONTEXT);
       for(;
-          left_line_ < difference_.left_begin;
+          left_line_ < difference_.left_begin && left_line_ < context_end_;
           ++left_line_, ++right_line_) {
         assert(right_line_ < difference_.right_begin);
-
-        assertionMessage(
-            result_,
-            formatLine(left_line_, right_line_, ' ', a_data_[left_line_]));
-      }
-
-      /* -- print the difference */
-      assert(left_line_ == difference_.left_begin);
-      assert(right_line_ == difference_.right_begin);
-      for(; left_line_ < difference_.left_end; ++left_line_) {
-        assertionMessage(
-            result_,
-            formatLine(left_line_, -1, '<', a_data_[left_line_]));
-      }
-      for(; right_line_ < difference_.right_end; ++right_line_) {
-        assertionMessage(
-            result_,
-            formatLine(-1, right_line_, '>', b_data_[right_line_]));
+        formatLine(report_, left_line_, right_line_, ' ', a_data_[left_line_]);
       }
     }
+    else
+      trailing_context_ = true;
 
-    /* -- print ending context */
-    const int context_end_(left_line_ + CONTEXT);
+    /* -- skip unchanged lines */
+    if(left_line_ < difference_.left_begin - CONTEXT) {
+      assert(right_line_ < difference_.right_begin);
+
+      report_ << "........................................" << commitMsg();
+      left_line_ = difference_.left_begin - CONTEXT;
+      right_line_ = difference_.right_begin - CONTEXT;
+    }
+
+    /* -- print entering context of the change */
     for(;
-        left_line_ < a_data_.size() && left_line_ < context_end_;
+        left_line_ < difference_.left_begin;
         ++left_line_, ++right_line_) {
-      assert(right_line_ < b_data_.size());
-
-      assertionMessage(
-          result_,
-          formatLine(left_line_, right_line_, ' ', a_data_[left_line_]));
+      assert(right_line_ < difference_.right_begin);
+      formatLine(report_, left_line_, right_line_, ' ', a_data_[left_line_]);
     }
 
-    /* -- skipt the end of the file */
-    if(left_line_ < a_data_.size()) {
-      assert(right_line_ < b_data_.size());
-
-      assertionMessage(result_, "........................................");
+    /* -- print the difference */
+    assert(left_line_ == difference_.left_begin);
+    assert(right_line_ == difference_.right_begin);
+    for(; left_line_ < difference_.left_end; ++left_line_) {
+      formatLine(report_, left_line_, -1, '<', a_data_[left_line_]);
+    }
+    for(; right_line_ < difference_.right_end; ++right_line_) {
+      formatLine(report_, -1, right_line_, '>', b_data_[right_line_]);
     }
   }
-  return leaveAssertion(result_);
+
+  /* -- print ending context */
+  const int context_end_(left_line_ + CONTEXT);
+  for(;
+      left_line_ < a_data_.size() && left_line_ < context_end_;
+      ++left_line_, ++right_line_) {
+    assert(right_line_ < b_data_.size());
+    formatLine(report_, left_line_, right_line_, ' ', a_data_[left_line_]);
+  }
+
+  /* -- skipt the end of the file */
+  if(left_line_ < a_data_.size()) {
+    assert(right_line_ < b_data_.size());
+    report_ << "........................................" << commitMsg();
+  }
+
+  return report_.getResult();
 }
 
 bool LongTextAssertion::testAssertLongTextSS(

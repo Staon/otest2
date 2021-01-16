@@ -65,46 +65,39 @@ class ReporterConsole : public Reporter {
     /* -- reporter interface */
     virtual void enterTest(
         const Context& context_,
-        const std::string& name_);
+        const std::string& name_) override;
     virtual void enterSuite(
         const Context& context_,
-        const std::string& name_);
+        const std::string& name_) override;
     virtual void enterCase(
         const Context& context_,
-        const std::string& name_);
+        const std::string& name_) override;
     virtual void enterState(
         const Context& context_,
-        const std::string& name_);
-    virtual void enterAssert(
+        const std::string& name_) override;
+    virtual AssertBufferPtr enterAssert(
         const Context& context_,
         bool condition_,
-        const std::string& message_,
         const std::string& file_,
-        int lineno_);
-    virtual void enterError(
-        const Context& context_,
-        const std::string& message_);
-    virtual void reportAssertionMessage(
-        const Context& context_,
-        const std::string& message_);
-    virtual void leaveAssert(
-        const Context& context_);
+        int lineno_) override;
+    virtual AssertBufferPtr enterError(
+        const Context& context_) override;
     virtual void leaveState(
         const Context& context_,
         const std::string& name_,
-        bool result_);
+        bool result_) override;
     virtual void leaveCase(
         const Context& context_,
         const std::string& name_,
-        bool result_);
+        bool result_) override;
     virtual void leaveSuite(
         const Context& context_,
         const std::string& name_,
-        bool result_);
+        bool result_) override;
     virtual void leaveTest(
         const Context& context_,
         const std::string& name_,
-        bool result_);
+        bool result_) override;
 };
 
 } /* namespace OTest2 */

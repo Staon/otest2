@@ -21,12 +21,7 @@
 
 namespace OTest2 {
 
-Reporter::Reporter() {
-
-}
-
-Reporter::~Reporter() {
-
-}
+Reporter::Reporter() = default;
+Reporter::~Reporter() = default;
 
 } /* namespace OTest2 */

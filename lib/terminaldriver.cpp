@@ -24,6 +24,7 @@
 #include <fstream>
 #include <iostream>
 #include <memory>
+#include <streambuf>
 #include <string>
 #include <term.h>
 #include <unistd.h>
@@ -45,19 +46,31 @@ class Driver {
     Driver();
     virtual ~Driver();
 
-    virtual void setFGColor(
-        std::ostream* os_,
-        TerminalDriver::Color color_) = 0;
+    virtual void setForeground(
+        std::streambuf& buffer_,
+        Color color_) = 0;
+    virtual void setTextStyle(
+        std::streambuf& buffer_,
+        Style style_) = 0;
     virtual void cleanAttributes(
-        std::ostream* os_) = 0;
+        std::streambuf& buffer_) = 0;
+
+  protected:
+    static void printSequence(
+        std::streambuf& buffer_,
+        const char* sequence_);
 };
 
-Driver::Driver() {
+Driver::Driver() = default;
+Driver::~Driver() = default;
 
-}
-
-Driver::~Driver() {
-
+void Driver::printSequence(
+    std::streambuf& buffer_,
+    const char* sequence_) {
+  while(*sequence_ != 0) {
+    buffer_.sputc(*sequence_);
+    ++sequence_;
+  }
 }
 
 class DriverNull : public Driver {
@@ -71,30 +84,34 @@ class DriverNull : public Driver {
     DriverNull();
     virtual ~DriverNull();
 
-    virtual void setFGColor(
-        std::ostream* os_,
-        TerminalDriver::Color color_);
+    virtual void setForeground(
+        std::streambuf& buffer_,
+        Color color_) override;
+    virtual void setTextStyle(
+        std::streambuf& buffer_,
+        Style style_) override;
     virtual void cleanAttributes(
-        std::ostream* os_);
+        std::streambuf& buffer_) override;
 };
 
-DriverNull::DriverNull() {
+DriverNull::DriverNull() = default;
+DriverNull::~DriverNull() = default;
 
+void DriverNull::setForeground(
+    std::streambuf& buffer_,
+    Color color_) {
+  /* -- nothing to do */
 }
 
-DriverNull::~DriverNull() {
-
-}
-
-void DriverNull::setFGColor(
-    std::ostream* os_,
-    TerminalDriver::Color color_) {
-
+void DriverNull::setTextStyle(
+    std::streambuf& buffer_,
+    Style style_) {
+  /* -- nothing to do */
 }
 
 void DriverNull::cleanAttributes(
-    std::ostream* os_) {
-
+    std::streambuf& buffer_) {
+  /* -- nothing to do */
 }
 
 class DriverTerminfo : public Driver {
@@ -103,6 +120,9 @@ class DriverTerminfo : public Driver {
     const std::string setaf;
     const std::string setf;
 
+    static std::string initSequence(
+        const char* seq_id_);
+
   public:
     /* -- avoid copying */
     DriverTerminfo(
@@ -110,78 +130,92 @@ class DriverTerminfo : public Driver {
     DriverTerminfo& operator =(
         const DriverTerminfo&) = delete;
 
-    explicit DriverTerminfo(
-        const std::string& sgr0_,
-        const std::string& setaf_,
-        const std::string& setf_);
+    explicit DriverTerminfo();
     virtual ~DriverTerminfo();
 
-    virtual void setFGColor(
-        std::ostream* os_,
-        TerminalDriver::Color color_);
+    virtual void setForeground(
+        std::streambuf& buffer_,
+        Color color_) override;
+    virtual void setTextStyle(
+        std::streambuf& buffer_,
+        Style style_) override;
     virtual void cleanAttributes(
-        std::ostream* os_);
+        std::streambuf& buffer_) override;
 };
 
-DriverTerminfo::DriverTerminfo(
-    const std::string& sgr0_,
-    const std::string& setaf_,
-    const std::string& setf_) :
-  sgr0(sgr0_),
-  setaf(setaf_),
-  setf(setf_) {
+std::string DriverTerminfo::initSequence(
+    const char* seq_id_) {
+  const char* sequence_(tigetstr(seq_id_));
+  if(sequence_ != nullptr)
+    return std::string(sequence_);
+  else
+    return std::string();
+}
+
+DriverTerminfo::DriverTerminfo() :
+  sgr0(initSequence("sgr0")),
+  setaf(initSequence("setaf")),
+  setf(initSequence("setf")) {
 
 }
 
-DriverTerminfo::~DriverTerminfo() {
+DriverTerminfo::~DriverTerminfo() = default;
 
-}
-
-void DriverTerminfo::setFGColor(
-    std::ostream* os_,
-    TerminalDriver::Color color_) {
+void DriverTerminfo::setForeground(
+    std::streambuf& buffer_,
+    Color color_) {
+  /* -- ANSI colors */
   if(!setaf.empty()) {
-    /* -- ANSI colors */
     int converted_(0);
     switch(color_) {
-      case TerminalDriver::RED:
+      case Color::RED:
         converted_ = 1;
         break;
-      case TerminalDriver::GREEN:
+      case Color::GREEN:
         converted_ = 2;
         break;
       default:
         assert(0);
     }
-    *os_ << tparm(setaf.c_str(), converted_);
+    printSequence(buffer_, tparm(setaf.c_str(), converted_));
+    return;
   }
-  else {
-    /* -- old color system */
+
+  /* -- legacy colors */
+  if(!setf.empty()) {
     int converted_(0);
     switch(color_) {
-      case TerminalDriver::RED:
+      case Color::RED:
         converted_ = 4;
         break;
-      case TerminalDriver::GREEN:
+      case Color::GREEN:
         converted_ = 2;
         break;
       default:
         assert(0);
     }
-    *os_ << tparm(setf.c_str(), converted_);
+    printSequence(buffer_, tparm(setaf.c_str(), converted_));
+    return;
   }
+}
+
+void DriverTerminfo::setTextStyle(
+    std::streambuf& buffer_,
+    Style style_) {
+  /* -- TODO */
 }
 
 void DriverTerminfo::cleanAttributes(
-    std::ostream* os_) {
-  *os_ << tparm(sgr0.c_str());
+    std::streambuf& buffer_) {
+  if(!sgr0.empty()) {
+    printSequence(buffer_, tparm(sgr0.c_str()));
+  }
 }
 
 } /* -- namespace */
 
 struct TerminalDriver::Impl {
   public:
-    std::ostream* os;
     std::unique_ptr<Driver> driver;
 
     /* -- avoid copying */
@@ -191,46 +225,24 @@ struct TerminalDriver::Impl {
         const Impl&) = delete;
 
     explicit Impl(
-        std::ostream* os_);
+        int handle_);
     ~Impl();
 };
 
 TerminalDriver::Impl::Impl(
-    std::ostream* os_) :
-  os(os_) {
-  assert(os != nullptr);
-
-  /* -- Decide the file handle. Now only standard output and standard
-   *    error output are considered being terminals. */
-  int handle_(-1);
-  if(os == &std::cout)
-    handle_ = 1;
-  else if(os == &std::cerr)
-    handle_ = 2;
-
+    int handle_) {
   /* -- initialize the terminfo */
   if(handle_ >= 0 && isatty(handle_)) {
     int err_;
     int info_(setupterm(nullptr, handle_, &err_));
     if(info_ == OK && err_ == 1) {
-      const char* setaf_(tigetstr("setaf"));
-      const char* setf_(tigetstr("setf"));
-      const char* sgr0_(tigetstr("sgr0"));
-      if(sgr0_ > reinterpret_cast<char*>(0)
-          && (setaf_ > reinterpret_cast<char*>(0)
-              || setf_ > reinterpret_cast<char*>(0))) {
-        /* -- the capabilities are correctly read, create the driver */
-        driver.reset(new DriverTerminfo(
-            sgr0_,
-            (setaf_ > reinterpret_cast<char*>(0))?setaf_:"",
-            (setf_ > reinterpret_cast<char*>(0))?setf_:""));
-        return;
-      }
+      driver = ::OTest2::make_unique<DriverTerminfo>();
+      return;
     }
   }
 
   /* -- In all other cases set the null driver up. */
-  driver.reset(new DriverNull);
+  driver = ::OTest2::make_unique<DriverNull>();
 }
 
 TerminalDriver::Impl::~Impl() {
@@ -238,8 +250,8 @@ TerminalDriver::Impl::~Impl() {
 }
 
 TerminalDriver::TerminalDriver(
-    std::ostream* os_) :
-  pimpl(new Impl(os_)) {
+    int handle_) :
+  pimpl(new Impl(handle_)) {
 
 }
 
@@ -247,13 +259,21 @@ TerminalDriver::~TerminalDriver() {
   odelete(pimpl);
 }
 
-void TerminalDriver::setFGColor(
-    TerminalDriver::Color color_) {
-  pimpl->driver->setFGColor(pimpl->os, color_);
+void TerminalDriver::setForeground(
+    std::streambuf& buffer_,
+    Color color_) {
+  pimpl->driver->setForeground(buffer_, color_);
 }
 
-void TerminalDriver::cleanAttributes() {
-  pimpl->driver->cleanAttributes(pimpl->os);
+void TerminalDriver::setTextStyle(
+    std::streambuf& buffer_,
+    Style style_) {
+  pimpl->driver->setTextStyle(buffer_, style_);
+}
+
+void TerminalDriver::cleanAttributes(
+    std::streambuf& buffer_) {
+  pimpl->driver->cleanAttributes(buffer_);
 }
 
 } /* namespace OTest2 */

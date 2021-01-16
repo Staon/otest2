@@ -21,12 +21,12 @@
 
 #include <otest2/assertions.h>
 
-#include <sstream>
 #include <type_traits>
 
 #include <typeinfo>
 #include <cxxabi.h>
 
+#include <otest2/assertstream.h>
 #include <otest2/printtraits.h>
 
 namespace OTest2 {
@@ -44,30 +44,27 @@ bool GenericAssertion::testAssertCompare(
   const bool condition_(cmp_(a_, b_));
 
   /* -- report the result and the used relation operator */
-  std::ostringstream sos_;
+  AssertStream report_(enterAssertion(condition_));
   if(condition_) {
-    sos_ << "check 'a ";
-    PrintTrait<CmpType_>::print(sos_, cmp_);
-    sos_ << " b' has passed";
+    report_ << "check 'a ";
+    PrintTrait<CmpType_>::print(report_, cmp_);
+    report_ << " b' has passed" << commitMsg();
   }
   else {
-    sos_ << "check 'a ";
-    PrintTrait<CmpType_>::print(sos_, cmp_);
-    sos_ << " b' has failed";
+    report_ << "check 'a ";
+    PrintTrait<CmpType_>::print(report_, cmp_);
+    report_ << " b' has failed" << commitMsg();
   }
-  enterAssertion(condition_, sos_.str(), false);
 
   /* -- report values of the operands */
-  sos_.str("");
-  sos_ << "a = ";
-  PrintTrait<AType_>::print(sos_, a_);
-  assertionMessage(condition_, sos_.str());
-  sos_.str("");
-  sos_ << "b = ";
-  PrintTrait<BType_>::print(sos_, b_);
-  assertionMessage(condition_, sos_.str());
+  report_ << "a = ";
+  PrintTrait<AType_>::print(report_, a_);
+  report_ << commitMsg();
+  report_ << "b = ";
+  PrintTrait<BType_>::print(report_, b_);
+  report_ << commitMsg();
 
-  return leaveAssertion(condition_);
+  return report_.getResult();
 }
 
 }  /* -- namespace OTest2 */

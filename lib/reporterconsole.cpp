@@ -24,6 +24,7 @@
 #include <sstream>
 #include <utility>
 
+#include <assertbufferstr.h>
 #include <context.h>
 #include <objectpath.h>
 #include <reporterstatistics.h>
@@ -100,15 +101,14 @@ void printResultLine(
   os_ << '[';
 
   if(result_) {
-    driver_.setFGColor(TerminalDriver::GREEN);
+    driver_.setForeground(*os_.rdbuf(), Color::GREEN);
     os_ << "Passed";
-    driver_.cleanAttributes();
   }
   else {
-    driver_.setFGColor(TerminalDriver::RED);
+    driver_.setForeground(*os_.rdbuf(), Color::RED);
     os_ << "Failed";
-    driver_.cleanAttributes();
   }
+  driver_.cleanAttributes(*os_.rdbuf());
   os_ << ']' << std::endl;
 }
 
@@ -168,7 +168,34 @@ void printTotalErrors(
 
 } /* -- namespace */
 
-struct ReporterConsole::Impl {
+struct ReporterConsole::Impl : public AssertBufferListener {
+  private:
+    class AssertBuffer : public AssertBufferStr {
+      private:
+        Impl* pimpl;
+
+      public:
+        /* -- avoid copying */
+        AssertBuffer(
+            const AssertBuffer&) = delete;
+        AssertBuffer& operator = (
+            const AssertBuffer&) = delete;
+
+        explicit AssertBuffer(
+            Impl* pimpl_);
+        virtual ~AssertBuffer();
+
+        /* -- setting of text attributes */
+        virtual void setForeground(
+            Color color_) override;
+        virtual void setTextStyle(
+            Style style_) override;
+        virtual void resetAttributes() override;
+    };
+
+    static int selectHandle(
+        std::ostream* os_);
+
   public:
     ReporterConsole* owner;
     std::ostream* os;
@@ -181,9 +208,19 @@ struct ReporterConsole::Impl {
     /* -- assertion printing */
     bool verbose;
     bool hide_location;
-    bool last_condition;
     int indent;
     std::pair<int, char> stacked_hr;
+
+    /* -- data about currently opened assertion */
+    struct {
+        bool error;
+        bool condition;
+        std::string file;
+        int line;
+    } opened_assertion;
+
+    /* -- buffer for assertion messages */
+    AssertBufferPtr assert_buffer;
 
     /* -- avoid copying */
     Impl(
@@ -196,11 +233,44 @@ struct ReporterConsole::Impl {
         std::ostream* os_,
         bool verbose_,
         bool hide_location_);
-    ~Impl();
+    virtual ~Impl();
 
     void printStackedHR();
     void resetStackedHR();
+
+    /* -- assertion buffer listener */
+    virtual void commitFirstMessage(
+        const Context& context_,
+        const std::string& message_) override;
+    virtual void commitMessage(
+        const Context& context_,
+        const std::string& message_) override;
+    virtual void commitAssertion(
+        const Context& context_) override;
 };
+
+ReporterConsole::Impl::AssertBuffer::AssertBuffer(
+    Impl* pimpl_) :
+  AssertBufferStr(pimpl_),
+  pimpl(pimpl_) {
+
+}
+
+ReporterConsole::Impl::AssertBuffer::~AssertBuffer() = default;
+
+void ReporterConsole::Impl::AssertBuffer::setForeground(
+    Color color_) {
+  pimpl->term_driver.setForeground(*this, color_);
+}
+
+void ReporterConsole::Impl::AssertBuffer::setTextStyle(
+    Style style_) {
+  pimpl->term_driver.setTextStyle(*this, style_);
+}
+
+void ReporterConsole::Impl::AssertBuffer::resetAttributes() {
+  pimpl->term_driver.cleanAttributes(*this);
+}
 
 ReporterConsole::Impl::Impl(
     ReporterConsole* owner_,
@@ -209,18 +279,28 @@ ReporterConsole::Impl::Impl(
     bool hide_location_) :
   owner(owner_),
   os(os_),
-  term_driver(os_),
+  term_driver(selectHandle(os_)),
   level(0),
   verbose(verbose_),
   hide_location(hide_location_),
-  last_condition(true),
   indent(-1),
-  stacked_hr(0, '=') {
+  stacked_hr(0, '='),
+  assert_buffer(std::make_shared<AssertBuffer>(this)) {
   assert(os != nullptr);
 
 }
 
 ReporterConsole::Impl::~Impl() = default;
+
+int ReporterConsole::Impl::selectHandle(
+    std::ostream* os_) {
+  if(os_ == &std::cout)
+    return 1;
+  else if(os_ == &std::cerr)
+    return 2;
+  else
+    return -1;
+}
 
 void ReporterConsole::Impl::printStackedHR() {
   if(stacked_hr.first >= 0)
@@ -230,6 +310,48 @@ void ReporterConsole::Impl::printStackedHR() {
 
 void ReporterConsole::Impl::resetStackedHR() {
   stacked_hr = {-1, ' '};
+}
+
+void ReporterConsole::Impl::commitFirstMessage(
+    const Context& context_,
+    const std::string& message_) {
+  printStackedHR();
+
+  /* -- print the assertion status */
+  if(verbose || !opened_assertion.condition) {
+    if(!opened_assertion.error) {
+      /* -- regular assertion */
+      *os << '[';
+      if(!hide_location)
+        *os << opened_assertion.file << ':' << opened_assertion.line;
+      else
+        *os << "...";
+      *os << "] "
+          << context_.object_path->getCurrentPath()  << ": " << message_
+          << std::endl;
+    }
+    else {
+      /* -- internal error */
+      *os << "error in " << context_.object_path->getCurrentPath() << ": " << message_
+          << std::endl;
+    }
+  }
+}
+
+void ReporterConsole::Impl::commitMessage(
+    const Context& context_,
+    const std::string& message_) {
+  if(verbose || !opened_assertion.condition) {
+    std::istringstream iss_(message_);
+    std::string line_;
+    while(std::getline(iss_, line_))
+      *os << "    " << line_ << std::endl;
+  }
+}
+
+void ReporterConsole::Impl::commitAssertion(
+    const Context& context_) {
+  /* -- nothing to do */
 }
 
 ReporterConsole::ReporterConsole(
@@ -279,63 +401,23 @@ void ReporterConsole::enterState(
 
 }
 
-void ReporterConsole::enterAssert(
+AssertBufferPtr ReporterConsole::enterAssert(
     const Context& context_,
     bool condition_,
-    const std::string& message_,
     const std::string& file_,
     int lineno_) {
   /* -- adjust the statistics */
   pimpl->statistics.reportAssertion(condition_);
-
-  /* -- store the condition for printing of additional messages */
-  pimpl->last_condition = condition_;
-
-  /* -- print the assertion status */
-  pimpl->printStackedHR();
-  if(pimpl->verbose || !condition_) {
-    *pimpl->os << '[';
-    if(!pimpl->hide_location)
-      *pimpl->os << file_ << ':' << lineno_;
-    else
-      *pimpl->os << "...";
-    *pimpl->os
-        << "] "
-        << context_.object_path->getCurrentPath()  << ": " << message_
-        << std::endl;
-  }
+  pimpl->opened_assertion = {false, condition_, file_, lineno_};
+  return pimpl->assert_buffer;
 }
 
-void ReporterConsole::enterError(
-    const Context& context_,
-    const std::string& message_) {
+AssertBufferPtr ReporterConsole::enterError(
+    const Context& context_) {
   /* -- adjust the statistics */
   pimpl->statistics.reportError();
-
-  /* -- store the condition for printing of additional messages */
-  pimpl->last_condition = false;
-
-  /* -- print the error */
-  pimpl->printStackedHR();
-  *pimpl->os
-      << "error in " << context_.object_path->getCurrentPath() << ": " << message_
-      << std::endl;
-}
-
-void ReporterConsole::reportAssertionMessage(
-    const Context& context_,
-    const std::string& message_) {
-  if(pimpl->verbose || !pimpl->last_condition) {
-    std::istringstream iss_(message_);
-    std::string line_;
-    while(std::getline(iss_, line_))
-      *pimpl->os << "    " << line_ << std::endl;
-  }
-}
-
-void ReporterConsole::leaveAssert(
-    const Context& context_) {
-  /* -- nothing to do */
+  pimpl->opened_assertion = {true, false, "", -1};
+  return pimpl->assert_buffer;
 }
 
 void ReporterConsole::leaveState(

@@ -22,10 +22,111 @@
 #include <algorithm>
 #include <assert.h>
 #include <functional>
+#include <vector>
+
+#include <assertbuffer.h>
 
 namespace OTest2 {
 
 using namespace std::placeholders;
+
+namespace {
+
+class Buffer : public AssertBuffer {
+  private:
+    std::vector<AssertBufferPtr> buffers;
+
+  public:
+    /* -- avoid copying */
+    Buffer(
+        const Buffer&) = delete;
+    Buffer& operator = (
+        const Buffer&) = delete;
+
+  public:
+    Buffer();
+    virtual ~Buffer();
+
+    void appendBuffer(
+        AssertBufferPtr buffer_);
+
+  protected:
+    /* -- stream buffer */
+    virtual int overflow(
+        int c_) override final;
+
+  public:
+    /* -- assertion buffer */
+    virtual void setForeground(
+        Color color_) override;
+    virtual void setTextStyle(
+        Style style_) override;
+    virtual void resetAttributes() override;
+    virtual void commitMessage(
+        const Context& context_) override;
+    virtual void commitAssertion(
+        const Context& context_) override;
+};
+
+Buffer::Buffer() = default;
+Buffer::~Buffer() = default;
+
+void Buffer::appendBuffer(
+    AssertBufferPtr buffer_) {
+  buffers.push_back(buffer_);
+}
+
+int Buffer::overflow(
+    int c_) {
+  if(c_ != traits_type::eof()) {
+    std::for_each(
+        buffers.begin(),
+        buffers.end(),
+        std::bind(&AssertBuffer::sputc, _1, traits_type::to_char_type(c_)));
+  }
+  return traits_type::not_eof(c_);
+}
+
+void Buffer::setForeground(
+    Color color_) {
+  std::for_each(
+      buffers.begin(),
+      buffers.end(),
+      std::bind(&AssertBuffer::setForeground, _1, color_));
+}
+
+void Buffer::setTextStyle(
+    Style style_) {
+  std::for_each(
+      buffers.begin(),
+      buffers.end(),
+      std::bind(&AssertBuffer::setTextStyle, _1, style_));
+}
+
+void Buffer::resetAttributes() {
+  std::for_each(
+      buffers.begin(),
+      buffers.end(),
+      std::bind(&AssertBuffer::resetAttributes, _1));
+}
+
+void Buffer::commitMessage(
+    const Context& context_) {
+  std::for_each(
+      buffers.begin(),
+      buffers.end(),
+      std::bind(&AssertBuffer::commitMessage, _1, std::cref(context_)));
+}
+
+void Buffer::commitAssertion(
+    const Context& context_) {
+  std::for_each(
+      buffers.begin(),
+      buffers.end(),
+      std::bind(&AssertBuffer::commitAssertion, _1, std::cref(context_)));
+}
+
+} /* -- namespace */
 
 ReporterTee::ReporterTee() {
 
@@ -94,60 +195,35 @@ void ReporterTee::enterState(
           std::cref(name_)));
 }
 
-void ReporterTee::enterAssert(
+AssertBufferPtr ReporterTee::enterAssert(
     const Context& context_,
     bool condition_,
-    const std::string& message_,
     const std::string& file_,
     int lineno_) {
+  auto buffer_(std::make_shared<Buffer>());
   std::for_each(
       reporters.begin(),
       reporters.end(),
-      std::bind(
-          &Reporter::enterAssert,
-          _1,
-          std::cref(context_),
-          condition_,
-          std::cref(message_),
-          std::cref(file_),
-          lineno_));
+      [buffer_, &context_, condition_, &file_, lineno_](Reporter* reporter_) {
+        buffer_->appendBuffer(
+            reporter_->enterAssert(context_, condition_, file_, lineno_));
+        }
+  );
+  return buffer_;
 }
 
-void ReporterTee::enterError(
-    const Context& context_,
-    const std::string& message_) {
-  std::for_each(
-      reporters.begin(),
-      reporters.end(),
-      std::bind(
-          &Reporter::enterError,
-          _1,
-          std::cref(context_),
-          std::cref(message_)));
-}
-
-void ReporterTee::reportAssertionMessage(
-    const Context& context_,
-    const std::string& message_) {
-  std::for_each(
-      reporters.begin(),
-      reporters.end(),
-      std::bind(
-          &Reporter::reportAssertionMessage,
-          _1,
-          std::cref(context_),
-          std::cref(message_)));
-}
-
-void ReporterTee::leaveAssert(
+AssertBufferPtr ReporterTee::enterError(
     const Context& context_) {
+  auto buffer_(std::make_shared<Buffer>());
   std::for_each(
       reporters.begin(),
       reporters.end(),
-      std::bind(
-          &Reporter::leaveAssert,
-          _1,
-          std::cref(context_)));
+      [buffer_, &context_](Reporter* reporter_) {
+        buffer_->appendBuffer(
+            reporter_->enterError(context_));
+      }
+  );
+  return buffer_;
 }
 
 void ReporterTee::leaveState(

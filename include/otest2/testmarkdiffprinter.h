@@ -20,13 +20,14 @@
 #ifndef OTest2__INCLUDE_OTEST2_TESTMARKDIFFPRINTER_H_
 #define OTest2__INCLUDE_OTEST2_TESTMARKDIFFPRINTER_H_
 
-#include <iosfwd>
 #include <vector>
 
 #include <otest2/difflogblock.h>
 #include <otest2/testmark.h>
 
 namespace OTest2 {
+
+class TestMarkFormatter;
 
 /**
  * @brief Print difference of two testmarks
@@ -38,7 +39,7 @@ namespace OTest2 {
  * @param context_ Count of lines printed as a context of each change
  */
 void printTestMarkDiff(
-    std::ostream& os_,
+    TestMarkFormatter& formatter_,
     const std::vector<TestMark::LinearizedRecord>& left_,
     const std::vector<TestMark::LinearizedRecord>& right_,
     const DiffLogBlocks& diff_log_,

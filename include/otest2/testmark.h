@@ -20,7 +20,6 @@
 #define OTest2__LIB_TESTMARK_H_
 
 #include <cstdint>
-#include <iosfwd>
 #include <string>
 #include <vector>
 
@@ -30,6 +29,7 @@ namespace OTest2 {
 
 class DiffLogBuilder;
 class TestMarkFactory;
+class TestMarkFormatter;
 class TestMarkIn;
 class TestMarkOut;
 
@@ -277,12 +277,18 @@ class TestMark {
     /**
      * @brief Print the testmark
      *
-     * @param os_ An output stream
-     * @param prefix_ A prefix at the beginning of each line
+     * @param formatter_ A formatter object
      */
     void printMark(
-        std::ostream& os_,
-        const std::string& prefix_) const;
+        TestMarkFormatter& formatter_) const;
+
+    /**
+     * @brief Print the testmark as it's completely new
+     *
+     * @param formatter_ A formatter object
+     */
+    void printAddMark(
+        TestMarkFormatter& formatter_) const;
 };
 
 } /* namespace OTest2 */

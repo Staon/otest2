@@ -313,13 +313,21 @@ void TestMark::computeDiff(
 }
 
 void TestMark::printMark(
-    std::ostream& os_,
-    const std::string& prefix_) const {
+    TestMarkFormatter& formatter_) const {
   std::vector<LinearizedRecord> array_;
   linearizedMark(array_);
   int index_;
   TestMarkPrinter printer_(&array_, index_);
-  while(printer_.printLine(os_, prefix_));
+  while(printer_.printLine(formatter_));
+}
+
+void TestMark::printAddMark(
+    TestMarkFormatter& formatter_) const {
+  std::vector<LinearizedRecord> array_;
+  linearizedMark(array_);
+  int index_;
+  TestMarkPrinter printer_(&array_, index_);
+  while(printer_.printAdded(formatter_));
 }
 
 } /* namespace OTest2 */

@@ -31,6 +31,7 @@
 #include <utility>
 #include <vector>
 
+#include <otest2/assertstream.h>
 #include <otest2/comparisons.h>
 #include <otest2/containertrait.h>
 #include <otest2/printtraits.h>
@@ -123,10 +124,10 @@ bool ItemWiseAssertion::testAssertItemWiseList(
   assert(messages_.size() > 0);
 
   /* -- report the result */
-  enterAssertion(result_, messages_[0], false);
-  for(int i_(1); i_ < messages_.size(); ++i_)
-    assertionMessage(result_, messages_[i_]);
-  return leaveAssertion(result_);
+  AssertStream report_(enterAssertion(result_));
+  for(const auto& message_ : messages_)
+    report_ << message_ << commitMsg();
+  return report_.getResult();
 }
 
 template<template<typename, typename> class Compare_, typename IterA_, typename IterB_>

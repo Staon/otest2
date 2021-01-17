@@ -25,6 +25,7 @@
 #include <vector>
 
 #include <otest2/assertbean.h>
+#include <otest2/assertbufferstr.h>
 #include <otest2/context.h>
 #include <otest2/objectpath.h>
 #include <otest2/utils.h>
@@ -54,12 +55,14 @@ std::ostream& formatRecord(
 
 } /* -- namespace */
 
-struct ReporterMock::Impl {
+struct ReporterMock::Impl : public AssertBufferListener {
   public:
     typedef std::vector<std::string> Records;
     Records records;
     std::ostringstream oss;
     bool report_paths;
+
+    AssertBufferStrPtr assert_buffer;
 
     /* -- avoid copying */
     Impl(
@@ -69,18 +72,40 @@ struct ReporterMock::Impl {
 
     explicit Impl(
         bool report_paths_);
-    ~Impl();
+    virtual ~Impl();
 
     void printResult(
         bool result_);
     void addRecord();
     void reportObjectPath(
         const Context& context_);
+
+    /* -- assertion buffer listener */
+    virtual void assertionOpeningMessage(
+        const Context& context_,
+        const AssertBufferAssertData& data_,
+        const std::string& message_) override;
+    virtual void assertionAdditionalMessage(
+        const Context& context_,
+        const AssertBufferAssertData& data_,
+        const std::string& message_) override;
+    virtual void assertionClose(
+        const Context& context_,
+        const AssertBufferAssertData& data_) override;
+    virtual void errorOpeningMessage(
+        const Context& context_,
+        const std::string& message_) override;
+    virtual void errorAdditionalMessage(
+        const Context& context_,
+        const std::string& message_) override;
+    virtual void errorClose(
+        const Context& context_) override;
 };
 
 ReporterMock::Impl::Impl(
     bool report_paths_) :
-  report_paths(report_paths_) {
+  report_paths(report_paths_),
+  assert_buffer(std::make_shared<AssertBufferStr>(this)){
 
 }
 
@@ -107,6 +132,59 @@ void ReporterMock::Impl::reportObjectPath(
     oss << "path: " << context_.object_path->getCurrentPath();
     addRecord();
   }
+}
+
+void ReporterMock::Impl::assertionOpeningMessage(
+    const Context& context_,
+    const AssertBufferAssertData& data_,
+    const std::string& message_) {
+  /* -- regular assertion */
+  oss << "assert<" << message_ << ">: ";
+  printResult(data_.condition);
+  addRecord();
+  reportObjectPath(context_);
+}
+
+void ReporterMock::Impl::assertionAdditionalMessage(
+    const Context& context_,
+    const AssertBufferAssertData& data_,
+    const std::string& message_) {
+  oss << "message<" << message_ << ">";
+  addRecord();
+  reportObjectPath(context_);
+}
+
+void ReporterMock::Impl::assertionClose(
+    const Context& context_,
+    const AssertBufferAssertData& data_) {
+  oss << "leaveAssert<>";
+  addRecord();
+  reportObjectPath(context_);
+}
+
+void ReporterMock::Impl::errorOpeningMessage(
+    const Context& context_,
+    const std::string& message_) {
+  /* -- internal error */
+  oss << "error<" << message_ << ">: ";
+  printResult(false);
+  addRecord();
+  reportObjectPath(context_);
+}
+
+void ReporterMock::Impl::errorAdditionalMessage(
+    const Context& context_,
+    const std::string& message_) {
+  oss << "errMessage<" << message_ << ">";
+  addRecord();
+  reportObjectPath(context_);
+}
+
+void ReporterMock::Impl::errorClose(
+    const Context& context_) {
+  oss << "leaveError<>";
+  addRecord();
+  reportObjectPath(context_);
 }
 
 ReporterMock::ReporterMock(
@@ -194,40 +272,19 @@ void ReporterMock::enterState(
   pimpl->reportObjectPath(context_);
 }
 
-void ReporterMock::enterAssert(
+AssertBufferPtr ReporterMock::enterAssert(
     const Context& context_,
     bool condition_,
-    const std::string& message_,
     const std::string& file_,
     int lineno_) {
-  pimpl->oss << "assert<" << message_ << ">: ";
-  pimpl->printResult(condition_);
-  pimpl->addRecord();
-  pimpl->reportObjectPath(context_);
+  pimpl->assert_buffer->openAssertion({condition_, file_, lineno_});
+  return pimpl->assert_buffer;
 }
 
-void ReporterMock::enterError(
-    const Context& context_,
-    const std::string& message_) {
-  pimpl->oss << "error<" << message_ << ">: ";
-  pimpl->printResult(false);
-  pimpl->addRecord();
-  pimpl->reportObjectPath(context_);
-}
-
-void ReporterMock::reportAssertionMessage(
-    const Context& context_,
-    const std::string& message_) {
-  pimpl->oss << "message<" << message_ << ">";
-  pimpl->addRecord();
-  pimpl->reportObjectPath(context_);
-}
-
-void ReporterMock::leaveAssert(
+AssertBufferPtr ReporterMock::enterError(
     const Context& context_) {
-  pimpl->oss << "leaveAssert<>";
-  pimpl->addRecord();
-  pimpl->reportObjectPath(context_);
+  pimpl->assert_buffer->openError();
+  return pimpl->assert_buffer;
 }
 
 void ReporterMock::leaveState(

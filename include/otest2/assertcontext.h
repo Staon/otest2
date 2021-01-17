@@ -20,10 +20,12 @@
 #ifndef OTest2__INCLUDE_OTEST2_ASSERTCONTEXT_H_
 #define OTest2__INCLUDE_OTEST2_ASSERTCONTEXT_H_
 
+#include <initializer_list>
 #include <string>
 
 namespace OTest2 {
 
+class AssertStream;
 class Context;
 
 /**
@@ -37,7 +39,7 @@ class AssertContext {
     const Context* context;
     std::string file;
     int lineno;
-    std::string expression;
+    std::initializer_list<const char*> parameters;
 
   public:
     /* -- avoid copying */
@@ -52,14 +54,16 @@ class AssertContext {
      * @param context_ The OTest2 context
      * @param file_ filename which the assertion is located in
      * @param lineno_ line number of the assertion
-     * @param expression_ the checked expression as a string. Use empty
-     *     string if there is no strigifized expression.
+     * @param parameters_ Array of strings representing the parameters
+     *     of the assertion. The initializer list is valid just inside
+     *     one expression as well as the instance of the assertion context
+     *     is.
      */
     explicit AssertContext(
         const Context& context_,
         const std::string& file_,
         int lineno_,
-        const std::string& expression_);
+        std::initializer_list<const char*> parameters_);
 
   protected:
     /**
@@ -67,55 +71,35 @@ class AssertContext {
      */
     ~AssertContext();
 
+
     /**
      * @brief Enter an assertion
      *
-     * @param condition_ The checked condition
-     * @param message_ The assertion message (it may be empty)
-     * @param use_expression_ If it's true, a textual representation of
-     *     the first assertion parameter is added into the assertion message.
+     * @param result_ Result of the assertion (the checked condition)
+     * @return An assertion stream. This object allows to print more
+     *     descriptive description why the assertion has failed including
+     *     some text attributes like color or style. The object correctly
+     *     closes the assertion by its destruction.
      */
-    void enterAssertion(
-        bool condition_,
-        const std::string& message_,
-        bool use_expression_);
-
-    /**
-     * @brief Add a message into opened assertion
-     *
-     * @param condition_ The checked condition
-     * @param message_ The message
-     */
-    void assertionMessage(
-        bool condition_,
-        const std::string& message_);
-
-    /**
-     * @brief Close opened assertion
-     *
-     * @param condition_ The checked condition
-     * @return The checked condition
-     */
-    bool leaveAssertion(
-        bool condition_);
+    AssertStream enterAssertion(
+        bool result_);
 
     /**
      * @brief Implementation of a simple assertion
      *
      * This method implements a simple assertion which doesn't report additive
-     * messages. Generally, the method invokes opening and closing assertion
-     * methods.
+     * messages.
      *
      * @param condition_ The checked condition
      * @param message_ The assertion message (it may be empty)
-     * @param use_expression_ If it's true, a textual representation of
-     *     the first assertion parameter is added into the assertion message.
+     * @param print_expression_ If it's true, the first assertion parameter
+     *     is printed with the assertion message.
      * @return the condition
      */
     bool simpleAssertionImpl(
         bool condition_,
         const std::string& message_,
-        bool use_expression_);
+        bool print_expression_);
 
     /**
      * @brief Get the OTest2 context

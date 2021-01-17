@@ -19,6 +19,7 @@
 
 #include <reporterjunit.h>
 
+#include <assert.h>
 #include <chrono>
 #include <iomanip>
 #include <pugixml.hpp>
@@ -28,6 +29,7 @@
 #include <time.h>
 #include <vector>
 
+#include <assertbufferstr.h>
 #include <context.h>
 #include <timesource.h>
 #include <utils.h>
@@ -68,7 +70,7 @@ std::string formatDuration(
 
 } /* -- namespace */
 
-struct ReporterJUnit::Impl {
+struct ReporterJUnit::Impl : public AssertBufferListener {
     std::string filename;
     bool hide_location;
 
@@ -90,6 +92,9 @@ struct ReporterJUnit::Impl {
     };
     std::vector<Record> node_stack;
 
+    std::ostringstream message;
+    AssertBufferStrPtr assert_buffer;
+
     /* -- avoid copying */
     Impl(
         const Impl&) = delete;
@@ -99,7 +104,7 @@ struct ReporterJUnit::Impl {
     explicit Impl(
         const std::string& file_,
         bool hide_location_);
-    ~Impl();
+    virtual ~Impl();
 
     void cumulateStatistics(
         Record& target_,
@@ -117,6 +122,32 @@ struct ReporterJUnit::Impl {
         const Context& context_,
         Record& record_,
         const std::string& name_);
+    void appendMessage(
+        const Context& context_,
+        const std::string& message_);
+    void commitMessage(
+        const Context& context_);
+
+    /* -- listener of the assertion buffer */
+    virtual void assertionOpeningMessage(
+        const Context& context_,
+        const AssertBufferAssertData& data_,
+        const std::string& message_) override;
+    virtual void assertionAdditionalMessage(
+        const Context& context_,
+        const AssertBufferAssertData& data_,
+        const std::string& message_) override;
+    virtual void assertionClose(
+        const Context& context_,
+        const AssertBufferAssertData& data_) override;
+    virtual void errorOpeningMessage(
+        const Context& context_,
+        const std::string& message_) override;
+    virtual void errorAdditionalMessage(
+        const Context& context_,
+        const std::string& message_) override;
+    virtual void errorClose(
+        const Context& context_) override;
 };
 
 ReporterJUnit::Impl::Impl(
@@ -125,7 +156,8 @@ ReporterJUnit::Impl::Impl(
   filename(file_),
   hide_location(hide_location_),
   testname(),
-  node_stack() {
+  node_stack(),
+  assert_buffer(std::make_shared<AssertBufferStr>(this)) {
 
 }
 
@@ -181,6 +213,72 @@ void ReporterJUnit::Impl::fillName(
   /* -- name of the test */
   auto name_node_(record_.node.append_attribute("name"));
   name_node_ = name_.c_str();
+}
+
+void ReporterJUnit::Impl::appendMessage(
+    const Context& context_,
+    const std::string& message_) {
+  message << "\n" << message_;
+}
+
+void ReporterJUnit::Impl::commitMessage(
+    const Context& context_) {
+  auto& top_(node_stack.back());
+  auto node_(top_.node.last_child());
+  auto msg_(node_.append_attribute("message"));
+  msg_ = message.str().c_str();
+  message.str("");
+}
+
+void ReporterJUnit::Impl::assertionOpeningMessage(
+    const Context& context_,
+    const AssertBufferAssertData& data_,
+    const std::string& message_) {
+  /* -- make the failure record */
+  if(!data_.condition) {
+    auto& top_(node_stack.back());
+    auto failure_(top_.node.append_child("failure"));
+    if(!hide_location) {
+      auto line_attr_(failure_.append_attribute("line"));
+      line_attr_ = data_.line;
+      auto file_attr_(failure_.append_attribute("file"));
+      file_attr_ = data_.file.c_str();
+    }
+    message << message_;
+  }
+}
+
+void ReporterJUnit::Impl::assertionAdditionalMessage(
+    const Context& context_,
+    const AssertBufferAssertData& data_,
+    const std::string& message_) {
+  appendMessage(context_, message_);
+}
+
+void ReporterJUnit::Impl::assertionClose(
+    const Context& context_,
+    const AssertBufferAssertData& data_) {
+  commitMessage(context_);
+}
+
+void ReporterJUnit::Impl::errorOpeningMessage(
+    const Context& context_,
+    const std::string& message_) {
+  auto& top_(node_stack.back());
+  auto error_(top_.node.append_child("error"));
+  auto msg_(error_.append_attribute("message"));
+  message << message_;
+}
+
+void ReporterJUnit::Impl::errorAdditionalMessage(
+    const Context& context_,
+    const std::string& message_) {
+  appendMessage(context_, message_);
+}
+
+void ReporterJUnit::Impl::errorClose(
+    const Context& context_) {
+  commitMessage(context_);
 }
 
 ReporterJUnit::ReporterJUnit(
@@ -253,10 +351,9 @@ void ReporterJUnit::enterState(
   /* -- nothing to do - the states are not supported by the JUnit report */
 }
 
-void ReporterJUnit::enterAssert(
+AssertBufferPtr ReporterJUnit::enterAssert(
     const Context& context_,
     bool condition_,
-    const std::string& message_,
     const std::string& file_,
     int lineno_) {
   if(!condition_) {
@@ -266,23 +363,14 @@ void ReporterJUnit::enterAssert(
       top_.first_failure = false;
       ++top_.case_failures;
     }
-
-    /* -- make the failure record */
-    auto failure_(top_.node.append_child("failure"));
-    auto message_attr_(failure_.append_attribute("message"));
-    message_attr_ = message_.c_str();
-    if(!pimpl->hide_location) {
-      auto line_attr_(failure_.append_attribute("line"));
-      line_attr_ = lineno_;
-      auto file_attr_(failure_.append_attribute("file"));
-      file_attr_ = file_.c_str();
-    }
   }
+
+  pimpl->assert_buffer->openAssertion({condition_, file_, lineno_});
+  return pimpl->assert_buffer;
 }
 
-void ReporterJUnit::enterError(
-    const Context& context_,
-    const std::string& message_) {
+AssertBufferPtr ReporterJUnit::enterError(
+    const Context& context_) {
   /* -- update statistics */
   auto& top_(pimpl->node_stack.back());
   if(top_.first_error) {
@@ -290,21 +378,8 @@ void ReporterJUnit::enterError(
     ++top_.case_errors;
   }
 
-  /* -- make the failure record */
-  auto error_(top_.node.append_child("error"));
-  auto message_attr_(error_.append_attribute("message"));
-  message_attr_ = message_.c_str();
-}
-
-void ReporterJUnit::reportAssertionMessage(
-    const Context& context_,
-    const std::string& message_) {
-
-}
-
-void ReporterJUnit::leaveAssert(
-    const Context& context_) {
-
+  pimpl->assert_buffer->openError();
+  return pimpl->assert_buffer;
 }
 
 void ReporterJUnit::leaveState(

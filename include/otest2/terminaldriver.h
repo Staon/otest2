@@ -21,6 +21,7 @@
 #define OTest2__INCLUDE_OTEST2_TERMINALDRIVER_H_
 
 #include <iosfwd>
+#include <otest2/reporterattributes.h>
 
 namespace OTest2 {
 
@@ -31,15 +32,6 @@ namespace OTest2 {
  * like text color or boldness.
  */
 class TerminalDriver {
-  public:
-    /**
-     * @brief Color enumeration
-     */
-    enum Color : int {
-      RED = 1,
-      GREEN = 2,
-    };
-
   private:
     struct Impl;
     Impl* pimpl;
@@ -54,10 +46,12 @@ class TerminalDriver {
     /**
      * @brief Ctor
      *
-     * @param os_ An injected output stream. The ownership is not taken.
+     * @param handle_ File handle of the output stream. The handle is used
+     *     to detect whether the output is a terminal and for initialization
+     *     of the terminfo library.
      */
     explicit TerminalDriver(
-        std::ostream* os_);
+        int handle_);
 
     /**
      * @brief Dtor
@@ -65,17 +59,44 @@ class TerminalDriver {
     ~TerminalDriver();
 
     /**
-     * @brief Change color of the text (foreground)
+     * @brief Change the foreground color of the text
      *
+     * @param buffer_ A stream buffer which the control sequence is written
+     *     into.
      * @param color_ The new color of the text
      */
-    void setFGColor(
+    void setForeground(
+        std::streambuf& buffer_,
         Color color_);
 
     /**
-     * @brief Clean all previously set terminal attributes
+     * @brief Set background color
+     *
+     * @param buffer_ A buffer which the control sequence is written into.
+     * @param color_ The new background color
      */
-    void cleanAttributes();
+    void setBackground(
+        std::streambuf& buffer_,
+        Color color_);
+
+    /**
+     * @brief Change the text style
+     *
+     * @param buffer_ A stream buffer which the control sequence is written
+     *     into.
+     */
+    void setTextStyle(
+        std::streambuf& buffer_,
+        Style style_);
+
+    /**
+     * @brief Clean all previously set terminal attributes
+     *
+     * @param buffer_ A stream buffer which the control sequence is written
+     *     into.
+     */
+    void cleanAttributes(
+        std::streambuf& buffer_);
 };
 
 } /* namespace OTest2 */

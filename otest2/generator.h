@@ -77,8 +77,6 @@ class Generator {
     struct AssertionArg {
         Location begin;    /**< beginning location of the argument */
         Location end;      /**< ending location of the argument */
-        bool append_comma; /**< if it's true the command will be appended
-                                the argument. */
     };
 
     /**

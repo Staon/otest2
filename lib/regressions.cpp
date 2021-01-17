@@ -21,14 +21,15 @@
 
 #include <assert.h>
 #include <iostream>
-#include <sstream>
 #include <string>
 
+#include <assertstream.h>
 #include <context.h>
 #include <difflogblock.h>
 #include <objectpath.h>
 #include <testmark.h>
 #include <testmarkdiffprinter.h>
+#include <testmarkformatterassert.h>
 #include <testmarkptr.h>
 #include <testmarkstorage.h>
 
@@ -52,30 +53,29 @@ bool RegressionAssertion::compareObjectMark(
     equal_ = test_mark_->isEqual(*stored_);
 
   /* -- report the assertion */
-  std::ostringstream oss_;
+  AssertStream report_(enterAssertion(equal_));
   if(equal_)
-    oss_ << "regression check '" << full_key_ << "' has passed";
+    report_ << "regression check '" << full_key_ << "' has passed" << commitMsg();
   else
-    oss_ << "regression check '" << full_key_ << "' has failed";
-  enterAssertion(equal_, oss_.str(), false);
+    report_ << "regression check '" << full_key_ << "' has failed" << commitMsg();
 
   /* -- report the difference if the check fails */
   if(!equal_) {
-    /* -- print current test mark */
-    oss_.str("");
-    test_mark_->printMark(oss_, "  ");
-    assertionMessage(equal_, "---------  Current   ---------");
-    assertionMessage(equal_, oss_.str());
+    TestMarkFormatterAssert formatter_(&report_, "");
 
-    assertionMessage(equal_, "---------  Original  ---------");
+    /* -- print current test mark */
+    report_ << "---------  Current   ---------" << commitMsg();
+    test_mark_->printMark(formatter_);
+    report_ << commitMsg();
+
+    report_ << "---------  Original  ---------" << commitMsg();
     if(stored_ != nullptr) {
       /* -- print the original mark */
-      oss_.str("");
-      stored_->printMark(oss_, "  ");
-      assertionMessage(equal_, oss_.str());
+      stored_->printMark(formatter_);
+      report_ << commitMsg();
     }
 
-    assertionMessage(equal_, "--------- Difference ---------");
+    report_ << "--------- Difference ---------" << commitMsg();
     if(stored_ != nullptr) {
       /* -- compute the difference */
       std::vector<TestMark::LinearizedRecord> array1_;
@@ -85,24 +85,23 @@ bool RegressionAssertion::compareObjectMark(
       test_mark_->computeDiff(*stored_, array1_, array2_, log_builder_);
 
       /* -- print the difference */
-      oss_.str("");
-      printTestMarkDiff(oss_, array1_, array2_, diff_log_, 3);
-      assertionMessage(equal_, oss_.str());
+      printTestMarkDiff(formatter_, array1_, array2_, diff_log_, 3);
+      report_ << commitMsg();
     }
     else {
       /* -- the new mark is one big addition */
-      oss_.str("");
-      test_mark_->printMark(oss_, "+ ");
-      assertionMessage(equal_, oss_.str());
+      test_mark_->printAddMark(formatter_);
+      report_ << commitMsg();
     }
   }
   else if(print_) {
     /* -- print current test mark */
     std::cout << "test mark key: " << full_key_ << std::endl;
-    test_mark_->printMark(std::cout, "");
+    TestMarkFormatterAssert formatter_(&report_, "");
+    test_mark_->printMark(formatter_);
   }
 
-  return leaveAssertion(equal_);
+  return report_.getResult();
 }
 
 bool RegressionAssertion::storeObjectMark(
@@ -117,10 +116,9 @@ bool RegressionAssertion::storeObjectMark(
   context_.test_mark_storage->setTestMark(full_key_, test_mark_);
 
   /* -- report the assertion */
-  std::ostringstream oss_;
-  oss_ << "stored regression mark '" << full_key_ << "'";
-  enterAssertion(false, oss_.str(), false);
-  return leaveAssertion(false);
+  AssertStream report_(enterAssertion(false));
+  report_ << "stored regression mark '" << full_key_ << "'" << commitMsg();
+  return report_.getResult();
 }
 
 } /* -- namespace OTest2 */

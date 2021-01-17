@@ -133,6 +133,21 @@ class Runtime {
         const std::string& case_name_,
         Reporter* reporter_);
 
+    /**
+     * @brief Ctor
+     *
+     * @param suite_name_ Name of the suite to be run
+     * @param case_name_ Name of the case to be run.
+     * @param regression_file_ Name of the regression (test marks) file
+     * @param reporter_ A reporter object injected into the runtime.
+     *     The ownership is not taken.
+     */
+    explicit Runtime(
+        const std::string& suite_name_,
+        const std::string& case_name_,
+        const std::string& regression_file_,
+        Reporter* reporter_);
+
   private:
     static struct InternalCtor{} internal_ctor;
     explicit Runtime(

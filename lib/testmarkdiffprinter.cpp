@@ -20,12 +20,13 @@
 
 #include <iostream>
 
+#include <testmarkformatter.h>
 #include <testmarkprinter.h>
 
 namespace OTest2 {
 
 void printTestMarkDiff(
-    std::ostream& os_,
+    TestMarkFormatter& formatter_,
     const std::vector<TestMark::LinearizedRecord>& left_,
     const std::vector<TestMark::LinearizedRecord>& right_,
     const DiffLogBlocks& diff_log_,
@@ -42,41 +43,41 @@ void printTestMarkDiff(
       for(int beg_(left_line_);
           left_line_ < beg_ + context_ && left_line_ < diff_.left_begin;
           )
-        left_printer_.printLine(os_, "  ");
+        left_printer_.printLine(formatter_);
     }
     else
       trailing_context_ = true;
 
     /* -- skip unchanged lines */
     if(left_line_ < diff_.left_begin - context_)
-      os_ << "  ......... \n";
+      formatter_.printSeparator();
     while(left_line_ < diff_.left_begin - context_)
-      left_printer_.skipLine(os_);
+      left_printer_.skipLine(formatter_);
     while(right_line_ < diff_.right_begin)
-      right_printer_.skipLine(os_);
+      right_printer_.skipLine(formatter_);
 
     /* -- print the context lines */
     while(left_line_ < diff_.left_begin)
-      left_printer_.printLine(os_, "  ");
+      left_printer_.printLine(formatter_);
 
     /* -- print the changes */
     while(right_line_ < diff_.right_end)
-      right_printer_.printLine(os_, "- ");
+      right_printer_.printDeleted(formatter_);
     while(left_line_ < diff_.left_end)
-      left_printer_.printLine(os_, "+ ");
+      left_printer_.printAdded(formatter_);
   }
 
   /* -- print trailing context */
   if(trailing_context_) {
     bool gap_mark_(true);
     for(int beg_(left_line_); left_line_ < beg_ + context_;) {
-      if(!left_printer_.printLine(os_, "  ")) {
+      if(!left_printer_.printLine(formatter_)) {
         gap_mark_ = false;
         break;
       }
     }
     if(gap_mark_)
-      os_ << "  ......... \n";
+      formatter_.printSeparator();
   }
 }
 

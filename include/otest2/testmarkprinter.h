@@ -20,13 +20,14 @@
 #ifndef OTest2__INCLUDE_OTEST2_TESTMARKPRINTER_H_
 #define OTest2__INCLUDE_OTEST2_TESTMARKPRINTER_H_
 
-#include <iosfwd>
 #include <string>
 #include <vector>
 
 #include <otest2/testmark.h>
 
 namespace OTest2 {
+
+class TestMarkFormatter;
 
 /**
  * @brief Printer of testmarks
@@ -64,13 +65,29 @@ class TestMarkPrinter {
     /**
      * @brief Print current line into a stream
      *
-     * @param os_ The output stream
-     * @param prefix_ Prefix of the printed line
+     * @param formatter_ A testmark formatter
      * @return True if there are next items in the array
      */
     bool printLine(
-        std::ostream& os_,
-        const std::string& prefix_);
+        TestMarkFormatter& formatter_);
+
+    /**
+     * @brief Print deleted line
+     *
+     * @param formatter_ A testmark formatter
+     * @return True if there are next items in the array
+     */
+    bool printDeleted(
+        TestMarkFormatter& formatter_);
+
+    /**
+     * @brief Print added line
+     *
+     * @param formatter_ A testmark formatter
+     * @return True if there are next items in the array
+     */
+    bool printAdded(
+        TestMarkFormatter& formatter_);
 
     /**
      * @brief Skip current line
@@ -80,7 +97,7 @@ class TestMarkPrinter {
      * @return True if there are next items in the array
      */
     bool skipLine(
-        std::ostream& os_);
+        TestMarkFormatter& os_);
 };
 
 } /* namespace OTest2 */

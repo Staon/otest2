@@ -30,6 +30,7 @@
 #include <otest2/testmarkbuilder.h>
 #include <otest2/testmarkdiffprinter.h>
 #include <otest2/testmarkfactory.h>
+#include <otest2/testmarkformatterios.h>
 #include <otest2/testmarkinbinios.h>
 #include <otest2/testmarkoutbinios.h>
 #include <otest2/testmarkstorage.h>
@@ -79,7 +80,8 @@ bool testDifference(
 
   /* -- print the difference */
   std::ostringstream oss_;
-  printTestMarkDiff(oss_, array1_, array2_, diff_log_, 3);
+  TestMarkFormatterIOS formatter_(&oss_, "");
+  printTestMarkDiff(formatter_, array1_, array2_, diff_log_, 3);
 
   /* -- print the expected */
   std::ostringstream exp_oss_;
@@ -446,7 +448,9 @@ TEST_SUITE(TestMarks) {
       builder_.closeContainer();
       builder_.closeContainer();
       builder_.closeContainer();
-      builder_.stealMark()->printMark(std::cout, "*  ");
+
+      TestMarkFormatterIOS formatter_(&std::cout, "*  ");
+      builder_.stealMark()->printMark(formatter_);
     }
   }
 

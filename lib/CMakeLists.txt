@@ -113,6 +113,9 @@ add_library(libotest2
     testmarkbuilder.cpp
     testmarkdiffprinter.cpp
     testmarkfactory.cpp
+    testmarkformatter.cpp
+    testmarkformatterassert.cpp
+    testmarkformatterios.cpp
     testmarkfloat.cpp
     testmarkhash.cpp
     testmarkin.cpp

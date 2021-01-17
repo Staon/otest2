@@ -139,6 +139,20 @@ Runtime::Runtime(
 }
 
 Runtime::Runtime(
+    const std::string& suite_name_,
+    const std::string& case_name_,
+    const std::string& regression_file_,
+    Reporter* reporter_) :
+  Runtime(
+      internal_ctor,
+      createTagGlob(suite_name_, case_name_),
+      reporter_,
+      false,
+      regression_file_) {
+
+}
+
+Runtime::Runtime(
     const Runtime::InternalCtor&,
     const std::string& tag_glob_,
     Reporter* reporter_,

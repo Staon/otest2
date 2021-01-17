@@ -29,6 +29,7 @@
 #include <objectpath.h>
 #include <testmark.h>
 #include <testmarkdiffprinter.h>
+#include <testmarkformatterassert.h>
 #include <testmarkptr.h>
 #include <testmarkstorage.h>
 
@@ -60,15 +61,17 @@ bool RegressionAssertion::compareObjectMark(
 
   /* -- report the difference if the check fails */
   if(!equal_) {
+    TestMarkFormatterAssert formatter_(&report_, "");
+
     /* -- print current test mark */
     report_ << "---------  Current   ---------" << commitMsg();
-    test_mark_->printMark(report_, "  ");
+    test_mark_->printMark(formatter_);
     report_ << commitMsg();
 
     report_ << "---------  Original  ---------" << commitMsg();
     if(stored_ != nullptr) {
       /* -- print the original mark */
-      stored_->printMark(report_, "  ");
+      stored_->printMark(formatter_);
       report_ << commitMsg();
     }
 
@@ -82,19 +85,20 @@ bool RegressionAssertion::compareObjectMark(
       test_mark_->computeDiff(*stored_, array1_, array2_, log_builder_);
 
       /* -- print the difference */
-      printTestMarkDiff(report_, array1_, array2_, diff_log_, 3);
+      printTestMarkDiff(formatter_, array1_, array2_, diff_log_, 3);
       report_ << commitMsg();
     }
     else {
       /* -- the new mark is one big addition */
-      test_mark_->printMark(report_, "+ ");
+      test_mark_->printAddMark(formatter_);
       report_ << commitMsg();
     }
   }
   else if(print_) {
     /* -- print current test mark */
     std::cout << "test mark key: " << full_key_ << std::endl;
-    test_mark_->printMark(std::cout, "");
+    TestMarkFormatterAssert formatter_(&report_, "");
+    test_mark_->printMark(formatter_);
   }
 
   return report_.getResult();

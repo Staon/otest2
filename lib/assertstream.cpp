@@ -60,10 +60,21 @@ void AssertStream::setForeground(
   buffer->setForeground(color_);
 }
 
+void AssertStream::setBackground(
+    Color color_) {
+  assert(buffer != nullptr);
+  buffer->setBackground(color_);
+}
+
 void AssertStream::setTextStyle(
     Style style_) {
   assert(buffer != nullptr);
   buffer->setTextStyle(style_);
+}
+
+void AssertStream::resetAttributes() {
+  assert(buffer != nullptr);
+  buffer->resetAttributes();
 }
 
 void AssertStream::printParameter(
@@ -168,9 +179,18 @@ Private::Manipulator<Color> foreground(
   return Private::Manipulator<Color>(&AssertStream::setForeground, color_);
 }
 
+Private::Manipulator<Color> background(
+    Color color_) {
+  return Private::Manipulator<Color>(&AssertStream::setBackground, color_);
+}
+
 Private::Manipulator<Style> textStyle(
     Style style_) {
   return Private::Manipulator<Style>(&AssertStream::setTextStyle, style_);
+}
+
+Private::Manipulator<> resetAttrs() {
+  return Private::Manipulator<>(&AssertStream::resetAttributes);
 }
 
 Private::Manipulator<int> assertPar(

@@ -58,6 +58,14 @@ class AssertBuffer : public std::streambuf {
         Color color_) = 0;
 
     /**
+     * @brief Set background color
+     *
+     * @param color_ The color
+     */
+    virtual void setBackground(
+        Color color_) = 0;
+
+    /**
      * @brief Set style of the shown text
      *
      * @param style_ The style

@@ -28,8 +28,14 @@ namespace OTest2 {
  * @brief List of colors supported by the reporters
  */
 enum class Color : std::uint8_t {
-  RED = 0,
+  BLACK = 0,
+  RED,
   GREEN,
+  YELLOW,
+  BLUE,
+  MAGENTA,
+  CYAN,
+  WHITE,
 };
 
 /**
@@ -38,7 +44,7 @@ enum class Color : std::uint8_t {
 enum class Style : std::uint8_t {
   NORMAL = 0,
   BOLD,
-  ITALIC,
+  DIM,
 };
 
 } /* -- namespace OTest2 */

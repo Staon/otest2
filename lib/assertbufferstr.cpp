@@ -81,6 +81,11 @@ void AssertBufferStr::setForeground(
   /* -- default implementation is to do nothing */
 }
 
+void AssertBufferStr::setBackground(
+    Color color_) {
+  /* -- default implementation is to do nothing */
+}
+
 void AssertBufferStr::setTextStyle(
     Style style_) {
   /* -- default implementation is to do nothing */

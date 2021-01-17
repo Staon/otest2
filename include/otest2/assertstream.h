@@ -85,12 +85,25 @@ class AssertStream : public std::ostream {
         Color color_);
 
     /**
+     * @brief Set background color
+     *
+     * @param color_ The color
+     */
+    void setBackground(
+        Color color_);
+
+    /**
      * @brief Set text style
      *
      * @param style_ The style
      */
     void setTextStyle(
         Style style_);
+
+    /**
+     * @brief Reset the color and style attributes
+     */
+    void resetAttributes();
 
     /**
      * @brief Print assertion parameter at the zero based @a index_
@@ -148,12 +161,25 @@ Private::Manipulator<Color> foreground(
     Color color_);
 
 /**
+ * @brief Background color manipulator
+ *
+ * @param color_ The color
+ */
+Private::Manipulator<Color> background(
+    Color color_);
+
+/**
  * @brief Text style manipulator
  *
  * @param style_ The text style
  */
 Private::Manipulator<Style> textStyle(
     Style style_);
+
+/**
+ * @brief Reset color and style attributes - manipulator
+ */
+Private::Manipulator<> resetAttrs();
 
 /**
  * @brief Print assertion parameter

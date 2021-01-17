@@ -49,6 +49,9 @@ class Driver {
     virtual void setForeground(
         std::streambuf& buffer_,
         Color color_) = 0;
+    virtual void setBackground(
+        std::streambuf& buffer_,
+        Color color_) = 0;
     virtual void setTextStyle(
         std::streambuf& buffer_,
         Style style_) = 0;
@@ -87,6 +90,9 @@ class DriverNull : public Driver {
     virtual void setForeground(
         std::streambuf& buffer_,
         Color color_) override;
+    virtual void setBackground(
+        std::streambuf& buffer_,
+        Color color_) override;
     virtual void setTextStyle(
         std::streambuf& buffer_,
         Style style_) override;
@@ -98,6 +104,12 @@ DriverNull::DriverNull() = default;
 DriverNull::~DriverNull() = default;
 
 void DriverNull::setForeground(
+    std::streambuf& buffer_,
+    Color color_) {
+  /* -- nothing to do */
+}
+
+void DriverNull::setBackground(
     std::streambuf& buffer_,
     Color color_) {
   /* -- nothing to do */
@@ -119,9 +131,18 @@ class DriverTerminfo : public Driver {
     const std::string sgr0;
     const std::string setaf;
     const std::string setf;
+    const std::string setab;
+    const std::string setb;
+    const std::string bold;
+    const std::string dim;
 
     static std::string initSequence(
         const char* seq_id_);
+
+    static int convertAnsiColor(
+        Color color_);
+    static int convertLegacyColor(
+        Color color_);
 
   public:
     /* -- avoid copying */
@@ -134,6 +155,9 @@ class DriverTerminfo : public Driver {
     virtual ~DriverTerminfo();
 
     virtual void setForeground(
+        std::streambuf& buffer_,
+        Color color_) override;
+    virtual void setBackground(
         std::streambuf& buffer_,
         Color color_) override;
     virtual void setTextStyle(
@@ -152,10 +176,64 @@ std::string DriverTerminfo::initSequence(
     return std::string();
 }
 
+int DriverTerminfo::convertAnsiColor(
+    Color color_) {
+  switch(color_) {
+    case Color::BLACK:
+      return 0;
+    case Color::RED:
+      return 1;
+    case Color::GREEN:
+      return 2;
+    case Color::YELLOW:
+      return 3;
+    case Color::BLUE:
+      return 4;
+    case Color::MAGENTA:
+      return 5;
+    case Color::CYAN:
+      return 6;
+    case Color::WHITE:
+      return 7;
+    default:
+      assert(false);
+      return 7;
+  }
+}
+
+int DriverTerminfo::convertLegacyColor(
+    Color color_) {
+  switch(color_) {
+    case Color::BLACK:
+      return 0;
+    case Color::RED:
+      return 4;
+    case Color::GREEN:
+      return 2;
+    case Color::YELLOW:
+      return 6;
+    case Color::BLUE:
+      return 1;
+    case Color::MAGENTA:
+      return 5;
+    case Color::CYAN:
+      return 3;
+    case Color::WHITE:
+      return 7;
+    default:
+      assert(false);
+      return 7;
+  }
+}
+
 DriverTerminfo::DriverTerminfo() :
   sgr0(initSequence("sgr0")),
   setaf(initSequence("setaf")),
-  setf(initSequence("setf")) {
+  setf(initSequence("setf")),
+  setab(initSequence("setab")),
+  setb(initSequence("setb")),
+  bold(initSequence("bold")),
+  dim(initSequence("dim")) {
 
 }
 
@@ -164,37 +242,39 @@ DriverTerminfo::~DriverTerminfo() = default;
 void DriverTerminfo::setForeground(
     std::streambuf& buffer_,
     Color color_) {
+  /* -- don't set attributes if they cannot be reset */
+  if(sgr0.empty())
+    return;
+
   /* -- ANSI colors */
   if(!setaf.empty()) {
-    int converted_(0);
-    switch(color_) {
-      case Color::RED:
-        converted_ = 1;
-        break;
-      case Color::GREEN:
-        converted_ = 2;
-        break;
-      default:
-        assert(0);
-    }
-    printSequence(buffer_, tparm(setaf.c_str(), converted_));
+    printSequence(buffer_, tparm(setaf.c_str(), convertAnsiColor(color_)));
     return;
   }
 
   /* -- legacy colors */
   if(!setf.empty()) {
-    int converted_(0);
-    switch(color_) {
-      case Color::RED:
-        converted_ = 4;
-        break;
-      case Color::GREEN:
-        converted_ = 2;
-        break;
-      default:
-        assert(0);
-    }
-    printSequence(buffer_, tparm(setaf.c_str(), converted_));
+    printSequence(buffer_, tparm(setf.c_str(), convertLegacyColor(color_)));
+    return;
+  }
+}
+
+void DriverTerminfo::setBackground(
+    std::streambuf& buffer_,
+    Color color_) {
+  /* -- don't set attributes if they cannot be reset */
+  if(sgr0.empty())
+    return;
+
+  /* -- ANSI colors */
+  if(!setab.empty()) {
+    printSequence(buffer_, tparm(setab.c_str(), convertAnsiColor(color_)));
+    return;
+  }
+
+  /* -- legacy colors */
+  if(!setb.empty()) {
+    printSequence(buffer_, tparm(setb.c_str(), convertLegacyColor(color_)));
     return;
   }
 }
@@ -202,7 +282,25 @@ void DriverTerminfo::setForeground(
 void DriverTerminfo::setTextStyle(
     std::streambuf& buffer_,
     Style style_) {
-  /* -- TODO */
+  /* -- don't set attributes if they cannot be reset */
+  if(sgr0.empty())
+    return;
+
+  switch(style_) {
+    case Style::BOLD:
+      if(!bold.empty())
+        printSequence(buffer_, tparm(bold.c_str()));
+      break;
+
+    case Style::DIM:
+      if(!dim.empty())
+        printSequence(buffer_, tparm(dim.c_str()));
+      break;
+
+    default:
+      assert(false);
+      break;
+  }
 }
 
 void DriverTerminfo::cleanAttributes(
@@ -263,6 +361,12 @@ void TerminalDriver::setForeground(
     std::streambuf& buffer_,
     Color color_) {
   pimpl->driver->setForeground(buffer_, color_);
+}
+
+void TerminalDriver::setBackground(
+    std::streambuf& buffer_,
+    Color color_) {
+  pimpl->driver->setBackground(buffer_, color_);
 }
 
 void TerminalDriver::setTextStyle(

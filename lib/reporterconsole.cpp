@@ -188,6 +188,8 @@ struct ReporterConsole::Impl : public AssertBufferListener {
         /* -- setting of text attributes */
         virtual void setForeground(
             Color color_) override;
+        virtual void setBackground(
+            Color color_) override;
         virtual void setTextStyle(
             Style style_) override;
         virtual void resetAttributes() override;
@@ -270,6 +272,11 @@ void ReporterConsole::Impl::AssertBuffer::setForeground(
   pimpl->term_driver.setForeground(*this, color_);
 }
 
+void ReporterConsole::Impl::AssertBuffer::setBackground(
+    Color color_) {
+  pimpl->term_driver.setBackground(*this, color_);
+}
+
 void ReporterConsole::Impl::AssertBuffer::setTextStyle(
     Style style_) {
   pimpl->term_driver.setTextStyle(*this, style_);
@@ -338,7 +345,10 @@ void ReporterConsole::Impl::assertionOpeningMessage(
 
   /* -- print the assertion status */
   if(verbose || !data_.condition) {
-    /* -- regular assertion */
+    /* -- make the opening message more visible */
+    term_driver.setTextStyle(*os->rdbuf(), Style::BOLD);
+
+    /* -- print the message */
     *os << '[';
     if(!hide_location)
       *os << data_.file << ':' << data_.line;
@@ -347,6 +357,9 @@ void ReporterConsole::Impl::assertionOpeningMessage(
     *os << "] "
         << context_.object_path->getCurrentPath()  << ": " << message_
         << std::endl;
+
+    /* -- clean text attributes */
+    term_driver.cleanAttributes(*os->rdbuf());
   }
 }
 

@@ -70,6 +70,16 @@ class TerminalDriver {
         Color color_);
 
     /**
+     * @brief Set background color
+     *
+     * @param buffer_ A buffer which the control sequence is written into.
+     * @param color_ The new background color
+     */
+    void setBackground(
+        std::streambuf& buffer_,
+        Color color_);
+
+    /**
      * @brief Change the text style
      *
      * @param buffer_ A stream buffer which the control sequence is written

@@ -59,6 +59,8 @@ class Buffer : public AssertBuffer {
     /* -- assertion buffer */
     virtual void setForeground(
         Color color_) override;
+    virtual void setBackground(
+        Color color_) override;
     virtual void setTextStyle(
         Style style_) override;
     virtual void resetAttributes() override;
@@ -93,6 +95,14 @@ void Buffer::setForeground(
       buffers.begin(),
       buffers.end(),
       std::bind(&AssertBuffer::setForeground, _1, color_));
+}
+
+void Buffer::setBackground(
+    Color color_) {
+  std::for_each(
+      buffers.begin(),
+      buffers.end(),
+      std::bind(&AssertBuffer::setBackground, _1, color_));
 }
 
 void Buffer::setTextStyle(

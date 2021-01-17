@@ -184,6 +184,8 @@ class AssertBufferStr : public AssertBuffer {
     /* -- assert buffer */
     virtual void setForeground(
         Color color_) override;
+    virtual void setBackground(
+        Color color_) override;
     virtual void setTextStyle(
         Style style_) override;
     virtual void resetAttributes() override;

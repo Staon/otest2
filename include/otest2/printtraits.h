@@ -49,7 +49,7 @@ struct PrintTrait<std::string> {
     static std::ostream& print(
         std::ostream& os_,
         const std::string& value_) {
-      return os_ << '\'' << value_ << '\'';
+      return os_ << '"' << value_ << '"';
     }
 };
 template<>
@@ -60,7 +60,7 @@ struct PrintTrait<const char*> {
       if(value_ == nullptr)
         return os_ << "NULL";
       else
-        return os_ << '\'' << value_ << '\'';
+        return os_ << '"' << value_ << '"';
     }
 };
 

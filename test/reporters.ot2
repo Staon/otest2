@@ -49,9 +49,10 @@ OT2_SUITE(Reporters) {
             oss_.str(),
 R"result( ================================ NestedSuites ================================
    ============================== TheNestedSuite ==============================
-[...] selftest::NestedSuites::TheNestedSuite::NestedCase: check 'a == b' has failed
-    a = 'hello'
-    b = 'world'
+[...] selftest::NestedSuites::TheNestedSuite::NestedCase: check '==' has failed
+      "hello" == "world"
+    actual values:
+      "hello" == "world"
     NestedCase                                                        [Failed]
      ============================ ThirdLevelSuite =============================
       ThirdLevelCase                                                  [Passed]
@@ -115,7 +116,7 @@ R"result(<?xml version="1.0"?>
 		<testsuite name="NestedSuites" timestamp="1970-01-02T03:31:00" time="0.000" tests="3" failures="1" errors="0">
 			<testsuite name="TheNestedSuite" timestamp="1970-01-02T03:31:00" time="0.000" tests="2" failures="1" errors="0">
 				<testcase name="NestedCase" time="0.000">
-					<failure message="check 'a == b' has failed" />
+					<failure message="check '==' has failed" />
 				</testcase>
 				<testsuite name="ThirdLevelSuite" timestamp="1970-01-02T03:31:00" time="0.000" tests="1" failures="0" errors="0">
 					<testcase name="ThirdLevelCase" time="0.000" />

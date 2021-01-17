@@ -45,22 +45,27 @@ bool GenericAssertion::testAssertCompare(
 
   /* -- report the result and the used relation operator */
   AssertStream report_(enterAssertion(condition_));
-  if(condition_) {
-    report_ << "check 'a ";
-    PrintTrait<CmpType_>::print(report_, cmp_);
-    report_ << " b' has passed" << commitMsg();
-  }
-  else {
-    report_ << "check 'a ";
-    PrintTrait<CmpType_>::print(report_, cmp_);
-    report_ << " b' has failed" << commitMsg();
-  }
-
-  /* -- report values of the operands */
-  report_ << "a = ";
-  PrintTrait<AType_>::print(report_, a_);
+  report_ << "check '";
+  PrintTrait<CmpType_>::print(report_, cmp_);
+  report_ << "' ";
+  if(condition_)
+    report_ << "has passed";
+  else
+    report_ << "has failed";
   report_ << commitMsg();
-  report_ << "b = ";
+
+  /* -- print the expression */
+  report_ << "  " << assertPar(0) << " ";
+  PrintTrait<CmpType_>::print(report_, cmp_);
+  report_ << " " << assertPar(1) << commitMsg();
+
+  /* -- print actual values */
+  report_ << "actual values:" << commitMsg();
+  report_ << "  ";
+  PrintTrait<AType_>::print(report_, a_);
+  report_ << " ";
+  PrintTrait<CmpType_>::print(report_, cmp_);
+  report_ << " ";
   PrintTrait<BType_>::print(report_, b_);
   report_ << commitMsg();
 

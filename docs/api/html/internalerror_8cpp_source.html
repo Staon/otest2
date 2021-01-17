@@ -90,31 +90,36 @@ $(function() {
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment"> */</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="internalerror_8h.html">internalerror.h</a>&gt;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="context_8h.html">context.h</a>&gt;</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="reporter_8h.html">reporter.h</a>&gt;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="semanticstack_8h.html">semanticstack.h</a>&gt;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="namespaceOTest2.html#ac5a3df96bffd96d1c51a91ff6371a69e">   27</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespaceOTest2.html#ac5a3df96bffd96d1c51a91ff6371a69e">internalError</a>(</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">const</span> std::string&amp; message_) noexcept {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;  <span class="comment">/* -- fail the test */</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  context_.semantic_stack-&gt;setTop(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  <span class="comment">/* -- report the failure */</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  context_.reporter-&gt;enterError(context_, message_);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  context_.reporter-&gt;leaveAssert(context_);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="assertstream_8h.html">assertstream.h</a>&gt;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="context_8h.html">context.h</a>&gt;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="reporter_8h.html">reporter.h</a>&gt;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="semanticstack_8h.html">semanticstack.h</a>&gt;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="namespaceOTest2.html#ac5a3df96bffd96d1c51a91ff6371a69e">   28</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespaceOTest2.html#ac5a3df96bffd96d1c51a91ff6371a69e">internalError</a>(</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">const</span> std::string&amp; message_) noexcept {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;  <span class="comment">/* -- fail the test */</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;  context_.semantic_stack-&gt;setTop(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="comment">/* -- report the failure */</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  <a class="code" href="classOTest2_1_1AssertStream.html">AssertStream</a> report_(</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;      context_, context_.reporter-&gt;enterError(context_), <span class="keyword">false</span>, {});</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  report_ &lt;&lt; message_ &lt;&lt; <a class="code" href="namespaceOTest2.html#a327ca975264fe626efa02a7368484a3e">commitMsg</a>();</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aassertstream_8h_html"><div class="ttname"><a href="assertstream_8h.html">assertstream.h</a></div></div>
 <div class="ttc" id="areporter_8h_html"><div class="ttname"><a href="reporter_8h.html">reporter.h</a></div></div>
+<div class="ttc" id="anamespaceOTest2_html_a327ca975264fe626efa02a7368484a3e"><div class="ttname"><a href="namespaceOTest2.html#a327ca975264fe626efa02a7368484a3e">OTest2::commitMsg</a></div><div class="ttdeci">Private::Manipulator commitMsg()</div><div class="ttdoc">Commit current assertion message.</div><div class="ttdef"><b>Definition:</b> <a href="assertstream_8cpp_source.html#l00201">assertstream.cpp:201</a></div></div>
 <div class="ttc" id="ainternalerror_8h_html"><div class="ttname"><a href="internalerror_8h.html">internalerror.h</a></div></div>
-<div class="ttc" id="anamespaceOTest2_html_ac5a3df96bffd96d1c51a91ff6371a69e"><div class="ttname"><a href="namespaceOTest2.html#ac5a3df96bffd96d1c51a91ff6371a69e">OTest2::internalError</a></div><div class="ttdeci">void internalError(const Context &amp;context_, const std::string &amp;message_) noexcept</div><div class="ttdoc">Fail the running test because of an internal error.</div><div class="ttdef"><b>Definition:</b> <a href="internalerror_8cpp_source.html#l00027">internalerror.cpp:27</a></div></div>
+<div class="ttc" id="anamespaceOTest2_html_ac5a3df96bffd96d1c51a91ff6371a69e"><div class="ttname"><a href="namespaceOTest2.html#ac5a3df96bffd96d1c51a91ff6371a69e">OTest2::internalError</a></div><div class="ttdeci">void internalError(const Context &amp;context_, const std::string &amp;message_) noexcept</div><div class="ttdoc">Fail the running test because of an internal error.</div><div class="ttdef"><b>Definition:</b> <a href="internalerror_8cpp_source.html#l00028">internalerror.cpp:28</a></div></div>
 <div class="ttc" id="asemanticstack_8h_html"><div class="ttname"><a href="semanticstack_8h.html">semanticstack.h</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
 <div class="ttc" id="acontext_8h_html"><div class="ttname"><a href="context_8h.html">context.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1Context_html"><div class="ttname"><a href="classOTest2_1_1Context.html">OTest2::Context</a></div><div class="ttdoc">OTest2 runtime context.</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00038">context.h:38</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1AssertStream_html"><div class="ttname"><a href="classOTest2_1_1AssertStream.html">OTest2::AssertStream</a></div><div class="ttdoc">Assertion stream.</div><div class="ttdef"><b>Definition:</b> <a href="assertstream_8h_source.html#l00040">assertstream.h:40</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

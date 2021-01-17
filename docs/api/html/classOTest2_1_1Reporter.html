@@ -83,11 +83,10 @@ Inheritance diagram for OTest2::Reporter:</div>
 <div class="dyncontent">
 <div class="center"><img src="classOTest2_1_1Reporter__inherit__graph.png" border="0" usemap="#OTest2_1_1Reporter_inherit__map" alt="Inheritance graph"/></div>
 <map name="OTest2_1_1Reporter_inherit__map" id="OTest2_1_1Reporter_inherit__map">
-<area shape="rect" title="Generic test reporter." alt="" coords="5,81,132,108"/>
-<area shape="rect" href="classOTest2_1_1ReporterConsole.html" title="A reporter writing into a console or file." alt="" coords="180,5,359,32"/>
-<area shape="rect" href="classOTest2_1_1ReporterDebug.html" title="Debugging implementation of the Reporter interface." alt="" coords="185,56,354,83"/>
-<area shape="rect" href="classOTest2_1_1ReporterJUnit.html" title="A reporter creating JUnit XML reports." alt="" coords="191,107,347,133"/>
-<area shape="rect" href="classOTest2_1_1ReporterTee.html" title="A tee reporter &#45; a composition of several reporters." alt="" coords="195,157,343,184"/>
+<area shape="rect" title="Generic test reporter." alt="" coords="223,5,350,32"/>
+<area shape="rect" href="classOTest2_1_1ReporterConsole.html" title="A reporter writing into a console or file." alt="" coords="5,80,184,107"/>
+<area shape="rect" href="classOTest2_1_1ReporterJUnit.html" title="A reporter creating JUnit XML reports." alt="" coords="209,80,365,107"/>
+<area shape="rect" href="classOTest2_1_1ReporterTee.html" title="A tee reporter &#45; a composition of several reporters." alt="" coords="389,80,537,107"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -115,18 +114,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a360a9d3df24237970484472733dbbb41"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Reporter.html#a360a9d3df24237970484472733dbbb41">enterState</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, const std::string &amp;name_)=0</td></tr>
 <tr class="memdesc:a360a9d3df24237970484472733dbbb41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enter a state.  <a href="classOTest2_1_1Reporter.html#a360a9d3df24237970484472733dbbb41">More...</a><br /></td></tr>
 <tr class="separator:a360a9d3df24237970484472733dbbb41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f4f6d749a8cd842f85aff2dc288f697"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Reporter.html#a8f4f6d749a8cd842f85aff2dc288f697">enterAssert</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, bool condition_, const std::string &amp;message_, const std::string &amp;file_, int lineno_)=0</td></tr>
-<tr class="memdesc:a8f4f6d749a8cd842f85aff2dc288f697"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enter an assertion.  <a href="classOTest2_1_1Reporter.html#a8f4f6d749a8cd842f85aff2dc288f697">More...</a><br /></td></tr>
-<tr class="separator:a8f4f6d749a8cd842f85aff2dc288f697"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b60d18ffc9f8bd9ac63fa34000f43a3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Reporter.html#a1b60d18ffc9f8bd9ac63fa34000f43a3">enterError</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, const std::string &amp;message_)=0</td></tr>
-<tr class="memdesc:a1b60d18ffc9f8bd9ac63fa34000f43a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enter an error report.  <a href="classOTest2_1_1Reporter.html#a1b60d18ffc9f8bd9ac63fa34000f43a3">More...</a><br /></td></tr>
-<tr class="separator:a1b60d18ffc9f8bd9ac63fa34000f43a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad27db7da7ec012c2b62fc6f7639d009d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Reporter.html#ad27db7da7ec012c2b62fc6f7639d009d">reportAssertionMessage</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, const std::string &amp;message_)=0</td></tr>
-<tr class="memdesc:ad27db7da7ec012c2b62fc6f7639d009d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a supplementary assertion message.  <a href="classOTest2_1_1Reporter.html#ad27db7da7ec012c2b62fc6f7639d009d">More...</a><br /></td></tr>
-<tr class="separator:ad27db7da7ec012c2b62fc6f7639d009d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ead07f2863098dc2f6cecd4534ddd5c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Reporter.html#a6ead07f2863098dc2f6cecd4534ddd5c">leaveAssert</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_)=0</td></tr>
-<tr class="memdesc:a6ead07f2863098dc2f6cecd4534ddd5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Leave an opened assertion or error.  <a href="classOTest2_1_1Reporter.html#a6ead07f2863098dc2f6cecd4534ddd5c">More...</a><br /></td></tr>
-<tr class="separator:a6ead07f2863098dc2f6cecd4534ddd5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5d457c43a27600d528b1a87673fbeb9"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceOTest2.html#a178def9a887026315ef328e4226aa85e">AssertBufferPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Reporter.html#af5d457c43a27600d528b1a87673fbeb9">enterAssert</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, bool condition_, const std::string &amp;file_, int lineno_)=0</td></tr>
+<tr class="memdesc:af5d457c43a27600d528b1a87673fbeb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enter an assertion.  <a href="classOTest2_1_1Reporter.html#af5d457c43a27600d528b1a87673fbeb9">More...</a><br /></td></tr>
+<tr class="separator:af5d457c43a27600d528b1a87673fbeb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac98e41b2697e8fe9c69fe8d47f9259d4"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceOTest2.html#a178def9a887026315ef328e4226aa85e">AssertBufferPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Reporter.html#ac98e41b2697e8fe9c69fe8d47f9259d4">enterError</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_)=0</td></tr>
+<tr class="memdesc:ac98e41b2697e8fe9c69fe8d47f9259d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enter an error report.  <a href="classOTest2_1_1Reporter.html#ac98e41b2697e8fe9c69fe8d47f9259d4">More...</a><br /></td></tr>
+<tr class="separator:ac98e41b2697e8fe9c69fe8d47f9259d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01e28dd6ea93fa0aac186896724836c1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Reporter.html#a01e28dd6ea93fa0aac186896724836c1">leaveState</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, const std::string &amp;name_, bool result_)=0</td></tr>
 <tr class="memdesc:a01e28dd6ea93fa0aac186896724836c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Leave a state.  <a href="classOTest2_1_1Reporter.html#a01e28dd6ea93fa0aac186896724836c1">More...</a><br /></td></tr>
 <tr class="separator:a01e28dd6ea93fa0aac186896724836c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,7 +136,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Generic test reporter. </p>
 
-<p class="definition">Definition at line <a class="el" href="reporter_8h_source.html#l00032">32</a> of file <a class="el" href="reporter_8h_source.html">reporter.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="reporter_8h_source.html#l00033">33</a> of file <a class="el" href="reporter_8h_source.html">reporter.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a9ab262a584cbdeadc8c455b20172bd2e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9ab262a584cbdeadc8c455b20172bd2e">&#9670;&nbsp;</a></span>Reporter() <span class="overload">[1/2]</span></h2>
@@ -176,6 +169,9 @@ Public Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">OTest2::Reporter::Reporter </td>
@@ -184,11 +180,14 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Ctor. </p>
-
-<p class="definition">Definition at line <a class="el" href="reporter_8cpp_source.html#l00024">24</a> of file <a class="el" href="reporter_8cpp_source.html">reporter.cpp</a>.</p>
 
 </div>
 </div>
@@ -210,20 +209,18 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">default</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p>Dtor. </p>
 
-<p class="definition">Definition at line <a class="el" href="reporter_8cpp_source.html#l00028">28</a> of file <a class="el" href="reporter_8cpp_source.html">reporter.cpp</a>.</p>
-
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a8f4f6d749a8cd842f85aff2dc288f697"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f4f6d749a8cd842f85aff2dc288f697">&#9670;&nbsp;</a></span>enterAssert()</h2>
+<a id="af5d457c43a27600d528b1a87673fbeb9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5d457c43a27600d528b1a87673fbeb9">&#9670;&nbsp;</a></span>enterAssert()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -232,7 +229,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void OTest2::Reporter::enterAssert </td>
+          <td class="memname">virtual <a class="el" href="namespaceOTest2.html#a178def9a887026315ef328e4226aa85e">AssertBufferPtr</a> OTest2::Reporter::enterAssert </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;&#160;</td>
           <td class="paramname"><em>context_</em>, </td>
@@ -242,12 +239,6 @@ Public Member Functions</h2></td></tr>
           <td></td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>condition_</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>message_</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -275,19 +266,20 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Enter an assertion. </p>
-<p>The assertion is opened and closed similarly to states, cases and suites. While the assertion is opened some messages may be reported by the <a class="el" href="classOTest2_1_1Reporter.html#ad27db7da7ec012c2b62fc6f7639d009d" title="Add a supplementary assertion message.">reportAssertionMessage()</a> method. The assertion is closed by the method <a class="el" href="classOTest2_1_1Reporter.html#a6ead07f2863098dc2f6cecd4534ddd5c" title="Leave an opened assertion or error.">leaveAssert()</a>.</p>
+<p>The assertion is opened similarly to states, cases and suites until the AsssertBuffer::commitAssertion() method of the returned assertion buffer is invoked.</p>
+<dl class="section warning"><dt>Warning</dt><dd>Just one assertion at time may be opened!</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context_</td><td>the <a class="el" href="namespaceOTest2.html">OTest2</a> context </td></tr>
     <tr><td class="paramname">condition_</td><td>result of the assertion (false means failed assertion) </td></tr>
-    <tr><td class="paramname">message_</td><td>Initial assertion message. Usually it's shown at the same line as the rest of assertion data. More messages may be added by the method <a class="el" href="classOTest2_1_1Reporter.html#ad27db7da7ec012c2b62fc6f7639d009d" title="Add a supplementary assertion message.">reportAssertionMessage()</a>. </td></tr>
     <tr><td class="paramname">file_</td><td>name of the source file </td></tr>
     <tr><td class="paramname">lineno_</td><td>line number in the source file </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>An assertion buffer object which is used for formatting the assertion report. </dd></dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1ReporterTee.html#a89faa69f3fd10db36e18fa64ec6f796a">OTest2::ReporterTee</a>, <a class="el" href="classOTest2_1_1ReporterJUnit.html#a6fd1b77efcc0e3bd3f48d9480acc7aba">OTest2::ReporterJUnit</a>, and <a class="el" href="classOTest2_1_1ReporterConsole.html#a73d33cbf95ec158ea29e789c529188b6">OTest2::ReporterConsole</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1ReporterConsole.html#a0772ce150ab3f17f41b0ed23a71a62b4">OTest2::ReporterConsole</a>, <a class="el" href="classOTest2_1_1ReporterTee.html#ad347d3f84cc1cc967c6a94ae9485f573">OTest2::ReporterTee</a>, and <a class="el" href="classOTest2_1_1ReporterJUnit.html#ab86e43d5703bed20c323dbf4874d3f61">OTest2::ReporterJUnit</a>.</p>
 
 </div>
 </div>
@@ -334,12 +326,12 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1ReporterTee.html#ab2f6f5e8527ccf0a2c0b2168110a2fde">OTest2::ReporterTee</a>, <a class="el" href="classOTest2_1_1ReporterJUnit.html#a4b98bcbf1b06f0f4e536da0f7fb5e74b">OTest2::ReporterJUnit</a>, <a class="el" href="classOTest2_1_1ReporterConsole.html#a45a088305d9957a2ed1cf2d575ea0348">OTest2::ReporterConsole</a>, and <a class="el" href="classOTest2_1_1ReporterDebug.html#aa1e5345ce4067ecd5b3149e46604c568">OTest2::ReporterDebug</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1ReporterConsole.html#a8da8ff0fe5b0a584b7fdfd43badd89b4">OTest2::ReporterConsole</a>, <a class="el" href="classOTest2_1_1ReporterTee.html#ab2f6f5e8527ccf0a2c0b2168110a2fde">OTest2::ReporterTee</a>, and <a class="el" href="classOTest2_1_1ReporterJUnit.html#a4b98bcbf1b06f0f4e536da0f7fb5e74b">OTest2::ReporterJUnit</a>.</p>
 
 </div>
 </div>
-<a id="a1b60d18ffc9f8bd9ac63fa34000f43a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1b60d18ffc9f8bd9ac63fa34000f43a3">&#9670;&nbsp;</a></span>enterError()</h2>
+<a id="ac98e41b2697e8fe9c69fe8d47f9259d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac98e41b2697e8fe9c69fe8d47f9259d4">&#9670;&nbsp;</a></span>enterError()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -348,21 +340,11 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void OTest2::Reporter::enterError </td>
+          <td class="memname">virtual <a class="el" href="namespaceOTest2.html#a178def9a887026315ef328e4226aa85e">AssertBufferPtr</a> OTest2::Reporter::enterError </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;&#160;</td>
-          <td class="paramname"><em>context_</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>context_</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>message_</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -373,17 +355,18 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Enter an error report. </p>
-<p>This method is used to report errors happened in the testing framework. Errors mean failure of the test. However, they cannot be located in the user code (no filename, no line number). A good example is a not handled exception caught by the framework outside the test case.</p>
-<p>The method works as well as the <a class="el" href="classOTest2_1_1Reporter.html#a8f4f6d749a8cd842f85aff2dc288f697" title="Enter an assertion.">enterAssert()</a> method with failed condition and with no location info. The opened error state is closed by the method <a class="el" href="classOTest2_1_1Reporter.html#a6ead07f2863098dc2f6cecd4534ddd5c" title="Leave an opened assertion or error.">leaveAssert()</a>.</p>
+<p>This method is used to report errors happened in the testing framework. Errors mean failure of the test. However, they cannot be located in the user code (no filename, no line number). A good example is a not handled exception caught by the framework outside test cases.</p>
+<p>The method works as well as the <a class="el" href="classOTest2_1_1Reporter.html#af5d457c43a27600d528b1a87673fbeb9" title="Enter an assertion.">enterAssert()</a> method with failed condition and with no location info. The opened error state is closed by the <a class="el" href="classOTest2_1_1AssertBuffer.html#ae95e2704c24b5d98319f3b1e68b9449f" title="Finish current assertion.">AssertBuffer::commitAssertion()</a> method of the returned assertion buffer.</p>
+<dl class="section warning"><dt>Warning</dt><dd>Just one assertion at time may be opened!</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context_</td><td>the context </td></tr>
-    <tr><td class="paramname">message_</td><td>initial error message. The message is usually shown at the same line as the rest of the assertion reporting. More message may be added by the method <a class="el" href="classOTest2_1_1Reporter.html#ad27db7da7ec012c2b62fc6f7639d009d" title="Add a supplementary assertion message.">reportAssertionMessage()</a>. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>An assertion buffer object which is used for formatting the assertion report. </dd></dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1ReporterTee.html#ac3b9f15bae68bcd687b87ac8932a0880">OTest2::ReporterTee</a>, <a class="el" href="classOTest2_1_1ReporterJUnit.html#ae295c388b4cb660d5740d40a26b40dd5">OTest2::ReporterJUnit</a>, and <a class="el" href="classOTest2_1_1ReporterConsole.html#ac0dfca9cb5dbb1d3cb9655a167c1a69a">OTest2::ReporterConsole</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1ReporterConsole.html#a6c2153f3ccf9b3f625135ec76497dc1e">OTest2::ReporterConsole</a>, <a class="el" href="classOTest2_1_1ReporterTee.html#a90b4fe23a93ac9f264b2068e5601ad69">OTest2::ReporterTee</a>, and <a class="el" href="classOTest2_1_1ReporterJUnit.html#a5d4611ac3b069a8c0852b333535ef628">OTest2::ReporterJUnit</a>.</p>
 
 </div>
 </div>
@@ -430,7 +413,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1ReporterTee.html#a8e963b76812d8b32fc7660f25e91d7dc">OTest2::ReporterTee</a>, <a class="el" href="classOTest2_1_1ReporterJUnit.html#a7b379a2603e5e9a625ecfb1308db23e1">OTest2::ReporterJUnit</a>, <a class="el" href="classOTest2_1_1ReporterConsole.html#ac771491b19d31eca9f2dd0b84d2c9838">OTest2::ReporterConsole</a>, and <a class="el" href="classOTest2_1_1ReporterDebug.html#aa1c7dd77764ad5c239edcab39476d798">OTest2::ReporterDebug</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1ReporterConsole.html#abd77588268c9e0e6ec231ab219561c2c">OTest2::ReporterConsole</a>, <a class="el" href="classOTest2_1_1ReporterTee.html#a8e963b76812d8b32fc7660f25e91d7dc">OTest2::ReporterTee</a>, and <a class="el" href="classOTest2_1_1ReporterJUnit.html#a7b379a2603e5e9a625ecfb1308db23e1">OTest2::ReporterJUnit</a>.</p>
 
 </div>
 </div>
@@ -477,7 +460,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1ReporterTee.html#adbacb43c779874b3e2d081ce04a362f1">OTest2::ReporterTee</a>, <a class="el" href="classOTest2_1_1ReporterJUnit.html#a5c6efedd360a4b06b31e474e3929c657">OTest2::ReporterJUnit</a>, <a class="el" href="classOTest2_1_1ReporterConsole.html#a2dfea82dba0e1abaa455f31f1f079a23">OTest2::ReporterConsole</a>, and <a class="el" href="classOTest2_1_1ReporterDebug.html#ab99f0fce9234e6c1f6fa0291f1e4e923">OTest2::ReporterDebug</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1ReporterConsole.html#a68a0e370837340e18300f95f4f9f9e5a">OTest2::ReporterConsole</a>, <a class="el" href="classOTest2_1_1ReporterTee.html#adbacb43c779874b3e2d081ce04a362f1">OTest2::ReporterTee</a>, and <a class="el" href="classOTest2_1_1ReporterJUnit.html#a5c6efedd360a4b06b31e474e3929c657">OTest2::ReporterJUnit</a>.</p>
 
 </div>
 </div>
@@ -524,43 +507,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1ReporterTee.html#ac2b31fd25d1ec7a4e68efcf6f280c2c4">OTest2::ReporterTee</a>, <a class="el" href="classOTest2_1_1ReporterJUnit.html#ab2eb2ec8d4de2e58536f93f59fdefd41">OTest2::ReporterJUnit</a>, <a class="el" href="classOTest2_1_1ReporterConsole.html#a42f8f3f7e7ceab69c3f668c4f3455f49">OTest2::ReporterConsole</a>, and <a class="el" href="classOTest2_1_1ReporterDebug.html#a5f545f3717221df3be2c71d136d6eadb">OTest2::ReporterDebug</a>.</p>
-
-</div>
-</div>
-<a id="a6ead07f2863098dc2f6cecd4534ddd5c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ead07f2863098dc2f6cecd4534ddd5c">&#9670;&nbsp;</a></span>leaveAssert()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void OTest2::Reporter::leaveAssert </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;&#160;</td>
-          <td class="paramname"><em>context_</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Leave an opened assertion or error. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">context_</td><td>The <a class="el" href="namespaceOTest2.html">OTest2</a> context </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implemented in <a class="el" href="classOTest2_1_1ReporterTee.html#ade984de09efcb2e1fb0b1776c1010c1f">OTest2::ReporterTee</a>, <a class="el" href="classOTest2_1_1ReporterJUnit.html#ab35dc62d785aa84379a2b5e507904532">OTest2::ReporterJUnit</a>, and <a class="el" href="classOTest2_1_1ReporterConsole.html#a2901b61c145f928a40829cae5ebd209c">OTest2::ReporterConsole</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1ReporterConsole.html#a40e6c30855dcc6fcb84276311ac68901">OTest2::ReporterConsole</a>, <a class="el" href="classOTest2_1_1ReporterTee.html#ac2b31fd25d1ec7a4e68efcf6f280c2c4">OTest2::ReporterTee</a>, and <a class="el" href="classOTest2_1_1ReporterJUnit.html#ab2eb2ec8d4de2e58536f93f59fdefd41">OTest2::ReporterJUnit</a>.</p>
 
 </div>
 </div>
@@ -614,7 +561,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1ReporterTee.html#abf77796790d1f231b1c2ed658ffce2bd">OTest2::ReporterTee</a>, <a class="el" href="classOTest2_1_1ReporterJUnit.html#a4fee44feeffee5f160a031f33d70d77f">OTest2::ReporterJUnit</a>, <a class="el" href="classOTest2_1_1ReporterConsole.html#aba3d01a6a91bd09fd91ce6e0b3d5168e">OTest2::ReporterConsole</a>, and <a class="el" href="classOTest2_1_1ReporterDebug.html#aaa296d90a248acef044a3f6d5f966454">OTest2::ReporterDebug</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1ReporterConsole.html#a5925baba1fa02cdc6112a45bf2776476">OTest2::ReporterConsole</a>, <a class="el" href="classOTest2_1_1ReporterTee.html#abf77796790d1f231b1c2ed658ffce2bd">OTest2::ReporterTee</a>, and <a class="el" href="classOTest2_1_1ReporterJUnit.html#a4fee44feeffee5f160a031f33d70d77f">OTest2::ReporterJUnit</a>.</p>
 
 </div>
 </div>
@@ -668,7 +615,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1ReporterTee.html#a1ecbe3c68db3877c050e6428f1ec500f">OTest2::ReporterTee</a>, <a class="el" href="classOTest2_1_1ReporterJUnit.html#a4ff8748ca88ba10dbd4b4a59b29d73e4">OTest2::ReporterJUnit</a>, <a class="el" href="classOTest2_1_1ReporterConsole.html#a1411e0c071aa4fbe72a074804bcbc432">OTest2::ReporterConsole</a>, and <a class="el" href="classOTest2_1_1ReporterDebug.html#a9c76ac1a76179914a6013f50105d5860">OTest2::ReporterDebug</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1ReporterConsole.html#a8ac734b2c66200192a9d8bb0f23ddd9f">OTest2::ReporterConsole</a>, <a class="el" href="classOTest2_1_1ReporterTee.html#a1ecbe3c68db3877c050e6428f1ec500f">OTest2::ReporterTee</a>, and <a class="el" href="classOTest2_1_1ReporterJUnit.html#a4ff8748ca88ba10dbd4b4a59b29d73e4">OTest2::ReporterJUnit</a>.</p>
 
 </div>
 </div>
@@ -722,7 +669,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1ReporterTee.html#a3c1679d3971d137def2a124644c315a0">OTest2::ReporterTee</a>, <a class="el" href="classOTest2_1_1ReporterJUnit.html#a2799029ad6464dad64d0847c0603a371">OTest2::ReporterJUnit</a>, <a class="el" href="classOTest2_1_1ReporterConsole.html#a99db7305a10aa16b04c6199134656e56">OTest2::ReporterConsole</a>, and <a class="el" href="classOTest2_1_1ReporterDebug.html#ae2c1e33744e590c278260291521f61b8">OTest2::ReporterDebug</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1ReporterConsole.html#ac72ddc61b03fb905728eb294b6a50172">OTest2::ReporterConsole</a>, <a class="el" href="classOTest2_1_1ReporterTee.html#a3c1679d3971d137def2a124644c315a0">OTest2::ReporterTee</a>, and <a class="el" href="classOTest2_1_1ReporterJUnit.html#a2799029ad6464dad64d0847c0603a371">OTest2::ReporterJUnit</a>.</p>
 
 </div>
 </div>
@@ -776,7 +723,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1ReporterTee.html#abaf6e7a91b5275beb834e2a4733397f7">OTest2::ReporterTee</a>, <a class="el" href="classOTest2_1_1ReporterJUnit.html#a6befa5ec421b890e30c75007daa9b60c">OTest2::ReporterJUnit</a>, <a class="el" href="classOTest2_1_1ReporterConsole.html#a5a0f25c1616c902b921429d205fbb5c1">OTest2::ReporterConsole</a>, and <a class="el" href="classOTest2_1_1ReporterDebug.html#a01e067f1b02d89f1694ddb0583104ffc">OTest2::ReporterDebug</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1ReporterConsole.html#aca3bf20ebddfd279d83e1dc84370546a">OTest2::ReporterConsole</a>, <a class="el" href="classOTest2_1_1ReporterTee.html#abaf6e7a91b5275beb834e2a4733397f7">OTest2::ReporterTee</a>, and <a class="el" href="classOTest2_1_1ReporterJUnit.html#a6befa5ec421b890e30c75007daa9b60c">OTest2::ReporterJUnit</a>.</p>
 
 </div>
 </div>
@@ -803,54 +750,6 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad27db7da7ec012c2b62fc6f7639d009d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad27db7da7ec012c2b62fc6f7639d009d">&#9670;&nbsp;</a></span>reportAssertionMessage()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void OTest2::Reporter::reportAssertionMessage </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;&#160;</td>
-          <td class="paramname"><em>context_</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>message_</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Add a supplementary assertion message. </p>
-<p>This method allows to add more descriptive messages connected to an opened assertion. For example, differences of test marks are reported this way.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">context_</td><td>The <a class="el" href="namespaceOTest2.html">OTest2</a> context </td></tr>
-    <tr><td class="paramname">message_</td><td>The message </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implemented in <a class="el" href="classOTest2_1_1ReporterTee.html#aff7d69cd5ee7e43ad8d95a649aea2b17">OTest2::ReporterTee</a>, <a class="el" href="classOTest2_1_1ReporterJUnit.html#a92e8f9c8e268b8c6f3fde16933d3aed2">OTest2::ReporterJUnit</a>, and <a class="el" href="classOTest2_1_1ReporterConsole.html#ab621b41eb6869bd11f9df741dab56896">OTest2::ReporterConsole</a>.</p>
 
 </div>
 </div>

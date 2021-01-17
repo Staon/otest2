@@ -1,5 +1,11 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classOTest2_1_1TestMarkOut.html" title="A generic interface of a serializer of test marks." alt="" coords="5,5,157,32"/>
-<area shape="rect" id="node2" href="$classOTest2_1_1TestMarkOutBin.html" title="Generic implementation of the testmark serializer based on a binary stream." alt="" coords="205,5,377,32"/>
-<area shape="rect" id="node3" href="$classOTest2_1_1TestMarkOutBinIOS.html" title="A binary testmark serializer based on the standard C++ streams." alt="" coords="425,5,620,32"/>
+<area shape="rect" id="node1" href="$classOTest2_1_1TestMark.html" title="Generic interface of a test mark node." alt="" coords="5,132,135,159"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1TestMarkBool.html" title="Bool test mark." alt="" coords="187,5,345,32"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1TestMarkFloat.html" title="Floating point test mark." alt="" coords="186,56,346,83"/>
+<area shape="rect" id="node4" href="$classOTest2_1_1TestMarkInt.html" title="Integer test mark." alt="" coords="193,107,339,133"/>
+<area shape="rect" id="node5" href="$classOTest2_1_1TestMarkNull.html" title="Test mark node representing a null pointer." alt="" coords="189,157,343,184"/>
+<area shape="rect" id="node6" href="$classOTest2_1_1TestMarkPrefix.html" title="A generic test mark with string prefix." alt="" coords="184,208,348,235"/>
+<area shape="rect" id="node9" href="$classOTest2_1_1TestMarkString.html" title="String test mark." alt="" coords="183,259,349,285"/>
+<area shape="rect" id="node7" href="$classOTest2_1_1TestMarkList.html" title="Ordered list of nested test marks." alt="" coords="400,183,551,209"/>
+<area shape="rect" id="node8" href="$classOTest2_1_1TestMarkMap.html" title="Unordered indexed multimap of test marks." alt="" coords="397,233,553,260"/>
 </map>

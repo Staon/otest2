@@ -1,3 +1,12 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classOTest2_1_1Context.html" title="OTest2 runtime context." alt="" coords="5,5,128,32"/>
+<area shape="rect" id="node1" href="$classOTest2_1_1Command.html" title="generic command interface" alt="" coords="5,208,145,235"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1CmdDummy.html" title="Dummy (NOP) command." alt="" coords="219,5,373,32"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1CmdFirstState.html" title="Run next test case." alt="" coords="214,56,378,83"/>
+<area shape="rect" id="node4" href="$classOTest2_1_1CmdLeaveObject.html" title="Leaving of a testing object." alt="" coords="205,107,387,133"/>
+<area shape="rect" id="node5" href="$classOTest2_1_1CmdNextObject.html" title="Schedule run of next testing object." alt="" coords="209,157,383,184"/>
+<area shape="rect" id="node6" href="$classOTest2_1_1CmdRepeatObject.html" title="Schedule repeated run of testing object." alt="" coords="202,208,390,235"/>
+<area shape="rect" id="node7" href="$classOTest2_1_1CmdRunState.html" title="Run a state." alt="" coords="215,259,377,285"/>
+<area shape="rect" id="node8" href="$classOTest2_1_1CmdStartUpObject.html" title="Start a testing object up." alt="" coords="199,309,393,336"/>
+<area shape="rect" id="node9" href="$classOTest2_1_1CmdState.html" title=" " alt="" coords="227,360,365,387"/>
+<area shape="rect" id="node10" href="$classOTest2_1_1CmdTearDownObject.html" title="Run a tear&#45;down function." alt="" coords="193,411,399,437"/>
 </map>

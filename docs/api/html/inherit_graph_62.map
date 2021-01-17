@@ -1,5 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structOTest2_1_1Private_1_1MapTraitImplCommon.html" title=" " alt="" coords="5,39,212,80"/>
-<area shape="rect" id="node2" href="$structOTest2_1_1Private_1_1MapTraitImpl_3_01Container___00_01false_01_4.html" title=" " alt="" coords="260,5,447,47"/>
-<area shape="rect" id="node3" href="$structOTest2_1_1Private_1_1MapTraitImpl_3_01Container___00_01true_01_4.html" title=" " alt="" coords="262,71,445,112"/>
+<area shape="rect" id="node1" href="$structOTest2_1_1Private_1_1GenSequence.html" title="Compile&#45;time generator of the sequence of integers." alt="" coords="5,5,220,47"/>
 </map>

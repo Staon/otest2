@@ -1,10 +1,9 @@
 <map id="include/otest2/testmarkprefix.h" name="include/otest2/testmarkprefix.h">
-<area shape="rect" id="node1" title=" " alt="" coords="133,5,354,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="245,155,304,181"/>
-<area shape="rect" id="node3" href="$testmark_8h.html" title=" " alt="" coords="282,80,419,107"/>
-<area shape="rect" id="node8" href="$testmarkhash_8h.html" title=" " alt="" coords="38,80,206,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="90,229,155,256"/>
-<area shape="rect" id="node5" title=" " alt="" coords="378,155,440,181"/>
-<area shape="rect" id="node6" title=" " alt="" coords="464,155,527,181"/>
-<area shape="rect" id="node7" href="$testmarkhashcode_8h.html" title=" " alt="" coords="23,155,222,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="19,5,240,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,155,64,181"/>
+<area shape="rect" id="node3" href="$testmark_8h.html" title=" " alt="" coords="238,80,375,107"/>
+<area shape="rect" id="node7" href="$testmarkhash_8h.html" title=" " alt="" coords="45,80,213,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="205,229,270,256"/>
+<area shape="rect" id="node5" title=" " alt="" coords="361,155,423,181"/>
+<area shape="rect" id="node6" href="$testmarkhashcode_8h.html" title=" " alt="" coords="138,155,337,181"/>
 </map>

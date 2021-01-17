@@ -92,52 +92,61 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#ifndef OTest2__INCLUDE_OTEST2_TESTMARKPRINTER_H_</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#define OTest2__INCLUDE_OTEST2_TESTMARKPRINTER_H_</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;iosfwd&gt;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="testmark_8h.html">otest2/testmark.h</a>&gt;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classOTest2_1_1TestMarkPrinter.html">   34</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOTest2_1_1TestMarkPrinter.html">TestMarkPrinter</a> {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">struct </span>Impl;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    Impl* pimpl;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classOTest2_1_1TestMarkPrinter.html#aee1393447f5a26cdb9b0b267b195be99">TestMarkPrinter</a>(</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">const</span> std::vector&lt;TestMark::LinearizedRecord&gt;* array_,</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordtype">int</span>&amp; index_);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <a class="code" href="classOTest2_1_1TestMarkPrinter.html#ad8c0ce64914563edac7cc96ffa25566c">~TestMarkPrinter</a>();</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <a class="code" href="classOTest2_1_1TestMarkPrinter.html#aee1393447f5a26cdb9b0b267b195be99">TestMarkPrinter</a>(</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TestMarkPrinter.html">TestMarkPrinter</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <a class="code" href="classOTest2_1_1TestMarkPrinter.html">TestMarkPrinter</a>&amp; <a class="code" href="classOTest2_1_1TestMarkPrinter.html#a271a88684e8390f3ecb543ae0631b1fc">operator =</a>(</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TestMarkPrinter.html">TestMarkPrinter</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1TestMarkPrinter.html#a2157e0d20ea290879c22102e44159def">printLine</a>(</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        std::ostream&amp; os_,</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keyword">const</span> std::string&amp; prefix_);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1TestMarkPrinter.html#a3689ed67cf3bd689c7ac4581ebeba937">skipLine</a>(</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        std::ostream&amp; os_);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;};</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* OTest2__INCLUDE_OTEST2_TESTMARKPRINTER_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="testmark_8h.html">otest2/testmark.h</a>&gt;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">class </span>TestMarkFormatter;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classOTest2_1_1TestMarkPrinter.html">   35</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOTest2_1_1TestMarkPrinter.html">TestMarkPrinter</a> {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">struct </span>Impl;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    Impl* pimpl;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classOTest2_1_1TestMarkPrinter.html#aee1393447f5a26cdb9b0b267b195be99">TestMarkPrinter</a>(</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">const</span> std::vector&lt;TestMark::LinearizedRecord&gt;* array_,</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordtype">int</span>&amp; index_);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="classOTest2_1_1TestMarkPrinter.html#ad8c0ce64914563edac7cc96ffa25566c">~TestMarkPrinter</a>();</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <a class="code" href="classOTest2_1_1TestMarkPrinter.html#aee1393447f5a26cdb9b0b267b195be99">TestMarkPrinter</a>(</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TestMarkPrinter.html">TestMarkPrinter</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <a class="code" href="classOTest2_1_1TestMarkPrinter.html">TestMarkPrinter</a>&amp; <a class="code" href="classOTest2_1_1TestMarkPrinter.html#a271a88684e8390f3ecb543ae0631b1fc">operator =</a>(</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TestMarkPrinter.html">TestMarkPrinter</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1TestMarkPrinter.html#a6b5fd90e88171d8e2870427cefe3d118">printLine</a>(</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <a class="code" href="classOTest2_1_1TestMarkFormatter.html">TestMarkFormatter</a>&amp; formatter_);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1TestMarkPrinter.html#a087630df5544dd9e3f5dbc65374814f0">printDeleted</a>(</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <a class="code" href="classOTest2_1_1TestMarkFormatter.html">TestMarkFormatter</a>&amp; formatter_);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1TestMarkPrinter.html#ab09a4b27c82e806a4c56b474c04ca120">printAdded</a>(</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <a class="code" href="classOTest2_1_1TestMarkFormatter.html">TestMarkFormatter</a>&amp; formatter_);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1TestMarkPrinter.html#aa21f9e520003902a361458659dedd8d3">skipLine</a>(</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <a class="code" href="classOTest2_1_1TestMarkFormatter.html">TestMarkFormatter</a>&amp; os_);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;};</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* OTest2__INCLUDE_OTEST2_TESTMARKPRINTER_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassOTest2_1_1TestMarkPrinter_html_ad8c0ce64914563edac7cc96ffa25566c"><div class="ttname"><a href="classOTest2_1_1TestMarkPrinter.html#ad8c0ce64914563edac7cc96ffa25566c">OTest2::TestMarkPrinter::~TestMarkPrinter</a></div><div class="ttdeci">~TestMarkPrinter()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkprinter_8cpp_source.html#l00146">testmarkprinter.cpp:146</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1TestMarkPrinter_html"><div class="ttname"><a href="classOTest2_1_1TestMarkPrinter.html">OTest2::TestMarkPrinter</a></div><div class="ttdoc">Printer of testmarks.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkprinter_8h_source.html#l00034">testmarkprinter.h:34</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1TestMarkPrinter_html_aa21f9e520003902a361458659dedd8d3"><div class="ttname"><a href="classOTest2_1_1TestMarkPrinter.html#aa21f9e520003902a361458659dedd8d3">OTest2::TestMarkPrinter::skipLine</a></div><div class="ttdeci">bool skipLine(TestMarkFormatter &amp;os_)</div><div class="ttdoc">Skip current line.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkprinter_8cpp_source.html#l00160">testmarkprinter.cpp:160</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1TestMarkPrinter_html_ad8c0ce64914563edac7cc96ffa25566c"><div class="ttname"><a href="classOTest2_1_1TestMarkPrinter.html#ad8c0ce64914563edac7cc96ffa25566c">OTest2::TestMarkPrinter::~TestMarkPrinter</a></div><div class="ttdeci">~TestMarkPrinter()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkprinter_8cpp_source.html#l00138">testmarkprinter.cpp:138</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1TestMarkPrinter_html"><div class="ttname"><a href="classOTest2_1_1TestMarkPrinter.html">OTest2::TestMarkPrinter</a></div><div class="ttdoc">Printer of testmarks.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkprinter_8h_source.html#l00035">testmarkprinter.h:35</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1TestMarkPrinter_html_a3689ed67cf3bd689c7ac4581ebeba937"><div class="ttname"><a href="classOTest2_1_1TestMarkPrinter.html#a3689ed67cf3bd689c7ac4581ebeba937">OTest2::TestMarkPrinter::skipLine</a></div><div class="ttdeci">bool skipLine(std::ostream &amp;os_)</div><div class="ttdoc">Skip current line.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkprinter_8cpp_source.html#l00156">testmarkprinter.cpp:156</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkPrinter_html_a271a88684e8390f3ecb543ae0631b1fc"><div class="ttname"><a href="classOTest2_1_1TestMarkPrinter.html#a271a88684e8390f3ecb543ae0631b1fc">OTest2::TestMarkPrinter::operator=</a></div><div class="ttdeci">TestMarkPrinter &amp; operator=(const TestMarkPrinter &amp;)=delete</div></div>
-<div class="ttc" id="aclassOTest2_1_1TestMarkPrinter_html_aee1393447f5a26cdb9b0b267b195be99"><div class="ttname"><a href="classOTest2_1_1TestMarkPrinter.html#aee1393447f5a26cdb9b0b267b195be99">OTest2::TestMarkPrinter::TestMarkPrinter</a></div><div class="ttdeci">TestMarkPrinter(const std::vector&lt; TestMark::LinearizedRecord &gt; *array_, int &amp;index_)</div><div class="ttdoc">Ctor.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkprinter_8cpp_source.html#l00139">testmarkprinter.cpp:139</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1TestMarkPrinter_html_aee1393447f5a26cdb9b0b267b195be99"><div class="ttname"><a href="classOTest2_1_1TestMarkPrinter.html#aee1393447f5a26cdb9b0b267b195be99">OTest2::TestMarkPrinter::TestMarkPrinter</a></div><div class="ttdeci">TestMarkPrinter(const std::vector&lt; TestMark::LinearizedRecord &gt; *array_, int &amp;index_)</div><div class="ttdoc">Ctor.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkprinter_8cpp_source.html#l00131">testmarkprinter.cpp:131</a></div></div>
 <div class="ttc" id="atestmark_8h_html"><div class="ttname"><a href="testmark_8h.html">testmark.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1TestMarkPrinter_html_a2157e0d20ea290879c22102e44159def"><div class="ttname"><a href="classOTest2_1_1TestMarkPrinter.html#a2157e0d20ea290879c22102e44159def">OTest2::TestMarkPrinter::printLine</a></div><div class="ttdeci">bool printLine(std::ostream &amp;os_, const std::string &amp;prefix_)</div><div class="ttdoc">Print current line into a stream.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkprinter_8cpp_source.html#l00150">testmarkprinter.cpp:150</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1TestMarkPrinter_html_ab09a4b27c82e806a4c56b474c04ca120"><div class="ttname"><a href="classOTest2_1_1TestMarkPrinter.html#ab09a4b27c82e806a4c56b474c04ca120">OTest2::TestMarkPrinter::printAdded</a></div><div class="ttdeci">bool printAdded(TestMarkFormatter &amp;formatter_)</div><div class="ttdoc">Print added line.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkprinter_8cpp_source.html#l00154">testmarkprinter.cpp:154</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1TestMarkPrinter_html_a6b5fd90e88171d8e2870427cefe3d118"><div class="ttname"><a href="classOTest2_1_1TestMarkPrinter.html#a6b5fd90e88171d8e2870427cefe3d118">OTest2::TestMarkPrinter::printLine</a></div><div class="ttdeci">bool printLine(TestMarkFormatter &amp;formatter_)</div><div class="ttdoc">Print current line into a stream.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkprinter_8cpp_source.html#l00142">testmarkprinter.cpp:142</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1TestMarkPrinter_html_a087630df5544dd9e3f5dbc65374814f0"><div class="ttname"><a href="classOTest2_1_1TestMarkPrinter.html#a087630df5544dd9e3f5dbc65374814f0">OTest2::TestMarkPrinter::printDeleted</a></div><div class="ttdeci">bool printDeleted(TestMarkFormatter &amp;formatter_)</div><div class="ttdoc">Print deleted line.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkprinter_8cpp_source.html#l00148">testmarkprinter.cpp:148</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1TestMarkFormatter_html"><div class="ttname"><a href="classOTest2_1_1TestMarkFormatter.html">OTest2::TestMarkFormatter</a></div><div class="ttdoc">Generic interface of the testmark formatter.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkformatter_8h_source.html#l00032">testmarkformatter.h:32</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

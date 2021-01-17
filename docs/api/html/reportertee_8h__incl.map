@@ -1,6 +1,8 @@
 <map id="include/otest2/reportertee.h" name="include/otest2/reportertee.h">
-<area shape="rect" id="node1" title=" " alt="" coords="30,5,231,32"/>
-<area shape="rect" id="node2" href="$reporter_8h.html" title=" " alt="" coords="5,80,136,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="161,80,223,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="41,155,100,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="121,5,322,32"/>
+<area shape="rect" id="node2" href="$reporter_8h.html" title=" " alt="" coords="96,80,227,107"/>
+<area shape="rect" id="node6" title=" " alt="" coords="251,80,314,107"/>
+<area shape="rect" id="node3" href="$assertbufferptr_8h.html" title=" " alt="" coords="5,155,179,181"/>
+<area shape="rect" id="node5" title=" " alt="" coords="203,155,261,181"/>
+<area shape="rect" id="node4" title=" " alt="" coords="54,229,130,256"/>
 </map>

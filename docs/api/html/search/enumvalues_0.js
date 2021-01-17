@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['change_1765',['CHANGE',['../namespaceOTest2.html#a2baa442fbc6b25b61c438167a04ac4e3a421cfd143e450c3f5814a0495409e073',1,'OTest2']]]
+  ['black_1911',['BLACK',['../namespaceOTest2.html#a31f5de8a6e75a59b7983467178f8ed23a08d0012388564e95c3b4a7407cf04965',1,'OTest2']]],
+  ['blue_1912',['BLUE',['../namespaceOTest2.html#a31f5de8a6e75a59b7983467178f8ed23a1b3e1ee9bff86431dea6b181365ba65f',1,'OTest2']]],
+  ['bold_1913',['BOLD',['../namespaceOTest2.html#a1a5fbd413cced9f788a0ac52907a8d0da2909dd0e0336f10b6da9735b859a3d19',1,'OTest2']]]
 ];

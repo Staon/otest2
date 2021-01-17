@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['type_1778',['TYPE',['../namespaceOTest2.html#a112d453422c07793fd9761acddc2079aa948495146facadfe8859789036313d79',1,'OTest2']]]
+  ['normal_1925',['NORMAL',['../namespaceOTest2.html#a1a5fbd413cced9f788a0ac52907a8d0da1e23852820b9154316c7c06e2b7ba051',1,'OTest2']]]
 ];

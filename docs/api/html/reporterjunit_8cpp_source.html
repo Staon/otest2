@@ -91,374 +91,456 @@ $(function() {
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="reporterjunit_8h.html">reporterjunit.h</a>&gt;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;chrono&gt;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;iomanip&gt;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;pugixml.hpp&gt;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;ctime&gt;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="context_8h.html">context.h</a>&gt;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="timesource_8h.html">timesource.h</a>&gt;</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="utils_8h.html">utils.h</a>&gt;</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;assert.h&gt;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;chrono&gt;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;pugixml.hpp&gt;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;sstream&gt;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;ctime&gt;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="assertbufferstr_8h.html">assertbufferstr.h</a>&gt;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="context_8h.html">context.h</a>&gt;</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="timesource_8h.html">timesource.h</a>&gt;</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="utils_8h.html">utils.h</a>&gt;</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">namespace </span>{</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;std::string formatTimestamp(</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TimeSource.html#a891516b4c1da31e6ee81e345eb4032d4">TimeSource::time_point</a>&amp; time_) {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  std::time_t epoche_(std::chrono::system_clock::to_time_t(time_));</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keyword">struct </span>tm broken_;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  localtime_r(&amp;epoche_, &amp;broken_);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  std::ostringstream oss_;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  oss_ &lt;&lt; std::setfill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; std::dec &lt;&lt; std::internal</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;      &lt;&lt; std::setw(4) &lt;&lt; (broken_.tm_year + 1900)</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;      &lt;&lt; <span class="charliteral">&#39;-&#39;</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      &lt;&lt; std::setw(2) &lt;&lt; (broken_.tm_mon + 1)</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">namespace </span>{</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;std::string formatTimestamp(</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TimeSource.html#a891516b4c1da31e6ee81e345eb4032d4">TimeSource::time_point</a>&amp; time_) {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  std::time_t epoche_(std::chrono::system_clock::to_time_t(time_));</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keyword">struct </span>tm broken_;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  localtime_r(&amp;epoche_, &amp;broken_);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  std::ostringstream oss_;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  oss_ &lt;&lt; std::setfill(<span class="charliteral">&#39;0&#39;</span>) &lt;&lt; std::dec &lt;&lt; std::internal</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;      &lt;&lt; std::setw(4) &lt;&lt; (broken_.tm_year + 1900)</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;      &lt;&lt; <span class="charliteral">&#39;-&#39;</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;      &lt;&lt; std::setw(2) &lt;&lt; broken_.tm_mday</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;      &lt;&lt; <span class="charliteral">&#39;T&#39;</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      &lt;&lt; std::setw(2) &lt;&lt; broken_.tm_hour</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;      &lt;&lt; <span class="charliteral">&#39;:&#39;</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      &lt;&lt; std::setw(2) &lt;&lt; broken_.tm_min</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;      &lt;&lt; std::setw(2) &lt;&lt; (broken_.tm_mon + 1)</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;      &lt;&lt; <span class="charliteral">&#39;-&#39;</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;      &lt;&lt; std::setw(2) &lt;&lt; broken_.tm_mday</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;      &lt;&lt; <span class="charliteral">&#39;T&#39;</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;      &lt;&lt; std::setw(2) &lt;&lt; broken_.tm_hour</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      &lt;&lt; <span class="charliteral">&#39;:&#39;</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      &lt;&lt; std::setw(2) &lt;&lt; broken_.tm_sec;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="keywordflow">return</span> oss_.str();</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;}</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;std::string formatDuration(</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TimeSource.html#a891516b4c1da31e6ee81e345eb4032d4">TimeSource::time_point</a>&amp; start_,</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TimeSource.html#a891516b4c1da31e6ee81e345eb4032d4">TimeSource::time_point</a>&amp; end_) {</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  std::chrono::duration&lt;double&gt; duration_(end_ - start_);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  std::ostringstream oss_;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  oss_ &lt;&lt; std::setprecision(3) &lt;&lt; std::fixed &lt;&lt; duration_.count();</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  <span class="keywordflow">return</span> oss_.str();</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;}</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;} <span class="comment">/* -- namespace */</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;      &lt;&lt; std::setw(2) &lt;&lt; broken_.tm_min</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;      &lt;&lt; <span class="charliteral">&#39;:&#39;</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;      &lt;&lt; std::setw(2) &lt;&lt; broken_.tm_sec;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <span class="keywordflow">return</span> oss_.str();</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;std::string formatDuration(</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TimeSource.html#a891516b4c1da31e6ee81e345eb4032d4">TimeSource::time_point</a>&amp; start_,</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1TimeSource.html#a891516b4c1da31e6ee81e345eb4032d4">TimeSource::time_point</a>&amp; end_) {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  std::chrono::duration&lt;double&gt; duration_(end_ - start_);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  std::ostringstream oss_;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  oss_ &lt;&lt; std::setprecision(3) &lt;&lt; std::fixed &lt;&lt; duration_.count();</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keywordflow">return</span> oss_.str();</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keyword">struct </span>ReporterJUnit::Impl {</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    std::string filename;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">bool</span> hide_location;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="comment">/* -- XML structure */</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    ::pugi::xml_document doc;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="comment">/* -- name of the test (usually from the command line) */</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    std::string testname;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="comment">/* -- current active object */</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keyword">struct </span>Record {</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        ::pugi::xml_node node;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <a class="code" href="classOTest2_1_1TimeSource.html#a891516b4c1da31e6ee81e345eb4032d4">TimeSource::time_point</a> start;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordtype">int</span> case_count;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="keywordtype">bool</span> first_failure;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordtype">int</span> case_failures;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keywordtype">bool</span> first_error;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordtype">int</span> case_errors;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    };</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    std::vector&lt;Record&gt; node_stack;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    Impl(</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keyword">const</span> Impl&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    Impl&amp; <a class="code" href="classOTest2_1_1ReporterJUnit.html#a9c7d3eecccef5392ef30252677d8f85a">operator = </a>(</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keyword">const</span> Impl&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keyword">explicit</span> Impl(</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keyword">const</span> std::string&amp; file_,</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keywordtype">bool</span> hide_location_);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    ~Impl();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;} <span class="comment">/* -- namespace */</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword">struct </span>ReporterJUnit::Impl : <span class="keyword">public</span> AssertBufferListener {</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    std::string filename;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordtype">bool</span> hide_location;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="comment">/* -- XML structure */</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    ::pugi::xml_document doc;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="comment">/* -- name of the test (usually from the command line) */</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    std::string testname;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="comment">/* -- current active object */</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keyword">struct </span>Record {</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        ::pugi::xml_node node;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <a class="code" href="classOTest2_1_1TimeSource.html#a891516b4c1da31e6ee81e345eb4032d4">TimeSource::time_point</a> start;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordtype">int</span> case_count;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keywordtype">bool</span> first_failure;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordtype">int</span> case_failures;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <span class="keywordtype">bool</span> first_error;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keywordtype">int</span> case_errors;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    };</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    std::vector&lt;Record&gt; node_stack;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    std::ostringstream message;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <a class="code" href="namespaceOTest2.html#a17c515d71794f85c9c5034e780443a79">AssertBufferStrPtr</a> assert_buffer;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="comment">/* -- avoid copying */</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    Impl(</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keyword">const</span> Impl&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    Impl&amp; <a class="code" href="classOTest2_1_1ReporterJUnit.html#a9c7d3eecccef5392ef30252677d8f85a">operator = </a>(</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="keyword">const</span> Impl&amp;) = <span class="keyword">delete</span>;</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordtype">void</span> cumulateStatistics(</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        Record&amp; target_,</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keyword">const</span> Record&amp; source_);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordtype">void</span> fillRunningTime(</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keyword">const</span> Context&amp; context_,</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        Record&amp; record_);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    <span class="keywordtype">void</span> fillStatistics(</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keyword">const</span> Context&amp; context_,</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        Record&amp; record_);</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordtype">void</span> fillTimestamp(</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="keyword">const</span> Context&amp; context_,</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        Record&amp; record_);</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordtype">void</span> fillName(</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keyword">const</span> Context&amp; context_,</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        Record&amp; record_,</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <span class="keyword">const</span> std::string&amp; name_);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;};</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;ReporterJUnit::Impl::Impl(</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="keyword">const</span> std::string&amp; file_,</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keywordtype">bool</span> hide_location_) :</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;  filename(file_),</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;  hide_location(hide_location_),</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  testname(),</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  node_stack() {</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;}</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;ReporterJUnit::Impl::~Impl() {</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;}</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="keywordtype">void</span> ReporterJUnit::Impl::cumulateStatistics(</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    Record&amp; target_,</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="keyword">const</span> Record&amp; source_) {</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  target_.case_count += source_.case_count;</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  target_.case_failures += source_.case_failures;</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  target_.case_errors += source_.case_errors;</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;}</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="keywordtype">void</span> ReporterJUnit::Impl::fillRunningTime(</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keyword">const</span> Context&amp; context_,</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    Record&amp; record_) {</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;  <span class="comment">/* -- time of run of the suite (in seconds) */</span></div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;  <span class="keyword">auto</span> end_time_(context_.time_source-&gt;now());</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  <span class="keyword">auto</span> time_(record_.node.append_attribute(<span class="stringliteral">&quot;time&quot;</span>));</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;  time_ = formatDuration(record_.start, end_time_).c_str();</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;}</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keyword">explicit</span> Impl(</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keyword">const</span> std::string&amp; file_,</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keywordtype">bool</span> hide_location_);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keyword">virtual</span> ~Impl();</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordtype">void</span> cumulateStatistics(</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        Record&amp; target_,</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keyword">const</span> Record&amp; source_);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keywordtype">void</span> fillRunningTime(</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        Record&amp; record_);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="keywordtype">void</span> fillStatistics(</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        Record&amp; record_);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keywordtype">void</span> fillTimestamp(</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        Record&amp; record_);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keywordtype">void</span> fillName(</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        Record&amp; record_,</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        <span class="keyword">const</span> std::string&amp; name_);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keywordtype">void</span> appendMessage(</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="keyword">const</span> std::string&amp; message_);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keywordtype">void</span> commitMessage(</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keyword">const</span> Context&amp; context_);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="comment">/* -- listener of the assertion buffer */</span></div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1AssertBufferListener.html#a58debba7d1fd48f779ab9a35bf0e7134">assertionOpeningMessage</a>(</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        <span class="keyword">const</span> AssertBufferAssertData&amp; data_,</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        <span class="keyword">const</span> std::string&amp; message_) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1AssertBufferListener.html#afd95ebc0b1dc3483969854ba90aa2448">assertionAdditionalMessage</a>(</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        <span class="keyword">const</span> AssertBufferAssertData&amp; data_,</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        <span class="keyword">const</span> std::string&amp; message_) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1AssertBufferListener.html#ae6128fbde98dd67d465392eb58aa9e17">assertionClose</a>(</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        <span class="keyword">const</span> AssertBufferAssertData&amp; data_) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1AssertBufferListener.html#ae03f4d93b8fef9e1bad7823d1b27d215">errorOpeningMessage</a>(</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        <span class="keyword">const</span> std::string&amp; message_) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1AssertBufferListener.html#a8bc3422cac8eff2fc2b9c1de6f196049">errorAdditionalMessage</a>(</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <span class="keyword">const</span> std::string&amp; message_) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1AssertBufferListener.html#a3c6dc58ecd746517faa8c7cfae3be0de">errorClose</a>(</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        <span class="keyword">const</span> Context&amp; context_) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;};</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="keywordtype">void</span> ReporterJUnit::Impl::fillStatistics(</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keyword">const</span> Context&amp; context_,</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    Record&amp; record_) {</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  <span class="comment">/* -- number of tests */</span></div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;  <span class="keyword">auto</span> tests_(record_.node.append_attribute(<span class="stringliteral">&quot;tests&quot;</span>));</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  tests_ = record_.case_count;</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  <span class="comment">/* -- number of failed tests */</span></div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;  <span class="keyword">auto</span> failures_(record_.node.append_attribute(<span class="stringliteral">&quot;failures&quot;</span>));</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;  failures_ = record_.case_failures;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;ReporterJUnit::Impl::Impl(</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keyword">const</span> std::string&amp; file_,</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordtype">bool</span> hide_location_) :</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;  filename(file_),</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;  hide_location(hide_location_),</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;  testname(),</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;  node_stack(),</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;  assert_buffer(std::make_shared&lt;AssertBufferStr&gt;(this)) {</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160; </div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;}</div>
 <div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160; </div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  <span class="comment">/* -- number of error tests */</span></div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  <span class="keyword">auto</span> errors_(record_.node.append_attribute(<span class="stringliteral">&quot;errors&quot;</span>));</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  errors_ = record_.case_errors;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;}</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="keywordtype">void</span> ReporterJUnit::Impl::fillTimestamp(</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keyword">const</span> Context&amp; context_,</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    Record&amp; record_) {</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;  <span class="comment">/* -- timestamp of run */</span></div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;  <span class="keyword">auto</span> timestamp_(record_.node.append_attribute(<span class="stringliteral">&quot;timestamp&quot;</span>));</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  timestamp_ = formatTimestamp(record_.start).c_str();</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;}</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160; </div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;<span class="keywordtype">void</span> ReporterJUnit::Impl::fillName(</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    <span class="keyword">const</span> Context&amp; context_,</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    Record&amp; record_,</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    <span class="keyword">const</span> std::string&amp; name_) {</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  <span class="comment">/* -- name of the test */</span></div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  <span class="keyword">auto</span> name_node_(record_.node.append_attribute(<span class="stringliteral">&quot;name&quot;</span>));</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  name_node_ = name_.c_str();</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;}</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160; </div>
-<div class="line"><a name="l00186"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#ad35b1dcb91f715fbe6993b1974cb31a0">  186</a></span>&#160;<a class="code" href="classOTest2_1_1ReporterJUnit.html#ad35b1dcb91f715fbe6993b1974cb31a0">ReporterJUnit::ReporterJUnit</a>(</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    <span class="keyword">const</span> std::string&amp; file_,</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keywordtype">bool</span> hide_location_) :</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  pimpl(new Impl(file_, hide_location_)) {</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160; </div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;}</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; </div>
-<div class="line"><a name="l00193"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#ad50a4cb780cc9a0088bbed7f66d72098">  193</a></span>&#160;<a class="code" href="classOTest2_1_1ReporterJUnit.html#ad50a4cb780cc9a0088bbed7f66d72098">ReporterJUnit::~ReporterJUnit</a>() {</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  <a class="code" href="namespaceOTest2.html#a9c0e5683fb529ec38164c2f418172b30">odelete</a>(pimpl);</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;}</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160; </div>
-<div class="line"><a name="l00197"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#ab2eb2ec8d4de2e58536f93f59fdefd41">  197</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html#ab2eb2ec8d4de2e58536f93f59fdefd41">ReporterJUnit::enterTest</a>(</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <span class="keyword">const</span> std::string&amp; name_) {</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  pimpl-&gt;testname = name_;</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160; </div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  <span class="comment">/* -- create root node and root test suite (CircleCI ignores standalone</span></div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;<span class="comment">   *    test cases) */</span></div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  <span class="keyword">auto</span> root_(pimpl-&gt;doc.append_child(<span class="stringliteral">&quot;testsuites&quot;</span>));</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  pimpl-&gt;node_stack.push_back({</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    root_.append_child(<span class="stringliteral">&quot;testsuite&quot;</span>),</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    context_.<a class="code" href="classOTest2_1_1Context.html#ab65f725b9cca95913e668bd23181f738">time_source</a>-&gt;<a class="code" href="classOTest2_1_1TimeSource.html#a536250771afc59351ad96970fb873ef1">now</a>(),</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;    0,</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    <span class="keyword">true</span>,</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    0,</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    <span class="keyword">true</span>,</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    0,</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  });</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  pimpl-&gt;fillTimestamp(context_, pimpl-&gt;node_stack.back());</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;}</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160; </div>
-<div class="line"><a name="l00217"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#a5c6efedd360a4b06b31e474e3929c657">  217</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html#a5c6efedd360a4b06b31e474e3929c657">ReporterJUnit::enterSuite</a>(</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    <span class="keyword">const</span> std::string&amp; name_) {</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  <span class="comment">/* -- create new node */</span></div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  pimpl-&gt;node_stack.push_back({</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    pimpl-&gt;node_stack.back().node.append_child(<span class="stringliteral">&quot;testsuite&quot;</span>),</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    context_.<a class="code" href="classOTest2_1_1Context.html#ab65f725b9cca95913e668bd23181f738">time_source</a>-&gt;<a class="code" href="classOTest2_1_1TimeSource.html#a536250771afc59351ad96970fb873ef1">now</a>(),</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    0,</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keyword">true</span>,</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    0,</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    <span class="keyword">true</span>,</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    0,</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;  });</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  pimpl-&gt;fillName(context_, pimpl-&gt;node_stack.back(), name_);</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;  pimpl-&gt;fillTimestamp(context_, pimpl-&gt;node_stack.back());</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;}</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160; </div>
-<div class="line"><a name="l00234"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#a4b98bcbf1b06f0f4e536da0f7fb5e74b">  234</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html#a4b98bcbf1b06f0f4e536da0f7fb5e74b">ReporterJUnit::enterCase</a>(</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    <span class="keyword">const</span> std::string&amp; name_) {</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;  <span class="comment">/* -- create new node */</span></div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;  pimpl-&gt;node_stack.push_back({</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    pimpl-&gt;node_stack.back().node.append_child(<span class="stringliteral">&quot;testcase&quot;</span>),</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    context_.<a class="code" href="classOTest2_1_1Context.html#ab65f725b9cca95913e668bd23181f738">time_source</a>-&gt;<a class="code" href="classOTest2_1_1TimeSource.html#a536250771afc59351ad96970fb873ef1">now</a>(),</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    1,</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    <span class="keyword">true</span>,</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;    0,</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    <span class="keyword">true</span>,</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    0,</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;  });</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;  pimpl-&gt;fillName(context_, pimpl-&gt;node_stack.back(), name_);</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;}</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160; </div>
-<div class="line"><a name="l00250"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#a7b379a2603e5e9a625ecfb1308db23e1">  250</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html#a7b379a2603e5e9a625ecfb1308db23e1">ReporterJUnit::enterState</a>(</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    <span class="keyword">const</span> std::string&amp; name_) {</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;  <span class="comment">/* -- nothing to do - the states are not supported by the JUnit report */</span></div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;}</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160; </div>
-<div class="line"><a name="l00256"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#a6fd1b77efcc0e3bd3f48d9480acc7aba">  256</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html#a6fd1b77efcc0e3bd3f48d9480acc7aba">ReporterJUnit::enterAssert</a>(</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    <span class="keywordtype">bool</span> condition_,</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    <span class="keyword">const</span> std::string&amp; message_,</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    <span class="keyword">const</span> std::string&amp; file_,</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    <span class="keywordtype">int</span> lineno_) {</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;  <span class="keywordflow">if</span>(!condition_) {</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    <span class="comment">/* -- update statistics */</span></div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    <span class="keyword">auto</span>&amp; top_(pimpl-&gt;node_stack.back());</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    <span class="keywordflow">if</span>(top_.first_failure) {</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;      top_.first_failure = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;      ++top_.case_failures;</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    }</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160; </div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;    <span class="comment">/* -- make the failure record */</span></div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;    <span class="keyword">auto</span> failure_(top_.node.append_child(<span class="stringliteral">&quot;failure&quot;</span>));</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    <span class="keyword">auto</span> message_attr_(failure_.append_attribute(<span class="stringliteral">&quot;message&quot;</span>));</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    message_attr_ = message_.c_str();</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <span class="keywordflow">if</span>(!pimpl-&gt;hide_location) {</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;      <span class="keyword">auto</span> line_attr_(failure_.append_attribute(<span class="stringliteral">&quot;line&quot;</span>));</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;      line_attr_ = lineno_;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;      <span class="keyword">auto</span> file_attr_(failure_.append_attribute(<span class="stringliteral">&quot;file&quot;</span>));</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;      file_attr_ = file_.c_str();</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    }</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;  }</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;}</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
-<div class="line"><a name="l00283"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#ae295c388b4cb660d5740d40a26b40dd5">  283</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html#ae295c388b4cb660d5740d40a26b40dd5">ReporterJUnit::enterError</a>(</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    <span class="keyword">const</span> std::string&amp; message_) {</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;  <span class="comment">/* -- update statistics */</span></div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;  <span class="keyword">auto</span>&amp; top_(pimpl-&gt;node_stack.back());</div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;  <span class="keywordflow">if</span>(top_.first_error) {</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    top_.first_error = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    ++top_.case_errors;</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;  }</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;  <span class="comment">/* -- make the failure record */</span></div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;  <span class="keyword">auto</span> error_(top_.node.append_child(<span class="stringliteral">&quot;error&quot;</span>));</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  <span class="keyword">auto</span> message_attr_(error_.append_attribute(<span class="stringliteral">&quot;message&quot;</span>));</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;  message_attr_ = message_.c_str();</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;}</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160; </div>
-<div class="line"><a name="l00299"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#a92e8f9c8e268b8c6f3fde16933d3aed2">  299</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html#a92e8f9c8e268b8c6f3fde16933d3aed2">ReporterJUnit::reportAssertionMessage</a>(</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;    <span class="keyword">const</span> std::string&amp; message_) {</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160; </div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;}</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160; </div>
-<div class="line"><a name="l00305"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#ab35dc62d785aa84379a2b5e507904532">  305</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html#ab35dc62d785aa84379a2b5e507904532">ReporterJUnit::leaveAssert</a>(</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_) {</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160; </div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;}</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160; </div>
-<div class="line"><a name="l00310"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#a4ff8748ca88ba10dbd4b4a59b29d73e4">  310</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html#a4ff8748ca88ba10dbd4b4a59b29d73e4">ReporterJUnit::leaveState</a>(</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    <span class="keyword">const</span> std::string&amp; name_,</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;    <span class="keywordtype">bool</span> result_) {</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;ReporterJUnit::Impl::~Impl() {</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;}</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="keywordtype">void</span> ReporterJUnit::Impl::cumulateStatistics(</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    Record&amp; target_,</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keyword">const</span> Record&amp; source_) {</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;  target_.case_count += source_.case_count;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;  target_.case_failures += source_.case_failures;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;  target_.case_errors += source_.case_errors;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;}</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="keywordtype">void</span> ReporterJUnit::Impl::fillRunningTime(</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    Record&amp; record_) {</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;  <span class="comment">/* -- time of run of the suite (in seconds) */</span></div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;  <span class="keyword">auto</span> end_time_(context_.time_source-&gt;now());</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;  <span class="keyword">auto</span> time_(record_.node.append_attribute(<span class="stringliteral">&quot;time&quot;</span>));</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  time_ = formatDuration(record_.start, end_time_).c_str();</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;}</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160; </div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="keywordtype">void</span> ReporterJUnit::Impl::fillStatistics(</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    Record&amp; record_) {</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  <span class="comment">/* -- number of tests */</span></div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  <span class="keyword">auto</span> tests_(record_.node.append_attribute(<span class="stringliteral">&quot;tests&quot;</span>));</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  tests_ = record_.case_count;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160; </div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;  <span class="comment">/* -- number of failed tests */</span></div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  <span class="keyword">auto</span> failures_(record_.node.append_attribute(<span class="stringliteral">&quot;failures&quot;</span>));</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  failures_ = record_.case_failures;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160; </div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  <span class="comment">/* -- number of error tests */</span></div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  <span class="keyword">auto</span> errors_(record_.node.append_attribute(<span class="stringliteral">&quot;errors&quot;</span>));</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;  errors_ = record_.case_errors;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;}</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160; </div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;<span class="keywordtype">void</span> ReporterJUnit::Impl::fillTimestamp(</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    Record&amp; record_) {</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  <span class="comment">/* -- timestamp of run */</span></div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  <span class="keyword">auto</span> timestamp_(record_.node.append_attribute(<span class="stringliteral">&quot;timestamp&quot;</span>));</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  timestamp_ = formatTimestamp(record_.start).c_str();</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;}</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160; </div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;<span class="keywordtype">void</span> ReporterJUnit::Impl::fillName(</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;    <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    Record&amp; record_,</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    <span class="keyword">const</span> std::string&amp; name_) {</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;  <span class="comment">/* -- name of the test */</span></div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  <span class="keyword">auto</span> name_node_(record_.node.append_attribute(<span class="stringliteral">&quot;name&quot;</span>));</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  name_node_ = name_.c_str();</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;}</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160; </div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;<span class="keywordtype">void</span> ReporterJUnit::Impl::appendMessage(</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    <span class="keyword">const</span> std::string&amp; message_) {</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;  message &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span> &lt;&lt; message_;</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;}</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160; </div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="keywordtype">void</span> ReporterJUnit::Impl::commitMessage(</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keyword">const</span> Context&amp; context_) {</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;  <span class="keyword">auto</span>&amp; top_(node_stack.back());</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;  <span class="keyword">auto</span> node_(top_.node.last_child());</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;  <span class="keyword">auto</span> msg_(node_.append_attribute(<span class="stringliteral">&quot;message&quot;</span>));</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;  msg_ = message.str().c_str();</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;  message.str(<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;}</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="keywordtype">void</span> ReporterJUnit::Impl::assertionOpeningMessage(</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <span class="keyword">const</span> AssertBufferAssertData&amp; data_,</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    <span class="keyword">const</span> std::string&amp; message_) {</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;  <span class="comment">/* -- make the failure record */</span></div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;  <span class="keywordflow">if</span>(!data_.condition) {</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    <span class="keyword">auto</span>&amp; top_(node_stack.back());</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    <span class="keyword">auto</span> failure_(top_.node.append_child(<span class="stringliteral">&quot;failure&quot;</span>));</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    <span class="keywordflow">if</span>(!hide_location) {</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;      <span class="keyword">auto</span> line_attr_(failure_.append_attribute(<span class="stringliteral">&quot;line&quot;</span>));</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;      line_attr_ = data_.line;</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;      <span class="keyword">auto</span> file_attr_(failure_.append_attribute(<span class="stringliteral">&quot;file&quot;</span>));</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;      file_attr_ = data_.file.c_str();</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    }</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    message &lt;&lt; message_;</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;  }</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;}</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160; </div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;<span class="keywordtype">void</span> ReporterJUnit::Impl::assertionAdditionalMessage(</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="keyword">const</span> AssertBufferAssertData&amp; data_,</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    <span class="keyword">const</span> std::string&amp; message_) {</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;  appendMessage(context_, message_);</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;}</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160; </div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;<span class="keywordtype">void</span> ReporterJUnit::Impl::assertionClose(</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    <span class="keyword">const</span> AssertBufferAssertData&amp; data_) {</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;  commitMessage(context_);</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;}</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160; </div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;<span class="keywordtype">void</span> ReporterJUnit::Impl::errorOpeningMessage(</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    <span class="keyword">const</span> std::string&amp; message_) {</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;  <span class="keyword">auto</span>&amp; top_(node_stack.back());</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;  <span class="keyword">auto</span> error_(top_.node.append_child(<span class="stringliteral">&quot;error&quot;</span>));</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  <span class="keyword">auto</span> msg_(error_.append_attribute(<span class="stringliteral">&quot;message&quot;</span>));</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;  message &lt;&lt; message_;</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;}</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160; </div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;<span class="keywordtype">void</span> ReporterJUnit::Impl::errorAdditionalMessage(</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <span class="keyword">const</span> Context&amp; context_,</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    <span class="keyword">const</span> std::string&amp; message_) {</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;  appendMessage(context_, message_);</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;}</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160; </div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;<span class="keywordtype">void</span> ReporterJUnit::Impl::errorClose(</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    <span class="keyword">const</span> Context&amp; context_) {</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;  commitMessage(context_);</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;}</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160; </div>
+<div class="line"><a name="l00284"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#ad35b1dcb91f715fbe6993b1974cb31a0">  284</a></span>&#160;<a class="code" href="classOTest2_1_1ReporterJUnit.html#ad35b1dcb91f715fbe6993b1974cb31a0">ReporterJUnit::ReporterJUnit</a>(</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    <span class="keyword">const</span> std::string&amp; file_,</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    <span class="keywordtype">bool</span> hide_location_) :</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;  pimpl(new Impl(file_, hide_location_)) {</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160; </div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;}</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160; </div>
+<div class="line"><a name="l00291"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#ad50a4cb780cc9a0088bbed7f66d72098">  291</a></span>&#160;<a class="code" href="classOTest2_1_1ReporterJUnit.html#ad50a4cb780cc9a0088bbed7f66d72098">ReporterJUnit::~ReporterJUnit</a>() {</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;  <a class="code" href="namespaceOTest2.html#a9c0e5683fb529ec38164c2f418172b30">odelete</a>(pimpl);</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;}</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160; </div>
+<div class="line"><a name="l00295"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#ab2eb2ec8d4de2e58536f93f59fdefd41">  295</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html#ab2eb2ec8d4de2e58536f93f59fdefd41">ReporterJUnit::enterTest</a>(</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    <span class="keyword">const</span> std::string&amp; name_) {</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;  pimpl-&gt;testname = name_;</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160; </div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;  <span class="comment">/* -- create root node and root test suite (CircleCI ignores standalone</span></div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;<span class="comment">   *    test cases) */</span></div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;  <span class="keyword">auto</span> root_(pimpl-&gt;doc.append_child(<span class="stringliteral">&quot;testsuites&quot;</span>));</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;  pimpl-&gt;node_stack.push_back({</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;    root_.append_child(<span class="stringliteral">&quot;testsuite&quot;</span>),</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    context_.<a class="code" href="classOTest2_1_1Context.html#ab65f725b9cca95913e668bd23181f738">time_source</a>-&gt;<a class="code" href="classOTest2_1_1TimeSource.html#a536250771afc59351ad96970fb873ef1">now</a>(),</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    0,</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    <span class="keyword">true</span>,</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    0,</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    <span class="keyword">true</span>,</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    0,</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;  });</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;  pimpl-&gt;fillTimestamp(context_, pimpl-&gt;node_stack.back());</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;}</div>
 <div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160; </div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;}</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
-<div class="line"><a name="l00317"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#a4fee44feeffee5f160a031f33d70d77f">  317</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html#a4fee44feeffee5f160a031f33d70d77f">ReporterJUnit::leaveCase</a>(</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    <span class="keyword">const</span> std::string&amp; name_,</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    <span class="keywordtype">bool</span> result_) {</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;  <span class="keyword">auto</span> top_(pimpl-&gt;node_stack.back());</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160; </div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;  <span class="comment">/* -- fill test case attributes */</span></div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;  pimpl-&gt;fillRunningTime(context_, top_);</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160; </div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;  <span class="comment">/* -- pop the object and cumulate statistics with the parent */</span></div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;  pimpl-&gt;node_stack.pop_back();</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;  pimpl-&gt;cumulateStatistics(pimpl-&gt;node_stack.back(), top_);</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;}</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160; </div>
-<div class="line"><a name="l00331"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#a2799029ad6464dad64d0847c0603a371">  331</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html#a2799029ad6464dad64d0847c0603a371">ReporterJUnit::leaveSuite</a>(</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    <span class="keyword">const</span> std::string&amp; name_,</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    <span class="keywordtype">bool</span> result_) {</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;  <span class="keyword">auto</span> top_(pimpl-&gt;node_stack.back());</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160; </div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;  <span class="comment">/* -- fill suite attributes */</span></div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;  pimpl-&gt;fillRunningTime(context_, top_);</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;  pimpl-&gt;fillStatistics(context_, top_);</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160; </div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;  <span class="comment">/* -- pop the object and cumulate statistics with the parent */</span></div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;  pimpl-&gt;node_stack.pop_back();</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;  pimpl-&gt;cumulateStatistics(pimpl-&gt;node_stack.back(), top_);</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;}</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160; </div>
-<div class="line"><a name="l00346"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#a6befa5ec421b890e30c75007daa9b60c">  346</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html#a6befa5ec421b890e30c75007daa9b60c">ReporterJUnit::leaveTest</a>(</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    <span class="keyword">const</span> std::string&amp; name_,</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    <span class="keywordtype">bool</span> result_) {</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;  <span class="keyword">auto</span> top_(pimpl-&gt;node_stack.back());</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160; </div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;  <span class="comment">/* -- fill suite attributes */</span></div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;  pimpl-&gt;fillRunningTime(context_, top_);</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;  pimpl-&gt;fillStatistics(context_, top_);</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160; </div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;  <span class="comment">/* -- remove the root test suite */</span></div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;  pimpl-&gt;node_stack.pop_back();</div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160; </div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;  <span class="comment">/* -- save the XML report */</span></div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;  pimpl-&gt;doc.save_file(pimpl-&gt;filename.c_str());</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;}</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160; </div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
+<div class="line"><a name="l00315"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#a5c6efedd360a4b06b31e474e3929c657">  315</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html#a5c6efedd360a4b06b31e474e3929c657">ReporterJUnit::enterSuite</a>(</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    <span class="keyword">const</span> std::string&amp; name_) {</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;  <span class="comment">/* -- create new node */</span></div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;  pimpl-&gt;node_stack.push_back({</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    pimpl-&gt;node_stack.back().node.append_child(<span class="stringliteral">&quot;testsuite&quot;</span>),</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;    context_.<a class="code" href="classOTest2_1_1Context.html#ab65f725b9cca95913e668bd23181f738">time_source</a>-&gt;<a class="code" href="classOTest2_1_1TimeSource.html#a536250771afc59351ad96970fb873ef1">now</a>(),</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    0,</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    <span class="keyword">true</span>,</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    0,</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    <span class="keyword">true</span>,</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    0,</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;  });</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;  pimpl-&gt;fillName(context_, pimpl-&gt;node_stack.back(), name_);</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;  pimpl-&gt;fillTimestamp(context_, pimpl-&gt;node_stack.back());</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;}</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160; </div>
+<div class="line"><a name="l00332"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#a4b98bcbf1b06f0f4e536da0f7fb5e74b">  332</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html#a4b98bcbf1b06f0f4e536da0f7fb5e74b">ReporterJUnit::enterCase</a>(</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    <span class="keyword">const</span> std::string&amp; name_) {</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;  <span class="comment">/* -- create new node */</span></div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;  pimpl-&gt;node_stack.push_back({</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    pimpl-&gt;node_stack.back().node.append_child(<span class="stringliteral">&quot;testcase&quot;</span>),</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    context_.<a class="code" href="classOTest2_1_1Context.html#ab65f725b9cca95913e668bd23181f738">time_source</a>-&gt;<a class="code" href="classOTest2_1_1TimeSource.html#a536250771afc59351ad96970fb873ef1">now</a>(),</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    1,</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    <span class="keyword">true</span>,</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    0,</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    <span class="keyword">true</span>,</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    0,</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;  });</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;  pimpl-&gt;fillName(context_, pimpl-&gt;node_stack.back(), name_);</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;}</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160; </div>
+<div class="line"><a name="l00348"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#a7b379a2603e5e9a625ecfb1308db23e1">  348</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html#a7b379a2603e5e9a625ecfb1308db23e1">ReporterJUnit::enterState</a>(</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;    <span class="keyword">const</span> std::string&amp; name_) {</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;  <span class="comment">/* -- nothing to do - the states are not supported by the JUnit report */</span></div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;}</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160; </div>
+<div class="line"><a name="l00354"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#ab86e43d5703bed20c323dbf4874d3f61">  354</a></span>&#160;<a class="code" href="namespaceOTest2.html#a178def9a887026315ef328e4226aa85e">AssertBufferPtr</a> <a class="code" href="classOTest2_1_1ReporterJUnit.html#ab86e43d5703bed20c323dbf4874d3f61">ReporterJUnit::enterAssert</a>(</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    <span class="keywordtype">bool</span> condition_,</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    <span class="keyword">const</span> std::string&amp; file_,</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;    <span class="keywordtype">int</span> lineno_) {</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;  <span class="keywordflow">if</span>(!condition_) {</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;    <span class="comment">/* -- update statistics */</span></div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    <span class="keyword">auto</span>&amp; top_(pimpl-&gt;node_stack.back());</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <span class="keywordflow">if</span>(top_.first_failure) {</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;      top_.first_failure = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;      ++top_.case_failures;</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    }</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;  }</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160; </div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;  pimpl-&gt;assert_buffer-&gt;openAssertion({condition_, file_, lineno_});</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;  <span class="keywordflow">return</span> pimpl-&gt;assert_buffer;</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;}</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160; </div>
+<div class="line"><a name="l00372"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#a5d4611ac3b069a8c0852b333535ef628">  372</a></span>&#160;<a class="code" href="namespaceOTest2.html#a178def9a887026315ef328e4226aa85e">AssertBufferPtr</a> <a class="code" href="classOTest2_1_1ReporterJUnit.html#a5d4611ac3b069a8c0852b333535ef628">ReporterJUnit::enterError</a>(</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_) {</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;  <span class="comment">/* -- update statistics */</span></div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;  <span class="keyword">auto</span>&amp; top_(pimpl-&gt;node_stack.back());</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;  <span class="keywordflow">if</span>(top_.first_error) {</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;    top_.first_error = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;    ++top_.case_errors;</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;  }</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160; </div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;  pimpl-&gt;assert_buffer-&gt;openError();</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;  <span class="keywordflow">return</span> pimpl-&gt;assert_buffer;</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;}</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160; </div>
+<div class="line"><a name="l00385"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#a4ff8748ca88ba10dbd4b4a59b29d73e4">  385</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html#a4ff8748ca88ba10dbd4b4a59b29d73e4">ReporterJUnit::leaveState</a>(</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;    <span class="keyword">const</span> std::string&amp; name_,</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;    <span class="keywordtype">bool</span> result_) {</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160; </div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;}</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160; </div>
+<div class="line"><a name="l00392"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#a4fee44feeffee5f160a031f33d70d77f">  392</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html#a4fee44feeffee5f160a031f33d70d77f">ReporterJUnit::leaveCase</a>(</div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;    <span class="keyword">const</span> std::string&amp; name_,</div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;    <span class="keywordtype">bool</span> result_) {</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;  <span class="keyword">auto</span> top_(pimpl-&gt;node_stack.back());</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160; </div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;  <span class="comment">/* -- fill test case attributes */</span></div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;  pimpl-&gt;fillRunningTime(context_, top_);</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160; </div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;  <span class="comment">/* -- pop the object and cumulate statistics with the parent */</span></div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;  pimpl-&gt;node_stack.pop_back();</div>
+<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;  pimpl-&gt;cumulateStatistics(pimpl-&gt;node_stack.back(), top_);</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;}</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160; </div>
+<div class="line"><a name="l00406"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#a2799029ad6464dad64d0847c0603a371">  406</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html#a2799029ad6464dad64d0847c0603a371">ReporterJUnit::leaveSuite</a>(</div>
+<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
+<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;    <span class="keyword">const</span> std::string&amp; name_,</div>
+<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;    <span class="keywordtype">bool</span> result_) {</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;  <span class="keyword">auto</span> top_(pimpl-&gt;node_stack.back());</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160; </div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;  <span class="comment">/* -- fill suite attributes */</span></div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;  pimpl-&gt;fillRunningTime(context_, top_);</div>
+<div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;  pimpl-&gt;fillStatistics(context_, top_);</div>
+<div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160; </div>
+<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;  <span class="comment">/* -- pop the object and cumulate statistics with the parent */</span></div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;  pimpl-&gt;node_stack.pop_back();</div>
+<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;  pimpl-&gt;cumulateStatistics(pimpl-&gt;node_stack.back(), top_);</div>
+<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;}</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160; </div>
+<div class="line"><a name="l00421"></a><span class="lineno"><a class="line" href="classOTest2_1_1ReporterJUnit.html#a6befa5ec421b890e30c75007daa9b60c">  421</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1ReporterJUnit.html#a6befa5ec421b890e30c75007daa9b60c">ReporterJUnit::leaveTest</a>(</div>
+<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_,</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    <span class="keyword">const</span> std::string&amp; name_,</div>
+<div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;    <span class="keywordtype">bool</span> result_) {</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;  <span class="keyword">auto</span> top_(pimpl-&gt;node_stack.back());</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160; </div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;  <span class="comment">/* -- fill suite attributes */</span></div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;  pimpl-&gt;fillRunningTime(context_, top_);</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;  pimpl-&gt;fillStatistics(context_, top_);</div>
+<div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160; </div>
+<div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160;  <span class="comment">/* -- remove the root test suite */</span></div>
+<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;  pimpl-&gt;node_stack.pop_back();</div>
+<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160; </div>
+<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;  <span class="comment">/* -- save the XML report */</span></div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;  pimpl-&gt;doc.save_file(pimpl-&gt;filename.c_str());</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;}</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160; </div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;} <span class="comment">/* -- namespace OTest2 */</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassOTest2_1_1Context_html_ab65f725b9cca95913e668bd23181f738"><div class="ttname"><a href="classOTest2_1_1Context.html#ab65f725b9cca95913e668bd23181f738">OTest2::Context::time_source</a></div><div class="ttdeci">TimeSource *const time_source</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00043">context.h:43</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_a6befa5ec421b890e30c75007daa9b60c"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#a6befa5ec421b890e30c75007daa9b60c">OTest2::ReporterJUnit::leaveTest</a></div><div class="ttdeci">virtual void leaveTest(const Context &amp;context_, const std::string &amp;name_, bool result_) override</div><div class="ttdoc">Leave entire test.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00346">reporterjunit.cpp:346</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_a6fd1b77efcc0e3bd3f48d9480acc7aba"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#a6fd1b77efcc0e3bd3f48d9480acc7aba">OTest2::ReporterJUnit::enterAssert</a></div><div class="ttdeci">virtual void enterAssert(const Context &amp;context_, bool condition_, const std::string &amp;message_, const std::string &amp;file_, int lineno_) override</div><div class="ttdoc">Enter an assertion.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00256">reporterjunit.cpp:256</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_ad50a4cb780cc9a0088bbed7f66d72098"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#ad50a4cb780cc9a0088bbed7f66d72098">OTest2::ReporterJUnit::~ReporterJUnit</a></div><div class="ttdeci">virtual ~ReporterJUnit()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00193">reporterjunit.cpp:193</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_a4fee44feeffee5f160a031f33d70d77f"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#a4fee44feeffee5f160a031f33d70d77f">OTest2::ReporterJUnit::leaveCase</a></div><div class="ttdeci">virtual void leaveCase(const Context &amp;context_, const std::string &amp;name_, bool result_) override</div><div class="ttdoc">Leave a case.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00317">reporterjunit.cpp:317</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_ae295c388b4cb660d5740d40a26b40dd5"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#ae295c388b4cb660d5740d40a26b40dd5">OTest2::ReporterJUnit::enterError</a></div><div class="ttdeci">virtual void enterError(const Context &amp;context_, const std::string &amp;message_) override</div><div class="ttdoc">Enter an error report.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00283">reporterjunit.cpp:283</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_a6befa5ec421b890e30c75007daa9b60c"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#a6befa5ec421b890e30c75007daa9b60c">OTest2::ReporterJUnit::leaveTest</a></div><div class="ttdeci">virtual void leaveTest(const Context &amp;context_, const std::string &amp;name_, bool result_) override</div><div class="ttdoc">Leave entire test.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00421">reporterjunit.cpp:421</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_ad50a4cb780cc9a0088bbed7f66d72098"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#ad50a4cb780cc9a0088bbed7f66d72098">OTest2::ReporterJUnit::~ReporterJUnit</a></div><div class="ttdeci">virtual ~ReporterJUnit()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00291">reporterjunit.cpp:291</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_a4fee44feeffee5f160a031f33d70d77f"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#a4fee44feeffee5f160a031f33d70d77f">OTest2::ReporterJUnit::leaveCase</a></div><div class="ttdeci">virtual void leaveCase(const Context &amp;context_, const std::string &amp;name_, bool result_) override</div><div class="ttdoc">Leave a case.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00392">reporterjunit.cpp:392</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1AssertBufferListener_html_ae6128fbde98dd67d465392eb58aa9e17"><div class="ttname"><a href="classOTest2_1_1AssertBufferListener.html#ae6128fbde98dd67d465392eb58aa9e17">OTest2::AssertBufferListener::assertionClose</a></div><div class="ttdeci">virtual void assertionClose(const Context &amp;context_, const AssertBufferAssertData &amp;data_)=0</div><div class="ttdoc">Closing of the assertion.</div></div>
+<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_a5d4611ac3b069a8c0852b333535ef628"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#a5d4611ac3b069a8c0852b333535ef628">OTest2::ReporterJUnit::enterError</a></div><div class="ttdeci">virtual AssertBufferPtr enterError(const Context &amp;context_) override</div><div class="ttdoc">Enter an error report.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00372">reporterjunit.cpp:372</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_a9c7d3eecccef5392ef30252677d8f85a"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#a9c7d3eecccef5392ef30252677d8f85a">OTest2::ReporterJUnit::operator=</a></div><div class="ttdeci">ReporterJUnit &amp; operator=(const ReporterJUnit &amp;)=delete</div></div>
+<div class="ttc" id="anamespaceOTest2_html_a17c515d71794f85c9c5034e780443a79"><div class="ttname"><a href="namespaceOTest2.html#a17c515d71794f85c9c5034e780443a79">OTest2::AssertBufferStrPtr</a></div><div class="ttdeci">std::shared_ptr&lt; AssertBufferStr &gt; AssertBufferStrPtr</div><div class="ttdef"><b>Definition:</b> <a href="assertbufferstrptr_8h_source.html#l00027">assertbufferstrptr.h:27</a></div></div>
 <div class="ttc" id="autils_8h_html"><div class="ttname"><a href="utils_8h.html">utils.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_a5c6efedd360a4b06b31e474e3929c657"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#a5c6efedd360a4b06b31e474e3929c657">OTest2::ReporterJUnit::enterSuite</a></div><div class="ttdeci">virtual void enterSuite(const Context &amp;context_, const std::string &amp;name_) override</div><div class="ttdoc">Enter a suite.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00217">reporterjunit.cpp:217</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_ab35dc62d785aa84379a2b5e507904532"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#ab35dc62d785aa84379a2b5e507904532">OTest2::ReporterJUnit::leaveAssert</a></div><div class="ttdeci">virtual void leaveAssert(const Context &amp;context_) override</div><div class="ttdoc">Leave an opened assertion or error.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00305">reporterjunit.cpp:305</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_a5c6efedd360a4b06b31e474e3929c657"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#a5c6efedd360a4b06b31e474e3929c657">OTest2::ReporterJUnit::enterSuite</a></div><div class="ttdeci">virtual void enterSuite(const Context &amp;context_, const std::string &amp;name_) override</div><div class="ttdoc">Enter a suite.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00315">reporterjunit.cpp:315</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_a92e8f9c8e268b8c6f3fde16933d3aed2"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#a92e8f9c8e268b8c6f3fde16933d3aed2">OTest2::ReporterJUnit::reportAssertionMessage</a></div><div class="ttdeci">virtual void reportAssertionMessage(const Context &amp;context_, const std::string &amp;message_) override</div><div class="ttdoc">Add a supplementary assertion message.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00299">reporterjunit.cpp:299</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_a2799029ad6464dad64d0847c0603a371"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#a2799029ad6464dad64d0847c0603a371">OTest2::ReporterJUnit::leaveSuite</a></div><div class="ttdeci">virtual void leaveSuite(const Context &amp;context_, const std::string &amp;name_, bool result_) override</div><div class="ttdoc">Leave a suite.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00331">reporterjunit.cpp:331</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_ab2eb2ec8d4de2e58536f93f59fdefd41"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#ab2eb2ec8d4de2e58536f93f59fdefd41">OTest2::ReporterJUnit::enterTest</a></div><div class="ttdeci">virtual void enterTest(const Context &amp;context_, const std::string &amp;name_) override</div><div class="ttdoc">Enter entire test.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00197">reporterjunit.cpp:197</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_ad35b1dcb91f715fbe6993b1974cb31a0"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#ad35b1dcb91f715fbe6993b1974cb31a0">OTest2::ReporterJUnit::ReporterJUnit</a></div><div class="ttdeci">ReporterJUnit(const std::string &amp;file_, bool hide_location_)</div><div class="ttdoc">Ctor.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00186">reporterjunit.cpp:186</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_a2799029ad6464dad64d0847c0603a371"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#a2799029ad6464dad64d0847c0603a371">OTest2::ReporterJUnit::leaveSuite</a></div><div class="ttdeci">virtual void leaveSuite(const Context &amp;context_, const std::string &amp;name_, bool result_) override</div><div class="ttdoc">Leave a suite.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00406">reporterjunit.cpp:406</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1AssertBufferListener_html_afd95ebc0b1dc3483969854ba90aa2448"><div class="ttname"><a href="classOTest2_1_1AssertBufferListener.html#afd95ebc0b1dc3483969854ba90aa2448">OTest2::AssertBufferListener::assertionAdditionalMessage</a></div><div class="ttdeci">virtual void assertionAdditionalMessage(const Context &amp;context_, const AssertBufferAssertData &amp;data_, const std::string &amp;message_)=0</div><div class="ttdoc">Additional assertion message.</div></div>
+<div class="ttc" id="aclassOTest2_1_1AssertBufferListener_html_a3c6dc58ecd746517faa8c7cfae3be0de"><div class="ttname"><a href="classOTest2_1_1AssertBufferListener.html#a3c6dc58ecd746517faa8c7cfae3be0de">OTest2::AssertBufferListener::errorClose</a></div><div class="ttdeci">virtual void errorClose(const Context &amp;context_)=0</div><div class="ttdoc">Closing of the internal error.</div></div>
+<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_ab2eb2ec8d4de2e58536f93f59fdefd41"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#ab2eb2ec8d4de2e58536f93f59fdefd41">OTest2::ReporterJUnit::enterTest</a></div><div class="ttdeci">virtual void enterTest(const Context &amp;context_, const std::string &amp;name_) override</div><div class="ttdoc">Enter entire test.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00295">reporterjunit.cpp:295</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1AssertBufferListener_html_a8bc3422cac8eff2fc2b9c1de6f196049"><div class="ttname"><a href="classOTest2_1_1AssertBufferListener.html#a8bc3422cac8eff2fc2b9c1de6f196049">OTest2::AssertBufferListener::errorAdditionalMessage</a></div><div class="ttdeci">virtual void errorAdditionalMessage(const Context &amp;context_, const std::string &amp;message_)=0</div><div class="ttdoc">Additional error message.</div></div>
+<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_ad35b1dcb91f715fbe6993b1974cb31a0"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#ad35b1dcb91f715fbe6993b1974cb31a0">OTest2::ReporterJUnit::ReporterJUnit</a></div><div class="ttdeci">ReporterJUnit(const std::string &amp;file_, bool hide_location_)</div><div class="ttdoc">Ctor.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00284">reporterjunit.cpp:284</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TimeSource_html_a536250771afc59351ad96970fb873ef1"><div class="ttname"><a href="classOTest2_1_1TimeSource.html#a536250771afc59351ad96970fb873ef1">OTest2::TimeSource::now</a></div><div class="ttdeci">virtual time_point now()=0</div><div class="ttdoc">Get current time.</div></div>
+<div class="ttc" id="aclassOTest2_1_1AssertBufferListener_html_a58debba7d1fd48f779ab9a35bf0e7134"><div class="ttname"><a href="classOTest2_1_1AssertBufferListener.html#a58debba7d1fd48f779ab9a35bf0e7134">OTest2::AssertBufferListener::assertionOpeningMessage</a></div><div class="ttdeci">virtual void assertionOpeningMessage(const Context &amp;context_, const AssertBufferAssertData &amp;data_, const std::string &amp;message_)=0</div><div class="ttdoc">First composed message of an assertion.</div></div>
 <div class="ttc" id="acontext_8h_html"><div class="ttname"><a href="context_8h.html">context.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_a4b98bcbf1b06f0f4e536da0f7fb5e74b"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#a4b98bcbf1b06f0f4e536da0f7fb5e74b">OTest2::ReporterJUnit::enterCase</a></div><div class="ttdeci">virtual void enterCase(const Context &amp;context_, const std::string &amp;name_) override</div><div class="ttdoc">Enter a case.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00234">reporterjunit.cpp:234</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_a4b98bcbf1b06f0f4e536da0f7fb5e74b"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#a4b98bcbf1b06f0f4e536da0f7fb5e74b">OTest2::ReporterJUnit::enterCase</a></div><div class="ttdeci">virtual void enterCase(const Context &amp;context_, const std::string &amp;name_) override</div><div class="ttdoc">Enter a case.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00332">reporterjunit.cpp:332</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1Context_html"><div class="ttname"><a href="classOTest2_1_1Context.html">OTest2::Context</a></div><div class="ttdoc">OTest2 runtime context.</div><div class="ttdef"><b>Definition:</b> <a href="context_8h_source.html#l00038">context.h:38</a></div></div>
 <div class="ttc" id="atimesource_8h_html"><div class="ttname"><a href="timesource_8h.html">timesource.h</a></div></div>
 <div class="ttc" id="areporterjunit_8h_html"><div class="ttname"><a href="reporterjunit_8h.html">reporterjunit.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_a7b379a2603e5e9a625ecfb1308db23e1"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#a7b379a2603e5e9a625ecfb1308db23e1">OTest2::ReporterJUnit::enterState</a></div><div class="ttdeci">virtual void enterState(const Context &amp;context_, const std::string &amp;name_) override</div><div class="ttdoc">Enter a state.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00250">reporterjunit.cpp:250</a></div></div>
+<div class="ttc" id="anamespaceOTest2_html_a178def9a887026315ef328e4226aa85e"><div class="ttname"><a href="namespaceOTest2.html#a178def9a887026315ef328e4226aa85e">OTest2::AssertBufferPtr</a></div><div class="ttdeci">std::shared_ptr&lt; AssertBuffer &gt; AssertBufferPtr</div><div class="ttdef"><b>Definition:</b> <a href="assertbufferptr_8h_source.html#l00027">assertbufferptr.h:27</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_ab86e43d5703bed20c323dbf4874d3f61"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#ab86e43d5703bed20c323dbf4874d3f61">OTest2::ReporterJUnit::enterAssert</a></div><div class="ttdeci">virtual AssertBufferPtr enterAssert(const Context &amp;context_, bool condition_, const std::string &amp;file_, int lineno_) override</div><div class="ttdoc">Enter an assertion.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00354">reporterjunit.cpp:354</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_a7b379a2603e5e9a625ecfb1308db23e1"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#a7b379a2603e5e9a625ecfb1308db23e1">OTest2::ReporterJUnit::enterState</a></div><div class="ttdeci">virtual void enterState(const Context &amp;context_, const std::string &amp;name_) override</div><div class="ttdoc">Enter a state.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00348">reporterjunit.cpp:348</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html_a9c0e5683fb529ec38164c2f418172b30"><div class="ttname"><a href="namespaceOTest2.html#a9c0e5683fb529ec38164c2f418172b30">OTest2::odelete</a></div><div class="ttdeci">void odelete(T_ *&amp;object_)</div><div class="ttdoc">Delete a pointer and set it invalid.</div><div class="ttdef"><b>Definition:</b> <a href="utils_8h_source.html#l00034">utils.h:34</a></div></div>
+<div class="ttc" id="aassertbufferstr_8h_html"><div class="ttname"><a href="assertbufferstr_8h.html">assertbufferstr.h</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1AssertBufferListener_html_ae03f4d93b8fef9e1bad7823d1b27d215"><div class="ttname"><a href="classOTest2_1_1AssertBufferListener.html#ae03f4d93b8fef9e1bad7823d1b27d215">OTest2::AssertBufferListener::errorOpeningMessage</a></div><div class="ttdeci">virtual void errorOpeningMessage(const Context &amp;context_, const std::string &amp;message_)=0</div><div class="ttdoc">First composed message of an internal error.</div></div>
 <div class="ttc" id="aclassOTest2_1_1TimeSource_html_a891516b4c1da31e6ee81e345eb4032d4"><div class="ttname"><a href="classOTest2_1_1TimeSource.html#a891516b4c1da31e6ee81e345eb4032d4">OTest2::TimeSource::time_point</a></div><div class="ttdeci">std::chrono::system_clock::time_point time_point</div><div class="ttdef"><b>Definition:</b> <a href="timesource_8h_source.html#l00032">timesource.h:32</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_a4ff8748ca88ba10dbd4b4a59b29d73e4"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#a4ff8748ca88ba10dbd4b4a59b29d73e4">OTest2::ReporterJUnit::leaveState</a></div><div class="ttdeci">virtual void leaveState(const Context &amp;context_, const std::string &amp;name_, bool result_) override</div><div class="ttdoc">Leave a state.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00310">reporterjunit.cpp:310</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1ReporterJUnit_html_a4ff8748ca88ba10dbd4b4a59b29d73e4"><div class="ttname"><a href="classOTest2_1_1ReporterJUnit.html#a4ff8748ca88ba10dbd4b4a59b29d73e4">OTest2::ReporterJUnit::leaveState</a></div><div class="ttdeci">virtual void leaveState(const Context &amp;context_, const std::string &amp;name_, bool result_) override</div><div class="ttdoc">Leave a state.</div><div class="ttdef"><b>Definition:</b> <a href="reporterjunit_8cpp_source.html#l00385">reporterjunit.cpp:385</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

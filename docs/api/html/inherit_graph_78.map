@@ -1,4 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" title=" " alt="" coords="5,13,117,39"/>
-<area shape="rect" id="node2" href="$classOTest2_1_1SuiteRepeaterMulti.html" title=" " alt="" coords="165,5,359,47"/>
+<area shape="rect" id="node1" href="$classOTest2_1_1RunnerFilter.html" title="Generic interface of a runner filter." alt="" coords="5,56,152,83"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1RunnerFilterEntire.html" title="Run all objects." alt="" coords="213,5,397,32"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1RunnerFilterTags.html" title="Filter of tagged testing objects." alt="" coords="218,56,393,83"/>
+<area shape="rect" id="node4" href="$classOTest2_1_1RunnerFilterUntagged.html" title="Run all untagged objects." alt="" coords="200,107,411,133"/>
 </map>

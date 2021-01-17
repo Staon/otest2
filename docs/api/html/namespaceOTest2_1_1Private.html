@@ -76,7 +76,14 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTest2_1_1Private_1_1GenSequence.html">GenSequence</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compile-time generator of the sequence of integers.  <a href="structOTest2_1_1Private_1_1GenSequence.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTest2_1_1Private_1_1GenSequence_3_010_00_01Seq___8_8_8_01_4.html">GenSequence&lt; 0, Seq_... &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Private_1_1HasContainerKeyComp.html">HasContainerKeyComp</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Private_1_1Manipulator.html">Manipulator</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTest2_1_1Private_1_1MapTraitImpl.html">MapTraitImpl</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -85,6 +92,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTest2_1_1Private_1_1MapTraitImpl_3_01Container___00_01true_01_4.html">MapTraitImpl&lt; Container_, true &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTest2_1_1Private_1_1MapTraitImplCommon.html">MapTraitImplCommon</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTest2_1_1Private_1_1NumSequence.html">NumSequence</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compile-time sequence of integers.  <a href="structOTest2_1_1Private_1_1NumSequence.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOTest2_1_1Private_1_1SelectArgType.html">SelectArgType</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -104,6 +114,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a2ea60923dd6a555f87067e62429bd34d"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename, typename &gt; class Compare_, typename ContainerA_ , typename ContainerB_ &gt; </td></tr>
 <tr class="memitem:a2ea60923dd6a555f87067e62429bd34d"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceOTest2_1_1Private.html#a2ea60923dd6a555f87067e62429bd34d">compareMaps</a> (std::vector&lt; std::string &gt; &amp;messages_, const ContainerA_ &amp;a_, const ContainerB_ &amp;b_)</td></tr>
 <tr class="separator:a2ea60923dd6a555f87067e62429bd34d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3096d23d4ae37cbffbf83e9a20f3680b"><td class="memTemplParams" colspan="2">template&lt;typename... Values_, int... indexes_&gt; </td></tr>
+<tr class="memitem:a3096d23d4ae37cbffbf83e9a20f3680b"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceOTest2_1_1Private.html#a3096d23d4ae37cbffbf83e9a20f3680b">invokeFunction</a> (<a class="el" href="structOTest2_1_1Private_1_1NumSequence.html">NumSequence</a>&lt; indexes_... &gt;, <a class="el" href="classOTest2_1_1AssertStream.html">AssertStream</a> *stream_, void(AssertStream::*fce_)(Values_...), const std::tuple&lt; Values_... &gt; &amp;args_)</td></tr>
+<tr class="separator:a3096d23d4ae37cbffbf83e9a20f3680b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a4663acdb5f7db2464f33ed3b0f908f16"></a>
@@ -152,7 +165,7 @@ template&lt;template&lt; typename, typename &gt; class Compare_, typename IterA_
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="assertionsitemwiseimpl_8h_source.html#l00048">48</a> of file <a class="el" href="assertionsitemwiseimpl_8h_source.html">assertionsitemwiseimpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="assertionsitemwiseimpl_8h_source.html#l00049">49</a> of file <a class="el" href="assertionsitemwiseimpl_8h_source.html">assertionsitemwiseimpl.h</a>.</p>
 
 </div>
 </div>
@@ -202,7 +215,7 @@ template&lt;template&lt; typename, typename &gt; class Compare_, typename IterA_
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="assertionslexiimpl_8h_source.html#l00041">41</a> of file <a class="el" href="assertionslexiimpl_8h_source.html">assertionslexiimpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="assertionslexiimpl_8h_source.html#l00042">42</a> of file <a class="el" href="assertionslexiimpl_8h_source.html">assertionslexiimpl.h</a>.</p>
 
 </div>
 </div>
@@ -240,7 +253,51 @@ template&lt;template&lt; typename, typename &gt; class Compare_, typename Contai
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="assertionsmapimpl_8h_source.html#l00040">40</a> of file <a class="el" href="assertionsmapimpl_8h_source.html">assertionsmapimpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="assertionsmapimpl_8h_source.html#l00041">41</a> of file <a class="el" href="assertionsmapimpl_8h_source.html">assertionsmapimpl.h</a>.</p>
+
+</div>
+</div>
+<a id="a3096d23d4ae37cbffbf83e9a20f3680b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3096d23d4ae37cbffbf83e9a20f3680b">&#9670;&nbsp;</a></span>invokeFunction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Values_, int... indexes_&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void OTest2::Private::invokeFunction </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structOTest2_1_1Private_1_1NumSequence.html">NumSequence</a>&lt; indexes_... &gt;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classOTest2_1_1AssertStream.html">AssertStream</a> *&#160;</td>
+          <td class="paramname"><em>stream_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void(AssertStream::*)(Values_...)&#160;</td>
+          <td class="paramname"><em>fce_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::tuple&lt; Values_... &gt; &amp;&#160;</td>
+          <td class="paramname"><em>args_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="assertstream_8cpp_source.html#l00121">121</a> of file <a class="el" href="assertstream_8cpp_source.html">assertstream.cpp</a>.</p>
 
 </div>
 </div>

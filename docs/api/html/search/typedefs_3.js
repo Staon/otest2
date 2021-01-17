@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['factorymethod_1742',['FactoryMethod',['../classOTest2_1_1ObjectRepeaterMultiNested.html#ad0712c65db048e8acd333e3b03badb44',1,'OTest2::ObjectRepeaterMultiNested::FactoryMethod()'],['../classOTest2_1_1ObjectRepeaterFactoryMultiNested.html#a638d5b5733e61ceab22415a212cb90b0',1,'OTest2::ObjectRepeaterFactoryMultiNested::FactoryMethod()'],['../classOTest2_1_1ObjectRepeaterOnceNested.html#a6df8d40a11e31c738c3b109e5b7ad966',1,'OTest2::ObjectRepeaterOnceNested::FactoryMethod()'],['../classOTest2_1_1ObjectRepeaterFactoryOnceNested.html#a4e0111dd95c8e43bf090c2b5029f7464',1,'OTest2::ObjectRepeaterFactoryOnceNested::FactoryMethod()'],['../classOTest2_1_1CaseRepeaterMulti.html#a87e46bf7a32133d1af80424b27449bb1',1,'OTest2::CaseRepeaterMulti::FactoryMethod()']]],
-  ['fcemarshalerptr_1743',['FceMarshalerPtr',['../namespaceOTest2.html#ad26cf6c5609408e1e188b29a62ffec54',1,'OTest2']]]
+  ['difflogarray_1883',['DiffLogArray',['../namespaceOTest2.html#a9606628b8b21898a31798ad3c509359c',1,'OTest2']]],
+  ['difflogblocks_1884',['DiffLogBlocks',['../namespaceOTest2.html#a55a108eeef6452bf9038976408caa9b9',1,'OTest2']]],
+  ['duration_1885',['duration',['../classOTest2_1_1TimeSource.html#af147afd4a18395d469225f896fe5d751',1,'OTest2::TimeSource']]]
 ];

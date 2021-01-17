@@ -92,6 +92,7 @@ struct ReporterJUnit::Impl : public AssertBufferListener {
     };
     std::vector<Record> node_stack;
 
+    std::ostringstream message;
     AssertBufferStrPtr assert_buffer;
 
     /* -- avoid copying */
@@ -121,6 +122,11 @@ struct ReporterJUnit::Impl : public AssertBufferListener {
         const Context& context_,
         Record& record_,
         const std::string& name_);
+    void appendMessage(
+        const Context& context_,
+        const std::string& message_);
+    void commitMessage(
+        const Context& context_);
 
     /* -- listener of the assertion buffer */
     virtual void assertionOpeningMessage(
@@ -209,6 +215,21 @@ void ReporterJUnit::Impl::fillName(
   name_node_ = name_.c_str();
 }
 
+void ReporterJUnit::Impl::appendMessage(
+    const Context& context_,
+    const std::string& message_) {
+  message << "\n" << message_;
+}
+
+void ReporterJUnit::Impl::commitMessage(
+    const Context& context_) {
+  auto& top_(node_stack.back());
+  auto node_(top_.node.last_child());
+  auto msg_(node_.append_attribute("message"));
+  msg_ = message.str().c_str();
+  message.str("");
+}
+
 void ReporterJUnit::Impl::assertionOpeningMessage(
     const Context& context_,
     const AssertBufferAssertData& data_,
@@ -223,8 +244,7 @@ void ReporterJUnit::Impl::assertionOpeningMessage(
       auto file_attr_(failure_.append_attribute("file"));
       file_attr_ = data_.file.c_str();
     }
-    auto msg_(failure_.append_attribute("message"));
-    msg_ = message_.c_str();
+    message << message_;
   }
 }
 
@@ -232,13 +252,13 @@ void ReporterJUnit::Impl::assertionAdditionalMessage(
     const Context& context_,
     const AssertBufferAssertData& data_,
     const std::string& message_) {
-  /* -- not supported by the JUnit format */
+  appendMessage(context_, message_);
 }
 
 void ReporterJUnit::Impl::assertionClose(
     const Context& context_,
     const AssertBufferAssertData& data_) {
-  /* -- nothing to do - the XML nodes are already created */
+  commitMessage(context_);
 }
 
 void ReporterJUnit::Impl::errorOpeningMessage(
@@ -247,18 +267,18 @@ void ReporterJUnit::Impl::errorOpeningMessage(
   auto& top_(node_stack.back());
   auto error_(top_.node.append_child("error"));
   auto msg_(error_.append_attribute("message"));
-  msg_ = message_.c_str();
+  message << message_;
 }
 
 void ReporterJUnit::Impl::errorAdditionalMessage(
     const Context& context_,
     const std::string& message_) {
-  /* -- not supported by the JUnit format */
+  appendMessage(context_, message_);
 }
 
 void ReporterJUnit::Impl::errorClose(
     const Context& context_) {
-  /* -- nothing to do - the XML nodes are already created */
+  commitMessage(context_);
 }
 
 ReporterJUnit::ReporterJUnit(

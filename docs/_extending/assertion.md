@@ -97,30 +97,31 @@ bool FileCompare::testCompareFiles(
   hirschbergDiff(current_data_, expected_data_, log_builder_);
 
   bool result_(diff_log_.empty());
+  AssertStream report_(enterAssertion(result_));
   if(result_) {
     /* -- There is no difference, the files match */
-    enterAssertion(result_, "OK", false);
+    report_ << "OK" << commitMsg();
   }
   else {
     /* -- the files are different */
-    enterAssertion(result_, "the file is different than the expected one", false);
+    report_ << "the file is different than the expected one" << commitMsg();
 
     /* -- print the difference */
     for(const auto& difference_ : diff_log_) {
       for(int i_(difference_.left_begin); i_ < difference_.left_end; ++i_) {
-        std::ostringstream oss_;
-        oss_ << std::setfill('0') << std::setw(4) << (i_ + 1) << "     : + " << current_data_[i_];
-        assertionMessage(result_, oss_.str());
+        report_ << foreground(Color::GREEN) << std::setfill('0')
+            << std::setw(4) << (i_ + 1) << "     : + " << current_data_[i_]
+            << resetAttrs() << commitMsg();
       }
 
       for(int i_(difference_.right_begin); i_ < difference_.right_end; ++i_) {
-        std::ostringstream oss_;
-        oss_ << std::setfill('0') << "     " << std::setw(4) << (i_ + 1) << ": - " << expected_data_[i_];
-        assertionMessage(result_, oss_.str());
+        report_ << foreground(Color::RED) << std::setfill('0')
+            << "     " << std::setw(4) << (i_ + 1) << ": - " << expected_data_[i_]
+            << resetAttrs() << commitMsg();
       }
     }
   }
-  return leaveAssertion(result_);
+  return report_.getResult();
 }
 ```
 
@@ -128,11 +129,24 @@ The function firstly reads contents of the files and then computes their
 difference. If the difference is not empty the assertion fails and
 the difference is reported.
 
-Remark the functions `enterAssertion`, `assertionMessage` and `leaveAssertion`.
-They are the interface of the `AssertContext` class for assertion implementation.
-Every assertion **must** invoke once `enterAssertion` and `leaveAssertion` methods
-in this order. And it may call the `assertionMessage` zero or more times 
-between them.
+The function `enterAssertion` creates an assertion stream which must be
+used for composing of assertion messages. The implementor of the custom
+assertion function is responsible to print at least one message.
+
+Lifetime of the assertion stream defines time for what the reporters keep
+the assertion opened. At the time the stream is destroyed the reporters finish
+the opened assertion (e.g. creates a record in an XML tree).
+
+The assertion stream implements standard `std::ostream` interface so
+everything you know about streams may be used for formatting of assertion
+messages.
+
+In addition, the assertion stream offers several manipulators. The most
+important one is the `::OTest2::commitMessage()` which marks end of
+currently composing assertion message. There are some other manipulators
+allowing to change text color `::OTest2::foreground()`
+and `::OTest2::background()` or text style `::OTest2::textStyle()`
+or printing the stringifized assertion parameter `::OTest2::assertPar()`.
 
 Now it's time to declare the assertion function.
 

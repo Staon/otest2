@@ -62,13 +62,7 @@ struct ReporterMock::Impl : public AssertBufferListener {
     std::ostringstream oss;
     bool report_paths;
 
-    struct {
-        bool error;
-        bool condition;
-        std::string file;
-        int line;
-    } opened_assertion;
-    AssertBufferPtr assert_buffer;
+    AssertBufferStrPtr assert_buffer;
 
     /* -- avoid copying */
     Impl(
@@ -87,13 +81,24 @@ struct ReporterMock::Impl : public AssertBufferListener {
         const Context& context_);
 
     /* -- assertion buffer listener */
-    virtual void commitFirstMessage(
+    virtual void assertionOpeningMessage(
+        const Context& context_,
+        const AssertBufferAssertData& data_,
+        const std::string& message_) override;
+    virtual void assertionAdditionalMessage(
+        const Context& context_,
+        const AssertBufferAssertData& data_,
+        const std::string& message_) override;
+    virtual void assertionClose(
+        const Context& context_,
+        const AssertBufferAssertData& data_) override;
+    virtual void errorOpeningMessage(
         const Context& context_,
         const std::string& message_) override;
-    virtual void commitMessage(
+    virtual void errorAdditionalMessage(
         const Context& context_,
         const std::string& message_) override;
-    virtual void commitAssertion(
+    virtual void errorClose(
         const Context& context_) override;
 };
 
@@ -129,34 +134,55 @@ void ReporterMock::Impl::reportObjectPath(
   }
 }
 
-void ReporterMock::Impl::commitFirstMessage(
+void ReporterMock::Impl::assertionOpeningMessage(
     const Context& context_,
+    const AssertBufferAssertData& data_,
     const std::string& message_) {
-  if(!opened_assertion.error) {
-    /* -- regular assertion */
-    oss << "assert<" << message_ << ">: ";
-    printResult(opened_assertion.condition);
-  }
-  else {
-    /* -- internal error */
-    oss << "error<" << message_ << ">: ";
-    printResult(false);
-  }
+  /* -- regular assertion */
+  oss << "assert<" << message_ << ">: ";
+  printResult(data_.condition);
   addRecord();
   reportObjectPath(context_);
 }
 
-void ReporterMock::Impl::commitMessage(
+void ReporterMock::Impl::assertionAdditionalMessage(
     const Context& context_,
+    const AssertBufferAssertData& data_,
     const std::string& message_) {
   oss << "message<" << message_ << ">";
   addRecord();
   reportObjectPath(context_);
 }
 
-void ReporterMock::Impl::commitAssertion(
-    const Context& context_) {
+void ReporterMock::Impl::assertionClose(
+    const Context& context_,
+    const AssertBufferAssertData& data_) {
   oss << "leaveAssert<>";
+  addRecord();
+  reportObjectPath(context_);
+}
+
+void ReporterMock::Impl::errorOpeningMessage(
+    const Context& context_,
+    const std::string& message_) {
+  /* -- internal error */
+  oss << "error<" << message_ << ">: ";
+  printResult(false);
+  addRecord();
+  reportObjectPath(context_);
+}
+
+void ReporterMock::Impl::errorAdditionalMessage(
+    const Context& context_,
+    const std::string& message_) {
+  oss << "errMessage<" << message_ << ">";
+  addRecord();
+  reportObjectPath(context_);
+}
+
+void ReporterMock::Impl::errorClose(
+    const Context& context_) {
+  oss << "leaveError<>";
   addRecord();
   reportObjectPath(context_);
 }
@@ -251,13 +277,13 @@ AssertBufferPtr ReporterMock::enterAssert(
     bool condition_,
     const std::string& file_,
     int lineno_) {
-  pimpl->opened_assertion = {false, condition_, file_, lineno_};
+  pimpl->assert_buffer->openAssertion({condition_, file_, lineno_});
   return pimpl->assert_buffer;
 }
 
 AssertBufferPtr ReporterMock::enterError(
     const Context& context_) {
-  pimpl->opened_assertion = {true, false, "", -1};
+  pimpl->assert_buffer->openError();
   return pimpl->assert_buffer;
 }
 

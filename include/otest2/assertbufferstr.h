@@ -21,11 +21,22 @@
 #define OTest2_INCLUDE_OTEST2_ASSERTBUFFERSTR_H_
 
 #include <otest2/assertbuffer.h>
+#include <otest2/assertbufferstrptr.h>
 #include <sstream>
+#include <string>
 
 namespace OTest2 {
 
 class Context;
+
+/**
+ * @brief Common data kept for opened assertion
+ */
+struct AssertBufferAssertData {
+    bool condition;
+    std::string file;
+    int line;
+};
 
 /**
  * @brief Listener of the string assertion buffer
@@ -49,23 +60,53 @@ class AssertBufferListener {
     virtual ~AssertBufferListener();
 
     /**
-     * @brief First composed assertion message
+     * @brief First composed message of an assertion
+     *
+     * @param context_ OTest2 context
+     * @param data_ Data about the assertion
+     * @param message_ The composed message
      */
-    virtual void commitFirstMessage(
+    virtual void assertionOpeningMessage(
         const Context& context_,
+        const AssertBufferAssertData& data_,
         const std::string& message_) = 0;
 
     /**
      * @brief Additional assertion message
      */
-    virtual void commitMessage(
+    virtual void assertionAdditionalMessage(
         const Context& context_,
+        const AssertBufferAssertData& data_,
         const std::string& message_) = 0;
 
     /**
      * @brief Closing of the assertion
      */
-    virtual void commitAssertion(
+    virtual void assertionClose(
+        const Context& context_,
+        const AssertBufferAssertData& data_) = 0;
+
+    /**
+     * @brief First composed message of an internal error
+     *
+     * @param context_ OTest2 context
+     * @param message_ The composed message
+     */
+    virtual void errorOpeningMessage(
+        const Context& context_,
+        const std::string& message_) = 0;
+
+    /**
+     * @brief Additional error message
+     */
+    virtual void errorAdditionalMessage(
+        const Context& context_,
+        const std::string& message_) = 0;
+
+    /**
+     * @brief Closing of the internal error
+     */
+    virtual void errorClose(
         const Context& context_) = 0;
 };
 
@@ -84,8 +125,17 @@ class AssertBufferStr : public AssertBuffer {
     /* -- dynamic buffer for the whole message */
     std::stringbuf buffer;
 
-    /* -- status flag - first assertion message */
-    bool first_message;
+    /* -- object status - opening of the assertion */
+    enum class State {
+        IDLE = 0,
+        OPENED,
+        ADDITIONAL,
+    } state;
+    enum class Type {
+        ASSERTION = 0,
+        ERROR,
+    } type;
+    AssertBufferAssertData data;
 
     /* -- buffer listener */
     AssertBufferListener* listener;
@@ -111,6 +161,19 @@ class AssertBufferStr : public AssertBuffer {
      * @brief Dtor
      */
     virtual ~AssertBufferStr();
+
+    /**
+     * @brief Open an assertion
+     *
+     * @param data_ Data kept about the assertion
+     */
+    void openAssertion(
+        const AssertBufferAssertData& data_);
+
+    /**
+     * @brief Open an internal error
+     */
+    void openError();
 
   protected:
     /* -- stream buffer */

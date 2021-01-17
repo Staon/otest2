@@ -92,8 +92,7 @@ struct ReporterJUnit::Impl : public AssertBufferListener {
     };
     std::vector<Record> node_stack;
 
-    bool opened_assertion;
-    AssertBufferPtr assert_buffer;
+    AssertBufferStrPtr assert_buffer;
 
     /* -- avoid copying */
     Impl(
@@ -124,13 +123,24 @@ struct ReporterJUnit::Impl : public AssertBufferListener {
         const std::string& name_);
 
     /* -- listener of the assertion buffer */
-    virtual void commitFirstMessage(
+    virtual void assertionOpeningMessage(
+        const Context& context_,
+        const AssertBufferAssertData& data_,
+        const std::string& message_) override;
+    virtual void assertionAdditionalMessage(
+        const Context& context_,
+        const AssertBufferAssertData& data_,
+        const std::string& message_) override;
+    virtual void assertionClose(
+        const Context& context_,
+        const AssertBufferAssertData& data_) override;
+    virtual void errorOpeningMessage(
         const Context& context_,
         const std::string& message_) override;
-    virtual void commitMessage(
+    virtual void errorAdditionalMessage(
         const Context& context_,
         const std::string& message_) override;
-    virtual void commitAssertion(
+    virtual void errorClose(
         const Context& context_) override;
 };
 
@@ -141,7 +151,6 @@ ReporterJUnit::Impl::Impl(
   hide_location(hide_location_),
   testname(),
   node_stack(),
-  opened_assertion(false),
   assert_buffer(std::make_shared<AssertBufferStr>(this)) {
 
 }
@@ -200,27 +209,56 @@ void ReporterJUnit::Impl::fillName(
   name_node_ = name_.c_str();
 }
 
-void ReporterJUnit::Impl::commitFirstMessage(
+void ReporterJUnit::Impl::assertionOpeningMessage(
     const Context& context_,
+    const AssertBufferAssertData& data_,
     const std::string& message_) {
-  if(opened_assertion) {
-    /* -- fill the message into the failure record */
-    auto failure_(node_stack.back().node.last_child());
-    assert(!failure_.empty());
-    auto message_attr_(failure_.append_attribute("message"));
-    message_attr_ = message_.c_str();
+  /* -- make the failure record */
+  if(!data_.condition) {
+    auto& top_(node_stack.back());
+    auto failure_(top_.node.append_child("failure"));
+    if(!hide_location) {
+      auto line_attr_(failure_.append_attribute("line"));
+      line_attr_ = data_.line;
+      auto file_attr_(failure_.append_attribute("file"));
+      file_attr_ = data_.file.c_str();
+    }
+    auto msg_(failure_.append_attribute("message"));
+    msg_ = message_.c_str();
   }
 }
 
-void ReporterJUnit::Impl::commitMessage(
+void ReporterJUnit::Impl::assertionAdditionalMessage(
     const Context& context_,
+    const AssertBufferAssertData& data_,
     const std::string& message_) {
-  /* -- additional messages are not supported by the JUnit format */
+  /* -- not supported by the JUnit format */
 }
 
-void ReporterJUnit::Impl::commitAssertion(
+void ReporterJUnit::Impl::assertionClose(
+    const Context& context_,
+    const AssertBufferAssertData& data_) {
+  /* -- nothing to do - the XML nodes are already created */
+}
+
+void ReporterJUnit::Impl::errorOpeningMessage(
+    const Context& context_,
+    const std::string& message_) {
+  auto& top_(node_stack.back());
+  auto error_(top_.node.append_child("error"));
+  auto msg_(error_.append_attribute("message"));
+  msg_ = message_.c_str();
+}
+
+void ReporterJUnit::Impl::errorAdditionalMessage(
+    const Context& context_,
+    const std::string& message_) {
+  /* -- not supported by the JUnit format */
+}
+
+void ReporterJUnit::Impl::errorClose(
     const Context& context_) {
-  opened_assertion = false;
+  /* -- nothing to do - the XML nodes are already created */
 }
 
 ReporterJUnit::ReporterJUnit(
@@ -305,19 +343,9 @@ AssertBufferPtr ReporterJUnit::enterAssert(
       top_.first_failure = false;
       ++top_.case_failures;
     }
-
-    /* -- make the failure record */
-    auto failure_(top_.node.append_child("failure"));
-    if(!pimpl->hide_location) {
-      auto line_attr_(failure_.append_attribute("line"));
-      line_attr_ = lineno_;
-      auto file_attr_(failure_.append_attribute("file"));
-      file_attr_ = file_.c_str();
-    }
-
-    pimpl->opened_assertion = true;
   }
 
+  pimpl->assert_buffer->openAssertion({condition_, file_, lineno_});
   return pimpl->assert_buffer;
 }
 
@@ -330,10 +358,7 @@ AssertBufferPtr ReporterJUnit::enterError(
     ++top_.case_errors;
   }
 
-  /* -- make the failure record */
-  auto error_(top_.node.append_child("error"));
-
-  pimpl->opened_assertion = true;
+  pimpl->assert_buffer->openError();
   return pimpl->assert_buffer;
 }
 

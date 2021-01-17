@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<testsuites>
+	<testsuite timestamp="2021-01-16T17:56:41" time="0.065" tests="100" failures="1" errors="0">
+		<testsuite name="AssertionsSuite" timestamp="2021-01-16T17:56:41" time="0.013" tests="20" failures="1" errors="0">
+			<testcase name="GenericAssertionPass" time="0.001">
+				<failure line="53" file="/home/staon/programovani/otest2/test/assertions.ot2" message="'!runtime.runTheTest()' has failed" />
+				<failure line="54" file="/home/staon/programovani/otest2/test/assertions.ot2" message="'runtime.reporter.checkRecords(data_)' different data size" />
+			</testcase>
+			<testcase name="GenericAssertionFail" time="0.001" />
+			<testcase name="GenericAssertionBeanPass" time="0.001" />
+			<testcase name="GenericAssertionBeanFail" time="0.001" />
+			<testcase name="EqualAssertionIntPass" time="0.001" />
+			<testcase name="EqualAssertionIntFail" time="0.001" />
+			<testcase name="EqualAssertionStringPass" time="0.001" />
+			<testcase name="EqualAssertionStringFail" time="0.001" />
+			<testcase name="NotEqualAssertionPass" time="0.001" />
+			<testcase name="NotEqualAssertionFail" time="0.001" />
+			<testcase name="LessAssertionPass" time="0.001" />
+			<testcase name="LessAssertionFail" time="0.001" />
+			<testcase name="LessOrEqualAssertionPass" time="0.001" />
+			<testcase name="LessOrEqualAssertionFail" time="0.001" />
+			<testcase name="GreaterAssertionPass" time="0.001" />
+			<testcase name="GreaterAssertionFail" time="0.001" />
+			<testcase name="GreaterOrEqualAssertionPass" time="0.001" />
+			<testcase name="GreaterOrEqualAssertionFail" time="0.001" />
+			<testcase name="GenericComparisonAssertion" time="0.001" />
+			<testcase name="ExpressionAssertion" time="0.000" />
+		</testsuite>
+		<testsuite name="BZip2" timestamp="2021-01-16T17:56:41" time="0.005" tests="1" failures="0" errors="0">
+			<testcase name="CompressDecompress" time="0.005" />
+		</testsuite>
+		<testsuite name="Base64" timestamp="2021-01-16T17:56:41" time="0.001" tests="6" failures="0" errors="0">
+			<testcase name="OutputStreamShort" time="0.000" />
+			<testcase name="OutputStreamLongOneLine" time="0.000" />
+			<testcase name="OutputStreamLongLines" time="0.000" />
+			<testcase name="InputStreamShort" time="0.000" />
+			<testcase name="InputStreamLongOneLine" time="0.000" />
+			<testcase name="InputStreamLongLines" time="0.000" />
+		</testsuite>
+		<testsuite name="DslSuite" timestamp="2021-01-16T17:56:41" time="0.002" tests="5" failures="0" errors="0">
+			<testcase name="EmptySuite" time="0.000" />
+			<testcase name="EmptyCaseSuite" time="0.000" />
+			<testcase name="ExtendedDslSuite" time="0.000" />
+			<testcase name="StandaloneCase" time="0.000" />
+			<testcase name="NestedSuites" time="0.000" />
+		</testsuite>
+		<testsuite name="ExceptionsSuite" timestamp="2021-01-16T17:56:41" time="0.002" tests="6" failures="0" errors="0">
+			<testcase name="MarkedTryCatch" time="0.000" />
+			<testcase name="UnhandledException" time="0.000" />
+			<testcase name="ExceptionFromCaseStartUp" time="0.000" />
+			<testcase name="ExceptionFromCaseTearDown" time="0.000" />
+			<testcase name="ExceptionFromSuiteStartUp" time="0.000" />
+			<testcase name="ExceptionFromSuiteTearDown" time="0.000" />
+		</testsuite>
+		<testsuite name="FixtureObjectsSuite" timestamp="2021-01-16T17:56:41" time="0.000" tests="1" failures="0" errors="0">
+			<testcase name="FixtureObjects" time="0.000" />
+		</testsuite>
+		<testsuite name="FixturesSuite" timestamp="2021-01-16T17:56:41" time="0.001" tests="2" failures="0" errors="0">
+			<testcase name="FixturesCase" time="0.000" />
+			<testcase name="FixturesInitLists" time="0.000" />
+		</testsuite>
+		<testsuite name="Hirschberg" timestamp="2021-01-16T17:56:41" time="0.001" tests="2" failures="0" errors="0">
+			<testcase name="SomeStrings" time="0.001" />
+			<testcase name="StringsBlockDiff" time="0.001" />
+		</testsuite>
+		<testsuite name="ItemWiseComparisons" timestamp="2021-01-16T17:56:41" time="0.002" tests="6" failures="0" errors="0">
+			<testcase name="VectorComparison" time="0.000" />
+			<testcase name="ListComparison" time="0.000" />
+			<testcase name="DequeComparison" time="0.000" />
+			<testcase name="SetComparison" time="0.000" />
+			<testcase name="MultisetComparison" time="0.000" />
+			<testcase name="MixedComparison" time="0.000" />
+		</testsuite>
+		<testcase name="JUnitReporterStandaloneCase" time="0.001" />
+		<testsuite name="LexicographicalComparisons" timestamp="2021-01-16T17:56:41" time="0.002" tests="6" failures="0" errors="0">
+			<testcase name="VectorComparison" time="0.000" />
+			<testcase name="ListComparison" time="0.000" />
+			<testcase name="DequeComparison" time="0.000" />
+			<testcase name="SetComparison" time="0.000" />
+			<testcase name="MultisetComparison" time="0.000" />
+			<testcase name="MixedComparison" time="0.000" />
+		</testsuite>
+		<testsuite name="LongTextsComparisons" timestamp="2021-01-16T17:56:41" time="0.001" tests="1" failures="0" errors="0">
+			<testcase name="StreamStreamComparison" time="0.001" />
+		</testsuite>
+		<testsuite name="MainLoopSuite" timestamp="2021-01-16T17:56:41" time="0.011" tests="2" failures="0" errors="0">
+			<testcase name="SimpleSwitch" time="0.000" />
+			<testcase name="Bug22" time="0.010" />
+		</testsuite>
+		<testsuite name="MapComparisons" timestamp="2021-01-16T17:56:41" time="0.004" tests="5" failures="0" errors="0">
+			<testcase name="MapAssertions" time="0.001" />
+			<testcase name="UnorderedMapAssertions" time="0.001" />
+			<testcase name="MultiMapAssertions" time="0.001" />
+			<testcase name="UnorderedMultiMapAssertions" time="0.001" />
+			<testcase name="MixedAssertions" time="0.001" />
+		</testsuite>
+		<testsuite name="RegressionsSuite" timestamp="2021-01-16T17:56:41" time="0.003" tests="3" failures="0" errors="0">
+			<testcase name="AssertionPassed" time="0.001" />
+			<testcase name="AssertionDifferentMark" time="0.001" />
+			<testcase name="AssertionMissingMark" time="0.001" />
+		</testsuite>
+		<testsuite name="RepeatersSuite" timestamp="2021-01-16T17:56:41" time="0.004" tests="4" failures="0" errors="0">
+			<testcase name="RepeatersCase" time="0.001" />
+			<testcase name="ValuesCaseInitList" time="0.001" />
+			<testcase name="ValuesCaseVector" time="0.001" />
+			<testcase name="ValuesCaseIter" time="0.001" />
+		</testsuite>
+		<testsuite name="Reporters" timestamp="2021-01-16T17:56:41" time="0.002" tests="3" failures="0" errors="0">
+			<testsuite name="NestedReportersSuite" timestamp="2021-01-16T17:56:41" time="0.001" tests="2" failures="0" errors="0">
+				<testcase name="ConsoleReporterNestedSuite" time="0.001" />
+				<testcase name="ConsoleReporterStandaloneCase" time="0.000" />
+			</testsuite>
+			<testcase name="JUnitReporterNestedSuites" time="0.000" />
+		</testsuite>
+		<testsuite name="TagFilters" timestamp="2021-01-16T17:56:41" time="0.003" tests="10" failures="0" errors="0">
+			<testcase name="AllObjects" time="0.000" />
+			<testcase name="UntaggedObjects" time="0.000" />
+			<testcase name="TaggedCases" time="0.000" />
+			<testcase name="Tag1Objects" time="0.000" />
+			<testcase name="NotTag2Objects" time="0.000" />
+			<testcase name="Tag1OrTag2Objects" time="0.000" />
+			<testcase name="Tag1AndTag2Objects" time="0.000" />
+			<testcase name="TaggedSuite" time="0.000" />
+			<testcase name="TaggedSuiteAndCase" time="0.000" />
+			<testcase name="TaggedSuiteAndCaseZeroRepeat" time="0.000" />
+		</testsuite>
+		<testsuite name="TeeStream" timestamp="2021-01-16T17:56:41" time="0.000" tests="1" failures="0" errors="0">
+			<testcase name="SimpleTee" time="0.000" />
+		</testsuite>
+		<testsuite name="TestMarks" timestamp="2021-01-16T17:56:41" time="0.004" tests="5" failures="0" errors="0">
+			<testcase name="BasicTypes" time="0.002" />
+			<testcase name="Printing" time="0.000" />
+			<testcase name="Difference" time="0.002" />
+			<testcase name="Serialization" time="0.000" />
+			<testcase name="Storage" time="0.000" />
+		</testsuite>
+		<testsuite name="UserDataSuite" timestamp="2021-01-16T17:56:41" time="0.003" tests="10" failures="0" errors="0">
+			<testcase name="UserDataOperations" time="0.000" />
+			<testcase name="UserDataCorrectlyPassed" time="0.000" />
+			<testcase name="UserDataFailedCase" time="0.000" />
+			<testcase name="UserDataFailedSuite" time="0.000" />
+			<testcase name="UserDataAsParameters" time="0.000" />
+			<testcase name="UserDataParamsSuiteStartUp" time="0.000" />
+			<testcase name="UserDataParamsSuiteTearDown" time="0.000" />
+			<testcase name="UserDataParamsCaseStartUp" time="0.000" />
+			<testcase name="UserDataParamsCaseTearDown" time="0.000" />
+			<testcase name="UserDataParamsState" time="0.000" />
+		</testsuite>
+	</testsuite>
+</testsuites>

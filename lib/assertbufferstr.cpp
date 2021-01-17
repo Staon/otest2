@@ -28,7 +28,8 @@ AssertBufferListener::~AssertBufferListener() = default;
 
 AssertBufferStr::AssertBufferStr(
     AssertBufferListener* listener_) :
-  first_message(true),
+  state(State::IDLE),
+  type(Type::ASSERTION),
   listener(listener_) {
   assert(listener != nullptr);
   setp(tmp_buffer, tmp_buffer + TMP_SIZE);
@@ -36,6 +37,22 @@ AssertBufferStr::AssertBufferStr(
 
 AssertBufferStr::~AssertBufferStr() {
   /* -- ignore unfinished message */
+}
+
+void AssertBufferStr::openAssertion(
+    const AssertBufferAssertData& data_) {
+  assert(state == State::IDLE);
+
+  state = State::OPENED;
+  type = Type::ASSERTION;
+  data = data_;
+}
+
+void AssertBufferStr::openError() {
+  assert(state == State::IDLE);
+
+  state = State::OPENED;
+  type = Type::ERROR;
 }
 
 void AssertBufferStr::finishTmpBuffer() {
@@ -75,6 +92,8 @@ void AssertBufferStr::resetAttributes() {
 
 void AssertBufferStr::commitMessage(
     const Context& context_) {
+  assert(state != State::IDLE);
+
   /* -- append temporary buffer to the string */
   finishTmpBuffer();
 
@@ -83,23 +102,64 @@ void AssertBufferStr::commitMessage(
   buffer.str("");
 
   /* -- emit the event */
-  if(first_message) {
-    first_message = false;
-    listener->commitFirstMessage(context_, message_);
+  switch(state) {
+    case State::OPENED:
+      state = State::ADDITIONAL;
+      switch(type) {
+        case Type::ASSERTION:
+          listener->assertionOpeningMessage(context_, data, message_);
+          break;
+        case Type::ERROR:
+          listener->errorOpeningMessage(context_, message_);
+          break;
+        default:
+          assert(false);
+          break;
+      }
+      break;
+    case State::ADDITIONAL:
+      switch(type) {
+        case Type::ASSERTION:
+          listener->assertionAdditionalMessage(context_, data, message_);
+          break;
+        case Type::ERROR:
+          listener->errorAdditionalMessage(context_, message_);
+          break;
+        default:
+          assert(false);
+          break;
+      }
+      break;
+    default:
+      assert(false);
+      break;
   }
-  else
-    listener->commitMessage(context_, message_);
 }
 
 void AssertBufferStr::commitAssertion(
     const Context& context_) {
+  /* -- at least one message must have been constructed */
+  assert(state == State::ADDITIONAL);
+
   /* -- reset the buffer */
   buffer.str("");
   setp(tmp_buffer, tmp_buffer + TMP_SIZE);
-  first_message = true;
+
+  /* -- switch the state */
+  state = State::IDLE;
 
   /* -- emit the event */
-  listener->commitAssertion(context_);
+  switch(type) {
+    case Type::ASSERTION:
+      listener->assertionClose(context_, data);
+      break;
+    case Type::ERROR:
+      listener->errorClose(context_);
+      break;
+    default:
+      assert(false);
+      break;
+  }
 }
 
 } /* -- namespace OTest2 */

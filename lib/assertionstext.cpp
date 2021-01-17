@@ -65,9 +65,24 @@ void formatLine(
   else
     os_ << "    ";
 
-  os_ << " " << change_ << " : " << line_;
+  switch(change_) {
+    case '>':
+      os_ << foreground(Color::GREEN);
+      break;
+    case '<':
+      os_ << foreground(Color::RED);
+      break;
+    default:
+      break;
+  }
+  os_ << " " << change_ << " : " << line_ << resetAttrs() << commitMsg();
+}
 
-  os_ << commitMsg();
+void printSeparator(
+    AssertStream& os_) {
+  os_ << textStyle(Style::DIM)
+      << "........................................"
+      << resetAttrs() << commitMsg();
 }
 
 } /* -- namespace */
@@ -121,7 +136,7 @@ bool LongTextAssertion::testAssertImpl(
     if(left_line_ < difference_.left_begin - CONTEXT) {
       assert(right_line_ < difference_.right_begin);
 
-      report_ << "........................................" << commitMsg();
+      printSeparator(report_);
       left_line_ = difference_.left_begin - CONTEXT;
       right_line_ = difference_.right_begin - CONTEXT;
     }
@@ -157,7 +172,7 @@ bool LongTextAssertion::testAssertImpl(
   /* -- skipt the end of the file */
   if(left_line_ < a_data_.size()) {
     assert(right_line_ < b_data_.size());
-    report_ << "........................................" << commitMsg();
+    printSeparator(report_);
   }
 
   return report_.getResult();

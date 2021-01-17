@@ -26,9 +26,6 @@
 
 #include "runtime.h"
 
-#include <otest2/reporterconsole.h>
-#include <iostream>
-
 namespace OTest2 {
 
 namespace Test {

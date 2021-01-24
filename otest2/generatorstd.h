@@ -101,6 +101,7 @@ class GeneratorStd : public Generator {
     virtual void finishCaseFunctions() override;
     virtual void enterState(
         const std::string& name_,
+        bool first_,
         FunctionPtr state_fce_,
         const Location& fbegin_,
         const Location& fend_) override;

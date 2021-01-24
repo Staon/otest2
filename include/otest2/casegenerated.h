@@ -96,6 +96,14 @@ class CaseGenerated : public CaseOrdinary, public ContextObject {
         StatePtr state_);
 
     /**
+     * @brief Set name of the entering (first) state
+     *
+     * @param name_ The name
+     */
+    void setEnteringState(
+        const std::string& name_);
+
+    /**
      * @brief Register a pair of start-up and tear-down functions
      */
     void registerFixture(

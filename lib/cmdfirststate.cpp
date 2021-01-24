@@ -20,9 +20,11 @@
 #include <cmdfirststate.h>
 
 #include <assert.h>
+#include <string>
 
 #include <caseordinary.h>
 #include <caseordinaryptr.h>
+#include <internalerror.h>
 #include <state.h>
 #include <stateptr.h>
 
@@ -42,7 +44,12 @@ CmdFirstState::~CmdFirstState() {
 void CmdFirstState::run(
     const Context& context_) {
   StatePtr state_(testcase->getFirstState());
-  state_->scheduleRun(context_, testcase, state_, false, -1);
+  if(state_ != nullptr) {
+    state_->scheduleRun(context_, testcase, state_, false, -1);
+  }
+  else {
+    internalError(context_, "there is not set any entering state");
+  }
 }
 
 } /* namespace OTest2 */

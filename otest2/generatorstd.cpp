@@ -78,6 +78,7 @@ struct GeneratorStd::Impl {
     /* -- list of states */
     typedef std::vector<std::string> States;
     States states;
+    std::string first_state;
 
   private:
     /* -- avoid copying */
@@ -506,6 +507,8 @@ void GeneratorStd::enterCase(
   pimpl->tear_down_fce.emplace_back(nullptr);
   pimpl->repeater.emplace_back("");
   pimpl->indent += 2;
+  pimpl->states.clear();
+  pimpl->first_state.clear();
 
   /* -- begin the generated case class */
   Formatting::printIndent(pimpl->output, pimpl->indent - 2);
@@ -538,6 +541,7 @@ void GeneratorStd::finishCaseFunctions() {
 
 void GeneratorStd::enterState(
     const std::string& state_,
+    bool first_,
     FunctionPtr state_fce_,
     const Location& fbegin_,
     const Location& fend_) {
@@ -547,6 +551,8 @@ void GeneratorStd::enterState(
   pimpl->objectpath.push_back(state_);
   pimpl->variables = std::make_shared<VarTable>("state_", pimpl->variables);
   pimpl->states.push_back(state_);
+  if(first_)
+    pimpl->first_state = state_;
   pimpl->indent += 2;
   pimpl->state_fce = state_fce_;
 
@@ -713,6 +719,13 @@ void GeneratorStd::leaveCase() {
     Formatting::printIndent(pimpl->output, pimpl->indent + 3);
     pimpl->output << "createState_" << state_ << "(context_));\n";
   }
+  auto first_name_(pimpl->first_state);
+  if(first_name_.empty())
+    first_name_ = pimpl->states.front();
+  Formatting::printIndent(pimpl->output, pimpl->indent + 1);
+  pimpl->output << "setEnteringState(";
+  writeCString(pimpl->output, first_name_);
+  pimpl->output << ");\n";
   Formatting::printIndent(pimpl->output, pimpl->indent);
   pimpl->output << "}\n\n";
 
@@ -747,6 +760,7 @@ void GeneratorStd::leaveCase() {
   pimpl->tear_down_fce.pop_back();
   pimpl->repeater.pop_back();
   pimpl->states.clear();
+  pimpl->first_state.clear();
 }
 
 void GeneratorStd::leaveSuite() {

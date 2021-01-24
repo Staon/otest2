@@ -117,6 +117,30 @@ OT2_SUITE(ExtendedDslSuite) {
       caseFunction2("Hello case 2!");
     }
   }
+
+  OT2_CASE(FirstState) {
+    /* -- the entering state in this case is selected by first delcaration */
+    void secondState() OT2_STATE();
+
+    void enteringState() OT2_STATE() {
+      switchState(secondState, 10);
+    }
+
+    void secondState() OT2_STATE() {
+
+    }
+  }
+
+  OT2_CASE(ExplicitEnteringState) {
+    /* -- the entering state is selected explicitly by the scenario mark */
+    void secondState() OT2_STATE() {
+
+    }
+
+    void enteringState() OT2_SCENARIO() {
+      switchState(secondState, 10);
+    }
+  }
 }
 
 OT2_CASE(StandaloneCase) {
@@ -128,16 +152,14 @@ OT2_CASE(StandaloneCase) {
 OT2_SUITE(NestedSuites) {
   OT2_SUITE(TheNestedSuite) {
     OT2_CASE(NestedCase) {
-      void secondState();
+      void secondState() OT2_STATE() {
+        testAssertEqual("hello", "world");
+      }
 
-      void firstState() OT2_STATE() {
+      void firstState() OT2_SCENARIO() {
         testAssertNotEqual("hello", "world");
 
         switchState(secondState, 10);
-      }
-
-      void secondState() OT2_STATE() {
-        testAssertEqual("hello", "world");
       }
     }
 

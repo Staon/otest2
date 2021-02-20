@@ -23,6 +23,7 @@
 #include <iostream>
 #include <memory>
 #include <otest2/utils.h>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -589,13 +590,26 @@ void GeneratorStd::emptyState() {
 }
 
 void GeneratorStd::enterSection(
-    const std::string& name_) {
-  /* -- TODO */
+    const std::string& name_,
+    const Location& section_begin_) {
+  assert(!name_.empty());
+
+  /* -- store the section to be registered later */
+  std::string full_path_(pimpl->objects.back()->pushSection(name_));
+
+  /* -- generate the opening code */
+  pimpl->writeGenerLineDirective();
+
+  Formatting::printIndent(pimpl->output, pimpl->indent);
+  pimpl->output << "if(isTestSectionActive(otest2Context(), ";
+  writeCString(pimpl->output, full_path_);
+  pimpl->output << "))";
+
+  pimpl->writeUserLineDirective(section_begin_);
 }
 
-void GeneratorStd::leaveSection(
-    const std::string& name_) {
-  /* -- TODO */
+void GeneratorStd::leaveSection() {
+  pimpl->objects.back()->popSection();
 }
 
 void GeneratorStd::appendVariable(

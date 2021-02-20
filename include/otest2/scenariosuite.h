@@ -81,7 +81,6 @@ class ScenarioSuite : public ScenarioContainer {
 
     /* -- scenario container */
     virtual void appendScenario(
-        const std::string& name_,
         ScenarioPtr scenario_) override;
     virtual bool isEmpty() const noexcept;
 };

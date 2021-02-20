@@ -472,14 +472,16 @@ bool AssertVisitor::TraverseIfStmt(
   context->generator->copySource(current, stmt_begin_);
 
   /* -- enter the section */
-  context->generator->enterSection(section_name_);
+  clang::SourceRange body_range_(context->getNodeRange(section_body_));
+  auto section_begin_(context->createLocation(body_range_.getBegin()));
+  context->generator->enterSection(section_name_, section_begin_);
 
   /* -- parse code of the section */
   if(!parseCodeBlock(context, section_body_, true /* -- sections may be nested */))
     return false;
 
   /* -- leave the section */
-  context->generator->leaveSection(section_name_);
+  context->generator->leaveSection();
 
   /* -- skip the rest of the statement */
   current = stmt_end_;

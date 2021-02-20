@@ -207,17 +207,16 @@ class Generator {
      * @brief Enter a test section
      *
      * @param name_ Name of the section
+     * @param section_begin_ Location of the section body
      */
     virtual void enterSection(
-        const std::string& name_) = 0;
+        const std::string& name_,
+        const Location& section_begin_) = 0;
 
     /**
      * @brief Leave an already opened section
-     *
-     * @param name_ Name of the section
      */
-    virtual void leaveSection(
-        const std::string& name_) = 0;
+    virtual void leaveSection() = 0;
 
     /**
      * @brief Append a variable

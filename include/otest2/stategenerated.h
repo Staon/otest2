@@ -94,6 +94,17 @@ class StateGenerated : public StateOrdinary, public ContextObject {
         const Context& context_,
         const std::string& name_,
         int delay_);
+
+    /**
+     * @brief Check whether a test section is active
+     *
+     * @param context_ The OTest2 context
+     * @param section_path_ Absolute section path based on the test case
+     * @return True if the section is active
+     */
+    bool isTestSectionActive(
+        const Context& context_,
+        const std::string& section_path_);
 };
 
 } /* -- namespace OTest2 */

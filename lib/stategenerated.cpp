@@ -111,4 +111,10 @@ void StateGenerated::switchState(
       std::make_shared<CmdState>(pimpl->parent, name_, delay_));
 }
 
+bool StateGenerated::isTestSectionActive(
+    const Context& context_,
+    const std::string& section_path_) {
+  return false;
+}
+
 } /* -- namespace OTest2 */

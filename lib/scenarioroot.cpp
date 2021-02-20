@@ -66,7 +66,7 @@ ObjectScenarioPtr ObjectRepeaterRoot::doCreateObject(
 
 struct ScenarioRoot::Impl {
     std::string name;
-    typedef std::map<std::string, ScenarioPtr> Children;
+    typedef std::vector<ScenarioPtr> Children;
     Children children;
 
     /* -- avoid copying */
@@ -113,8 +113,8 @@ ScenarioPtr ScenarioRoot::filterScenario(
     ScenarioContainerPtr parent_,
     const RunnerFilter& filter_) const {
   ScenarioContainerPtr root_(std::make_shared<ScenarioRoot>(pimpl->name));
-  for(const auto& item_ : pimpl->children) {
-    item_.second->filterScenario(tags_, root_, filter_);
+  for(auto item_ : pimpl->children) {
+    item_->filterScenario(tags_, root_, filter_);
   }
 
   return root_;
@@ -143,10 +143,9 @@ ScenarioIterPtr ScenarioRoot::getChildren() const {
 }
 
 void ScenarioRoot::appendScenario(
-    const std::string& name_,
     ScenarioPtr scenario_) {
-  assert(!name_.empty() && scenario_ != nullptr);
-  pimpl->children.insert(Impl::Children::value_type(name_, scenario_));
+  assert(scenario_ != nullptr);
+  pimpl->children.push_back(scenario_);
 }
 
 bool ScenarioRoot::isEmpty() const noexcept {

@@ -52,11 +52,9 @@ class ScenarioContainer : public Scenario {
     /**
      * @brief Append new sub-scenario into the container
      *
-     * @param name_ Name of the appended scenario
      * @param scenario_ The appended scenario
      */
     virtual void appendScenario(
-        const std::string& name_,
         ScenarioPtr scenario_) = 0;
 
     /**

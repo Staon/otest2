@@ -45,6 +45,14 @@ class ObjectPath {
     ObjectPath();
 
     /**
+     * @brief Ctor with initial path
+     *
+     * @param full_path_ The full path (parts of path separated by '::')
+     */
+    explicit ObjectPath(
+        const std::string& full_path_);
+
+    /**
      * @brief Dtor
      */
     ~ObjectPath();
@@ -85,6 +93,12 @@ class ObjectPath {
      */
     std::string getRegressionKey(
         const std::string& local_key_) const;
+
+    /**
+     * @brief Tell us whether this object is a prefix of specified @a path_
+     */
+    bool isPrefixOf(
+        const ObjectPath& path_) const noexcept;
 };
 
 } /* -- namespace OTest2 */

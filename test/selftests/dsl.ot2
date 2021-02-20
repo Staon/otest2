@@ -179,6 +179,39 @@ OT2_SUITE(NestedSuites) {
   }
 }
 
+OT2_SUITE(SectionsSuite) {
+  OT2_CASE(Sections) {
+    OT2_SIMPLE() {
+      int a_(10);
+      testAssertExpr(a_ == 10);
+
+      OT2_SECTION(FirstSection) {
+        a_ += 2;
+        testAssertExpr(a_ == 12);
+      }
+
+      OT2_SECTION(SecondSection) {
+        a_ += 3;
+        testAssertExpr(a_ == 13);
+
+        OT2_SECTION(FirstNested) {
+          a_ += 5;
+          testAssertExpr(a_ == 18);
+        }
+
+        OT2_SECTION(SecondNested) {
+          a_ += 2;
+          testAssertExpr(a_ == 15);
+        }
+
+        testAssertExpr(a_ > 10);
+      }
+
+      testAssertExpr(a_ < 20);
+    }
+  }
+}
+
 } /* -- namespace SelfTest */
 
 } /* -- namespace OTest2 */

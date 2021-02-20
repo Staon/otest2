@@ -41,6 +41,27 @@ ObjectPath::ObjectPath() :
 
 }
 
+ObjectPath::ObjectPath(
+    const std::string& full_path_) {
+  /* -- parse the path */
+  Impl::PathStack stack_;
+  if(!full_path_.empty()) {
+    std::string::size_type start_(0);
+    do {
+      auto index_(full_path_.find("::", start_));
+      if(index_ == std::string::npos)
+        break;
+      stack_.push_back(full_path_.substr(start_, index_ - start_));
+      start_ = index_ + 2;
+    } while(true);
+    stack_.push_back(full_path_.substr(start_));
+  }
+
+  /* -- create the object */
+  pimpl = new Impl;
+  pimpl->path_stack_.swap(stack_);
+}
+
 ObjectPath::~ObjectPath() {
   odelete(pimpl);
 }
@@ -85,6 +106,21 @@ std::string ObjectPath::getRegressionKey(
       std::ostream_iterator<std::string>(oss_, ">>"));
   oss_ << local_key_;
   return oss_.str();
+}
+
+bool ObjectPath::isPrefixOf(
+    const ObjectPath& path_) const noexcept {
+  /* -- I'm longer */
+  if(pimpl->path_stack_.size() > path_.pimpl->path_stack_.size())
+    return false;
+
+  /* -- compare segments in the paths */
+  for(int i_(0); i_ < pimpl->path_stack_.size(); ++i_) {
+    if(pimpl->path_stack_[i_] != path_.pimpl->path_stack_[i_])
+      return false;
+  }
+
+  return true;
 }
 
 } /* -- namespace OTest2 */

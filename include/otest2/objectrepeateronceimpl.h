@@ -22,6 +22,7 @@
 
 #include <assert.h>
 #include <memory>
+#include <string>
 
 #include <otest2/objectrepeaterfactory.h>
 #include <otest2/objectrepeateronce.h>
@@ -31,15 +32,21 @@ namespace OTest2 {
 template<typename Object_>
 class ObjectRepeaterOnceRoot : public ObjectRepeaterOnce {
   private:
+    std::string section_path;
+
     virtual ObjectScenarioPtr doCreateObject(
         const Context& context_,
         const std::string& decorated_name_,
         ObjectPtr parent_) override {
-      return std::make_shared<Object_>(context_);
+      return std::make_shared<Object_>(context_, section_path);
     }
 
   public:
-    ObjectRepeaterOnceRoot() = default;
+    explicit ObjectRepeaterOnceRoot(
+        const std::string& section_path_) :
+      section_path(section_path_) {
+
+    }
     virtual ~ObjectRepeaterOnceRoot() = default;
 
     /* -- avoid copying */
@@ -52,7 +59,7 @@ class ObjectRepeaterOnceRoot : public ObjectRepeaterOnce {
 template<typename Object_>
 class ObjectRepeaterFactoryOnceRoot : public ObjectRepeaterFactory {
   public:
-    ObjectRepeaterFactoryOnceRoot() = default;
+    explicit ObjectRepeaterFactoryOnceRoot() = default;
     virtual ~ObjectRepeaterFactoryOnceRoot() = default;
 
     /* -- avoid copying */
@@ -62,18 +69,20 @@ class ObjectRepeaterFactoryOnceRoot : public ObjectRepeaterFactory {
         const ObjectRepeaterFactoryOnceRoot&) = delete;
 
     virtual ObjectRepeaterPtr createRepeater(
-        const Context& context_) const {
-      return std::make_shared<ObjectRepeaterOnceRoot<Object_> >();
+        const Context& context_,
+        const std::string& section_path_) const {
+      return std::make_shared<ObjectRepeaterOnceRoot<Object_> >(section_path_);
     }
 };
 
 template<typename Parent_, typename Object_>
 class ObjectRepeaterOnceNested : public ObjectRepeaterOnce {
   public:
-    typedef ObjectScenarioPtr (Parent_::* FactoryMethod)(const Context&);
+    typedef ObjectScenarioPtr (Parent_::* FactoryMethod)(const Context&, const std::string&);
 
   private:
     FactoryMethod factory_method;
+    std::string section_path;
 
     virtual ObjectScenarioPtr doCreateObject(
         const Context& context_,
@@ -81,13 +90,15 @@ class ObjectRepeaterOnceNested : public ObjectRepeaterOnce {
         ObjectPtr parent_) override {
       auto parent_typed_(std::dynamic_pointer_cast<Parent_>(parent_));
       assert(parent_typed_ != nullptr);
-      return (parent_typed_.get()->*factory_method)(context_);
+      return (parent_typed_.get()->*factory_method)(context_, section_path);
     }
 
   public:
     explicit ObjectRepeaterOnceNested(
-        FactoryMethod factory_method_) :
-      factory_method(factory_method_) {
+        FactoryMethod factory_method_,
+        const std::string& section_path_) :
+      factory_method(factory_method_),
+      section_path(section_path_) {
 
     }
 
@@ -124,8 +135,9 @@ class ObjectRepeaterFactoryOnceNested : public ObjectRepeaterFactory {
         const ObjectRepeaterFactoryOnceNested&) = delete;
 
     virtual ObjectRepeaterPtr createRepeater(
-        const Context& context_) const {
-      return std::make_shared<ObjectRepeaterOnceNested<Parent_, Object_> >(factory_method);
+        const Context& context_,
+        const std::string& section_path_) const {
+      return std::make_shared<ObjectRepeaterOnceNested<Parent_, Object_> >(factory_method, section_path_);
     }
 };
 

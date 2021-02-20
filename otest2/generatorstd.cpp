@@ -175,11 +175,13 @@ void GeneratorStd::Impl::writeStateClass(
   Formatting::printIndent(output, indent);
   output << "explicit " << state_ << "(\n";
   Formatting::printIndent(output, indent + 2);
-  output << "const ::OTest2::Context& context_";
+  output << "const ::OTest2::Context& context_,\n";
+  Formatting::printIndent(output, indent + 2);
+  output << "const std::string& section_path_";
   variables->printParameters(output, indent + 2);
   output << ") :\n";
   Formatting::printIndent(output, indent + 1);
-  output << "::OTest2::StateGenerated(context_, \"" << state_ << "\")";
+  output << "::OTest2::StateGenerated(context_, \"" << state_ << "\", section_path_)";
   variables->printInitializers(output, indent + 1);
   output << " {\n\n";
   Formatting::printIndent(output, indent);
@@ -209,7 +211,9 @@ void GeneratorStd::Impl::writeObjectCtors(
   Formatting::printIndent(output, indent);
   output << "explicit " << objectpath.back() << "(\n";
   Formatting::printIndent(output, indent + 2);
-  output << "const ::OTest2::Context& context_";
+  output << "const ::OTest2::Context& context_,\n";
+  Formatting::printIndent(output, indent + 2);
+  output << "const std::string& section_path_";
   variables->printParameters(output, indent + 2);
   output << ") :\n";
   Formatting::printIndent(output, indent + 1);
@@ -233,11 +237,15 @@ void GeneratorStd::Impl::writeStateFactoryMethod(
   Formatting::printIndent(output, indent);
   output << "::OTest2::StatePtr createState_" << state_ << "(\n";
   Formatting::printIndent(output, indent + 2);
-  output << "const ::OTest2::Context& context_) {\n";
+  output << "const ::OTest2::Context& context_,\n";
+  Formatting::printIndent(output, indent + 2);
+  output << "const std::string& section_path_) {\n";
   Formatting::printIndent(output, indent + 1);
   output << "return std::make_shared<" << state_ << ">(\n";
   Formatting::printIndent(output, indent + 3);
-  output << "context_";
+  output << "context_,\n";
+  Formatting::printIndent(output, indent + 3);
+  output << "section_path_";
   variables->printArguments(output, indent + 3);
   output << ");\n";
   Formatting::printIndent(output, indent);
@@ -253,17 +261,21 @@ void GeneratorStd::Impl::writeObjectFactoryMethod(
     Formatting::printIndent(output, indent);
     output << "::OTest2::ObjectScenarioPtr create" << object_ << "_" << objectpath.back() << "(\n";
     Formatting::printIndent(output, indent + 2);
-    output << "const ::OTest2::Context& context_";
+    output << "const ::OTest2::Context& context_,\n";
+    Formatting::printIndent(output, indent + 2);
+    output << "const std::string& section_path_";
     variables->printFactoryParameters(output, indent + 2);
     output << ") {\n";
     Formatting::printIndent(output, indent + 1);
     output << "return std::make_shared<" << objectpath.back() << ">(\n";
     Formatting::printIndent(output, indent + 3);
-    output << "context_";
+    output << "context_,\n";
+    Formatting::printIndent(output, indent + 3);
+    output << "section_path_";
     variables->printArguments(output, indent + 3);
     output << ");\n";
     Formatting::printIndent(output, indent);
-    output << "}";
+    output << "}\n\n";
   }
 }
 
@@ -535,7 +547,7 @@ void GeneratorStd::finishCaseFunctions() {
 
   /* -- ctor and dtor */
   pimpl->writeObjectCtors("::OTest2::CaseGenerated", {
-      "registerAllStates(context_);",
+      "registerAllStates(context_, section_path_);",
       "registerFixtures();",
   });
 }
@@ -734,14 +746,16 @@ void GeneratorStd::leaveCase() {
   Formatting::printIndent(pimpl->output, pimpl->indent);
   pimpl->output << "void registerAllStates(\n";
   Formatting::printIndent(pimpl->output, pimpl->indent + 2);
-  pimpl->output << "const ::OTest2::Context& context_) {\n";
+  pimpl->output << "const ::OTest2::Context& context_,\n";
+  Formatting::printIndent(pimpl->output, pimpl->indent + 2);
+  pimpl->output << "const std::string& section_path_) {\n";
   for(const auto& state_ : pimpl->states) {
     Formatting::printIndent(pimpl->output, pimpl->indent + 1);
     pimpl->output << "registerState(\n";
     Formatting::printIndent(pimpl->output, pimpl->indent + 3);
     pimpl->output << "\"" << state_ << "\",\n";
     Formatting::printIndent(pimpl->output, pimpl->indent + 3);
-    pimpl->output << "createState_" << state_ << "(context_));\n";
+    pimpl->output << "createState_" << state_ << "(context_, section_path_));\n";
   }
   auto first_name_(pimpl->first_state);
   if(first_name_.empty())

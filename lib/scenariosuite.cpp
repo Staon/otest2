@@ -111,7 +111,7 @@ ScenarioPtr ScenarioSuite::filterScenario(
 
 std::pair<std::string, ObjectRepeaterPtr> ScenarioSuite::createRepeater(
     const Context& context_) const {
-  return {pimpl->name, pimpl->repeater_factory->createRepeater(context_)};
+  return {pimpl->name, pimpl->repeater_factory->createRepeater(context_, std::string())};
 }
 
 void ScenarioSuite::reportEntering(

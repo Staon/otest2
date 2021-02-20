@@ -49,10 +49,13 @@ class StateGenerated : public StateOrdinary, public ContextObject {
      *
      * @param context_ OTest2 context
      * @param name_ Name of the state
+     * @param section_path_ Path of active section. Empty string means
+     *     all sections are active.
      */
     explicit StateGenerated(
         const Context& context_,
-        const std::string& name_);
+        const std::string& name_,
+        const std::string& section_path_);
 
     /**
      * @brief Dtor

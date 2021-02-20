@@ -174,7 +174,7 @@ ScenarioPtr ScenarioCase::filterScenario(
 
 std::pair<std::string, ObjectRepeaterPtr> ScenarioCase::createRepeater(
     const Context& context_) const {
-  return {pimpl->name, pimpl->repeater_factory->createRepeater(context_)};
+  return {pimpl->name, pimpl->repeater_factory->createRepeater(context_, pimpl->section_path)};
 }
 
 void ScenarioCase::reportEntering(

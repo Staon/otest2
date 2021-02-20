@@ -32,11 +32,14 @@ namespace OTest2 {
 template<typename Object_, typename Repeater_>
 class ObjectRepeaterMultiRoot : public ObjectRepeater {
   private:
+    std::string section_path;
     int index;
     std::shared_ptr<Repeater_> repeater_object;
 
   public:
-    explicit ObjectRepeaterMultiRoot() :
+    explicit ObjectRepeaterMultiRoot(
+        const std::string& section_path_) :
+      section_path(section_path_),
       index(1),
       repeater_object() {
 
@@ -72,7 +75,7 @@ class ObjectRepeaterMultiRoot : public ObjectRepeater {
         const std::string& case_name_,
         ObjectPtr parent_) override {
       ++index;
-      return std::make_shared<Object_>(context_, std::ref(repeater_object));
+      return std::make_shared<Object_>(context_, section_path, std::ref(repeater_object));
     }
 };
 
@@ -89,8 +92,9 @@ class ObjectRepeaterFactoryMultiRoot : public ObjectRepeaterFactory {
         const ObjectRepeaterFactoryMultiRoot&) = delete;
 
     virtual ObjectRepeaterPtr createRepeater(
-        const Context& context_) const {
-      return std::make_shared<ObjectRepeaterMultiRoot<Object_, Repeater_> >();
+        const Context& context_,
+        const std::string& section_path_) const {
+      return std::make_shared<ObjectRepeaterMultiRoot<Object_, Repeater_> >(section_path_);
     }
 };
 
@@ -99,19 +103,23 @@ class ObjectRepeaterMultiNested : public ObjectRepeater {
   public:
     typedef ObjectScenarioPtr (Parent_::* FactoryMethod)(
         const Context&,
+        const std::string&,
         std::shared_ptr<Repeater_>&);
 
   private:
+    FactoryMethod factory_method;
+    std::string section_path;
     int index;
     std::shared_ptr<Repeater_> repeater_object;
-    FactoryMethod factory_method;
 
   public:
     explicit ObjectRepeaterMultiNested(
-        FactoryMethod factory_method_) :
+        FactoryMethod factory_method_,
+        const std::string& section_path_) :
+      factory_method(factory_method_),
+      section_path(section_path_),
       index(1),
-      repeater_object(),
-      factory_method(factory_method_) {
+      repeater_object() {
       assert(factory_method != nullptr);
 
     }
@@ -148,7 +156,7 @@ class ObjectRepeaterMultiNested : public ObjectRepeater {
       ++index;
       auto parent_typed_(std::dynamic_pointer_cast<Parent_>(parent_));
       assert(parent_typed_ != nullptr);
-      return (parent_typed_.get()->*factory_method)(context_, repeater_object);
+      return (parent_typed_.get()->*factory_method)(context_, section_path, repeater_object);
     }
 };
 
@@ -176,8 +184,9 @@ class ObjectRepeaterFactoryMultiNested : public ObjectRepeaterFactory {
         const ObjectRepeaterFactoryMultiNested&) = delete;
 
     virtual ObjectRepeaterPtr createRepeater(
-        const Context& context_) const {
-      return std::make_shared<ObjectRepeaterMultiNested<Parent_, Object_, Repeater_> >(factory_method);
+        const Context& context_,
+        const std::string& section_path_) const {
+      return std::make_shared<ObjectRepeaterMultiNested<Parent_, Object_, Repeater_> >(factory_method, section_path_);
     }
 };
 

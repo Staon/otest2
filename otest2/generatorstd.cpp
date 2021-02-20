@@ -588,6 +588,16 @@ void GeneratorStd::emptyState() {
   pimpl->variables = pimpl->variables->getPrevLevel();
 }
 
+void GeneratorStd::enterSection(
+    const std::string& name_) {
+  /* -- TODO */
+}
+
+void GeneratorStd::leaveSection(
+    const std::string& name_) {
+  /* -- TODO */
+}
+
 void GeneratorStd::appendVariable(
     const std::string& name_,
     const std::string& type_,

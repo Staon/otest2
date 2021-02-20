@@ -49,10 +49,11 @@ std::vector<std::string> parseAnnotationArguments(
 
 AssertVisitor::AssertVisitor(
     ParserContext* context_,
-    const Location& curr_) :
+    const Location& curr_,
+    bool allow_sections_) :
   context(context_),
   current(curr_),
-  subtree_root(nullptr) {
+  allow_sections(allow_sections_) {
 
 }
 
@@ -334,12 +335,12 @@ bool AssertVisitor::VisitCallExpr(
   return true;
 }
 
-bool AssertVisitor::VisitCXXTryStmt(
+bool AssertVisitor::TraverseCXXTryStmt(
     clang::CXXTryStmt* stmt_) {
   /* -- sanity check, it shouldn't happen */
   const int handlers_(stmt_->getNumHandlers());
   if(handlers_ < 1)
-    return true;
+    return Parent::TraverseCXXTryStmt(stmt_);
 
   /* -- check annotations of handlers */
   bool all_clear_(true);
@@ -355,8 +356,8 @@ bool AssertVisitor::VisitCXXTryStmt(
     }
   }
   /* -- all handlers are clear => ordinary try/catch statement */
-  if(all_clear_)
-    return true;
+  if (all_clear_)
+    return Parent::TraverseCXXTryStmt(stmt_);
   /* -- some handlers are marked, some not => invalid use of the try/catch */
   if(!all_marked_) {
     context->setError("mixed marked and unmarked catch statements!", stmt_);
@@ -374,7 +375,7 @@ bool AssertVisitor::VisitCXXTryStmt(
   context->generator->makeTryCatchBegin(begin_);
 
   /* -- generate the asserted try/catch statement */
-  if(!parseCodeBlock(context, stmt_->getTryBlock()))
+  if(!parseCodeBlock(context, stmt_->getTryBlock(), false))
     return false;
 
   for(int i_(0); i_ < handlers_; ++i_) {
@@ -388,7 +389,7 @@ bool AssertVisitor::VisitCXXTryStmt(
 
     /* -- process content of the handler block */
     auto handler_block_(handler_->getHandlerBlock());
-    if(!parseCodeBlock(context, handler_block_))
+    if(!parseCodeBlock(context, handler_block_, false))
       return false;
   }
   context->generator->makeTryCatchEnd();
@@ -396,22 +397,96 @@ bool AssertVisitor::VisitCXXTryStmt(
   /* -- skip rest of the original try/catch block */
   context->generator->startUserArea(end_);
   current = end_;
-  subtree_root = stmt_;
 
   return true;
 }
 
-bool AssertVisitor::dataTraverseStmtPre(
-    clang::Stmt* stmt_) {
-  return subtree_root == nullptr;
-}
+bool AssertVisitor::TraverseIfStmt(
+    clang::IfStmt* stmt_) {
+  /* -- Parse the if condition. The section statement contains just invocation
+   *    of a function marked by an annotation. */
+  auto condition_(stmt_->getCond());
+  if(condition_ == nullptr || !clang::isa<clang::CallExpr>(condition_))
+    return Parent::TraverseIfStmt(stmt_);
 
-bool AssertVisitor::dataTraverseStmtPost(
-    clang::Stmt* stmt_) {
-  if(subtree_root == stmt_)
-    subtree_root = nullptr;
+  /* -- check whether the condition is an invocation of a function */
+  auto call_(clang::cast<clang::CallExpr>(condition_));
+  auto callee_(call_->getCallee());
+  if(!clang::isa<clang::ImplicitCastExpr>(callee_))
+    return Parent::TraverseIfStmt(stmt_);
+  auto cast_(clang::cast<clang::ImplicitCastExpr>(callee_));
+
+  /* -- get declaration of the invoked function */
+  auto declref_(cast_->getReferencedDeclOfCallee());
+  if(declref_ == nullptr)
+    return Parent::TraverseIfStmt(stmt_);
+  if(!clang::isa<clang::FunctionDecl>(declref_))
+    return Parent::TraverseIfStmt(stmt_);
+  auto fce_(clang::cast<clang::FunctionDecl>(declref_));
+
+  /* -- check function annotation */
+  if(!hasAnnotation(fce_, SECTION_ANNOTATION))
+    return Parent::TraverseIfStmt(stmt_);
+
+  /* -- reject the section if it isn't allowed */
+  if(!allow_sections) {
+    context->setError("sections are allowed just in the scenario block!", stmt_);
+    return false;
+  }
+
+  /* -- The if statement defines a section. Parse the section name. */
+  if(call_->getNumArgs() != 1) {
+    context->setError("invalid number of arguments of the section statement!", stmt_);
+    return false;
+  }
+  auto section_arg_(call_->getArg(0));
+  if(!clang::isa<clang::ImplicitCastExpr>(section_arg_)) {
+    context->setError("the section name must be an identifier!", stmt_);
+    return false;
+  }
+  auto section_cast_(clang::cast<clang::ImplicitCastExpr>(section_arg_));
+  auto section_name_expr_(section_cast_->getSubExprAsWritten());
+  if(!clang::isa<clang::StringLiteral>(section_name_expr_)) {
+    context->setError("the section name must be an identifier!", stmt_);
+    return false;
+  }
+  auto section_name_literal(clang::cast<clang::StringLiteral>(section_name_expr_));
+  std::string section_name_(section_name_literal->getString().str());
+
+  /* -- Check branches of the if statement. There must be the true branch
+   *    but there must be no else branch (section doesn't any else branch). */
+  auto section_body_(stmt_->getThen());
+  if(section_body_ == nullptr) {
+    context->setError("missing body of the section!", stmt_);
+    return false;
+  }
+  if(stmt_->getElse() != nullptr) {
+    context->setError("a section must not have any else branch!", stmt_);
+    return false;
+  }
+
+  /* -- copy source just before the state switch */
+  clang::SourceRange stmt_range_(context->getNodeRange(stmt_));
+  auto stmt_begin_(context->createLocation(stmt_range_.getBegin()));
+  auto stmt_end_(context->createLocation(stmt_range_.getEnd()));
+  context->generator->copySource(current, stmt_begin_);
+
+  /* -- enter the section */
+  context->generator->enterSection(section_name_);
+
+  /* -- parse code of the section */
+  if(!parseCodeBlock(context, section_body_, true /* -- sections may be nested */))
+    return false;
+
+  /* -- leave the section */
+  context->generator->leaveSection(section_name_);
+
+  /* -- skip the rest of the statement */
+  current = stmt_end_;
+
   return true;
 }
+
 
 Location AssertVisitor::getCurrentLocation() const {
   return current;

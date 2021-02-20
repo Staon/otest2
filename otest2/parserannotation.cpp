@@ -26,6 +26,7 @@ const std::string SUITE_ANNOTATION("otest2::suite");
 const std::string CASE_ANNOTATION("otest2::case");
 const std::string SCENARIO_ANNOTATION("otest2::scenario");
 const std::string STATE_ANNOTATION("otest2::state");
+const std::string SECTION_ANNOTATION("otest2::section");
 const std::string START_UP_ANNOTATION("otest2::startUp");
 const std::string TEAR_DOWN_ANNOTATION("otest2::tearDown");
 const std::string ASSERTION_ANNOTATION("^otest2::assertion[(](.*)[)]$");

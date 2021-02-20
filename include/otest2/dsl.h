@@ -62,11 +62,14 @@
 
 #endif /* -- OTEST2_PARSER_ACTIVE */
 
+#define OT2_SECTION(name_) if(::OTest2::Controls::Private::sectionName(#name_))
+
 /* -- compact DSL syntax */
 #define TEST_START_UP() void startUp() OT2_START_UP()
 #define TEST_TEAR_DOWN() void tearDown() OT2_TEAR_DOWN()
 #define TEST_SUITE(name_) OT2_SUITE(name_)
 #define TEST_CASE(name_) OT2_CASE(name_)
+#define TEST_SCENARIO(name_) void name_() OT2_SCENARIO()
 #define TEST_STATE(name_) void name_() OT2_STATE()
 #define TEST_SIMPLE() OT2_SIMPLE()
 

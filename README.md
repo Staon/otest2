@@ -4,7 +4,7 @@
 
 **Current CI status:** [![Staon](https://circleci.com/gh/Staon/otest2.svg?style=svg)](https://circleci.com/gh/Staon/workflows/otest2/tree/master)
 
-**Current version:** [1.2.0](https://github.com/Staon/otest2/releases/tag/v1.2.0)
+**Current version:** [1.3.0](https://github.com/Staon/otest2/releases/tag/v1.3.0)
 
 **Downloads:** [https://github.com/Staon/otest2/releases/](https://github.com/Staon/otest2/releases/)
 
@@ -37,6 +37,8 @@ I know the original project is still in use.
   may be initialized and destroyed by their constructor and destructor methods
   (as it's common in C++) or they can be initialized in special start-up
   and tear-down methods.  
+* Test sections allow to share the same initialization code with several
+  testing sections. 
 * User can implement own fixture objects with hook methods invoked during
   start-up and tear-down phase of suite or test case where the object is used.
 * Possible integration with custom main event loop. The framework doesn't

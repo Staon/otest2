@@ -1,8 +1,9 @@
 <map id="include/otest2/comparisonslexi.h" name="include/otest2/comparisonslexi.h">
-<area shape="rect" id="node1" title=" " alt="" coords="29,5,260,32"/>
-<area shape="rect" id="node2" href="$comparisons_8h.html" title=" " alt="" coords="5,80,167,107"/>
-<area shape="rect" id="node4" href="$typetraits_8h.html" title=" " alt="" coords="135,155,275,181"/>
-<area shape="rect" id="node3" title=" " alt="" coords="45,155,111,181"/>
-<area shape="rect" id="node5" title=" " alt="" coords="118,229,187,256"/>
-<area shape="rect" id="node6" title=" " alt="" coords="211,229,302,256"/>
+<area shape="rect" id="node1" title=" " alt="" coords="72,5,303,32"/>
+<area shape="rect" id="node2" href="$comparisons_8h.html" title=" " alt="" coords="45,80,207,107"/>
+<area shape="rect" id="node5" href="$typetraits_8h.html" title=" " alt="" coords="181,155,321,181"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,155,68,181"/>
+<area shape="rect" id="node4" title=" " alt="" coords="92,155,157,181"/>
+<area shape="rect" id="node6" title=" " alt="" coords="165,229,234,256"/>
+<area shape="rect" id="node7" title=" " alt="" coords="258,229,349,256"/>
 </map>

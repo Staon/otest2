@@ -107,9 +107,15 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1b41db3ab0c16bd3e0895b68d1da8a28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a63606d06f803183fb5602a140ece1da5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1GenericAssertion.html#a63606d06f803183fb5602a140ece1da5">testAssert</a> (const <a class="el" href="classOTest2_1_1AssertBean.html">AssertBean</a> &amp;bean_)</td></tr>
 <tr class="separator:a63606d06f803183fb5602a140ece1da5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7d6c5064745ec51d8dba6c409eec0f4"><td class="memTemplParams" colspan="2">template&lt;typename Compare_ , typename A_ , typename B_ &gt; </td></tr>
+<tr class="memitem:ad7d6c5064745ec51d8dba6c409eec0f4"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOTest2_1_1GenericAssertion.html#ad7d6c5064745ec51d8dba6c409eec0f4">reportAssertion</a> (Compare_ &amp;&amp;cmp_, A_ &amp;&amp;a_, B_ &amp;&amp;b_, bool condition_)</td></tr>
+<tr class="separator:ad7d6c5064745ec51d8dba6c409eec0f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa52d9b7e0133bd664ca5c1648db0a20e"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename, typename &gt; class Compare_, typename A_ , typename B_ &gt; </td></tr>
 <tr class="memitem:aa52d9b7e0133bd664ca5c1648db0a20e"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOTest2_1_1GenericAssertion.html#aa52d9b7e0133bd664ca5c1648db0a20e">testAssertCompare</a> (A_ &amp;&amp;a_, B_ &amp;&amp;b_)</td></tr>
 <tr class="separator:aa52d9b7e0133bd664ca5c1648db0a20e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d17ab62a12851d855597787305a292a"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename, typename, typename &gt; class Compare_, typename A_ , typename B_ , typename Precision_  = long double&gt; </td></tr>
+<tr class="memitem:a3d17ab62a12851d855597787305a292a"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOTest2_1_1GenericAssertion.html#a3d17ab62a12851d855597787305a292a">testAssertCompareFP</a> (A_ a_, B_ b_, Precision_ precision_=<a class="el" href="namespaceOTest2.html#af75497647f3ea44fff1d85daa3176a5e">DEFAULT_FLOAT_PRECISION</a>)</td></tr>
+<tr class="separator:a3d17ab62a12851d855597787305a292a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab8195d4b847a8b418e86e1f3d92a87fe"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1GenericAssertion.html#ab8195d4b847a8b418e86e1f3d92a87fe">testException</a> (std::function&lt; bool()&gt; ftor_)</td></tr>
 <tr class="separator:ab8195d4b847a8b418e86e1f3d92a87fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ceeae0a89895755c9296b0836b043bc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1GenericAssertion.html#a0ceeae0a89895755c9296b0836b043bc">AssertContext</a> (const <a class="el" href="classOTest2_1_1AssertContext.html">AssertContext</a> &amp;)=delete</td></tr>
@@ -149,7 +155,7 @@ Additional Inherited Members</h2></td></tr>
 <p>The declaration class must inherit from the <a class="el" href="classOTest2_1_1AssertContext.html" title="Assertion context.">AssertContext</a> class, it must inherit the parent's constructor and an assertion method with exactly the same parameters as the asssertion's declaration function. The declaration function must be connected to the implementation class and its method by the annotation.</p>
 <p>The <a class="el" href="namespaceOTest2.html">OTest2</a> preprocessor replaces the invocation of the assertion by instantiation of the implementation class and invocation of the assertion method. </p>
 
-<p class="definition">Definition at line <a class="el" href="assertions_8h_source.html#l00055">55</a> of file <a class="el" href="assertions_8h_source.html">assertions.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="assertions_8h_source.html#l00056">56</a> of file <a class="el" href="assertions_8h_source.html">assertions.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab725393c396e85b1dc6a1d3005ff176d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab725393c396e85b1dc6a1d3005ff176d">&#9670;&nbsp;</a></span>GenericAssertion()</h2>
@@ -261,6 +267,50 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="ad7d6c5064745ec51d8dba6c409eec0f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7d6c5064745ec51d8dba6c409eec0f4">&#9670;&nbsp;</a></span>reportAssertion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Compare_ , typename A_ , typename B_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool OTest2::GenericAssertion::reportAssertion </td>
+          <td>(</td>
+          <td class="paramtype">Compare_ &amp;&amp;&#160;</td>
+          <td class="paramname"><em>cmp_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">A_ &amp;&amp;&#160;</td>
+          <td class="paramname"><em>a_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">B_ &amp;&amp;&#160;</td>
+          <td class="paramname"><em>b_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>condition_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="assertionsimpl_8h_source.html#l00035">35</a> of file <a class="el" href="assertionsimpl_8h_source.html">assertionsimpl.h</a>.</p>
+
+</div>
+</div>
 <a id="a1b41db3ab0c16bd3e0895b68d1da8a28"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1b41db3ab0c16bd3e0895b68d1da8a28">&#9670;&nbsp;</a></span>testAssert() <span class="overload">[1/2]</span></h2>
 
@@ -329,7 +379,45 @@ template&lt;template&lt; typename, typename &gt; class Compare_, typename A_ , t
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="assertionsimpl_8h_source.html#l00035">35</a> of file <a class="el" href="assertionsimpl_8h_source.html">assertionsimpl.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="assertionsimpl_8h_source.html#l00074">74</a> of file <a class="el" href="assertionsimpl_8h_source.html">assertionsimpl.h</a>.</p>
+
+</div>
+</div>
+<a id="a3d17ab62a12851d855597787305a292a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d17ab62a12851d855597787305a292a">&#9670;&nbsp;</a></span>testAssertCompareFP()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;template&lt; typename, typename, typename &gt; class Compare_, typename A_ , typename B_ , typename Precision_ &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool OTest2::GenericAssertion::testAssertCompareFP </td>
+          <td>(</td>
+          <td class="paramtype">A_&#160;</td>
+          <td class="paramname"><em>a_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">B_&#160;</td>
+          <td class="paramname"><em>b_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Precision_&#160;</td>
+          <td class="paramname"><em>precision_</em> = <code><a class="el" href="namespaceOTest2.html#af75497647f3ea44fff1d85daa3176a5e">DEFAULT_FLOAT_PRECISION</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="assertionsimpl_8h_source.html#l00088">88</a> of file <a class="el" href="assertionsimpl_8h_source.html">assertionsimpl.h</a>.</p>
 
 </div>
 </div>

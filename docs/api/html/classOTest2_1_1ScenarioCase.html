@@ -69,6 +69,8 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="classOTest2_1_1ScenarioCase-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">OTest2::ScenarioCase Class Reference</div>  </div>
@@ -108,6 +110,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa426d1f87961eabde6131fe7ecb53aa9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ScenarioCase.html#aa426d1f87961eabde6131fe7ecb53aa9">ScenarioCase</a> (const std::string &amp;name_, const <a class="el" href="classOTest2_1_1Tags.html">Tags</a> &amp;tags_, <a class="el" href="namespaceOTest2.html#ad286e8341e2ba1c41df47c60d4bf8549">ObjectRepeaterFactoryPtr</a> repeater_factory_)</td></tr>
 <tr class="memdesc:aa426d1f87961eabde6131fe7ecb53aa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ctor.  <a href="classOTest2_1_1ScenarioCase.html#aa426d1f87961eabde6131fe7ecb53aa9">More...</a><br /></td></tr>
 <tr class="separator:aa426d1f87961eabde6131fe7ecb53aa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefa63052c406cb269d9a5aec42792c89"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ScenarioCase.html#aefa63052c406cb269d9a5aec42792c89">ScenarioCase</a> (const std::string &amp;name_, const std::string &amp;section_path_, const <a class="el" href="classOTest2_1_1Tags.html">Tags</a> &amp;tags_, <a class="el" href="namespaceOTest2.html#ad286e8341e2ba1c41df47c60d4bf8549">ObjectRepeaterFactoryPtr</a> repeater_factory_)</td></tr>
+<tr class="memdesc:aefa63052c406cb269d9a5aec42792c89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ctor - instance with active test section.  <a href="classOTest2_1_1ScenarioCase.html#aefa63052c406cb269d9a5aec42792c89">More...</a><br /></td></tr>
+<tr class="separator:aefa63052c406cb269d9a5aec42792c89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a98c140a6b6c6ade7d833e1f77166b483"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ScenarioCase.html#a98c140a6b6c6ade7d833e1f77166b483">~ScenarioCase</a> ()</td></tr>
 <tr class="memdesc:a98c140a6b6c6ade7d833e1f77166b483"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="classOTest2_1_1ScenarioCase.html#a98c140a6b6c6ade7d833e1f77166b483">More...</a><br /></td></tr>
 <tr class="separator:a98c140a6b6c6ade7d833e1f77166b483"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -121,12 +126,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1cd25c0dd1623a25e6e3651014c13e8a"><td class="memItemLeft" align="right" valign="top">virtual std::pair&lt; std::string, <a class="el" href="namespaceOTest2.html#a09bd49f984fc343c80222bf08df40b4b">ObjectRepeaterPtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ScenarioCase.html#a1cd25c0dd1623a25e6e3651014c13e8a">createRepeater</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_) const override</td></tr>
 <tr class="memdesc:a1cd25c0dd1623a25e6e3651014c13e8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create repeater object for testing object represented by this scenario object.  <a href="classOTest2_1_1ScenarioCase.html#a1cd25c0dd1623a25e6e3651014c13e8a">More...</a><br /></td></tr>
 <tr class="separator:a1cd25c0dd1623a25e6e3651014c13e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbcfa8cabc6b266918866d491831316e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ScenarioCase.html#acbcfa8cabc6b266918866d491831316e">reportEntering</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, const std::string &amp;decorated_name_) const noexcept override</td></tr>
-<tr class="memdesc:acbcfa8cabc6b266918866d491831316e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report entering of the testing object.  <a href="classOTest2_1_1ScenarioCase.html#acbcfa8cabc6b266918866d491831316e">More...</a><br /></td></tr>
-<tr class="separator:acbcfa8cabc6b266918866d491831316e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af433345da9b2d4190770e689bc5eb010"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ScenarioCase.html#af433345da9b2d4190770e689bc5eb010">reportLeaving</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, const std::string &amp;decorated_name_, bool result_) const noexcept override</td></tr>
-<tr class="memdesc:af433345da9b2d4190770e689bc5eb010"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report leaving of the testing object.  <a href="classOTest2_1_1ScenarioCase.html#af433345da9b2d4190770e689bc5eb010">More...</a><br /></td></tr>
-<tr class="separator:af433345da9b2d4190770e689bc5eb010"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8006ed8c577f96184a68ad5986387575"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ScenarioCase.html#a8006ed8c577f96184a68ad5986387575">enterObject</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_) const noexcept override</td></tr>
+<tr class="memdesc:a8006ed8c577f96184a68ad5986387575"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enter the testing object.  <a href="classOTest2_1_1ScenarioCase.html#a8006ed8c577f96184a68ad5986387575">More...</a><br /></td></tr>
+<tr class="separator:a8006ed8c577f96184a68ad5986387575"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3e3f8fdbe41378940623265506b37a9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ScenarioCase.html#aa3e3f8fdbe41378940623265506b37a9">leaveObject</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_) const noexcept override</td></tr>
+<tr class="memdesc:aa3e3f8fdbe41378940623265506b37a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Report leaving of the testing object.  <a href="classOTest2_1_1ScenarioCase.html#aa3e3f8fdbe41378940623265506b37a9">More...</a><br /></td></tr>
+<tr class="separator:aa3e3f8fdbe41378940623265506b37a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7afd184337ce95494f91b7e943e2ea5b"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceOTest2.html#acba59c569e67a301963dec19b0e40f9f">ScenarioIterPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ScenarioCase.html#a7afd184337ce95494f91b7e943e2ea5b">getChildren</a> () const override</td></tr>
 <tr class="memdesc:a7afd184337ce95494f91b7e943e2ea5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get iterator of children object.  <a href="classOTest2_1_1ScenarioCase.html#a7afd184337ce95494f91b7e943e2ea5b">More...</a><br /></td></tr>
 <tr class="separator:a7afd184337ce95494f91b7e943e2ea5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,14 +146,25 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac96b4812e58486eee447a8c43053f5ee inherit pub_methods_classOTest2_1_1Scenario"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b7a61d8d85bc9b22f66daff349cc54d inherit pub_methods_classOTest2_1_1Scenario"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOTest2_1_1Scenario.html">Scenario</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1Scenario.html#a4b7a61d8d85bc9b22f66daff349cc54d">operator=</a> (const <a class="el" href="classOTest2_1_1Scenario.html">Scenario</a> &amp;)=delete</td></tr>
 <tr class="separator:a4b7a61d8d85bc9b22f66daff349cc54d inherit pub_methods_classOTest2_1_1Scenario"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a5459aaa4fb0f75a9a4b8819580b4f683"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classOTest2_1_1ScenarioCaseBuilder.html">ScenarioCaseBuilder</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ScenarioCase.html#a5459aaa4fb0f75a9a4b8819580b4f683">createBuilder</a> (const std::string &amp;name_, const <a class="el" href="classOTest2_1_1Tags.html">Tags</a> &amp;tags_, <a class="el" href="namespaceOTest2.html#ad286e8341e2ba1c41df47c60d4bf8549">ObjectRepeaterFactoryPtr</a> repeater_factory_)</td></tr>
+<tr class="memdesc:a5459aaa4fb0f75a9a4b8819580b4f683"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create builder of the scenario case.  <a href="classOTest2_1_1ScenarioCase.html#a5459aaa4fb0f75a9a4b8819580b4f683">More...</a><br /></td></tr>
+<tr class="separator:a5459aaa4fb0f75a9a4b8819580b4f683"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:ae48c290f5cd10c9a048ffffea38f5cf0"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ScenarioCase.html#ae48c290f5cd10c9a048ffffea38f5cf0">ScenarioCaseBuilder</a></td></tr>
+<tr class="separator:ae48c290f5cd10c9a048ffffea38f5cf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classOTest2_1_1Scenario.html" title="Generic scenario object.">Scenario</a> object of a test case. </p>
 
-<p class="definition">Definition at line <a class="el" href="scenariocase_8h_source.html#l00033">33</a> of file <a class="el" href="scenariocase_8h_source.html">scenariocase.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="scenariocase_8h_source.html#l00034">34</a> of file <a class="el" href="scenariocase_8h_source.html">scenariocase.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aa426d1f87961eabde6131fe7ecb53aa9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa426d1f87961eabde6131fe7ecb53aa9">&#9670;&nbsp;</a></span>ScenarioCase() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa426d1f87961eabde6131fe7ecb53aa9">&#9670;&nbsp;</a></span>ScenarioCase() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -197,7 +213,68 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="scenariocase_8cpp_source.html#l00068">68</a> of file <a class="el" href="scenariocase_8cpp_source.html">scenariocase.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="scenariocase_8cpp_source.html#l00121">121</a> of file <a class="el" href="scenariocase_8cpp_source.html">scenariocase.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aefa63052c406cb269d9a5aec42792c89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefa63052c406cb269d9a5aec42792c89">&#9670;&nbsp;</a></span>ScenarioCase() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">OTest2::ScenarioCase::ScenarioCase </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>section_path_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classOTest2_1_1Tags.html">Tags</a> &amp;&#160;</td>
+          <td class="paramname"><em>tags_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceOTest2.html#ad286e8341e2ba1c41df47c60d4bf8549">ObjectRepeaterFactoryPtr</a>&#160;</td>
+          <td class="paramname"><em>repeater_factory_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Ctor - instance with active test section. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name_</td><td>Name of the test case </td></tr>
+    <tr><td class="paramname">section_path_</td><td>Path of the active section (relative to the case) </td></tr>
+    <tr><td class="paramname">tags_</td><td><a class="el" href="classOTest2_1_1Tags.html" title="List of tags assigned to a testing object.">Tags</a> assigned to the object </td></tr>
+    <tr><td class="paramname">repeater_factory</td><td>A factory of repeater objects of the test case </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="scenariocase_8cpp_source.html#l00129">129</a> of file <a class="el" href="scenariocase_8cpp_source.html">scenariocase.cpp</a>.</p>
 
 </div>
 </div>
@@ -226,12 +303,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p class="definition">Definition at line <a class="el" href="scenariocase_8cpp_source.html#l00076">76</a> of file <a class="el" href="scenariocase_8cpp_source.html">scenariocase.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="scenariocase_8cpp_source.html#l00145">145</a> of file <a class="el" href="scenariocase_8cpp_source.html">scenariocase.cpp</a>.</p>
 
 </div>
 </div>
 <a id="abfdb59714f2a66e9e81bb50763c02b4b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abfdb59714f2a66e9e81bb50763c02b4b">&#9670;&nbsp;</a></span>ScenarioCase() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abfdb59714f2a66e9e81bb50763c02b4b">&#9670;&nbsp;</a></span>ScenarioCase() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -257,6 +334,53 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a5459aaa4fb0f75a9a4b8819580b4f683"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5459aaa4fb0f75a9a4b8819580b4f683">&#9670;&nbsp;</a></span>createBuilder()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classOTest2_1_1ScenarioCaseBuilder.html">ScenarioCaseBuilder</a> OTest2::ScenarioCase::createBuilder </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classOTest2_1_1Tags.html">Tags</a> &amp;&#160;</td>
+          <td class="paramname"><em>tags_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceOTest2.html#ad286e8341e2ba1c41df47c60d4bf8549">ObjectRepeaterFactoryPtr</a>&#160;</td>
+          <td class="paramname"><em>repeater_factory_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create builder of the scenario case. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classOTest2_1_1ScenarioCase.html#aa426d1f87961eabde6131fe7ecb53aa9" title="Ctor.">ScenarioCase::ScenarioCase()</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="scenariocase_8cpp_source.html#l00138">138</a> of file <a class="el" href="scenariocase_8cpp_source.html">scenariocase.cpp</a>.</p>
+
+</div>
+</div>
 <a id="a1cd25c0dd1623a25e6e3651014c13e8a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1cd25c0dd1623a25e6e3651014c13e8a">&#9670;&nbsp;</a></span>createRepeater()</h2>
 
@@ -293,7 +417,47 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classOTest2_1_1Scenario.html#aa0658996ad2a279875c783c8fa921e02">OTest2::Scenario</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="scenariocase_8cpp_source.html#l00103">103</a> of file <a class="el" href="scenariocase_8cpp_source.html">scenariocase.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="scenariocase_8cpp_source.html#l00177">177</a> of file <a class="el" href="scenariocase_8cpp_source.html">scenariocase.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a8006ed8c577f96184a68ad5986387575"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8006ed8c577f96184a68ad5986387575">&#9670;&nbsp;</a></span>enterObject()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OTest2::ScenarioCase::enterObject </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;&#160;</td>
+          <td class="paramname"><em>context_</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enter the testing object. </p>
+<p>This method is responsible for report of entering of the testing object. It may modify object's parameters and it must report the object into the reporter.</p>
+<p>As constructor methods may throw an exception causing failure of the test, we report the entering into the object before actual creation of the object.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context_</td><td>The <a class="el" href="namespaceOTest2.html">OTest2</a> context. Current object path is ready. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classOTest2_1_1Scenario.html#a281f2d00800d6b055c9fc4b20ccc5730">OTest2::Scenario</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="scenariocase_8cpp_source.html#l00182">182</a> of file <a class="el" href="scenariocase_8cpp_source.html">scenariocase.cpp</a>.</p>
 
 </div>
 </div>
@@ -351,7 +515,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classOTest2_1_1Scenario.html#a92a7ec643cf9ea33ed4ae449debdbb14">OTest2::Scenario</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="scenariocase_8cpp_source.html#l00080">80</a> of file <a class="el" href="scenariocase_8cpp_source.html">scenariocase.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="scenariocase_8cpp_source.html#l00149">149</a> of file <a class="el" href="scenariocase_8cpp_source.html">scenariocase.cpp</a>.</p>
 
 </div>
 </div>
@@ -382,7 +546,45 @@ Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classOTest2_1_1Scenario.html#a942ad16024dd9abfcc3caf1e041b2590">OTest2::Scenario</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="scenariocase_8cpp_source.html#l00121">121</a> of file <a class="el" href="scenariocase_8cpp_source.html">scenariocase.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="scenariocase_8cpp_source.html#l00204">204</a> of file <a class="el" href="scenariocase_8cpp_source.html">scenariocase.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa3e3f8fdbe41378940623265506b37a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3e3f8fdbe41378940623265506b37a9">&#9670;&nbsp;</a></span>leaveObject()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OTest2::ScenarioCase::leaveObject </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;&#160;</td>
+          <td class="paramname"><em>context_</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Report leaving of the testing object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context_</td><td>The <a class="el" href="namespaceOTest2.html">OTest2</a> context. Current object path is still set. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classOTest2_1_1Scenario.html#af2e6f8d25eb3a1f8c0b97b1de022ae34">OTest2::Scenario</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="scenariocase_8cpp_source.html#l00195">195</a> of file <a class="el" href="scenariocase_8cpp_source.html">scenariocase.cpp</a>.</p>
 
 </div>
 </div>
@@ -412,8 +614,9 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="acbcfa8cabc6b266918866d491831316e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acbcfa8cabc6b266918866d491831316e">&#9670;&nbsp;</a></span>reportEntering()</h2>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a id="ae48c290f5cd10c9a048ffffea38f5cf0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae48c290f5cd10c9a048ffffea38f5cf0">&#9670;&nbsp;</a></span>ScenarioCaseBuilder</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -422,99 +625,17 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void OTest2::ScenarioCase::reportEntering </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;&#160;</td>
-          <td class="paramname"><em>context_</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>decorated_name_</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
+          <td class="memname">friend class <a class="el" href="classOTest2_1_1ScenarioCaseBuilder.html">ScenarioCaseBuilder</a></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Report entering of the testing object. </p>
-<p>As constructor methods may throw an exception causing failure of the test, we report the entering into the object before actual creation of the object.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">context_</td><td>The <a class="el" href="namespaceOTest2.html">OTest2</a> context </td></tr>
-    <tr><td class="paramname">decorated_name_</td><td>Decorated name of the testing object </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implements <a class="el" href="classOTest2_1_1Scenario.html#a439e7b21f1e7ce11827e24a438b72090">OTest2::Scenario</a>.</p>
-
-<p class="definition">Definition at line <a class="el" href="scenariocase_8cpp_source.html#l00108">108</a> of file <a class="el" href="scenariocase_8cpp_source.html">scenariocase.cpp</a>.</p>
-
-</div>
-</div>
-<a id="af433345da9b2d4190770e689bc5eb010"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af433345da9b2d4190770e689bc5eb010">&#9670;&nbsp;</a></span>reportLeaving()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void OTest2::ScenarioCase::reportLeaving </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;&#160;</td>
-          <td class="paramname"><em>context_</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>decorated_name_</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>result_</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Report leaving of the testing object. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">context_</td><td>The <a class="el" href="namespaceOTest2.html">OTest2</a> context </td></tr>
-    <tr><td class="paramname">decorated_name_</td><td>Decorated name of the testign object </td></tr>
-    <tr><td class="paramname">result_</td><td>Result of the testing object </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implements <a class="el" href="classOTest2_1_1Scenario.html#ab6a57fb9b7ce41f6b3e03175925f15a0">OTest2::Scenario</a>.</p>
-
-<p class="definition">Definition at line <a class="el" href="scenariocase_8cpp_source.html#l00114">114</a> of file <a class="el" href="scenariocase_8cpp_source.html">scenariocase.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="scenariocase_8h_source.html#l00038">38</a> of file <a class="el" href="scenariocase_8h_source.html">scenariocase.h</a>.</p>
 
 </div>
 </div>

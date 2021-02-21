@@ -1,7 +1,8 @@
 <map id="include/otest2/testmark.h" name="include/otest2/testmark.h">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,192,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="110,155,175,181"/>
-<area shape="rect" id="node3" title=" " alt="" coords="27,80,85,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="110,80,173,107"/>
-<area shape="rect" id="node5" href="$testmarkhashcode_8h.html" title=" " alt="" coords="197,80,395,107"/>
+<area shape="rect" id="node1" title=" " alt="" coords="45,5,232,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="177,155,242,181"/>
+<area shape="rect" id="node3" title=" " alt="" coords="24,80,83,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="107,80,170,107"/>
+<area shape="rect" id="node5" href="$const_8h.html" title=" " alt="" coords="195,80,309,107"/>
+<area shape="rect" id="node6" href="$testmarkhashcode_8h.html" title=" " alt="" coords="334,80,533,107"/>
 </map>

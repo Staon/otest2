@@ -1,0 +1,7 @@
+<map id="OTest2::AssertBufferBase" name="OTest2::AssertBufferBase">
+<area shape="rect" id="node1" title="An empty implementation of the assertion buffer." alt="" coords="104,229,288,256"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1AssertBufferStr.html" title="An implementation of the assertion buffer keeping messages in a memory buffer." alt="" coords="5,155,176,181"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1AssertBuffer.html" title="Streambuffer interface used in the assertion API." alt="" coords="15,80,167,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="47,5,135,32"/>
+<area shape="rect" id="node5" href="$classOTest2_1_1AssertBufferListener.html" title="Listener of the string assertion buffer." alt="" coords="200,155,403,181"/>
+</map>

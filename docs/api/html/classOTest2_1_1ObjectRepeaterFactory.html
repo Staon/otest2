@@ -103,14 +103,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a96bdf21aeea3628912a67ced0332e365"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa219b733e3c05cbfea0c082ae421320b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOTest2_1_1ObjectRepeaterFactory.html">ObjectRepeaterFactory</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ObjectRepeaterFactory.html#aa219b733e3c05cbfea0c082ae421320b">operator=</a> (const <a class="el" href="classOTest2_1_1ObjectRepeaterFactory.html">ObjectRepeaterFactory</a> &amp;)=delete</td></tr>
 <tr class="separator:aa219b733e3c05cbfea0c082ae421320b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe4b911ed30a13828f6513f83bd53953"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceOTest2.html#a09bd49f984fc343c80222bf08df40b4b">ObjectRepeaterPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ObjectRepeaterFactory.html#afe4b911ed30a13828f6513f83bd53953">createRepeater</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_) const =0</td></tr>
-<tr class="memdesc:afe4b911ed30a13828f6513f83bd53953"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create repeater object.  <a href="classOTest2_1_1ObjectRepeaterFactory.html#afe4b911ed30a13828f6513f83bd53953">More...</a><br /></td></tr>
-<tr class="separator:afe4b911ed30a13828f6513f83bd53953"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f7851c0990e1ee0cc48884a8bf6006d"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceOTest2.html#a09bd49f984fc343c80222bf08df40b4b">ObjectRepeaterPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ObjectRepeaterFactory.html#a2f7851c0990e1ee0cc48884a8bf6006d">createRepeater</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, const std::string &amp;section_path_) const =0</td></tr>
+<tr class="memdesc:a2f7851c0990e1ee0cc48884a8bf6006d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create repeater object.  <a href="classOTest2_1_1ObjectRepeaterFactory.html#a2f7851c0990e1ee0cc48884a8bf6006d">More...</a><br /></td></tr>
+<tr class="separator:a2f7851c0990e1ee0cc48884a8bf6006d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Factory of object repeater objects. </p>
 
-<p class="definition">Definition at line <a class="el" href="objectrepeaterfactory_8h_source.html#l00033">33</a> of file <a class="el" href="objectrepeaterfactory_8h_source.html">objectrepeaterfactory.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="objectrepeaterfactory_8h_source.html#l00035">35</a> of file <a class="el" href="objectrepeaterfactory_8h_source.html">objectrepeaterfactory.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a22bd99721702ecc6e3c9b7c02556298c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a22bd99721702ecc6e3c9b7c02556298c">&#9670;&nbsp;</a></span>ObjectRepeaterFactory() <span class="overload">[1/2]</span></h2>
@@ -189,8 +189,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="afe4b911ed30a13828f6513f83bd53953"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe4b911ed30a13828f6513f83bd53953">&#9670;&nbsp;</a></span>createRepeater()</h2>
+<a id="a2f7851c0990e1ee0cc48884a8bf6006d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f7851c0990e1ee0cc48884a8bf6006d">&#9670;&nbsp;</a></span>createRepeater()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -202,8 +202,18 @@ Public Member Functions</h2></td></tr>
           <td class="memname">virtual <a class="el" href="namespaceOTest2.html#a09bd49f984fc343c80222bf08df40b4b">ObjectRepeaterPtr</a> OTest2::ObjectRepeaterFactory::createRepeater </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;&#160;</td>
-          <td class="paramname"><em>context_</em></td><td>)</td>
-          <td> const</td>
+          <td class="paramname"><em>context_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>section_path_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
         </tr>
       </table>
   </td>
@@ -217,12 +227,13 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context_</td><td>The <a class="el" href="namespaceOTest2.html">OTest2</a> context </td></tr>
+    <tr><td class="paramname">section_path_</td><td>Full path of active section. Used just be test cases. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The repeater object </dd></dl>
 
-<p>Implemented in <a class="el" href="classOTest2_1_1ObjectRepeaterFactoryMultiNested.html#a2f8b56ac84479be0a5df63f9a0b7cb8c">OTest2::ObjectRepeaterFactoryMultiNested&lt; Parent_, Object_, Repeater_ &gt;</a>, <a class="el" href="classOTest2_1_1ObjectRepeaterFactoryOnceNested.html#a34ef22fadba4b610a247912f1b33eada">OTest2::ObjectRepeaterFactoryOnceNested&lt; Parent_, Object_ &gt;</a>, <a class="el" href="classOTest2_1_1ObjectRepeaterFactoryMultiRoot.html#a772527faa0f5ca750f07d62f900b5249">OTest2::ObjectRepeaterFactoryMultiRoot&lt; Object_, Repeater_ &gt;</a>, and <a class="el" href="classOTest2_1_1ObjectRepeaterFactoryOnceRoot.html#a6fa3ba113380972cd7d8048f5631787b">OTest2::ObjectRepeaterFactoryOnceRoot&lt; Object_ &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classOTest2_1_1ObjectRepeaterFactoryMultiNested.html#a5d98d824df5e19d5e3ba32798ae06ae8">OTest2::ObjectRepeaterFactoryMultiNested&lt; Parent_, Object_, Repeater_ &gt;</a>, <a class="el" href="classOTest2_1_1ObjectRepeaterFactoryOnceNested.html#a137d03d80825ed4a0e2f8e709b708691">OTest2::ObjectRepeaterFactoryOnceNested&lt; Parent_, Object_ &gt;</a>, <a class="el" href="classOTest2_1_1ObjectRepeaterFactoryMultiRoot.html#a6e2195f84de3842e11f6dabd2c24b435">OTest2::ObjectRepeaterFactoryMultiRoot&lt; Object_, Repeater_ &gt;</a>, and <a class="el" href="classOTest2_1_1ObjectRepeaterFactoryOnceRoot.html#a92efff0e413c6a8cb1532be43d261c32">OTest2::ObjectRepeaterFactoryOnceRoot&lt; Object_ &gt;</a>.</p>
 
 </div>
 </div>

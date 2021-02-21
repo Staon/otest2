@@ -116,9 +116,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a420a12abba60df151327de14b5698a42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60a2d14d950d45caed0cbbbe19163fdc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOTest2_1_1StateGenerated.html">StateGenerated</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1StateGenerated.html#a60a2d14d950d45caed0cbbbe19163fdc">operator=</a> (const <a class="el" href="classOTest2_1_1StateGenerated.html">StateGenerated</a> &amp;)=delete</td></tr>
 <tr class="separator:a60a2d14d950d45caed0cbbbe19163fdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37124b734d328f975b6175b82062bac6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1StateGenerated.html#a37124b734d328f975b6175b82062bac6">StateGenerated</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, const std::string &amp;name_)</td></tr>
-<tr class="memdesc:a37124b734d328f975b6175b82062bac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ctor.  <a href="classOTest2_1_1StateGenerated.html#a37124b734d328f975b6175b82062bac6">More...</a><br /></td></tr>
-<tr class="separator:a37124b734d328f975b6175b82062bac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd4af8ff1fe6aad6e9732e8f4d26db39"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1StateGenerated.html#afd4af8ff1fe6aad6e9732e8f4d26db39">StateGenerated</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, const std::string &amp;name_, const std::string &amp;section_path_)</td></tr>
+<tr class="memdesc:afd4af8ff1fe6aad6e9732e8f4d26db39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ctor.  <a href="classOTest2_1_1StateGenerated.html#afd4af8ff1fe6aad6e9732e8f4d26db39">More...</a><br /></td></tr>
+<tr class="separator:afd4af8ff1fe6aad6e9732e8f4d26db39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac63465eead3e2bb77f84fa85b2ac0530"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1StateGenerated.html#ac63465eead3e2bb77f84fa85b2ac0530">~StateGenerated</a> ()</td></tr>
 <tr class="memdesc:ac63465eead3e2bb77f84fa85b2ac0530"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dtor.  <a href="classOTest2_1_1StateGenerated.html#ac63465eead3e2bb77f84fa85b2ac0530">More...</a><br /></td></tr>
 <tr class="separator:ac63465eead3e2bb77f84fa85b2ac0530"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -184,6 +184,9 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a6d9ff4ca0539989c84f312be0ebbcc3e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1StateGenerated.html#a6d9ff4ca0539989c84f312be0ebbcc3e">switchState</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, const std::string &amp;name_, int delay_)</td></tr>
 <tr class="memdesc:a6d9ff4ca0539989c84f312be0ebbcc3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Switch test states.  <a href="classOTest2_1_1StateGenerated.html#a6d9ff4ca0539989c84f312be0ebbcc3e">More...</a><br /></td></tr>
 <tr class="separator:a6d9ff4ca0539989c84f312be0ebbcc3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed5ff7f5b83acab0eeac5ce762e25097"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1StateGenerated.html#aed5ff7f5b83acab0eeac5ce762e25097">isTestSectionActive</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, const std::string &amp;section_path_)</td></tr>
+<tr class="memdesc:aed5ff7f5b83acab0eeac5ce762e25097"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether a test section is active.  <a href="classOTest2_1_1StateGenerated.html#aed5ff7f5b83acab0eeac5ce762e25097">More...</a><br /></td></tr>
+<tr class="separator:aed5ff7f5b83acab0eeac5ce762e25097"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Common implementation of generated states. </p>
@@ -216,8 +219,8 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a37124b734d328f975b6175b82062bac6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37124b734d328f975b6175b82062bac6">&#9670;&nbsp;</a></span>StateGenerated() <span class="overload">[2/2]</span></h2>
+<a id="afd4af8ff1fe6aad6e9732e8f4d26db39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd4af8ff1fe6aad6e9732e8f4d26db39">&#9670;&nbsp;</a></span>StateGenerated() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -235,7 +238,13 @@ Protected Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name_</em>&#160;</td>
+          <td class="paramname"><em>name_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>section_path_</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -255,11 +264,12 @@ Protected Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">context_</td><td><a class="el" href="namespaceOTest2.html">OTest2</a> context </td></tr>
     <tr><td class="paramname">name_</td><td>Name of the state </td></tr>
+    <tr><td class="paramname">section_path_</td><td>Path of active section. Empty string means all sections are active. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="stategenerated_8cpp_source.html#l00071">71</a> of file <a class="el" href="stategenerated_8cpp_source.html">stategenerated.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="stategenerated_8cpp_source.html#l00076">76</a> of file <a class="el" href="stategenerated_8cpp_source.html">stategenerated.cpp</a>.</p>
 
 </div>
 </div>
@@ -288,7 +298,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Dtor. </p>
 
-<p class="definition">Definition at line <a class="el" href="stategenerated_8cpp_source.html#l00079">79</a> of file <a class="el" href="stategenerated_8cpp_source.html">stategenerated.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="stategenerated_8cpp_source.html#l00085">85</a> of file <a class="el" href="stategenerated_8cpp_source.html">stategenerated.cpp</a>.</p>
 
 </div>
 </div>
@@ -338,7 +348,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classOTest2_1_1StateOrdinary.html#a555fbd160aacb016d046ddbc7221d862">OTest2::StateOrdinary</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="stategenerated_8cpp_source.html#l00087">87</a> of file <a class="el" href="stategenerated_8cpp_source.html">stategenerated.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="stategenerated_8cpp_source.html#l00093">93</a> of file <a class="el" href="stategenerated_8cpp_source.html">stategenerated.cpp</a>.</p>
 
 </div>
 </div>
@@ -369,7 +379,55 @@ Protected Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classOTest2_1_1Object.html#a841e43a6c24ea6f6478a1ab810f904cb">OTest2::Object</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="stategenerated_8cpp_source.html#l00083">83</a> of file <a class="el" href="stategenerated_8cpp_source.html">stategenerated.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="stategenerated_8cpp_source.html#l00089">89</a> of file <a class="el" href="stategenerated_8cpp_source.html">stategenerated.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aed5ff7f5b83acab0eeac5ce762e25097"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed5ff7f5b83acab0eeac5ce762e25097">&#9670;&nbsp;</a></span>isTestSectionActive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool OTest2::StateGenerated::isTestSectionActive </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;&#160;</td>
+          <td class="paramname"><em>context_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>section_path_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Check whether a test section is active. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context_</td><td>The <a class="el" href="namespaceOTest2.html">OTest2</a> context </td></tr>
+    <tr><td class="paramname">section_path_</td><td>Absolute section path based on the test case </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the section is active </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="stategenerated_8cpp_source.html#l00120">120</a> of file <a class="el" href="stategenerated_8cpp_source.html">stategenerated.cpp</a>.</p>
 
 </div>
 </div>
@@ -426,7 +484,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="classOTest2_1_1ContextObject.html#a9fe30e2044944d64654b7a6fb27790ac">OTest2::ContextObject</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="stategenerated_8cpp_source.html#l00099">99</a> of file <a class="el" href="stategenerated_8cpp_source.html">stategenerated.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="stategenerated_8cpp_source.html#l00105">105</a> of file <a class="el" href="stategenerated_8cpp_source.html">stategenerated.cpp</a>.</p>
 
 </div>
 </div>
@@ -481,7 +539,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="stategenerated_8cpp_source.html#l00103">103</a> of file <a class="el" href="stategenerated_8cpp_source.html">stategenerated.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="stategenerated_8cpp_source.html#l00109">109</a> of file <a class="el" href="stategenerated_8cpp_source.html">stategenerated.cpp</a>.</p>
 
 </div>
 </div>

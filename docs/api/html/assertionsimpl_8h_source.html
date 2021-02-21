@@ -103,51 +103,75 @@ $(function() {
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>, <span class="keyword">typename</span>&gt; <span class="keyword">class </span>Compare_, <span class="keyword">typename</span> A_, <span class="keyword">typename</span> B_&gt;</div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classOTest2_1_1GenericAssertion.html#aa52d9b7e0133bd664ca5c1648db0a20e">   35</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1GenericAssertion.html#aa52d9b7e0133bd664ca5c1648db0a20e">GenericAssertion::testAssertCompare</a>(</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    A_&amp;&amp; a_,</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    B_&amp;&amp; b_) {</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;  <span class="keyword">typedef</span> <span class="keyword">typename</span> <a class="code" href="structOTest2_1_1AssertionParameter.html#aa170902ac3a8312fe9eed307e2ffae72">AssertionParameter&lt;A_&gt;::Type</a> AType_;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;  <span class="keyword">typedef</span> <span class="keyword">typename</span> <a class="code" href="structOTest2_1_1AssertionParameter.html#aa170902ac3a8312fe9eed307e2ffae72">AssertionParameter&lt;B_&gt;::Type</a> BType_;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keyword">typedef</span> Compare_&lt;AType_, BType_&gt; CmpType_;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="comment">/* -- compare the values */</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  CmpType_ cmp_;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">bool</span> condition_(cmp_(a_, b_));</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="comment">/* -- report the result and the used relation operator */</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <a class="code" href="classOTest2_1_1AssertStream.html">AssertStream</a> report_(<a class="code" href="classOTest2_1_1AssertContext.html#a5b0f3204a3f30b5431f51fb201ca0133">enterAssertion</a>(condition_));</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  report_ &lt;&lt; <span class="stringliteral">&quot;check &#39;&quot;</span>;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <a class="code" href="structOTest2_1_1PrintTrait.html#a779387757bfdd8c216fb342c7dabbed2">PrintTrait&lt;CmpType_&gt;::print</a>(report_, cmp_);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  report_ &lt;&lt; <span class="stringliteral">&quot;&#39; &quot;</span>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordflow">if</span>(condition_)</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    report_ &lt;&lt; <span class="stringliteral">&quot;has passed&quot;</span>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    report_ &lt;&lt; <span class="stringliteral">&quot;has failed&quot;</span>;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  report_ &lt;&lt; <a class="code" href="namespaceOTest2.html#a327ca975264fe626efa02a7368484a3e">commitMsg</a>();</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <span class="comment">/* -- print the expression */</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  report_ &lt;&lt; <span class="stringliteral">&quot;  &quot;</span> &lt;&lt; <a class="code" href="namespaceOTest2.html#a3e4e2397e51add6c61a6fadf0a642e0d">assertPar</a>(0) &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <a class="code" href="structOTest2_1_1PrintTrait.html#a779387757bfdd8c216fb342c7dabbed2">PrintTrait&lt;CmpType_&gt;::print</a>(report_, cmp_);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  report_ &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; <a class="code" href="namespaceOTest2.html#a3e4e2397e51add6c61a6fadf0a642e0d">assertPar</a>(1) &lt;&lt; <a class="code" href="namespaceOTest2.html#a327ca975264fe626efa02a7368484a3e">commitMsg</a>();</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="comment">/* -- print actual values */</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  report_ &lt;&lt; <span class="stringliteral">&quot;actual values:&quot;</span> &lt;&lt; <a class="code" href="namespaceOTest2.html#a327ca975264fe626efa02a7368484a3e">commitMsg</a>();</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  report_ &lt;&lt; <span class="stringliteral">&quot;  &quot;</span>;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <a class="code" href="structOTest2_1_1PrintTrait.html#a779387757bfdd8c216fb342c7dabbed2">PrintTrait&lt;AType_&gt;::print</a>(report_, a_);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> Compare_, <span class="keyword">typename</span> A_, <span class="keyword">typename</span> B_&gt;</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classOTest2_1_1GenericAssertion.html#ad7d6c5064745ec51d8dba6c409eec0f4">   35</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1GenericAssertion.html#ad7d6c5064745ec51d8dba6c409eec0f4">GenericAssertion::reportAssertion</a>(</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    Compare_&amp;&amp; cmp_,</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    A_&amp;&amp; a_,</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    B_&amp;&amp; b_,</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">bool</span> condition_) {</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keyword">typedef</span> <span class="keyword">typename</span> <a class="code" href="structOTest2_1_1AssertionParameter.html#aa170902ac3a8312fe9eed307e2ffae72">AssertionParameter&lt;A_&gt;::Type</a> AType_;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;  <span class="keyword">typedef</span> <span class="keyword">typename</span> <a class="code" href="structOTest2_1_1AssertionParameter.html#aa170902ac3a8312fe9eed307e2ffae72">AssertionParameter&lt;B_&gt;::Type</a> BType_;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keyword">typedef</span> <span class="keyword">typename</span> <a class="code" href="runnerfiltertags_8cpp.html#a6e2d2148929ac137f2e2ef4091a4dc69">std::remove_reference&lt;Compare_&gt;::type</a> CmpType_;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="comment">/* -- report the result and the used relation operator */</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <a class="code" href="classOTest2_1_1AssertStream.html">AssertStream</a> report_(<a class="code" href="classOTest2_1_1AssertContext.html#a5b0f3204a3f30b5431f51fb201ca0133">enterAssertion</a>(condition_));</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  report_ &lt;&lt; <span class="stringliteral">&quot;check &#39;&quot;</span>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <a class="code" href="structOTest2_1_1PrintTrait.html#a779387757bfdd8c216fb342c7dabbed2">PrintTrait&lt;CmpType_&gt;::print</a>(report_, cmp_);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  report_ &lt;&lt; <span class="stringliteral">&quot;&#39; &quot;</span>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  <span class="keywordflow">if</span>(condition_)</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    report_ &lt;&lt; <span class="stringliteral">&quot;has passed&quot;</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;  <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    report_ &lt;&lt; <span class="stringliteral">&quot;has failed&quot;</span>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  report_ &lt;&lt; <a class="code" href="namespaceOTest2.html#a327ca975264fe626efa02a7368484a3e">commitMsg</a>();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  <span class="comment">/* -- print the expression */</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  report_ &lt;&lt; <span class="stringliteral">&quot;  &quot;</span> &lt;&lt; <a class="code" href="namespaceOTest2.html#a3e4e2397e51add6c61a6fadf0a642e0d">assertPar</a>(0) &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  <a class="code" href="structOTest2_1_1PrintTrait.html#a779387757bfdd8c216fb342c7dabbed2">PrintTrait&lt;CmpType_&gt;::print</a>(report_, cmp_);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  report_ &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; <a class="code" href="namespaceOTest2.html#a3e4e2397e51add6c61a6fadf0a642e0d">assertPar</a>(1) &lt;&lt; <a class="code" href="namespaceOTest2.html#a327ca975264fe626efa02a7368484a3e">commitMsg</a>();</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <span class="comment">/* -- print actual values */</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;  report_ &lt;&lt; <span class="stringliteral">&quot;actual values:&quot;</span> &lt;&lt; <a class="code" href="namespaceOTest2.html#a327ca975264fe626efa02a7368484a3e">commitMsg</a>();</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  report_ &lt;&lt; <span class="stringliteral">&quot;  &quot;</span>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <a class="code" href="structOTest2_1_1PrintTrait.html#a779387757bfdd8c216fb342c7dabbed2">PrintTrait&lt;AType_&gt;::print</a>(report_, a_);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  report_ &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <a class="code" href="structOTest2_1_1PrintTrait.html#a779387757bfdd8c216fb342c7dabbed2">PrintTrait&lt;CmpType_&gt;::print</a>(report_, cmp_);</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  report_ &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <a class="code" href="structOTest2_1_1PrintTrait.html#a779387757bfdd8c216fb342c7dabbed2">PrintTrait&lt;CmpType_&gt;::print</a>(report_, cmp_);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  report_ &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <a class="code" href="structOTest2_1_1PrintTrait.html#a779387757bfdd8c216fb342c7dabbed2">PrintTrait&lt;BType_&gt;::print</a>(report_, b_);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  report_ &lt;&lt; <a class="code" href="namespaceOTest2.html#a327ca975264fe626efa02a7368484a3e">commitMsg</a>();</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="keywordflow">return</span> report_.<a class="code" href="classOTest2_1_1AssertStream.html#acaf7a8de02c2c2db82b03721434dd9dd">getResult</a>();</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}  <span class="comment">/* -- namespace OTest2 */</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* OTest2__INCLUDE_OTEST2_ASSERTIONSIMPL_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <a class="code" href="structOTest2_1_1PrintTrait.html#a779387757bfdd8c216fb342c7dabbed2">PrintTrait&lt;BType_&gt;::print</a>(report_, b_);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  report_ &lt;&lt; <a class="code" href="namespaceOTest2.html#a327ca975264fe626efa02a7368484a3e">commitMsg</a>();</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keywordflow">return</span> report_.<a class="code" href="classOTest2_1_1AssertStream.html#acaf7a8de02c2c2db82b03721434dd9dd">getResult</a>();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>, <span class="keyword">typename</span>&gt; <span class="keyword">class </span>Compare_, <span class="keyword">typename</span> A_, <span class="keyword">typename</span> B_&gt;</div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classOTest2_1_1GenericAssertion.html#aa52d9b7e0133bd664ca5c1648db0a20e">   74</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1GenericAssertion.html#aa52d9b7e0133bd664ca5c1648db0a20e">GenericAssertion::testAssertCompare</a>(</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    A_&amp;&amp; a_,</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    B_&amp;&amp; b_) {</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keyword">typedef</span> <span class="keyword">typename</span> <a class="code" href="structOTest2_1_1AssertionParameter.html#aa170902ac3a8312fe9eed307e2ffae72">AssertionParameter&lt;A_&gt;::Type</a> AType_;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keyword">typedef</span> <span class="keyword">typename</span> <a class="code" href="structOTest2_1_1AssertionParameter.html#aa170902ac3a8312fe9eed307e2ffae72">AssertionParameter&lt;B_&gt;::Type</a> BType_;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <span class="keyword">typedef</span> Compare_&lt;AType_, BType_&gt; CmpType_;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <span class="comment">/* -- compare the values */</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  CmpType_ cmp_;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">bool</span> condition_(cmp_(a_, b_));</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="classOTest2_1_1GenericAssertion.html#ad7d6c5064745ec51d8dba6c409eec0f4">reportAssertion</a>(cmp_, a_, b_, condition_);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;}</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>, <span class="keyword">typename</span>, <span class="keyword">typename</span>&gt; <span class="keyword">class </span>Compare_, <span class="keyword">typename</span> A_, <span class="keyword">typename</span> B_, <span class="keyword">typename</span> Precision_&gt;</div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="classOTest2_1_1GenericAssertion.html#a3d17ab62a12851d855597787305a292a">   88</a></span>&#160;<span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1GenericAssertion.html#a3d17ab62a12851d855597787305a292a">GenericAssertion::testAssertCompareFP</a>(</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    A_ a_,</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    B_ b_,</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    Precision_ precision_) {</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="comment">/* -- compare the values */</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  Compare_&lt;A_, B_, Precision_&gt; cmp_;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">bool</span> condition_(cmp_(a_, b_, precision_));</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="classOTest2_1_1GenericAssertion.html#ad7d6c5064745ec51d8dba6c409eec0f4">reportAssertion</a>(cmp_, a_, b_, condition_);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;}  <span class="comment">/* -- namespace OTest2 */</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* OTest2__INCLUDE_OTEST2_ASSERTIONSIMPL_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aclassOTest2_1_1GenericAssertion_html_ad7d6c5064745ec51d8dba6c409eec0f4"><div class="ttname"><a href="classOTest2_1_1GenericAssertion.html#ad7d6c5064745ec51d8dba6c409eec0f4">OTest2::GenericAssertion::reportAssertion</a></div><div class="ttdeci">bool reportAssertion(Compare_ &amp;&amp;cmp_, A_ &amp;&amp;a_, B_ &amp;&amp;b_, bool condition_)</div><div class="ttdef"><b>Definition:</b> <a href="assertionsimpl_8h_source.html#l00035">assertionsimpl.h:35</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html_a3e4e2397e51add6c61a6fadf0a642e0d"><div class="ttname"><a href="namespaceOTest2.html#a3e4e2397e51add6c61a6fadf0a642e0d">OTest2::assertPar</a></div><div class="ttdeci">Private::Manipulator&lt; int &gt; assertPar(int index_)</div><div class="ttdoc">Print assertion parameter.</div><div class="ttdef"><b>Definition:</b> <a href="assertstream_8cpp_source.html#l00196">assertstream.cpp:196</a></div></div>
 <div class="ttc" id="aassertstream_8h_html"><div class="ttname"><a href="assertstream_8h.html">assertstream.h</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1AssertStream_html_acaf7a8de02c2c2db82b03721434dd9dd"><div class="ttname"><a href="classOTest2_1_1AssertStream.html#acaf7a8de02c2c2db82b03721434dd9dd">OTest2::AssertStream::getResult</a></div><div class="ttdeci">bool getResult()</div><div class="ttdoc">Return the assertion result.</div><div class="ttdef"><b>Definition:</b> <a href="assertstream_8cpp_source.html#l00093">assertstream.cpp:93</a></div></div>
@@ -157,8 +181,10 @@ $(function() {
 <div class="ttc" id="astructOTest2_1_1PrintTrait_html_a779387757bfdd8c216fb342c7dabbed2"><div class="ttname"><a href="structOTest2_1_1PrintTrait.html#a779387757bfdd8c216fb342c7dabbed2">OTest2::PrintTrait::print</a></div><div class="ttdeci">static std::ostream &amp; print(std::ostream &amp;os_, typename TypeTrait&lt; Type_ &gt;::BestArg value_)</div><div class="ttdef"><b>Definition:</b> <a href="printtraits_8h_source.html#l00039">printtraits.h:39</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
 <div class="ttc" id="astructOTest2_1_1AssertionParameter_html_aa170902ac3a8312fe9eed307e2ffae72"><div class="ttname"><a href="structOTest2_1_1AssertionParameter.html#aa170902ac3a8312fe9eed307e2ffae72">OTest2::AssertionParameter::Type</a></div><div class="ttdeci">NormalizeStringType&lt; typename std::remove_const&lt; typename std::remove_reference&lt; Type_ &gt;::type &gt;::type &gt;::Type Type</div><div class="ttdef"><b>Definition:</b> <a href="typetraits_8h_source.html#l00084">typetraits.h:84</a></div></div>
+<div class="ttc" id="arunnerfiltertags_8cpp_html_a6e2d2148929ac137f2e2ef4091a4dc69"><div class="ttname"><a href="runnerfiltertags_8cpp.html#a6e2d2148929ac137f2e2ef4091a4dc69">type</a></div><div class="ttdeci">TokenType type</div><div class="ttdef"><b>Definition:</b> <a href="runnerfiltertags_8cpp_source.html#l00502">runnerfiltertags.cpp:502</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1AssertStream_html"><div class="ttname"><a href="classOTest2_1_1AssertStream.html">OTest2::AssertStream</a></div><div class="ttdoc">Assertion stream.</div><div class="ttdef"><b>Definition:</b> <a href="assertstream_8h_source.html#l00040">assertstream.h:40</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1GenericAssertion_html_aa52d9b7e0133bd664ca5c1648db0a20e"><div class="ttname"><a href="classOTest2_1_1GenericAssertion.html#aa52d9b7e0133bd664ca5c1648db0a20e">OTest2::GenericAssertion::testAssertCompare</a></div><div class="ttdeci">bool testAssertCompare(A_ &amp;&amp;a_, B_ &amp;&amp;b_)</div><div class="ttdef"><b>Definition:</b> <a href="assertionsimpl_8h_source.html#l00035">assertionsimpl.h:35</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1GenericAssertion_html_a3d17ab62a12851d855597787305a292a"><div class="ttname"><a href="classOTest2_1_1GenericAssertion.html#a3d17ab62a12851d855597787305a292a">OTest2::GenericAssertion::testAssertCompareFP</a></div><div class="ttdeci">bool testAssertCompareFP(A_ a_, B_ b_, Precision_ precision_=DEFAULT_FLOAT_PRECISION)</div><div class="ttdef"><b>Definition:</b> <a href="assertionsimpl_8h_source.html#l00088">assertionsimpl.h:88</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1GenericAssertion_html_aa52d9b7e0133bd664ca5c1648db0a20e"><div class="ttname"><a href="classOTest2_1_1GenericAssertion.html#aa52d9b7e0133bd664ca5c1648db0a20e">OTest2::GenericAssertion::testAssertCompare</a></div><div class="ttdeci">bool testAssertCompare(A_ &amp;&amp;a_, B_ &amp;&amp;b_)</div><div class="ttdef"><b>Definition:</b> <a href="assertionsimpl_8h_source.html#l00074">assertionsimpl.h:74</a></div></div>
 <div class="ttc" id="aassertions_8h_html"><div class="ttname"><a href="assertions_8h.html">assertions.h</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

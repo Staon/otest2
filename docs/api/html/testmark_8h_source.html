@@ -95,17 +95,17 @@ $(function() {
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="testmarkhashcode_8h.html">otest2/testmarkhashcode.h</a>&gt;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">class </span>DiffLogBuilder;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">class </span>TestMarkFactory;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">class </span>TestMarkFormatter;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">class </span>TestMarkIn;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">class </span>TestMarkOut;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;constexpr <span class="keywordtype">long</span> <span class="keywordtype">double</span> <a class="code" href="namespaceOTest2.html#af16224becf59eedf5a61b3fcf6fa4c2b">DEFAULT_FLOAT_PRECISION</a>(1.0e-9);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="const_8h.html">otest2/const.h</a>&gt;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="testmarkhashcode_8h.html">otest2/testmarkhashcode.h</a>&gt;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">class </span>DiffLogBuilder;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">class </span>TestMarkFactory;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">class </span>TestMarkFormatter;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">class </span>TestMarkIn;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">class </span>TestMarkOut;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
 <div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classOTest2_1_1TestMark.html">   41</a></span>&#160;<span class="keyword">class </span><a class="code" href="classOTest2_1_1TestMark.html">TestMark</a> {</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;  <span class="keyword">public</span>:</div>
@@ -175,15 +175,15 @@ $(function() {
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160; </div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1TestMark.html#a22be7b015a9d3c8ee939e96a27ea4712">isEqual</a>(</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        const <a class="code" href="classOTest2_1_1TestMark.html">TestMark</a>&amp; other_,</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        <span class="keywordtype">long</span> <span class="keywordtype">double</span> precision_ = <a class="code" href="namespaceOTest2.html#af16224becf59eedf5a61b3fcf6fa4c2b">DEFAULT_FLOAT_PRECISION</a>) const;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        <span class="keywordtype">long</span> <span class="keywordtype">double</span> precision_ = <a class="code" href="namespaceOTest2.html#af75497647f3ea44fff1d85daa3176a5e">DEFAULT_FLOAT_PRECISION</a>) const;</div>
 <div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1TestMark.html#a74ed90fbd50fb8d93b63d0705490f91c">isEqualValue</a>(</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;        const <a class="code" href="classOTest2_1_1TestMark.html">TestMark</a>&amp; other_,</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;        <span class="keywordtype">long</span> <span class="keywordtype">double</span> precision_ = <a class="code" href="namespaceOTest2.html#af16224becf59eedf5a61b3fcf6fa4c2b">DEFAULT_FLOAT_PRECISION</a>) const;</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;        <span class="keywordtype">long</span> <span class="keywordtype">double</span> precision_ = <a class="code" href="namespaceOTest2.html#af75497647f3ea44fff1d85daa3176a5e">DEFAULT_FLOAT_PRECISION</a>) const;</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160; </div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classOTest2_1_1TestMark.html#a6d47b308f4b1ade01978bdc43f7df53c">isEqualValueHash</a>(</div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;        const <a class="code" href="classOTest2_1_1TestMark.html">TestMark</a>&amp; other_,</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        <span class="keywordtype">long</span> <span class="keywordtype">double</span> precision_ = <a class="code" href="namespaceOTest2.html#af16224becf59eedf5a61b3fcf6fa4c2b">DEFAULT_FLOAT_PRECISION</a>) const;</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        <span class="keywordtype">long</span> <span class="keywordtype">double</span> precision_ = <a class="code" href="namespaceOTest2.html#af75497647f3ea44fff1d85daa3176a5e">DEFAULT_FLOAT_PRECISION</a>) const;</div>
 <div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160; </div>
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1TestMark.html#aa1ac2c2e59952be87d094fe4d5558c61">linearizedMark</a>(</div>
 <div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;        std::vector&lt;<a class="code" href="structOTest2_1_1TestMark_1_1LinearizedRecord.html">LinearizedRecord</a>&gt;&amp; array_) const;</div>
@@ -236,7 +236,9 @@ $(function() {
 <div class="ttc" id="aclassOTest2_1_1DiffLogBuilder_html"><div class="ttname"><a href="classOTest2_1_1DiffLogBuilder.html">OTest2::DiffLogBuilder</a></div><div class="ttdoc">Generic interface of the log builder.</div><div class="ttdef"><b>Definition:</b> <a href="difflogbuilder_8h_source.html#l00030">difflogbuilder.h:30</a></div></div>
 <div class="ttc" id="astructOTest2_1_1TestMark_1_1LinearizedRecord_html_a024aeceee9dd088a0f6545529ccaa156"><div class="ttname"><a href="structOTest2_1_1TestMark_1_1LinearizedRecord.html#a024aeceee9dd088a0f6545529ccaa156">OTest2::TestMark::LinearizedRecord::level</a></div><div class="ttdeci">const int level</div><div class="ttdef"><b>Definition:</b> <a href="testmark_8h_source.html#l00047">testmark.h:47</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMark_html_aa9cdb00f17a869378c35b3c210b1a429"><div class="ttname"><a href="classOTest2_1_1TestMark.html#aa9cdb00f17a869378c35b3c210b1a429">OTest2::TestMark::doLinearizedMark</a></div><div class="ttdeci">virtual void doLinearizedMark(int level_, const std::string &amp;label_, std::vector&lt; LinearizedRecord &gt; &amp;array_) const =0</div><div class="ttdoc">Create linearized test mark.</div></div>
+<div class="ttc" id="aconst_8h_html"><div class="ttname"><a href="const_8h.html">const.h</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
+<div class="ttc" id="anamespaceOTest2_html_af75497647f3ea44fff1d85daa3176a5e"><div class="ttname"><a href="namespaceOTest2.html#af75497647f3ea44fff1d85daa3176a5e">OTest2::DEFAULT_FLOAT_PRECISION</a></div><div class="ttdeci">constexpr long double DEFAULT_FLOAT_PRECISION(1.0e-12)</div><div class="ttdoc">Default precision for floating point comparisons.</div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMark_html_a34b02ff3d8cfa3be376765d6fc3eb155"><div class="ttname"><a href="classOTest2_1_1TestMark.html#a34b02ff3d8cfa3be376765d6fc3eb155">OTest2::TestMark::printClose</a></div><div class="ttdeci">void printClose(std::ostream &amp;os_, const std::string &amp;prefix_) const</div><div class="ttdoc">Print closing of the node into a stream.</div><div class="ttdef"><b>Definition:</b> <a href="testmark_8cpp_source.html#l00126">testmark.cpp:126</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMark_html_a9da55b5b8ab811eebad2070bb0f47ea2"><div class="ttname"><a href="classOTest2_1_1TestMark.html#a9da55b5b8ab811eebad2070bb0f47ea2">OTest2::TestMark::serializeMark</a></div><div class="ttdeci">void serializeMark(TestMarkOut &amp;serializer_) const</div><div class="ttdoc">Serialize the testmark into a serializer.</div><div class="ttdef"><b>Definition:</b> <a href="testmark_8cpp_source.html#l00132">testmark.cpp:132</a></div></div>
 <div class="ttc" id="astructOTest2_1_1TestMark_1_1LinearizedRecord_html"><div class="ttname"><a href="structOTest2_1_1TestMark_1_1LinearizedRecord.html">OTest2::TestMark::LinearizedRecord</a></div><div class="ttdoc">One item of linearized test mark.</div><div class="ttdef"><b>Definition:</b> <a href="testmark_8h_source.html#l00046">testmark.h:46</a></div></div>
@@ -244,7 +246,6 @@ $(function() {
 <div class="ttc" id="aclassOTest2_1_1TestMark_html"><div class="ttname"><a href="classOTest2_1_1TestMark.html">OTest2::TestMark</a></div><div class="ttdoc">Generic interface of a test mark node.</div><div class="ttdef"><b>Definition:</b> <a href="testmark_8h_source.html#l00041">testmark.h:41</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkFactory_html"><div class="ttname"><a href="classOTest2_1_1TestMarkFactory.html">OTest2::TestMarkFactory</a></div><div class="ttdoc">A factory of testmark objects used for deserialization.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkfactory_8h_source.html#l00045">testmarkfactory.h:45</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1TestMarkFormatter_html"><div class="ttname"><a href="classOTest2_1_1TestMarkFormatter.html">OTest2::TestMarkFormatter</a></div><div class="ttdoc">Generic interface of the testmark formatter.</div><div class="ttdef"><b>Definition:</b> <a href="testmarkformatter_8h_source.html#l00032">testmarkformatter.h:32</a></div></div>
-<div class="ttc" id="anamespaceOTest2_html_af16224becf59eedf5a61b3fcf6fa4c2b"><div class="ttname"><a href="namespaceOTest2.html#af16224becf59eedf5a61b3fcf6fa4c2b">OTest2::DEFAULT_FLOAT_PRECISION</a></div><div class="ttdeci">constexpr long double DEFAULT_FLOAT_PRECISION(1.0e-9)</div></div>
 <div class="ttc" id="astructOTest2_1_1TestMark_1_1LinearizedRecord_html_a76fa96dd262e4d9e43dc9efae89f3234"><div class="ttname"><a href="structOTest2_1_1TestMark_1_1LinearizedRecord.html#a76fa96dd262e4d9e43dc9efae89f3234">OTest2::TestMark::LinearizedRecord::label</a></div><div class="ttdeci">std::string label</div><div class="ttdef"><b>Definition:</b> <a href="testmark_8h_source.html#l00049">testmark.h:49</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

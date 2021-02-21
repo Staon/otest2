@@ -1,3 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structOTest2_1_1AssertionParameter.html" title="A helper trait &#45; get normalized type of a captured assertion parameter." alt="" coords="5,5,205,47"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,81,81,108"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1AssertStream.html" title="Assertion stream." alt="" coords="137,5,300,32"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1Base64OStream.html" title="Base64 output stream." alt="" coords="129,56,308,83"/>
+<area shape="rect" id="node4" href="$classOTest2_1_1Bzip2OStream.html" title="Bzip2 output stream." alt="" coords="135,107,302,133"/>
+<area shape="rect" id="node5" href="$classOTest2_1_1TeeOStream.html" title="An output stream working as the tee unix utility." alt="" coords="143,157,295,184"/>
 </map>

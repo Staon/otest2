@@ -1,7 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classOTest2_1_1Scenario.html" title="Generic scenario object." alt="" coords="5,31,135,57"/>
-<area shape="rect" id="node2" href="$classOTest2_1_1ScenarioCase.html" title="Scenario object of a test case." alt="" coords="197,5,359,32"/>
-<area shape="rect" id="node3" href="$classOTest2_1_1ScenarioContainer.html" title="Generic interface of a scenario container." alt="" coords="183,56,373,83"/>
-<area shape="rect" id="node4" href="$classOTest2_1_1ScenarioRoot.html" title="Scenario object representing entire test." alt="" coords="424,31,581,57"/>
-<area shape="rect" id="node5" href="$classOTest2_1_1ScenarioSuite.html" title="A scenario object representing one test suite." alt="" coords="421,81,584,108"/>
+<area shape="rect" id="node1" href="$classOTest2_1_1Reporter.html" title="Generic test reporter." alt="" coords="5,56,132,83"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1ReporterConsole.html" title="A reporter writing into a console or file." alt="" coords="180,5,359,32"/>
+<area shape="rect" id="node3" href="$classOTest2_1_1ReporterJUnit.html" title="A reporter creating JUnit XML reports." alt="" coords="191,56,347,83"/>
+<area shape="rect" id="node4" href="$classOTest2_1_1ReporterTee.html" title="A tee reporter &#45; a composition of several reporters." alt="" coords="195,107,343,133"/>
 </map>

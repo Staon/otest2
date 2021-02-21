@@ -92,38 +92,47 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="cmdfirststate_8h.html">cmdfirststate.h</a>&gt;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &lt;assert.h&gt;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="caseordinary_8h.html">caseordinary.h</a>&gt;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="caseordinaryptr_8h.html">caseordinaryptr.h</a>&gt;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="state_8h.html">state.h</a>&gt;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="stateptr_8h.html">stateptr.h</a>&gt;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="caseordinary_8h.html">caseordinary.h</a>&gt;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="caseordinaryptr_8h.html">caseordinaryptr.h</a>&gt;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="internalerror_8h.html">internalerror.h</a>&gt;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="state_8h.html">state.h</a>&gt;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="stateptr_8h.html">stateptr.h</a>&gt;</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classOTest2_1_1CmdFirstState.html#a9282db0b120f1e79a8a91211acf6ec6a">   31</a></span>&#160;<a class="code" href="classOTest2_1_1CmdFirstState.html#af8bc422a2ec719a8029bc20434294442">CmdFirstState::CmdFirstState</a>(</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="namespaceOTest2.html#a3ee94bac3095616d591bc32c9b8b4e4c">CaseOrdinaryPtr</a> case_) :</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  testcase(case_) {</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;  assert(testcase != <span class="keyword">nullptr</span>);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;}</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classOTest2_1_1CmdFirstState.html#a9282db0b120f1e79a8a91211acf6ec6a">   33</a></span>&#160;<a class="code" href="classOTest2_1_1CmdFirstState.html#af8bc422a2ec719a8029bc20434294442">CmdFirstState::CmdFirstState</a>(</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="namespaceOTest2.html#a3ee94bac3095616d591bc32c9b8b4e4c">CaseOrdinaryPtr</a> case_) :</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  testcase(case_) {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;  assert(testcase != <span class="keyword">nullptr</span>);</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classOTest2_1_1CmdFirstState.html#a028728a59feb359a2680d85619a5a1c1">   38</a></span>&#160;<a class="code" href="classOTest2_1_1CmdFirstState.html#a028728a59feb359a2680d85619a5a1c1">CmdFirstState::~CmdFirstState</a>() {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;}</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classOTest2_1_1CmdFirstState.html#a028728a59feb359a2680d85619a5a1c1">   40</a></span>&#160;<a class="code" href="classOTest2_1_1CmdFirstState.html#a028728a59feb359a2680d85619a5a1c1">CmdFirstState::~CmdFirstState</a>() {</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classOTest2_1_1CmdFirstState.html#a7d2db3fdbbdfd7fc7aa8db9710d86435">   42</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1CmdFirstState.html#a7d2db3fdbbdfd7fc7aa8db9710d86435">CmdFirstState::run</a>(</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_) {</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <a class="code" href="namespaceOTest2.html#a85dd661d9e820001497de510286d6fdd">StatePtr</a> state_(testcase-&gt;getFirstState());</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  state_-&gt;scheduleRun(context_, testcase, state_, <span class="keyword">false</span>, -1);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="classOTest2_1_1CmdFirstState.html#a7d2db3fdbbdfd7fc7aa8db9710d86435">   44</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classOTest2_1_1CmdFirstState.html#a7d2db3fdbbdfd7fc7aa8db9710d86435">CmdFirstState::run</a>(</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">const</span> <a class="code" href="classOTest2_1_1Context.html">Context</a>&amp; context_) {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <a class="code" href="namespaceOTest2.html#a85dd661d9e820001497de510286d6fdd">StatePtr</a> state_(testcase-&gt;getFirstState());</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordflow">if</span>(state_ != <span class="keyword">nullptr</span>) {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    state_-&gt;scheduleRun(context_, testcase, state_, <span class="keyword">false</span>, -1);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;  }</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="namespaceOTest2.html#ac5a3df96bffd96d1c51a91ff6371a69e">internalError</a>(context_, <span class="stringliteral">&quot;there is not set any entering state&quot;</span>);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  }</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;} <span class="comment">/* namespace OTest2 */</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="acaseordinaryptr_8h_html"><div class="ttname"><a href="caseordinaryptr_8h.html">caseordinaryptr.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1CmdFirstState_html_a7d2db3fdbbdfd7fc7aa8db9710d86435"><div class="ttname"><a href="classOTest2_1_1CmdFirstState.html#a7d2db3fdbbdfd7fc7aa8db9710d86435">OTest2::CmdFirstState::run</a></div><div class="ttdeci">virtual void run(const Context &amp;context_)</div><div class="ttdoc">Run the command.</div><div class="ttdef"><b>Definition:</b> <a href="cmdfirststate_8cpp_source.html#l00042">cmdfirststate.cpp:42</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1CmdFirstState_html_a7d2db3fdbbdfd7fc7aa8db9710d86435"><div class="ttname"><a href="classOTest2_1_1CmdFirstState.html#a7d2db3fdbbdfd7fc7aa8db9710d86435">OTest2::CmdFirstState::run</a></div><div class="ttdeci">virtual void run(const Context &amp;context_)</div><div class="ttdoc">Run the command.</div><div class="ttdef"><b>Definition:</b> <a href="cmdfirststate_8cpp_source.html#l00044">cmdfirststate.cpp:44</a></div></div>
 <div class="ttc" id="acaseordinary_8h_html"><div class="ttname"><a href="caseordinary_8h.html">caseordinary.h</a></div></div>
-<div class="ttc" id="aclassOTest2_1_1CmdFirstState_html_a028728a59feb359a2680d85619a5a1c1"><div class="ttname"><a href="classOTest2_1_1CmdFirstState.html#a028728a59feb359a2680d85619a5a1c1">OTest2::CmdFirstState::~CmdFirstState</a></div><div class="ttdeci">virtual ~CmdFirstState()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="cmdfirststate_8cpp_source.html#l00038">cmdfirststate.cpp:38</a></div></div>
+<div class="ttc" id="aclassOTest2_1_1CmdFirstState_html_a028728a59feb359a2680d85619a5a1c1"><div class="ttname"><a href="classOTest2_1_1CmdFirstState.html#a028728a59feb359a2680d85619a5a1c1">OTest2::CmdFirstState::~CmdFirstState</a></div><div class="ttdeci">virtual ~CmdFirstState()</div><div class="ttdoc">Dtor.</div><div class="ttdef"><b>Definition:</b> <a href="cmdfirststate_8cpp_source.html#l00040">cmdfirststate.cpp:40</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html_a3ee94bac3095616d591bc32c9b8b4e4c"><div class="ttname"><a href="namespaceOTest2.html#a3ee94bac3095616d591bc32c9b8b4e4c">OTest2::CaseOrdinaryPtr</a></div><div class="ttdeci">std::shared_ptr&lt; CaseOrdinary &gt; CaseOrdinaryPtr</div><div class="ttdoc">Shared pointer of the ordinary cases.</div><div class="ttdef"><b>Definition:</b> <a href="caseordinaryptr_8h_source.html#l00027">caseordinaryptr.h:27</a></div></div>
+<div class="ttc" id="ainternalerror_8h_html"><div class="ttname"><a href="internalerror_8h.html">internalerror.h</a></div></div>
+<div class="ttc" id="anamespaceOTest2_html_ac5a3df96bffd96d1c51a91ff6371a69e"><div class="ttname"><a href="namespaceOTest2.html#ac5a3df96bffd96d1c51a91ff6371a69e">OTest2::internalError</a></div><div class="ttdeci">void internalError(const Context &amp;context_, const std::string &amp;message_) noexcept</div><div class="ttdoc">Fail the running test because of an internal error.</div><div class="ttdef"><b>Definition:</b> <a href="internalerror_8cpp_source.html#l00028">internalerror.cpp:28</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
 <div class="ttc" id="anamespaceOTest2_html_a85dd661d9e820001497de510286d6fdd"><div class="ttname"><a href="namespaceOTest2.html#a85dd661d9e820001497de510286d6fdd">OTest2::StatePtr</a></div><div class="ttdeci">std::shared_ptr&lt; State &gt; StatePtr</div><div class="ttdoc">Pointer to test state objects.</div><div class="ttdef"><b>Definition:</b> <a href="stateptr_8h_source.html#l00027">stateptr.h:27</a></div></div>
 <div class="ttc" id="aclassOTest2_1_1CmdFirstState_html_af8bc422a2ec719a8029bc20434294442"><div class="ttname"><a href="classOTest2_1_1CmdFirstState.html#af8bc422a2ec719a8029bc20434294442">OTest2::CmdFirstState::CmdFirstState</a></div><div class="ttdeci">CmdFirstState(const CmdFirstState &amp;)=delete</div></div>

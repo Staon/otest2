@@ -1,6 +1,8 @@
 <map id="include/otest2/assertbufferstr.h" name="include/otest2/assertbufferstr.h">
-<area shape="rect" id="node1" title=" " alt="" coords="163,5,384,32"/>
-<area shape="rect" id="node2" href="$assertbufferstr_8cpp.html" title=" " alt="" coords="5,80,165,107"/>
-<area shape="rect" id="node3" href="$reporterconsole_8cpp.html" title=" " alt="" coords="189,80,357,107"/>
-<area shape="rect" id="node4" href="$reporterjunit_8cpp.html" title=" " alt="" coords="381,80,528,107"/>
+<area shape="rect" id="node1" title=" " alt="" coords="327,5,549,32"/>
+<area shape="rect" id="node2" href="$assertbufferbase_8h.html" title=" " alt="" coords="5,80,241,107"/>
+<area shape="rect" id="node4" href="$assertbufferstr_8cpp.html" title=" " alt="" coords="265,80,425,107"/>
+<area shape="rect" id="node5" href="$reporterconsole_8cpp.html" title=" " alt="" coords="449,80,617,107"/>
+<area shape="rect" id="node6" href="$reporterjunit_8cpp.html" title=" " alt="" coords="641,80,787,107"/>
+<area shape="rect" id="node3" href="$assertbufferbase_8cpp.html" title=" " alt="" coords="36,155,211,181"/>
 </map>

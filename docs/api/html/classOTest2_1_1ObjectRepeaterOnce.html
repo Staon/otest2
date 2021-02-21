@@ -111,12 +111,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a6a93002b18dfb8b2e639ad4dbb7d6ba5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a531488ef0823af8b5742762aa11b709e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOTest2_1_1ObjectRepeaterOnce.html">ObjectRepeaterOnce</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ObjectRepeaterOnce.html#a531488ef0823af8b5742762aa11b709e">operator=</a> (const <a class="el" href="classOTest2_1_1ObjectRepeaterOnce.html">ObjectRepeaterOnce</a> &amp;)=delete</td></tr>
 <tr class="separator:a531488ef0823af8b5742762aa11b709e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b9f0cf0def4d11d5ac3cb26ea1234bd"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ObjectRepeaterOnce.html#a1b9f0cf0def4d11d5ac3cb26ea1234bd">isNextRun</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_) const override</td></tr>
-<tr class="memdesc:a1b9f0cf0def4d11d5ac3cb26ea1234bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether next run of the object is planned.  <a href="classOTest2_1_1ObjectRepeaterOnce.html#a1b9f0cf0def4d11d5ac3cb26ea1234bd">More...</a><br /></td></tr>
-<tr class="separator:a1b9f0cf0def4d11d5ac3cb26ea1234bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7948befe71771e9b39d9c529365f2f85"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ObjectRepeaterOnce.html#a7948befe71771e9b39d9c529365f2f85">transformName</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, const std::string &amp;name_) const override</td></tr>
-<tr class="memdesc:a7948befe71771e9b39d9c529365f2f85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decorate object name for next run.  <a href="classOTest2_1_1ObjectRepeaterOnce.html#a7948befe71771e9b39d9c529365f2f85">More...</a><br /></td></tr>
-<tr class="separator:a7948befe71771e9b39d9c529365f2f85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9ac77ec8a27804b0d3b8b6b25a228b9"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ObjectRepeaterOnce.html#af9ac77ec8a27804b0d3b8b6b25a228b9">hasNextRun</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_) const override</td></tr>
+<tr class="memdesc:af9ac77ec8a27804b0d3b8b6b25a228b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether next run of the object is planned.  <a href="classOTest2_1_1ObjectRepeaterOnce.html#af9ac77ec8a27804b0d3b8b6b25a228b9">More...</a><br /></td></tr>
+<tr class="separator:af9ac77ec8a27804b0d3b8b6b25a228b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a773459c704d508761ea12f29d95787b9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ObjectRepeaterOnce.html#a773459c704d508761ea12f29d95787b9">modifyObjectPath</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, <a class="el" href="classOTest2_1_1ObjectPath.html">ObjectPath</a> &amp;path_) const override</td></tr>
+<tr class="memdesc:a773459c704d508761ea12f29d95787b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change current object path.  <a href="classOTest2_1_1ObjectRepeaterOnce.html#a773459c704d508761ea12f29d95787b9">More...</a><br /></td></tr>
+<tr class="separator:a773459c704d508761ea12f29d95787b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c808cd005fb4d2493e73207f18c4e68"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceOTest2.html#a8aa59a6cef987cf8c4063cec044e2b75">ObjectScenarioPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOTest2_1_1ObjectRepeaterOnce.html#a3c808cd005fb4d2493e73207f18c4e68">createObject</a> (const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;context_, const std::string &amp;decorated_name_, <a class="el" href="namespaceOTest2.html#a368e06f0a87b365130f00b43126ff538">ObjectPtr</a> parent_) override</td></tr>
 <tr class="memdesc:a3c808cd005fb4d2493e73207f18c4e68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the testing object.  <a href="classOTest2_1_1ObjectRepeaterOnce.html#a3c808cd005fb4d2493e73207f18c4e68">More...</a><br /></td></tr>
 <tr class="separator:a3c808cd005fb4d2493e73207f18c4e68"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -233,7 +233,7 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>decorated_name_</em>, </td>
+          <td class="paramname"><em>name_</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -258,22 +258,22 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context_</td><td>The <a class="el" href="namespaceOTest2.html">OTest2</a> context </td></tr>
-    <tr><td class="paramname">decorated_name_</td><td>Decorated object name </td></tr>
+    <tr><td class="paramname">name_</td><td>Name of the object </td></tr>
     <tr><td class="paramname">parent_</td><td>Parent object of the created object </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The created object </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>The method may be called only if the <a class="el" href="classOTest2_1_1ObjectRepeaterOnce.html#a1b9f0cf0def4d11d5ac3cb26ea1234bd" title="Check whether next run of the object is planned.">isNextRun()</a> is true! </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>The method may be called only if the isNextRun() is true! </dd></dl>
 
-<p>Implements <a class="el" href="classOTest2_1_1ObjectRepeater.html#ab2d738d5e89c15f4d07108cf62577fd8">OTest2::ObjectRepeater</a>.</p>
+<p>Implements <a class="el" href="classOTest2_1_1ObjectRepeater.html#a3645b3ee897433e9dda613fad196327f">OTest2::ObjectRepeater</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="objectrepeateronce_8cpp_source.html#l00047">47</a> of file <a class="el" href="objectrepeateronce_8cpp_source.html">objectrepeateronce.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="objectrepeateronce_8cpp_source.html#l00046">46</a> of file <a class="el" href="objectrepeateronce_8cpp_source.html">objectrepeateronce.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a1b9f0cf0def4d11d5ac3cb26ea1234bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1b9f0cf0def4d11d5ac3cb26ea1234bd">&#9670;&nbsp;</a></span>isNextRun()</h2>
+<a id="af9ac77ec8a27804b0d3b8b6b25a228b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9ac77ec8a27804b0d3b8b6b25a228b9">&#9670;&nbsp;</a></span>hasNextRun()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -282,7 +282,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool OTest2::ObjectRepeaterOnce::isNextRun </td>
+          <td class="memname">bool OTest2::ObjectRepeaterOnce::hasNextRun </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;&#160;</td>
           <td class="paramname"><em>context_</em></td><td>)</td>
@@ -305,9 +305,59 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if next run is prepared </dd></dl>
 
-<p>Implements <a class="el" href="classOTest2_1_1ObjectRepeater.html#aeb168d6160c3b780f5eba69445e6640c">OTest2::ObjectRepeater</a>.</p>
+<p>Implements <a class="el" href="classOTest2_1_1ObjectRepeater.html#aa4ff294491b2308c670aa5906168613c">OTest2::ObjectRepeater</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="objectrepeateronce_8cpp_source.html#l00035">35</a> of file <a class="el" href="objectrepeateronce_8cpp_source.html">objectrepeateronce.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a773459c704d508761ea12f29d95787b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a773459c704d508761ea12f29d95787b9">&#9670;&nbsp;</a></span>modifyObjectPath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void OTest2::ObjectRepeaterOnce::modifyObjectPath </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;&#160;</td>
+          <td class="paramname"><em>context_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classOTest2_1_1ObjectPath.html">ObjectPath</a> &amp;&#160;</td>
+          <td class="paramname"><em>path_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Change current object path. </p>
+<p>This method changes current object path to distinguish different runs of the testing object. Usually the some object's parameters are set.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">context_</td><td>The <a class="el" href="namespaceOTest2.html">OTest2</a> context </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">path_</td><td>The modified object path </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="classOTest2_1_1ObjectRepeater.html#a25761365fa303ac54519922dd09141c2">OTest2::ObjectRepeater</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="objectrepeateronce_8cpp_source.html#l00040">40</a> of file <a class="el" href="objectrepeateronce_8cpp_source.html">objectrepeateronce.cpp</a>.</p>
 
 </div>
 </div>
@@ -334,56 +384,6 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="a7948befe71771e9b39d9c529365f2f85"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7948befe71771e9b39d9c529365f2f85">&#9670;&nbsp;</a></span>transformName()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string OTest2::ObjectRepeaterOnce::transformName </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classOTest2_1_1Context.html">Context</a> &amp;&#160;</td>
-          <td class="paramname"><em>context_</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name_</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Decorate object name for next run. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name_</td><td>Bare name of the object </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Decorated object name </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>The method may be called only if the <a class="el" href="classOTest2_1_1ObjectRepeaterOnce.html#a1b9f0cf0def4d11d5ac3cb26ea1234bd" title="Check whether next run of the object is planned.">isNextRun()</a> is true! </dd></dl>
-
-<p>Implements <a class="el" href="classOTest2_1_1ObjectRepeater.html#ae1a7cd1c61acf235f84a07379bd8800f">OTest2::ObjectRepeater</a>.</p>
-
-<p class="definition">Definition at line <a class="el" href="objectrepeateronce_8cpp_source.html#l00040">40</a> of file <a class="el" href="objectrepeateronce_8cpp_source.html">objectrepeateronce.cpp</a>.</p>
 
 </div>
 </div>

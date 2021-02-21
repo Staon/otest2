@@ -94,31 +94,41 @@ $(function() {
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#ifndef OTEST2_PARSER_ACTIVE</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
 <div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="controls_8h.html#ac78464504d0802999e9aded8208d79f3">   24</a></span>&#160;<span class="preprocessor">#define TEST_CONTROLS_SWITCH_STATE()</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#else </span><span class="comment">/* -- OTEST2_PARSER_ACTIVE */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#define TEST_CONTROLS_SWITCH_STATE() __attribute__((annotate(&quot;otest2::switchState&quot;)))</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* -- OTEST2_PARSER_ACTIVE */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="controls_8h.html#a1fb2f3f97c031e4fdd886d39a5d1fb16">   25</a></span>&#160;<span class="preprocessor">#define TEST_CONTROLS_SECTION_NAME()</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#else </span><span class="comment">/* -- OTEST2_PARSER_ACTIVE */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define TEST_CONTROLS_SWITCH_STATE() __attribute__((annotate(&quot;otest2::switchState&quot;)))</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#define TEST_CONTROLS_SECTION_NAME() __attribute__((annotate(&quot;otest2::section&quot;)))</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* -- OTEST2_PARSER_ACTIVE */</span><span class="preprocessor"></span></div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="namespaceOTest2_1_1Controls.html">   34</a></span>&#160;<span class="keyword">namespace </span>Controls {</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceOTest2.html">OTest2</a> {</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Args_&gt;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespaceOTest2_1_1Controls.html#ad162038b71510b9a6c60d3818e86e2cf">switchState</a>(</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">void</span> (*state_)(Args_... args_),</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">int</span> delay_) <a class="code" href="controls_8h.html#ac78464504d0802999e9aded8208d79f3">TEST_CONTROLS_SWITCH_STATE</a>();</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}  <span class="comment">/* -- namespace Controls */</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="namespaceOTest2_1_1Controls.html">   36</a></span>&#160;<span class="keyword">namespace </span>Controls {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Args_&gt;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keywordtype">void</span> <a class="code" href="namespaceOTest2_1_1Controls.html#ad162038b71510b9a6c60d3818e86e2cf">switchState</a>(</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">void</span> (*state_)(Args_... args_),</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">int</span> delay_) <a class="code" href="controls_8h.html#ac78464504d0802999e9aded8208d79f3">TEST_CONTROLS_SWITCH_STATE</a>();</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}  <span class="comment">/* -- namespace OTest2 */</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="namespaceOTest2_1_1Controls_1_1Private.html">   53</a></span>&#160;<span class="keyword">namespace </span>Private {</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* OTest2__INCLUDE_OTEST2_CONTROLS_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="namespaceOTest2_1_1Controls_1_1Private.html#a0144eaacc0bc824da3f3bbde55989e7a">sectionName</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* section_name_) <a class="code" href="controls_8h.html#a1fb2f3f97c031e4fdd886d39a5d1fb16">TEST_CONTROLS_SECTION_NAME</a>();</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;} <span class="comment">/* -- namespace Private */</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}  <span class="comment">/* -- namespace Controls */</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;}  <span class="comment">/* -- namespace OTest2 */</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* OTest2__INCLUDE_OTEST2_CONTROLS_H_ */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="anamespaceOTest2_1_1Controls_1_1Private_html_a0144eaacc0bc824da3f3bbde55989e7a"><div class="ttname"><a href="namespaceOTest2_1_1Controls_1_1Private.html#a0144eaacc0bc824da3f3bbde55989e7a">OTest2::Controls::Private::sectionName</a></div><div class="ttdeci">bool sectionName(const char *section_name_) TEST_CONTROLS_SECTION_NAME()</div><div class="ttdoc">A function marking start of a section.</div></div>
 <div class="ttc" id="anamespaceOTest2_1_1Controls_html_ad162038b71510b9a6c60d3818e86e2cf"><div class="ttname"><a href="namespaceOTest2_1_1Controls.html#ad162038b71510b9a6c60d3818e86e2cf">OTest2::Controls::switchState</a></div><div class="ttdeci">void switchState(void(*state_)(Args_... args_), int delay_) TEST_CONTROLS_SWITCH_STATE()</div><div class="ttdoc">Prepare next test state.</div></div>
 <div class="ttc" id="anamespaceOTest2_html"><div class="ttname"><a href="namespaceOTest2.html">OTest2</a></div><div class="ttdef"><b>Definition:</b> <a href="assertbean_8h_source.html#l00025">assertbean.h:25</a></div></div>
 <div class="ttc" id="acontrols_8h_html_ac78464504d0802999e9aded8208d79f3"><div class="ttname"><a href="controls_8h.html#ac78464504d0802999e9aded8208d79f3">TEST_CONTROLS_SWITCH_STATE</a></div><div class="ttdeci">#define TEST_CONTROLS_SWITCH_STATE()</div><div class="ttdef"><b>Definition:</b> <a href="controls_8h_source.html#l00024">controls.h:24</a></div></div>
+<div class="ttc" id="acontrols_8h_html_a1fb2f3f97c031e4fdd886d39a5d1fb16"><div class="ttname"><a href="controls_8h.html#a1fb2f3f97c031e4fdd886d39a5d1fb16">TEST_CONTROLS_SECTION_NAME</a></div><div class="ttdeci">#define TEST_CONTROLS_SECTION_NAME()</div><div class="ttdef"><b>Definition:</b> <a href="controls_8h_source.html#l00025">controls.h:25</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

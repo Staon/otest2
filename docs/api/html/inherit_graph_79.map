@@ -1,3 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classOTest2_1_1RunnerResult.html" title="Result of test run." alt="" coords="5,5,160,32"/>
+<area shape="rect" id="node1" href="$classOTest2_1_1Repeater.html" title="Generic repeater interface." alt="" coords="5,13,136,39"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1RepeaterValue.html" title="Generic repeater for a list of values." alt="" coords="184,5,349,47"/>
 </map>

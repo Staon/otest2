@@ -1,11 +1,13 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" title=" " alt="" coords="5,180,93,207"/>
-<area shape="rect" id="node2" href="$classOTest2_1_1AssertBuffer.html" title="Streambuffer interface used in the assertion API." alt="" coords="155,5,307,32"/>
-<area shape="rect" id="node4" href="$classOTest2_1_1Base64Buffer.html" title="Base64 stream buffer." alt="" coords="151,56,310,83"/>
-<area shape="rect" id="node5" href="$classOTest2_1_1Base64IStream_1_1Buffer.html" title=" " alt="" coords="145,107,317,149"/>
-<area shape="rect" id="node6" href="$classOTest2_1_1Base64OStream_1_1Buffer.html" title="Base64 output stream buffer." alt="" coords="141,173,320,214"/>
-<area shape="rect" id="node7" href="$classOTest2_1_1Bzip2IStream_1_1Buffer.html" title=" " alt="" coords="151,238,310,279"/>
-<area shape="rect" id="node8" href="$classOTest2_1_1Bzip2OStream_1_1Buffer.html" title=" " alt="" coords="147,303,314,345"/>
-<area shape="rect" id="node9" href="$classOTest2_1_1TeeOStream_1_1Buffer.html" title=" " alt="" coords="155,369,307,410"/>
-<area shape="rect" id="node3" href="$classOTest2_1_1AssertBufferStr.html" title="An implementation of the assertion buffer keeping messages in a memory buffer." alt="" coords="368,5,539,32"/>
+<area shape="rect" id="node1" href="$classOTest2_1_1AssertBufferListener.html" title="Listener of the string assertion buffer." alt="" coords="368,5,571,32"/>
+<area shape="rect" id="node2" href="$classOTest2_1_1AssertBufferBase.html" title="An empty implementation of the assertion buffer." alt="" coords="619,31,803,57"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,231,93,257"/>
+<area shape="rect" id="node4" href="$classOTest2_1_1AssertBuffer.html" title="Streambuffer interface used in the assertion API." alt="" coords="155,56,307,83"/>
+<area shape="rect" id="node6" href="$classOTest2_1_1Base64Buffer.html" title="Base64 stream buffer." alt="" coords="151,107,310,133"/>
+<area shape="rect" id="node7" href="$classOTest2_1_1Base64IStream_1_1Buffer.html" title=" " alt="" coords="145,158,317,199"/>
+<area shape="rect" id="node8" href="$classOTest2_1_1Base64OStream_1_1Buffer.html" title="Base64 output stream buffer." alt="" coords="141,223,320,265"/>
+<area shape="rect" id="node9" href="$classOTest2_1_1Bzip2IStream_1_1Buffer.html" title=" " alt="" coords="151,289,310,330"/>
+<area shape="rect" id="node10" href="$classOTest2_1_1Bzip2OStream_1_1Buffer.html" title=" " alt="" coords="147,354,314,395"/>
+<area shape="rect" id="node11" href="$classOTest2_1_1TeeOStream_1_1Buffer.html" title=" " alt="" coords="155,419,307,461"/>
+<area shape="rect" id="node5" href="$classOTest2_1_1AssertBufferStr.html" title="An implementation of the assertion buffer keeping messages in a memory buffer." alt="" coords="384,56,555,83"/>
 </map>

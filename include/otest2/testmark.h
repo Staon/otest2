@@ -23,6 +23,7 @@
 #include <string>
 #include <vector>
 
+#include <otest2/const.h>
 #include <otest2/testmarkhashcode.h>
 
 namespace OTest2 {
@@ -33,7 +34,6 @@ class TestMarkFormatter;
 class TestMarkIn;
 class TestMarkOut;
 
-constexpr long double DEFAULT_FLOAT_PRECISION(1.0e-9);
 
 /**
  * @brief Generic interface of a test mark node

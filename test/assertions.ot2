@@ -601,6 +601,86 @@ TEST_SUITE(AssertionsSuite) {
 //      runtime.reporter.dumpRecords(std::cout);
     }
   }
+
+  TEST_CASE(FloatingPointAssertions) {
+    Runtime runtime("AssertionsSuite", "FloatingPointAssertions");
+
+    TEST_SIMPLE() {
+      std::vector<const char*> data_{
+        "enterTest<selftest>",
+        "enterSuite<AssertionsSuite>",
+        "enterCase<FloatingPointAssertions>",
+        "enterState<AnonymousState>",
+        "assert<check '==' has passed>: passed",
+        "message<  value1_ == value2_>",
+        "message<actual values:>",
+        "message<  1.246 == 1.246>",
+        "leaveAssert<>",
+        "assert<check '==' has passed>: passed",
+        "message<  value2_ == value1_>",
+        "message<actual values:>",
+        "message<  1.246 == 1.246>",
+        "leaveAssert<>",
+        "assert<check '!=' has passed>: passed",
+        "message<  value1_ != value3_>",
+        "message<actual values:>",
+        "message<  1.246 != 1.246>",
+        "leaveAssert<>",
+        "assert<check '!=' has passed>: passed",
+        "message<  value3_ != value1_>",
+        "message<actual values:>",
+        "message<  1.246 != 1.246>",
+        "leaveAssert<>",
+        "assert<check '==' has passed>: passed",
+        "message<  value1_ == value2_>",
+        "message<actual values:>",
+        "message<  1.246 == 1.246>",
+        "leaveAssert<>",
+        "assert<check '==' has passed>: passed",
+        "message<  value2_ == value1_>",
+        "message<actual values:>",
+        "message<  1.246 == 1.246>",
+        "leaveAssert<>",
+        "assert<check '!=' has passed>: passed",
+        "message<  value1_ != value3_>",
+        "message<actual values:>",
+        "message<  1.246 != 1.246>",
+        "leaveAssert<>",
+        "assert<check '!=' has passed>: passed",
+        "message<  value3_ != value1_>",
+        "message<actual values:>",
+        "message<  1.246 != 1.246>",
+        "leaveAssert<>",
+        "assert<check '==' has passed>: passed",
+        "message<  value1_ == value1_>",
+        "message<actual values:>",
+        "message<  1.246 == 1.246>",
+        "leaveAssert<>",
+        "assert<check '!=' has passed>: passed",
+        "message<  value1_ != value3_>",
+        "message<actual values:>",
+        "message<  1.246 != 1.246>",
+        "leaveAssert<>",
+        "assert<check '==' has passed>: passed",
+        "message<  value1_ == value1_>",
+        "message<actual values:>",
+        "message<  1.246 == 1.246>",
+        "leaveAssert<>",
+        "assert<check '!=' has passed>: passed",
+        "message<  value1_ != value3_>",
+        "message<actual values:>",
+        "message<  1.246 != 1.246>",
+        "leaveAssert<>",
+        "leaveState<AnonymousState>: passed",
+        "leaveCase<FloatingPointAssertions>: passed",
+        "leaveSuite<AssertionsSuite>: passed",
+        "leaveTest<selftest>: passed",
+      };
+      testAssert(runtime.runTheTest());
+      testAssert(runtime.reporter.checkRecords(data_));
+//      runtime.reporter.dumpRecords(std::cout);
+    }
+  }
 }
 
 } /* -- namespace Test */

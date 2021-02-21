@@ -19,6 +19,7 @@
 #ifndef OTest2__INCLUDE_OTEST2_COMPARISONS_H_
 #define OTest2__INCLUDE_OTEST2_COMPARISONS_H_
 
+#include <cmath>
 #include <cstring>
 
 #include <otest2/typetraits.h>
@@ -43,6 +44,16 @@ struct Equal<const char*, const char*> {
     }
 };
 
+template<typename A_, typename B_, typename Precision_>
+struct EqualFP {
+    bool operator()(
+        typename TypeTrait<A_>::BestArg a_,
+        typename TypeTrait<B_>::BestArg b_,
+        typename TypeTrait<Precision_>::BestArg precision_) const {
+      return std::fabs(a_ - b_) <= precision_;
+    }
+};
+
 template<typename A_, typename B_>
 struct NotEqual {
     bool operator()(
@@ -58,6 +69,16 @@ struct NotEqual<const char*, const char*> {
         const char* a_,
         const char* b_) const {
       return std::strcmp(a_, b_) != 0;
+    }
+};
+
+template<typename A_, typename B_, typename Precision_>
+struct NotEqualFP {
+    bool operator()(
+        typename TypeTrait<A_>::BestArg a_,
+        typename TypeTrait<B_>::BestArg b_,
+        typename TypeTrait<Precision_>::BestArg precision_) const {
+      return std::fabs(a_ - b_) > precision_;
     }
 };
 

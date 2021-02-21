@@ -27,6 +27,7 @@
 #include <otest2/assertcontext.h>
 #include <otest2/assertionannotation.h>
 #include <otest2/comparisons.h>
+#include <otest2/const.h>
 
 namespace OTest2 {
 
@@ -69,10 +70,22 @@ class GenericAssertion : public AssertContext {
         bool condition_);
     bool testAssert(
         const AssertBean& bean_);
+
+    template<typename Compare_, typename A_, typename B_>
+    bool reportAssertion(
+        Compare_&& cmp_,
+        A_&& a_,
+        B_&& b_,
+        bool condition_);
     template<template<typename, typename> class Compare_, typename A_, typename B_>
     bool testAssertCompare(
         A_&& a_,
         B_&& b_);
+    template<template<typename, typename, typename> class Compare_, typename A_, typename B_, typename Precision_ = long double>
+    bool testAssertCompareFP(
+        A_ a_,
+        B_ b_,
+        Precision_ precision_ = DEFAULT_FLOAT_PRECISION);
 
     /* -- exception assertion - it's never used as an assertion as
      *    it's always generated. */
@@ -127,7 +140,24 @@ bool testAssertExpr(
 template<template<typename, typename> class Compare_, typename A_, typename B_>
 bool testAssertCmp(
     A_ a_,
-    B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::$1 >");
+    B_ b_)
+TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::$1 >");
+
+/**
+ * @brief Generic floating point comparison
+ *
+ * @tparam Compare_ The comparison template
+ * @param a_ Left operand
+ * @param b_ Right operand
+ * @param precision_ Comparison precision
+ * @return Result of the comparison
+ */
+template<template<typename, typename, typename> class Compare_, typename A_, typename B_, typename P_ = long double>
+bool testAssertCmpFP(
+    A_ a_,
+    B_ b_,
+    P_ precision_ = DEFAULT_FLOAT_PRECISION)
+TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompareFP< ::$1 >");
 
 /**
  * @brief Compare whether @a a_ is equal to @a b_
@@ -142,6 +172,21 @@ bool testAssertEqual(
     B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::OTest2::Equal >");
 
 /**
+ * @brief Compare two floating points whether they are equal with a precision
+ *
+ * @param a_ Left operand
+ * @param b_ Right operand
+ * @param precision_ The comparison precision
+ * @return True if they are equal
+ */
+template<typename A_, typename B_, typename P_ = long double>
+bool testAssertEqualFP(
+    A_ a_,
+    B_ b_,
+    P_ precision_ = DEFAULT_FLOAT_PRECISION)
+TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompareFP< ::OTest2::EqualFP >");
+
+/**
  * @brief Compare whether @a a_ is not equal to @a b_
  *
  * @param a_ Left operand
@@ -152,6 +197,21 @@ template<typename A_, typename B_>
 bool testAssertNotEqual(
     A_ a_,
     B_ b_) TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompare< ::OTest2::NotEqual >");
+
+/**
+ * @brief Compare two floating points whether they are not equal with a precision
+ *
+ * @param a_ Left operand
+ * @param b_ Right operand
+ * @param precision_ The comparison precision
+ * @return True if they are not equal
+ */
+template<typename A_, typename B_, typename P_ = long double>
+bool testAssertNotEqualFP(
+    A_ a_,
+    B_ b_,
+    P_ precision_ = DEFAULT_FLOAT_PRECISION)
+TEST_ASSERTION_MARK_TMPL("::OTest2::GenericAssertion", "testAssertCompareFP< ::OTest2::NotEqualFP >");
 
 /**
  * @brief Compare whether @a a_ is less than @a b_

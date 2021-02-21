@@ -73,11 +73,27 @@ struct PrintTrait<Equal<A_, B_> > {
       return os_ << "==";
     }
 };
+template<typename A_, typename B_, typename P_>
+struct PrintTrait<EqualFP<A_, B_, P_> > {
+    static std::ostream& print(
+        std::ostream& os_,
+        const EqualFP<A_, B_, P_>& value_) {
+      return os_ << "==";
+    }
+};
 template<typename A_, typename B_>
 struct PrintTrait<NotEqual<A_, B_> > {
     static std::ostream& print(
         std::ostream& os_,
         const NotEqual<A_, B_>& value_) {
+      return os_ << "!=";
+    }
+};
+template<typename A_, typename B_, typename P_>
+struct PrintTrait<NotEqualFP<A_, B_, P_> > {
+    static std::ostream& print(
+        std::ostream& os_,
+        const NotEqualFP<A_, B_, P_>& value_) {
       return os_ << "!=";
     }
 };

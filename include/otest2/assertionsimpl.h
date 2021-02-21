@@ -31,17 +31,15 @@
 
 namespace OTest2 {
 
-template<template<typename, typename> class Compare_, typename A_, typename B_>
-bool GenericAssertion::testAssertCompare(
+template<typename Compare_, typename A_, typename B_>
+bool GenericAssertion::reportAssertion(
+    Compare_&& cmp_,
     A_&& a_,
-    B_&& b_) {
+    B_&& b_,
+    bool condition_) {
   typedef typename AssertionParameter<A_>::Type AType_;
   typedef typename AssertionParameter<B_>::Type BType_;
-  typedef Compare_<AType_, BType_> CmpType_;
-
-  /* -- compare the values */
-  CmpType_ cmp_;
-  const bool condition_(cmp_(a_, b_));
+  typedef typename std::remove_reference<Compare_>::type CmpType_;
 
   /* -- report the result and the used relation operator */
   AssertStream report_(enterAssertion(condition_));
@@ -70,6 +68,31 @@ bool GenericAssertion::testAssertCompare(
   report_ << commitMsg();
 
   return report_.getResult();
+}
+
+template<template<typename, typename> class Compare_, typename A_, typename B_>
+bool GenericAssertion::testAssertCompare(
+    A_&& a_,
+    B_&& b_) {
+  typedef typename AssertionParameter<A_>::Type AType_;
+  typedef typename AssertionParameter<B_>::Type BType_;
+  typedef Compare_<AType_, BType_> CmpType_;
+
+  /* -- compare the values */
+  CmpType_ cmp_;
+  const bool condition_(cmp_(a_, b_));
+  return reportAssertion(cmp_, a_, b_, condition_);
+}
+
+template<template<typename, typename, typename> class Compare_, typename A_, typename B_, typename Precision_>
+bool GenericAssertion::testAssertCompareFP(
+    A_ a_,
+    B_ b_,
+    Precision_ precision_) {
+  /* -- compare the values */
+  Compare_<A_, B_, Precision_> cmp_;
+  const bool condition_(cmp_(a_, b_, precision_));
+  return reportAssertion(cmp_, a_, b_, condition_);
 }
 
 }  /* -- namespace OTest2 */

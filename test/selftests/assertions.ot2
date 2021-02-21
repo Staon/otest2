@@ -162,6 +162,33 @@ TEST_SUITE(AssertionsSuite) {
       testAssertExpr(!(10 == 15));
     }
   }
+
+  TEST_CASE(FloatingPointAssertions) {
+    TEST_SIMPLE() {
+      const float epsilon_(1e-6);
+      const float value1_(1.246);
+      const double value2_(value1_ + epsilon_ / 2.0);
+      const long double value3_(value1_ + 2.0 * epsilon_);
+
+      /* -- specific comparison assertions */
+      testAssertEqualFP(value1_, value2_, epsilon_);
+      testAssertEqualFP(value2_, value1_, epsilon_);
+      testAssertNotEqualFP(value1_, value3_, epsilon_);
+      testAssertNotEqualFP(value3_, value1_, epsilon_);
+
+      /* -- generic comparison assertion */
+      testAssertCmpFP<EqualFP>(value1_, value2_, epsilon_);
+      testAssertCmpFP<EqualFP>(value2_, value1_, epsilon_);
+      testAssertCmpFP<NotEqualFP>(value1_, value3_, epsilon_);
+      testAssertCmpFP<NotEqualFP>(value3_, value1_, epsilon_);
+
+      /* -- with default precision */
+      testAssertEqualFP(value1_, value1_);
+      testAssertNotEqual(value1_, value3_);
+      testAssertCmpFP<EqualFP>(value1_, value1_);
+      testAssertCmpFP<NotEqualFP>(value1_, value3_);
+    }
+  }
 }
 
 } /* -- namespace SelfTest */

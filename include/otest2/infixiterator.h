@@ -21,19 +21,28 @@
 #define OTest2__INCLUDE_OTEST2_INFIXITERATOR_H_
 
 #include <assert.h>
+#include <functional>
 #include <iostream>
 #include <iterator>
 
 namespace OTest2 {
 
+template<typename T_>
+struct IdentityAccessor {
+    T_&& operator()(T_&& item_) {
+      return std::forward<T_>(item_);
+    }
+};
+
 /**
  * @brief ostream iterator with infix delimiter
  */
-template<typename T_, typename CharT_ = char, typename Traits_ = std::char_traits<CharT_> >
+template<typename T_, typename Accessor_ = IdentityAccessor<T_>, typename CharT_ = char, typename Traits_ = std::char_traits<CharT_> >
 class InfixIterator
     : public std::iterator<std::output_iterator_tag, void, void, void, void> {
   private:
     std::basic_ostream<CharT_, Traits_>* os;
+    Accessor_ accessor;
     const CharT_* delimiter;
     bool first_elem;
 
@@ -58,25 +67,25 @@ class InfixIterator
 
     }
 
-    InfixIterator<T_, CharT_, Traits_>& operator=(
+    InfixIterator<T_, Accessor_, CharT_, Traits_>& operator=(
         const T_& item_) {
       if(!first_elem)
         *os << delimiter;
       else
         first_elem = false;
-      *os << item_;
+      *os << accessor(item_);
       return *this;
     }
 
-    InfixIterator<T_, CharT_, Traits_>& operator*() {
+    InfixIterator<T_, Accessor_, CharT_, Traits_>& operator*() {
         return *this;
     }
 
-    InfixIterator<T_, CharT_, Traits_>& operator++() {
+    InfixIterator<T_, Accessor_, CharT_, Traits_>& operator++() {
         return *this;
     }
 
-    InfixIterator<T_, CharT_, Traits_>& operator++(int) {
+    InfixIterator<T_, Accessor_, CharT_, Traits_>& operator++(int) {
         return *this;
     }
 };

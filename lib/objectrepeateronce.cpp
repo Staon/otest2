@@ -32,16 +32,15 @@ ObjectRepeaterOnce::~ObjectRepeaterOnce() {
 
 }
 
-bool ObjectRepeaterOnce::isNextRun(
+bool ObjectRepeaterOnce::hasNextRun(
     const Context& context_) const {
   return !created;
 }
 
-std::string ObjectRepeaterOnce::transformName(
+void ObjectRepeaterOnce::modifyObjectPath(
     const Context& context_,
-    const std::string& name_) const {
+    ObjectPath& path_) const {
   assert(!created);
-  return name_;
 }
 
 ObjectScenarioPtr ObjectRepeaterOnce::createObject(

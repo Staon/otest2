@@ -23,9 +23,10 @@
 #include <iostream>
 #include <memory>
 
-#include <otest2/objectscenarioptr.h>
+#include <otest2/objectpath.h>
 #include <otest2/objectrepeater.h>
 #include <otest2/objectrepeaterfactory.h>
+#include <otest2/objectscenarioptr.h>
 
 namespace OTest2 {
 
@@ -53,7 +54,7 @@ class ObjectRepeaterMultiRoot : public ObjectRepeater {
     ObjectRepeaterMultiRoot& operator = (
         const ObjectRepeaterMultiRoot&) = delete;
 
-    virtual bool isNextRun(
+    virtual bool hasNextRun(
         const Context& context_) const override {
       /* -- first run */
       if(repeater_object == nullptr)
@@ -62,12 +63,12 @@ class ObjectRepeaterMultiRoot : public ObjectRepeater {
       return repeater_object->hasNextRun(context_);
     }
 
-    virtual std::string transformName(
+    virtual void modifyObjectPath(
         const Context& context_,
-        const std::string& suite_name_) const override {
+        ObjectPath& path_) const override {
       std::ostringstream oss_;
-      oss_ << suite_name_ << " (" << index << ")";
-      return oss_.str();
+      oss_ << index;
+      path_.appendParameter("run", oss_.str());
     }
 
     virtual ObjectScenarioPtr createObject(
@@ -132,7 +133,7 @@ class ObjectRepeaterMultiNested : public ObjectRepeater {
     ObjectRepeaterMultiNested& operator = (
         const ObjectRepeaterMultiNested&) = delete;
 
-    virtual bool isNextRun(
+    virtual bool hasNextRun(
         const Context& context_) const override {
       /* -- first run */
       if(repeater_object == nullptr)
@@ -141,12 +142,12 @@ class ObjectRepeaterMultiNested : public ObjectRepeater {
       return repeater_object->hasNextRun(context_);
     }
 
-    virtual std::string transformName(
+    virtual void modifyObjectPath(
         const Context& context_,
-        const std::string& case_name_) const override {
+        ObjectPath& path_) const override {
       std::ostringstream oss_;
-      oss_ << case_name_ << " (" << index << ")";
-      return oss_.str();
+      oss_ << index;
+      path_.appendParameter("run", oss_.str());
     }
 
     virtual ObjectScenarioPtr createObject(

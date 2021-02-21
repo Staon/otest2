@@ -52,30 +52,29 @@ CmdRepeatObject::~CmdRepeatObject() {
 
 void CmdRepeatObject::run(
     const Context& context_) {
-  if(repeater->isNextRun(context_)) {
-    /* -- decorate object's name for next run */
-    std::string decorated_name_(repeater->transformName(context_, name));
-
+  if(repeater->hasNextRun(context_)) {
     /* -- schedule myself for next run */
     context_.command_stack->pushCommand(
         std::make_shared<CmdRepeatObject>(scenario, repeater, name, parent));
 
     /* -- prepare stack-frame of the object - object's result and path. */
-    context_.object_path->pushName(decorated_name_);
+    context_.object_path->pushName(name);
     context_.semantic_stack->push(true);
 
-    /* -- report entering of the suite */
-    scenario->reportEntering(context_, decorated_name_);
+    /* -- let the repeater to distinguish the run */
+    repeater->modifyObjectPath(context_, *context_.object_path);
+
+    /* -- let the scenario modify the object path and report the object */
+    scenario->enterObject(context_);
 
     /* -- schedule finishing of the suite */
-    context_.command_stack->pushCommand(
-        std::make_shared<CmdLeaveObject>(scenario, decorated_name_));
+    context_.command_stack->pushCommand(std::make_shared<CmdLeaveObject>(scenario));
 
     /* -- The constructor method of the suite may throw and exception.
      *    So I do the creation in a protected environment. */
-    runUserCode(context_, [this, &decorated_name_](const Context& context_) {
+    runUserCode(context_, [this](const Context& context_) {
       ObjectScenarioPtr object_(
-          repeater->createObject(context_, decorated_name_, parent));
+          repeater->createObject(context_, name, parent));
       context_.command_stack->pushCommand(
           std::make_shared<CmdStartUpObject>(object_, scenario, parent, 0));
     });

@@ -24,12 +24,16 @@
 
 namespace OTest2 {
 
+class Parameters;
+
 /**
  * @brief This is a simple object keeping path to current testing object
  */
 class ObjectPath {
-  private:
+  public:
     struct Impl;
+
+  private:
     Impl* pimpl;
 
   public:
@@ -71,11 +75,28 @@ class ObjectPath {
     void popName();
 
     /**
+     * @brief Append parameter to current testing object
+     *
+     * @param name_ Name of the parameter
+     * @param value_ Value of the parameter
+     */
+    void appendParameter(
+        const std::string& name_,
+        const std::string& value_);
+
+    /**
      * @brief Get name at the top of the stack
      *
      * @return the name
      */
     std::string getCurrentName() const;
+
+    /**
+     * @brief Get parameters of current object
+     *
+     * @return The parameters
+     */
+    const Parameters& getCurrentParameters() const;
 
     /**
      * @brief Get path of current object

@@ -21,11 +21,96 @@
 
 #include <cstdio>
 
+#include <otest2/assertbufferstr.h>
+#include <otest2/parameters.h>
+#include <otest2/utils.h>
+
 namespace OTest2 {
 
 namespace Examples {
 
-ReporterDot::ReporterDot() {
+class ReporterDot::Impl :  public AssertBufferListener {
+  public:
+    AssertBufferStrPtr buffer;
+
+    /* -- avoid copying */
+    Impl(
+        const Impl&) = delete;
+    Impl& operator = (
+        const Impl&) = delete;
+
+    Impl();
+    virtual ~Impl();
+
+    /* -- assert buffer listener */
+    virtual void assertionOpeningMessage(
+        const Context& context_,
+        const AssertBufferAssertData& data_,
+        const std::string& message_) override;
+    virtual void assertionAdditionalMessage(
+        const Context& context_,
+        const AssertBufferAssertData& data_,
+        const std::string& message_) override;
+    virtual void assertionClose(
+        const Context& context_,
+        const AssertBufferAssertData& data_) override;
+    virtual void errorOpeningMessage(
+        const Context& context_,
+        const std::string& message_) override;
+    virtual void errorAdditionalMessage(
+        const Context& context_,
+        const std::string& message_) override;
+    virtual void errorClose(
+        const Context& context_) override;
+};
+
+ReporterDot::Impl::Impl() :
+  buffer(::OTest2::make_unique<AssertBufferStr>(this)) {
+
+}
+
+ReporterDot::Impl::~Impl() = default;
+
+void ReporterDot::Impl::assertionOpeningMessage(
+    const Context& context_,
+    const AssertBufferAssertData& data_,
+    const std::string& message_) {
+  if(!data_.condition)
+    std::printf("\n[%s, %d]: %s\n", data_.file.c_str(), data_.line, message_.c_str());
+}
+
+void ReporterDot::Impl::assertionAdditionalMessage(
+    const Context& context_,
+    const AssertBufferAssertData& data_,
+    const std::string& message_) {
+
+}
+
+void ReporterDot::Impl::assertionClose(
+    const Context& context_,
+    const AssertBufferAssertData& data_) {
+
+}
+
+void ReporterDot::Impl::errorOpeningMessage(
+    const Context& context_,
+    const std::string& message_) {
+  std::printf("\nerror: %s\n", message_.c_str());
+}
+
+void ReporterDot::Impl::errorAdditionalMessage(
+    const Context& context_,
+    const std::string& message_) {
+
+}
+
+void ReporterDot::Impl::errorClose(
+    const Context& context_) {
+
+}
+
+ReporterDot::ReporterDot() :
+  pimpl(::OTest2::make_unique<Impl>()) {
 
 }
 
@@ -35,19 +120,22 @@ ReporterDot::~ReporterDot() {
 
 void ReporterDot::enterTest(
     const Context& context_,
-    const std::string& name_) {
+    const std::string& name_,
+    const Parameters& params_) {
 
 }
 
 void ReporterDot::enterSuite(
     const Context& context_,
-    const std::string& name_) {
+    const std::string& name_,
+    const Parameters& params_) {
 
 }
 
 void ReporterDot::enterCase(
     const Context& context_,
-    const std::string& name_) {
+    const std::string& name_,
+    const Parameters& params_) {
 
 }
 
@@ -57,31 +145,19 @@ void ReporterDot::enterState(
 
 }
 
-void ReporterDot::enterAssert(
+AssertBufferPtr ReporterDot::enterAssert(
     const Context& context_,
     bool condition_,
-    const std::string& message_,
     const std::string& file_,
     int lineno_) {
-  if(!condition_)
-    std::printf("\n[%s, %d]: %s\n", file_.c_str(), lineno_, message_.c_str());
+  pimpl->buffer->openAssertion({condition_, file_, lineno_});
+  return pimpl->buffer;
 }
 
-void ReporterDot::enterError(
-    const Context& context_,
-    const std::string& message_) {
-  std::printf("\nerror: %s\n", message_.c_str());
-}
-
-void ReporterDot::reportAssertionMessage(
-    const Context& context_,
-    const std::string& message_) {
-
-}
-
-void ReporterDot::leaveAssert(
+AssertBufferPtr ReporterDot::enterError(
     const Context& context_) {
-
+  pimpl->buffer->openError();
+  return pimpl->buffer;
 }
 
 void ReporterDot::leaveState(
@@ -94,6 +170,7 @@ void ReporterDot::leaveState(
 void ReporterDot::leaveCase(
     const Context& context_,
     const std::string& name_,
+    const Parameters& params_,
     bool result_) {
   std::printf(".");
   std::fflush(stdout);
@@ -102,6 +179,7 @@ void ReporterDot::leaveCase(
 void ReporterDot::leaveSuite(
     const Context& context_,
     const std::string& name_,
+    const Parameters& params_,
     bool result_) {
 
 }
@@ -109,6 +187,7 @@ void ReporterDot::leaveSuite(
 void ReporterDot::leaveTest(
     const Context& context_,
     const std::string& name_,
+    const Parameters& params_,
     bool result_) {
   if(result_)
     std::printf("OK\n");

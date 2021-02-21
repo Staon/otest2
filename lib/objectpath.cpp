@@ -24,17 +24,34 @@
 #include <iterator>
 #include <sstream>
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include <infixiterator.h>
+#include <parameters.h>
 #include <utils.h>
 
 namespace OTest2 {
 
 struct ObjectPath::Impl {
-    typedef std::vector<std::string> PathStack;
+    struct Record {
+        std::string name;
+        Parameters params;
+    };
+    typedef std::vector<Record> PathStack;
     PathStack path_stack_;
 };
+
+namespace {
+
+struct NameAccessor {
+    const std::string& operator()(
+        const ObjectPath::Impl::PathStack::value_type& item_) const noexcept {
+      return item_.name;
+    }
+};
+
+} /* -- namespace */
 
 ObjectPath::ObjectPath() :
   pimpl(new Impl) {
@@ -51,10 +68,10 @@ ObjectPath::ObjectPath(
       auto index_(full_path_.find("::", start_));
       if(index_ == std::string::npos)
         break;
-      stack_.push_back(full_path_.substr(start_, index_ - start_));
+      stack_.push_back({full_path_.substr(start_, index_ - start_), {}});
       start_ = index_ + 2;
     } while(true);
-    stack_.push_back(full_path_.substr(start_));
+    stack_.push_back({full_path_.substr(start_), {}});
   }
 
   /* -- create the object */
@@ -69,7 +86,8 @@ ObjectPath::~ObjectPath() {
 void ObjectPath::pushName(
     const std::string& name_) {
   assert(!name_.empty());
-  pimpl->path_stack_.push_back(name_);
+
+  pimpl->path_stack_.push_back({name_, {}});
 }
 
 void ObjectPath::popName() {
@@ -77,10 +95,24 @@ void ObjectPath::popName() {
   pimpl->path_stack_.pop_back();
 }
 
+void ObjectPath::appendParameter(
+    const std::string& name_,
+    const std::string& value_) {
+  assert(!pimpl->path_stack_.empty());
+
+  pimpl->path_stack_.back().params.appendParameter(name_, value_);
+}
+
 std::string ObjectPath::getCurrentName() const {
   assert(!pimpl->path_stack_.empty());
 
-  return pimpl->path_stack_.back();
+  return pimpl->path_stack_.back().name;
+}
+
+const Parameters& ObjectPath::getCurrentParameters() const {
+  assert(!pimpl->path_stack_.empty());
+
+  return pimpl->path_stack_.back().params;
 }
 
 std::string ObjectPath::getCurrentPath() const {
@@ -88,7 +120,7 @@ std::string ObjectPath::getCurrentPath() const {
   std::copy(
       pimpl->path_stack_.begin(),
       pimpl->path_stack_.end(),
-      InfixIterator<std::string>(&oss_, "::"));
+      InfixIterator<Impl::Record, NameAccessor>(&oss_, "::"));
   return oss_.str();
 }
 
@@ -103,8 +135,8 @@ std::string ObjectPath::getRegressionKey(
   std::copy(
       suite_part_,
       pimpl->path_stack_.end(),
-      std::ostream_iterator<std::string>(oss_, ">>"));
-  oss_ << local_key_;
+      InfixIterator<Impl::Record, NameAccessor>(&oss_, ">>"));
+  oss_ << ">>" << local_key_;
   return oss_.str();
 }
 
@@ -116,7 +148,7 @@ bool ObjectPath::isPrefixOf(
 
   /* -- compare segments in the paths */
   for(int i_(0); i_ < pimpl->path_stack_.size(); ++i_) {
-    if(pimpl->path_stack_[i_] != path_.pimpl->path_stack_[i_])
+    if(pimpl->path_stack_[i_].name != path_.pimpl->path_stack_[i_].name)
       return false;
   }
 

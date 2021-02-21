@@ -30,6 +30,7 @@
 #include "scenarioitercontainer.h"
 #include <scenariocontainerptr.h>
 #include <scenarioptr.h>
+#include <semanticstack.h>
 #include <testroot.h>
 #include <utils.h>
 
@@ -125,17 +126,21 @@ std::pair<std::string, ObjectRepeaterPtr> ScenarioRoot::createRepeater(
   return {pimpl->name, std::make_shared<ObjectRepeaterRoot>()};
 }
 
-void ScenarioRoot::reportEntering(
-    const Context& context_,
-    const std::string& decorated_name_) const noexcept {
-  context_.reporter->enterTest(context_, decorated_name_);
+void ScenarioRoot::enterObject(
+    const Context& context_) const noexcept {
+  context_.reporter->enterTest(
+      context_,
+      context_.object_path->getCurrentName(),
+      context_.object_path->getCurrentParameters());
 }
 
-void ScenarioRoot::reportLeaving(
-    const Context& context_,
-    const std::string& decorated_name_,
-    bool result_) const noexcept {
-  context_.reporter->leaveTest(context_, decorated_name_, result_);
+void ScenarioRoot::leaveObject(
+    const Context& context_) const noexcept {
+  context_.reporter->leaveTest(
+      context_,
+      context_.object_path->getCurrentName(),
+      context_.object_path->getCurrentParameters(),
+      context_.semantic_stack->top());
 }
 
 ScenarioIterPtr ScenarioRoot::getChildren() const {

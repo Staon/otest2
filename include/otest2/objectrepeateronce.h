@@ -60,11 +60,11 @@ class ObjectRepeaterOnce : public ObjectRepeater {
         const ObjectRepeaterOnce&) = delete;
 
     /* -- repeater interface */
-    virtual bool isNextRun(
+    virtual bool hasNextRun(
         const Context& context_) const override;
-    virtual std::string transformName(
+    virtual void modifyObjectPath(
         const Context& context_,
-        const std::string& name_) const override;
+        ObjectPath& path_) const override;
     virtual ObjectScenarioPtr createObject(
         const Context& context_,
         const std::string& decorated_name_,

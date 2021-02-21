@@ -72,6 +72,7 @@ add_library(libotest2
     objectrepeaterfactory.cpp
     objectrepeateronce.cpp
     objectscenario.cpp
+    parameters.cpp
     printutils.cpp
     registry.cpp
     regressions.cpp

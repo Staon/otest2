@@ -30,6 +30,7 @@
 #include <objectrepeaterfactory.h>
 #include <reporter.h>
 #include "scenarioitercontainer.h"
+#include <semanticstack.h>
 #include <tags.h>
 #include <tagsstack.h>
 #include <utils.h>
@@ -114,17 +115,21 @@ std::pair<std::string, ObjectRepeaterPtr> ScenarioSuite::createRepeater(
   return {pimpl->name, pimpl->repeater_factory->createRepeater(context_, std::string())};
 }
 
-void ScenarioSuite::reportEntering(
-    const Context& context_,
-    const std::string& decorated_name_) const noexcept {
-  context_.reporter->enterSuite(context_, decorated_name_);
+void ScenarioSuite::enterObject(
+    const Context& context_) const noexcept {
+  context_.reporter->enterSuite(
+      context_,
+      context_.object_path->getCurrentName(),
+      context_.object_path->getCurrentParameters());
 }
 
-void ScenarioSuite::reportLeaving(
-    const Context& context_,
-    const std::string& decorated_name_,
-    bool result_) const noexcept {
-  context_.reporter->leaveSuite(context_, decorated_name_, result_);
+void ScenarioSuite::leaveObject(
+    const Context& context_) const noexcept {
+  context_.reporter->leaveSuite(
+      context_,
+      context_.object_path->getCurrentName(),
+      context_.object_path->getCurrentParameters(),
+      context_.semantic_stack->top());
 }
 
 ScenarioIterPtr ScenarioSuite::getChildren() const {

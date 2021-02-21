@@ -25,9 +25,11 @@
 #include <objectpath.h>
 #include <objectrepeater.h>
 #include <objectrepeaterfactory.h>
+#include <parameters.h>
 #include <reporter.h>
 #include <runnerfilter.h>
 #include <scenariocontainer.h>
+#include <semanticstack.h>
 #include <tags.h>
 #include <tagsstack.h>
 #include <utils.h>
@@ -177,17 +179,26 @@ std::pair<std::string, ObjectRepeaterPtr> ScenarioCase::createRepeater(
   return {pimpl->name, pimpl->repeater_factory->createRepeater(context_, pimpl->section_path)};
 }
 
-void ScenarioCase::reportEntering(
-    const Context& context_,
-    const std::string& decorated_name_) const noexcept {
-  context_.reporter->enterCase(context_, decorated_name_);
+void ScenarioCase::enterObject(
+    const Context& context_) const noexcept {
+  /* -- set the section path if it's active */
+  if(!pimpl->section_path.empty())
+    context_.object_path->appendParameter("section", pimpl->section_path);
+
+  /* -- report the object */
+  context_.reporter->enterCase(
+      context_,
+      context_.object_path->getCurrentName(),
+      context_.object_path->getCurrentParameters());
 }
 
-void ScenarioCase::reportLeaving(
-    const Context& context_,
-    const std::string& decorated_name_,
-    bool result_) const noexcept {
-  context_.reporter->leaveCase(context_, decorated_name_, result_);
+void ScenarioCase::leaveObject(
+    const Context& context_) const noexcept {
+  context_.reporter->leaveCase(
+      context_,
+      context_.object_path->getCurrentName(),
+      context_.object_path->getCurrentParameters(),
+      context_.semantic_stack->top());
 }
 
 ScenarioIterPtr ScenarioCase::getChildren() const {

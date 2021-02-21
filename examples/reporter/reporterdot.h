@@ -20,6 +20,8 @@
 #ifndef OTest2__EXAMPLES_REPORTER_REPORTERDOT_H_
 #define OTest2__EXAMPLES_REPORTER_REPORTERDOT_H_
 
+#include <memory>
+
 #include <otest2/reporter.h>
 
 namespace OTest2 {
@@ -30,6 +32,10 @@ namespace Examples {
  * @brief A simple reporter printing a dot per each test case
  */
 class ReporterDot : public Reporter {
+  private:
+    class Impl;
+    std::unique_ptr<Impl> pimpl;
+
   public:
     /**
      * @brief Ctor
@@ -50,29 +56,25 @@ class ReporterDot : public Reporter {
     /* -- reporter interface */
     virtual void enterTest(
         const Context& context_,
-        const std::string& name_) override;
+        const std::string& name_,
+        const Parameters& params_) override;
     virtual void enterSuite(
         const Context& context_,
-        const std::string& name_) override;
+        const std::string& name_,
+        const Parameters& params_) override;
     virtual void enterCase(
         const Context& context_,
-        const std::string& name_) override;
+        const std::string& name_,
+        const Parameters& params_) override;
     virtual void enterState(
         const Context& context_,
         const std::string& name_) override;
-    virtual void enterAssert(
+    virtual AssertBufferPtr enterAssert(
         const Context& context_,
         bool condition_,
-        const std::string& message_,
         const std::string& file_,
         int lineno_) override;
-    virtual void enterError(
-        const Context& context_,
-        const std::string& message_) override;
-    virtual void reportAssertionMessage(
-        const Context& context_,
-        const std::string& message_) override;
-    virtual void leaveAssert(
+    virtual AssertBufferPtr enterError(
         const Context& context_) override;
     virtual void leaveState(
         const Context& context_,
@@ -81,14 +83,17 @@ class ReporterDot : public Reporter {
     virtual void leaveCase(
         const Context& context_,
         const std::string& name_,
+        const Parameters& params_,
         bool result_) override;
     virtual void leaveSuite(
         const Context& context_,
         const std::string& name_,
+        const Parameters& params_,
         bool result_) override;
     virtual void leaveTest(
         const Context& context_,
         const std::string& name_,
+        const Parameters& params_,
         bool result_) override;
 };
 

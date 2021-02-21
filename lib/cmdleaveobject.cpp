@@ -29,11 +29,9 @@
 namespace OTest2 {
 
 CmdLeaveObject::CmdLeaveObject(
-    ScenarioPtr scenario_,
-    const std::string& decorated_name_) :
-  scenario(scenario_),
-  decorated_name(decorated_name_) {
-  assert(scenario != nullptr && !decorated_name.empty());
+    ScenarioPtr scenario_) :
+  scenario(scenario_) {
+  assert(scenario != nullptr);
 
 }
 
@@ -44,7 +42,7 @@ CmdLeaveObject::~CmdLeaveObject() {
 void CmdLeaveObject::run(
     const Context& context_) {
   /* -- report finishing of the object */
-  scenario->reportLeaving(context_, decorated_name, context_.semantic_stack->top());
+  scenario->leaveObject(context_);
 
   /* -- finish object's stack-frame */
   context_.object_path->popName();

@@ -12,7 +12,7 @@ from an older project of mine written while I was working for
 [Aveco](http://www.aveco.com/) - that's why there is number 2 in the name.
 As far as I know the original project is still in use.
 
-Current release version is [1.2.0]({{ site.repositoryurl }}/releases/tag/v1.2.0).
+Current release version is [1.3.0]({{ site.repositoryurl }}/releases/tag/v1.3.0).
 
 [Github Repository]({{ site.repositoryurl }})
 
@@ -37,6 +37,8 @@ Current release version is [1.2.0]({{ site.repositoryurl }}/releases/tag/v1.2.0)
   initialized and destroyed by their constructor and destructor methods
   (as it's common in C++) or they can be initialized in special start-up
   and tear-down methods.  
+* [Test sections]({{ "/examples/sections/" | relative_url }}) allow
+  to share the same initialization code with several testing sections. 
 * User can implement
   [own fixture objects]({{ "/examples/fixture-objects/" | relative_url }})
   with hook methods invoked during start-up and tear-down phase of suite

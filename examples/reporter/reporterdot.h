@@ -33,8 +33,8 @@ namespace Examples {
  */
 class ReporterDot : public Reporter {
   private:
-    class Impl;
-    std::unique_ptr<Impl> pimpl;
+    class AssertBufferDot;
+    std::shared_ptr<AssertBufferDot> buffer;
 
   public:
     /**

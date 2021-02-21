@@ -1,6 +1,6 @@
 ---
 title: Exception Handling
-lesson: 3
+lesson: 4
 ---
 A special **try/catch** block checking whether an exception actually happens.
 Handling of unexpected exceptions fired from a test case.

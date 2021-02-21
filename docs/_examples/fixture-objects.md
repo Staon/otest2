@@ -1,6 +1,6 @@
 ---
 title: Fixture Objects
-lesson: 7
+lesson: 8
 ---
 Objects which are part of the fixture initialization.
 

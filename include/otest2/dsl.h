@@ -72,5 +72,6 @@
 #define TEST_SCENARIO(name_) void name_() OT2_SCENARIO()
 #define TEST_STATE(name_) void name_() OT2_STATE()
 #define TEST_SIMPLE() OT2_SIMPLE()
+#define TEST_SECTION(name_) OT2_SECTION(name_)
 
 #endif /* -- OTest2__INCLUDE_OTEST2_DSL_H_ */

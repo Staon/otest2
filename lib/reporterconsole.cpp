@@ -437,6 +437,7 @@ void ReporterConsole::enterCase(
   /* -- correct indentation of a standalone test case */
   if(pimpl->level == 0)
     pimpl->indent = 0;
+  pimpl->printStackedHR();
 
   /* -- increase level of nesting */
   ++pimpl->level;

@@ -21,7 +21,7 @@
 
 #include <cstdio>
 
-#include <otest2/assertbufferstr.h>
+#include <otest2/assertbufferbase.h>
 #include <otest2/parameters.h>
 #include <otest2/utils.h>
 
@@ -29,49 +29,28 @@ namespace OTest2 {
 
 namespace Examples {
 
-class ReporterDot::Impl :  public AssertBufferListener {
+class ReporterDot::AssertBufferDot : public AssertBufferBase {
   public:
-    AssertBufferStrPtr buffer;
-
     /* -- avoid copying */
-    Impl(
-        const Impl&) = delete;
-    Impl& operator = (
-        const Impl&) = delete;
+    AssertBufferDot(
+        const AssertBufferDot&) = delete;
+    AssertBufferDot& operator = (
+        const AssertBufferDot&) = delete;
 
-    Impl();
-    virtual ~Impl();
+    AssertBufferDot() = default;
+    virtual ~AssertBufferDot() = default;
 
-    /* -- assert buffer listener */
+    /* -- assert buffer interface */
     virtual void assertionOpeningMessage(
         const Context& context_,
         const AssertBufferAssertData& data_,
         const std::string& message_) override;
-    virtual void assertionAdditionalMessage(
-        const Context& context_,
-        const AssertBufferAssertData& data_,
-        const std::string& message_) override;
-    virtual void assertionClose(
-        const Context& context_,
-        const AssertBufferAssertData& data_) override;
     virtual void errorOpeningMessage(
         const Context& context_,
         const std::string& message_) override;
-    virtual void errorAdditionalMessage(
-        const Context& context_,
-        const std::string& message_) override;
-    virtual void errorClose(
-        const Context& context_) override;
 };
 
-ReporterDot::Impl::Impl() :
-  buffer(::OTest2::make_unique<AssertBufferStr>(this)) {
-
-}
-
-ReporterDot::Impl::~Impl() = default;
-
-void ReporterDot::Impl::assertionOpeningMessage(
+void ReporterDot::AssertBufferDot::assertionOpeningMessage(
     const Context& context_,
     const AssertBufferAssertData& data_,
     const std::string& message_) {
@@ -79,38 +58,14 @@ void ReporterDot::Impl::assertionOpeningMessage(
     std::printf("\n[%s, %d]: %s\n", data_.file.c_str(), data_.line, message_.c_str());
 }
 
-void ReporterDot::Impl::assertionAdditionalMessage(
-    const Context& context_,
-    const AssertBufferAssertData& data_,
-    const std::string& message_) {
-
-}
-
-void ReporterDot::Impl::assertionClose(
-    const Context& context_,
-    const AssertBufferAssertData& data_) {
-
-}
-
-void ReporterDot::Impl::errorOpeningMessage(
+void ReporterDot::AssertBufferDot::errorOpeningMessage(
     const Context& context_,
     const std::string& message_) {
   std::printf("\nerror: %s\n", message_.c_str());
 }
 
-void ReporterDot::Impl::errorAdditionalMessage(
-    const Context& context_,
-    const std::string& message_) {
-
-}
-
-void ReporterDot::Impl::errorClose(
-    const Context& context_) {
-
-}
-
 ReporterDot::ReporterDot() :
-  pimpl(::OTest2::make_unique<Impl>()) {
+  buffer(std::make_shared<AssertBufferDot>()) {
 
 }
 
@@ -150,14 +105,14 @@ AssertBufferPtr ReporterDot::enterAssert(
     bool condition_,
     const std::string& file_,
     int lineno_) {
-  pimpl->buffer->openAssertion({condition_, file_, lineno_});
-  return pimpl->buffer;
+  buffer->openAssertion({condition_, file_, lineno_});
+  return buffer;
 }
 
 AssertBufferPtr ReporterDot::enterError(
     const Context& context_) {
-  pimpl->buffer->openError();
-  return pimpl->buffer;
+  buffer->openError();
+  return buffer;
 }
 
 void ReporterDot::leaveState(

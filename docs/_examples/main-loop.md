@@ -1,6 +1,6 @@
 ---
 title: Custom Main Loop
-lesson: 5
+lesson: 6
 ---
 Integration of the framework with a custom main event loop.
 

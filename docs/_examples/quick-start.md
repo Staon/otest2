@@ -54,9 +54,7 @@ project(otest2-example-quick-start)
 
 find_package(OTest2)
 
-add_executable(quick-start
-    main.cpp  # -- just because add_executable must have at least one source
-)
+add_executable(quick-start "")
 target_otest2_sources(quick-start
     quick.ot2
 )

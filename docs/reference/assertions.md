@@ -91,6 +91,36 @@ bool testAssertGreaterOrEqual(A_ a_, B_ b_);
 
 These assertions are just shortcuts using the default comparators.
 
+### Floating Point Assertions
+
+```c++
+template<template<typename, typename, typename> class Comparator_, typename A_, typename B_, typename P_ = long double>
+bool testAssertCmpFP(A_ a_, B_ b_, P_ precision_ = DEFAULT_FLOAT_PRECISION);
+```
+
+This assertion allows to compare two floating point values with specified
+precision. There are two implemented comparators:
+[`::OTest2::EqualFP`]({{ "api/html/structOTest2_1_1EqualFP.html" | relative_url }}) and
+[`::OTest2::NotEqualFP`]({{ "api/html/structOTest2_1_1NotEqualFP.html" | relative_url }}).
+User can implement own comparator or make a specialization of those two.
+As well as for generic comparators the print traits must be defined too.
+
+And there are shortcut assertions too:
+ 
+```c++
+template<typename A_, typename B_, typename P_ = long double>
+bool testAssertEqualFP(
+    A_ a_,
+    B_ b_,
+    P_ precision_ = DEFAULT_FLOAT_PRECISION);
+
+template<typename A_, typename B_, typename P_ = long double>
+bool testAssertNotEqualFP(
+    A_ a_,
+    B_ b_,
+    P_ precision_ = DEFAULT_FLOAT_PRECISION);
+```
+
 ### Item-Wise Assertions
 
 ```c++

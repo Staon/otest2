@@ -62,13 +62,6 @@ class StateRegistry {
         StatePtr state_);
 
     /**
-     * @brief Get the initial state
-     *
-     * @return The state or the nullptr if the registry is empty.
-     */
-    StatePtr getFirstState() const;
-
-    /**
      * @brief Get state with specified @a name_
      *
      * @param name_ Name of the state

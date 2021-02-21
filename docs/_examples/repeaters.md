@@ -1,6 +1,6 @@
 ---
 title: Repeaters
-lesson: 8
+lesson: 9
 ---
 Repeated run of suites or test cases
 
@@ -30,19 +30,19 @@ If you run this test you'll get similar output:
 {% highlight plaintext linenos %}
  =============================== RepeaterSuite ================================
 repeated case 0: 1
-  ValueRepeater (1)                                                   [Passed]
+  ValueRepeater (run: 1)                                              [Passed]
 repeated case 1: 2
-  ValueRepeater (2)                                                   [Passed]
+  ValueRepeater (run: 2)                                              [Passed]
 repeated case 2: 3
-  ValueRepeater (3)                                                   [Passed]
+  ValueRepeater (run: 3)                                              [Passed]
 repeated case 3: 5
-  ValueRepeater (4)                                                   [Passed]
+  ValueRepeater (run: 4)                                              [Passed]
 repeated case 4: 8
-  ValueRepeater (5)                                                   [Passed]
+  ValueRepeater (run: 5)                                              [Passed]
 repeated case 5: 13
-  ValueRepeater (6)                                                   [Passed]
+  ValueRepeater (run: 6)                                              [Passed]
 repeated case 6: 21
-  ValueRepeater (7)                                                   [Passed]
+  ValueRepeater (run: 7)                                              [Passed]
  ------------------------------------------------------------------------------
   Suite total                                                         [Passed]
  ================================ Test results ================================
@@ -153,23 +153,23 @@ with similar output:
 {% highlight plaintext linenos %}
  =============================== RepeaterSuite ================================
 0: a node 0 contacted me
-  RepeaterNodesCase (1)                                               [Passed]
+  RepeaterNodesCase (run: 1)                                          [Passed]
 0: a node 1 contacted me
-  RepeaterNodesCase (2)                                               [Passed]
+  RepeaterNodesCase (run: 2)                                          [Passed]
 0: a node 2 contacted me
-  RepeaterNodesCase (3)                                               [Passed]
+  RepeaterNodesCase (run: 3)                                          [Passed]
 1: a node 0 contacted me
-  RepeaterNodesCase (4)                                               [Passed]
+  RepeaterNodesCase (run: 4)                                          [Passed]
 1: a node 1 contacted me
-  RepeaterNodesCase (5)                                               [Passed]
+  RepeaterNodesCase (run: 5)                                          [Passed]
 1: a node 2 contacted me
-  RepeaterNodesCase (6)                                               [Passed]
+  RepeaterNodesCase (run: 6)                                          [Passed]
 2: a node 0 contacted me
-  RepeaterNodesCase (7)                                               [Passed]
+  RepeaterNodesCase (run: 7)                                          [Passed]
 2: a node 1 contacted me
-  RepeaterNodesCase (8)                                               [Passed]
+  RepeaterNodesCase (run: 8)                                          [Passed]
 2: a node 2 contacted me
-  RepeaterNodesCase (9)                                               [Passed]
+  RepeaterNodesCase (run: 9)                                          [Passed]
  ------------------------------------------------------------------------------
   Suite total                                                         [Passed]
  ================================ Test results ================================

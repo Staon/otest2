@@ -26,6 +26,7 @@
 
 #include "formatting.h"
 #include "generfmt.h"
+#include "sectiontree.h"
 
 namespace OTest2 {
 
@@ -46,6 +47,9 @@ class ObjectRecord {
 
     virtual void setRepeaterType(
         const std::string& repeater_type_) = 0;
+    virtual std::string pushSection(
+        const std::string& name_) = 0;
+    virtual void popSection() = 0;
     virtual void printRegistrationInSuite(
         std::ostream& os_,
         const std::string& suite_,
@@ -77,6 +81,9 @@ class SuiteRecord : public ObjectRecord {
     virtual ~SuiteRecord() = default;
     virtual void setRepeaterType(
         const std::string& repeater_type_) override;
+    virtual std::string pushSection(
+        const std::string& name_) override;
+    virtual void popSection() override;
     virtual void printRegistrationInSuite(
         std::ostream& os_,
         const std::string& suite_,
@@ -101,30 +108,40 @@ void SuiteRecord::setRepeaterType(
   repeater_type = repeater_type_;
 }
 
+std::string SuiteRecord::pushSection(
+    const std::string& name_) {
+  assert(false);
+  return std::string();
+}
+
+void SuiteRecord::popSection() {
+  assert(false);
+}
+
 void SuiteRecord::printRegistrationInSuite(
     std::ostream& os_,
     const std::string& suite_,
     int indent_) const {
   Formatting::printIndent(os_, indent_);
   os_ << "{\n";
-  Formatting::printIndent(os_, indent_ + 2);
+  Formatting::printIndent(os_, indent_ + 1);
   os_ << "auto scenario_(std::make_shared< ::OTest2::ScenarioSuite >(\n";
-  Formatting::printIndent(os_, indent_ + 4);
+  Formatting::printIndent(os_, indent_ + 3);
   os_ << "\"" << name << "\",\n";
-  Formatting::printIndent(os_, indent_ + 4);
+  Formatting::printIndent(os_, indent_ + 3);
   writeTags(os_, tags, indent_ + 2);
   os_ << ",\n";
-  Formatting::printIndent(os_, indent_ + 4);
+  Formatting::printIndent(os_, indent_ + 3);
   if(repeater_type.empty())
     os_ << "std::make_shared< ::OTest2::ObjectRepeaterFactoryOnceNested<" << suite_ << ", " << name << "> >(\n";
   else
     os_ << "std::make_shared< ::OTest2::ObjectRepeaterFactoryMultiNested<" << suite_ << ", " << name << ", " << repeater_type << " > >(\n";
-  Formatting::printIndent(os_, indent_ + 6);
+  Formatting::printIndent(os_, indent_ + 5);
   os_ << "&" << suite_ << "::createSuite_" << name << ")));\n";
-  Formatting::printIndent(os_, indent_ + 2);
+  Formatting::printIndent(os_, indent_ + 1);
   os_ << name << "::registerAllChildren(scenario_);\n";
-  Formatting::printIndent(os_, indent_ + 2);
-  os_ << "parent_->appendScenario(\"" << name << "\", scenario_);\n";
+  Formatting::printIndent(os_, indent_ + 1);
+  os_ << "parent_->appendScenario(scenario_);\n";
   Formatting::printIndent(os_, indent_);
   os_ << "}\n";
 }
@@ -154,7 +171,7 @@ void SuiteRecord::printRegistrationInFile(
   Formatting::printIndent(os_, indent_ + 1);
   os_ <<"::OTest2::Registry::instance(";
   writeCString(os_, domain_);
-  os_ << ").registerScenario(\"" << name << "\", scenario_);\n";
+  os_ << ").registerScenario(scenario_);\n";
   Formatting::printIndent(os_, indent_);
   os_ << "}\n";
 }
@@ -163,6 +180,7 @@ class CaseRecord : public ObjectRecord {
   private:
     std::string name;
     std::string repeater_type;
+    SectionTree sections;
     ObjectTags tags;
 
   public:
@@ -178,6 +196,9 @@ class CaseRecord : public ObjectRecord {
     virtual ~CaseRecord() = default;
     virtual void setRepeaterType(
         const std::string& repeater_type_) override;
+    virtual std::string pushSection(
+        const std::string& name_) override;
+    virtual void popSection() override;
     virtual void printRegistrationInSuite(
         std::ostream& os_,
         const std::string& suite_,
@@ -202,28 +223,44 @@ void CaseRecord::setRepeaterType(
   repeater_type = repeater_type_;
 }
 
+std::string CaseRecord::pushSection(
+    const std::string& name_) {
+  sections.pushSection(name_);
+  return sections.getSectionPath();
+}
+
+void CaseRecord::popSection() {
+  sections.popSection();
+}
+
 void CaseRecord::printRegistrationInSuite(
     std::ostream& os_,
     const std::string& suite_,
     int indent_) const {
   Formatting::printIndent(os_, indent_);
-  os_ << "parent_->appendScenario(\n";
-  Formatting::printIndent(os_, indent_ + 2);
+  os_ << "{\n";
+  Formatting::printIndent(os_, indent_ + 1);
+  os_ << "auto scenario_(::OTest2::ScenarioCase::createBuilder(\n";
+  Formatting::printIndent(os_, indent_ + 3);
   os_ << "\"" << name << "\",\n";
-  Formatting::printIndent(os_, indent_ + 2);
-  os_ << "std::make_shared< ::OTest2::ScenarioCase >(\n";
-  Formatting::printIndent(os_, indent_ + 4);
-  os_ << "\"" << name << "\",\n";
-  Formatting::printIndent(os_, indent_ + 4);
-  writeTags(os_, tags, indent_ + 4);
+  Formatting::printIndent(os_, indent_ + 3);
+  writeTags(os_, tags, indent_ + 3);
   os_ << ",\n";
-  Formatting::printIndent(os_, indent_ + 4);
+  Formatting::printIndent(os_, indent_ + 3);
   if(repeater_type.empty())
     os_ << "std::make_shared< ::OTest2::ObjectRepeaterFactoryOnceNested<" << suite_ << ", " << name << "> >(\n";
   else
     os_ << "std::make_shared< ::OTest2::ObjectRepeaterFactoryMultiNested<" << suite_ << ", " << name << ", " << repeater_type << " > >(\n";
-  Formatting::printIndent(os_, indent_ + 6);
-  os_ << "&" << suite_ << "::createCase_" << name << ")));\n";
+  Formatting::printIndent(os_, indent_ + 5);
+  os_ << "&" << suite_ << "::createCase_" << name << "))";
+  sections.printRegistration(os_, indent_ + 2);
+  os_ << "\n";
+  Formatting::printIndent(os_, indent_ + 2);
+  os_ << ".getScenario());\n";
+  Formatting::printIndent(os_, indent_ + 1);
+  os_ << "parent_->appendScenario(scenario_);\n";
+  Formatting::printIndent(os_, indent_);
+  os_ << "}\n";
 }
 
 void CaseRecord::printRegistrationInFile(
@@ -233,7 +270,7 @@ void CaseRecord::printRegistrationInFile(
   Formatting::printIndent(os_, indent_);
   os_ << "{\n";
   Formatting::printIndent(os_, indent_ + 1);
-  os_ << "auto scenario_(std::make_shared< ::OTest2::ScenarioCase >(\n";
+  os_ << "auto scenario_(::OTest2::ScenarioCase::createBuilder(\n";
   Formatting::printIndent(os_, indent_ + 3);
   os_ << "\"" << name << "\",\n";
   Formatting::printIndent(os_, indent_ + 3);
@@ -245,11 +282,15 @@ void CaseRecord::printRegistrationInFile(
     os_ << "std::make_shared< ::OTest2::ObjectRepeaterFactoryOnceRoot< " << name;
   else
     os_ << "std::make_shared< ::OTest2::ObjectRepeaterFactoryMultiRoot< " << name << ", " << repeater_type;
-  os_<< " > >()));\n";
+  os_<< " > >())";
+  sections.printRegistration(os_, indent_ + 2);
+  os_ << "\n";
+  Formatting::printIndent(os_, indent_ + 2);
+  os_ << ".getScenario());\n";
   Formatting::printIndent(os_, indent_ + 1);
   os_ <<"::OTest2::Registry::instance(";
   writeCString(os_, domain_);
-  os_ << ").registerScenario(\"" << name << "\", scenario_);\n";
+  os_ << ").registerScenario(scenario_);\n";
   Formatting::printIndent(os_, indent_);
   os_ << "}\n";
 }
@@ -310,6 +351,17 @@ void ObjectList::setRepeaterType(
     const std::string& repeater_type_) {
   assert(!pimpl->objects.empty());
   pimpl->objects.back()->setRepeaterType(repeater_type_);
+}
+
+std::string ObjectList::pushSection(
+    const std::string& name_) {
+  assert(!pimpl->objects.empty());
+  return pimpl->objects.back()->pushSection(name_);
+}
+
+void ObjectList::popSection() {
+  assert(!pimpl->objects.empty());
+  pimpl->objects.back()->popSection();
 }
 
 void ObjectList::printRegistrationsInSuite(

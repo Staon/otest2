@@ -47,22 +47,41 @@ TEST_CASE(CaseName) {
   TEST_TEAR_DOWN() { /* ... */ }
   /* ... other user functions ... */
 
-  /* -- Children objects. A test case may contain just test states.
-   *    The first implemented state is the entering state. As the
-   *    state switching function needs to know the state functions
-   *    empty forward declarations of state functions are allowed
-   *    too. */
   TEST_STATE(SecondState);              /* -- declaration */
+  
+  /* -- The test case can contain just test states. State marked
+   *    by the macro TEST_SCENARIO is the entering state. If there
+   *    is no scenario state, first implemented state is the entering
+   *    one. */
+  TEST_SCENARIO(FirstState) {
+    /* -- The state may contain testing code. The scenario state
+     *    may define test sections in addition. */
+     
+    TEST_SECTION(FirstSection) {
+      /* ... */
+
+      /* -- sections may be nested */
+      TEST_SECTION(NestedSection) { /* ... */ }
+      
+      /* ... */
+    }
     
-  TEST_STATE(FirstState) { /* ... */ }  /* -- entering state */
+    /* ... */
+    
+    TEST_SECTION(SecondSection) { /* ... */ }
+    
+    /* ... */
+  }
+    
+  TEST_STATE(FirstState) { /* ... */ }
   
   TEST_STATE(SecondState) { /* ... */ } /* -- second state */
   
-  /* -- Following macro is a shortcut for cases which don't need
-   *    to switch states - it creates one AnonymousState. */
-  TEST_SIMPLE() { /* ... */ }
-  
   /* ... other states ... */
+  
+  /* -- Following macro is a shortcut for cases which don't need
+   *    to switch states - it creates one anonymous scenario state. */
+  TEST_SIMPLE() { /* ... */ }
 }
 
 TEST_SUITE(SuiteName) {
@@ -111,14 +130,31 @@ OT2_CASE(CaseName) OT2_TAGS("...tags...") {
   void tearDown() OT2_TEAR_DOWN() { /* ... */ }
   /* ... other user functions ... */
 
-  /* -- Children objects. A test case may contain just test states.
-   *    The first implemented state is the entering state. As the
-   *    state switching function needs to know the state functions
-   *    empty forward declarations of state functions are allowed
-   *    too. */
   void secondState() OT2_STATE();              /* -- declaration */
+
+  /* -- The test case can contain just test states. State marked
+   *    by the macro TEST_SCENARIO is the entering state. If there
+   *    is no scenario state, first implemented state is the entering
+   *    one. */
+  void firstState() OT2_SCENARIO() {
+    /* -- The state may contain testing code. The scenario state
+     *    may define test sections in addition. */
+     
+    OT2_SECTION(FirstSection) {
+      /* ... */
+
+      /* -- sections may be nested */
+      OT2_SECTION(NestedSection) { /* ... */ }
+      
+      /* ... */
+    }
     
-  void firstState() OT2_STATE() { /* ... */ }  /* -- entering state */
+    /* ... */
+    
+    OT2_SECTION(SecondSection) { /* ... */ }
+    
+    /* ... */
+  }
   
   void secondState() OT2_STATE() { /* ... */ } /* -- second state */
   

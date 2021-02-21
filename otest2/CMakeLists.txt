@@ -73,6 +73,8 @@ add_executable(otest2
     parsertags.h
     parsertype.cpp
     parsertype.h
+    sectiontree.cpp
+    sectiontree.h
     typetemplate.cpp
     typetemplate.h
     vartable.cpp

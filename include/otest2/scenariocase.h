@@ -26,6 +26,7 @@
 namespace OTest2 {
 
 class Tags;
+class ScenarioCaseBuilder;
 
 /**
  * @brief Scenario object of a test case
@@ -34,6 +35,7 @@ class ScenarioCase : public Scenario {
   private:
     struct Impl;
     Impl* pimpl;
+    friend class ScenarioCaseBuilder;
 
   public:
     /**
@@ -44,6 +46,29 @@ class ScenarioCase : public Scenario {
      * @param repeater_factory A factory of repeater objects of the test case
      */
     explicit ScenarioCase(
+        const std::string& name_,
+        const Tags& tags_,
+        ObjectRepeaterFactoryPtr repeater_factory_);
+
+    /**
+     * @brief Ctor - instance with active test section
+     *
+     * @param name_ Name of the test case
+     * @param section_path_ Path of the active section (relative to the case)
+     * @param tags_ Tags assigned to the object
+     * @param repeater_factory A factory of repeater objects of the test case
+     */
+    explicit ScenarioCase(
+        const std::string& name_,
+        const std::string& section_path_,
+        const Tags& tags_,
+        ObjectRepeaterFactoryPtr repeater_factory_);
+
+    /**
+     * @brief Create builder of the scenario case
+     * @sa ScenarioCase::ScenarioCase()
+     */
+    static ScenarioCaseBuilder createBuilder(
         const std::string& name_,
         const Tags& tags_,
         ObjectRepeaterFactoryPtr repeater_factory_);
@@ -66,14 +91,66 @@ class ScenarioCase : public Scenario {
         const RunnerFilter& filter_) const override;
     virtual std::pair<std::string, ObjectRepeaterPtr> createRepeater(
         const Context& context_) const override;
-    virtual void reportEntering(
-        const Context& context_,
-        const std::string& decorated_name_) const noexcept override;
-    virtual void reportLeaving(
-        const Context& context_,
-        const std::string& decorated_name_,
-        bool result_) const noexcept override;
+    virtual void enterObject(
+        const Context& context_) const noexcept override;
+    virtual void leaveObject(
+        const Context& context_) const noexcept override;
     virtual ScenarioIterPtr getChildren() const override;
+};
+
+/**
+ * @brief A helper class for building of a case scenario (mainly composition
+ *     of test sections)
+ */
+class ScenarioCaseBuilder {
+  private:
+    struct Impl;
+    Impl* pimpl;
+
+  public:
+    /* -- avoid copying */
+    ScenarioCaseBuilder(
+        const ScenarioCaseBuilder&) = delete;
+    ScenarioCaseBuilder& operator = (
+        const ScenarioCaseBuilder&) = delete;
+
+    /**
+     * @brief Ctor
+     * @sa ScenarioCase::ScenarioCase()
+     */
+    explicit ScenarioCaseBuilder(
+        const std::string& name_,
+        const Tags& tags_,
+        ObjectRepeaterFactoryPtr repeater_factory_);
+
+    /**
+     * @brief Move ctor
+     */
+    ScenarioCaseBuilder(
+        ScenarioCaseBuilder&& other_);
+
+    /**
+     * @brief Dtor
+     */
+    ~ScenarioCaseBuilder();
+
+    /**
+     * @brief Push a child section
+     *
+     * @param name_ Name of the section
+     */
+    ScenarioCaseBuilder& pushSection(
+        const std::string& name_);
+
+    /**
+     * @brief Pop section at current top
+     */
+    ScenarioCaseBuilder& popSection();
+
+    /**
+     * @brief Get the build scenario
+     */
+    ScenarioPtr getScenario();
 };
 
 } /* -- namespace OTest2 */

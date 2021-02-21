@@ -30,6 +30,7 @@
 #include <objectrepeaterfactory.h>
 #include <reporter.h>
 #include "scenarioitercontainer.h"
+#include <semanticstack.h>
 #include <tags.h>
 #include <tagsstack.h>
 #include <utils.h>
@@ -40,10 +41,8 @@ struct ScenarioSuite::Impl {
     std::string name;
     Tags tags;
     ObjectRepeaterFactoryPtr repeater_factory;
-    typedef std::map<std::string, ScenarioPtr> Children;
+    typedef std::vector<ScenarioPtr> Children;
     Children children;
-    typedef std::vector<Children::iterator> Order;
-    Order order;
 
     /* -- avoid copying */
     Impl(
@@ -96,13 +95,13 @@ ScenarioPtr ScenarioSuite::filterScenario(
   /* -- create new suite container and filter children */
   ScenarioContainerPtr suite_(std::make_shared<ScenarioSuite>(
       pimpl->name, pimpl->tags, pimpl->repeater_factory));
-  for(auto iter_ : pimpl->order) {
-    (*iter_).second->filterScenario(tags_, suite_, filter_);
+  for(auto iter_ : pimpl->children) {
+    iter_->filterScenario(tags_, suite_, filter_);
   }
 
   /* -- append myself if there are some not-filtered children */
   if(!suite_->isEmpty()) {
-    parent_->appendScenario(pimpl->name, suite_);
+    parent_->appendScenario(suite_);
   }
 
   /* -- remove myself from the object path */
@@ -113,42 +112,34 @@ ScenarioPtr ScenarioSuite::filterScenario(
 
 std::pair<std::string, ObjectRepeaterPtr> ScenarioSuite::createRepeater(
     const Context& context_) const {
-  return {pimpl->name, pimpl->repeater_factory->createRepeater(context_)};
+  return {pimpl->name, pimpl->repeater_factory->createRepeater(context_, std::string())};
 }
 
-void ScenarioSuite::reportEntering(
-    const Context& context_,
-    const std::string& decorated_name_) const noexcept {
-  context_.reporter->enterSuite(context_, decorated_name_);
+void ScenarioSuite::enterObject(
+    const Context& context_) const noexcept {
+  context_.reporter->enterSuite(
+      context_,
+      context_.object_path->getCurrentName(),
+      context_.object_path->getCurrentParameters());
 }
 
-void ScenarioSuite::reportLeaving(
-    const Context& context_,
-    const std::string& decorated_name_,
-    bool result_) const noexcept {
-  context_.reporter->leaveSuite(context_, decorated_name_, result_);
+void ScenarioSuite::leaveObject(
+    const Context& context_) const noexcept {
+  context_.reporter->leaveSuite(
+      context_,
+      context_.object_path->getCurrentName(),
+      context_.object_path->getCurrentParameters(),
+      context_.semantic_stack->top());
 }
 
 ScenarioIterPtr ScenarioSuite::getChildren() const {
-  std::vector<ScenarioPtr> items_;
-  items_.reserve(pimpl->children.size());
-  for(auto iter_ : pimpl->order) {
-    items_.push_back((*iter_).second);
-  }
-  return std::make_shared<ScenarioIterContainer>(items_);
+  return std::make_shared<ScenarioIterContainer>(pimpl->children);
 }
 
 void ScenarioSuite::appendScenario(
-    const std::string& name_,
     ScenarioPtr scenario_) {
-  assert(!name_.empty() && scenario_ != nullptr);
-  auto item_(pimpl->children.insert(Impl::Children::value_type(name_, scenario_)));
-  if(item_.second) {
-    pimpl->order.push_back(item_.first);
-  }
-  else {
-    assert(false);
-  }
+  assert(scenario_ != nullptr);
+  pimpl->children.push_back(scenario_);
 }
 
 bool ScenarioSuite::isEmpty() const noexcept {

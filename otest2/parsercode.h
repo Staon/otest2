@@ -36,7 +36,8 @@ namespace Parser {
 
 bool parseCodeBlock(
     ParserContext* context_,
-    clang::Stmt* stmt_);
+    clang::Stmt* stmt_,
+    bool allow_sections_);
 clang::VarDecl* getVarDecl(
     ParserContext* context_,
     clang::Stmt* stmt_);

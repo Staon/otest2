@@ -119,9 +119,8 @@ Registry::~Registry() {
 }
 
 void Registry::registerScenario(
-    const std::string& name_,
     ScenarioPtr scenario_) {
-  pimpl->scenario_root->appendScenario(name_, scenario_);
+  pimpl->scenario_root->appendScenario(scenario_);
 }
 
 void Registry::setTestName(

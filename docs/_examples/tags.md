@@ -1,6 +1,6 @@
 ---
 title: Tagging of Testing Objects
-lesson: 9
+lesson: 10
 ---
 Tagging of test cases or suites and filtering of objects by set tags.
 

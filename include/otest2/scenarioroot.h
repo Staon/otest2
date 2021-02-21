@@ -67,18 +67,14 @@ class ScenarioRoot : public ScenarioContainer {
         const RunnerFilter& filter_) const override;
     virtual std::pair<std::string, ObjectRepeaterPtr> createRepeater(
         const Context& context_) const override;
-    virtual void reportEntering(
-        const Context& context_,
-        const std::string& decorated_name_) const noexcept override;
-    virtual void reportLeaving(
-        const Context& context_,
-        const std::string& decorated_name_,
-        bool result_) const noexcept override;
+    virtual void enterObject(
+        const Context& context_) const noexcept override;
+    virtual void leaveObject(
+        const Context& context_) const noexcept override;
     virtual ScenarioIterPtr getChildren() const override;
 
     /* -- scenario container interface */
     virtual void appendScenario(
-        const std::string& name_,
         ScenarioPtr scenario_) override;
     virtual bool isEmpty() const noexcept override;
 };

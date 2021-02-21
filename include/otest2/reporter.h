@@ -26,6 +26,7 @@
 namespace OTest2 {
 
 class Context;
+class Parameters;
 
 /**
  * @brief Generic test reporter
@@ -53,30 +54,36 @@ class Reporter {
      *
      * @param context_ The OTest2 context
      * @param name_ Name of the test
+     * @param params_ Parameters of the testing object
      */
     virtual void enterTest(
         const Context& context_,
-        const std::string& name_) = 0;
+        const std::string& name_,
+        const Parameters& params_) = 0;
 
     /**
      * @brief Enter a suite
      *
      * @param context_ the OTest2 context
      * @param name_ Name of the suite
+     * @param params_ Parameters of the testing object
      */
     virtual void enterSuite(
         const Context& context_,
-        const std::string& name_) = 0;
+        const std::string& name_,
+        const Parameters& params_) = 0;
 
     /**
      * @brief Enter a case
      *
      * @param context_ the OTest2 context
      * @param name_ Name of the case
+     * @param params_ Parameters of the testing object
      */
     virtual void enterCase(
         const Context& context_,
-        const std::string& name_) = 0;
+        const std::string& name_,
+        const Parameters& params_) = 0;
 
     /**
      * @brief Enter a state
@@ -149,11 +156,13 @@ class Reporter {
      *
      * @param context_ the OTest2 context
      * @param name_ Name of the case
+     * @param params_ Parameters of the testing object
      * @param result_ Result of the case
      */
     virtual void leaveCase(
         const Context& context_,
         const std::string& name_,
+        const Parameters& params_,
         bool result_) = 0;
 
     /**
@@ -161,11 +170,13 @@ class Reporter {
      *
      * @param context_ the OTest2 context
      * @param name_ Name of the suite
+     * @param params_ Parameters of the testing object
      * @param result_ Result of the suite
      */
     virtual void leaveSuite(
         const Context& context_,
         const std::string& name_,
+        const Parameters& params_,
         bool result_) = 0;
 
     /**
@@ -173,11 +184,13 @@ class Reporter {
      *
      * @param context_ the OTest2 context
      * @param name_ Name of the leaving test
+     * @param params_ Parameters of the testing object
      * @param result_ Result of the test
      */
     virtual void leaveTest(
         const Context& context_,
         const std::string& name_,
+        const Parameters& params_,
         bool result_) = 0;
 };
 

@@ -29,6 +29,7 @@
 namespace OTest2 {
 
 class Context;
+class ObjectPath;
 
 /**
  * @brief Generic interface of a repeater of a testing object (this repeater
@@ -58,31 +59,35 @@ class ObjectRepeater {
      * @param context_ The otest2 context
      * @return True if next run is prepared
      */
-    virtual bool isNextRun(
+    virtual bool hasNextRun(
         const Context& context_) const = 0;
 
     /**
-     * @brief Decorate object name for next run
-     * @param name_ Bare name of the object
-     * @return Decorated object name
-     * @warning The method may be called only if the isNextRun() is true!
+     * @brief Change current object path
+     *
+     * This method changes current object path to distinguish different
+     * runs of the testing object. Usually the some object's parameters
+     * are set.
+     *
+     * @param[in] context_ The OTest2 context
+     * @param[in,out] path_ The modified object path
      */
-    virtual std::string transformName(
+    virtual void modifyObjectPath(
         const Context& context_,
-        const std::string& name_) const = 0;
+        ObjectPath& path_) const = 0;
 
     /**
      * @brief Create the testing object
      *
      * @param context_ The OTest2 context
-     * @param decorated_name_ Decorated object name
+     * @param name_ Name of the object
      * @param parent_ Parent object of the created object
      * @return The created object
      * @warning The method may be called only if the isNextRun() is true!
      */
     virtual ObjectScenarioPtr createObject(
         const Context& context_,
-        const std::string& decorated_name_,
+        const std::string& name_,
         ObjectPtr parent_) = 0;
 };
 

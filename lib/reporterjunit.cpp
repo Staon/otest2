@@ -31,6 +31,7 @@
 
 #include <assertbufferstr.h>
 #include <context.h>
+#include <parameters.h>
 #include <timesource.h>
 #include <utils.h>
 
@@ -294,8 +295,9 @@ ReporterJUnit::~ReporterJUnit() {
 
 void ReporterJUnit::enterTest(
     const Context& context_,
-    const std::string& name_) {
-  pimpl->testname = name_;
+    const std::string& name_,
+    const Parameters& params_) {
+  pimpl->testname = params_.mixWithName(name_);
 
   /* -- create root node and root test suite (CircleCI ignores standalone
    *    test cases) */
@@ -314,7 +316,8 @@ void ReporterJUnit::enterTest(
 
 void ReporterJUnit::enterSuite(
     const Context& context_,
-    const std::string& name_) {
+    const std::string& name_,
+    const Parameters& params_) {
   /* -- create new node */
   pimpl->node_stack.push_back({
     pimpl->node_stack.back().node.append_child("testsuite"),
@@ -325,13 +328,14 @@ void ReporterJUnit::enterSuite(
     true,
     0,
   });
-  pimpl->fillName(context_, pimpl->node_stack.back(), name_);
+  pimpl->fillName(context_, pimpl->node_stack.back(), params_.mixWithName(name_));
   pimpl->fillTimestamp(context_, pimpl->node_stack.back());
 }
 
 void ReporterJUnit::enterCase(
     const Context& context_,
-    const std::string& name_) {
+    const std::string& name_,
+    const Parameters& params_) {
   /* -- create new node */
   pimpl->node_stack.push_back({
     pimpl->node_stack.back().node.append_child("testcase"),
@@ -342,7 +346,7 @@ void ReporterJUnit::enterCase(
     true,
     0,
   });
-  pimpl->fillName(context_, pimpl->node_stack.back(), name_);
+  pimpl->fillName(context_, pimpl->node_stack.back(), params_.mixWithName(name_));
 }
 
 void ReporterJUnit::enterState(
@@ -392,6 +396,7 @@ void ReporterJUnit::leaveState(
 void ReporterJUnit::leaveCase(
     const Context& context_,
     const std::string& name_,
+    const Parameters& params_,
     bool result_) {
   auto top_(pimpl->node_stack.back());
 
@@ -406,6 +411,7 @@ void ReporterJUnit::leaveCase(
 void ReporterJUnit::leaveSuite(
     const Context& context_,
     const std::string& name_,
+    const Parameters& params_,
     bool result_) {
   auto top_(pimpl->node_stack.back());
 
@@ -421,6 +427,7 @@ void ReporterJUnit::leaveSuite(
 void ReporterJUnit::leaveTest(
     const Context& context_,
     const std::string& name_,
+    const Parameters& params_,
     bool result_) {
   auto top_(pimpl->node_stack.back());
 

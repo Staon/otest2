@@ -30,7 +30,9 @@ namespace OTest2 {
 
 namespace Parser {
 
+class SectionTree;
 class ObjectList;
+
 typedef std::shared_ptr<ObjectList> ObjectListPtr;
 
 /**
@@ -91,6 +93,20 @@ class ObjectList {
      */
     void setRepeaterType(
         const std::string& repeater_type_);
+
+    /**
+     * @brief Push a nested section
+     *
+     * @param name_ Name of the section
+     * @return The full path of the section
+     */
+    std::string pushSection(
+        const std::string& name_);
+
+    /**
+     * @brief Pop current section
+     */
+    void popSection();
 
     /**
      * @brief Print registrations of children object inside a suite object

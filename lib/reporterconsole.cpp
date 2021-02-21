@@ -27,6 +27,7 @@
 #include <assertbufferstr.h>
 #include <context.h>
 #include <objectpath.h>
+#include <parameters.h>
 #include <reporterstatistics.h>
 #include <terminaldriver.h>
 #include <utils.h>
@@ -411,17 +412,19 @@ ReporterConsole::~ReporterConsole() {
 
 void ReporterConsole::enterTest(
     const Context& context_,
-    const std::string& name_) {
+    const std::string& name_,
+    const Parameters& params_) {
 
 }
 
 void ReporterConsole::enterSuite(
     const Context& context_,
-    const std::string& name_) {
+    const std::string& name_,
+    const Parameters& params_) {
   /* -- print the separator */
   ++pimpl->indent;
   pimpl->resetStackedHR();
-  printHR(*pimpl->os, '=', name_, pimpl->indent);
+  printHR(*pimpl->os, '=', params_.mixWithName(name_), pimpl->indent);
 
   /* -- increase level of nesting */
   ++pimpl->level;
@@ -429,10 +432,12 @@ void ReporterConsole::enterSuite(
 
 void ReporterConsole::enterCase(
     const Context& context_,
-    const std::string& name_) {
+    const std::string& name_,
+    const Parameters& params_) {
   /* -- correct indentation of a standalone test case */
   if(pimpl->level == 0)
     pimpl->indent = 0;
+  pimpl->printStackedHR();
 
   /* -- increase level of nesting */
   ++pimpl->level;
@@ -477,12 +482,13 @@ void ReporterConsole::leaveState(
 void ReporterConsole::leaveCase(
     const Context& context_,
     const std::string& name_,
+    const Parameters& params_,
     bool result_) {
   pimpl->statistics.reportCase(result_);
 
   /* -- print result of the test case */
   pimpl->printStackedHR();
-  printResultLine(*pimpl->os, pimpl->term_driver, name_, result_, pimpl->indent);
+  printResultLine(*pimpl->os, pimpl->term_driver, params_.mixWithName(name_), result_, pimpl->indent);
 
   /* -- decrease level of nesting and indentation */
   --pimpl->level;
@@ -493,6 +499,7 @@ void ReporterConsole::leaveCase(
 void ReporterConsole::leaveSuite(
     const Context& context_,
     const std::string& name_,
+    const Parameters& params_,
     bool result_) {
   pimpl->statistics.reportSuite(result_);
 
@@ -512,6 +519,7 @@ void ReporterConsole::leaveSuite(
 void ReporterConsole::leaveTest(
     const Context& context_,
     const std::string& name_,
+    const Parameters& params_,
     bool result_) {
   pimpl->resetStackedHR();
   printHR(*pimpl->os, '=', "Test results", 0);

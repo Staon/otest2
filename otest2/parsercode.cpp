@@ -31,7 +31,8 @@ namespace Parser {
 
 bool parseCodeBlock(
     ParserContext* context_,
-    clang::Stmt* stmt_) {
+    clang::Stmt* stmt_,
+    bool allow_sections_) {
   /* -- get source range of the block */
   clang::SourceRange range_(context_->getNodeRange(stmt_));
   Location begin_(context_->createLocation(range_.getBegin()));
@@ -41,7 +42,7 @@ bool parseCodeBlock(
   context_->generator->startUserArea(begin_);
 
   /* -- visit the block (manipulate all assertions) */
-  AssertVisitor visitor_(context_, begin_);
+  AssertVisitor visitor_(context_, begin_, allow_sections_);
   visitor_.TraverseStmt(stmt_);
   if(*context_->failure)
     return false;

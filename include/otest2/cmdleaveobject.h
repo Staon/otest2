@@ -33,18 +33,15 @@ namespace OTest2 {
 class CmdLeaveObject : public Command {
   private:
     ScenarioPtr scenario;
-    std::string decorated_name;
 
   public:
     /**
      * @brief Ctor
      *
      * @param scenario_ The scenario object representing the testing object
-     * @param decorated_name_ Decorated name of the testing object
      */
     explicit CmdLeaveObject(
-        ScenarioPtr scenario_,
-        const std::string& decorated_name_);
+        ScenarioPtr scenario_);
 
     /**
      * @brief Dtor

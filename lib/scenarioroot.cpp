@@ -30,6 +30,7 @@
 #include "scenarioitercontainer.h"
 #include <scenariocontainerptr.h>
 #include <scenarioptr.h>
+#include <semanticstack.h>
 #include <testroot.h>
 #include <utils.h>
 
@@ -66,7 +67,7 @@ ObjectScenarioPtr ObjectRepeaterRoot::doCreateObject(
 
 struct ScenarioRoot::Impl {
     std::string name;
-    typedef std::map<std::string, ScenarioPtr> Children;
+    typedef std::vector<ScenarioPtr> Children;
     Children children;
 
     /* -- avoid copying */
@@ -113,8 +114,8 @@ ScenarioPtr ScenarioRoot::filterScenario(
     ScenarioContainerPtr parent_,
     const RunnerFilter& filter_) const {
   ScenarioContainerPtr root_(std::make_shared<ScenarioRoot>(pimpl->name));
-  for(const auto& item_ : pimpl->children) {
-    item_.second->filterScenario(tags_, root_, filter_);
+  for(auto item_ : pimpl->children) {
+    item_->filterScenario(tags_, root_, filter_);
   }
 
   return root_;
@@ -125,17 +126,21 @@ std::pair<std::string, ObjectRepeaterPtr> ScenarioRoot::createRepeater(
   return {pimpl->name, std::make_shared<ObjectRepeaterRoot>()};
 }
 
-void ScenarioRoot::reportEntering(
-    const Context& context_,
-    const std::string& decorated_name_) const noexcept {
-  context_.reporter->enterTest(context_, decorated_name_);
+void ScenarioRoot::enterObject(
+    const Context& context_) const noexcept {
+  context_.reporter->enterTest(
+      context_,
+      context_.object_path->getCurrentName(),
+      context_.object_path->getCurrentParameters());
 }
 
-void ScenarioRoot::reportLeaving(
-    const Context& context_,
-    const std::string& decorated_name_,
-    bool result_) const noexcept {
-  context_.reporter->leaveTest(context_, decorated_name_, result_);
+void ScenarioRoot::leaveObject(
+    const Context& context_) const noexcept {
+  context_.reporter->leaveTest(
+      context_,
+      context_.object_path->getCurrentName(),
+      context_.object_path->getCurrentParameters(),
+      context_.semantic_stack->top());
 }
 
 ScenarioIterPtr ScenarioRoot::getChildren() const {
@@ -143,10 +148,9 @@ ScenarioIterPtr ScenarioRoot::getChildren() const {
 }
 
 void ScenarioRoot::appendScenario(
-    const std::string& name_,
     ScenarioPtr scenario_) {
-  assert(!name_.empty() && scenario_ != nullptr);
-  pimpl->children.insert(Impl::Children::value_type(name_, scenario_));
+  assert(scenario_ != nullptr);
+  pimpl->children.push_back(scenario_);
 }
 
 bool ScenarioRoot::isEmpty() const noexcept {

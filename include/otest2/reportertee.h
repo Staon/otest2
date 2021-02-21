@@ -61,13 +61,16 @@ class ReporterTee : public Reporter {
     /* -- reporter interface */
     virtual void enterTest(
         const Context& context_,
-        const std::string& name_) override;
+        const std::string& name_,
+        const Parameters& params_) override;
     virtual void enterSuite(
         const Context& context_,
-        const std::string& name_) override;
+        const std::string& name_,
+        const Parameters& params_) override;
     virtual void enterCase(
         const Context& context_,
-        const std::string& name_) override;
+        const std::string& name_,
+        const Parameters& params_) override;
     virtual void enterState(
         const Context& context_,
         const std::string& name_) override;
@@ -85,14 +88,17 @@ class ReporterTee : public Reporter {
     virtual void leaveCase(
         const Context& context_,
         const std::string& name_,
+        const Parameters& params_,
         bool result_) override;
     virtual void leaveSuite(
         const Context& context_,
         const std::string& name_,
+        const Parameters& params_,
         bool result_) override;
     virtual void leaveTest(
         const Context& context_,
         const std::string& name_,
+        const Parameters& params_,
         bool result_) override;
 };
 

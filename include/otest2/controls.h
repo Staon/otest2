@@ -22,10 +22,12 @@
 #ifndef OTEST2_PARSER_ACTIVE
 
 #define TEST_CONTROLS_SWITCH_STATE()
+#define TEST_CONTROLS_SECTION_NAME()
 
 #else /* -- OTEST2_PARSER_ACTIVE */
 
 #define TEST_CONTROLS_SWITCH_STATE() __attribute__((annotate("otest2::switchState")))
+#define TEST_CONTROLS_SECTION_NAME() __attribute__((annotate("otest2::section")))
 
 #endif /* -- OTEST2_PARSER_ACTIVE */
 
@@ -47,6 +49,19 @@ template<typename... Args_>
 void switchState(
     void (*state_)(Args_... args_),
     int delay_) TEST_CONTROLS_SWITCH_STATE();
+
+namespace Private {
+
+/**
+ * @brief A function marking start of a section
+ *
+ * @note This function is not implemented - it works just as a mark in
+ *     the DSL.
+ * @param section_name_ Name of the section
+ */
+bool sectionName(const char* section_name_) TEST_CONTROLS_SECTION_NAME();
+
+} /* -- namespace Private */
 
 }  /* -- namespace Controls */
 

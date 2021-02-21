@@ -28,6 +28,7 @@
 #include <otest2/assertbufferstr.h>
 #include <otest2/context.h>
 #include <otest2/objectpath.h>
+#include <otest2/parameters.h>
 #include <otest2/utils.h>
 
 namespace OTest2 {
@@ -242,24 +243,27 @@ AssertBean ReporterMock::checkRecords(
 
 void ReporterMock::enterTest(
     const Context& context_,
-    const std::string& name_) {
-  pimpl->oss << "enterTest<" << name_ << ">";
+    const std::string& name_,
+    const Parameters& params_) {
+  pimpl->oss << "enterTest<" << params_.mixWithName(name_) << ">";
   pimpl->addRecord();
   pimpl->reportObjectPath(context_);
 }
 
 void ReporterMock::enterSuite(
     const Context& context_,
-    const std::string& name_) {
-  pimpl->oss << "enterSuite<" << name_ << ">";
+    const std::string& name_,
+    const Parameters& params_) {
+  pimpl->oss << "enterSuite<" << params_.mixWithName(name_) << ">";
   pimpl->addRecord();
   pimpl->reportObjectPath(context_);
 }
 
 void ReporterMock::enterCase(
     const Context& context_,
-    const std::string& name_) {
-  pimpl->oss << "enterCase<" << name_ << ">";
+    const std::string& name_,
+    const Parameters& params_) {
+  pimpl->oss << "enterCase<" << params_.mixWithName(name_) << ">";
   pimpl->addRecord();
   pimpl->reportObjectPath(context_);
 }
@@ -300,8 +304,9 @@ void ReporterMock::leaveState(
 void ReporterMock::leaveCase(
     const Context& context_,
     const std::string& name_,
+    const Parameters& params_,
     bool result_) {
-  pimpl->oss << "leaveCase<" << name_ << ">: ";
+  pimpl->oss << "leaveCase<" << params_.mixWithName(name_) << ">: ";
   pimpl->printResult(result_);
   pimpl->addRecord();
   pimpl->reportObjectPath(context_);
@@ -310,8 +315,9 @@ void ReporterMock::leaveCase(
 void ReporterMock::leaveSuite(
     const Context& context_,
     const std::string& name_,
+    const Parameters& params_,
     bool result_) {
-  pimpl->oss << "leaveSuite<" << name_ << ">: ";
+  pimpl->oss << "leaveSuite<" << params_.mixWithName(name_) << ">: ";
   pimpl->printResult(result_);
   pimpl->addRecord();
   pimpl->reportObjectPath(context_);
@@ -320,8 +326,9 @@ void ReporterMock::leaveSuite(
 void ReporterMock::leaveTest(
     const Context& context_,
     const std::string& name_,
+    const Parameters& params_,
     bool result_) {
-  pimpl->oss << "leaveTest<" << name_ << ">: ";
+  pimpl->oss << "leaveTest<" << params_.mixWithName(name_) << ">: ";
   pimpl->printResult(result_);
   pimpl->addRecord();
   pimpl->reportObjectPath(context_);

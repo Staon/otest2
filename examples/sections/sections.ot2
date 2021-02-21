@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2020 Ondrej Starek
  *
- * This file is part of OTest2
+ * This file is part of OTest2.
  *
  * OTest2 is free software: you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by
@@ -16,40 +16,30 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with OTest2.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <objectrepeateronce.h>
+#include <otest2/otest2.h>
 
-#include <assert.h>
-#include <string>
+#include <iostream>
 
 namespace OTest2 {
 
-ObjectRepeaterOnce::ObjectRepeaterOnce() :
-  created(false) {
+namespace Examples {
 
+TEST_CASE(TestSections) {
+  TEST_SIMPLE() {
+    std::cout << "Some initialization steps..." << std::endl;
+
+    TEST_SECTION(FirstTestingSection) {
+      std::cout << "First section" << std::endl;
+    }
+
+    TEST_SECTION(SecondTestingSection) {
+      std::cout << "Second section" << std::endl;
+    }
+
+    std::cout << "Some cleaning up steps..." << std::endl;
+  }
 }
 
-ObjectRepeaterOnce::~ObjectRepeaterOnce() {
-
-}
-
-bool ObjectRepeaterOnce::hasNextRun(
-    const Context& context_) const {
-  return !created;
-}
-
-void ObjectRepeaterOnce::modifyObjectPath(
-    const Context& context_,
-    ObjectPath& path_) const {
-  assert(!created);
-}
-
-ObjectScenarioPtr ObjectRepeaterOnce::createObject(
-    const Context& context_,
-    const std::string& decorated_name_,
-    ObjectPtr parent_) {
-  assert(!created);
-  created = true;
-  return doCreateObject(context_, decorated_name_, parent_);
-}
+} /* -- namespace Examples */
 
 } /* -- namespace OTest2 */

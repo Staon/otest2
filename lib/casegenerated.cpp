@@ -42,6 +42,7 @@ struct CaseGenerated::Impl {
     const Context* context;
     std::string name;
     StateRegistry state_registry;
+    std::string entering_state;
     std::vector<FceMarshalerPtr> start_ups;
     std::vector<FceMarshalerPtr> tear_downs;
 
@@ -65,7 +66,10 @@ CaseGenerated::Impl::Impl(
   owner(owner_),
   context(&context_),
   name(name_),
-  state_registry() {
+  state_registry(),
+  entering_state(),
+  start_ups(),
+  tear_downs() {
 
 }
 
@@ -124,7 +128,7 @@ void CaseGenerated::tearDownObject(
 }
 
 StatePtr CaseGenerated::getFirstState() const {
-  return pimpl->state_registry.getFirstState();
+  return pimpl->state_registry.getState(pimpl->entering_state);
 }
 
 StatePtr CaseGenerated::getState(
@@ -140,6 +144,11 @@ void CaseGenerated::registerState(
     const std::string& name_,
     StatePtr state_) {
   pimpl->state_registry.registerState(name_, state_);
+}
+
+void CaseGenerated::setEnteringState(
+    const std::string& name_) {
+  pimpl->entering_state = name_;
 }
 
 void CaseGenerated::registerFixture(

@@ -26,6 +26,7 @@
 #include <cmdstate.h>
 #include <commandstack.h>
 #include <context.h>
+#include <objectpath.h>
 #include "runcode.h"
 #include <utils.h>
 
@@ -37,6 +38,7 @@ struct StateGenerated::Impl {
 
     const Context* context;
     std::string name;
+    ObjectPath section;
 
     CaseOrdinaryPtr parent;
 
@@ -49,17 +51,20 @@ struct StateGenerated::Impl {
     explicit Impl(
         StateGenerated* owner_,
         const Context& context_,
-        const std::string& name_);
+        const std::string& name_,
+        const std::string& section_path_);
     ~Impl();
 };
 
 StateGenerated::Impl::Impl(
     StateGenerated* owner_,
     const Context& context_,
-    const std::string& name_) :
+    const std::string& name_,
+    const std::string& section_path_) :
   owner(owner_),
   context(&context_),
   name(name_),
+  section(section_path_),
   parent() {
 
 }
@@ -70,9 +75,10 @@ StateGenerated::Impl::~Impl() {
 
 StateGenerated::StateGenerated(
     const Context& context_,
-    const std::string& name_) :
+    const std::string& name_,
+    const std::string& section_path_) :
   StateOrdinary(context_),
-  pimpl(new Impl(this, context_, name_)) {
+  pimpl(new Impl(this, context_, name_, section_path_)) {
 
 }
 
@@ -109,6 +115,13 @@ void StateGenerated::switchState(
   /* -- schedule the commands */
   context_.command_stack->replaceCommand(
       std::make_shared<CmdState>(pimpl->parent, name_, delay_));
+}
+
+bool StateGenerated::isTestSectionActive(
+    const Context& context_,
+    const std::string& section_path_) {
+  const ObjectPath path_(section_path_);
+  return path_.isPrefixOf(pimpl->section);
 }
 
 } /* -- namespace OTest2 */

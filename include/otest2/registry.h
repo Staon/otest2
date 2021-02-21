@@ -60,11 +60,9 @@ class Registry {
     /**
      * @brief Register a scenario object
      *
-     * @param name_ Name of the scenario (name of the testing object)
      * @param scenario_ The scenario object
      */
     void registerScenario(
-        const std::string& name_,
         ScenarioPtr scenario_);
 
     /**

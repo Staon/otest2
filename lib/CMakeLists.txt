@@ -30,6 +30,7 @@ target_include_directories(libotest2common PRIVATE ${PROJECT_SOURCE_DIR}/include
 add_library(libotest2
     assertbean.cpp
     assertbuffer.cpp
+    assertbufferbase.cpp
     assertbufferstr.cpp
     assertcontext.cpp
     assertions.cpp
@@ -72,6 +73,7 @@ add_library(libotest2
     objectrepeaterfactory.cpp
     objectrepeateronce.cpp
     objectscenario.cpp
+    parameters.cpp
     printutils.cpp
     registry.cpp
     regressions.cpp

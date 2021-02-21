@@ -35,10 +35,13 @@ namespace Parser {
 struct AnnotationRegex;
 
 class AssertVisitor : public clang::RecursiveASTVisitor<AssertVisitor> {
+  public:
+    typedef clang::RecursiveASTVisitor<AssertVisitor> Parent;
+
   private:
     ParserContext* context;
     Location current;
-    clang::Stmt* subtree_root;
+    bool allow_sections;
 
     bool generateAssertion(
         clang::CallExpr* expr_,
@@ -68,17 +71,16 @@ class AssertVisitor : public clang::RecursiveASTVisitor<AssertVisitor> {
   public:
     explicit AssertVisitor(
         ParserContext* context_,
-        const Location& curr_);
+        const Location& curr_,
+        bool allow_sections_);
     virtual ~AssertVisitor();
 
     bool VisitCallExpr(
         clang::CallExpr* expr_);
-    bool VisitCXXTryStmt(
+    bool TraverseCXXTryStmt(
         clang::CXXTryStmt* stmt_);
-    bool dataTraverseStmtPre(
-        clang::Stmt* stmt_);
-    bool dataTraverseStmtPost(
-        clang::Stmt* stmt_);
+    bool TraverseIfStmt(
+        clang::IfStmt* stmt_);
 
     Location getCurrentLocation() const;
 };

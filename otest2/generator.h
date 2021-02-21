@@ -185,12 +185,15 @@ class Generator {
      * @brief Beginning of a test state
      *
      * @param name_ Name of the state
+     * @param first_ If it's true the state is the entering state - the
+     *     scenario
      * @param state_fce_ Description of the state function
      * @param fbegin_ Beginning of the declaration of the state function
      * @param fend_ End of the declaration of the state function
      */
     virtual void enterState(
         const std::string& name_,
+        bool first_,
         FunctionPtr state_fce_,
         const Location& fbegin_,
         const Location& fend_) = 0;
@@ -199,6 +202,21 @@ class Generator {
      * @brief Generate empty state
      */
     virtual void emptyState() = 0;
+
+    /**
+     * @brief Enter a test section
+     *
+     * @param name_ Name of the section
+     * @param section_begin_ Location of the section body
+     */
+    virtual void enterSection(
+        const std::string& name_,
+        const Location& section_begin_) = 0;
+
+    /**
+     * @brief Leave an already opened section
+     */
+    virtual void leaveSection() = 0;
 
     /**
      * @brief Append a variable

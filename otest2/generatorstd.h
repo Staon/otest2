@@ -101,10 +101,15 @@ class GeneratorStd : public Generator {
     virtual void finishCaseFunctions() override;
     virtual void enterState(
         const std::string& name_,
+        bool first_,
         FunctionPtr state_fce_,
         const Location& fbegin_,
         const Location& fend_) override;
     virtual void emptyState() override;
+    virtual void enterSection(
+        const std::string& name_,
+        const Location& section_begin_) override;
+    virtual void leaveSection() override;
     virtual void appendVariable(
         const std::string& name_,
         const std::string& type_,

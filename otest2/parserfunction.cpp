@@ -43,7 +43,8 @@ FunctionFlags::FunctionFlags(
   start_up(true),
   tear_down(true),
   test_state(test_state_),
-  first_state(true) {
+  first_state(true),
+  scenario_state(false) {
 
 }
 
@@ -159,7 +160,7 @@ std::pair<bool, bool> parseFunction(
 
       context_->generator->appendStartUpFunction(
           function_, decl_begin_, decl_end_);
-      if(!parseCodeBlock(context_, body_))
+      if(!parseCodeBlock(context_, body_, false))
         return {false, false};
 
       return {true, false};
@@ -173,12 +174,13 @@ std::pair<bool, bool> parseFunction(
 
       context_->generator->appendTearDownFunction(
           function_, decl_begin_, decl_end_);
-      if(!parseCodeBlock(context_, body_))
+      if(!parseCodeBlock(context_, body_, false))
         return {false, false};
 
       return {true, false};
     }
-    else if(hasAnnotation(fce_, STATE_ANNOTATION)) {
+    else if(hasAnnotation(fce_, STATE_ANNOTATION) || hasAnnotation(fce_, SCENARIO_ANNOTATION)) {
+      const bool scenario_flag_(hasAnnotation(fce_, SCENARIO_ANNOTATION));
       if(!fce_flags_.test_state) {
         context_->setError("unexpected test state function", fce_);
         return {false, true};
@@ -189,11 +191,22 @@ std::pair<bool, bool> parseFunction(
         context_->generator->finishCaseFunctions();
         fce_flags_.first_state = false;
       }
+      bool entering_state_(false);
+      if(scenario_flag_) {
+        /* -- just one scenario state is allowed */
+        if(fce_flags_.scenario_state) {
+          context_->setError("unexpected scenario function", fce_);
+          return {false, true};
+        }
+
+        fce_flags_.scenario_state = true;
+        entering_state_ = true;
+      }
 
       /* -- enter the test case */
       context_->generator->enterState(
-          fce_->getNameAsString(), function_, decl_begin_, decl_end_);
-      if(!parseCodeBlock(context_, body_))
+          fce_->getNameAsString(), entering_state_, function_, decl_begin_, decl_end_);
+      if(!parseCodeBlock(context_, body_, scenario_flag_))
         return {false, true};
       context_->generator->leaveState();
 
@@ -212,7 +225,7 @@ std::pair<bool, bool> parseFunction(
 
     context_->generator->appendGenericFunction(
         function_, decl_begin_, decl_end_);
-    if(!parseCodeBlock(context_, body_))
+    if(!parseCodeBlock(context_, body_, false))
       return {false, false};
 
     return {true, false};

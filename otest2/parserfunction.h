@@ -41,6 +41,7 @@ struct FunctionFlags {
     bool tear_down;
     bool test_state;
     bool first_state;
+    bool scenario_state;
 
     explicit FunctionFlags(
         bool test_state_);

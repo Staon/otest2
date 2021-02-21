@@ -23,6 +23,7 @@
 #include <iostream>
 #include <memory>
 #include <otest2/utils.h>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -78,6 +79,7 @@ struct GeneratorStd::Impl {
     /* -- list of states */
     typedef std::vector<std::string> States;
     States states;
+    std::string first_state;
 
   private:
     /* -- avoid copying */
@@ -173,11 +175,13 @@ void GeneratorStd::Impl::writeStateClass(
   Formatting::printIndent(output, indent);
   output << "explicit " << state_ << "(\n";
   Formatting::printIndent(output, indent + 2);
-  output << "const ::OTest2::Context& context_";
+  output << "const ::OTest2::Context& context_,\n";
+  Formatting::printIndent(output, indent + 2);
+  output << "const std::string& section_path_";
   variables->printParameters(output, indent + 2);
   output << ") :\n";
   Formatting::printIndent(output, indent + 1);
-  output << "::OTest2::StateGenerated(context_, \"" << state_ << "\")";
+  output << "::OTest2::StateGenerated(context_, \"" << state_ << "\", section_path_)";
   variables->printInitializers(output, indent + 1);
   output << " {\n\n";
   Formatting::printIndent(output, indent);
@@ -207,7 +211,9 @@ void GeneratorStd::Impl::writeObjectCtors(
   Formatting::printIndent(output, indent);
   output << "explicit " << objectpath.back() << "(\n";
   Formatting::printIndent(output, indent + 2);
-  output << "const ::OTest2::Context& context_";
+  output << "const ::OTest2::Context& context_,\n";
+  Formatting::printIndent(output, indent + 2);
+  output << "const std::string& section_path_";
   variables->printParameters(output, indent + 2);
   output << ") :\n";
   Formatting::printIndent(output, indent + 1);
@@ -231,11 +237,15 @@ void GeneratorStd::Impl::writeStateFactoryMethod(
   Formatting::printIndent(output, indent);
   output << "::OTest2::StatePtr createState_" << state_ << "(\n";
   Formatting::printIndent(output, indent + 2);
-  output << "const ::OTest2::Context& context_) {\n";
+  output << "const ::OTest2::Context& context_,\n";
+  Formatting::printIndent(output, indent + 2);
+  output << "const std::string& section_path_) {\n";
   Formatting::printIndent(output, indent + 1);
   output << "return std::make_shared<" << state_ << ">(\n";
   Formatting::printIndent(output, indent + 3);
-  output << "context_";
+  output << "context_,\n";
+  Formatting::printIndent(output, indent + 3);
+  output << "section_path_";
   variables->printArguments(output, indent + 3);
   output << ");\n";
   Formatting::printIndent(output, indent);
@@ -251,17 +261,21 @@ void GeneratorStd::Impl::writeObjectFactoryMethod(
     Formatting::printIndent(output, indent);
     output << "::OTest2::ObjectScenarioPtr create" << object_ << "_" << objectpath.back() << "(\n";
     Formatting::printIndent(output, indent + 2);
-    output << "const ::OTest2::Context& context_";
+    output << "const ::OTest2::Context& context_,\n";
+    Formatting::printIndent(output, indent + 2);
+    output << "const std::string& section_path_";
     variables->printFactoryParameters(output, indent + 2);
     output << ") {\n";
     Formatting::printIndent(output, indent + 1);
     output << "return std::make_shared<" << objectpath.back() << ">(\n";
     Formatting::printIndent(output, indent + 3);
-    output << "context_";
+    output << "context_,\n";
+    Formatting::printIndent(output, indent + 3);
+    output << "section_path_";
     variables->printArguments(output, indent + 3);
     output << ");\n";
     Formatting::printIndent(output, indent);
-    output << "}";
+    output << "}\n\n";
   }
 }
 
@@ -506,6 +520,8 @@ void GeneratorStd::enterCase(
   pimpl->tear_down_fce.emplace_back(nullptr);
   pimpl->repeater.emplace_back("");
   pimpl->indent += 2;
+  pimpl->states.clear();
+  pimpl->first_state.clear();
 
   /* -- begin the generated case class */
   Formatting::printIndent(pimpl->output, pimpl->indent - 2);
@@ -531,13 +547,14 @@ void GeneratorStd::finishCaseFunctions() {
 
   /* -- ctor and dtor */
   pimpl->writeObjectCtors("::OTest2::CaseGenerated", {
-      "registerAllStates(context_);",
+      "registerAllStates(context_, section_path_);",
       "registerFixtures();",
   });
 }
 
 void GeneratorStd::enterState(
     const std::string& state_,
+    bool first_,
     FunctionPtr state_fce_,
     const Location& fbegin_,
     const Location& fend_) {
@@ -547,6 +564,8 @@ void GeneratorStd::enterState(
   pimpl->objectpath.push_back(state_);
   pimpl->variables = std::make_shared<VarTable>("state_", pimpl->variables);
   pimpl->states.push_back(state_);
+  if(first_)
+    pimpl->first_state = state_;
   pimpl->indent += 2;
   pimpl->state_fce = state_fce_;
 
@@ -580,6 +599,29 @@ void GeneratorStd::emptyState() {
   pimpl->writeStateFactoryMethod(state_name_);
 
   pimpl->variables = pimpl->variables->getPrevLevel();
+}
+
+void GeneratorStd::enterSection(
+    const std::string& name_,
+    const Location& section_begin_) {
+  assert(!name_.empty());
+
+  /* -- store the section to be registered later */
+  std::string full_path_(pimpl->objects.back()->pushSection(name_));
+
+  /* -- generate the opening code */
+  pimpl->writeGenerLineDirective();
+
+  Formatting::printIndent(pimpl->output, pimpl->indent);
+  pimpl->output << "if(isTestSectionActive(otest2Context(), ";
+  writeCString(pimpl->output, full_path_);
+  pimpl->output << "))";
+
+  pimpl->writeUserLineDirective(section_begin_);
+}
+
+void GeneratorStd::leaveSection() {
+  pimpl->objects.back()->popSection();
 }
 
 void GeneratorStd::appendVariable(
@@ -704,15 +746,24 @@ void GeneratorStd::leaveCase() {
   Formatting::printIndent(pimpl->output, pimpl->indent);
   pimpl->output << "void registerAllStates(\n";
   Formatting::printIndent(pimpl->output, pimpl->indent + 2);
-  pimpl->output << "const ::OTest2::Context& context_) {\n";
+  pimpl->output << "const ::OTest2::Context& context_,\n";
+  Formatting::printIndent(pimpl->output, pimpl->indent + 2);
+  pimpl->output << "const std::string& section_path_) {\n";
   for(const auto& state_ : pimpl->states) {
     Formatting::printIndent(pimpl->output, pimpl->indent + 1);
     pimpl->output << "registerState(\n";
     Formatting::printIndent(pimpl->output, pimpl->indent + 3);
     pimpl->output << "\"" << state_ << "\",\n";
     Formatting::printIndent(pimpl->output, pimpl->indent + 3);
-    pimpl->output << "createState_" << state_ << "(context_));\n";
+    pimpl->output << "createState_" << state_ << "(context_, section_path_));\n";
   }
+  auto first_name_(pimpl->first_state);
+  if(first_name_.empty())
+    first_name_ = pimpl->states.front();
+  Formatting::printIndent(pimpl->output, pimpl->indent + 1);
+  pimpl->output << "setEnteringState(";
+  writeCString(pimpl->output, first_name_);
+  pimpl->output << ");\n";
   Formatting::printIndent(pimpl->output, pimpl->indent);
   pimpl->output << "}\n\n";
 
@@ -747,6 +798,7 @@ void GeneratorStd::leaveCase() {
   pimpl->tear_down_fce.pop_back();
   pimpl->repeater.pop_back();
   pimpl->states.clear();
+  pimpl->first_state.clear();
 }
 
 void GeneratorStd::leaveSuite() {

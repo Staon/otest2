@@ -35,7 +35,9 @@ namespace Parser {
 
 extern const std::string SUITE_ANNOTATION;
 extern const std::string CASE_ANNOTATION;
+extern const std::string SCENARIO_ANNOTATION;
 extern const std::string STATE_ANNOTATION;
+extern const std::string SECTION_ANNOTATION;
 extern const std::string START_UP_ANNOTATION;
 extern const std::string TEAR_DOWN_ANNOTATION;
 extern const std::string ASSERTION_ANNOTATION;

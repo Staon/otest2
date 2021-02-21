@@ -24,12 +24,16 @@
 
 namespace OTest2 {
 
+class Parameters;
+
 /**
  * @brief This is a simple object keeping path to current testing object
  */
 class ObjectPath {
-  private:
+  public:
     struct Impl;
+
+  private:
     Impl* pimpl;
 
   public:
@@ -43,6 +47,14 @@ class ObjectPath {
      * @brief Ctor
      */
     ObjectPath();
+
+    /**
+     * @brief Ctor with initial path
+     *
+     * @param full_path_ The full path (parts of path separated by '::')
+     */
+    explicit ObjectPath(
+        const std::string& full_path_);
 
     /**
      * @brief Dtor
@@ -63,11 +75,28 @@ class ObjectPath {
     void popName();
 
     /**
+     * @brief Append parameter to current testing object
+     *
+     * @param name_ Name of the parameter
+     * @param value_ Value of the parameter
+     */
+    void appendParameter(
+        const std::string& name_,
+        const std::string& value_);
+
+    /**
      * @brief Get name at the top of the stack
      *
      * @return the name
      */
     std::string getCurrentName() const;
+
+    /**
+     * @brief Get parameters of current object
+     *
+     * @return The parameters
+     */
+    const Parameters& getCurrentParameters() const;
 
     /**
      * @brief Get path of current object
@@ -85,6 +114,12 @@ class ObjectPath {
      */
     std::string getRegressionKey(
         const std::string& local_key_) const;
+
+    /**
+     * @brief Tell us whether this object is a prefix of specified @a path_
+     */
+    bool isPrefixOf(
+        const ObjectPath& path_) const noexcept;
 };
 
 } /* -- namespace OTest2 */

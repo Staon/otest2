@@ -20,6 +20,8 @@
 #ifndef OTest2_INCLUDE_OTEST2_OBJECTREPEATERFACTORY_H_
 #define OTest2_INCLUDE_OTEST2_OBJECTREPEATERFACTORY_H_
 
+#include <string>
+
 #include <otest2/objectrepeaterfactoryptr.h>
 #include <otest2/objectrepeaterptr.h>
 
@@ -52,10 +54,13 @@ class ObjectRepeaterFactory {
      * @brief Create repeater object
      *
      * @param context_ The OTest2 context
+     * @param section_path_ Full path of active section. Used just be
+     *     test cases.
      * @return The repeater object
      */
     virtual ObjectRepeaterPtr createRepeater(
-        const Context& context_) const = 0;
+        const Context& context_,
+        const std::string& section_path_) const = 0;
 };
 
 } /* -- namespace OTest2 */

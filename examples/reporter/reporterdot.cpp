@@ -21,11 +21,51 @@
 
 #include <cstdio>
 
+#include <otest2/assertbufferbase.h>
+#include <otest2/parameters.h>
+#include <otest2/utils.h>
+
 namespace OTest2 {
 
 namespace Examples {
 
-ReporterDot::ReporterDot() {
+class ReporterDot::AssertBufferDot : public AssertBufferBase {
+  public:
+    /* -- avoid copying */
+    AssertBufferDot(
+        const AssertBufferDot&) = delete;
+    AssertBufferDot& operator = (
+        const AssertBufferDot&) = delete;
+
+    AssertBufferDot() = default;
+    virtual ~AssertBufferDot() = default;
+
+    /* -- assert buffer interface */
+    virtual void assertionOpeningMessage(
+        const Context& context_,
+        const AssertBufferAssertData& data_,
+        const std::string& message_) override;
+    virtual void errorOpeningMessage(
+        const Context& context_,
+        const std::string& message_) override;
+};
+
+void ReporterDot::AssertBufferDot::assertionOpeningMessage(
+    const Context& context_,
+    const AssertBufferAssertData& data_,
+    const std::string& message_) {
+  if(!data_.condition)
+    std::printf("\n[%s, %d]: %s\n", data_.file.c_str(), data_.line, message_.c_str());
+}
+
+void ReporterDot::AssertBufferDot::errorOpeningMessage(
+    const Context& context_,
+    const std::string& message_) {
+  std::printf("\nerror: %s\n", message_.c_str());
+}
+
+ReporterDot::ReporterDot() :
+  buffer(std::make_shared<AssertBufferDot>()) {
 
 }
 
@@ -35,19 +75,22 @@ ReporterDot::~ReporterDot() {
 
 void ReporterDot::enterTest(
     const Context& context_,
-    const std::string& name_) {
+    const std::string& name_,
+    const Parameters& params_) {
 
 }
 
 void ReporterDot::enterSuite(
     const Context& context_,
-    const std::string& name_) {
+    const std::string& name_,
+    const Parameters& params_) {
 
 }
 
 void ReporterDot::enterCase(
     const Context& context_,
-    const std::string& name_) {
+    const std::string& name_,
+    const Parameters& params_) {
 
 }
 
@@ -57,31 +100,19 @@ void ReporterDot::enterState(
 
 }
 
-void ReporterDot::enterAssert(
+AssertBufferPtr ReporterDot::enterAssert(
     const Context& context_,
     bool condition_,
-    const std::string& message_,
     const std::string& file_,
     int lineno_) {
-  if(!condition_)
-    std::printf("\n[%s, %d]: %s\n", file_.c_str(), lineno_, message_.c_str());
+  buffer->openAssertion({condition_, file_, lineno_});
+  return buffer;
 }
 
-void ReporterDot::enterError(
-    const Context& context_,
-    const std::string& message_) {
-  std::printf("\nerror: %s\n", message_.c_str());
-}
-
-void ReporterDot::reportAssertionMessage(
-    const Context& context_,
-    const std::string& message_) {
-
-}
-
-void ReporterDot::leaveAssert(
+AssertBufferPtr ReporterDot::enterError(
     const Context& context_) {
-
+  buffer->openError();
+  return buffer;
 }
 
 void ReporterDot::leaveState(
@@ -94,6 +125,7 @@ void ReporterDot::leaveState(
 void ReporterDot::leaveCase(
     const Context& context_,
     const std::string& name_,
+    const Parameters& params_,
     bool result_) {
   std::printf(".");
   std::fflush(stdout);
@@ -102,6 +134,7 @@ void ReporterDot::leaveCase(
 void ReporterDot::leaveSuite(
     const Context& context_,
     const std::string& name_,
+    const Parameters& params_,
     bool result_) {
 
 }
@@ -109,6 +142,7 @@ void ReporterDot::leaveSuite(
 void ReporterDot::leaveTest(
     const Context& context_,
     const std::string& name_,
+    const Parameters& params_,
     bool result_) {
   if(result_)
     std::printf("OK\n");

@@ -31,6 +31,7 @@ namespace OTest2 {
 
 class Context;
 class ObjectPath;
+class Parameters;
 class RunnerFilter;
 class RunnerFilterTags;
 class TagsStack;
@@ -90,30 +91,28 @@ class Scenario {
         const Context& context_) const = 0;
 
     /**
-     * @brief Report entering of the testing object
+     * @brief Enter the testing object
+     *
+     * This method is responsible for report of entering of the testing object.
+     * It may modify object's parameters and it must report the object
+     * into the reporter.
      *
      * As constructor methods may throw an exception causing failure of the test,
      * we report the entering into the object before actual creation of the
      * object.
      *
-     * @param context_ The OTest2 context
-     * @param decorated_name_ Decorated name of the testing object
+     * @param context_ The OTest2 context. Current object path is ready.
      */
-    virtual void reportEntering(
-        const Context& context_,
-        const std::string& decorated_name_) const noexcept = 0;
+    virtual void enterObject(
+        const Context& context_) const noexcept = 0;
 
     /**
      * @brief Report leaving of the testing object
      *
-     * @param context_ The OTest2 context
-     * @param decorated_name_ Decorated name of the testign object
-     * @param result_ Result of the testing object
+     * @param context_ The OTest2 context. Current object path is still set.
      */
-    virtual void reportLeaving(
-        const Context& context_,
-        const std::string& decorated_name_,
-        bool result_) const noexcept = 0;
+    virtual void leaveObject(
+        const Context& context_) const noexcept = 0;
 
     /**
      * @brief Get iterator of children object

@@ -155,7 +155,8 @@ void ReporterTee::appendReporter(
 
 void ReporterTee::enterTest(
     const Context& context_,
-    const std::string& name_) {
+    const std::string& name_,
+    const Parameters& params_) {
   std::for_each(
       reporters.begin(),
       reporters.end(),
@@ -163,12 +164,14 @@ void ReporterTee::enterTest(
           &Reporter::enterTest,
           _1,
           std::cref(context_),
-          std::cref(name_)));
+          std::cref(name_),
+          std::cref(params_)));
 }
 
 void ReporterTee::enterSuite(
     const Context& context_,
-    const std::string& name_) {
+    const std::string& name_,
+    const Parameters& params_) {
   std::for_each(
       reporters.begin(),
       reporters.end(),
@@ -176,12 +179,14 @@ void ReporterTee::enterSuite(
           &Reporter::enterSuite,
           _1,
           std::cref(context_),
-          std::cref(name_)));
+          std::cref(name_),
+          std::cref(params_)));
 }
 
 void ReporterTee::enterCase(
     const Context& context_,
-    const std::string& name_) {
+    const std::string& name_,
+    const Parameters& params_) {
   std::for_each(
       reporters.begin(),
       reporters.end(),
@@ -189,7 +194,8 @@ void ReporterTee::enterCase(
           &Reporter::enterCase,
           _1,
           std::cref(context_),
-          std::cref(name_)));
+          std::cref(name_),
+          std::cref(params_)));
 }
 
 void ReporterTee::enterState(
@@ -254,6 +260,7 @@ void ReporterTee::leaveState(
 void ReporterTee::leaveCase(
     const Context& context_,
     const std::string& name_,
+    const Parameters& params_,
     bool result_) {
   std::for_each(
       reporters.begin(),
@@ -263,12 +270,14 @@ void ReporterTee::leaveCase(
           _1,
           std::cref(context_),
           std::cref(name_),
+          std::cref(params_),
           result_));
 }
 
 void ReporterTee::leaveSuite(
     const Context& context_,
     const std::string& name_,
+    const Parameters& params_,
     bool result_) {
   std::for_each(
       reporters.begin(),
@@ -278,12 +287,14 @@ void ReporterTee::leaveSuite(
           _1,
           std::cref(context_),
           std::cref(name_),
+          std::cref(params_),
           result_));
 }
 
 void ReporterTee::leaveTest(
     const Context& context_,
     const std::string& name_,
+    const Parameters& params_,
     bool result_) {
   std::for_each(
       reporters.begin(),
@@ -293,6 +304,7 @@ void ReporterTee::leaveTest(
           _1,
           std::cref(context_),
           std::cref(name_),
+          std::cref(params_),
           result_));
 }
 

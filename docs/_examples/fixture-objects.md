@@ -6,14 +6,10 @@ Objects which are part of the fixture initialization.
 
 [Full source code of the example]({{ site.repositoryurl }}/blob/master/examples/fixture-objects)
 
-As it has been shown in the [fixture example]({{ "/examples/fixtures" | relative_url }})
-there are two phases of initialization of fixtures of a testing object.
-During the first phase the fixture variables are created by their constructor
-methods. The second phase invokes the start-up method of the testing object.
-
-Actually, the second phase is not just invocation of the start-up method.
-The framework invokes all start-up methods of fixture variables which
-declare some. Let's get a simple example:
+Even though the test suites and cases are fixtures themselves, user is able to
+create custom fixture objects. If the fixture object is declared as a member
+of any testing object (suite or case) it's initialized during first and second
+phase as well as the parent suite or case is initialized.
 
 ```c++
 #include <otest2/otest2.h>
@@ -76,8 +72,9 @@ the start-up and tear-down methods may accept the OTest2 context and any
 user data parameters ([see the example]({{ "/examples/userdata" | relative_url }})).
 
 The framework is able to access the fixture object through a reference,
-pointer or a smart pointer. The start-up method of the testing object is invoked
-before fixture objects, hence the fixture object can be created here:
+pointer or a smart pointer. The start-up method of the parent testing object
+is invoked before start-up method of fixture objects, hence the fixture object
+can be created here:
 
 ```c++
 TEST_SUITE(FixtureObjectsSuite) {
@@ -107,5 +104,5 @@ the service starts eventually.
 * The start-up and tear-down methods of parent classes must have different
   names. Otherwise, the generated code will not be compilable.
 * The pre-processor handles inheritance, but it doesn't handle overriding
-  of methods. Annotate an overriden method just in one class! Otherwise,
-  the overriden method will be invoked several times!
+  of methods. Annotate an overridden method just in one class! Otherwise,
+  the overridden method will be invoked several times!

@@ -6,26 +6,33 @@ An example showing usage of test fixtures in the _OTest2_ framework.
 
 [Full source code of the example]({{ site.repositoryurl }}/blob/master/examples/fixtures)
 
-In the world of unit-tests the term fixture means any preparation needed
-for run of the test like construction of the testing environment (insertion
-of mock dependencies), filling data into a database, generating of files used
-as inputs of the tests etc. And, of course, cleaning them at the end of the test.
+In the world of unit-tests a fixture is an object which can be initialized
+before a test and destroyed after the test. A fixture can prepare a testing
+environment (injection of mocked dependencies), fill data into a database,
+generate files working as input of the test and many other.
 
-The OTest2 framework supports fixtures at the both levels of suites and testcases.
-There are two phases of fixture initialization:
-1. the fixture variables are created by their constructor methods
-2. the start-up method of the testing object is invoked.
+The OTest2 framework supports fixtures widely - test suites and test cases
+are fixtures themselves. And any member of testing objects can be a fixture
+too - see [next example]({{ "/examples/fixture-objects/" | relative_url }})
+for more details.
 
-Complementarily, destruction of fixture variables is done in two symmetric phases:
-1. the tear-down method of the testing object is invoked
-2. the fixture variables are destroyed by their destructor methods. 
+The OTest2 framework initializes fixture objects (test suites and cases and
+user defined fixtures) in two phases:
+1. the fixture variable is created by their constructor methods,
+2. the start-up method of the fixture object is invoked.
 
-The first phase is the natural C++ way - the fixture variables are just
-member variable. As the framework creates any testing object just before
-its entering and destructs the object instantly at its end, the fixture variables
-exist just for run of the testing object[^1]. 
+Complementarily, destruction of the fixture object is executed in two symmetric
+phases:
+1. the tear-down method of the testing object is invoked,
+2. the fixture variable is destroyed by its destructor methods. 
 
-The start-up and tear-down methods are just member functions of a testing
+The first phase is the natural C++ way - the fixtures are just C++ variables.
+The framework creates suites and cases just prior their run and destroys them
+instantly when they finish. Hence, lifetime of any fixture is strictly limited
+to the lifetime of its particular test. No fixture is created during dynamic
+initialization of the test binary.
+
+The start-up and tear-down methods are just member functions of a fixture
 object invoked at the beginning and at the end. The framework promises that
 the tear-down method is called every time even if the test object fails
 or ends up with an unhandled exception.
@@ -47,28 +54,28 @@ namespace Examples {
 namespace Test {
 
 TEST_SUITE(Fixtures) {
-  /* -- This is a suite's fixture initialized in constructor. The round
-   *    braces are mandatory - OTest2 doesn't support other syntax of
-   *    initializers. */
+  /* -- This fixture's variable is initialized in the constructor method
+   *    of the suite. The round braces are mandatory - OTest2 doesn't support
+   *    other syntax of initializers. */
   MyFixture fixture1("Number one");
 
-  /* -- This is a suite's fixture initialized in the start-up method. */
+  /* -- This is a suite's variable initialized in the start-up method. */
   std::unique_ptr<MyFixture> fixture2;
 
   TEST_START_UP() {
     /* -- This method is invoked at the beginning of the suite. The second
-     *    fixture is created here. */
+     *    variable is created here. */
     fixture2.reset(new MyFixture("Number two"));
   }
 
   TEST_TEAR_DOWN() {
-    /* -- This method is invoked at the end of the suite. The second fixture
-     *    is explicitly destructed here. */
+    /* -- This method is invoked at the end of the suite. The second variable
+     *    is explicitly destroyed here. */
     fixture2.reset(nullptr);
   }
 
   TEST_CASE(FirstCase) {
-    /* -- Fixtures of the first case. */
+    /* -- Variables of the first case. */
     MyFixture fixture3("Number three");
     std::unique_ptr<MyFixture> fixture4;
 
@@ -95,7 +102,7 @@ TEST_SUITE(Fixtures) {
   }
 
   TEST_CASE(SecondCase) {
-    /* -- This fixture shadows the suite's fixture. In the whole testcase
+    /* -- This variable shadows the suite's variable. In the entire test case
      *    this variable is used instead of the suite's one. */
     MyFixture fixture1("Number five");
 
